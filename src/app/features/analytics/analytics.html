@@ -1,0 +1,67 @@
+<div class="analytics-page">
+  <div class="container">
+    <div class="analytics-header">
+      <h1 class="analytics-header__title">{{ t('analytics.title') }}</h1>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="metrics-grid">
+      @for (metric of metrics; track metric.label) {
+        <div class="metric-card glass-card-base">
+          <app-pulse-metric [value]="metric.value" [label]="metric.label" />
+        </div>
+      }
+    </div>
+
+    <!-- Trend Chart -->
+    <div class="chart-section">
+      <h2 class="section-title">{{ t('analytics.trend') }}</h2>
+      <div class="chart-card glass-card-base">
+        <div class="bar-chart">
+          @for (value of trendData; track $index) {
+            <div class="bar-column">
+              <div class="bar" [style.height.%]="getBarHeight(value)">
+                <span class="bar__value">{{ value }}</span>
+              </div>
+              <span class="bar__label">{{ $index === 6 ? '今天' : '' }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="tables-row">
+      <!-- Top Pages -->
+      <div class="table-section">
+        <h2 class="section-title">{{ t('analytics.topPages') }}</h2>
+        <div class="table-card glass-card-base">
+          @for (page of topPages; track page.path) {
+            <div class="table-row">
+              <div class="table-row__info">
+                <span class="table-row__title">{{ page.title }}</span>
+                <span class="table-row__path">{{ page.path }}</span>
+              </div>
+              <span class="table-row__views">{{ page.views }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Top Articles -->
+      <div class="table-section">
+        <h2 class="section-title">{{ t('analytics.topArticles') }}</h2>
+        <div class="table-card glass-card-base">
+          @for (article of topArticles; track article.slug) {
+            <div class="table-row">
+              <div class="table-row__info">
+                <span class="table-row__title">{{ article.title }}</span>
+                <span class="table-row__date">{{ article.date }}</span>
+              </div>
+              <span class="table-row__views">{{ article.views }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
