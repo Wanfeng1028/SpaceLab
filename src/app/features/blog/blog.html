@@ -1,0 +1,54 @@
+<div class="blog-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="blog-header">
+      <h1 class="blog-header__title">{{ t('blog.title') }}</h1>
+      <p class="blog-header__desc">记录技术思考与生活感悟</p>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="blog-toolbar">
+      <div class="search-box">
+        <span class="search-box__icon">🔍</span>
+        <input
+          class="search-box__input"
+          type="text"
+          [placeholder]="t('blog.searchPlaceholder')"
+          [value]="searchQuery()"
+          (input)="onSearch($event)"
+        />
+      </div>
+
+      <div class="category-filters">
+        @for (cat of categories(); track cat) {
+          <button
+            class="filter-chip"
+            [class.is-active]="selectedCategory() === cat"
+            (click)="selectCategory(cat)">
+            {{ cat === 'all' ? t('common.all') : cat }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Article Grid -->
+    @if (filteredPosts().length > 0) {
+      <div class="blog-grid">
+        @for (post of filteredPosts(); track post.slug) {
+          <app-article-card
+            [title]="post.title"
+            [slug]="post.slug"
+            [excerpt]="post.excerpt"
+            [date]="post.date"
+            [tags]="post.tags"
+          />
+        }
+      </div>
+    } @else {
+      <div class="blog-empty">
+        <span class="blog-empty__icon">📭</span>
+        <p>{{ t('blog.noArticles') }}</p>
+      </div>
+    }
+  </div>
+</div>
