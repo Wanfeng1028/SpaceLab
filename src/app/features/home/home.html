@@ -1,178 +1,93 @@
 <!-- ============================================= -->
-<!-- Hero 首屏 — 仅 欢迎 / 进入 / 联系我            -->
+<!-- Hero 首屏 — 太空光场 + 欢迎 + 按钮             -->
 <!-- ============================================= -->
-<section class="hero" [class.animation-done]="animationDone">
-  <!-- Three.js 粒子背景 -->
-  @if (showParticles) {
-    <app-three-canvas [sceneFactory]="particlesFactory" />
+<section class="hero">
+  <!-- Three.js 光场背景 -->
+  @if (showScene) {
+    <app-three-canvas [sceneFactory]="sceneFactory" />
   }
+
+  <!-- CSS 光斑层 -->
+  <div class="hero__glows">
+    <div class="glow glow--1"></div>
+    <div class="glow glow--2"></div>
+    <div class="glow glow--3"></div>
+  </div>
 
   <!-- 加载过渡 -->
   @if (phase() === 'loading') {
     <div class="hero__loader">
-      <div class="loader-ring"></div>
+      <div class="loader-dot"></div>
     </div>
   }
 
-  <!-- Hero 文案 + 按钮 -->
-  <div class="hero__content" [class.is-visible]="showText">
-    <h1 class="hero__title blur-reveal" [class.is-visible]="showText">
+  <!-- 中央文案 + 按钮 -->
+  <div class="hero__center" [class.is-visible]="showText">
+    <h1 class="hero__title" [class.is-visible]="showText">
       {{ t('home.welcome') }}
     </h1>
-    <div class="hero__actions fade-in-up" [class.is-visible]="showButtons">
-      <button class="button-google" (click)="onEnter()">
+    <div class="hero__actions" [class.is-visible]="showButtons">
+      <button class="btn-primary" (click)="onEnter()">
         {{ t('home.enter') }}
       </button>
-      <button class="button-glass" (click)="onContact()">
+      <button class="btn-glass" (click)="onContact()">
         {{ t('home.contact') }}
       </button>
     </div>
   </div>
-</section>
 
-<!-- ============================================= -->
-<!-- Portal 传送门 — 四大板块快捷入口                 -->
-<!-- ============================================= -->
-<section id="portal" class="section section--portal">
-  <div class="container">
-    <app-section-header
-      [title]="t('home.portalTitle')"
-      [subtitle]="t('home.portalSubtitle')"
-    />
-    <div class="portal-grid">
-      @for (item of portals; track item.title) {
-        <app-portal-card
-          [icon]="item.icon"
-          [title]="item.title"
-          [route]="item.route"
-          [description]="item.description"
-        />
-      }
-    </div>
+  <!-- 向下滚动提示 -->
+  <div class="hero__scroll-hint" [class.is-visible]="showButtons">
+    <div class="scroll-line"></div>
   </div>
 </section>
 
 <!-- ============================================= -->
-<!-- Featured Projects 精选项目                      -->
+<!-- 3D Portal — 玻璃传送门 + 四个入口               -->
 <!-- ============================================= -->
-<section class="section section--projects">
-  <div class="container">
-    <app-section-header
-      [title]="t('home.featuredProjects')"
-      [linkRoute]="'/projects'"
-      [linkText]="t('common.more')"
-    />
-    <div class="projects-grid">
-      @for (project of featuredProjects; track project.slug) {
-        <app-project-card
-          [title]="project.title"
-          [slug]="project.slug"
-          [icon]="project.icon"
-          [description]="project.description"
-          [accentColor]="project.accentColor"
-          [stack]="project.stack"
-        />
-      }
-    </div>
+<section id="portal" class="portal-section">
+  <!-- 光场背景 -->
+  <div class="portal-bg">
+    <div class="portal-bg__glow"></div>
   </div>
-</section>
 
-<!-- ============================================= -->
-<!-- Latest Articles 最新文章                        -->
-<!-- ============================================= -->
-<section class="section section--articles">
-  <div class="container">
-    <app-section-header
-      [title]="t('home.latestArticles')"
-      [linkRoute]="'/blog'"
-      [linkText]="t('common.more')"
-    />
-    <div class="articles-grid">
-      @for (article of latestArticles; track article.slug) {
-        <app-article-card
-          [title]="article.title"
-          [slug]="article.slug"
-          [excerpt]="article.excerpt"
-          [date]="article.date"
-          [tags]="article.tags"
-        />
-      }
+  <!-- 传送门 -->
+  <div class="portal">
+    <!-- 发光圆环 -->
+    <div class="portal__ring">
+      <div class="portal__ring-inner"></div>
+      <div class="portal__ring-glow"></div>
     </div>
-  </div>
-</section>
 
-<!-- ============================================= -->
-<!-- Lab Preview 实验室预览                          -->
-<!-- ============================================= -->
-<section class="section section--lab">
-  <div class="container">
-    <app-section-header
-      [title]="t('home.labPreview')"
-      [subtitle]="t('home.labSubtitle')"
-      [linkRoute]="'/lab'"
-      [linkText]="t('common.more')"
-    />
-    <div class="lab-placeholder glass-card-base">
-      <span class="lab-placeholder__icon">🧪</span>
-      <p>动效实验区域 — 即将上线</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================= -->
-<!-- Gallery Preview 画廊预览                        -->
-<!-- ============================================= -->
-<section class="section section--gallery">
-  <div class="container">
-    <app-section-header
-      [title]="t('home.galleryPreview')"
-      [linkRoute]="'/gallery'"
-      [linkText]="t('common.more')"
-    />
-    <div class="gallery-grid">
-      @for (item of galleryItems; track item.title) {
-        <app-gallery-card
-          [title]="item.title"
-          [icon]="item.icon"
-          [type]="item.type"
-          [bgColor]="item.bgColor"
-        />
-      }
-    </div>
-  </div>
-</section>
-
-<!-- ============================================= -->
-<!-- Site Pulse 站点脉搏                              -->
-<!-- ============================================= -->
-<section class="section section--pulse">
-  <div class="container">
-    <div class="pulse-card glass-card-base">
-      @for (metric of pulseMetrics; track metric.label) {
-        <app-pulse-metric [value]="metric.value" [label]="metric.label" />
-      }
-    </div>
-  </div>
-</section>
-
-<!-- ============================================= -->
-<!-- Contact 联系方式                                -->
-<!-- ============================================= -->
-<section id="contact" class="section section--contact">
-  <div class="container">
-    <div class="contact-card glass-card-base">
-      <h2 class="contact-card__title">{{ t('home.contactTitle') }}</h2>
-      <p class="contact-card__desc">{{ t('home.contactDesc') }}</p>
-      <div class="contact-card__links">
-        <a class="contact-link" href="mailto:hello@spacelab.dev" aria-label="Email">
-          <span class="contact-link__icon">✉️</span>
-          <span>Email</span>
+    <!-- 四个入口节点 -->
+    <div class="portal__nodes">
+      @for (node of portalNodes; track node.label) {
+        <a class="portal-node" [routerLink]="node.route">
+          <div class="portal-node__orb"></div>
+          <span class="portal-node__label">{{ node.label }}</span>
+          <span class="portal-node__subtitle">{{ node.subtitle }}</span>
         </a>
-        <a class="contact-link" href="https://github.com/Wanfeng1028" target="_blank" rel="noopener" aria-label="GitHub">
-          <span class="contact-link__icon">🐙</span>
-          <span>GitHub</span>
-        </a>
-      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- Contact                                        -->
+<!-- ============================================= -->
+<section id="contact" class="contact-section">
+  <div class="contact-card">
+    <h2 class="contact-card__title">{{ t('home.contactTitle') }}</h2>
+    <p class="contact-card__desc">{{ t('home.contactDesc') }}</p>
+    <div class="contact-card__links">
+      <a class="contact-pill" href="mailto:hello@spacelab.dev">
+        <span class="contact-pill__dot"></span>
+        <span>Email</span>
+      </a>
+      <a class="contact-pill" href="https://github.com/Wanfeng1028" target="_blank" rel="noopener">
+        <span class="contact-pill__dot"></span>
+        <span>GitHub</span>
+      </a>
     </div>
   </div>
 </section>

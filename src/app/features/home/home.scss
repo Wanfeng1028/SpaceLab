@@ -1,5 +1,6 @@
-@use '../../../styles/abstracts/mixins' as m;
-@use '../../../styles/abstracts/functions' as f;
+// ============================================
+// SpaceLab Home — 太空光场 + 玻璃星体 + Portal
+// ============================================
 
 :host {
   display: block;
@@ -16,21 +17,70 @@
   justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
-  text-align: center;
   overflow: hidden;
-  background: var(--color-bg);
+  // 奶油色太空背景 — 非纯黑，非纯白
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(200, 215, 240, 0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 70% 70%, rgba(240, 220, 200, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(220, 210, 235, 0.3) 0%, transparent 40%),
+    linear-gradient(175deg, #eae5dc 0%, #e2ddd4 40%, #ddd8cf 100%);
 }
 
-.hero__content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2xl);
+// ============================================
+// CSS 光斑层 — 柔和径向光斑
+// ============================================
+
+.hero__glows {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-// Loader Ring
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0;
+  animation: glowFadeIn 2s var(--ease-out) forwards;
+
+  &--1 {
+    width: 500px;
+    height: 500px;
+    top: -10%;
+    right: -5%;
+    background: radial-gradient(circle, rgba(180, 200, 240, 0.35) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+
+  &--2 {
+    width: 400px;
+    height: 400px;
+    bottom: -5%;
+    left: -5%;
+    background: radial-gradient(circle, rgba(240, 215, 190, 0.3) 0%, transparent 70%);
+    animation-delay: 0.6s;
+  }
+
+  &--3 {
+    width: 300px;
+    height: 300px;
+    top: 30%;
+    left: 40%;
+    background: radial-gradient(circle, rgba(210, 200, 235, 0.25) 0%, transparent 70%);
+    animation-delay: 0.9s;
+  }
+}
+
+@keyframes glowFadeIn {
+  to { opacity: 1; }
+}
+
+// ============================================
+// Loader
+// ============================================
+
 .hero__loader {
   position: absolute;
   inset: 0;
@@ -40,33 +90,47 @@
   z-index: 3;
 }
 
-.loader-ring {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(0, 0, 0, 0.08);
-  border-top-color: var(--color-text-secondary);
+.loader-dot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  background: rgba(0, 0, 0, 0.2);
+  animation: pulse 1.2s ease-in-out infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.3); }
 }
 
-// Hero Title — Blur Reveal
+// ============================================
+// Hero Center Content
+// ============================================
+
+.hero__center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  text-align: center;
+}
+
+// 欢迎标题 — 清晰、干净、高级感
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(44px, 10vw, 112px);
+  font-size: clamp(48px, 10vw, 120px);
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   color: var(--color-text);
-
+  // 初始状态
   opacity: 0;
-  filter: blur(20px);
-  transform: translateY(20px);
-  transition: opacity 1.2s var(--ease-out), filter 1.2s var(--ease-out),
-    transform 1.2s var(--ease-out);
+  filter: blur(16px);
+  transform: translateY(24px);
+  transition: opacity 1.4s var(--ease-out), filter 1.4s var(--ease-out),
+    transform 1.4s var(--ease-out);
 
   &.is-visible {
     opacity: 1;
@@ -75,17 +139,18 @@
   }
 }
 
-// Hero Actions — Fade In Up
+// ============================================
+// Buttons
+// ============================================
+
 .hero__actions {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-  justify-content: center;
-
+  gap: 20px;
+  // 初始状态
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.8s var(--ease-out) 0.2s, transform 0.8s var(--ease-out) 0.2s;
+  transform: translateY(20px);
+  transition: opacity 0.9s var(--ease-out) 0.3s, transform 0.9s var(--ease-out) 0.3s;
 
   &.is-visible {
     opacity: 1;
@@ -93,171 +158,345 @@
   }
 }
 
-// ============================================
-// Section Base
-// ============================================
+// Google Blue 主按钮
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 36px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: #1a73e8;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
 
-.section {
-  padding: var(--space-4xl) 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-lg);
-}
-
-// ============================================
-// Portal Grid
-// ============================================
-
-.portal-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-lg);
-
-  @media (max-width: 991px) {
-    grid-template-columns: repeat(2, 1fr);
+  &:hover {
+    background: #1557b0;
+    box-shadow: 0 4px 20px rgba(26, 115, 232, 0.35);
+    transform: translateY(-2px);
   }
 
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+  &:active {
+    background: #0d47a1;
+    transform: translateY(0);
   }
 }
 
-// ============================================
-// Projects Grid
-// ============================================
+// 玻璃按钮
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 36px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s, color 0.25s;
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
+  &:hover {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.7);
+    color: var(--color-text);
+    transform: translateY(-2px);
+  }
 
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
+  &:active {
+    transform: translateY(0);
   }
 }
 
 // ============================================
-// Articles Grid
+// Scroll Hint
 // ============================================
 
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
+.hero__scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1s var(--ease-out) 0.8s;
 
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 100%);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.2); }
+}
+
+// ============================================
+// Portal Section
+// ============================================
+
+.portal-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(200, 210, 235, 0.3) 0%, transparent 70%),
+    linear-gradient(180deg, #ddd8cf 0%, #e5e0d7 50%, #eae5dc 100%);
+}
+
+.portal-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  &__glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 195, 230, 0.2) 0%, transparent 60%);
+    filter: blur(60px);
   }
 }
 
 // ============================================
-// Lab Placeholder
+// Portal
 // ============================================
 
-.lab-placeholder {
+.portal {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 200px;
-  gap: var(--space-md);
-  border-radius: var(--radius-2xl);
+  gap: 64px;
+}
 
-  &__icon {
-    font-size: 3rem;
-  }
+// 发光圆环
+.portal__ring {
+  position: relative;
+  width: 200px;
+  height: 200px;
 
-  p {
-    color: var(--color-text-tertiary);
-    font-size: 0.9rem;
+  @media (max-width: 767px) {
+    width: 150px;
+    height: 150px;
   }
 }
 
+.portal__ring-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 0 40px rgba(180, 200, 240, 0.15),
+    inset 0 0 30px rgba(255, 255, 255, 0.1);
+  animation: ringRotate 20s linear infinite;
+}
+
+.portal__ring-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 1px solid rgba(180, 200, 240, 0.2);
+  box-shadow: 0 0 60px rgba(180, 200, 240, 0.1);
+  animation: ringRotate 30s linear infinite reverse;
+}
+
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+
 // ============================================
-// Gallery Grid
+// Portal Nodes — 四个入口
 // ============================================
 
-.gallery-grid {
+.portal__nodes {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 800px;
+  width: 100%;
+  padding: 0 24px;
 
-  @media (max-width: 991px) {
+  @media (max-width: 767px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
+    max-width: 280px;
   }
 }
 
-// ============================================
-// Site Pulse
-// ============================================
-
-.pulse-card {
+.portal-node {
+  position: relative;
   display: flex;
-  justify-content: space-around;
-  border-radius: var(--radius-2xl);
-  padding: var(--space-xl) 0;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out),
+    border-color 0.4s, background 0.4s;
+
+  &:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(180, 200, 240, 0.6);
+    box-shadow:
+      0 12px 40px rgba(180, 200, 240, 0.2),
+      0 0 0 1px rgba(180, 200, 240, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-4px);
+  }
+}
+
+// 玻璃球体装饰
+.portal-node__orb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(200, 215, 240, 0.4) 40%,
+    rgba(180, 200, 230, 0.2) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 4px 12px rgba(180, 200, 240, 0.2),
+    inset 0 -4px 8px rgba(180, 200, 240, 0.1);
+  transition: box-shadow 0.4s, transform 0.4s;
+
+  .portal-node:hover & {
+    box-shadow:
+      0 4px 20px rgba(180, 200, 240, 0.4),
+      0 0 30px rgba(180, 200, 240, 0.15),
+      inset 0 -4px 8px rgba(180, 200, 240, 0.15);
+    transform: scale(1.1);
+  }
+}
+
+.portal-node__label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.portal-node__subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-tertiary);
 }
 
 // ============================================
-// Contact
+// Contact Section
 // ============================================
+
+.contact-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px;
+  background: linear-gradient(180deg, #eae5dc 0%, #e8e3d8 100%);
+}
 
 .contact-card {
   text-align: center;
-  padding: var(--space-3xl) var(--space-xl);
-  border-radius: var(--radius-2xl);
+  max-width: 500px;
 
   &__title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: var(--space-sm);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
   }
 
   &__desc {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--color-text-secondary);
-    max-width: 480px;
-    margin: 0 auto var(--space-xl);
-    line-height: 1.6;
+    line-height: 1.65;
+    margin-bottom: 36px;
   }
 
   &__links {
     display: flex;
-    gap: var(--space-lg);
+    gap: 16px;
     justify-content: center;
     flex-wrap: wrap;
   }
 }
 
-.contact-link {
-  display: flex;
+.contact-pill {
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-full);
-  background: rgba(0, 0, 0, 0.04);
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   text-decoration: none;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  transition: background 0.2s, color 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(180, 200, 240, 0.5);
     color: var(--color-text);
+    transform: translateY(-2px);
   }
+}
 
-  &__icon {
-    font-size: 1.1rem;
-  }
+.contact-pill__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34a853;
 }
 
 // ============================================
@@ -266,14 +505,20 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero__title,
-  .hero__actions {
+  .hero__actions,
+  .hero__scroll-hint {
     opacity: 1;
     filter: none;
     transform: none;
     transition: none;
   }
 
-  .loader-ring {
+  .glow,
+  .loader-dot,
+  .scroll-line,
+  .portal__ring-inner,
+  .portal__ring-glow {
     animation: none;
+    opacity: 1;
   }
 }

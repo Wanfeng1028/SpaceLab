@@ -2,24 +2,32 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  BufferGeometry,
-  Float32BufferAttribute,
+  SphereGeometry,
+  Mesh,
+  MeshPhysicalMaterial,
   Points,
   PointsMaterial,
+  BufferGeometry,
+  Float32BufferAttribute,
   Color,
+  AmbientLight,
+  PointLight,
   AdditiveBlending,
   MathUtils,
+  Group,
 } from 'three';
 
 /**
- * Hero 粒子场场景
- * 轻量级粒子漂浮效果，模拟空间感和光场
+ * 太空光场场景
+ * 干净的奶油色空间 + 柔和光斑 + 6-12 个玻璃星体 + 稀疏星尘
  */
-export class HeroParticlesScene {
+export class HeroLightFieldScene {
   private scene!: Scene;
   private camera!: PerspectiveCamera;
   private renderer!: WebGLRenderer;
-  private particles!: Points;
+  private orbs: Mesh[] = [];
+  private starDust!: Points;
+  private glowGroup!: Group;
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private mouseX = 0;
@@ -28,19 +36,22 @@ export class HeroParticlesScene {
   private targetMouseY = 0;
   private disposed = false;
 
-  // 根据设备性能调整
-  private particleCount: number;
-  private dpr: number;
+  private readonly orbCount: number;
+  private readonly starCount: number;
+  private readonly dpr: number;
 
   constructor(private canvas: HTMLCanvasElement) {
     const isMobile = window.innerWidth < 768;
-    this.particleCount = isMobile ? 600 : 1500;
+    this.orbCount = isMobile ? 6 : 10;
+    this.starCount = isMobile ? 80 : 200;
     this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
   }
 
   init(): void {
     this.initScene();
-    this.initParticles();
+    this.initLighting();
+    this.initGlassOrbs();
+    this.initStarDust();
     this.bindEvents();
     this.animate();
   }
@@ -48,68 +59,164 @@ export class HeroParticlesScene {
   private initScene(): void {
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(
-      60,
+      50,
       window.innerWidth / window.innerHeight,
       0.1,
-      100
+      200
     );
-    this.camera.position.z = 30;
+    this.camera.position.set(0, 0, 40);
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
-      antialias: false,
+      antialias: true,
       alpha: true,
     });
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(0x000000, 0);
+    this.renderer.toneMapping = 1; // ACESFilmicToneMapping
+    this.renderer.toneMappingExposure = 1.2;
   }
 
-  private initParticles(): void {
-    const geometry = new BufferGeometry();
-    const positions = new Float32Array(this.particleCount * 3);
-    const colors = new Float32Array(this.particleCount * 3);
-    const sizes = new Float32Array(this.particleCount);
+  private initLighting(): void {
+    // 环境光 — 柔和均匀
+    const ambient = new AmbientLight(0xd4cfc4, 0.6);
+    this.scene.add(ambient);
 
-    const colorPalette = [
-      new Color('#ffd21f'),  // yellow
-      new Color('#69d7ff'),  // cyan
-      new Color('#8f7cff'),  // violet
-      new Color('#f3b9c8'),  // rose
-      new Color('#ffffff'),  // white
+    // 主点光 — 暖白色，从右上方
+    const mainLight = new PointLight(0xfff5e6, 1.2, 100);
+    mainLight.position.set(15, 20, 25);
+    this.scene.add(mainLight);
+
+    // 补光 — 冷蓝色，从左下方
+    const fillLight = new PointLight(0xc5d8f0, 0.6, 80);
+    fillLight.position.set(-12, -10, 20);
+    this.scene.add(fillLight);
+
+    // 背光 — 极淡紫色，营造深度
+    const backLight = new PointLight(0xe0d0f0, 0.4, 60);
+    backLight.position.set(0, 5, -20);
+    this.scene.add(backLight);
+  }
+
+  private initGlassOrbs(): void {
+    this.glowGroup = new Group();
+    this.scene.add(this.glowGroup);
+
+    // 玻璃星体配置 — 不同大小、位置、色调
+    const orbConfigs = this.generateOrbConfigs();
+
+    for (const cfg of orbConfigs) {
+      const geometry = new SphereGeometry(cfg.radius, 48, 48);
+      const material = new MeshPhysicalMaterial({
+        color: cfg.color,
+        transparent: true,
+        opacity: cfg.opacity,
+        roughness: 0.05,
+        metalness: 0.0,
+        transmission: 0.92,
+        thickness: cfg.radius * 1.5,
+        ior: 1.45,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.05,
+        envMapIntensity: 0.8,
+        attenuationColor: cfg.attenuationColor,
+        attenuationDistance: cfg.radius * 3,
+      });
+
+      const mesh = new Mesh(geometry, material);
+      mesh.position.set(cfg.x, cfg.y, cfg.z);
+      // 存储初始参数用于动画
+      mesh.userData = {
+        baseX: cfg.x,
+        baseY: cfg.y,
+        baseZ: cfg.z,
+        floatSpeed: cfg.floatSpeed,
+        floatAmplitude: cfg.floatAmplitude,
+        phaseOffset: cfg.phaseOffset,
+        rotationSpeed: cfg.rotationSpeed,
+      };
+
+      this.orbs.push(mesh);
+      this.glowGroup.add(mesh);
+    }
+  }
+
+  private generateOrbConfigs(): Array<{
+    radius: number; x: number; y: number; z: number;
+    color: Color; opacity: number; attenuationColor: Color;
+    floatSpeed: number; floatAmplitude: number;
+    phaseOffset: number; rotationSpeed: number;
+  }> {
+    const configs = [];
+    const isMobile = window.innerWidth < 768;
+    const spread = isMobile ? 18 : 30;
+
+    // 预定义的玻璃星体 — 手动布局确保美观
+    const templates = [
+      { r: 2.8, x: 12, y: 6, z: -5, color: '#d8e8ff', atten: '#b8d4ff', opacity: 0.35 },
+      { r: 1.6, x: -14, y: -4, z: -8, color: '#ffe8d0', atten: '#ffd4a8', opacity: 0.3 },
+      { r: 3.5, x: -8, y: 10, z: -15, color: '#e8e0ff', atten: '#d0c0ff', opacity: 0.25 },
+      { r: 1.2, x: 16, y: -8, z: -3, color: '#e0f0ff', atten: '#c0e0ff', opacity: 0.35 },
+      { r: 2.0, x: 5, y: -12, z: -10, color: '#fff0e8', atten: '#ffe0d0', opacity: 0.3 },
+      { r: 0.9, x: -18, y: 3, z: -2, color: '#f0e8ff', atten: '#e0d0ff', opacity: 0.4 },
+      { r: 2.4, x: -3, y: 8, z: -20, color: '#e8f0ff', atten: '#d0e0ff', opacity: 0.2 },
+      { r: 1.4, x: 10, y: -3, z: -12, color: '#ffe8f0', atten: '#ffd0e0', opacity: 0.3 },
+      { r: 1.8, x: -10, y: -10, z: -6, color: '#e8fff0', atten: '#d0ffe0', opacity: 0.28 },
+      { r: 0.7, x: 18, y: 12, z: -8, color: '#fff8e0', atten: '#fff0c0', opacity: 0.4 },
     ];
 
-    for (let i = 0; i < this.particleCount; i++) {
+    for (let i = 0; i < Math.min(this.orbCount, templates.length); i++) {
+      const t = templates[i];
+      const scale = isMobile ? 0.7 : 1;
+      configs.push({
+        radius: t.r * scale,
+        x: t.x * scale * (spread / 30),
+        y: t.y * scale * (spread / 30),
+        z: t.z,
+        color: new Color(t.color),
+        attenuationColor: new Color(t.atten),
+        opacity: t.opacity,
+        floatSpeed: 0.3 + Math.random() * 0.4,
+        floatAmplitude: 0.5 + Math.random() * 1.0,
+        phaseOffset: Math.random() * Math.PI * 2,
+        rotationSpeed: 0.05 + Math.random() * 0.1,
+      });
+    }
+
+    return configs;
+  }
+
+  private initStarDust(): void {
+    const geometry = new BufferGeometry();
+    const positions = new Float32Array(this.starCount * 3);
+    const sizes = new Float32Array(this.starCount);
+    const opacities = new Float32Array(this.starCount);
+
+    for (let i = 0; i < this.starCount; i++) {
       const i3 = i * 3;
-      // 分布在较大空间内
-      positions[i3] = MathUtils.randFloatSpread(60);
-      positions[i3 + 1] = MathUtils.randFloatSpread(40);
-      positions[i3 + 2] = MathUtils.randFloatSpread(40);
-
-      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-      colors[i3] = color.r;
-      colors[i3 + 1] = color.g;
-      colors[i3 + 2] = color.b;
-
-      sizes[i] = MathUtils.randFloat(0.5, 2.5);
+      positions[i3] = MathUtils.randFloatSpread(80);
+      positions[i3 + 1] = MathUtils.randFloatSpread(50);
+      positions[i3 + 2] = MathUtils.randFloat(-30, -5);
+      sizes[i] = MathUtils.randFloat(0.3, 1.2);
+      opacities[i] = MathUtils.randFloat(0.15, 0.5);
     }
 
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
     geometry.setAttribute('size', new Float32BufferAttribute(sizes, 1));
 
     const material = new PointsMaterial({
-      size: 1.5,
-      vertexColors: true,
+      size: 0.8,
+      color: 0xffffff,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.3,
       blending: AdditiveBlending,
       depthWrite: false,
       sizeAttenuation: true,
     });
 
-    this.particles = new Points(geometry, material);
-    this.scene.add(this.particles);
+    this.starDust = new Points(geometry, material);
+    this.scene.add(this.starDust);
   }
 
   private bindEvents(): void {
@@ -131,35 +238,33 @@ export class HeroParticlesScene {
 
   private animate(): void {
     if (this.disposed) return;
-
     this.animationId = requestAnimationFrame(() => this.animate());
 
-    const time = Date.now() * 0.0003;
+    const time = Date.now() * 0.001;
 
-    // 鼠标视差平滑插值
-    this.mouseX += (this.targetMouseX - this.mouseX) * 0.02;
-    this.mouseY += (this.targetMouseY - this.mouseY) * 0.02;
+    // 鼠标视差 — 平滑插值
+    this.mouseX += (this.targetMouseX - this.mouseX) * 0.015;
+    this.mouseY += (this.targetMouseY - this.mouseY) * 0.015;
 
-    // 粒子缓慢漂浮
-    const positions = this.particles.geometry.attributes['position'];
-    const posArray = (positions as Float32BufferAttribute).array as Float32Array;
-
-    for (let i = 0; i < this.particleCount; i++) {
-      const i3 = i * 3;
-      const speed = 0.3 + (i % 5) * 0.05;
-      posArray[i3 + 1] += Math.sin(time * speed + i * 0.1) * 0.008;
-      posArray[i3] += Math.cos(time * speed * 0.7 + i * 0.05) * 0.005;
+    // 玻璃星体缓慢漂浮
+    for (const orb of this.orbs) {
+      const d = orb.userData;
+      orb.position.x = d['baseX'] + Math.sin(time * d['floatSpeed'] + d['phaseOffset']) * d['floatAmplitude'];
+      orb.position.y = d['baseY'] + Math.cos(time * d['floatSpeed'] * 0.8 + d['phaseOffset']) * d['floatAmplitude'] * 0.7;
+      orb.rotation.y = time * d['rotationSpeed'];
+      orb.rotation.x = time * d['rotationSpeed'] * 0.3;
     }
-    positions.needsUpdate = true;
 
-    // 相机跟随鼠标 (parallax)
-    this.camera.position.x += (this.mouseX * 2 - this.camera.position.x) * 0.02;
-    this.camera.position.y += (this.mouseY * 1.5 - this.camera.position.y) * 0.02;
+    // 星尘极缓慢漂移
+    if (this.starDust) {
+      this.starDust.rotation.y = time * 0.008;
+      this.starDust.rotation.x = Math.sin(time * 0.005) * 0.02;
+    }
+
+    // 相机跟随鼠标 (parallax) — 轻微
+    this.camera.position.x += (this.mouseX * 1.5 - this.camera.position.x) * 0.015;
+    this.camera.position.y += (this.mouseY * 1.0 - this.camera.position.y) * 0.015;
     this.camera.lookAt(0, 0, 0);
-
-    // 整体缓慢旋转
-    this.particles.rotation.y = time * 0.15;
-    this.particles.rotation.x = Math.sin(time * 0.1) * 0.05;
 
     this.renderer.render(this.scene, this.camera);
   }
@@ -180,13 +285,16 @@ export class HeroParticlesScene {
   destroy(): void {
     this.disposed = true;
     this.pause();
-
     window.removeEventListener('resize', this.resizeHandler);
 
-    if (this.particles) {
-      this.particles.geometry.dispose();
-      (this.particles.material as PointsMaterial).dispose();
-      this.scene.remove(this.particles);
+    for (const orb of this.orbs) {
+      orb.geometry.dispose();
+      (orb.material as MeshPhysicalMaterial).dispose();
+    }
+
+    if (this.starDust) {
+      this.starDust.geometry.dispose();
+      (this.starDust.material as PointsMaterial).dispose();
     }
 
     this.renderer.dispose();
