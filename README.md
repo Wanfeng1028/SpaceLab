@@ -1,59 +1,122 @@
-# SpacelabTemp
+# 🌌 SpaceLab
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.12.
+个人数字空间网站 — 基于 Angular 21 + Three.js + GSAP 构建
 
-## Development server
+## ✨ 特性
 
-To start a local development server, run:
+- **3D 粒子背景** — Three.js 渲染的动态粒子场，支持鼠标视差交互
+- **Glassmorphism 设计** — 玻璃拟态 UI，8 种变体 mixin 系统
+- **文章发布系统** — Markdown 写作、分类筛选、阅读时间估算
+- **项目展示** — 分类过滤的项目卡片展示
+- **Lab 实验室** — 动效与交互实验空间
+- **Gallery 画廊** — 媒体作品集
+- **访问分析** — PV/UV 统计、趋势图表
+- **中英双语** — i18n 国际化支持
+- **响应式设计** — 适配桌面 / 平板 / 手机
+- **无障碍** — `prefers-reduced-motion` 支持
+
+## 🛠️ 技术栈
+
+| 类别 | 技术 |
+|------|------|
+| 框架 | Angular 21.2 (Standalone Components) |
+| 语言 | TypeScript 5.9 |
+| 样式 | SCSS + CSS Variables |
+| 3D | Three.js |
+| 动画 | GSAP |
+| 后端 | Supabase (规划中) |
+| 设计 | Glassmorphism |
+
+## 🚀 快速开始
 
 ```bash
+# 克隆项目
+git clone https://github.com/Wanfeng1028/SpaceLab.git
+cd SpaceLab
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
 ng serve
-```
+# 或
+npm start
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+# 构建生产版本
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+访问 `http://localhost:4200/` 查看效果。
 
-## Running unit tests
+## 📁 项目结构
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```
+src/
+├── app/
+│   ├── core/           # 核心模块 (模型、常量、配置、服务)
+│   ├── features/       # 功能页面
+│   │   ├── home/       # 首页 (Hero + 各区块)
+│   │   ├── blog/       # 博客列表
+│   │   ├── article/    # 文章详情
+│   │   ├── projects/   # 项目展示
+│   │   ├── lab/        # 实验室
+│   │   ├── gallery/    # 画廊
+│   │   ├── about/      # 关于
+│   │   ├── archive/    # 归档
+│   │   ├── admin/      # 后台管理 (隐藏路由)
+│   │   └── analytics/  # 访问分析
+│   ├── shared/         # 共享组件 (卡片、导航栏等)
+│   ├── three/          # Three.js 场景和组件
+│   └── i18n/           # 国际化翻译文件
+├── styles/             # 设计系统
+│   ├── abstracts/      # 变量、mixin、函数、玻璃拟态
+│   ├── base/           # 重置、排版、无障碍
+│   ├── components/     # 按钮、卡片、表单、Markdown
+│   └── utilities/      # 布局、动效、响应式
+└── assets/             # 静态资源
 ```
 
-## Running end-to-end tests
+## 🎨 设计系统
 
-For end-to-end (e2e) testing, run:
+### 颜色
 
-```bash
-ng e2e
-```
+- 背景: `#e8e3d8` (暖灰)
+- 主色: `#1a73e8` (Google Blue)
+- 文字: `#171717` / `#555` / `#999`
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 字体
 
-## Additional Resources
+- 中文: Noto Sans SC
+- 英文: Inter
+- 代码: JetBrains Mono
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### 断点
+
+| 名称 | 范围 |
+|------|------|
+| Desktop | ≥ 1200px |
+| Laptop | 992 - 1199px |
+| Tablet | 768 - 991px |
+| Mobile | < 768px |
+| Small Mobile | < 480px |
+
+## 📋 开发路线
+
+- [x] Phase 01: 项目初始化
+- [x] Phase 02: 设计系统
+- [x] Phase 03: Home Hero (3D 粒子 + 动画)
+- [x] Phase 04: Home 各区块
+- [x] Phase 05: 路由与全局布局
+- [x] Phase 06: Blog 文章列表
+- [x] Phase 07: Article 文章详情
+- [x] Phase 08: Projects 项目展示
+- [x] Phase 09: Lab / Gallery / About / Archive
+- [x] Phase 10: Admin 写作页 + 404
+- [x] Phase 11: Analytics 访问分析
+- [x] Phase 12: README + 最终打磨
+- [ ] Phase 13: Supabase 集成
+- [ ] Phase 14: 生产部署
+
+## 📄 License
+
+MIT
