@@ -1,0 +1,71 @@
+<div class="admin-page">
+  <div class="container">
+    <div class="admin-header">
+      <h1 class="admin-header__title">{{ t('admin.newArticle') }}</h1>
+      <div class="admin-header__actions">
+        <button class="button-glass" (click)="togglePreview()">
+          {{ isPreview() ? t('admin.editor') : t('admin.preview') }}
+        </button>
+        <button class="button-glass" (click)="onSaveDraft()">
+          {{ t('admin.saveDraft') }}
+        </button>
+        <button class="button-google" (click)="onPublish()">
+          {{ t('admin.publish') }}
+        </button>
+      </div>
+    </div>
+
+    @if (!isPreview()) {
+      <!-- Editor Mode -->
+      <div class="editor-form">
+        <div class="form-field">
+          <label class="form-label">{{ t('admin.title') }}</label>
+          <input
+            class="form-input"
+            type="text"
+            [value]="title()"
+            (input)="title.set($any($event.target).value)"
+            placeholder="文章标题..."
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">{{ t('admin.tags') }}</label>
+          <input
+            class="form-input"
+            type="text"
+            [value]="tags()"
+            (input)="tags.set($any($event.target).value)"
+            placeholder="用逗号分隔标签，如：Angular, 前端"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">{{ t('admin.category') }}</label>
+          <select class="form-select" [value]="category()" (change)="category.set($any($event.target).value)">
+            <option value="技术">技术</option>
+            <option value="设计">设计</option>
+            <option value="随笔">随笔</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">{{ t('admin.content') }}</label>
+          <textarea
+            class="form-textarea"
+            [value]="content()"
+            (input)="content.set($any($event.target).value)"
+            placeholder="输入 Markdown 内容..."
+            rows="20"
+          ></textarea>
+        </div>
+      </div>
+    } @else {
+      <!-- Preview Mode -->
+      <div class="preview-area">
+        <h2 class="preview-title">{{ title() || '（无标题）' }}</h2>
+        <div class="preview-content markdown-body">{{ content() }}</div>
+      </div>
+    }
+  </div>
+</div>

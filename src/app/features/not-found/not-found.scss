@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.not-found__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.not-found__code {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 800;
+  color: var(--color-text-secondary);
+  opacity: 0.3;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.not-found__message {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.not-found__desc {
+  font-size: 0.95rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-md);
+}
