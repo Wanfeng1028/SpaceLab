@@ -1,0 +1,42 @@
+<div class="projects-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="projects-header">
+      <h1 class="projects-header__title">{{ t('projects.title') }}</h1>
+      <p class="projects-header__desc">探索我的项目作品</p>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-filters">
+      @for (cat of categories(); track cat) {
+        <button
+          class="filter-chip"
+          [class.is-active]="selectedCategory() === cat"
+          (click)="selectCategory(cat)">
+          {{ cat === 'all' ? t('common.all') : cat }}
+        </button>
+      }
+    </div>
+
+    <!-- Projects Grid -->
+    @if (filteredProjects().length > 0) {
+      <div class="projects-grid">
+        @for (project of filteredProjects(); track project.slug) {
+          <app-project-card
+            [title]="project.title"
+            [slug]="project.slug"
+            [icon]="project.icon"
+            [description]="project.description"
+            [accentColor]="project.accentColor"
+            [stack]="project.stack"
+          />
+        }
+      </div>
+    } @else {
+      <div class="projects-empty">
+        <span class="projects-empty__icon">📭</span>
+        <p>{{ t('common.none') }}</p>
+      </div>
+    }
+  </div>
+</div>
