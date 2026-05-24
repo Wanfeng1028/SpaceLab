@@ -1,0 +1,105 @@
+// ============================================
+// Buttons — SpaceLab
+// ============================================
+
+// ---- Google Blue CTA ----
+.button-google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 46px;
+  padding: 0 24px;
+  border: 1px solid rgba(26, 115, 232, 0.18);
+  border-radius: var(--radius-pill);
+  background: var(--color-google-blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(26, 115, 232, 0.28);
+  transition:
+    transform 240ms var(--ease-out),
+    box-shadow 240ms var(--ease-out),
+    background 240ms var(--ease-out);
+
+  &:hover {
+    background: var(--color-google-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 18px 42px rgba(26, 115, 232, 0.34);
+  }
+
+  &:active {
+    background: var(--color-google-blue-active);
+    transform: translateY(0) scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ---- Glass Button ----
+.button-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 46px;
+  padding: 0 22px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.34);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  box-shadow:
+    0 12px 30px rgba(34, 28, 18, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  transition:
+    transform 240ms var(--ease-out),
+    background 240ms var(--ease-out),
+    border-color 240ms var(--ease-out),
+    box-shadow 240ms var(--ease-out);
+
+  &:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.54);
+    border-color: var(--glass-border-hover);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  // Color variants
+  &.is-blue {
+    background: rgba(26, 115, 232, 0.14);
+  }
+
+  &.is-yellow {
+    background: rgba(255, 210, 31, 0.18);
+  }
+
+  &.is-violet {
+    background: rgba(143, 124, 255, 0.14);
+  }
+
+  &.is-rose {
+    background: rgba(243, 185, 200, 0.16);
+  }
+}

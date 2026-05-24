@@ -1,0 +1,126 @@
+{
+  "common": {
+    "siteName": "SpaceLab",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "back": "Back",
+    "more": "View More",
+    "search": "Search",
+    "all": "All",
+    "none": "No content yet"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "enter": "Enter",
+    "contact": "Contact"
+  },
+  "portal": {
+    "blog": "Blog",
+    "blogDesc": "Articles & Thoughts",
+    "projects": "Projects",
+    "projectsDesc": "Project Works",
+    "lab": "Lab",
+    "labDesc": "Motion Experiments",
+    "gallery": "Gallery",
+    "galleryDesc": "Media Space"
+  },
+  "orbit": {
+    "articles": "Articles",
+    "projects": "Projects",
+    "experiments": "Experiments",
+    "media": "Media",
+    "about": "About",
+    "archive": "Archive"
+  },
+  "blog": {
+    "title": "Blog",
+    "searchPlaceholder": "Search articles...",
+    "noArticles": "No articles yet",
+    "readMore": "Read More",
+    "views": "views",
+    "minutes": "min"
+  },
+  "article": {
+    "backToBlog": "Back to Blog",
+    "prev": "Previous",
+    "next": "Next",
+    "notFound": "Article not found",
+    "publishedAt": "Published at",
+    "readingTime": "Reading time"
+  },
+  "projects": {
+    "title": "Projects",
+    "preview": "Preview",
+    "detail": "Detail",
+    "github": "GitHub",
+    "liveDemo": "Live Demo"
+  },
+  "lab": {
+    "title": "Lab",
+    "viewDemo": "View Demo",
+    "viewSource": "View Source"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "all": "All",
+    "images": "Images",
+    "videos": "Videos",
+    "gifs": "GIFs"
+  },
+  "about": {
+    "title": "About",
+    "currentFocus": "Current Focus",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "archive": {
+    "title": "Archive"
+  },
+  "admin": {
+    "login": "Login",
+    "logout": "Logout",
+    "newArticle": "New Article",
+    "editArticle": "Edit Article",
+    "saveDraft": "Save Draft",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "delete": "Delete",
+    "title": "Title",
+    "summary": "Summary",
+    "content": "Content",
+    "tags": "Tags",
+    "category": "Category",
+    "language": "Language",
+    "slug": "Slug",
+    "cover": "Cover",
+    "status": "Status",
+    "preview": "Preview",
+    "editor": "Editor",
+    "meta": "Meta",
+    "media": "Media"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "pv": "Page Views",
+    "uv": "Unique Visitors",
+    "today": "Today",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "topPages": "Top Pages",
+    "topArticles": "Top Articles",
+    "trend": "Visit Trend"
+  },
+  "pulse": {
+    "totalVisits": "Total Visits",
+    "todayVisits": "Today Visits",
+    "topPages": "Top Pages",
+    "topArticles": "Top Articles",
+    "trend": "Visit Trend"
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "Email",
+    "github": "GitHub"
+  }
+}

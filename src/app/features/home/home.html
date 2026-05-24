@@ -1,0 +1,28 @@
+<section class="hero">
+  <div class="hero__content blur-reveal is-visible">
+    <h1 class="hero__title">{{ t('home.welcome') }}</h1>
+    <div class="hero__actions">
+      <button class="button-google" (click)="scrollToPortal()">
+        {{ t('home.enter') }}
+      </button>
+      <button class="button-glass" (click)="scrollToContact()">
+        {{ t('home.contact') }}
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Placeholder sections for scroll targets -->
+<section id="portal" class="section-placeholder">
+  <div class="container">
+    <h2>Portal</h2>
+    <p>Coming soon...</p>
+  </div>
+</section>
+
+<section id="contact" class="section-placeholder">
+  <div class="container">
+    <h2>Contact</h2>
+    <p>Coming soon...</p>
+  </div>
+</section>

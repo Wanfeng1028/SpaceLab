@@ -1,0 +1,48 @@
+// ============================================
+// Typography — SpaceLab
+// ============================================
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h4 {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h5 {
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+h6 {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+pre {
+  overflow-x: auto;
+  tab-size: 2;
+}

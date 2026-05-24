@@ -1,0 +1,13 @@
+// ============================================
+// Functions — SpaceLab
+// ============================================
+
+// Convert px to rem
+@function to-rem($px, $base: 16) {
+  @return ($px / $base) * 1rem;
+}
+
+// Spacing scale
+@function space($multiplier) {
+  @return calc(var(--space-xs) * #{$multiplier});
+}

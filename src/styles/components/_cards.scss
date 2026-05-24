@@ -1,0 +1,56 @@
+// ============================================
+// Cards — SpaceLab
+// ============================================
+
+@use '../abstracts/glass' as glass;
+
+// ---- Glass Card (通用类) ----
+.glass-card {
+  @include glass.glass-card-base;
+  @include glass.glass-card-content-layer;
+  padding: var(--space-lg);
+
+  &::before {
+    @include glass.glass-card-light;
+  }
+
+  &::after {
+    @include glass.glass-card-glow;
+  }
+
+  &:hover {
+    @include glass.glass-card-hover;
+  }
+}
+
+// ---- Spotlight Card ----
+.spotlight-card {
+  @include glass.glass-card-base;
+  @include glass.glass-card-content-layer;
+  padding: var(--space-lg);
+
+  &::before {
+    @include glass.glass-card-light;
+  }
+
+  &::after {
+    @include glass.glass-card-glow;
+  }
+
+  .spotlight-card__spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 300ms var(--ease-out);
+    border-radius: inherit;
+  }
+
+  &:hover {
+    @include glass.glass-card-hover;
+
+    .spotlight-card__spotlight {
+      opacity: 1;
+    }
+  }
+}

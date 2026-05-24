@@ -1,0 +1,25 @@
+// ============================================
+// Accessibility — SpaceLab
+// ============================================
+
+// Focus visible
+:focus-visible {
+  outline: 2px solid var(--color-google-blue);
+  outline-offset: 2px;
+}
+
+// Skip to content link
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-google-blue);
+  color: #fff;
+  font-weight: 700;
+
+  &:focus {
+    top: 0;
+  }
+}

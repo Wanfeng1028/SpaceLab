@@ -1,0 +1,44 @@
+// ============================================
+// Forms — SpaceLab
+// ============================================
+
+.glass-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 var(--space-md);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--color-text);
+  font-size: 15px;
+  transition:
+    border-color 240ms var(--ease-out),
+    background 240ms var(--ease-out),
+    box-shadow 240ms var(--ease-out);
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-google-blue);
+    background: rgba(255, 255, 255, 0.36);
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.glass-textarea {
+  @extend .glass-input;
+  min-height: 120px;
+  padding: var(--space-md);
+  resize: vertical;
+  line-height: 1.6;
+}

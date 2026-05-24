@@ -1,0 +1,127 @@
+// ============================================
+// Markdown Content — SpaceLab
+// ============================================
+
+.markdown-body {
+  max-width: 860px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--color-text);
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.8em;
+    margin-bottom: 0.6em;
+    color: var(--color-text);
+  }
+
+  h1 { font-size: 2em; }
+  h2 { font-size: 1.6em; }
+  h3 { font-size: 1.35em; }
+  h4 { font-size: 1.15em; }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  a {
+    color: var(--color-google-blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--color-google-blue-hover);
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: 1.5em 0;
+  }
+
+  video {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: 1.5em 0;
+  }
+
+  blockquote {
+    padding: var(--space-md) var(--space-lg);
+    margin: 1.5em 0;
+    border-left: 4px solid var(--color-google-blue);
+    background: rgba(26, 115, 232, 0.06);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  code {
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  pre {
+    padding: var(--space-md);
+    margin: 1.5em 0;
+    background: #1e1e1e;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      background: none;
+      color: #d4d4d4;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  ul, ol {
+    padding-left: 1.5em;
+    margin-bottom: 1em;
+
+    li {
+      margin-bottom: 0.4em;
+      list-style: disc;
+
+      &::marker {
+        color: var(--color-text-secondary);
+      }
+    }
+  }
+
+  ol li {
+    list-style: decimal;
+  }
+
+  table {
+    width: 100%;
+    margin: 1.5em 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    text-align: left;
+  }
+
+  th {
+    background: rgba(0, 0, 0, 0.04);
+    font-weight: 600;
+  }
+
+  hr {
+    margin: 2em 0;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}

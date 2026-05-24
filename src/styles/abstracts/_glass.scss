@@ -1,0 +1,130 @@
+// ============================================
+// Glass Design System — SpaceLab
+// 磨砂玻璃设计规范 mixin 集合
+// ============================================
+
+// ---- Card Base: 核心玻璃层 ----
+@mixin glass-card-base {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(148deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.1) 48%,
+      rgba(255, 255, 255, 0.05) 100%),
+    rgba(255, 255, 255, 0.04);
+  box-shadow:
+    0 14px 34px rgba(23, 23, 23, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(26px) saturate(1.2);
+  -webkit-backdrop-filter: blur(26px) saturate(1.2);
+  overflow: hidden;
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    border-color 180ms var(--ease-out),
+    background 180ms var(--ease-out);
+}
+
+// ---- Card Light: 顶部高光 (::before) ----
+@mixin glass-card-light {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 12%,
+      rgba(255, 255, 255, 0.62), transparent 24%),
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.18), transparent 42%);
+  opacity: 0.88;
+}
+
+// ---- Card Glow: 品牌色光晕 (::after) ----
+@mixin glass-card-glow {
+  content: '';
+  position: absolute;
+  inset: auto -8% -24% 38%;
+  height: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle,
+    rgba(255, 204, 51, 0.1) 0%,
+    rgba(255, 255, 255, 0.03) 54%,
+    transparent 100%);
+  filter: blur(18px);
+  opacity: 0.56;
+  transform: rotate(-10deg);
+}
+
+// ---- Card Hover ----
+@mixin glass-card-hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 18px 40px rgba(23, 23, 23, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+// ---- Card Active: 选中/激活 ----
+@mixin glass-card-active {
+  border-color: rgba(255, 204, 51, 0.45);
+  background:
+    linear-gradient(148deg,
+      rgba(255, 255, 255, 0.26) 0%,
+      rgba(255, 255, 255, 0.12) 48%,
+      rgba(255, 204, 51, 0.06) 100%),
+    rgba(255, 204, 51, 0.04);
+  box-shadow:
+    0 14px 34px rgba(23, 23, 23, 0.06),
+    0 0 0 1px rgba(255, 204, 51, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+// ---- Content Layer: 子元素层级保护 ----
+@mixin glass-card-content-layer {
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// ---- Surface: 面板/导航底座 (无圆角) ----
+@mixin glass-surface {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  background:
+    linear-gradient(148deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.1) 48%,
+      rgba(255, 255, 255, 0.05) 100%),
+    rgba(255, 255, 255, 0.04);
+  box-shadow:
+    0 14px 34px rgba(23, 23, 23, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(26px) saturate(1.2);
+  -webkit-backdrop-filter: blur(26px) saturate(1.2);
+  overflow: hidden;
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    border-color 180ms var(--ease-out),
+    background 180ms var(--ease-out);
+}
+
+// ---- Surface Hover: 轻量悬浮 ----
+@mixin glass-surface-hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 18px 40px rgba(23, 23, 23, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
