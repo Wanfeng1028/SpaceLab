@@ -10,10 +10,26 @@
     "all": "All",
     "none": "No content yet"
   },
+  "nav": {
+    "blog": "Blog",
+    "projects": "Projects",
+    "lab": "Lab",
+    "gallery": "Gallery",
+    "about": "About"
+  },
   "home": {
     "welcome": "Welcome",
     "enter": "Enter",
-    "contact": "Contact"
+    "contact": "Contact",
+    "portalTitle": "Portal",
+    "portalSubtitle": "Choose where you want to go",
+    "featuredProjects": "Featured Projects",
+    "latestArticles": "Latest Articles",
+    "labPreview": "Lab",
+    "labSubtitle": "Motion & Interaction Experiments",
+    "galleryPreview": "Gallery",
+    "contactTitle": "Contact Me",
+    "contactDesc": "If you're interested in my projects or want to discuss tech, feel free to reach out."
   },
   "portal": {
     "blog": "Blog",

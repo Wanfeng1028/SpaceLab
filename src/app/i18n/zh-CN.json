@@ -10,10 +10,26 @@
     "all": "全部",
     "none": "暂无内容"
   },
+  "nav": {
+    "blog": "Blog",
+    "projects": "Projects",
+    "lab": "Lab",
+    "gallery": "Gallery",
+    "about": "About"
+  },
   "home": {
     "welcome": "欢迎",
     "enter": "进入",
-    "contact": "联系我"
+    "contact": "联系我",
+    "portalTitle": "传送门",
+    "portalSubtitle": "选择你想去的地方",
+    "featuredProjects": "精选项目",
+    "latestArticles": "最新文章",
+    "labPreview": "实验室",
+    "labSubtitle": "动效与交互实验",
+    "galleryPreview": "画廊",
+    "contactTitle": "联系我",
+    "contactDesc": "如果你对我的项目感兴趣，或者想交流技术，欢迎联系我。"
   },
   "portal": {
     "blog": "Blog",

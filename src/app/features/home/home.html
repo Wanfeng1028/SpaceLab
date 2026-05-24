@@ -36,8 +36,8 @@
 <section id="portal" class="section section--portal">
   <div class="container">
     <app-section-header
-      [title]="t('portal.title') || '传送门'"
-      [subtitle]="t('portal.subtitle') || '选择你想去的地方'"
+      [title]="t('home.portalTitle')"
+      [subtitle]="t('home.portalSubtitle')"
     />
     <div class="portal-grid">
       @for (item of portals; track item.title) {
@@ -58,9 +58,9 @@
 <section class="section section--projects">
   <div class="container">
     <app-section-header
-      [title]="t('home.featuredProjects') || '精选项目'"
+      [title]="t('home.featuredProjects')"
       [linkRoute]="'/projects'"
-      [linkText]="t('common.more') || '全部项目'"
+      [linkText]="t('common.more')"
     />
     <div class="projects-grid">
       @for (project of featuredProjects; track project.slug) {
@@ -83,9 +83,9 @@
 <section class="section section--articles">
   <div class="container">
     <app-section-header
-      [title]="t('home.latestArticles') || '最新文章'"
+      [title]="t('home.latestArticles')"
       [linkRoute]="'/blog'"
-      [linkText]="t('common.more') || '全部文章'"
+      [linkText]="t('common.more')"
     />
     <div class="articles-grid">
       @for (article of latestArticles; track article.slug) {
@@ -107,10 +107,10 @@
 <section class="section section--lab">
   <div class="container">
     <app-section-header
-      [title]="t('home.labPreview') || '实验室'"
-      [subtitle]="t('home.labSubtitle') || '动效与交互实验'"
+      [title]="t('home.labPreview')"
+      [subtitle]="t('home.labSubtitle')"
       [linkRoute]="'/lab'"
-      [linkText]="t('common.more') || '进入实验室'"
+      [linkText]="t('common.more')"
     />
     <div class="lab-placeholder glass-card-base">
       <span class="lab-placeholder__icon">🧪</span>
@@ -125,9 +125,9 @@
 <section class="section section--gallery">
   <div class="container">
     <app-section-header
-      [title]="t('home.galleryPreview') || '画廊'"
+      [title]="t('home.galleryPreview')"
       [linkRoute]="'/gallery'"
-      [linkText]="t('common.more') || '进入画廊'"
+      [linkText]="t('common.more')"
     />
     <div class="gallery-grid">
       @for (item of galleryItems; track item.title) {
@@ -161,8 +161,8 @@
 <section id="contact" class="section section--contact">
   <div class="container">
     <div class="contact-card glass-card-base">
-      <h2 class="contact-card__title">{{ t('home.contactTitle') || '联系我' }}</h2>
-      <p class="contact-card__desc">{{ t('home.contactDesc') || '如果你对我的项目感兴趣，或者想交流技术，欢迎联系我。' }}</p>
+      <h2 class="contact-card__title">{{ t('home.contactTitle') }}</h2>
+      <p class="contact-card__desc">{{ t('home.contactDesc') }}</p>
       <div class="contact-card__links">
         <a class="contact-link" href="mailto:hello@spacelab.dev" aria-label="Email">
           <span class="contact-link__icon">✉️</span>

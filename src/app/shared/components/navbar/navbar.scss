@@ -1,0 +1,209 @@
+@use '../../../../styles/abstracts/glass' as g;
+
+// ============================================
+// Navbar
+// ============================================
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-xl);
+  transition: transform 0.4s var(--ease-out), background 0.3s, backdrop-filter 0.3s;
+
+  // 默认透明
+  background: transparent;
+  backdrop-filter: none;
+
+  &.is-scrolled {
+    @include g.glass-surface;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  &.is-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+// ============================================
+// Brand
+// ============================================
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 1rem;
+  z-index: 101;
+}
+
+.navbar__logo {
+  font-size: 1.25rem;
+}
+
+.navbar__name {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+// ============================================
+// Nav Links (Desktop)
+// ============================================
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.navbar__link {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--space-xs) 0;
+  position: relative;
+  transition: color 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 1px;
+    transition: width 0.3s var(--ease-out);
+  }
+
+  &:hover,
+  &.is-active {
+    color: var(--color-text);
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+// ============================================
+// Language Toggle
+// ============================================
+
+.navbar__lang-toggle {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--color-text);
+  }
+}
+
+// ============================================
+// Hamburger (Mobile)
+// ============================================
+
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: var(--space-xs);
+  background: none;
+  cursor: pointer;
+  z-index: 101;
+
+  @media (max-width: 767px) {
+    display: flex;
+  }
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 1px;
+  transition: transform 0.3s, opacity 0.3s;
+
+  &.is-open:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  &.is-open:nth-child(2) {
+    opacity: 0;
+  }
+
+  &.is-open:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+// ============================================
+// Mobile Overlay
+// ============================================
+
+.navbar__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  backdrop-filter: blur(4px);
+}
+
+// ============================================
+// Mobile Menu
+// ============================================
+
+@media (max-width: 767px) {
+  .navbar__links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 260px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px var(--space-xl) var(--space-xl);
+    gap: var(--space-md);
+    background: var(--color-bg);
+    transform: translateX(100%);
+    transition: transform 0.3s var(--ease-out);
+    z-index: 100;
+
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+
+  .navbar__link {
+    font-size: 1rem;
+    padding: var(--space-sm) 0;
+  }
+}
+
+// ============================================
+// Reduced Motion
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__links,
+  .hamburger-line {
+    transition: none;
+  }
+}
