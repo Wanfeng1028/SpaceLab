@@ -1,27 +1,84 @@
 // ============================================
-// SpaceLab — Global Styles
+// 所有 @use 必须在最前面 (Sass 规范)
 // ============================================
 
-// Abstracts (tokens, mixins, functions, glass)
+// Angular Material
+@use '@angular/material' as mat;
+
+// SpaceLab 设计系统
 @use 'styles/abstracts/tokens';
 @use 'styles/abstracts/mixins';
 @use 'styles/abstracts/functions';
-
-// Base
 @use 'styles/base/reset';
 @use 'styles/base/typography';
 @use 'styles/base/a11y';
-
-// Components
 @use 'styles/components/buttons';
+@use 'styles/components/glass-buttons';
 @use 'styles/components/cards';
 @use 'styles/components/forms';
 @use 'styles/components/markdown';
-
-// Utilities
 @use 'styles/utilities/layout';
 @use 'styles/utilities/motion';
 @use 'styles/utilities/responsive';
+
+// ============================================
+// Angular Material 主题 — 仅用于功能性组件
+// 品牌级视觉统一使用 SpaceGlass* 系统
+// ============================================
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$yellow-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  color-scheme: light;
+  margin: 0;
+  height: 100%;
+}
+
+// ============================================
+// Angular Material 覆盖 — 统一到 SpaceLab 风格
+// ============================================
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button {
+  font-family: var(--font-body, 'Roboto', sans-serif) !important;
+  border-radius: var(--radius-pill, 999px) !important;
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 34px;
+}
+
+.mat-mdc-form-field {
+  font-family: var(--font-body, 'Roboto', sans-serif) !important;
+}
+
+.mat-mdc-menu-panel {
+  border-radius: 20px !important;
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.58) !important;
+  box-shadow:
+    0 14px 40px rgba(24, 20, 14, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.mat-mdc-snack-bar-container {
+  border-radius: 16px !important;
+}
 
 // ============================================
 // App Shell

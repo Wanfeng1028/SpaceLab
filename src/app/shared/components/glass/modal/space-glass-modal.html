@@ -1,0 +1,50 @@
+<!-- 遮罩层 -->
+<div
+  class="sgm-overlay"
+  (click)="onOverlayClick($event)"
+  [style.--orb-color-1]="orbColor1()"
+  [style.--orb-color-2]="orbColor2()"
+>
+  <!-- 光斑装饰 -->
+  <div class="sgm-orb sgm-orb--1"></div>
+  <div class="sgm-orb sgm-orb--2"></div>
+
+  <!-- 弹窗面板 -->
+  <div
+    class="sgm-panel"
+    [class.sgm-panel--sm]="size() === 'sm'"
+    [class.sgm-panel--lg]="size() === 'lg'"
+    role="dialog"
+    aria-modal="true"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- 关闭按钮 -->
+    @if (showClose()) {
+      <button
+        class="sgm-close"
+        type="button"
+        aria-label="关闭"
+        (click)="onClose()"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    }
+
+    <!-- Badge 插槽 -->
+    <div class="sgm-badge-area">
+      <ng-content select="[modalBadge]" />
+    </div>
+
+    <!-- 内容插槽 -->
+    <div class="sgm-body">
+      <ng-content />
+    </div>
+
+    <!-- 浮动玻璃气泡装饰 -->
+    <div class="sgm-bubble sgm-bubble--1"></div>
+    <div class="sgm-bubble sgm-bubble--2"></div>
+    <div class="sgm-bubble sgm-bubble--3"></div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+// ============================================
+// SpaceGlassButton — 全站统一玻璃按钮系统
+// 参考 PlanningGo Button + iOS 液态玻璃
+// ============================================
+
+// ---- 基础玻璃按钮 ----
+.space-glass-button {
+  --btn-tint: 255, 255, 255;
+  --btn-alpha: 0.34;
+  --btn-border-alpha: 0.58;
+  --btn-text: #111;
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 1px solid rgba(255, 255, 255, var(--btn-border-alpha));
+  border-radius: var(--radius-pill, 999px);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.48),
+      rgba(var(--btn-tint), var(--btn-alpha))
+    );
+  color: var(--btn-text);
+  font-family: var(--font-body, inherit);
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  box-shadow:
+    0 14px 36px rgba(24, 20, 14, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+  transition:
+    transform 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    box-shadow 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    background 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+    border-color 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+
+  // 内部高光层 — 玻璃被光照到的感觉
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      radial-gradient(circle at 30% 12%, rgba(255, 255, 255, 0.74), transparent 36%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 60%);
+    opacity: 0.76;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.82);
+    box-shadow:
+      0 20px 52px rgba(24, 20, 14, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.975);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(255, 210, 31, 0.45);
+    outline-offset: 4px;
+  }
+
+  &:disabled {
+    opacity: 0.46;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ---- 蓝色玻璃 (Google Blue) ----
+.space-glass-button--blue {
+  --btn-tint: 26, 115, 232;
+  --btn-alpha: 0.18;
+  --btn-text: #0d2d5c;
+}
+
+// ---- 黄色玻璃 ----
+.space-glass-button--yellow {
+  --btn-tint: 255, 210, 31;
+  --btn-alpha: 0.22;
+  --btn-text: #2a2100;
+}
+
+// ---- 紫色玻璃 ----
+.space-glass-button--violet {
+  --btn-tint: 143, 124, 255;
+  --btn-alpha: 0.16;
+  --btn-text: #241b58;
+}
+
+// ---- 青色玻璃 ----
+.space-glass-button--cyan {
+  --btn-tint: 105, 215, 255;
+  --btn-alpha: 0.16;
+  --btn-text: #063647;
+}
+
+// ---- 玫瑰色玻璃 ----
+.space-glass-button--rose {
+  --btn-tint: 243, 185, 200;
+  --btn-alpha: 0.18;
+  --btn-text: #512131;
+}
+
+// ---- 黑色玻璃 (最深，但仍然透明) ----
+.space-glass-button--black {
+  --btn-text: #fff;
+
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at 28% 12%, rgba(255, 255, 255, 0.18), transparent 36%),
+    linear-gradient(135deg, rgba(22, 22, 22, 0.88), rgba(0, 0, 0, 0.78));
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.32),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+// ---- 小尺寸 ----
+.space-glass-button--sm {
+  min-height: 38px;
+  padding: 0 18px;
+  font-size: 13px;
+}
+
+// ---- 大尺寸 ----
+.space-glass-button--lg {
+  min-height: 54px;
+  padding: 0 32px;
+  font-size: 16px;
+}
+
+// ============================================
+// SpaceGlassSegment — 玻璃胶囊标签 (弹窗内用)
+// ============================================
+
+.space-glass-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(255, 210, 31, 0.92);
+  color: #111;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+// ============================================
+// Legacy 兼容 — 旧 btn-primary / btn-glass 重定向
+// ============================================
+
+.btn-primary {
+  @extend .space-glass-button--blue !optional;
+  @extend .space-glass-button !optional;
+}
+
+.btn-glass {
+  @extend .space-glass-button !optional;
+}
+
+// ============================================
+// Reduced Motion
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .space-glass-button {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+
+    &:active {
+      transform: none;
+    }
+  }
+}

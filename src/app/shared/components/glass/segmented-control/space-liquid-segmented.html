@@ -1,0 +1,26 @@
+<div
+  class="sls-track"
+  [class.sls-track--blue]="tint() === 'blue'"
+  [class.sls-track--yellow]="tint() === 'yellow'"
+  [class.sls-track--violet]="tint() === 'violet'"
+  [class.sls-track--cyan]="tint() === 'cyan'"
+>
+  <!-- 液态玻璃滑块 -->
+  <div
+    class="sls-slider"
+    [style.left.px]="sliderLeft()"
+    [style.width.px]="sliderWidth()"
+  ></div>
+
+  <!-- 选项按钮 -->
+  @for (option of options(); track option; let i = $index) {
+    <button
+      class="sls-option"
+      [class.sls-option--active]="i === selectedIndex()"
+      type="button"
+      (click)="onSelect(i)"
+    >
+      {{ option }}
+    </button>
+  }
+</div>

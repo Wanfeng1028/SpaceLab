@@ -140,7 +140,7 @@
 }
 
 // ============================================
-// Buttons
+// Buttons — 使用全局 SpaceGlassButton 系统
 // ============================================
 
 .hero__actions {
@@ -154,68 +154,6 @@
 
   &.is-visible {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Google Blue 主按钮
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 48px;
-  padding: 0 36px;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: #fff;
-  background: #1a73e8;
-  border: none;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
-
-  &:hover {
-    background: #1557b0;
-    box-shadow: 0 4px 20px rgba(26, 115, 232, 0.35);
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    background: #0d47a1;
-    transform: translateY(0);
-  }
-}
-
-// 玻璃按钮
-.btn-glass {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 48px;
-  padding: 0 36px;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--color-text-secondary);
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 24px;
-  cursor: pointer;
-  transition: background 0.25s, border-color 0.25s, transform 0.25s, color 0.25s;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.55);
-    border-color: rgba(255, 255, 255, 0.7);
-    color: var(--color-text);
-    transform: translateY(-2px);
-  }
-
-  &:active {
     transform: translateY(0);
   }
 }
