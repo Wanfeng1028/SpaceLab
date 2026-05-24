@@ -21,7 +21,6 @@
   background: var(--color-bg);
 }
 
-// 三层结构：背景层(z:0) → 粒子(z:1) → 文案(z:2)
 .hero__content {
   position: relative;
   z-index: 2;
@@ -31,10 +30,7 @@
   gap: var(--space-2xl);
 }
 
-// ============================================
 // Loader Ring
-// ============================================
-
 .hero__loader {
   position: absolute;
   inset: 0;
@@ -57,10 +53,7 @@
   to { transform: rotate(360deg); }
 }
 
-// ============================================
 // Hero Title — Blur Reveal
-// ============================================
-
 .hero__title {
   font-family: var(--font-display);
   font-size: clamp(44px, 10vw, 112px);
@@ -69,7 +62,6 @@
   letter-spacing: -0.03em;
   color: var(--color-text);
 
-  // Blur Reveal 默认隐藏
   opacity: 0;
   filter: blur(20px);
   transform: translateY(20px);
@@ -83,10 +75,7 @@
   }
 }
 
-// ============================================
 // Hero Actions — Fade In Up
-// ============================================
-
 .hero__actions {
   display: flex;
   align-items: center;
@@ -94,7 +83,6 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  // Fade In Up 默认隐藏
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s var(--ease-out) 0.2s, transform 0.8s var(--ease-out) 0.2s;
@@ -106,7 +94,174 @@
 }
 
 // ============================================
-// Reduced Motion — 禁用一切动画
+// Section Base
+// ============================================
+
+.section {
+  padding: var(--space-4xl) 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+// ============================================
+// Portal Grid
+// ============================================
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// Projects Grid
+// ============================================
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// Articles Grid
+// ============================================
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// Lab Placeholder
+// ============================================
+
+.lab-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  gap: var(--space-md);
+  border-radius: var(--radius-2xl);
+
+  &__icon {
+    font-size: 3rem;
+  }
+
+  p {
+    color: var(--color-text-tertiary);
+    font-size: 0.9rem;
+  }
+}
+
+// ============================================
+// Gallery Grid
+// ============================================
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// Site Pulse
+// ============================================
+
+.pulse-card {
+  display: flex;
+  justify-content: space-around;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-xl) 0;
+  flex-wrap: wrap;
+}
+
+// ============================================
+// Contact
+// ============================================
+
+.contact-card {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  border-radius: var(--radius-2xl);
+
+  &__title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+  }
+
+  &__desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    max-width: 480px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.6;
+  }
+
+  &__links {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--color-text);
+  }
+
+  &__icon {
+    font-size: 1.1rem;
+  }
+}
+
+// ============================================
+// Reduced Motion
 // ============================================
 
 @media (prefers-reduced-motion: reduce) {
@@ -120,27 +275,5 @@
 
   .loader-ring {
     animation: none;
-  }
-}
-
-// ============================================
-// Section Placeholder
-// ============================================
-
-.section-placeholder {
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-4xl) 0;
-
-  h2 {
-    font-size: 2rem;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-sm);
-  }
-
-  p {
-    color: var(--color-text-tertiary);
   }
 }
