@@ -1,4 +1,5 @@
 @use '../../../styles/abstracts/mixins' as m;
+@use '../../../styles/abstracts/functions' as f;
 
 :host {
   display: block;
@@ -17,8 +18,10 @@
   min-height: 100dvh;
   text-align: center;
   overflow: hidden;
+  background: var(--color-bg);
 }
 
+// 三层结构：背景层(z:0) → 粒子(z:1) → 文案(z:2)
 .hero__content {
   position: relative;
   z-index: 2;
@@ -28,6 +31,36 @@
   gap: var(--space-2xl);
 }
 
+// ============================================
+// Loader Ring
+// ============================================
+
+.hero__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.loader-ring {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.08);
+  border-top-color: var(--color-text-secondary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ============================================
+// Hero Title — Blur Reveal
+// ============================================
+
 .hero__title {
   font-family: var(--font-display);
   font-size: clamp(44px, 10vw, 112px);
@@ -35,7 +68,24 @@
   line-height: 1.1;
   letter-spacing: -0.03em;
   color: var(--color-text);
+
+  // Blur Reveal 默认隐藏
+  opacity: 0;
+  filter: blur(20px);
+  transform: translateY(20px);
+  transition: opacity 1.2s var(--ease-out), filter 1.2s var(--ease-out),
+    transform 1.2s var(--ease-out);
+
+  &.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
 }
+
+// ============================================
+// Hero Actions — Fade In Up
+// ============================================
 
 .hero__actions {
   display: flex;
@@ -43,6 +93,34 @@
   gap: var(--space-md);
   flex-wrap: wrap;
   justify-content: center;
+
+  // Fade In Up 默认隐藏
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out) 0.2s, transform 0.8s var(--ease-out) 0.2s;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// Reduced Motion — 禁用一切动画
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title,
+  .hero__actions {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .loader-ring {
+    animation: none;
+  }
 }
 
 // ============================================

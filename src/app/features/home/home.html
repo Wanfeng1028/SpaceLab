@@ -1,11 +1,27 @@
-<section class="hero">
-  <div class="hero__content blur-reveal is-visible">
-    <h1 class="hero__title">{{ t('home.welcome') }}</h1>
-    <div class="hero__actions">
-      <button class="button-google" (click)="scrollToPortal()">
+<!-- Hero 首屏 — 仅 欢迎 / 进入 / 联系我 -->
+<section class="hero" [class.animation-done]="animationDone">
+  <!-- Three.js 粒子背景 -->
+  @if (showParticles) {
+    <app-three-canvas [sceneFactory]="particlesFactory" />
+  }
+
+  <!-- 加载过渡 -->
+  @if (phase() === 'loading') {
+    <div class="hero__loader">
+      <div class="loader-ring"></div>
+    </div>
+  }
+
+  <!-- Hero 文案 + 按钮 -->
+  <div class="hero__content" [class.is-visible]="showText">
+    <h1 class="hero__title blur-reveal" [class.is-visible]="showText">
+      {{ t('home.welcome') }}
+    </h1>
+    <div class="hero__actions fade-in-up" [class.is-visible]="showButtons">
+      <button class="button-google" (click)="onEnter()">
         {{ t('home.enter') }}
       </button>
-      <button class="button-glass" (click)="scrollToContact()">
+      <button class="button-glass" (click)="onContact()">
         {{ t('home.contact') }}
       </button>
     </div>
