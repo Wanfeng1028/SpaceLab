@@ -186,6 +186,33 @@
 }
 
 // ============================================
+// Filter Chip — 玻璃筛选标签
+// ============================================
+
+.filter-chip {
+  @extend .space-glass-button !optional;
+  @extend .space-glass-button--sm !optional;
+
+  font-weight: 700;
+
+  &.is-active {
+    --btn-tint: 17, 17, 17;
+    --btn-alpha: 0.82;
+    --btn-border-alpha: 0.22;
+    --btn-text: #fff;
+
+    border-color: rgba(255, 255, 255, 0.22);
+    background:
+      radial-gradient(circle at 28% 12%, rgba(255, 255, 255, 0.18), transparent 36%),
+      linear-gradient(135deg, rgba(22, 22, 22, 0.88), rgba(0, 0, 0, 0.78));
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+// ============================================
 // Reduced Motion
 // ============================================
 

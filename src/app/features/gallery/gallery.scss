@@ -39,23 +39,7 @@
 }
 
 .filter-chip {
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: var(--space-xs) var(--space-md);
-  border-radius: var(--radius-full);
-  background: rgba(0, 0, 0, 0.04);
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-
-  &.is-active {
-    background: var(--color-text);
-    color: var(--color-bg);
-  }
+  // 样式由全局 _glass-buttons.scss 统一管理
 }
 
 .gallery-grid {

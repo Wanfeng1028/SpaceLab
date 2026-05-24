@@ -3,13 +3,13 @@
     <div class="admin-header">
       <h1 class="admin-header__title">{{ t('admin.newArticle') }}</h1>
       <div class="admin-header__actions">
-        <button class="button-glass" (click)="togglePreview()">
+        <button class="space-glass-button space-glass-button--sm" (click)="togglePreview()">
           {{ isPreview() ? t('admin.editor') : t('admin.preview') }}
         </button>
-        <button class="button-glass" (click)="onSaveDraft()">
+        <button class="space-glass-button space-glass-button--sm" (click)="onSaveDraft()">
           {{ t('admin.saveDraft') }}
         </button>
-        <button class="button-google" (click)="onPublish()">
+        <button class="space-glass-button space-glass-button--blue" (click)="onPublish()">
           {{ t('admin.publish') }}
         </button>
       </div>
