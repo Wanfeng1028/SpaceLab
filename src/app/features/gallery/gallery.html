@@ -1,0 +1,39 @@
+<div class="gallery-page">
+  <div class="container">
+    <div class="gallery-header">
+      <h1 class="gallery-header__title">{{ t('gallery.title') }}</h1>
+      <p class="gallery-header__desc">媒体与实验作品集</p>
+    </div>
+
+    <!-- Type Filters -->
+    <div class="type-filters">
+      @for (type of types(); track type) {
+        <button
+          class="filter-chip"
+          [class.is-active]="selectedType() === type"
+          (click)="selectType(type)">
+          {{ type === 'all' ? t('gallery.all') : type }}
+        </button>
+      }
+    </div>
+
+    <!-- Gallery Grid -->
+    @if (filteredItems().length > 0) {
+      <div class="gallery-grid">
+        @for (item of filteredItems(); track item.title) {
+          <app-gallery-card
+            [title]="item.title"
+            [icon]="item.icon"
+            [type]="item.type"
+            [bgColor]="item.bgColor"
+          />
+        }
+      </div>
+    } @else {
+      <div class="gallery-empty">
+        <span class="gallery-empty__icon">🖼️</span>
+        <p>{{ t('common.none') }}</p>
+      </div>
+    }
+  </div>
+</div>

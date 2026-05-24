@@ -1,0 +1,51 @@
+<div class="about-page">
+  <div class="container">
+    <!-- Header -->
+    <div class="about-header">
+      <h1 class="about-header__title">{{ t('about.title') }}</h1>
+      <p class="about-header__bio">
+        热爱前端技术与 3D 可视化的开发者。致力于构建高性能、高质感的 Web 体验。
+      </p>
+    </div>
+
+    <!-- Current Focus -->
+    <section class="about-section">
+      <h2 class="about-section__title">{{ t('about.currentFocus') }}</h2>
+      <div class="focus-grid">
+        @for (area of focusAreas; track area.title) {
+          <div class="focus-card glass-card-hover">
+            <span class="focus-card__icon">{{ area.icon }}</span>
+            <h3 class="focus-card__title">{{ area.title }}</h3>
+            <p class="focus-card__desc">{{ area.desc }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="about-section">
+      <h2 class="about-section__title">{{ t('about.skills') }}</h2>
+      <div class="skills-list">
+        @for (skill of skills; track skill) {
+          <span class="skill-tag">{{ skill }}</span>
+        }
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="about-section">
+      <h2 class="about-section__title">{{ t('about.contact') }}</h2>
+      <div class="contact-list">
+        @for (contact of contacts; track contact.label) {
+          <a class="contact-item glass-card-hover" [href]="contact.href" target="_blank" rel="noopener">
+            <span class="contact-item__icon">{{ contact.icon }}</span>
+            <div class="contact-item__info">
+              <span class="contact-item__label">{{ contact.label }}</span>
+              <span class="contact-item__value">{{ contact.value }}</span>
+            </div>
+          </a>
+        }
+      </div>
+    </section>
+  </div>
+</div>

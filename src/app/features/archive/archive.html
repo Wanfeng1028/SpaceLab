@@ -1,0 +1,29 @@
+<div class="archive-page">
+  <div class="container">
+    <div class="archive-header">
+      <h1 class="archive-header__title">{{ t('archive.title') }}</h1>
+    </div>
+
+    @for (year of archiveData; track year.year) {
+      <div class="archive-year">
+        <h2 class="archive-year__label">{{ year.year }}</h2>
+        <ul class="archive-list">
+          @for (article of year.articles; track article.slug) {
+            <li class="archive-item">
+              <span class="archive-item__date">{{ article.date }}</span>
+              <a class="archive-item__link" [routerLink]="['/article', article.slug]">
+                {{ article.title }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (archiveData.length === 0) {
+      <div class="archive-empty">
+        <p>{{ t('common.none') }}</p>
+      </div>
+    }
+  </div>
+</div>

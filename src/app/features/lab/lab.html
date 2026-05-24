@@ -1,0 +1,28 @@
+<div class="lab-page">
+  <div class="container">
+    <div class="lab-header">
+      <h1 class="lab-header__title">{{ t('lab.title') }}</h1>
+      <p class="lab-header__desc">动效与交互实验空间</p>
+    </div>
+
+    <div class="lab-grid">
+      @for (exp of experiments; track exp.title) {
+        <div class="lab-card glass-card-hover" [class.is-coming]="exp.status === 'coming'">
+          <span class="lab-card__icon">{{ exp.icon }}</span>
+          <div class="lab-card__body">
+            <h3 class="lab-card__title">{{ exp.title }}</h3>
+            <p class="lab-card__desc">{{ exp.desc }}</p>
+            <div class="lab-card__meta">
+              <span class="lab-card__tech">{{ exp.tech }}</span>
+              @if (exp.status === 'live') {
+                <span class="lab-card__status lab-card__status--live">● Live</span>
+              } @else {
+                <span class="lab-card__status lab-card__status--coming">Coming Soon</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
