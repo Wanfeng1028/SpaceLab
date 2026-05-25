@@ -1,66 +1,73 @@
 // ============================================
-// SpaceGlassButton — 全站统一玻璃按钮系统
-// 参考 PlanningGo Button + iOS 液态玻璃
+// SpaceButton — SpaceLab 全局统一按钮系统
 // ============================================
+//
+// 硬规则：
+//   1. 所有按钮必须使用 .space-button + size + variant
+//   2. 禁止任何页面单独写 button 的 width/height/padding/border-radius
+//   3. 大小只允许 sm / md / lg 三档
+//   4. 同一组按钮必须使用同一个 size
+//   5. 彩色按钮必须保留玻璃质感
 
-// ---- 基础玻璃按钮 ----
-.space-glass-button {
-  --btn-tint: 255, 255, 255;
-  --btn-alpha: 0.34;
-  --btn-border-alpha: 0.58;
+// ── Base ──────────────────────────────────
+
+.space-button {
+  --btn-height: 46px;
+  --btn-min-width: 104px;
+  --btn-padding-x: 22px;
+  --btn-radius: 999px;
+  --btn-bg: rgba(255, 255, 255, 0.36);
+  --btn-border: rgba(255, 255, 255, 0.62);
   --btn-text: #111;
 
   position: relative;
   isolation: isolate;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 46px;
-  padding: 0 22px;
-  border: 1px solid rgba(255, 255, 255, var(--btn-border-alpha));
-  border-radius: var(--radius-pill, 999px);
+
+  height: var(--btn-height);
+  min-width: var(--btn-min-width);
+  padding: 0 var(--btn-padding-x);
+
+  border: 1px solid var(--btn-border);
+  border-radius: var(--btn-radius);
+
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.48),
-      rgba(var(--btn-tint), var(--btn-alpha))
-    );
+    radial-gradient(circle at 28% 12%, rgba(255, 255, 255, 0.72), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.48), var(--btn-bg));
+
   color: var(--btn-text);
   font-family: var(--font-body, inherit);
   font-size: 14px;
-  font-weight: 850;
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
   white-space: nowrap;
-  cursor: pointer;
+
   backdrop-filter: blur(16px) saturate(135%);
   -webkit-backdrop-filter: blur(16px) saturate(135%);
+
   box-shadow:
     0 14px 36px rgba(24, 20, 14, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.72),
     inset 0 -1px 0 rgba(255, 255, 255, 0.22);
-  transition:
-    transform 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-    box-shadow 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-    background 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
-    border-color 220ms var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 
-  // 内部高光层 — 玻璃被光照到的感觉
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    z-index: -1;
-    border-radius: inherit;
-    background:
-      radial-gradient(circle at 30% 12%, rgba(255, 255, 255, 0.74), transparent 36%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 60%);
-    opacity: 0.76;
-  }
+  cursor: pointer;
+
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  // ── States ─────────────────────────────
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.82);
+    border-color: rgba(255, 255, 255, 0.86);
     box-shadow:
       0 20px 52px rgba(24, 20, 14, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.86),
@@ -72,136 +79,103 @@
   }
 
   &:focus-visible {
-    outline: 3px solid rgba(255, 210, 31, 0.45);
+    outline: 3px solid rgba(26, 115, 232, 0.34);
     outline-offset: 4px;
   }
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled='true'] {
     opacity: 0.46;
     cursor: not-allowed;
     transform: none;
-    box-shadow: none;
   }
 }
 
-// ---- 蓝色玻璃 (Google Blue) ----
-.space-glass-button--blue {
-  --btn-tint: 26, 115, 232;
-  --btn-alpha: 0.18;
+// ── Sizes ─────────────────────────────────
+
+.space-button--sm {
+  --btn-height: 38px;
+  --btn-min-width: 84px;
+  --btn-padding-x: 16px;
+  font-size: 13px;
+}
+
+.space-button--md {
+  --btn-height: 46px;
+  --btn-min-width: 104px;
+  --btn-padding-x: 22px;
+  font-size: 14px;
+}
+
+.space-button--lg {
+  --btn-height: 54px;
+  --btn-min-width: 128px;
+  --btn-padding-x: 28px;
+  font-size: 15px;
+}
+
+// ── Variants ──────────────────────────────
+
+.space-button--blue {
+  --btn-bg: rgba(26, 115, 232, 0.2);
+  --btn-border: rgba(255, 255, 255, 0.68);
   --btn-text: #0d2d5c;
 }
 
-// ---- 黄色玻璃 ----
-.space-glass-button--yellow {
-  --btn-tint: 255, 210, 31;
-  --btn-alpha: 0.22;
-  --btn-text: #2a2100;
+.space-button--white {
+  --btn-bg: rgba(255, 255, 255, 0.38);
+  --btn-border: rgba(255, 255, 255, 0.64);
+  --btn-text: #111;
 }
 
-// ---- 紫色玻璃 ----
-.space-glass-button--violet {
-  --btn-tint: 143, 124, 255;
-  --btn-alpha: 0.16;
-  --btn-text: #241b58;
-}
-
-// ---- 青色玻璃 ----
-.space-glass-button--cyan {
-  --btn-tint: 105, 215, 255;
-  --btn-alpha: 0.16;
-  --btn-text: #063647;
-}
-
-// ---- 玫瑰色玻璃 ----
-.space-glass-button--rose {
-  --btn-tint: 243, 185, 200;
-  --btn-alpha: 0.18;
-  --btn-text: #512131;
-}
-
-// ---- 黑色玻璃 (最深，但仍然透明) ----
-.space-glass-button--black {
+.space-button--black {
+  --btn-bg: rgba(10, 10, 10, 0.82);
+  --btn-border: rgba(255, 255, 255, 0.18);
   --btn-text: #fff;
 
-  border-color: rgba(255, 255, 255, 0.16);
   background:
     radial-gradient(circle at 28% 12%, rgba(255, 255, 255, 0.18), transparent 36%),
-    linear-gradient(135deg, rgba(22, 22, 22, 0.88), rgba(0, 0, 0, 0.78));
-  box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.28);
-    box-shadow:
-      0 24px 60px rgba(0, 0, 0, 0.34),
-      inset 0 1px 0 rgba(255, 255, 255, 0.32),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.12);
-  }
+    linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(0, 0, 0, 0.78));
 }
 
-// ---- 小尺寸 ----
-.space-glass-button--sm {
-  min-height: 38px;
-  padding: 0 18px;
-  font-size: 13px;
+.space-button--yellow {
+  --btn-bg: rgba(255, 210, 31, 0.22);
+  --btn-border: rgba(255, 255, 255, 0.68);
+  --btn-text: #5c4a0d;
 }
 
-// ---- 大尺寸 ----
-.space-glass-button--lg {
-  min-height: 54px;
-  padding: 0 32px;
-  font-size: 16px;
+.space-button--violet {
+  --btn-bg: rgba(143, 124, 255, 0.16);
+  --btn-border: rgba(255, 255, 255, 0.64);
+  --btn-text: #2d1f7a;
 }
 
-// ============================================
-// SpaceGlassSegment — 玻璃胶囊标签 (弹窗内用)
-// ============================================
-
-.space-glass-badge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0 16px;
-  border-radius: 999px;
-  background: rgba(255, 210, 31, 0.92);
-  color: #111;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
+.space-button--cyan {
+  --btn-bg: rgba(105, 215, 255, 0.16);
+  --btn-border: rgba(255, 255, 255, 0.62);
+  --btn-text: #0d3d5c;
 }
 
-// ============================================
-// Legacy 兼容 — 旧 btn-primary / btn-glass 重定向
-// ============================================
-
-.btn-primary {
-  @extend .space-glass-button--blue !optional;
-  @extend .space-glass-button !optional;
+.space-button--rose {
+  --btn-bg: rgba(243, 185, 200, 0.18);
+  --btn-border: rgba(255, 255, 255, 0.62);
+  --btn-text: #5c0d22;
 }
 
-.btn-glass {
-  @extend .space-glass-button !optional;
-}
-
-// ============================================
-// Filter Chip — 玻璃筛选标签
-// ============================================
+// ── Filter Chip ───────────────────────────
+// 筛选标签，激活态使用深色玻璃
 
 .filter-chip {
-  @extend .space-glass-button !optional;
-  @extend .space-glass-button--sm !optional;
+  @extend .space-button !optional;
+  @extend .space-button--sm !optional;
 
   font-weight: 700;
 
   &.is-active {
-    --btn-tint: 17, 17, 17;
-    --btn-alpha: 0.82;
-    --btn-border-alpha: 0.22;
+    --btn-bg: rgba(17, 17, 17, 0.82);
+    --btn-border: rgba(255, 255, 255, 0.22);
     --btn-text: #fff;
 
-    border-color: rgba(255, 255, 255, 0.22);
     background:
       radial-gradient(circle at 28% 12%, rgba(255, 255, 255, 0.18), transparent 36%),
       linear-gradient(135deg, rgba(22, 22, 22, 0.88), rgba(0, 0, 0, 0.78));
@@ -212,19 +186,64 @@
   }
 }
 
-// ============================================
-// Reduced Motion
-// ============================================
+// ── Button Group ──────────────────────────
+
+.space-button-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+// ── Badge ─────────────────────────────────
+
+.space-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 210, 31, 0.22);
+  border: 1px solid rgba(255, 210, 31, 0.36);
+  color: #8b6914;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+}
+
+// ── Legacy 兼容 ───────────────────────────
+
+.btn-primary {
+  @extend .space-button !optional;
+  @extend .space-button--blue !optional;
+}
+
+.btn-glass {
+  @extend .space-button !optional;
+}
+
+.button-google {
+  @extend .space-button !optional;
+  @extend .space-button--blue !optional;
+}
+
+.button-glass {
+  @extend .space-button !optional;
+}
+
+// ── Reduced Motion ────────────────────────
 
 @media (prefers-reduced-motion: reduce) {
-  .space-glass-button {
-    transition: none;
+  .space-button,
+  .filter-chip {
+    transition-duration: 0ms;
 
     &:hover {
-      transform: none;
-    }
-
-    &:active {
       transform: none;
     }
   }

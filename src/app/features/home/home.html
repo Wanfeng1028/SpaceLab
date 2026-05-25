@@ -26,11 +26,11 @@
     <h1 class="hero__title" [class.is-visible]="showText">
       {{ t('home.welcome') }}
     </h1>
-    <div class="hero__actions" [class.is-visible]="showButtons">
-      <button class="space-glass-button space-glass-button--blue" (click)="onEnter()">
+    <div class="space-button-group hero__actions" [class.is-visible]="showButtons">
+      <button class="space-button space-button--md space-button--blue" (click)="onEnter()">
         {{ t('home.enter') }}
       </button>
-      <button class="space-glass-button" (click)="onContact()">
+      <button class="space-button space-button--md space-button--white" (click)="onContact()">
         {{ t('home.contact') }}
       </button>
     </div>

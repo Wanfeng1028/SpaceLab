@@ -2,14 +2,14 @@
   <div class="container">
     <div class="admin-header">
       <h1 class="admin-header__title">{{ t('admin.newArticle') }}</h1>
-      <div class="admin-header__actions">
-        <button class="space-glass-button space-glass-button--sm" (click)="togglePreview()">
+      <div class="space-button-group admin-header__actions">
+        <button class="space-button space-button--sm space-button--white" (click)="togglePreview()">
           {{ isPreview() ? t('admin.editor') : t('admin.preview') }}
         </button>
-        <button class="space-glass-button space-glass-button--sm" (click)="onSaveDraft()">
+        <button class="space-button space-button--sm space-button--white" (click)="onSaveDraft()">
           {{ t('admin.saveDraft') }}
         </button>
-        <button class="space-glass-button space-glass-button--blue" (click)="onPublish()">
+        <button class="space-button space-button--sm space-button--blue" (click)="onPublish()">
           {{ t('admin.publish') }}
         </button>
       </div>
