@@ -20,10 +20,10 @@
   overflow: hidden;
   // 奶油色太空背景 — 非纯黑，非纯白
   background:
-    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(200, 215, 240, 0.5) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 70% 70%, rgba(240, 220, 200, 0.4) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(220, 210, 235, 0.3) 0%, transparent 40%),
-    linear-gradient(175deg, #eae5dc 0%, #e2ddd4 40%, #ddd8cf 100%);
+    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(189, 0, 255, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 70% 70%, rgba(0, 240, 255, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
+    linear-gradient(175deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
 }
 
 // ============================================
@@ -179,7 +179,7 @@
 .scroll-line {
   width: 1px;
   height: 48px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 100%);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
@@ -200,8 +200,8 @@
   justify-content: center;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(200, 210, 235, 0.3) 0%, transparent 70%),
-    linear-gradient(180deg, #ddd8cf 0%, #e5e0d7 50%, #eae5dc 100%);
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(189, 0, 255, 0.12) 0%, transparent 70%),
+    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 50%, var(--color-bg) 100%);
 }
 
 .portal-bg {
@@ -375,7 +375,7 @@
   align-items: center;
   justify-content: center;
   padding: 120px 24px;
-  background: linear-gradient(180deg, #eae5dc 0%, #e8e3d8 100%);
+  background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
 }
 
 .contact-card {
