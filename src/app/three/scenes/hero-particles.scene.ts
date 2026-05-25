@@ -5,32 +5,46 @@ import {
   SphereGeometry,
   Mesh,
   MeshPhysicalMaterial,
+  Color,
+  AmbientLight,
+  PointLight,
+  Group,
+  TorusGeometry,
+  MeshBasicMaterial,
   Points,
   PointsMaterial,
   BufferGeometry,
   Float32BufferAttribute,
-  Color,
-  AmbientLight,
-  PointLight,
   AdditiveBlending,
   MathUtils,
-  Group,
 } from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 /**
- * 3D 宇宙星系与科幻霓虹场景
- * 具有对数螺旋旋臂的 Galaxy 尘埃场 + 赛博霓虹点光源 + 具折射效果的浮空玻璃星体 + 鼠标重力涟漪
+ * premium 3D 科技星际仪与液态晶格场景
+ * 包含：
+ * 1. 巨大且缓缓变形的液态物理玻璃核心 (MeshPhysicalMaterial + CPU Vertex Displacement Wave)
+ * 2. 三圈交织自转的发光科技星轨线 (TorusGeometry + MeshBasicMaterial)
+ * 3. 沿星轨持续匀速滑行的数据节点小球
+ * 4. 极其稀疏淡雅的慢漂极地坐标底星 (35个)
  */
 export class HeroLightFieldScene {
   private scene!: Scene;
   private camera!: PerspectiveCamera;
   private renderer!: WebGLRenderer;
-  private orbs: Mesh[] = [];
-  private starDust!: Points;
-  private glowGroup!: Group;
-  private originalPositions!: Float32Array;
+
+  // 核心相关
+  private coreMesh!: Mesh;
+  private coreGeometry!: SphereGeometry;
+  private originalCorePositions!: Float32Array;
+
+  // 星轨相关
+  private orbitGroups: Group[] = [];
+  private orbitDataNodes: Mesh[] = [];
+
+  // 其他组件
+  private backgroundStars!: Points;
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private mouseX = 0;
@@ -39,22 +53,19 @@ export class HeroLightFieldScene {
   private targetMouseY = 0;
   private disposed = false;
 
-  private readonly orbCount: number;
-  private readonly starCount: number;
   private readonly dpr: number;
 
   constructor(private canvas: HTMLCanvasElement) {
     const isMobile = window.innerWidth < 768;
-    this.orbCount = isMobile ? 6 : 10;
-    this.starCount = isMobile ? 180 : 550; // 显著增加恒星数量以表现旋臂
     this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
   }
 
   init(): void {
     this.initScene();
     this.initLighting();
-    this.initGlassOrbs();
-    this.initStarDust();
+    this.initLiquidCore();
+    this.initOrbitRings();
+    this.initBackdropStars();
     this.bindEvents();
     if (typeof window !== 'undefined') {
       this.initScrollTrigger();
@@ -70,7 +81,7 @@ export class HeroLightFieldScene {
       0.1,
       200
     );
-    this.camera.position.set(0, 0, 42);
+    this.camera.position.set(0, 0, 36);
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
@@ -81,164 +92,135 @@ export class HeroLightFieldScene {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(0x000000, 0);
     this.renderer.toneMapping = 1; // ACESFilmicToneMapping
-    this.renderer.toneMappingExposure = 1.4;
+    this.renderer.toneMappingExposure = 1.5;
   }
 
   private initLighting(): void {
-    // 环境光 — 调低强度以凸显霓虹点光源
-    const ambient = new AmbientLight(0x0a0c1a, 0.4);
+    // 环境光 — 虚无深邃的冷靛蓝暗底
+    const ambient = new AmbientLight(0x0a0c20, 0.5);
     this.scene.add(ambient);
 
-    // 主点光源 — 霓虹青色 (Neon Cyan) 从右上方投射
-    const mainLight = new PointLight(0x00f0ff, 2.5, 120);
-    mainLight.position.set(18, 22, 20);
+    // 主反应源霓虹青光 — 从右上方直射核心
+    const mainLight = new PointLight(0x00f0ff, 3.5, 100);
+    mainLight.position.set(12, 18, 15);
     this.scene.add(mainLight);
 
-    // 辅助光源 — 电磁紫色 (Electric Purple) 从左下方投射
-    const fillLight = new PointLight(0xbd00ff, 2.0, 100);
-    fillLight.position.set(-15, -12, 15);
+    // 辅助霓虹紫光 — 从左下方映射偏振面
+    const fillLight = new PointLight(0xbd00ff, 3.0, 80);
+    fillLight.position.set(-15, -10, 10);
     this.scene.add(fillLight);
 
-    // 逆向轮廓光 — 极光粉色 (Neon Pink) 从后方勾勒边缘
-    const backLight = new PointLight(0xff007f, 1.5, 80);
-    backLight.position.set(0, 8, -25);
-    this.scene.add(backLight);
+    // 逆向轮廓红光 — 在球体背面打出边缘极光高光
+    const rimLight = new PointLight(0xff007f, 2.5, 60);
+    rimLight.position.set(0, 5, -20);
+    this.scene.add(rimLight);
   }
 
-  private initGlassOrbs(): void {
-    this.glowGroup = new Group();
-    this.scene.add(this.glowGroup);
+  private initLiquidCore(): void {
+    // 采用 48x48 细分既保证波形细腻，又防止 CPU 顶点计算过载
+    this.coreGeometry = new SphereGeometry(5.0, 48, 48);
+    const posAttr = this.coreGeometry.getAttribute('position') as Float32BufferAttribute;
+    
+    // 保存初始顶点用于波形偏移计算
+    this.originalCorePositions = new Float32Array(posAttr.array);
 
-    // 玻璃星体配置 — 高折射率物理玻璃材质
-    const orbConfigs = this.generateOrbConfigs();
+    // 顶奢物理玻璃：高穿透折射 + 边缘光透镜效应
+    const material = new MeshPhysicalMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.25,
+      roughness: 0.04,
+      metalness: 0.0,
+      transmission: 0.96, // 晶莹剔透
+      thickness: 4.8, // 厚实重玻璃折射率
+      ior: 1.56,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.04,
+      envMapIntensity: 1.4,
+      attenuationColor: new Color('#00f0ff'), // 边缘漫游青色折射
+      attenuationDistance: 8.0,
+    });
 
-    for (const cfg of orbConfigs) {
-      const geometry = new SphereGeometry(cfg.radius, 64, 64);
-      const material = new MeshPhysicalMaterial({
-        color: cfg.color,
-        transparent: true,
-        opacity: cfg.opacity,
-        roughness: 0.02, // 极其光滑的抛光表面
-        metalness: 0.0,
-        transmission: 0.95, // 极高穿透率
-        thickness: cfg.radius * 1.8, // 增加厚度，增强光的折射畸变
-        ior: 1.55, // 高折射率
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.02,
-        envMapIntensity: 1.2,
-        attenuationColor: cfg.attenuationColor,
-        attenuationDistance: cfg.radius * 3.5,
-      });
-
-      const mesh = new Mesh(geometry, material);
-      mesh.position.set(cfg.x, cfg.y, cfg.z);
-      mesh.userData = {
-        baseX: cfg.x,
-        baseY: cfg.y,
-        baseZ: cfg.z,
-        floatSpeed: cfg.floatSpeed,
-        floatAmplitude: cfg.floatAmplitude,
-        phaseOffset: cfg.phaseOffset,
-        rotationSpeed: cfg.rotationSpeed,
-      };
-
-      this.orbs.push(mesh);
-      this.glowGroup.add(mesh);
-    }
+    this.coreMesh = new Mesh(this.coreGeometry, material);
+    this.scene.add(this.coreMesh);
   }
 
-  private generateOrbConfigs(): Array<{
-    radius: number; x: number; y: number; z: number;
-    color: Color; opacity: number; attenuationColor: Color;
-    floatSpeed: number; floatAmplitude: number;
-    phaseOffset: number; rotationSpeed: number;
-  }> {
-    const configs = [];
-    const isMobile = window.innerWidth < 768;
-    const spread = isMobile ? 18 : 30;
-
-    const templates = [
-      { r: 2.8, x: 12, y: 6, z: -5, color: '#d0f8ff', atten: '#00f0ff', opacity: 0.4 },
-      { r: 1.6, x: -14, y: -4, z: -8, color: '#ffd0fc', atten: '#bd00ff', opacity: 0.35 },
-      { r: 3.5, x: -8, y: 10, z: -15, color: '#ebd0ff', atten: '#8f7cff', opacity: 0.3 },
-      { r: 1.2, x: 16, y: -8, z: -3, color: '#d8e8ff', atten: '#00bcff', opacity: 0.4 },
-      { r: 2.0, x: 5, y: -12, z: -10, color: '#ffd5e5', atten: '#ff007f', opacity: 0.35 },
-      { r: 0.9, x: -18, y: 3, z: -2, color: '#f0e8ff', atten: '#bd00ff', opacity: 0.45 },
-      { r: 2.4, x: -3, y: 8, z: -20, color: '#d0f8ff', atten: '#00f0ff', opacity: 0.25 },
-      { r: 1.4, x: 10, y: -3, z: -12, color: '#ffe5ee', atten: '#ff007f', opacity: 0.35 },
-      { r: 1.8, x: -10, y: -10, z: -6, color: '#d4ffeb', atten: '#00ffaa', opacity: 0.3 },
-      { r: 0.7, x: 18, y: 12, z: -8, color: '#fff0c0', atten: '#ffd21f', opacity: 0.45 },
+  private initOrbitRings(): void {
+    // 星轨配置 — 三圈大小、倾角互锁的科幻轨线
+    const ringConfigs = [
+      { radius: 8.5, tube: 0.03, color: 0x00f0ff, rotX: 1.1, rotY: 0.4, rotZ: 0.1, speed: 0.8 },
+      { radius: 11.5, tube: 0.024, color: 0xbd00ff, rotX: 0.3, rotY: 1.2, rotZ: -0.4, speed: -0.6 },
+      { radius: 14.5, tube: 0.02, color: 0xff007f, rotX: -0.7, rotY: -0.5, rotZ: 1.0, speed: 0.5 },
     ];
 
-    for (let i = 0; i < Math.min(this.orbCount, templates.length); i++) {
-      const t = templates[i];
-      const scale = isMobile ? 0.7 : 1;
-      configs.push({
-        radius: t.r * scale,
-        x: t.x * scale * (spread / 30),
-        y: t.y * scale * (spread / 30),
-        z: t.z,
-        color: new Color(t.color),
-        attenuationColor: new Color(t.atten),
-        opacity: t.opacity,
-        floatSpeed: 0.25 + Math.random() * 0.35,
-        floatAmplitude: 0.4 + Math.random() * 0.8,
-        phaseOffset: Math.random() * Math.PI * 2,
-        rotationSpeed: 0.04 + Math.random() * 0.08,
+    for (const cfg of ringConfigs) {
+      const orbitGroup = new Group();
+      
+      // 1. 绘制科幻发光线条轨环 (使用 Torus 制作高精度 3D 实心圆管)
+      const ringGeom = new TorusGeometry(cfg.radius, cfg.tube, 8, 96);
+      const ringMat = new MeshBasicMaterial({
+        color: cfg.color,
+        transparent: true,
+        opacity: 0.45,
+        blending: AdditiveBlending,
       });
-    }
+      const ringMesh = new Mesh(ringGeom, ringMat);
+      orbitGroup.add(ringMesh);
 
-    return configs;
+      // 2. 在星轨上绘制滑动的数据晶格球
+      const gliderGeom = new SphereGeometry(0.18, 16, 16);
+      const gliderMat = new MeshBasicMaterial({
+        color: cfg.color,
+        transparent: true,
+        opacity: 0.9,
+        blending: AdditiveBlending,
+      });
+      const gliderMesh = new Mesh(gliderGeom, gliderMat);
+      
+      // 记录初始数据包运动学属性
+      gliderMesh.userData = {
+        radius: cfg.radius,
+        speed: cfg.speed,
+        angleOffset: Math.random() * Math.PI * 2,
+      };
+
+      orbitGroup.add(gliderMesh);
+      this.orbitDataNodes.push(gliderMesh);
+
+      // 3. 应用星轨空间初始姿态旋转，使其多维互锁
+      orbitGroup.rotation.set(cfg.rotX, cfg.rotY, cfg.rotZ);
+
+      this.scene.add(orbitGroup);
+      this.orbitGroups.push(orbitGroup);
+    }
   }
 
-  private initStarDust(): void {
+  private initBackdropStars(): void {
+    // 替换密密麻麻的杂乱尘埃为 35 个极其轻柔、静谧的空间坐标系悬浮星
+    const starCount = 35;
     const geometry = new BufferGeometry();
-    const positions = new Float32Array(this.starCount * 3);
-    this.originalPositions = new Float32Array(this.starCount * 3);
-    const sizes = new Float32Array(this.starCount);
+    const positions = new Float32Array(starCount * 3);
 
-    // 对数螺线公式构建双旋臂银河
-    for (let i = 0; i < this.starCount; i++) {
+    for (let i = 0; i < starCount; i++) {
       const i3 = i * 3;
-      
-      // 距离银河中心的半径 (幂函数使核心区更密集)
-      const r = Math.pow(Math.random(), 1.8) * 44 + 1.5;
-      
-      // 双旋臂偏角，添加随机抖动产生自然星云厚度
-      const armIndex = i % 2 === 0 ? 0 : Math.PI;
-      const theta = r * 0.16 + armIndex + MathUtils.randFloatSpread(0.45);
-      
-      // 粒子三维偏移
-      const x = Math.cos(theta) * r + MathUtils.randFloatSpread(1.2);
-      const y = MathUtils.randFloatSpread(1.0 + r * 0.04); // 银河盘面扁平化
-      const z = Math.sin(theta) * r + MathUtils.randFloatSpread(1.2) - 10;
-
-      positions[i3] = x;
-      positions[i3 + 1] = y;
-      positions[i3 + 2] = z;
-
-      this.originalPositions[i3] = x;
-      this.originalPositions[i3 + 1] = y;
-      this.originalPositions[i3 + 2] = z;
-
-      sizes[i] = MathUtils.randFloat(0.4, 1.4);
+      positions[i3] = MathUtils.randFloatSpread(100);
+      positions[i3 + 1] = MathUtils.randFloatSpread(60);
+      positions[i3 + 2] = MathUtils.randFloat(-40, -10);
     }
 
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-    geometry.setAttribute('size', new Float32BufferAttribute(sizes, 1));
 
     const material = new PointsMaterial({
-      size: 0.9,
-      color: 0x00f0ff, // 基础青色高亮恒星
+      size: 0.6,
+      color: 0xffffff,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.25,
       blending: AdditiveBlending,
       depthWrite: false,
-      sizeAttenuation: true,
     });
 
-    this.starDust = new Points(geometry, material);
-    this.scene.add(this.starDust);
+    this.backgroundStars = new Points(geometry, material);
+    this.scene.add(this.backgroundStars);
   }
 
   private bindEvents(): void {
@@ -256,29 +238,28 @@ export class HeroLightFieldScene {
 
     const camPos = this.camera.position;
 
-    // 创建平滑绑定的 GSAP 时间轴，以视窗滚动驱动
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: 'body',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.8, // 柔和缓冲运镜
+        scrub: 2.0, // 平滑高感运镜
       }
     });
 
-    // 第一阶段：滚动到 3D Portal 区域 (近距离掠过浮空玻璃星球)
+    // 第一阶段：近身穿过外围科技星环，审视波动反应核心
     tl.to(camPos, {
-      x: -8,
-      y: -6,
-      z: 24,
+      x: -3.5,
+      y: -2.5,
+      z: 18,
       ease: 'power1.inOut',
     }, 0);
 
-    // 第二阶段：滚动到 Contact 底部区域 (广角后撤，仰视浩瀚星系)
+    // 第二阶段：全景后撤，斜向斜插广角宏观俯视这套精密科技仪器
     tl.to(camPos, {
-      x: 16,
-      y: 14,
-      z: 50,
+      x: 10,
+      y: 10,
+      z: 32,
       ease: 'power1.inOut',
     }, 1);
   }
@@ -296,59 +277,70 @@ export class HeroLightFieldScene {
 
     const time = Date.now() * 0.001;
 
-    // 鼠标视差平滑插值
+    // 鼠标微小阻尼视差
     this.mouseX += (this.targetMouseX - this.mouseX) * 0.02;
     this.mouseY += (this.targetMouseY - this.mouseY) * 0.02;
 
-    // 玻璃星体缓慢漂浮旋转
-    for (const orb of this.orbs) {
-      const d = orb.userData;
-      orb.position.x = d['baseX'] + Math.sin(time * d['floatSpeed'] + d['phaseOffset']) * d['floatAmplitude'];
-      orb.position.y = d['baseY'] + Math.cos(time * d['floatSpeed'] * 0.85 + d['phaseOffset']) * d['floatAmplitude'] * 0.75;
-      orb.rotation.y = time * d['rotationSpeed'];
-      orb.rotation.x = time * d['rotationSpeed'] * 0.25;
-    }
+    // 1. CPU 液态变形反应核数学位移算法
+    if (this.coreGeometry && this.originalCorePositions) {
+      const posAttr = this.coreGeometry.getAttribute('position') as Float32BufferAttribute;
+      const array = posAttr.array as Float32Array;
+      const orig = this.originalCorePositions;
 
-    // 银河星系恒星自主转动 + 鼠标重力畸变交互
-    if (this.starDust && this.originalPositions) {
-      const posAttr = this.starDust.geometry.getAttribute('position') as Float32BufferAttribute;
-      const positions = posAttr.array as Float32Array;
-      
-      const mouse3DX = this.mouseX * 30;
-      const mouse3DY = this.mouseY * 18;
-      const spinAngle = time * 0.03; // 星系缓慢盘旋旋转
+      for (let i = 0; i < array.length; i += 3) {
+        const x = orig[i];
+        const y = orig[i + 1];
+        const z = orig[i + 2];
 
-      for (let i = 0; i < this.starCount; i++) {
-        const i3 = i * 3;
-        const ox = this.originalPositions[i3];
-        const oy = this.originalPositions[i3 + 1];
-        const oz = this.originalPositions[i3 + 2] + 10; // 还原原本 z
+        // 规范化球表面矢量
+        const len = Math.sqrt(x * x + y * y + z * z);
+        const nx = x / len;
+        const ny = y / len;
+        const nz = z / len;
 
-        // 1. 转动恒星基础位置
-        const cosA = Math.cos(spinAngle);
-        const sinA = Math.sin(spinAngle);
-        const rx = ox * cosA - oz * sinA;
-        const rz = ox * sinA + oz * cosA - 10; // 重新应用 z 偏移
+        // 三重正弦波干涉创造有机起伏噪声
+        const wave = Math.sin(nx * 2.4 + time * 1.5) *
+                     Math.cos(ny * 2.0 + time * 1.2) *
+                     Math.sin(nz * 1.6 + time * 1.8) * 0.55; // 波幅控制
 
-        // 2. 鼠标引力算法
-        const dx = mouse3DX - rx;
-        const dy = mouse3DY - oy;
-        const dist = Math.sqrt(dx * dx + dy * dy + 9.0);
-        
-        // 软引力场强度反比于距离
-        const force = 3.5 / dist;
-
-        // 3. 应用插值和平滑
-        positions[i3] += (rx + (dx / dist) * force - positions[i3]) * 0.08;
-        positions[i3 + 1] += (oy + (dy / dist) * force - positions[i3 + 1]) * 0.08;
-        positions[i3 + 2] += (rz - positions[i3 + 2]) * 0.08;
+        array[i] = x + nx * wave;
+        array[i + 1] = y + ny * wave;
+        array[i + 2] = z + nz * wave;
       }
       posAttr.needsUpdate = true;
+      this.coreGeometry.computeVertexNormals(); // 实时计算法线映射玻璃折射
+    }
+
+    // 缓慢旋转反应核自转
+    if (this.coreMesh) {
+      this.coreMesh.rotation.y = time * 0.05;
+      this.coreMesh.rotation.x = Math.sin(time * 0.02) * 0.08;
+    }
+
+    // 2. 科技轨线自转
+    for (let i = 0; i < this.orbitGroups.length; i++) {
+      const group = this.orbitGroups[i];
+      // 细微的对立旋转
+      group.rotation.z = time * (i % 2 === 0 ? 0.06 : -0.04);
+    }
+
+    // 3. 数据节点沿轨循环滑移
+    for (const node of this.orbitDataNodes) {
+      const d = node.userData;
+      const angle = time * d['speed'] + d['angleOffset'];
+      node.position.x = Math.cos(angle) * d['radius'];
+      node.position.y = Math.sin(angle) * d['radius'];
+      node.position.z = 0; // Torus是平面几何，节点在局部坐标Z轴归零即可
+    }
+
+    // 4. 背景静星缓慢极速漂移
+    if (this.backgroundStars) {
+      this.backgroundStars.rotation.y = time * 0.003;
     }
 
     // 相机微小跟随 (视差效果)
-    this.camera.position.x += (this.mouseX * 1.8 - this.camera.position.x) * 0.02;
-    this.camera.position.y += (this.mouseY * 1.2 - this.camera.position.y) * 0.02;
+    this.camera.position.x += (this.mouseX * 1.5 - this.camera.position.x) * 0.02;
+    this.camera.position.y += (this.mouseY * 1.0 - this.camera.position.y) * 0.02;
     this.camera.lookAt(0, 0, 0);
 
     this.renderer.render(this.scene, this.camera);
@@ -372,14 +364,27 @@ export class HeroLightFieldScene {
     this.pause();
     window.removeEventListener('resize', this.resizeHandler);
 
-    for (const orb of this.orbs) {
-      orb.geometry.dispose();
-      (orb.material as MeshPhysicalMaterial).dispose();
+    if (this.coreGeometry) {
+      this.coreGeometry.dispose();
+      (this.coreMesh.material as MeshPhysicalMaterial).dispose();
     }
 
-    if (this.starDust) {
-      this.starDust.geometry.dispose();
-      (this.starDust.material as PointsMaterial).dispose();
+    for (const group of this.orbitGroups) {
+      group.traverse((child) => {
+        if (child instanceof Mesh) {
+          child.geometry.dispose();
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m) => m.dispose());
+          } else {
+            child.material.dispose();
+          }
+        }
+      });
+    }
+
+    if (this.backgroundStars) {
+      this.backgroundStars.geometry.dispose();
+      (this.backgroundStars.material as PointsMaterial).dispose();
     }
 
     this.renderer.dispose();
