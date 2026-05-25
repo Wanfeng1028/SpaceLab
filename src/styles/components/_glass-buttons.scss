@@ -17,7 +17,7 @@
   --btn-padding-x: 22px;
   --btn-radius: 999px;
   --btn-bg: rgba(255, 255, 255, 0.36);
-  --btn-border: rgba(255, 255, 255, 0.62);
+  --btn-border: rgba(255, 255, 255, 0.14);
   --btn-text: #111;
 
   position: relative;
@@ -52,8 +52,8 @@
 
   box-shadow:
     0 14px 36px rgba(24, 20, 14, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
 
   cursor: pointer;
 
@@ -67,11 +67,11 @@
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.86);
+    border-color: var(--btn-border);
     box-shadow:
       0 20px 52px rgba(24, 20, 14, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.86),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.28);
+      inset 0 1px 0 rgba(255, 255, 255, 0.52),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.16);
   }
 
   &:active {
@@ -118,19 +118,19 @@
 
 .space-button--blue {
   --btn-bg: rgba(26, 115, 232, 0.2);
-  --btn-border: rgba(255, 255, 255, 0.68);
+  --btn-border: rgba(26, 115, 232, 0.14);
   --btn-text: #0d2d5c;
 }
 
 .space-button--white {
   --btn-bg: rgba(255, 255, 255, 0.38);
-  --btn-border: rgba(255, 255, 255, 0.64);
+  --btn-border: rgba(255, 255, 255, 0.14);
   --btn-text: #111;
 }
 
 .space-button--black {
   --btn-bg: rgba(10, 10, 10, 0.82);
-  --btn-border: rgba(255, 255, 255, 0.18);
+  --btn-border: rgba(255, 255, 255, 0.08);
   --btn-text: #fff;
 
   background:
@@ -140,25 +140,25 @@
 
 .space-button--yellow {
   --btn-bg: rgba(255, 210, 31, 0.22);
-  --btn-border: rgba(255, 255, 255, 0.68);
+  --btn-border: rgba(255, 210, 31, 0.16);
   --btn-text: #5c4a0d;
 }
 
 .space-button--violet {
   --btn-bg: rgba(143, 124, 255, 0.16);
-  --btn-border: rgba(255, 255, 255, 0.64);
+  --btn-border: rgba(143, 124, 255, 0.14);
   --btn-text: #2d1f7a;
 }
 
 .space-button--cyan {
   --btn-bg: rgba(105, 215, 255, 0.16);
-  --btn-border: rgba(255, 255, 255, 0.62);
+  --btn-border: rgba(105, 215, 255, 0.14);
   --btn-text: #0d3d5c;
 }
 
 .space-button--rose {
   --btn-bg: rgba(243, 185, 200, 0.18);
-  --btn-border: rgba(255, 255, 255, 0.62);
+  --btn-border: rgba(243, 185, 200, 0.16);
   --btn-text: #5c0d22;
 }
 
@@ -173,7 +173,7 @@
 
   &.is-active {
     --btn-bg: rgba(17, 17, 17, 0.82);
-    --btn-border: rgba(255, 255, 255, 0.22);
+    --btn-border: rgba(255, 255, 255, 0.08);
     --btn-text: #fff;
 
     background:
