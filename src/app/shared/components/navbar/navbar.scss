@@ -170,32 +170,28 @@
   }
 }
 
-// Flowing light sweep border (流光效果)
+// Shimmer light sweep (流光效果 — 同"开始"按钮)
 .sparkle-btn__dots {
-  --size_border: calc(100% + 2px);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: var(--size_border);
-  height: var(--size_border);
-  background: conic-gradient(
-    from var(--flow-angle, 0deg),
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
     transparent 0%,
-    rgba(168, 85, 247, 0.8) 10%,
-    rgba(236, 72, 153, 0.6) 20%,
-    transparent 30%
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.03) 75%,
+    transparent 100%
   );
   border-radius: var(--btn_radius);
-  z-index: -1;
-  animation: flow-sweep 3s linear infinite;
+  z-index: 1;
+  transform: translateX(-150%);
+  animation: btn-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  padding: 1.5px;
 
   .sparkle-btn:hover &,
   .sparkle-btn:focus-visible &,
@@ -204,15 +200,9 @@
   }
 }
 
-@keyframes flow-sweep {
-  to { --flow-angle: 360deg; }
-}
-
-// Register CSS custom property for animation
-@property --flow-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
+@keyframes btn-shimmer {
+  0%, 100% { transform: translateX(-150%); }
+  50%      { transform: translateX(250%); }
 }
 
 // Sparkle SVG
@@ -512,7 +502,7 @@
   .navbar__links,
   .hamburger-line,
   .sparkle-btn,
-  .sparkle-btn__dots::before {
+  .sparkle-btn__dots {
     animation: none;
     transition: none;
   }
