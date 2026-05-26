@@ -449,14 +449,16 @@
 }
 
 .share-tooltip-container {
-  position: relative;
-  display: inline-flex;
+  position: absolute;
+  bottom: 80px;
+  left: 40px;
+  z-index: 50;
 
   .share-button-content {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 4px 12px;
+    padding: 6px 14px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50px;
     background: rgba(255, 255, 255, 0.06);
@@ -495,7 +497,7 @@
 
   .share-tooltip-content {
     position: absolute;
-    top: calc(100% + 12px);
+    bottom: calc(100% + 12px);
     left: 50%;
     transform: translateX(-50%) scale(0.8);
     opacity: 0;
@@ -515,14 +517,14 @@
     &::before {
       content: '';
       position: absolute;
-      top: -6px;
+      bottom: -6px;
       left: 50%;
       transform: translateX(-50%) rotate(45deg);
       width: 10px;
       height: 10px;
       background: rgba(8, 8, 20, 0.85);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
   }
 
