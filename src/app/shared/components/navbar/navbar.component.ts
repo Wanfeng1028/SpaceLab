@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { I18nService } from '../../../core/services/i18n.service';
+import { SpaceGlassModalComponent } from '../glass/modal/space-glass-modal.component';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -17,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, SpaceGlassModalComponent],
 })
 export class NavbarComponent implements OnInit {
   private router = inject(Router);
@@ -28,6 +29,7 @@ export class NavbarComponent implements OnInit {
   readonly isScrolled = signal(false);
   readonly mobileMenuOpen = signal(false);
   readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
+  readonly showShareModal = signal(false);
 
   readonly navLinks = [
     { route: '/blog', labelKey: 'nav.blog' },
@@ -72,6 +74,15 @@ export class NavbarComponent implements OnInit {
 
   closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
+  }
+
+  async onShare(): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(window.location.origin);
+    } catch {
+      // Clipboard API may fail in some environments
+    }
+    this.showShareModal.set(true);
   }
 
   shareTwitterUrl(): string {
