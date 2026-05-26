@@ -203,6 +203,258 @@
   50% { background-color: #ffffff }
 }
 
+// ── 纯 CSS 午夜星空 + 流星 + 月牙装饰层 (uiverse) ──
+.uiverse-midnight-sky {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+
+  .sky-canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .stars {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat;
+  }
+
+  .stars-1 {
+    background-image:
+      radial-gradient(1px 1px at 10% 10%, #fff, transparent),
+      radial-gradient(1px 1px at 30% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 50% 50%, #fff, transparent),
+      radial-gradient(1px 1px at 70% 30%, #fff, transparent),
+      radial-gradient(1px 1px at 90% 10%, #fff, transparent);
+    background-size: 200px 200px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  .stars-2 {
+    background-image:
+      radial-gradient(1.5px 1.5px at 20% 40%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 60% 85%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 85% 65%, #fff, transparent);
+    background-size: 300px 300px;
+    animation: twinkle 5s ease-in-out infinite 1s;
+  }
+
+  .stars-3 {
+    background-image:
+      radial-gradient(2px 2px at 40% 70%, #fff, transparent),
+      radial-gradient(2px 2px at 10% 80%, #fff, transparent),
+      radial-gradient(2px 2px at 80% 40%, #fff, transparent);
+    background-size: 400px 400px;
+    animation: twinkle 7s ease-in-out infinite 2s;
+  }
+
+  .meteor {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, #fff, transparent);
+    }
+  }
+
+  .m1 { top: 10%; left: 110%; animation: shoot 8s linear infinite; }
+  .m2 { top: 30%; left: 110%; animation: shoot 12s linear infinite 4s; }
+  .m3 { top: 50%; left: 110%; animation: shoot 10s linear infinite 2s; }
+
+  .moon {
+    position: absolute;
+    top: 12%;
+    right: 10%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 12px 12px 0 0 #fdfbd3;
+    filter: drop-shadow(0 0 12px rgba(253, 251, 211, 0.3));
+    opacity: 0.5;
+
+    @media (max-width: 767px) {
+      width: 40px;
+      height: 40px;
+      box-shadow: 8px 8px 0 0 #fdfbd3;
+      top: 8%;
+      right: 6%;
+    }
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; }
+  5% { opacity: 1; }
+  15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; }
+  100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; }
+}
+
+// ── 装饰性发光能量核心 (uiverse: andrew-manzyk) ──
+.energy-orb-wrapper {
+  position: absolute;
+  z-index: 3;
+  right: clamp(24px, 8vw, 120px);
+  bottom: clamp(80px, 18vh, 220px);
+  pointer-events: none;
+  opacity: 0.7;
+  animation: orbFloat 6s ease-in-out infinite;
+
+  @media (max-width: 767px) {
+    right: 16px;
+    bottom: 100px;
+    opacity: 0.4;
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.loader {
+  --color-one: #ffbf48;
+  --color-two: #be4a1d;
+  --color-three: #ffbf4780;
+  --color-four: #bf4a1d80;
+  --color-five: #ffbf4740;
+  --time-animation: 2s;
+  --size: 0.65;
+  position: relative;
+  border-radius: 50%;
+  transform: scale(var(--size));
+  box-shadow:
+    0 0 25px 0 var(--color-three),
+    0 20px 50px 0 var(--color-four);
+  animation: orbColorize calc(var(--time-animation) * 3) ease-in-out infinite;
+
+  @media (max-width: 767px) {
+    --size: 0.45;
+  }
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border-top: solid 1px var(--color-one);
+  border-bottom: solid 1px var(--color-two);
+  background: linear-gradient(180deg, var(--color-five), var(--color-four));
+  box-shadow:
+    inset 0 10px 10px 0 var(--color-three),
+    inset 0 -10px 10px 0 var(--color-four);
+}
+
+.orb-box {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    var(--color-one) 30%,
+    var(--color-two) 70%
+  );
+  mask: url(#orb-clipping);
+  -webkit-mask: url(#orb-clipping);
+}
+
+.loader svg {
+  position: absolute;
+}
+
+.loader svg #orb-clipping {
+  filter: contrast(15);
+  animation: orbRoundness calc(var(--time-animation) / 2) linear infinite;
+}
+
+.loader svg #orb-clipping polygon {
+  filter: blur(7px);
+}
+
+.loader svg #orb-clipping polygon:nth-child(1) {
+  transform-origin: 75% 25%;
+  transform: rotate(90deg);
+}
+
+.loader svg #orb-clipping polygon:nth-child(2) {
+  transform-origin: 50% 50%;
+  animation: orbRotation var(--time-animation) linear infinite reverse;
+}
+
+.loader svg #orb-clipping polygon:nth-child(3) {
+  transform-origin: 50% 60%;
+  animation: orbRotation var(--time-animation) linear infinite;
+  animation-delay: calc(var(--time-animation) / -3);
+}
+
+.loader svg #orb-clipping polygon:nth-child(4) {
+  transform-origin: 40% 40%;
+  animation: orbRotation var(--time-animation) linear infinite reverse;
+}
+
+.loader svg #orb-clipping polygon:nth-child(5) {
+  transform-origin: 40% 40%;
+  animation: orbRotation var(--time-animation) linear infinite reverse;
+  animation-delay: calc(var(--time-animation) / -2);
+}
+
+.loader svg #orb-clipping polygon:nth-child(6) {
+  transform-origin: 60% 40%;
+  animation: orbRotation var(--time-animation) linear infinite;
+}
+
+.loader svg #orb-clipping polygon:nth-child(7) {
+  transform-origin: 60% 40%;
+  animation: orbRotation var(--time-animation) linear infinite;
+  animation-delay: calc(var(--time-animation) / -1.5);
+}
+
+@keyframes orbRotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes orbRoundness {
+  0% { filter: contrast(15); }
+  20% { filter: contrast(3); }
+  40% { filter: contrast(3); }
+  60% { filter: contrast(15); }
+  100% { filter: contrast(15); }
+}
+
+@keyframes orbColorize {
+  0% { filter: hue-rotate(0deg); }
+  20% { filter: hue-rotate(-30deg); }
+  40% { filter: hue-rotate(-60deg); }
+  60% { filter: hue-rotate(-90deg); }
+  80% { filter: hue-rotate(-45deg); }
+  100% { filter: hue-rotate(0deg); }
+}
+
 // ── SpaceX 发射遥测 HUD 展示区 ──────────────
 .launch-showcase {
   position: relative;

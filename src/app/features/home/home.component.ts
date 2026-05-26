@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.i18n.loadTranslations('zh-CN');
-    this.startTypewriter();
+    // 打字机延迟到用户交互后启动（浏览器要求用户手势才能播放音频）
     this.startTelemetryLogs();
     this.startBrightnessPolling();
   }
@@ -189,9 +189,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (this.audioCtx.state === 'suspended') {
         this.audioCtx.resume().then(() => {
           this.audioCtxSuspended.set(false);
+          // 用户首次交互后启动打字机（确保音效同步）
+          if (!this.typingTimer && this.typingIndex === 0) {
+            this.startTypewriter();
+          }
         });
       } else {
         this.audioCtxSuspended.set(false);
+        if (!this.typingTimer && this.typingIndex === 0) {
+          this.startTypewriter();
+        }
       }
     }
   }
@@ -209,7 +216,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       thudOsc.type = 'triangle';
       thudOsc.frequency.setValueAtTime(100 + Math.random() * 60, now);
       thudOsc.frequency.exponentialRampToValueAtTime(10, now + 0.04);
-      thudGain.gain.setValueAtTime(0.2, now);
+      thudGain.gain.setValueAtTime(0.4, now);
       thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
 
       thudOsc.connect(thudGain);
@@ -223,7 +230,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       clickOsc.type = 'sine';
       clickOsc.frequency.setValueAtTime(1500 + Math.random() * 300, now);
       clickOsc.frequency.exponentialRampToValueAtTime(300, now + 0.015);
-      clickGain.gain.setValueAtTime(0.12, now);
+      clickGain.gain.setValueAtTime(0.25, now);
       clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
 
       clickOsc.connect(clickGain);
@@ -249,7 +256,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       // Mechanical bell chime frequency (2000Hz)
       bellOsc.frequency.setValueAtTime(2000, now);
 
-      bellGain.gain.setValueAtTime(0.15, now);
+      bellGain.gain.setValueAtTime(0.3, now);
       bellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
       bellOsc.connect(bellGain);
