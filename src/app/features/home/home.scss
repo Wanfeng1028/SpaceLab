@@ -243,6 +243,17 @@
   50% { background-color: #ffffff }
 }
 
+// ── SpaceX 发射遥测 HUD 展示区 ──────────────
+.launch-showcase {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+  margin-bottom: 16px;
+}
+
 // ── 底部版权声明 + 音效提示 ──────────────────
 .minimal-footer {
   position: relative;

@@ -11,20 +11,21 @@ import { Router, RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
 import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
+import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, ThreeCanvasComponent],
+  imports: [RouterLink, ThreeCanvasComponent, LaunchTelemetryOverlayComponent],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   sceneFactory = (canvas: HTMLCanvasElement) => new HeroLightFieldScene(canvas);
 
   // Typewriter properties
-  readonly typedText = signal<string>('');
-  readonly audioCtxSuspended = signal<boolean>(true);
+  typedText = signal<string>('');
+  audioCtxSuspended = signal<boolean>(true);
 
   private fullText = 'Life is coding...';
   private typingIndex = 0;

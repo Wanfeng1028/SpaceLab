@@ -1,0 +1,147 @@
+<!-- 发射视频模拟背景 -->
+<div class="launch-card">
+  <!-- 深空雾气 + 地平线 -->
+  <div class="launch-card__atmosphere">
+    <div class="launch-card__haze"></div>
+    <div class="launch-card__horizon"></div>
+    <div class="launch-card__glow"></div>
+  </div>
+
+  <!-- HUD 遥测面板 -->
+  <div class="hud">
+
+    <!-- 左侧仪表区 -->
+    <div class="hud__left">
+      <!-- SPEED 半圆仪表 -->
+      <div class="gauge">
+        <svg class="gauge__arc" viewBox="0 0 120 72" fill="none">
+          <!-- 背景弧 -->
+          <path d="M10 66 A50 50 0 0 1 110 66"
+                stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"
+                stroke-linecap="round" />
+          <!-- 激活弧 -->
+          <path d="M10 66 A50 50 0 0 1 110 66"
+                stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"
+                stroke-linecap="round"
+                stroke-dasharray="157" stroke-dashoffset="157" />
+          <!-- 刻度线 -->
+          @for (tick of [].constructor(9); track $index) {
+            <line
+              [attr.x1]="60 + 44 * Math.cos(Math.PI - ($index + 1) * Math.PI / 10)"
+              [attr.y1]="66 - 44 * Math.sin(($index + 1) * Math.PI / 10)"
+              [attr.x2]="60 + 48 * Math.cos(Math.PI - ($index + 1) * Math.PI / 10)"
+              [attr.y2]="66 - 48 * Math.sin(($index + 1) * Math.PI / 10)"
+              stroke="rgba(255,255,255,0.25)" stroke-width="1"
+            />
+          }
+        </svg>
+        <div class="gauge__label">SPEED</div>
+        <div class="gauge__value">{{ telemetry.speed }}</div>
+        <div class="gauge__unit">{{ telemetry.speedUnit }}</div>
+      </div>
+
+      <!-- ALTITUDE 半圆仪表 -->
+      <div class="gauge">
+        <svg class="gauge__arc" viewBox="0 0 120 72" fill="none">
+          <path d="M10 66 A50 50 0 0 1 110 66"
+                stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"
+                stroke-linecap="round" />
+          <path d="M10 66 A50 50 0 0 1 110 66"
+                stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"
+                stroke-linecap="round"
+                stroke-dasharray="157" stroke-dashoffset="154" />
+          @for (tick of [].constructor(9); track $index) {
+            <line
+              [attr.x1]="60 + 44 * Math.cos(Math.PI - ($index + 1) * Math.PI / 10)"
+              [attr.y1]="66 - 44 * Math.sin(($index + 1) * Math.PI / 10)"
+              [attr.x2]="60 + 48 * Math.cos(Math.PI - ($index + 1) * Math.PI / 10)"
+              [attr.y2]="66 - 48 * Math.sin(($index + 1) * Math.PI / 10)"
+              stroke="rgba(255,255,255,0.25)" stroke-width="1"
+            />
+          }
+        </svg>
+        <div class="gauge__label">ALTITUDE</div>
+        <div class="gauge__value">{{ telemetry.altitude }}</div>
+        <div class="gauge__unit">{{ telemetry.altitudeUnit }}</div>
+      </div>
+    </div>
+
+    <!-- 中间任务状态区 -->
+    <div class="hud__center">
+      <!-- 时间轴 -->
+      <div class="timeline">
+        <!-- 进度条 -->
+        <div class="timeline__track">
+          <div class="timeline__fill" [style.width.%]="phaseProgress * 100"></div>
+        </div>
+        <!-- 节点 -->
+        <div class="timeline__nodes">
+          @for (phase of phases; track phase.label) {
+            <div class="timeline__node" [class.is-active]="phase.active" [class.is-past]="$index < activeIndex">
+              <span class="timeline__dot"></span>
+              <span class="timeline__text">{{ phase.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- 倒计时 -->
+      <div class="countdown">
+        <span class="countdown__prefix">T-</span>
+        <span class="countdown__time">00:00:01</span>
+      </div>
+
+      <!-- 任务名称 -->
+      <div class="mission-id">{{ telemetry.mission }}</div>
+    </div>
+
+    <!-- 右侧仪表区 -->
+    <div class="hud__right">
+      <!-- G-FORCE 仪表 -->
+      <div class="gauge gauge--compact">
+        <svg class="gauge__arc" viewBox="0 0 120 72" fill="none">
+          <path d="M10 66 A50 50 0 0 1 110 66"
+                stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"
+                stroke-linecap="round" />
+          <path d="M10 66 A50 50 0 0 1 110 66"
+                stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"
+                stroke-linecap="round"
+                stroke-dasharray="157" stroke-dashoffset="125" />
+          @for (tick of [].constructor(9); track $index) {
+            <line
+              [attr.x1]="60 + 44 * Math.cos(Math.PI - ($index + 1) * Math.PI / 10)"
+              [attr.y1]="66 - 44 * Math.sin(($index + 1) * Math.PI / 10)"
+              [attr.x2]="60 + 48 * Math.cos(Math.PI - ($index + 1) * Math.PI / 10)"
+              [attr.y2]="66 - 48 * Math.sin(($index + 1) * Math.PI / 10)"
+              stroke="rgba(255,255,255,0.25)" stroke-width="1"
+            />
+          }
+        </svg>
+        <div class="gauge__label">G-FORCE</div>
+        <div class="gauge__value">{{ telemetry.gForce }}</div>
+        <div class="gauge__unit">G</div>
+      </div>
+
+      <!-- 发动机阵列 -->
+      <div class="engine-cluster">
+        <div class="engine-cluster__ring">
+          @for (i of [].constructor(9); track $index) {
+            <span class="engine-cluster__dot" [class.is-lit]="$index < 3"></span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部说明区 -->
+  <div class="hud__footer">
+    <div class="hud__meta">
+      <span class="hud__author">{{ telemetry.author }}</span>
+      <span class="hud__date">{{ telemetry.date }}</span>
+    </div>
+    <div class="hud__desc">
+      <span class="hud__desc-text">{{ telemetry.description }}</span>
+      <span class="hud__expand">展开</span>
+    </div>
+  </div>
+</div>
