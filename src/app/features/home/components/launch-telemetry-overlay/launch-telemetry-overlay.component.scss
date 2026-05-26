@@ -5,16 +5,27 @@
 
 :host {
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   width: 100%;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
 
   @media (max-width: 900px) {
-    gap: 16px;
     padding: 0 16px;
+  }
+}
+
+.telemetry-cards-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+
+  @media (max-width: 900px) {
+    gap: 16px;
   }
 
   @media (max-width: 640px) {
@@ -122,6 +133,50 @@
   margin-top: 3px;
 }
 
+// ── Left Card specific typography ───────────────────────────
+.telemetry-card--left {
+  .gauge-value {
+    font-size: 15px;
+    letter-spacing: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .gauge-unit {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.45);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+// ── Right Card specific typography ───────────────────────────
+.telemetry-card--right {
+  .gauge-value {
+    font-size: 18px;
+    letter-spacing: normal;
+    text-transform: uppercase;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  .gauge-unit {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.45);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
 // ── 阶段时间轴 ──────────────────────────
 
 .phase-timeline {
@@ -197,7 +252,7 @@
   }
 }
 
-// ── 倒计时 ───────────────────────────────
+// ── 倒计时 / 时钟 ───────────────────────────────
 
 .countdown {
   margin-top: 14px;
@@ -208,6 +263,7 @@
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.96);
   text-shadow: 0 0 18px rgba(255, 255, 255, 0.24);
+  font-variant-numeric: tabular-nums; // Ensure no width shift on tick updates
 }
 
 // ── 任务编号 ─────────────────────────────
@@ -259,6 +315,34 @@
   }
 }
 
+// ── Bottom environment caption ───────────────────────────
+
+.telemetry-caption {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+
+  @media (max-width: 900px) {
+    font-size: 10px;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    margin-top: 8px;
+  }
+}
+
 @keyframes flashOffline {
   0% { opacity: 0.4; }
   100% { opacity: 1; }
@@ -288,8 +372,16 @@
     height: 46px;
   }
 
-  .gauge-value {
-    font-size: 22px;
+  .telemetry-card--left {
+    .gauge-value {
+      font-size: 13px;
+    }
+  }
+
+  .telemetry-card--right {
+    .gauge-value {
+      font-size: 15px;
+    }
   }
 
   .network-status {
@@ -311,8 +403,6 @@
 
 @media (max-width: 640px) {
   :host {
-    flex-direction: column;
-    align-items: stretch;
     padding: 0 24px;
     gap: 16px;
   }
@@ -323,6 +413,7 @@
     height: auto;
     min-height: 140px;
     border-radius: 16px;
+    transform: none !important;
 
     &--center {
       order: 1; // Countdown panel at the very top on mobile

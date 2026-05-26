@@ -5,9 +5,10 @@ import {
   OnDestroy,
   inject,
   signal,
+  effect,
   HostListener,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
 import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
@@ -18,10 +19,39 @@ import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-o
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, ThreeCanvasComponent, LaunchTelemetryOverlayComponent],
+  imports: [ThreeCanvasComponent, LaunchTelemetryOverlayComponent],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  sceneFactory = (canvas: HTMLCanvasElement) => new HeroLightFieldScene(canvas);
+  private activeScene: HeroLightFieldScene | null = null;
+
+  sceneFactory = (canvas: HTMLCanvasElement) => {
+    this.activeScene = new HeroLightFieldScene(canvas);
+    return this.activeScene;
+  };
+
+  // WebGL Customization properties (inspired by uiverse.io high-tech controls)
+  coronaIntensity = signal<number>(2.8);
+  orbitalSpeed = signal<number>(1.05);
+  activePreset = signal<'ECLIPSE' | 'PULSAR' | 'AURORA'>('ECLIPSE');
+  filmNoise = signal<boolean>(true);
+
+  // Live scrolling sci-fi diagnostic terminal logs
+  telemetryLogs = signal<string[]>([]);
+  private logTimer: any = null;
+  private possibleLogs = [
+    '[SYS] Rayleigh coefficient aligned: 3.81',
+    '[NAV] Orbiting solar trajectory stable',
+    '[ENV] Mie dust concentration: 21.0ppm',
+    '[HUD] Launch telemetry sync: 100% OK',
+    '[SHD] Atmospheric pressure: 1.05e-5 bar',
+    '[CLK] Time warp offset active: +0.00s',
+    '[NET] Quantum uplink active (2.4Gbps)',
+    '[PWR] Star-core reactor temp: NOMINAL',
+    '[SYS] WebGL physical light field ready',
+    '[NAV] Gravity assist coefficient: 1.0G',
+    '[ENV] Solar wind density: 420 particles/cm³',
+    '[HUD] G-force compensator calibrated'
+  ];
 
   // Typewriter properties
   typedText = signal<string>('');
@@ -37,6 +67,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private i18n = inject(I18nService);
 
+  constructor() {
+    effect(() => {
+      const scene = this.activeScene;
+      if (!scene) return;
+
+      scene.updateIntensity(this.coronaIntensity());
+      scene.updateRotationSpeed(this.orbitalSpeed());
+
+      const preset = this.activePreset();
+      if (preset === 'ECLIPSE') {
+        scene.updateTints('#b2a8ff', '#fcff42');
+      } else if (preset === 'PULSAR') {
+        scene.updateTints('#00f0ff', '#ff007b');
+      } else if (preset === 'AURORA') {
+        scene.updateTints('#00ff87', '#60efe0');
+      }
+    });
+  }
+
   @HostListener('document:click')
   onDocumentClick(): void {
     this.resumeAudioContext();
@@ -50,11 +99,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.i18n.loadTranslations('zh-CN');
     this.startTypewriter();
+    this.startTelemetryLogs();
   }
 
   ngOnDestroy(): void {
     if (this.typingTimer) {
       clearTimeout(this.typingTimer);
+    }
+    if (this.logTimer) {
+      clearInterval(this.logTimer);
     }
     if (this.audioCtx) {
       this.audioCtx.close();
@@ -84,7 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       const char = this.fullText[this.typingIndex];
       this.typedText.update(val => val + char);
       this.typingIndex++;
-      
+
       // Play mechanical key sound
       this.playKeySound();
 
@@ -162,24 +215,46 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (!this.audioCtx || this.audioCtx.state === 'suspended') return;
 
       const now = this.audioCtx.currentTime;
-      
+
       const bellOsc = this.audioCtx.createOscillator();
       const bellGain = this.audioCtx.createGain();
-      
+
       bellOsc.type = 'sine';
       // Mechanical bell chime frequency (2000Hz)
       bellOsc.frequency.setValueAtTime(2000, now);
-      
+
       bellGain.gain.setValueAtTime(0.15, now);
       bellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-      
+
       bellOsc.connect(bellGain);
       bellGain.connect(this.audioCtx.destination);
-      
+
       bellOsc.start();
       bellOsc.stop(now + 0.6);
     } catch (e) {
       // Ignore Web Audio errors
     }
+  }
+
+  private startTelemetryLogs(): void {
+    // Initial logs
+    this.telemetryLogs.set([
+      '[SYS] System initializing...',
+      '[SYS] Rayleigh scattering model: OK',
+      '[NAV] Aligning solar sensor arrays...',
+      '[HUD] Diagnostic telemetry online'
+    ]);
+
+    // Periodically add new scrolling log
+    this.logTimer = setInterval(() => {
+      const current = this.telemetryLogs();
+      const nextLog = this.possibleLogs[Math.floor(Math.random() * this.possibleLogs.length)];
+
+      let updated = [...current, nextLog];
+      if (updated.length > 5) {
+        updated.shift(); // Keep maximum 5 logs to avoid scrolling overflow
+      }
+      this.telemetryLogs.set(updated);
+    }, 4500);
   }
 }

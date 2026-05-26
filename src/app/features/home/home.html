@@ -1,54 +1,124 @@
-<section class="eclipse-hero">
+<div class="home-container">
+  
+  <!-- 第一部分：极简黑曜石日食主屏幕 -->
+  <section class="eclipse-hero">
+    <!-- 电影画质细腻胶片微粒噪点遮罩层 -->
+    <div class="grain-overlay" [style.opacity]="filmNoise() ? 0.055 : 0"></div>
 
-  <!-- 电影画质细腻胶片微粒噪点遮罩层 -->
-  <div class="grain-overlay"></div>
+    <!-- WebGL 大气物理散射日食画布组件 -->
+    <app-three-canvas [sceneFactory]="sceneFactory" class="backdrop-stars" />
 
-  <!-- 顶部极简双翼导航 + 中央圆形头像 -->
-  <header class="minimal-header">
-    <a routerLink="/about" class="nav-link">About</a>
-    <div class="header-avatar">
-      <!-- 带有加载失败降级机制的头像 -->
-      <img src="assets/avatar.jpg" alt="Profile" class="avatar-img" #avatarImg
-        (error)="avatarImg.style.display = 'none'; fallbackAvatar.style.display = 'flex'" />
-      <div class="avatar-fallback" #fallbackAvatar style="display: none;">
-        <span>G</span>
+    <!-- 中央核心文字与 CTA 交互 -->
+    <div class="hero-content">
+      <!-- 打字机效果文本区 -->
+      <h1 class="typewriter-container">
+        <span class="typewriter-text">{{ typedText() }}</span>
+        <span class="typewriter-cursor"></span>
+      </h1>
+
+      <!-- 还原之前的精美双色玻璃质感按钮组 -->
+      <div class="space-button-group hero__actions">
+        <button class="space-button space-button--md space-button--blue" (click)="onEnter()">
+          {{ t('home.enter') }}
+        </button>
+        <button class="space-button space-button--md space-button--white" (click)="onContact()">
+          {{ t('home.contact') }}
+        </button>
       </div>
     </div>
-    <a routerLink="/projects" class="nav-link">Projects</a>
-  </header>
 
-  <!-- WebGL 大气物理散射日食画布组件 -->
-  <app-three-canvas [sceneFactory]="sceneFactory" class="backdrop-stars" />
+    <!-- SpaceX 发发射遥测 HUD 模块组 -->
+    <section class="launch-showcase" aria-label="Space launch telemetry preview">
+      <app-launch-telemetry-overlay />
+    </section>
 
-  <!-- 中央核心文字与 CTA 交互 -->
-  <div class="hero-content">
-    <!-- 打字机效果文本区 -->
-    <h1 class="typewriter-container">
-      <span class="typewriter-text">{{ typedText() }}</span>
-      <span class="typewriter-cursor"></span>
-    </h1>
+    <!-- 底部极简居中版权声明 -->
+    <footer class="minimal-footer">
+      <div>@Wanfeng2026</div>
+    </footer>
 
-    <!-- 还原之前的精美双色玻璃质感按钮组 -->
-    <div class="space-button-group hero__actions">
-      <button class="space-button space-button--md space-button--blue" (click)="onEnter()">
-        {{ t('home.enter') }}
-      </button>
-      <button class="space-button space-button--md space-button--white" (click)="onContact()">
-        {{ t('home.contact') }}
-      </button>
-    </div>
-  </div>
-
-  <!-- SpaceX 发发射遥测 HUD 模块组 -->
-  <section class="launch-showcase" aria-label="Space launch telemetry preview">
-    <app-launch-telemetry-overlay />
+    <!-- 音效激活提示 (漂浮在右上角的精致小组件) -->
+    @if (audioCtxSuspended()) {
+      <div class="audio-tip" role="button" aria-label="Enable sound effects">
+        🔊 Click anywhere to enable mechanical sounds
+      </div>
+    }
   </section>
 
-  <!-- 底部极简居中版权声明与音效激活提示 -->
-  <footer class="minimal-footer">
-    <div>@2026</div>
-    @if (audioCtxSuspended()) {
-    <div class="audio-tip">🔊 Click anywhere to enable typewriter mechanical sounds</div>
-    }
-  </footer>
-</section>
+  <!-- 第二部分：系统实验室与诊断中心 (Systems Diagnostics Deck) -->
+  <section class="systems-diagnostics-section">
+    <div class="grain-overlay" [style.opacity]="filmNoise() ? 0.055 : 0"></div>
+    
+    <div class="diagnostics-content">
+      <!-- 诊断中心头部标题区 -->
+      <div class="diagnostics-header">
+        <div class="diagnostics-tag">// SYSTEM DIAGNOSTICS & CORE SIMULATOR</div>
+        <h2 class="diagnostics-title">Interactive Space Deck</h2>
+        <p class="diagnostics-desc">
+          Monitor real-time quantum telemetry logs scrolling from the orbital core on the left, and use the right systems panel to customize the high-fidelity WebGL atmospheric scattering solar eclipse simulation.
+        </p>
+      </div>
+
+      <!-- 网格面板容器 -->
+      <div class="diagnostics-grid">
+        <!-- 实时量子遥测控制台 -->
+        <div class="terminal-logs-card">
+          <div class="panel-header">
+            <span class="pulse-dot pulse-dot--green"></span>
+            <span class="panel-title">QUANTUM TELEMETRY RECEIVER</span>
+          </div>
+          <div class="terminal-screen-large">
+            @for (log of telemetryLogs(); track log) {
+              <div class="log-line-large">{{ log }}</div>
+            }
+            <div class="log-line-large cursor-line-large">_</div>
+          </div>
+        </div>
+
+        <!-- 星体物理控制器 -->
+        <div class="systems-control-card">
+          <div class="panel-header">
+            <span class="pulse-dot pulse-dot--blue"></span>
+            <span class="panel-title">CORE PARAMETER CUSTOMIZER</span>
+          </div>
+          
+          <div class="control-grid-layout">
+            <div class="control-item">
+              <div class="control-label">CHROMA PRESET</div>
+              <div class="preset-buttons">
+                <button class="preset-btn" [class.is-active]="activePreset() === 'ECLIPSE'" (click)="activePreset.set('ECLIPSE')">ECLIPSE</button>
+                <button class="preset-btn" [class.is-active]="activePreset() === 'PULSAR'" (click)="activePreset.set('PULSAR')">PULSAR</button>
+                <button class="preset-btn" [class.is-active]="activePreset() === 'AURORA'" (click)="activePreset.set('AURORA')">AURORA</button>
+              </div>
+            </div>
+            
+            <div class="control-item">
+              <div class="slider-header">
+                <div class="control-label">CORONA FLARE INTENSITY</div>
+                <div class="slider-value">{{ coronaIntensity().toFixed(1) }}x</div>
+              </div>
+              <input type="range" class="control-slider" min="1.0" max="5.0" step="0.1" [value]="coronaIntensity()" (input)="coronaIntensity.set(+$any($event.target).value)" />
+            </div>
+            
+            <div class="control-item">
+              <div class="slider-header">
+                <div class="control-label">ORBITAL ROTATION SPEED</div>
+                <div class="slider-value">{{ orbitalSpeed().toFixed(2) }}x</div>
+              </div>
+              <input type="range" class="control-slider" min="0.0" max="3.0" step="0.05" [value]="orbitalSpeed()" (input)="orbitalSpeed.set(+$any($event.target).value)" />
+            </div>
+            
+            <div class="control-item row-layout">
+              <div class="control-label">SPACE FILM GRAIN</div>
+              <label class="toggle-switch">
+                <input type="checkbox" [checked]="filmNoise()" (change)="filmNoise.set($any($event.target).checked)" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

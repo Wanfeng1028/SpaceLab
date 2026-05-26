@@ -42,7 +42,7 @@ export class HeroLightFieldScene {
 
   private initScene(): void {
     this.scene = new Scene();
-    
+
     // Orthographic Camera to render a flat 2D full-screen quad
     this.camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
@@ -56,7 +56,7 @@ export class HeroLightFieldScene {
     this.renderer.setClearColor(0x000000, 0);
 
     const geometry = new PlaneGeometry(2, 2);
-    
+
     const vertexShader = `
       varying vec2 vUv;
       void main() {
@@ -235,7 +235,7 @@ export class HeroLightFieldScene {
         vec3 l  = normalize(uSunDir);
         vec2 e  = ray_vs_sphere(eye, dir, uAtmRadius);
         if (e.x > e.y) {
-          fragColor = vec4(uBackgroundColor, 1.0);
+          fragColor = vec4(uBackgroundColor, 0.0);
           return;
         }
         vec2 f = ray_vs_sphere(eye, dir, R_INNER);
@@ -245,7 +245,8 @@ export class HeroLightFieldScene {
         vec3  halo     = I * uIntensity * 10.0;
         float softMsk  = 1.0 - exp(-uSoftMask * colorLuma(halo));
         vec3  rgb      = blendAdaptive(uBackgroundColor, halo, softMsk);
-        fragColor = vec4(rgb, 1.0);
+        float alpha    = clamp(colorLuma(rgb) * 2.0, 0.0, 1.0);
+        fragColor = vec4(rgb, alpha);
       }
 
       void main() {
@@ -322,6 +323,29 @@ export class HeroLightFieldScene {
   resume(): void {
     if (!this.disposed && this.animationId === null) {
       this.animate();
+    }
+  }
+
+  updateIntensity(val: number): void {
+    if (this.material && this.material.uniforms['uIntensity']) {
+      this.material.uniforms['uIntensity'].value = val;
+    }
+  }
+
+  updateRotationSpeed(val: number): void {
+    if (this.material && this.material.uniforms['uRotationSpeed']) {
+      this.material.uniforms['uRotationSpeed'].value = val;
+    }
+  }
+
+  updateTints(rayleighColor: string, mieColor: string): void {
+    if (this.material) {
+      if (this.material.uniforms['uRayleighTint']) {
+        this.material.uniforms['uRayleighTint'].value.set(rayleighColor);
+      }
+      if (this.material.uniforms['uMieTint']) {
+        this.material.uniforms['uMieTint'].value.set(mieColor);
+      }
     }
   }
 

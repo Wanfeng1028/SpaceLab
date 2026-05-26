@@ -10,10 +10,6 @@ interface GaugeTick {
   major: boolean;
 }
 
-interface EngineDot {
-  lit: boolean;
-}
-
 @Component({
   selector: 'app-launch-telemetry-overlay',
   templateUrl: './launch-telemetry-overlay.component.html',
@@ -23,26 +19,25 @@ interface EngineDot {
 export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   readonly Math = Math;
 
-  readonly telemetry = {
-    speed: '0',
-    speedUnit: 'KM/H',
-    altitude: '0.1',
-    altitudeUnit: 'KM',
-    countdown: 'T- 00:00:01',
-    mission: 'NROL-172',
-    gForce: '1.0',
-    author: '@SpaceX',
-  };
+  get activeIndex(): number {
+    const hours = this.currentTime().getHours();
+    if (hours >= 5 && hours < 9) return 0;   // 05:00 - 08:59 (DAWN)
+    if (hours >= 9 && hours < 12) return 1;  // 09:00 - 11:59 (MORNING)
+    if (hours >= 12 && hours < 14) return 2; // 12:00 - 13:59 (MIDDAY)
+    if (hours >= 14 && hours < 19) return 3; // 14:00 - 18:59 (AFTERNOON)
+    return 4;                                // 19:00 - 04:59 (NIGHT)
+  }
 
-  readonly phases: TelemetryPhase[] = [
-    { label: 'STARTUP', active: false },
-    { label: 'LIFTOFF', active: true },
-    { label: 'MAX Q', active: false },
-    { label: 'STAGE SEP', active: false },
-    { label: 'FAIRING', active: false },
-  ];
-
-  readonly activeIndex = this.phases.findIndex(p => p.active);
+  get phases(): TelemetryPhase[] {
+    const idx = this.activeIndex;
+    return [
+      { label: 'DAWN', active: idx === 0 },
+      { label: 'MORNING', active: idx === 1 },
+      { label: 'MIDDAY', active: idx === 2 },
+      { label: 'AFTERNOON', active: idx === 3 },
+      { label: 'NIGHT', active: idx === 4 },
+    ];
+  }
 
   /** 11 条刻度线角度（从弧线左端到右端均匀分布） */
   readonly ticks: GaugeTick[] = Array.from({ length: 11 }, (_, i) => ({
@@ -50,45 +45,53 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     major: i % 2 === 0,
   }));
 
-  /** 3×3 发动机阵列，前 3 个点亮 */
-  readonly engineDots: EngineDot[] = Array.from({ length: 9 }, (_, i) => ({
-    lit: i < 3,
-  }));
+  // Signals for holding telemetry states
+  readonly currentTime = signal(new Date());
 
-  /** 实时在线状态与延迟数据 */
-  readonly isOnline = signal<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
-  readonly rtt = signal<number>(50);
+  readonly locationInfo = signal({
+    status: 'loading',
+    city: 'Locating...',
+    region: 'Permission Required',
+    latitude: null as number | null,
+    longitude: null as number | null
+  });
 
-  private isPinging = false;
-  private pingCounter = 0;
+  readonly weatherInfo = signal({
+    status: 'loading',
+    temperature: '--',
+    condition: 'Loading'
+  });
+
+  readonly networkInfo = signal({
+    status: 'UNKNOWN',
+    detail: 'CHECKING',
+    level: 0
+  });
+
   private timerId: ReturnType<typeof setInterval> | null = null;
 
   @HostListener('window:online')
   onOnline(): void {
-    this.isOnline.set(true);
-    this.updateNetworkStatus(true);
+    this.updateNetworkStatus();
   }
 
   @HostListener('window:offline')
   onOffline(): void {
-    this.isOnline.set(false);
+    this.updateNetworkStatus();
   }
 
-  /** 当前时间，每秒刷新 */
-  readonly currentTime = signal(new Date());
-
   ngOnInit(): void {
-    this.updateNetworkStatus(true);
+    // 1. Initialize network status
+    this.updateNetworkStatus();
+
+    // 2. Fetch location & weather
+    this.initLocationAndWeather();
+
+    // 3. Set up 1s clock interval
     this.timerId = setInterval(() => {
       this.currentTime.set(new Date());
-      this.pingCounter++;
-      // 每 3 秒执行一次实际的 HTTP Latency 测量，其余时间更新 navigator 状态
-      if (this.pingCounter >= 3) {
-        this.pingCounter = 0;
-        this.updateNetworkStatus(true);
-      } else {
-        this.updateNetworkStatus(false);
-      }
+      // Periodically refresh network status to capture rtt/downlink fluctuations
+      this.updateNetworkStatus();
     }, 1000);
   }
 
@@ -98,13 +101,29 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** 格式化为 yyyy-MM-dd HH:mm:ss */
+  // Formatting utility getters
   get formattedTime(): string {
-    return this.formatDate(this.currentTime());
+    const d = this.currentTime();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   }
 
-  get formattedCurrentTime(): string {
-    return this.formattedTime;
+  get formattedDate(): string {
+    const d = this.currentTime();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  }
+
+  get formattedDateTime(): string {
+    return `${this.formattedDate} ${this.formattedTime}`;
+  }
+
+  get userTimeZone(): string {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    } catch {
+      return 'UTC';
+    }
   }
 
   get phaseProgress(): number {
@@ -113,78 +132,171 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     return total > 0 ? idx / total : 0;
   }
 
-  private formatDate(d: Date): string {
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  /** Gets active signal strength index (0 to 5) */
+  get networkLevel(): number {
+    return this.networkInfo().level;
   }
 
-  /** 获取实际的网络延迟与在线状况 */
-  private async updateNetworkStatus(forcePing = false): Promise<void> {
-    if (typeof navigator === 'undefined') return;
+  private initLocationAndWeather(): void {
+    if (typeof navigator === 'undefined' || !navigator.geolocation) {
+      this.handleLocationError('unsupported');
+      return;
+    }
 
-    const online = navigator.onLine;
-    this.isOnline.set(online);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        this.fetchGeocodingAndWeather(lat, lon);
+      },
+      (error) => {
+        console.warn('Geolocation error:', error);
+        this.handleLocationError(error.code === error.PERMISSION_DENIED ? 'denied' : 'failed');
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+    );
+  }
 
-    if (!online) return;
+  private handleLocationError(reason: 'denied' | 'failed' | 'unsupported'): void {
+    const isDenied = reason === 'denied';
+    this.locationInfo.set({
+      status: reason,
+      city: 'Unavailable',
+      region: isDenied ? 'Location Disabled' : 'Locating Failed',
+      latitude: null,
+      longitude: null
+    });
+    this.weatherInfo.set({
+      status: 'unavailable',
+      temperature: '--',
+      condition: 'Weather N/A'
+    });
+  }
 
-    if (forcePing && !this.isPinging) {
-      this.isPinging = true;
-      const start = performance.now();
-      try {
-        // 创建一个带有超时中止机制的 Fetch 请求
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
+  private async fetchGeocodingAndWeather(lat: number, lon: number): Promise<void> {
+    // 1. Fetch location name via BigDataCloud Reverse Geocoding API (free, keyless)
+    try {
+      const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
+      const geoRes = await fetch(geoUrl);
+      if (!geoRes.ok) throw new Error('Geocoding response failed');
+      const geoData = await geoRes.json();
+      
+      const city = geoData.city || geoData.locality || geoData.principalSubdivision || 'Unknown';
+      const region = geoData.principalSubdivision && geoData.countryCode 
+        ? `${geoData.principalSubdivision} / ${geoData.countryCode}` 
+        : geoData.countryName || 'Unknown';
 
-        // 使用 HEAD 方法对网站资源进行无缓存的极轻量请求，精准测出网络往返延迟
-        await fetch('/favicon.ico?_t=' + Date.now(), {
-          method: 'HEAD',
-          signal: controller.signal,
-          cache: 'no-store'
-        });
-        clearTimeout(timeoutId);
+      this.locationInfo.set({
+        status: 'success',
+        city,
+        region,
+        latitude: lat,
+        longitude: lon
+      });
+    } catch (e) {
+      console.warn('Geocoding API failed, falling back to coordinates:', e);
+      // Fallback: display approximate coordinates
+      this.locationInfo.set({
+        status: 'success',
+        city: `${lat.toFixed(2)}°N`,
+        region: `${lon.toFixed(2)}°E`,
+        latitude: lat,
+        longitude: lon
+      });
+    }
 
-        const latency = Math.round(performance.now() - start);
-        this.isOnline.set(true);
-        this.rtt.set(latency);
-      } catch (e) {
-        // 如果 favicon.ico 不存在或由于开发服务器原因报错，尝试直接请求根路径 /
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2000);
-          await fetch('/?_t=' + Date.now(), {
-            method: 'HEAD',
-            signal: controller.signal,
-            cache: 'no-store'
-          });
-          clearTimeout(timeoutId);
+    // 2. Fetch current weather via Open-Meteo API (free, keyless)
+    try {
+      const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+      const weatherRes = await fetch(weatherUrl);
+      if (!weatherRes.ok) throw new Error('Weather response failed');
+      const weatherData = await weatherRes.json();
+      
+      const current = weatherData.current_weather;
+      if (!current) throw new Error('No current weather data');
 
-          const latency = Math.round(performance.now() - start);
-          this.isOnline.set(true);
-          this.rtt.set(latency);
-        } catch (err) {
-          // 如果全部请求失败，则采用 Connection API 或拟真波动
-          this.fallbackLatency();
-        }
-      } finally {
-        this.isPinging = false;
-      }
-    } else if (!forcePing) {
-      // 快速轮询时，如果有 Connection API 则更新，否则仅维持原状
-      const conn = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
-      if (conn && typeof conn.rtt === 'number') {
-        this.rtt.set(conn.rtt || 50);
-      }
+      const temp = Math.round(current.temperature);
+      const code = current.weathercode;
+      const condition = this.mapWeatherCode(code);
+
+      this.weatherInfo.set({
+        status: 'success',
+        temperature: `${temp}°`,
+        condition
+      });
+    } catch (e) {
+      console.warn('Weather API failed:', e);
+      this.weatherInfo.set({
+        status: 'unavailable',
+        temperature: '--',
+        condition: 'Weather N/A'
+      });
     }
   }
 
-  private fallbackLatency(): void {
+  private mapWeatherCode(code: number): string {
+    // Open-Meteo WMO weather codes mapping:
+    if (code === 0) return 'Clear';
+    if (code >= 1 && code <= 3) return 'Cloudy';
+    if (code === 45 || code === 48) return 'Foggy';
+    if (code >= 51 && code <= 55) return 'Drizzle';
+    if (code >= 61 && code <= 65) return 'Rainy';
+    if (code >= 71 && code <= 75) return 'Snowy';
+    if (code >= 80 && code <= 82) return 'Showers';
+    if (code >= 95 && code <= 99) return 'Storm';
+    return 'Cloudy';
+  }
+
+  private updateNetworkStatus(): void {
     if (typeof navigator === 'undefined') return;
+
+    const online = navigator.onLine;
+    if (!online) {
+      this.networkInfo.set({
+        status: 'OFFLINE',
+        detail: 'OFFLINE',
+        level: 0
+      });
+      return;
+    }
+
     const conn = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
-    if (conn && typeof conn.rtt === 'number') {
-      this.rtt.set(conn.rtt || 50);
+    if (conn) {
+      const type = conn.effectiveType || ''; // '4g', '3g', '2g', 'slow-2g'
+      const downlink = conn.downlink || 0;  // Mbps
+      const rtt = conn.rtt || 0;            // ms
+
+      let status = 'GOOD';
+      let level = 5;
+
+      if (type === 'slow-2g' || type === '2g' || downlink < 0.5) {
+        status = 'POOR';
+        level = 1;
+      } else if (type === '3g' || downlink < 2.0) {
+        status = 'FAIR';
+        level = 3;
+      } else {
+        status = 'GOOD';
+        level = 5;
+      }
+
+      // If online but level indicates slow connection
+      if (rtt > 300) {
+        level = Math.max(1, level - 1);
+      }
+
+      this.networkInfo.set({
+        status,
+        detail: `ONLINE (${type.toUpperCase() || 'LTE'})`,
+        level
+      });
     } else {
-      // 在本地开发或浏览器不支持该 API 时，模拟拟真的 35ms - 75ms 航天浮动网络数据
-      this.rtt.set(Math.round(35 + Math.random() * 40));
+      // Fallback if Network Information API is not supported
+      this.networkInfo.set({
+        status: 'GOOD',
+        detail: 'ONLINE',
+        level: 4
+      });
     }
   }
 }

@@ -5,17 +5,21 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
+}
+
+.home-container {
+  width: 100%;
+  background-color: #000000;
 }
 
 .eclipse-hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end; // 将底部 HUD 和 Footer 推至最下方，而 Hero 核心文字使用绝对定位居中
   align-items: center;
   background-color: #000000; // 纯黑曜石底色
   overflow: hidden;
@@ -25,7 +29,7 @@
 .backdrop-stars {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2; // Move WebGL canvas to z-index 2 (on top of telemetry HUD)
   pointer-events: none;
 }
 
@@ -33,70 +37,12 @@
 .grain-overlay {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 4; // Move grain overlay to z-index 4 to be on top of everything
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   opacity: 0.055; // 极其微弱细腻，凸显高端质感
 }
 
-// ── 顶部极简双翼导航 + 圆形头像 ──────────────
-.minimal-header {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 1200px;
-  padding: 32px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .nav-link {
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.45);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: color 250ms var(--ease-out);
-
-    &:hover {
-      color: #ffffff;
-    }
-  }
-
-  .header-avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.04);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .avatar-fallback {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.7);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-    }
-  }
-}
 
 // ── 黑曜石日食星体 (Conic-Radial Eclipse Flare & Mask) ──
 .eclipse-container {
@@ -199,13 +145,14 @@
 
 // ── 中央核心文字与 CTA 交互 ───────────────
 .hero-content {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 3;
   width: 100%;
   max-width: 900px;
   padding: 0 24px;
-  margin-top: clamp(160px, 28vh, 340px);
-  margin-bottom: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -247,7 +194,7 @@
 // ── SpaceX 发射遥测 HUD 展示区 ──────────────
 .launch-showcase {
   position: relative;
-  z-index: 5;
+  z-index: 1; // Move telemetry HUD underneath WebGL canvas (z-index 2)
   width: 100%;
   display: flex;
   justify-content: center;
@@ -268,7 +215,7 @@
   }
 }
 
-// ── 底部版权声明 + 音效提示 ──────────────────
+// ── 底部版权声明 ──────────────────────────────
 .minimal-footer {
   position: relative;
   z-index: 3;
@@ -286,23 +233,397 @@
   color: rgba(255, 255, 255, 0.22);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
 
-  .audio-tip {
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.36);
-    text-transform: none;
-    letter-spacing: 0.02em;
-    padding: 4px 12px;
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    animation: pulseAudioTip 2s infinite alternate;
+// ── 漂浮在角落的精致音效激活小提示 ──────────────
+.audio-tip {
+  position: absolute;
+  top: 96px;
+  right: 32px; // 放置在右上角导航下方，完美契合布局
+  z-index: 10;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.36);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 250ms var(--ease-out);
+  animation: pulseAudioTip 2s infinite alternate;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 }
 
 @keyframes pulseAudioTip {
   0% { opacity: 0.65; transform: scale(0.98); }
   100% { opacity: 0.95; transform: scale(1.02); }
+}
+
+// ── 第二部分：系统实验室与诊断中心 (Systems Diagnostics Section) ──
+
+.systems-diagnostics-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 100px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #030305; // 极其深邃的微蓝色调底色，代表飞船内部控制室
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(10, 92, 255, 0.04) 0%, transparent 65%),
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  overflow: hidden;
+
+  // 保证第二部分的背景中也包含电影微粒感
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    transition: opacity 300ms ease;
+  }
+}
+
+.diagnostics-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.diagnostics-header {
+  text-align: center;
+  max-width: 700px;
+  margin-bottom: 40px;
+
+  .diagnostics-tag {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    color: #00ffc4;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    text-shadow: 0 0 8px rgba(0, 255, 196, 0.2);
+  }
+
+  .diagnostics-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .diagnostics-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+  }
+}
+
+.diagnostics-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 32px;
+  width: 100%;
+
+  @media (max-width: 950px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.terminal-logs-card,
+.systems-control-card {
+  background: rgba(255, 255, 255, 0.012);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  transition: all 400ms var(--ease-out);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.022);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.75),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 14px;
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    
+    &--green {
+      background: #00ffc4;
+      box-shadow: 0 0 10px #00ffc4;
+      animation: pulseBlink 1.5s infinite alternate;
+    }
+
+    &--blue {
+      background: #00f0ff;
+      box-shadow: 0 0 10px #00f0ff;
+      animation: pulseBlink 1.5s infinite alternate-reverse;
+    }
+  }
+
+  .panel-title {
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+  }
+}
+
+@keyframes pulseBlink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+// ── 左侧日志大终端样式 ──────────────────────────
+.terminal-screen-large {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.5);
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+
+  .log-line-large {
+    word-break: break-all;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: fadeInUp 0.4s ease forwards;
+
+    &:nth-child(even) {
+      color: rgba(255, 255, 255, 0.35);
+    }
+  }
+
+  .cursor-line-large {
+    color: #00ffc4 !important;
+    animation: blinkCaret 1s step-end infinite;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blinkCaret {
+  from, to { opacity: 0 }
+  50% { opacity: 1 }
+}
+
+// ── 右侧控制组大面板样式 ──────────────────────────
+.control-grid-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &.row-layout {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .control-label {
+    font-family: var(--font-sans);
+    font-size: 9.5px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .slider-value {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: #00f0ff;
+    }
+  }
+}
+
+// Chroma Preset 按钮组
+.preset-buttons {
+  display: flex;
+  gap: 6px;
+
+  .preset-btn {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 10px 4px;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 200ms ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.85);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &.is-active {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: rgba(0, 240, 255, 0.35);
+      color: #00f0ff;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+    }
+  }
+}
+
+// Custom Sliders
+.control-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #00f0ff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px #00f0ff;
+    transition: all 150ms ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #00f0ff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px #00f0ff;
+    transition: all 150ms ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+// Toggle Switch
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 9px;
+    transition: all 250ms ease;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 10px;
+      width: 10px;
+      left: 3px;
+      bottom: 3px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      transition: all 250ms ease;
+    }
+  }
+
+  input:checked + .toggle-slider {
+    background-color: rgba(0, 240, 255, 0.15);
+    border-color: rgba(0, 240, 255, 0.35);
+
+    &:before {
+      transform: translateX(14px);
+      background-color: #00f0ff;
+      box-shadow: 0 0 8px #00f0ff;
+    }
+  }
 }
