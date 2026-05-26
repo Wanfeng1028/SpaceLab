@@ -22,7 +22,7 @@
       </header>
 
       <!-- Article Content -->
-      <article class="article-content markdown-body" [innerHTML]="art.content"></article>
+      <article class="article-content markdown-body" [innerHTML]="sanitizeContent(art.content)"></article>
 
       <!-- Prev / Next Navigation -->
       <nav class="article-nav">

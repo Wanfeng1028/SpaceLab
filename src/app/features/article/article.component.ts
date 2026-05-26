@@ -4,8 +4,11 @@ import {
   signal,
   OnInit,
   ChangeDetectionStrategy,
+  DestroyRef,
 } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 
 interface ArticleData {
@@ -31,6 +34,8 @@ interface ArticleData {
 export class ArticleComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private i18n = inject(I18nService);
+  private sanitizer = inject(DomSanitizer);
+  private destroyRef = inject(DestroyRef);
 
   readonly article = signal<ArticleData | null>(null);
 
@@ -200,7 +205,7 @@ scene.add(particles);</code></pre>
   };
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       const slug = params['slug'];
       const data = this.articlesMap[slug];
       if (data) {
@@ -211,5 +216,10 @@ scene.add(particles);</code></pre>
 
   t(key: string): string {
     return this.i18n.t(key);
+  }
+
+  // TODO: 当接入 Supabase 后端时，应使用 DOMPurify 对内容进行 XSS 过滤
+  sanitizeContent(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 }
