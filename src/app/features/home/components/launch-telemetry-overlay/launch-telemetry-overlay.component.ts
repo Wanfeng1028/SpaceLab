@@ -77,6 +77,10 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     return this.formatDate(this.currentTime());
   }
 
+  get formattedCurrentTime(): string {
+    return this.formattedTime;
+  }
+
   get phaseProgress(): number {
     const idx = this.activeIndex;
     const total = this.phases.length - 1;

@@ -1,140 +1,132 @@
-<!-- 深空发射视频氛围背景 -->
-<div class="atmosphere">
-  <div class="atmosphere__stars"></div>
-  <div class="atmosphere__haze"></div>
-  <div class="atmosphere__horizon"></div>
-  <div class="atmosphere__glow"></div>
-  <div class="atmosphere__tower"></div>
-</div>
-
-<!-- HUD 遥测面板 -->
-<div class="hud">
-  <!-- 主遥测区：三列布局 -->
-  <div class="telemetry-main">
-    <!-- 左侧：SPEED / ALTITUDE -->
-    <div class="telemetry-left">
-      <div class="gauge">
-        <svg class="gauge__svg" viewBox="0 0 120 72" fill="none">
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
-                stroke-linecap="round" />
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="157" stroke-dashoffset="157" />
-          @for (tick of ticks; track $index) {
-            <line
-              [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
-              [attr.y1]="66 - 42 * Math.sin(tick.angle)"
-              [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
-              [attr.y2]="66 - 48 * Math.sin(tick.angle)"
-              [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
-              [attr.stroke-width]="tick.major ? 1.5 : 1"
-            />
-          }
-        </svg>
-        <div class="gauge__label">SPEED</div>
-        <div class="gauge__value">{{ telemetry.speed }}</div>
-        <div class="gauge__unit">{{ telemetry.speedUnit }}</div>
-      </div>
-
-      <div class="gauge">
-        <svg class="gauge__svg" viewBox="0 0 120 72" fill="none">
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
-                stroke-linecap="round" />
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="157" stroke-dashoffset="150" />
-          @for (tick of ticks; track $index) {
-            <line
-              [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
-              [attr.y1]="66 - 42 * Math.sin(tick.angle)"
-              [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
-              [attr.y2]="66 - 48 * Math.sin(tick.angle)"
-              [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
-              [attr.stroke-width]="tick.major ? 1.5 : 1"
-            />
-          }
-        </svg>
-        <div class="gauge__label">ALTITUDE</div>
-        <div class="gauge__value">{{ telemetry.altitude }}</div>
-        <div class="gauge__unit">{{ telemetry.altitudeUnit }}</div>
-      </div>
-    </div>
-
-    <!-- 中间：时间轴 + 倒计时 + 任务编号 -->
-    <div class="telemetry-center">
-      <div class="timeline">
-        <div class="timeline__track">
-          <div class="timeline__fill" [style.width.%]="phaseProgress * 100"></div>
-        </div>
-        <div class="timeline__nodes">
-          @for (phase of phases; track phase.label) {
-            <div class="timeline__node" [class.is-active]="phase.active" [class.is-past]="$index < activeIndex">
-              <span class="timeline__dot"></span>
-              <span class="timeline__text">{{ phase.label }}</span>
-            </div>
-          }
-        </div>
-      </div>
-
-      <div class="countdown">
-        <span class="countdown__prefix">T-</span>
-        <span class="countdown__time">00:00:01</span>
-      </div>
-
-      <div class="mission-id">{{ telemetry.mission }}</div>
-    </div>
-
-    <!-- 右侧：G-FORCE / 发动机阵列 -->
-    <div class="telemetry-right">
-      <div class="gauge">
-        <svg class="gauge__svg" viewBox="0 0 120 72" fill="none">
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
-                stroke-linecap="round" />
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="157" stroke-dashoffset="120" />
-          @for (tick of ticks; track $index) {
-            <line
-              [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
-              [attr.y1]="66 - 42 * Math.sin(tick.angle)"
-              [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
-              [attr.y2]="66 - 48 * Math.sin(tick.angle)"
-              [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
-              [attr.stroke-width]="tick.major ? 1.5 : 1"
-            />
-          }
-        </svg>
-        <div class="gauge__label">G-FORCE</div>
-        <div class="gauge__value">{{ telemetry.gForce }}</div>
-        <div class="gauge__unit">G</div>
-      </div>
-
-      <div class="engine-cluster">
-        <div class="engine-cluster__ring">
-          @for (dot of engineDots; track $index) {
-            <span class="engine-cluster__dot" [class.is-lit]="dot.lit"></span>
-          }
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 底部状态栏 -->
-  <div class="telemetry-caption">
-    <span class="caption-group">
-      <span class="caption-author">{{ telemetry.author }}</span>
-      <span class="caption-sep">·</span>
-      <span class="caption-mission">{{ telemetry.mission }}</span>
-    </span>
-    <span class="caption-group">
-      <span class="caption-label">LOCAL TIME</span>
-      <span class="caption-time">{{ formattedTime }}</span>
-    </span>
-  </div>
-</div>
+<!-- 发射场景背景层 -->
+<div class="launch-scene">
+  <div class="launch-scene__sky"></div>
+  <div class="launch-scene__stars"></div>
+  <div class="launch-scene__horizon"></div>
+  <div class="launch-scene__fog"></div>
+  <div class="launch-scene__pad"></div>
+  <div class="launch-scene__glow"></div>
+ </div>
+ 
+ <!-- HUD 遥测覆盖层（绝对定位三段式） -->
+ <div class="telemetry-overlay">
+ 
+   <!-- 左侧：SPEED / ALTITUDE -->
+   <div class="telemetry-left">
+     <div class="gauge">
+       <svg class="gauge-svg" viewBox="0 0 120 72" fill="none">
+         <path d="M10 66 A50 50 0 0 1 110 66"
+               stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
+               stroke-linecap="round" />
+         <path d="M10 66 A50 50 0 0 1 110 66"
+               stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"
+               stroke-linecap="round"
+               stroke-dasharray="157" stroke-dashoffset="157" />
+         @for (tick of ticks; track $index) {
+           <line
+             [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
+             [attr.y1]="66 - 42 * Math.sin(tick.angle)"
+             [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
+             [attr.y2]="66 - 48 * Math.sin(tick.angle)"
+             [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
+             [attr.stroke-width]="tick.major ? 1.5 : 1"
+           />
+         }
+       </svg>
+       <div class="gauge-label">SPEED</div>
+       <div class="gauge-value">{{ telemetry.speed }}</div>
+       <div class="gauge-unit">{{ telemetry.speedUnit }}</div>
+     </div>
+ 
+     <div class="gauge">
+       <svg class="gauge-svg" viewBox="0 0 120 72" fill="none">
+         <path d="M10 66 A50 50 0 0 1 110 66"
+               stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
+               stroke-linecap="round" />
+         <path d="M10 66 A50 50 0 0 1 110 66"
+               stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"
+               stroke-linecap="round"
+               stroke-dasharray="157" stroke-dashoffset="150" />
+         @for (tick of ticks; track $index) {
+           <line
+             [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
+             [attr.y1]="66 - 42 * Math.sin(tick.angle)"
+             [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
+             [attr.y2]="66 - 48 * Math.sin(tick.angle)"
+             [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
+             [attr.stroke-width]="tick.major ? 1.5 : 1"
+           />
+         }
+       </svg>
+       <div class="gauge-label">ALTITUDE</div>
+       <div class="gauge-value">{{ telemetry.altitude }}</div>
+       <div class="gauge-unit">{{ telemetry.altitudeUnit }}</div>
+     </div>
+   </div>
+ 
+   <!-- 中间：时间轴 + 倒计时 + 任务编号 -->
+   <div class="telemetry-center">
+     <div class="phase-timeline">
+       <div class="phase-timeline__track">
+         <div class="phase-timeline__fill" [style.width.%]="phaseProgress * 100"></div>
+       </div>
+       <div class="phase-timeline__nodes">
+         @for (phase of phases; track phase.label) {
+           <div class="phase-timeline__node" [class.is-active]="phase.active" [class.is-past]="$index < activeIndex">
+             <span class="phase-timeline__dot"></span>
+             <span class="phase-timeline__label">{{ phase.label }}</span>
+           </div>
+         }
+       </div>
+     </div>
+ 
+     <div class="countdown">
+       T- 00:00:01
+     </div>
+ 
+     <div class="mission-id">{{ telemetry.mission }}</div>
+   </div>
+ 
+   <!-- 右侧：G-FORCE / 发动机阵列 -->
+   <div class="telemetry-right">
+     <div class="gauge">
+       <svg class="gauge-svg" viewBox="0 0 120 72" fill="none">
+         <path d="M10 66 A50 50 0 0 1 110 66"
+               stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
+               stroke-linecap="round" />
+         <path d="M10 66 A50 50 0 0 1 110 66"
+               stroke="rgba(255,255,255,0.45)" stroke-width="2.5" fill="none"
+               stroke-linecap="round"
+               stroke-dasharray="157" stroke-dashoffset="120" />
+         @for (tick of ticks; track $index) {
+           <line
+             [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
+             [attr.y1]="66 - 42 * Math.sin(tick.angle)"
+             [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
+             [attr.y2]="66 - 48 * Math.sin(tick.angle)"
+             [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
+             [attr.stroke-width]="tick.major ? 1.5 : 1"
+           />
+         }
+       </svg>
+       <div class="gauge-label">G-FORCE</div>
+       <div class="gauge-value">{{ telemetry.gForce }}</div>
+       <div class="gauge-unit">G</div>
+     </div>
+ 
+     <div class="engine-cluster">
+       <div class="engine-cluster__ring">
+         @for (dot of engineDots; track $index) {
+           <span class="engine-cluster__dot" [class.is-lit]="dot.lit"></span>
+         }
+       </div>
+     </div>
+   </div>
+ 
+   <!-- 底部状态栏 -->
+   <div class="telemetry-caption">
+     <span>@SpaceX &middot; NROL-172</span>
+     <span>LOCAL TIME &middot; {{ formattedCurrentTime }}</span>
+   </div>
+ 
+ </div>
