@@ -10,6 +10,9 @@
 
     <!-- 中央核心文字与 CTA 交互 -->
     <div class="hero-content">
+      <!-- 欢迎标语 -->
+      <p class="hero-welcome">Welcome to SpaceLab</p>
+
       <!-- 打字机效果文本区 -->
       <h1 class="typewriter-container">
         <span class="typewriter-text">{{ typedText() }}</span>
@@ -18,10 +21,14 @@
 
       <!-- 还原之前的精美双色玻璃质感按钮组 -->
       <div class="space-button-group hero__actions">
-        <button class="space-button space-button--md space-button--blue" (click)="onEnter()">
+        <button class="space-button space-button--md space-button--blue"
+          [class.space-button--eclipse-dark]="isBright()"
+          (click)="onEnter()">
           {{ t('home.enter') }}
         </button>
-        <button class="space-button space-button--md space-button--white" (click)="onContact()">
+        <button class="space-button space-button--md space-button--white"
+          [class.space-button--eclipse-dark]="isBright()"
+          (click)="onContact()">
           {{ t('home.contact') }}
         </button>
       </div>
@@ -53,7 +60,7 @@
       <!-- 诊断中心头部标题区 -->
       <div class="diagnostics-header">
         <div class="diagnostics-tag">// SYSTEM DIAGNOSTICS & CORE SIMULATOR</div>
-        <h2 class="diagnostics-title">Interactive Space Deck</h2>
+        <h2 class="diagnostics-title glitch-text" data-text="Interactive Space Deck">Interactive Space Deck</h2>
         <p class="diagnostics-desc">
           Monitor real-time quantum telemetry logs scrolling from the orbital core on the left, and use the right systems panel to customize the high-fidelity WebGL atmospheric scattering solar eclipse simulation.
         </p>
@@ -63,8 +70,14 @@
       <div class="diagnostics-grid">
         <!-- 实时量子遥测控制台 -->
         <div class="terminal-logs-card">
+          <!-- Matrix 数字雨背景 -->
+          <div class="matrix-rain-container">
+            @for (col of matrixColumns; track col.char) {
+              <div class="matrix-column">{{ col.char }}</div>
+            }
+          </div>
           <div class="panel-header">
-            <span class="pulse-dot pulse-dot--green"></span>
+            <span class="pulse-ring pulse-ring--green"></span>
             <span class="panel-title">QUANTUM TELEMETRY RECEIVER</span>
           </div>
           <div class="terminal-screen-large">
@@ -78,7 +91,7 @@
         <!-- 星体物理控制器 -->
         <div class="systems-control-card">
           <div class="panel-header">
-            <span class="pulse-dot pulse-dot--blue"></span>
+            <span class="pulse-ring pulse-ring--blue"></span>
             <span class="panel-title">CORE PARAMETER CUSTOMIZER</span>
           </div>
           
@@ -115,6 +128,47 @@
                 <span class="toggle-slider"></span>
               </label>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 雷达扫描动画卡片 -->
+      <div class="radar-card">
+        <div class="radar-container">
+          <div class="radar-rings"></div>
+          <div class="radar-ring-center"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-blips">
+            @for (blip of radarBlips; track blip) {
+              <div class="radar-blip"></div>
+            }
+          </div>
+        </div>
+        <div class="radar-label">ORBITAL SCAN ARRAY</div>
+        <div class="radar-status">SCANNING...</div>
+      </div>
+
+      <!-- Three.js 3D 场景卡片 -->
+      <div class="three-d-cards">
+        <!-- 全息二十面体 -->
+        <div class="three-d-card">
+          <div class="three-d-canvas-wrapper">
+            <app-three-canvas [sceneFactory]="holoIcoFactory" />
+          </div>
+          <div class="three-d-info">
+            <div class="three-d-title">HOLOGRAPHIC ICOSAHEDRON</div>
+            <div class="three-d-status">ACTIVE</div>
+          </div>
+        </div>
+
+        <!-- 线框地球 + 轨道线 -->
+        <div class="three-d-card">
+          <div class="three-d-canvas-wrapper">
+            <app-three-canvas [sceneFactory]="globeOrbitFactory" />
+          </div>
+          <div class="three-d-info">
+            <div class="three-d-title">WIREFRAME GLOBE & ORBITS</div>
+            <div class="three-d-status">ACTIVE</div>
           </div>
         </div>
       </div>

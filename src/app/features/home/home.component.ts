@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
 import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
+import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
+import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 
 @Component({
@@ -29,11 +31,31 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.activeScene;
   };
 
+  // Three.js scene factories for 3D cards
+  holoIcoFactory = (canvas: HTMLCanvasElement) => new HoloIcoScene(canvas);
+  globeOrbitFactory = (canvas: HTMLCanvasElement) => new GlobeOrbitScene(canvas);
+
+  // Matrix rain data (pre-generated to avoid random in template)
+  matrixColumns = Array.from({ length: 20 }, (_, i) => ({
+    char: this.generateMatrixChars(),
+    delay: Math.random() * 3,
+    duration: 3 + Math.random() * 4,
+  }));
+
+  // Radar blips data
+  radarBlips = Array.from({ length: 6 }, (_, i) => i);
+
   // WebGL Customization properties (inspired by uiverse.io high-tech controls)
   coronaIntensity = signal<number>(2.8);
   orbitalSpeed = signal<number>(1.05);
   activePreset = signal<'ECLIPSE' | 'PULSAR' | 'AURORA'>('ECLIPSE');
   filmNoise = signal<boolean>(true);
+
+  // 亮度自适应按钮状态
+  isBright = signal<boolean>(false);
+  private brightnessSmoothed = 0;
+  private isBrightState = false;
+  private brightnessTimer: any = null;
 
   // Live scrolling sci-fi diagnostic terminal logs
   telemetryLogs = signal<string[]>([]);
@@ -100,6 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.i18n.loadTranslations('zh-CN');
     this.startTypewriter();
     this.startTelemetryLogs();
+    this.startBrightnessPolling();
   }
 
   ngOnDestroy(): void {
@@ -108,6 +131,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     if (this.logTimer) {
       clearInterval(this.logTimer);
+    }
+    if (this.brightnessTimer) {
+      clearInterval(this.brightnessTimer);
     }
     if (this.audioCtx) {
       this.audioCtx.close();
@@ -256,5 +282,29 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       this.telemetryLogs.set(updated);
     }, 4500);
+  }
+
+  private generateMatrixChars(): string {
+    const chars = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ABCDEF';
+    return Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  }
+
+  private startBrightnessPolling(): void {
+    this.brightnessTimer = setInterval(() => {
+      if (!this.activeScene) return;
+      const raw = this.activeScene.getCenterBrightness();
+
+      // 指数移动平均平滑
+      this.brightnessSmoothed = this.brightnessSmoothed * 0.8 + raw * 0.2;
+
+      // 滞回阈值防抖：亮→暗 阈值低，暗→亮 阈值高
+      if (!this.isBrightState && this.brightnessSmoothed > 0.10) {
+        this.isBrightState = true;
+        this.isBright.set(true);
+      } else if (this.isBrightState && this.brightnessSmoothed < 0.05) {
+        this.isBrightState = false;
+        this.isBright.set(false);
+      }
+    }, 150);
   }
 }
