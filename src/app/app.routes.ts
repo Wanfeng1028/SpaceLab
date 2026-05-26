@@ -4,11 +4,13 @@ import { adminGuard } from './core/guards/admin.guard';
 export const routes: Routes = [
   {
     path: '',
+    title: 'SpaceLab',
     loadComponent: () =>
       import('./features/home/home.component').then(m => m.HomeComponent),
   },
   {
     path: 'blog',
+    title: 'Blog — SpaceLab',
     loadComponent: () =>
       import('./features/blog/blog.component').then(m => m.BlogComponent),
   },
@@ -19,6 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'projects',
+    title: 'Projects — SpaceLab',
     loadComponent: () =>
       import('./features/projects/projects.component').then(m => m.ProjectsComponent),
   },
@@ -29,50 +32,59 @@ export const routes: Routes = [
   },
   {
     path: 'lab',
+    title: 'Lab — SpaceLab',
     loadComponent: () =>
       import('./features/lab/lab.component').then(m => m.LabComponent),
   },
   {
     path: 'gallery',
+    title: 'Gallery — SpaceLab',
     loadComponent: () =>
       import('./features/gallery/gallery.component').then(m => m.GalleryComponent),
   },
   {
     path: 'about',
+    title: 'About — SpaceLab',
     loadComponent: () =>
       import('./features/about/about.component').then(m => m.AboutComponent),
   },
   {
     path: 'archive',
+    title: 'Archive — SpaceLab',
     loadComponent: () =>
       import('./features/archive/archive.component').then(m => m.ArchiveComponent),
   },
   {
     path: 'admin',
+    title: 'Admin — SpaceLab',
     canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/admin.component').then(m => m.AdminComponent),
   },
   {
     path: 'admin/write',
+    title: 'Write — SpaceLab Admin',
     canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/write/write.component').then(m => m.WriteComponent),
   },
   {
     path: 'admin/write/:id',
+    title: 'Edit — SpaceLab Admin',
     canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/write/write.component').then(m => m.WriteComponent),
   },
   {
     path: 'admin/analytics',
+    title: 'Analytics — SpaceLab Admin',
     canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/analytics/analytics.component').then(m => m.AnalyticsComponent),
   },
   {
     path: '**',
+    title: '404 — SpaceLab',
     loadComponent: () =>
       import('./features/not-found/not-found.component').then(m => m.NotFoundComponent),
   },

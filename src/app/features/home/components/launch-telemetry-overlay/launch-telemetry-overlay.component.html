@@ -26,6 +26,11 @@
         <div class="gauge-label">LOCATION</div>
         <div class="gauge-value" [title]="locationInfo().city">{{ locationInfo().city }}</div>
         <div class="gauge-unit" [title]="locationInfo().region">{{ locationInfo().region }}</div>
+        @if (locationInfo().status === 'pending') {
+          <button class="consent-btn" (click)="grantLocationConsent()" aria-label="Enable location access">
+            Enable
+          </button>
+        }
       </div>
 
       <div class="gauge">

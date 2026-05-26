@@ -1,6 +1,5 @@
 <nav class="navbar"
      [class.is-scrolled]="isScrolled()"
-     [class.is-hidden]="isHidden()"
      [class.mobile-open]="mobileMenuOpen()">
 
   <!-- Logo / Site Name -->
@@ -11,6 +10,9 @@
 
   <!-- Desktop Nav Links -->
   <div class="navbar__links" [class.is-open]="mobileMenuOpen()">
+    <a class="navbar__avatar-link" routerLink="/" (click)="closeMobileMenu()">
+      <img class="navbar__avatar" src="touxiang.png" alt="avatar" />
+    </a>
     @for (link of navLinks; track link.route) {
       <a class="navbar__link"
          [routerLink]="link.route"

@@ -21,13 +21,11 @@
   backdrop-filter: none;
 
   &.is-scrolled {
-    @include g.glass-surface;
+    background: rgba(4, 4, 12, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-  }
-
-  &.is-hidden {
-    transform: translateY(-100%);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -48,6 +46,28 @@
 
 .navbar__logo {
   font-size: 1.25rem;
+}
+
+.navbar__avatar-link {
+  display: flex;
+  text-decoration: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.navbar__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  .navbar:hover & {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  }
 }
 
 .navbar__name {

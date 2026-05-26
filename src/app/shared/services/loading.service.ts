@@ -1,24 +1,27 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 export type LoadingPhase = 'loading' | 'particles' | 'text' | 'buttons' | 'done';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService {
-  private phase$ = new BehaviorSubject<LoadingPhase>('loading');
-  readonly phase = this.phase$.asObservable();
+  readonly phase = signal<LoadingPhase>('loading');
+
+  private timers: ReturnType<typeof setTimeout>[] = [];
 
   /** 启动 Hero 动画序列 */
   startHeroSequence(): void {
-    this.setPhase('loading');
+    this.cancelTimers();
+    this.phase.set('loading');
 
-    setTimeout(() => this.setPhase('particles'), 200);
-    setTimeout(() => this.setPhase('text'), 1000);
-    setTimeout(() => this.setPhase('buttons'), 1600);
-    setTimeout(() => this.setPhase('done'), 2200);
+    this.timers.push(setTimeout(() => this.phase.set('particles'), 200));
+    this.timers.push(setTimeout(() => this.phase.set('text'), 1000));
+    this.timers.push(setTimeout(() => this.phase.set('buttons'), 1600));
+    this.timers.push(setTimeout(() => this.phase.set('done'), 2200));
   }
 
-  private setPhase(phase: LoadingPhase): void {
-    this.phase$.next(phase);
+  /** 取消所有待执行的定时器 */
+  cancelTimers(): void {
+    this.timers.forEach(t => clearTimeout(t));
+    this.timers = [];
   }
 }

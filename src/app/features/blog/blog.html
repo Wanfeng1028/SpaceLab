@@ -16,6 +16,7 @@
           [placeholder]="t('blog.searchPlaceholder')"
           [value]="searchQuery()"
           (input)="onSearch($event)"
+          [attr.aria-label]="t('blog.searchPlaceholder')"
         />
       </div>
 
@@ -24,6 +25,7 @@
           <button
             class="filter-chip"
             [class.is-active]="selectedCategory() === cat"
+            [attr.aria-pressed]="selectedCategory() === cat"
             (click)="selectCategory(cat)">
             {{ cat === 'all' ? t('common.all') : cat }}
           </button>

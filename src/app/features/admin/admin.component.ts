@@ -28,11 +28,9 @@ export class AdminComponent {
 
   onSaveDraft(): void {
     // TODO: Supabase integration
-    console.log('Save draft:', { title: this.title(), content: this.content(), tags: this.tags() });
   }
 
   onPublish(): void {
     // TODO: Supabase integration
-    console.log('Publish:', { title: this.title(), content: this.content(), tags: this.tags() });
   }
 }

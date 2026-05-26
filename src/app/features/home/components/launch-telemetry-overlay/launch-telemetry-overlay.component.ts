@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, signal, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, signal, computed, HostListener } from '@angular/core';
 
 interface TelemetryPhase {
   label: string;
@@ -19,17 +19,17 @@ interface GaugeTick {
 export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   readonly Math = Math;
 
-  get activeIndex(): number {
+  readonly activeIndex = computed(() => {
     const hours = this.currentTime().getHours();
     if (hours >= 5 && hours < 9) return 0;   // 05:00 - 08:59 (DAWN)
     if (hours >= 9 && hours < 12) return 1;  // 09:00 - 11:59 (MORNING)
     if (hours >= 12 && hours < 14) return 2; // 12:00 - 13:59 (MIDDAY)
     if (hours >= 14 && hours < 19) return 3; // 14:00 - 18:59 (AFTERNOON)
     return 4;                                // 19:00 - 04:59 (NIGHT)
-  }
+  });
 
-  get phases(): TelemetryPhase[] {
-    const idx = this.activeIndex;
+  readonly phases = computed<TelemetryPhase[]>(() => {
+    const idx = this.activeIndex();
     return [
       { label: 'DAWN', active: idx === 0 },
       { label: 'MORNING', active: idx === 1 },
@@ -37,7 +37,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       { label: 'AFTERNOON', active: idx === 3 },
       { label: 'NIGHT', active: idx === 4 },
     ];
-  }
+  });
 
   /** 11 条刻度线角度（从弧线左端到右端均匀分布） */
   readonly ticks: GaugeTick[] = Array.from({ length: 11 }, (_, i) => ({
@@ -71,6 +71,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   private timerId: ReturnType<typeof setInterval> | null = null;
   private connectionRef: EventTarget | null = null;
   private connectionChangeHandler: (() => void) | null = null;
+  private abortController: AbortController | null = null;
 
   @HostListener('window:online')
   onOnline(): void {
@@ -83,6 +84,8 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.abortController = new AbortController();
+
     // 1. Initialize network status and listen for connection changes
     this.updateNetworkStatus();
     this.setupConnectionListener();
@@ -100,6 +103,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     if (this.timerId !== null) {
       clearInterval(this.timerId);
     }
+    this.abortController?.abort();
     this.teardownConnectionListener();
   }
 
@@ -146,8 +150,8 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   get phaseProgress(): number {
-    const idx = this.activeIndex;
-    const total = this.phases.length - 1;
+    const idx = this.activeIndex();
+    const total = this.phases().length - 1;
     return total > 0 ? idx / total : 0;
   }
 
@@ -162,6 +166,27 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Respect prior geolocation consent
+    if (localStorage.getItem('geoConsent') !== 'true') {
+      this.locationInfo.set({
+        status: 'pending',
+        city: 'Click to enable',
+        region: 'Location permission required',
+        latitude: null,
+        longitude: null
+      });
+      return;
+    }
+
+    this.requestGeolocation();
+  }
+
+  grantLocationConsent(): void {
+    localStorage.setItem('geoConsent', 'true');
+    this.requestGeolocation();
+  }
+
+  private requestGeolocation(): void {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
@@ -196,7 +221,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     // 1. Fetch location name via BigDataCloud Reverse Geocoding API (free, keyless)
     try {
       const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
-      const geoRes = await fetch(geoUrl);
+      const geoRes = await fetch(geoUrl, { signal: this.abortController?.signal });
       if (!geoRes.ok) throw new Error('Geocoding response failed');
       const geoData = await geoRes.json();
       
@@ -227,7 +252,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     // 2. Fetch current weather via Open-Meteo API (free, keyless)
     try {
       const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
-      const weatherRes = await fetch(weatherUrl);
+      const weatherRes = await fetch(weatherUrl, { signal: this.abortController?.signal });
       if (!weatherRes.ok) throw new Error('Weather response failed');
       const weatherData = await weatherRes.json();
       

@@ -5,10 +5,12 @@ import {
   OnInit,
   HostListener,
   ChangeDetectionStrategy,
+  DestroyRef,
 } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { I18nService } from '../../../core/services/i18n.service';
 import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-navbar',
@@ -20,15 +22,12 @@ import { filter } from 'rxjs';
 export class NavbarComponent implements OnInit {
   private router = inject(Router);
   private i18n = inject(I18nService);
+  private destroyRef = inject(DestroyRef);
 
   readonly isHome = signal(true);
   readonly isScrolled = signal(false);
-  readonly isHidden = signal(false);
   readonly mobileMenuOpen = signal(false);
   readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
-
-  private lastScrollY = 0;
-  private scrollThreshold = 80;
 
   readonly navLinks = [
     { route: '/blog', labelKey: 'nav.blog' },
@@ -40,7 +39,10 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.events
-      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe((e) => {
         this.isHome.set(e.urlAfterRedirects === '/' || e.urlAfterRedirects === '/home');
         this.mobileMenuOpen.set(false);
@@ -51,17 +53,7 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('window:scroll')
   onScroll(): void {
-    const scrollY = window.scrollY;
-    this.isScrolled.set(scrollY > 20);
-
-    // 在首页 Hero 区域内隐藏导航栏
-    if (this.isHome() && scrollY < this.scrollThreshold) {
-      this.isHidden.set(true);
-    } else {
-      this.isHidden.set(false);
-    }
-
-    this.lastScrollY = scrollY;
+    this.isScrolled.set(window.scrollY > 20);
   }
 
   t(key: string): string {

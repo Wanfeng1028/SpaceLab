@@ -1,5 +1,7 @@
 <div
   class="sls-track"
+  role="tablist"
+  [attr.aria-label]="'Segmented control'"
   [class.sls-track--blue]="tint() === 'blue'"
   [class.sls-track--yellow]="tint() === 'yellow'"
   [class.sls-track--violet]="tint() === 'violet'"
@@ -18,6 +20,9 @@
       class="sls-option"
       [class.sls-option--active]="i === selectedIndex()"
       type="button"
+      role="tab"
+      [attr.aria-selected]="i === selectedIndex()"
+      [attr.aria-controls]="'panel-' + i"
       (click)="onSelect(i)"
     >
       {{ option }}

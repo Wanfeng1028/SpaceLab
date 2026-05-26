@@ -133,6 +133,32 @@
   margin-top: 3px;
 }
 
+.consent-btn {
+  margin-top: 6px;
+  padding: 3px 10px;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #00ffc4;
+  background: rgba(0, 255, 196, 0.08);
+  border: 1px solid rgba(0, 255, 196, 0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: rgba(0, 255, 196, 0.15);
+    border-color: rgba(0, 255, 196, 0.45);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #00ffc4;
+    outline-offset: 2px;
+  }
+}
+
 // ── Left Card specific typography ───────────────────────────
 .telemetry-card--left {
   .gauge-value {

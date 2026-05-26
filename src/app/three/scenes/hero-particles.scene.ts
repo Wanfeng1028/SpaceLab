@@ -26,6 +26,7 @@ export class HeroLightFieldScene {
   private resizeHandler!: () => void;
   private disposed = false;
   private startTime = Date.now();
+  private readonly boundAnimate = this.animate.bind(this);
 
   private readonly dpr: number;
 
@@ -50,6 +51,7 @@ export class HeroLightFieldScene {
       canvas: this.canvas,
       antialias: true,
       alpha: true,
+      preserveDrawingBuffer: true,
     });
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -305,7 +307,7 @@ export class HeroLightFieldScene {
 
   private animate(): void {
     if (this.disposed) return;
-    this.animationId = requestAnimationFrame(() => this.animate());
+    this.animationId = requestAnimationFrame(this.boundAnimate);
 
     const elapsedSeconds = (Date.now() - this.startTime) / 1000;
     this.material.uniforms['uTime'].value = elapsedSeconds;
@@ -322,7 +324,7 @@ export class HeroLightFieldScene {
 
   resume(): void {
     if (!this.disposed && this.animationId === null) {
-      this.animate();
+      this.animationId = requestAnimationFrame(this.boundAnimate);
     }
   }
 
@@ -347,6 +349,30 @@ export class HeroLightFieldScene {
         this.material.uniforms['uMieTint'].value.set(mieColor);
       }
     }
+  }
+
+  /** 采样画面中心区域的加权亮度 (0‒1)，用于驱动 UI 自适应 */
+  getCenterBrightness(): number {
+    if (this.disposed || !this.renderer) return 0;
+    const gl = this.renderer.getContext();
+    const sampleW = 16;
+    const sampleH = 16;
+    const canvasW = this.renderer.domElement.width;
+    const canvasH = this.renderer.domElement.height;
+    const x = Math.floor(canvasW / 2 - sampleW / 2);
+    const y = Math.floor(canvasH / 2 - sampleH / 2);
+    const pixels = new Uint8Array(sampleW * sampleH * 4);
+    gl.readPixels(x, y, sampleW, sampleH, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+    let total = 0;
+    const count = sampleW * sampleH;
+    for (let i = 0; i < count; i++) {
+      const r = pixels[i * 4] / 255;
+      const g = pixels[i * 4 + 1] / 255;
+      const b = pixels[i * 4 + 2] / 255;
+      const a = pixels[i * 4 + 3] / 255;
+      total += (0.2126 * r + 0.7152 * g + 0.0722 * b) * a;
+    }
+    return total / count;
   }
 
   destroy(): void {

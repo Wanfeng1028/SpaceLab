@@ -12,6 +12,7 @@
         <button
           class="filter-chip"
           [class.is-active]="selectedCategory() === cat"
+          [attr.aria-pressed]="selectedCategory() === cat"
           (click)="selectCategory(cat)">
           {{ cat === 'all' ? t('common.all') : cat }}
         </button>
