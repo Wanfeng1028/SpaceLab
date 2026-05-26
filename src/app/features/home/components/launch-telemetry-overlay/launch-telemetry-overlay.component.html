@@ -63,8 +63,8 @@
         <div class="phase-timeline__fill" [style.width.%]="phaseProgress * 100"></div>
       </div>
       <div class="phase-timeline__nodes">
-        @for (phase of phases; track phase.label) {
-          <div class="phase-timeline__node" [class.is-active]="phase.active" [class.is-past]="$index < activeIndex">
+        @for (phase of phases(); track phase.label) {
+          <div class="phase-timeline__node" [class.is-active]="phase.active" [class.is-past]="$index < activeIndex()">
             <span class="phase-timeline__dot"></span>
             <span class="phase-timeline__label">{{ phase.label }}</span>
           </div>

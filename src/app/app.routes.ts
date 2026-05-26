@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -48,21 +49,25 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/admin.component').then(m => m.AdminComponent),
   },
   {
     path: 'admin/write',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/write/write.component').then(m => m.WriteComponent),
   },
   {
     path: 'admin/write/:id',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/write/write.component').then(m => m.WriteComponent),
   },
   {
     path: 'admin/analytics',
+    canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/analytics/analytics.component').then(m => m.AnalyticsComponent),
   },
