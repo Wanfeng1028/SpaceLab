@@ -211,81 +211,49 @@
   text-align: center;
 }
 
-.hero-title {
+.typewriter-container {
   font-family: var(--font-display); // newsreader / Claude 智性宋体
   font-size: clamp(34px, 6.8vw, 72px);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: #ffffff;
-  margin-bottom: 22px;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
-  opacity: 0.96;
-}
-
-.hero-subtitle {
-  font-family: var(--font-sans);
-  font-size: clamp(12px, 1.8vw, 15px);
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  margin-bottom: 42px;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
-}
-
-.cta-container {
+  margin-bottom: 48px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+  opacity: 0.98;
+  min-height: 1.3em; // stable height
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 18px;
+  justify-content: center;
 }
 
-.pill-cta-button {
-  background: #ffffff;
-  color: #000000;
-  border: none;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  padding: 14px 34px;
-  border-radius: 999px;
-  cursor: pointer;
-  box-shadow: 0 12px 35px rgba(255, 255, 255, 0.08);
-  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), background-color 220ms var(--ease-out);
-
-  &:hover {
-    transform: translateY(-2px);
-    background-color: #e5e5e5;
-    box-shadow: 0 18px 45px rgba(255, 255, 255, 0.16);
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.98);
-  }
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.9em;
+  background-color: #ffffff;
+  margin-left: 8px;
+  vertical-align: middle;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  animation: blink 0.8s step-end infinite;
 }
 
-.subtext-link {
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.38);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  cursor: pointer;
-  transition: color 200ms var(--ease-out);
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.75);
-  }
+@keyframes blink {
+  from, to { background-color: transparent }
+  50% { background-color: #ffffff }
 }
 
-// ── 底部版权声明 ──────────────────────────
+// ── 底部版权声明 + 音效提示 ──────────────────
 .minimal-footer {
   position: relative;
   z-index: 3;
   width: 100%;
-  padding: 32px 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   text-align: center;
   font-family: var(--font-sans);
   font-size: 11.5px;
@@ -293,4 +261,23 @@
   color: rgba(255, 255, 255, 0.22);
   letter-spacing: 0.04em;
   text-transform: uppercase;
+
+  .audio-tip {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.36);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    animation: pulseAudioTip 2s infinite alternate;
+  }
+}
+
+@keyframes pulseAudioTip {
+  0% { opacity: 0.65; transform: scale(0.98); }
+  100% { opacity: 0.95; transform: scale(1.02); }
 }

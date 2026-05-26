@@ -27,19 +27,28 @@
 
   <!-- 中央核心文字与 CTA 交互 -->
   <div class="hero-content">
-    <h1 class="hero-title">Workflow changed.<br>Taste didn't.</h1>
-    <p class="hero-subtitle">Designing with systems, code and AI</p>
+    <!-- 打字机效果文本区 -->
+    <h1 class="typewriter-container">
+      <span class="typewriter-text">{{ typedText() }}</span>
+      <span class="typewriter-cursor"></span>
+    </h1>
     
-    <div class="cta-container">
-      <button class="pill-cta-button" (click)="onEnter()">
-        Let's build something
+    <!-- 还原用户之前的精美双色玻璃质感按钮组 -->
+    <div class="space-button-group hero__actions">
+      <button class="space-button space-button--md space-button--blue" (click)="onEnter()">
+        {{ t('home.enter') }}
       </button>
-      <a class="subtext-link" (click)="onContact()">Have a project?</a>
+      <button class="space-button space-button--md space-button--white" (click)="onContact()">
+        {{ t('home.contact') }}
+      </button>
     </div>
   </div>
 
-  <!-- 底部极简居中版权声明 -->
+  <!-- 底部极简居中版权声明与音效激活提示 -->
   <footer class="minimal-footer">
-    Vibed by Gruev — 2026
+    <div>Vibed by Gruev — 2026</div>
+    @if (audioCtxSuspended()) {
+      <div class="audio-tip">🔊 Click anywhere to enable typewriter mechanical sounds</div>
+    }
   </footer>
 </section>
