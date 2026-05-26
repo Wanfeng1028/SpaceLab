@@ -316,14 +316,14 @@
   position: absolute;
   z-index: 3;
   right: clamp(24px, 8vw, 120px);
-  bottom: clamp(80px, 18vh, 220px);
+  bottom: clamp(120px, 25vh, 300px);
   pointer-events: none;
   opacity: 0.7;
   animation: orbFloat 6s ease-in-out infinite;
 
   @media (max-width: 767px) {
     right: 16px;
-    bottom: 100px;
+    bottom: 140px;
     opacity: 0.4;
   }
 }
