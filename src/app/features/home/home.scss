@@ -320,6 +320,7 @@
   pointer-events: none;
   opacity: 0.7;
   animation: orbFloat 6s ease-in-out infinite;
+  will-change: transform;
 
   @media (max-width: 767px) {
     right: 16px;
@@ -416,23 +417,6 @@
   animation: orbRotation var(--time-animation) linear infinite reverse;
 }
 
-.loader svg #orb-clipping polygon:nth-child(5) {
-  transform-origin: 40% 40%;
-  animation: orbRotation var(--time-animation) linear infinite reverse;
-  animation-delay: calc(var(--time-animation) / -2);
-}
-
-.loader svg #orb-clipping polygon:nth-child(6) {
-  transform-origin: 60% 40%;
-  animation: orbRotation var(--time-animation) linear infinite;
-}
-
-.loader svg #orb-clipping polygon:nth-child(7) {
-  transform-origin: 60% 40%;
-  animation: orbRotation var(--time-animation) linear infinite;
-  animation-delay: calc(var(--time-animation) / -1.5);
-}
-
 @keyframes orbRotation {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -448,10 +432,10 @@
 
 @keyframes orbColorize {
   0% { filter: hue-rotate(0deg); }
-  20% { filter: hue-rotate(-30deg); }
-  40% { filter: hue-rotate(-60deg); }
-  60% { filter: hue-rotate(-90deg); }
-  80% { filter: hue-rotate(-45deg); }
+  20% { filter: hue-rotate(-15deg); }
+  40% { filter: hue-rotate(-30deg); }
+  60% { filter: hue-rotate(-45deg); }
+  80% { filter: hue-rotate(-20deg); }
   100% { filter: hue-rotate(0deg); }
 }
 
@@ -600,6 +584,18 @@
   .pulse-ring,
   .holo-scan-line,
   .glitch-text {
+    animation: none !important;
+  }
+
+  .energy-orb-wrapper {
+    animation: none !important;
+  }
+
+  .loader {
+    animation: none !important;
+  }
+
+  .loader svg #orb-clipping polygon {
     animation: none !important;
   }
 }

@@ -216,7 +216,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       thudOsc.type = 'triangle';
       thudOsc.frequency.setValueAtTime(100 + Math.random() * 60, now);
       thudOsc.frequency.exponentialRampToValueAtTime(10, now + 0.04);
-      thudGain.gain.setValueAtTime(0.4, now);
+      thudGain.gain.setValueAtTime(0.3, now);
       thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
 
       thudOsc.connect(thudGain);
@@ -230,7 +230,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       clickOsc.type = 'sine';
       clickOsc.frequency.setValueAtTime(1500 + Math.random() * 300, now);
       clickOsc.frequency.exponentialRampToValueAtTime(300, now + 0.015);
-      clickGain.gain.setValueAtTime(0.25, now);
+      clickGain.gain.setValueAtTime(0.18, now);
       clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
 
       clickOsc.connect(clickGain);
@@ -256,7 +256,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       // Mechanical bell chime frequency (2000Hz)
       bellOsc.frequency.setValueAtTime(2000, now);
 
-      bellGain.gain.setValueAtTime(0.3, now);
+      bellGain.gain.setValueAtTime(0.2, now);
       bellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
       bellOsc.connect(bellGain);
