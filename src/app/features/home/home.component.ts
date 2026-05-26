@@ -15,13 +15,14 @@ import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
 import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
+import { SpaceGlassModalComponent } from '../../shared/components/glass/modal/space-glass-modal.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, LaunchTelemetryOverlayComponent],
+  imports: [ThreeCanvasComponent, LaunchTelemetryOverlayComponent, SpaceGlassModalComponent],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private activeScene: HeroLightFieldScene | null = null;
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // 亮度自适应按钮状态
   isBright = signal<boolean>(false);
+  showContactModal = signal<boolean>(false);
   private brightnessSmoothed = 0;
   private isBrightState = false;
   private brightnessTimer: any = null;
@@ -80,7 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   audioCtxSuspended = signal<boolean>(true);
 
   // Share button state
-  shareToast = signal<string>('');
+  showShareModal = signal<boolean>(false);
 
   private fullText = 'Life is coding...';
   private typingIndex = 0;
@@ -148,38 +150,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onEnter(): void {
-    this.router.navigate(['/projects']);
+    const target = document.querySelector('.systems-diagnostics-section');
+    target?.scrollIntoView({ behavior: 'smooth' });
   }
 
   onContact(): void {
-    window.location.href = 'mailto:hello@spacelab.dev?subject=Hi Gruev!';
+    this.showContactModal.set(true);
   }
 
   async onShare(): Promise<void> {
-    const url = 'https://spacelab.dev';
-    const title = 'SpaceLab — Interactive Space Deck';
-    const text = 'Check out SpaceLab, a cinematic interactive space simulation portfolio.';
-
     try {
-      if (navigator.share) {
-        await navigator.share({ title, text, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        this.showToast('Link copied to clipboard');
-      }
+      await navigator.clipboard.writeText('https://spacelab.dev');
     } catch {
-      try {
-        await navigator.clipboard.writeText(url);
-        this.showToast('Link copied to clipboard');
-      } catch {
-        this.showToast('Copy failed');
-      }
+      // Clipboard API may fail in some environments
     }
-  }
-
-  private showToast(msg: string): void {
-    this.shareToast.set(msg);
-    setTimeout(() => this.shareToast.set(''), 2500);
+    this.showShareModal.set(true);
   }
 
   private startTypewriter(): void {
