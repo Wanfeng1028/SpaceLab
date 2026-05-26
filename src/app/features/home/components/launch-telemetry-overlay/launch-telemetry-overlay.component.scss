@@ -1,189 +1,81 @@
 // ============================================
 // LaunchTelemetryOverlay — SpaceX HUD 遥测面板
-// 绝对定位三段式布局
+// 独立浮动多面板玻璃组件（左、中、右三个模块）
 // ============================================
 
 :host {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-// ── 发射场景背景 ──────────────────────────
-
-.launch-scene {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.launch-scene__sky {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 140% 50% at 50% 15%, rgba(12, 18, 40, 0.9), transparent 60%),
-    linear-gradient(180deg, #010108 0%, #060610 25%, #0c0c1a 50%, #121220 70%, #1a1a2e 100%);
-}
-
-.launch-scene__stars {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 34% 8%, rgba(255, 255, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 56% 22%, rgba(255, 255, 255, 0.4), transparent),
-    radial-gradient(1px 1px at 78% 12%, rgba(255, 255, 255, 0.3), transparent),
-    radial-gradient(1px 1px at 88% 28%, rgba(255, 255, 255, 0.45), transparent),
-    radial-gradient(1px 1px at 22% 35%, rgba(255, 255, 255, 0.25), transparent),
-    radial-gradient(1px 1px at 65% 32%, rgba(255, 255, 255, 0.3), transparent),
-    radial-gradient(1.5px 1.5px at 45% 5%, rgba(200, 220, 255, 0.6), transparent),
-    radial-gradient(1px 1px at 92% 15%, rgba(255, 255, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 8% 28%, rgba(255, 255, 255, 0.2), transparent);
-}
-
-.launch-scene__horizon {
-  position: absolute;
-  bottom: 46%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 5%,
-    rgba(255, 255, 255, 0.05) 20%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.05) 80%,
-    transparent 95%
-  );
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent 10%,
-      rgba(120, 160, 255, 0.03) 30%,
-      rgba(120, 160, 255, 0.05) 50%,
-      rgba(120, 160, 255, 0.03) 70%,
-      transparent 90%
-    );
-    transform: translateY(1px);
-  }
-}
-
-.launch-scene__fog {
-  position: absolute;
-  bottom: 28%;
-  left: -10%;
-  right: -10%;
-  height: 40%;
-  background: radial-gradient(ellipse 120% 60% at 50% 80%,
-    rgba(80, 100, 140, 0.06),
-    transparent 70%
-  );
-  filter: blur(12px);
-}
-
-.launch-scene__pad {
-  position: absolute;
-  bottom: 46%;
-  left: 50%;
-  transform: translateX(-50%);
-
-  &::before {
-    content: '';
-    display: block;
-    width: 3px;
-    height: 50px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.08));
-    margin: 0 auto;
-  }
-
-  &::after {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-    margin-top: -1px;
-  }
-}
-
-.launch-scene__glow {
-  position: absolute;
-  bottom: 34%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 320px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse,
-    rgba(255, 160, 60, 0.07) 0%,
-    rgba(180, 120, 255, 0.03) 35%,
-    rgba(100, 140, 255, 0.02) 55%,
-    transparent 75%
-  );
-  filter: blur(30px);
-}
-
-// ============================================
-// HUD 遥测覆盖层 — 绝对定位三段式
-// ============================================
-
-.telemetry-overlay {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 176px;
-  color: rgba(255, 255, 255, 0.92);
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.55) 28%,
-      rgba(0, 0, 0, 0.94) 100%
-    );
-  backdrop-filter: blur(6px);
-  pointer-events: none;
-  z-index: 2;
-}
-
-// ── 左侧仪表区 ──────────────────────────
-
-.telemetry-left {
-  position: absolute;
-  left: clamp(32px, 5.5vw, 76px);
-  bottom: 54px;
   display: flex;
-  align-items: flex-end;
-  gap: 28px;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  @media (max-width: 900px) {
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
 }
 
-// ── 中间任务状态区 ───────────────────────
+// ── 独立浮动玻璃卡片 ──────────────────────────
 
-.telemetry-center {
-  position: absolute;
-  left: 50%;
-  bottom: 50px;
-  width: min(520px, 38vw);
-  transform: translateX(-50%);
+.telemetry-card {
+  height: 200px;
+  background: rgba(8, 10, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  align-items: stretch;
+  transition: all 300ms var(--ease-out);
+
+  &--left, &--right {
+    width: 320px;
+    flex: 0 0 320px;
+  }
+
+  &--center {
+    flex: 1;
+    min-width: 320px;
+    max-width: 520px;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-// ── 右侧仪表区 ──────────────────────────
-
-.telemetry-right {
-  position: absolute;
-  right: clamp(32px, 5.5vw, 76px);
-  bottom: 54px;
+.gauge-container {
   display: flex;
+  justify-content: space-between;
   align-items: flex-end;
-  gap: 28px;
+  width: 100%;
+  flex: 1;
+}
+
+.telemetry-card__footer {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.45);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 // ── 半圆仪表盘 ───────────────────────────
@@ -192,9 +84,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 96px;
-  height: 96px;
-  flex: 0 0 96px;
+  width: 110px;
+  flex: 0 0 110px;
 }
 
 .gauge-svg {
@@ -235,7 +126,7 @@
 
 .phase-timeline {
   width: 100%;
-  max-width: 460px;
+  max-width: 440px;
 }
 
 .phase-timeline__track {
@@ -323,7 +214,7 @@
 
 .mission-id {
   margin-top: 8px;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-family: var(--font-mono, monospace);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -340,6 +231,7 @@
   width: 82px;
   height: 82px;
   flex: 0 0 82px;
+  margin-bottom: 6px;
 }
 
 .engine-cluster__ring {
@@ -370,48 +262,24 @@
   }
 }
 
-// ── 底部状态栏 ───────────────────────────
-
-.telemetry-caption {
-  position: absolute;
-  left: clamp(32px, 5.5vw, 76px);
-  right: clamp(32px, 5.5vw, 76px);
-  bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.72);
-}
-
 // ============================================
 // 响应式
 // ============================================
 
 @media (max-width: 900px) {
-  .telemetry-left {
-    left: 28px;
-    gap: 16px;
-  }
+  .telemetry-card {
+    height: 190px;
+    padding: 16px;
 
-  .telemetry-right {
-    right: 28px;
-    gap: 16px;
-  }
-
-  .telemetry-center {
-    width: min(420px, 40vw);
+    &--left, &--right {
+      width: 270px;
+      flex: 0 0 270px;
+    }
   }
 
   .gauge {
-    width: 76px;
-    height: 76px;
-    flex-basis: 76px;
+    width: 90px;
+    flex-basis: 90px;
   }
 
   .gauge-svg {
@@ -441,51 +309,40 @@
   .countdown {
     font-size: 36px;
   }
-
-  .telemetry-caption {
-    left: 28px;
-    right: 28px;
-  }
 }
 
 @media (max-width: 640px) {
-  .telemetry-overlay {
-    height: 190px;
+  :host {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 24px;
+    gap: 16px;
   }
 
-  .telemetry-center {
-    left: 50%;
-    bottom: 100px;
-    width: calc(100% - 32px);
+  .telemetry-card {
+    width: 100% !important;
+    flex: none !important;
+    height: auto;
+    min-height: 140px;
+    border-radius: 16px;
+
+    &--center {
+      order: 1; // Countdown panel at the very top on mobile
+    }
+    &--left {
+      order: 2;
+    }
+    &--right {
+      order: 3;
+    }
   }
 
-  .telemetry-left {
-    left: 18px;
-    bottom: 50px;
-    gap: 12px;
-  }
-
-  .telemetry-right {
-    right: 18px;
-    bottom: 50px;
+  .gauge-container {
+    justify-content: space-around;
   }
 
   .engine-cluster {
     display: none;
-  }
-
-  .gauge {
-    width: 62px;
-    height: 62px;
-    flex-basis: 62px;
-  }
-
-  .gauge-svg {
-    height: 38px;
-  }
-
-  .gauge-value {
-    font-size: 18px;
   }
 
   .phase-timeline__label {
@@ -494,15 +351,5 @@
 
   .countdown {
     font-size: 28px;
-  }
-
-  .telemetry-caption {
-    left: 18px;
-    right: 18px;
-    bottom: 10px;
-    flex-direction: column;
-    gap: 4px;
-    text-align: center;
-    font-size: 10px;
   }
 }
