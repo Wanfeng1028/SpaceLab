@@ -1,0 +1,163 @@
+// ============================================
+// HologramChamberSection — 全息室
+// ============================================
+
+:host {
+  display: block;
+}
+
+// ── Centered Header ──
+
+.hologram-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding-top: clamp(40px, 6vw, 80px);
+}
+
+.hologram-header__number {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--space-cyan, #00f5ff);
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.hologram-header__title {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--space-text, rgba(255, 255, 255, 0.88));
+  line-height: 1.05;
+  margin: 0;
+  text-shadow: 0 0 40px rgba(0, 245, 255, 0.15);
+}
+
+.hologram-header__subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+  margin-top: 12px;
+}
+
+// ── Display Info (bottom-left) ──
+
+.hologram-info {
+  position: absolute;
+  bottom: clamp(60px, 8vw, 100px);
+  left: clamp(24px, 4vw, 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.hologram-info__row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.hologram-info__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+  min-width: 90px;
+}
+
+.hologram-info__value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--space-cyan, #00f5ff);
+}
+
+// ── Hints (bottom-right) ──
+
+.hologram-hints {
+  position: absolute;
+  bottom: clamp(60px, 8vw, 100px);
+  right: clamp(24px, 4vw, 60px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.hologram-hints__text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+}
+
+.hologram-hints__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--space-cyan, #00f5ff);
+  box-shadow: 0 0 8px var(--space-cyan, #00f5ff);
+  animation: hint-pulse 2s ease-in-out infinite;
+}
+
+// ── Footer ──
+
+.hologram-footer {
+  width: 100%;
+}
+
+// ── Animations ──
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+// ── Mobile Responsive ──
+
+@media (max-width: 768px) {
+  .hologram-header {
+    padding-top: 24px;
+  }
+
+  .hologram-info {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    margin-top: 24px;
+  }
+
+  .hologram-hints {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 16px;
+  }
+
+  .hud-layer {
+    padding: 20px 16px !important;
+  }
+}
+
+// ── Reduced Motion ──
+
+@media (prefers-reduced-motion: reduce) {
+  .hologram-hints__dot {
+    animation: none;
+  }
+
+  .hologram-header__title {
+    text-shadow: none;
+  }
+}

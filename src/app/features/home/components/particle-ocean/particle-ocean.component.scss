@@ -1,0 +1,86 @@
+// ============================================
+// ParticleOceanSection — 粒子海洋
+// ============================================
+
+:host {
+  display: block;
+}
+
+// ── Vertical Title (bottom-left) ──
+
+.particle-title {
+  position: absolute;
+  bottom: clamp(60px, 8vw, 100px);
+  left: clamp(24px, 4vw, 60px);
+  z-index: 2;
+}
+
+// ── Cursor Hint (bottom-right) ──
+
+.particle-cursor-hint {
+  position: absolute;
+  bottom: clamp(60px, 8vw, 100px);
+  right: clamp(24px, 4vw, 60px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.particle-cursor-hint__icon {
+  font-size: 18px;
+  color: var(--space-cyan, #00f5ff);
+  opacity: 0.7;
+  animation: hint-bob 2s ease-in-out infinite;
+}
+
+.particle-cursor-hint__text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+}
+
+// ── Footer ──
+
+.particle-footer {
+  width: 100%;
+}
+
+// ── Animations ──
+
+@keyframes hint-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+// ── Mobile Responsive ──
+
+@media (max-width: 768px) {
+  .particle-title {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    margin-bottom: 16px;
+  }
+
+  .particle-cursor-hint {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-bottom: 16px;
+  }
+
+  .hud-layer {
+    padding: 20px 16px !important;
+  }
+}
+
+// ── Reduced Motion ──
+
+@media (prefers-reduced-motion: reduce) {
+  .particle-cursor-hint__icon {
+    animation: none;
+  }
+}

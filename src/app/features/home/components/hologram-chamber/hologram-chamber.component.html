@@ -1,0 +1,49 @@
+<section class="space-section" id="hologram-chamber">
+  <!-- WebGL 3D Layer -->
+  <div class="webgl-layer">
+    <app-three-canvas [sceneFactory]="hologramFactory" />
+  </div>
+
+  <!-- HUD Overlay Layer -->
+  <div class="hud-layer">
+    <!-- Centered Header -->
+    <div class="hologram-header">
+      <span class="hologram-header__number">04</span>
+      <h2 class="hologram-header__title">Hologram<br />Chamber</h2>
+      <p class="hologram-header__subtitle">
+        Volumetric display &amp; spatial reconstruction
+      </p>
+    </div>
+
+    <!-- Display Info (bottom-left) -->
+    <div class="hologram-info">
+      <div class="hologram-info__row">
+        <span class="hologram-info__label">Resolution</span>
+        <span class="hologram-info__value">8K Volumetric</span>
+      </div>
+      <div class="hologram-info__row">
+        <span class="hologram-info__label">Refresh Rate</span>
+        <span class="hologram-info__value">120 Hz</span>
+      </div>
+      <div class="hologram-info__row">
+        <span class="hologram-info__label">Color Depth</span>
+        <span class="hologram-info__value">16-bit HDR</span>
+      </div>
+      <div class="hologram-info__row">
+        <span class="hologram-info__label">Field of View</span>
+        <span class="hologram-info__value">360&deg; &times; 180&deg;</span>
+      </div>
+    </div>
+
+    <!-- Hints (bottom-right) -->
+    <div class="hologram-hints">
+      <span class="hologram-hints__text">Hover to interact</span>
+      <span class="hologram-hints__dot"></span>
+    </div>
+
+    <!-- Telemetry Bar -->
+    <div class="hologram-footer">
+      <hud-telemetry-bar [text]="telemetryText()" />
+    </div>
+  </div>
+</section>

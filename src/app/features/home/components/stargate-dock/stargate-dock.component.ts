@@ -1,0 +1,46 @@
+import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  inject,
+  OnInit,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
+import { MagneticButtonComponent } from '../../../../shared/components/hud/magnetic-button.component';
+import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
+import { StargateScene } from '../../../../three/scenes/stargate.scene';
+
+@Component({
+  selector: 'app-stargate-dock',
+  templateUrl: './stargate-dock.component.html',
+  styleUrl: './stargate-dock.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ThreeCanvasComponent, MagneticButtonComponent, TelemetryBarComponent],
+})
+export class StargateDockSection implements OnInit {
+  private readonly router = inject(Router);
+
+  readonly telemetryText = signal('STARGATE DOCK // AWAITING COMMAND');
+
+  readonly stargateFactory = (canvas: HTMLCanvasElement) =>
+    new StargateScene(canvas);
+
+  readonly currentYear = new Date().getFullYear();
+
+  ngOnInit(): void {
+    this.telemetryText.set('STARGATE DOCK // GATE SYSTEM ONLINE');
+  }
+
+  onEnter(): void {
+    this.router.navigate(['/lab']);
+  }
+
+  onReturnTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  onExplore(): void {
+    this.router.navigate(['/projects']);
+  }
+}

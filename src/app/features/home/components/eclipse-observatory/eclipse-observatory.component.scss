@@ -1,0 +1,170 @@
+// ============================================
+// EclipseObservatorySection — 日蚀观测站
+// ============================================
+
+:host {
+  display: block;
+}
+
+// ── Header ──
+
+.eclipse-header {
+  position: absolute;
+  top: clamp(40px, 6vw, 80px);
+  left: clamp(24px, 4vw, 60px);
+  z-index: 2;
+}
+
+.eclipse-header__number {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--space-cyan, #00f5ff);
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.eclipse-header__title {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--space-text, rgba(255, 255, 255, 0.88));
+  line-height: 1.05;
+  margin: 0;
+}
+
+.eclipse-header__subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+  margin-top: 10px;
+}
+
+// ── Metrics Panel (left ~30%) ──
+
+.eclipse-metrics {
+  position: absolute;
+  left: clamp(24px, 4vw, 60px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(200px, 30%, 320px);
+  z-index: 2;
+}
+
+// ── Scale Ticks (right side) ──
+
+.eclipse-scale {
+  position: absolute;
+  right: clamp(24px, 4vw, 60px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+}
+
+.eclipse-scale__tick {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row-reverse;
+}
+
+.eclipse-scale__bar {
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: width 300ms var(--ease-out, ease-out), background 300ms;
+
+  .eclipse-scale__tick--major & {
+    width: 28px;
+    height: 2px;
+    background: var(--space-cyan, #00f5ff);
+    box-shadow: 0 0 6px rgba(0, 245, 255, 0.3);
+  }
+}
+
+.eclipse-scale__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+  white-space: nowrap;
+  min-width: 32px;
+  text-align: right;
+}
+
+// ── Footer Telemetry Bar ──
+
+.eclipse-footer {
+  width: 100%;
+}
+
+// ── Mobile Responsive ──
+
+@media (max-width: 768px) {
+  .eclipse-metrics {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .eclipse-scale {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: 16px;
+  }
+
+  .eclipse-scale__tick {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .eclipse-scale__bar {
+    width: 1px;
+    height: 12px;
+
+    .eclipse-scale__tick--major & {
+      width: 2px;
+      height: 20px;
+    }
+  }
+
+  .eclipse-scale__label {
+    display: none;
+  }
+
+  .eclipse-header {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 24px;
+  }
+
+  .hud-layer {
+    padding: 20px 16px !important;
+  }
+}
+
+// ── Reduced Motion ──
+
+@media (prefers-reduced-motion: reduce) {
+  .eclipse-scale__bar {
+    transition: none;
+  }
+}

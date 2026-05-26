@@ -1,0 +1,131 @@
+// ============================================
+// StargateDockSection — 星际之门
+// ============================================
+
+:host {
+  display: block;
+}
+
+// ── Centered Content ──
+
+.stargate-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+}
+
+.stargate-content__number {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--space-cyan, #00f5ff);
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.stargate-content__title {
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 7vw, 80px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--space-text, rgba(255, 255, 255, 0.88));
+  line-height: 1.0;
+  margin: 0;
+  text-shadow:
+    0 0 60px rgba(0, 245, 255, 0.2),
+    0 0 120px rgba(0, 245, 255, 0.08);
+}
+
+.stargate-content__subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+  margin-top: 16px;
+  margin-bottom: 40px;
+}
+
+// ── Button Row ──
+
+.stargate-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+// ── Footer Copyright Row ──
+
+.stargate-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+}
+
+.stargate-copyright {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--space-muted, rgba(255, 255, 255, 0.35));
+  text-transform: uppercase;
+}
+
+.stargate-coordinates {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--space-muted, rgba(255, 255, 255, 0.35));
+  text-transform: uppercase;
+}
+
+// ── Footer Telemetry Bar ──
+
+.stargate-footer {
+  width: 100%;
+  margin-top: 12px;
+}
+
+// ── Mobile Responsive ──
+
+@media (max-width: 768px) {
+  .stargate-content__title {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+
+  .stargate-content__subtitle {
+    margin-bottom: 28px;
+  }
+
+  .stargate-footer-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .hud-layer {
+    padding: 20px 16px !important;
+  }
+}
+
+// ── Reduced Motion ──
+
+@media (prefers-reduced-motion: reduce) {
+  .stargate-content__title {
+    text-shadow: none;
+  }
+}

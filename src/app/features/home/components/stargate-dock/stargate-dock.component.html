@@ -1,0 +1,45 @@
+<section class="space-section" id="stargate-dock">
+  <!-- WebGL 3D Layer -->
+  <div class="webgl-layer">
+    <app-three-canvas [sceneFactory]="stargateFactory" />
+  </div>
+
+  <!-- HUD Overlay Layer -->
+  <div class="hud-layer">
+    <!-- Centered Title + Subtitle + Buttons -->
+    <div class="stargate-content">
+      <span class="stargate-content__number">05</span>
+      <h2 class="stargate-content__title">Stargate<br />Dock</h2>
+      <p class="stargate-content__subtitle">
+        Hyperspace transit &amp; deep-space navigation hub
+      </p>
+
+      <div class="stargate-buttons">
+        <hud-magnetic-button (clicked)="onEnter()">
+          Enter the Lab
+        </hud-magnetic-button>
+        <hud-magnetic-button (clicked)="onExplore()">
+          Explore Projects
+        </hud-magnetic-button>
+        <hud-magnetic-button (clicked)="onReturnTop()">
+          Return to Top
+        </hud-magnetic-button>
+      </div>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="stargate-footer-row">
+      <span class="stargate-copyright">
+        &copy; {{ currentYear }} SpaceLab. All rights reserved.
+      </span>
+      <span class="stargate-coordinates">
+        LAT 0.000 &middot; LON 0.000 &middot; ALT 36,000 km
+      </span>
+    </div>
+
+    <!-- Telemetry Bar -->
+    <div class="stargate-footer">
+      <hud-telemetry-bar [text]="telemetryText()" />
+    </div>
+  </div>
+</section>

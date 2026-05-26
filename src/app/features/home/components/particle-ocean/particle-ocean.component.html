@@ -1,0 +1,25 @@
+<section class="space-section" id="particle-ocean">
+  <!-- WebGL 3D Layer -->
+  <div class="webgl-layer">
+    <app-three-canvas [sceneFactory]="particleFactory" />
+  </div>
+
+  <!-- HUD Overlay Layer -->
+  <div class="hud-layer">
+    <!-- Vertical Title (bottom-left) -->
+    <div class="particle-title">
+      <hud-vertical-title number="03" title="Particle Ocean" />
+    </div>
+
+    <!-- Cursor Hint (bottom-right) -->
+    <div class="particle-cursor-hint">
+      <span class="particle-cursor-hint__icon">&#9757;</span>
+      <span class="particle-cursor-hint__text">Move to create waves</span>
+    </div>
+
+    <!-- Telemetry Bar -->
+    <div class="particle-footer">
+      <hud-telemetry-bar [text]="telemetryText()" />
+    </div>
+  </div>
+</section>

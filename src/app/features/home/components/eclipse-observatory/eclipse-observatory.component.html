@@ -1,0 +1,51 @@
+<section class="space-section" id="eclipse-observatory">
+  <!-- WebGL 3D Layer -->
+  <div class="webgl-layer">
+    <app-three-canvas [sceneFactory]="eclipseFactory" />
+  </div>
+
+  <!-- HUD Overlay Layer -->
+  <div class="hud-layer">
+    <!-- Header (top-left) -->
+    <div class="eclipse-header">
+      <span class="eclipse-header__number">02</span>
+      <h2 class="eclipse-header__title">Eclipse<br />Observatory</h2>
+      <p class="eclipse-header__subtitle">
+        Corona imaging &amp; chromosphere telemetry
+      </p>
+    </div>
+
+    <!-- Left Metrics Panel -->
+    <div class="eclipse-metrics">
+      <hud-frame>
+        <hud-metric
+          label="Corona Temp"
+          value="1.5M K"
+          color="var(--space-cyan)"
+          [animated]="true"
+        />
+        <hud-metric label="Umbra Radius" value="2,684 km" />
+        <hud-metric label="Shadow Speed" value="3,400 km/h" />
+        <hud-metric label="Duration" value="4m 33s" />
+        <hud-metric label="Saros Cycle" value="136" />
+      </hud-frame>
+    </div>
+
+    <!-- Right Scale Ticks -->
+    <div class="eclipse-scale">
+      @for (tick of scaleTicks; track tick.value) {
+        <div class="eclipse-scale__tick" [class.eclipse-scale__tick--major]="tick.major">
+          <span class="eclipse-scale__bar"></span>
+          @if (tick.major) {
+            <span class="eclipse-scale__label">{{ tick.value }}&deg;</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Bottom Telemetry Bar -->
+    <div class="eclipse-footer">
+      <hud-telemetry-bar [text]="telemetryText()" />
+    </div>
+  </div>
+</section>

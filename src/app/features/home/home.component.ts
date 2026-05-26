@@ -16,13 +16,25 @@ import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
 import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { SpaceGlassModalComponent } from '../../shared/components/glass/modal/space-glass-modal.component';
+import { EclipseObservatorySection } from './components/eclipse-observatory/eclipse-observatory.component';
+import { ParticleOceanSection } from './components/particle-ocean/particle-ocean.component';
+import { HologramChamberSection } from './components/hologram-chamber/hologram-chamber.component';
+import { StargateDockSection } from './components/stargate-dock/stargate-dock.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, LaunchTelemetryOverlayComponent, SpaceGlassModalComponent],
+  imports: [
+    ThreeCanvasComponent,
+    LaunchTelemetryOverlayComponent,
+    SpaceGlassModalComponent,
+    EclipseObservatorySection,
+    ParticleOceanSection,
+    HologramChamberSection,
+    StargateDockSection,
+  ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private activeScene: HeroLightFieldScene | null = null;
