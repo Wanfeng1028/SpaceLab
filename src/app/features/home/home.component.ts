@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Share button state
   showShareModal = signal<boolean>(false);
+  shareToast = signal<string | null>(null);
 
   private fullText = 'Life is coding...';
   private typingIndex = 0;
