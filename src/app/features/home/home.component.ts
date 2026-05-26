@@ -6,15 +6,19 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
+import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
+import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, ThreeCanvasComponent],
 })
 export class HomeComponent implements OnInit {
+  sceneFactory = (canvas: HTMLCanvasElement) => new HeroLightFieldScene(canvas);
+
   private router = inject(Router);
   private i18n = inject(I18nService);
 

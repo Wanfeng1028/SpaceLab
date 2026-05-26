@@ -22,12 +22,8 @@
     <a routerLink="/projects" class="nav-link">Projects</a>
   </header>
 
-  <!-- 黑曜石日食星体 (Conic-Radial Eclipse Flare & Mask) -->
-  <div class="eclipse-container">
-    <div class="eclipse-flare yellow-orange"></div>
-    <div class="eclipse-flare blue-purple"></div>
-    <div class="eclipse-mask"></div>
-  </div>
+  <!-- WebGL 大气物理散射日食画布组件 -->
+  <app-three-canvas [sceneFactory]="sceneFactory" class="backdrop-stars" />
 
   <!-- 中央核心文字与 CTA 交互 -->
   <div class="hero-content">
