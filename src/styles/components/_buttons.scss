@@ -88,18 +88,22 @@
 
   // Color variants
   &.is-blue {
-    background: rgba(26, 115, 232, 0.14);
+    background: rgba(0, 188, 255, 0.36);
+    color: #fff;
   }
 
   &.is-yellow {
-    background: rgba(255, 210, 31, 0.18);
+    background: rgba(255, 210, 31, 0.36);
+    color: #fff;
   }
 
   &.is-violet {
-    background: rgba(143, 124, 255, 0.14);
+    background: rgba(189, 0, 255, 0.32);
+    color: #fff;
   }
 
   &.is-rose {
-    background: rgba(243, 185, 200, 0.16);
+    background: rgba(255, 0, 127, 0.34);
+    color: #fff;
   }
 }
