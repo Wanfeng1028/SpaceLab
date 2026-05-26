@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, signal } from '@angular/core';
 
 interface TelemetryPhase {
   label: string;
@@ -20,7 +20,7 @@ interface EngineDot {
   styleUrl: './launch-telemetry-overlay.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LaunchTelemetryOverlayComponent {
+export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   readonly Math = Math;
 
   readonly telemetry = {
@@ -31,10 +31,7 @@ export class LaunchTelemetryOverlayComponent {
     countdown: 'T- 00:00:01',
     mission: 'NROL-172',
     gForce: '1.0',
-    date: '5月12日',
     author: '@SpaceX',
-    description:
-      '北京时间2026年5月12日10:14，SpaceX猎鹰9号火箭从美国加利福尼亚州范登堡太空军基地4号航天发射中心SLC-4E工作发射，将NROL-172任务卫星送入近地轨道。',
   };
 
   readonly phases: TelemetryPhase[] = [
@@ -58,9 +55,36 @@ export class LaunchTelemetryOverlayComponent {
     lit: i < 3,
   }));
 
+  /** 当前时间，每秒刷新 */
+  readonly currentTime = signal(new Date());
+
+  private timerId: ReturnType<typeof setInterval> | null = null;
+
+  ngOnInit(): void {
+    this.timerId = setInterval(() => {
+      this.currentTime.set(new Date());
+    }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerId !== null) {
+      clearInterval(this.timerId);
+    }
+  }
+
+  /** 格式化为 yyyy-MM-dd HH:mm:ss */
+  get formattedTime(): string {
+    return this.formatDate(this.currentTime());
+  }
+
   get phaseProgress(): number {
     const idx = this.activeIndex;
     const total = this.phases.length - 1;
     return total > 0 ? idx / total : 0;
+  }
+
+  private formatDate(d: Date): string {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   }
 }

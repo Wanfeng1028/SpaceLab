@@ -121,41 +121,49 @@
   flex-direction: column;
   background: linear-gradient(180deg,
     transparent 0%,
-    rgba(0, 0, 0, 0.4) 20%,
-    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.35) 15%,
+    rgba(0, 0, 0, 0.7) 50%,
     rgba(0, 0, 0, 0.92) 100%
   );
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-// ── 第一层：遥测主区 ─────────────────────
+// ── 三列遥测主区 ─────────────────────────
 
 .telemetry-main {
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 240px minmax(0, 1fr) 240px;
   align-items: center;
-  gap: 20px;
-  padding: 16px 28px 8px;
-  min-height: 100px;
+  gap: 28px;
+  padding: 20px 32px 10px;
+  min-height: 110px;
 }
 
-.telemetry-main__left,
-.telemetry-main__right {
+// ── 左侧仪表区 ──────────────────────────
+
+.telemetry-left {
   display: flex;
   align-items: flex-end;
-  gap: 16px;
+  gap: 18px;
 }
 
-.telemetry-main__right {
-  align-items: center;
-}
+// ── 中间任务状态区 ───────────────────────
 
-.telemetry-main__center {
+.telemetry-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
+}
+
+// ── 右侧仪表区 ──────────────────────────
+
+.telemetry-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: flex-end;
 }
 
 // ── 半圆仪表盘 ───────────────────────────
@@ -164,11 +172,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 82px;
+  width: 86px;
 
   &__svg {
-    width: 82px;
-    height: 50px;
+    width: 86px;
+    height: 52px;
     margin-bottom: 4px;
   }
 
@@ -206,7 +214,7 @@
 .timeline {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .timeline__track {
@@ -295,7 +303,7 @@
 
   &__time {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 36px;
+    font-size: 38px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.04em;
@@ -322,8 +330,8 @@
   justify-content: center;
 
   &__ring {
-    width: 68px;
-    height: 68px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: grid;
@@ -350,69 +358,57 @@
   }
 }
 
-// ── 第二层：底部说明区 ───────────────────
+// ── 底部状态栏 ───────────────────────────
 
 .telemetry-caption {
-  padding: 8px 28px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 32px 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.telemetry-caption__meta {
+.caption-group {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
+  gap: 8px;
 }
 
-.telemetry-caption__author {
+.caption-author {
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
-.telemetry-caption__sep {
+.caption-sep {
   font-size: 10px;
   color: rgba(255, 255, 255, 0.2);
 }
 
-.telemetry-caption__date {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
-}
-
-.telemetry-caption__body {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.telemetry-caption__text {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.4);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex: 1;
-}
-
-.telemetry-caption__expand {
+.caption-mission {
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.45);
-  white-space: nowrap;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: color 200ms;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.35);
+}
 
-  &:hover {
-    color: rgba(255, 255, 255, 0.8);
-  }
+.caption-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.caption-time {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
 }
 
 // ============================================
@@ -421,26 +417,26 @@
 
 @media (max-width: 1199px) {
   .telemetry-main {
-    grid-template-columns: 180px 1fr 180px;
-    gap: 16px;
-    padding: 14px 24px 6px;
+    grid-template-columns: 210px minmax(0, 1fr) 210px;
+    gap: 20px;
+    padding: 18px 28px 8px;
   }
 }
 
 @media (max-width: 991px) {
   .telemetry-main {
-    grid-template-columns: 160px 1fr 160px;
-    gap: 12px;
-    padding: 12px 20px 4px;
-    min-height: 88px;
+    grid-template-columns: 190px minmax(0, 1fr) 190px;
+    gap: 18px;
+    padding: 14px 24px 6px;
+    min-height: 96px;
   }
 
   .gauge {
-    width: 68px;
+    width: 72px;
 
     &__svg {
-      width: 68px;
-      height: 42px;
+      width: 72px;
+      height: 44px;
     }
 
     &__value {
@@ -452,8 +448,13 @@
     }
   }
 
+  .telemetry-left,
+  .telemetry-right {
+    gap: 14px;
+  }
+
   .countdown__time {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   .countdown__prefix {
@@ -461,9 +462,9 @@
   }
 
   .engine-cluster__ring {
-    width: 56px;
-    height: 56px;
-    padding: 6px;
+    width: 60px;
+    height: 60px;
+    padding: 7px;
   }
 
   .engine-cluster__dot {
@@ -472,37 +473,37 @@
   }
 
   .telemetry-caption {
-    padding: 6px 20px 12px;
+    padding: 6px 24px 12px;
   }
 }
 
 @media (max-width: 767px) {
   .telemetry-main {
-    grid-template-columns: 120px 1fr 120px;
-    gap: 8px;
-    padding: 10px 16px 4px;
-    min-height: 76px;
+    grid-template-columns: 140px 1fr 140px;
+    gap: 10px;
+    padding: 12px 16px 4px;
+    min-height: 80px;
   }
 
-  .telemetry-main__left,
-  .telemetry-main__right {
+  .telemetry-left,
+  .telemetry-right {
     gap: 10px;
   }
 
   .gauge {
-    width: 52px;
+    width: 58px;
 
     &__svg {
-      width: 52px;
-      height: 32px;
+      width: 58px;
+      height: 36px;
     }
 
     &__label {
-      font-size: 7px;
+      font-size: 8px;
     }
 
     &__value {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     &__unit {
@@ -525,7 +526,7 @@
   }
 
   .countdown__time {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .mission-id {
@@ -533,9 +534,9 @@
   }
 
   .engine-cluster__ring {
-    width: 44px;
-    height: 44px;
-    padding: 4px;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
     gap: 2px;
   }
 
@@ -546,11 +547,8 @@
 
   .telemetry-caption {
     padding: 6px 16px 10px;
-  }
-
-  .telemetry-caption__text {
-    font-size: 11px;
-    -webkit-line-clamp: 2;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
   .atmosphere__tower {
@@ -560,38 +558,53 @@
 
 @media (max-width: 479px) {
   .telemetry-main {
-    grid-template-columns: 90px 1fr;
-    gap: 6px;
-    padding: 8px 12px 4px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 12px 4px;
+    min-height: auto;
   }
 
-  .telemetry-main__right {
+  .telemetry-center {
+    order: -1;
+  }
+
+  .telemetry-left {
+    justify-content: center;
+  }
+
+  .telemetry-right {
+    justify-content: center;
+  }
+
+  .engine-cluster {
     display: none;
-  }
-
-  .gauge {
-    width: 42px;
-
-    &__svg {
-      width: 42px;
-      height: 26px;
-    }
-
-    &__value {
-      font-size: 13px;
-    }
   }
 
   .timeline__text {
     display: none;
   }
 
-  .countdown__time {
-    font-size: 18px;
+  .gauge {
+    width: 52px;
+
+    &__svg {
+      width: 52px;
+      height: 32px;
+    }
+
+    &__value {
+      font-size: 14px;
+    }
   }
 
-  .telemetry-caption__text {
-    font-size: 10px;
-    -webkit-line-clamp: 1;
+  .countdown__time {
+    font-size: 20px;
+  }
+
+  .telemetry-caption {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 12px 8px;
   }
 }

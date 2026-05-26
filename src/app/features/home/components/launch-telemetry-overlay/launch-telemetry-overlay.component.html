@@ -7,13 +7,12 @@
   <div class="atmosphere__tower"></div>
 </div>
 
-<!-- HUD 遥测面板（贴在卡片底部） -->
+<!-- HUD 遥测面板 -->
 <div class="hud">
-  <!-- 第一层：遥测仪表 + 时间轴 + 倒计时 -->
+  <!-- 主遥测区：三列布局 -->
   <div class="telemetry-main">
-    <!-- 左侧仪表区 -->
-    <div class="telemetry-main__left">
-      <!-- SPEED -->
+    <!-- 左侧：SPEED / ALTITUDE -->
+    <div class="telemetry-left">
       <div class="gauge">
         <svg class="gauge__svg" viewBox="0 0 120 72" fill="none">
           <path d="M10 66 A50 50 0 0 1 110 66"
@@ -39,7 +38,6 @@
         <div class="gauge__unit">{{ telemetry.speedUnit }}</div>
       </div>
 
-      <!-- ALTITUDE -->
       <div class="gauge">
         <svg class="gauge__svg" viewBox="0 0 120 72" fill="none">
           <path d="M10 66 A50 50 0 0 1 110 66"
@@ -66,9 +64,8 @@
       </div>
     </div>
 
-    <!-- 中间状态区 -->
-    <div class="telemetry-main__center">
-      <!-- 时间轴 -->
+    <!-- 中间：时间轴 + 倒计时 + 任务编号 -->
+    <div class="telemetry-center">
       <div class="timeline">
         <div class="timeline__track">
           <div class="timeline__fill" [style.width.%]="phaseProgress * 100"></div>
@@ -83,19 +80,16 @@
         </div>
       </div>
 
-      <!-- 倒计时 -->
       <div class="countdown">
         <span class="countdown__prefix">T-</span>
         <span class="countdown__time">00:00:01</span>
       </div>
 
-      <!-- 任务编号 -->
       <div class="mission-id">{{ telemetry.mission }}</div>
     </div>
 
-    <!-- 右侧仪表区 -->
-    <div class="telemetry-main__right">
-      <!-- G-FORCE -->
+    <!-- 右侧：G-FORCE / 发动机阵列 -->
+    <div class="telemetry-right">
       <div class="gauge">
         <svg class="gauge__svg" viewBox="0 0 120 72" fill="none">
           <path d="M10 66 A50 50 0 0 1 110 66"
@@ -121,7 +115,6 @@
         <div class="gauge__unit">G</div>
       </div>
 
-      <!-- 发动机阵列 -->
       <div class="engine-cluster">
         <div class="engine-cluster__ring">
           @for (dot of engineDots; track $index) {
@@ -132,16 +125,16 @@
     </div>
   </div>
 
-  <!-- 第二层：底部说明区 -->
+  <!-- 底部状态栏 -->
   <div class="telemetry-caption">
-    <div class="telemetry-caption__meta">
-      <span class="telemetry-caption__author">{{ telemetry.author }}</span>
-      <span class="telemetry-caption__sep">·</span>
-      <span class="telemetry-caption__date">{{ telemetry.date }}</span>
-    </div>
-    <div class="telemetry-caption__body">
-      <span class="telemetry-caption__text">{{ telemetry.description }}</span>
-      <span class="telemetry-caption__expand">展开</span>
-    </div>
+    <span class="caption-group">
+      <span class="caption-author">{{ telemetry.author }}</span>
+      <span class="caption-sep">·</span>
+      <span class="caption-mission">{{ telemetry.mission }}</span>
+    </span>
+    <span class="caption-group">
+      <span class="caption-label">LOCAL TIME</span>
+      <span class="caption-time">{{ formattedTime }}</span>
+    </span>
   </div>
 </div>
