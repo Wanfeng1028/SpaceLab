@@ -79,6 +79,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   typedText = signal<string>('');
   audioCtxSuspended = signal<boolean>(true);
 
+  // Share button state
+  shareToast = signal<string>('');
+
   private fullText = 'Life is coding...';
   private typingIndex = 0;
   private typingTimer: any = null;
@@ -150,6 +153,33 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onContact(): void {
     window.location.href = 'mailto:hello@spacelab.dev?subject=Hi Gruev!';
+  }
+
+  async onShare(): Promise<void> {
+    const url = 'https://spacelab.dev';
+    const title = 'SpaceLab — Interactive Space Deck';
+    const text = 'Check out SpaceLab, a cinematic interactive space simulation portfolio.';
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        this.showToast('Link copied to clipboard');
+      }
+    } catch {
+      try {
+        await navigator.clipboard.writeText(url);
+        this.showToast('Link copied to clipboard');
+      } catch {
+        this.showToast('Copy failed');
+      }
+    }
+  }
+
+  private showToast(msg: string): void {
+    this.shareToast.set(msg);
+    setTimeout(() => this.shareToast.set(''), 2500);
   }
 
   private startTypewriter(): void {
