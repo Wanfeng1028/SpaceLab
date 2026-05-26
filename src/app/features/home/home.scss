@@ -250,8 +250,36 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 56px;
   padding: 0 24px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.launch-video-card {
+  width: min(980px, calc(100vw - 48px));
+  height: 320px;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+
+  @media (max-width: 1199px) {
+    width: min(980px, calc(100vw - 32px));
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100vw - 24px);
+    height: 280px;
+    border-radius: 16px;
+  }
+
+  @media (max-width: 479px) {
+    height: 240px;
+    border-radius: 12px;
+  }
 }
 
 // ── 底部版权声明 + 音效提示 ──────────────────

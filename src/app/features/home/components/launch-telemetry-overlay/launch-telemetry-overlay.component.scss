@@ -5,60 +5,111 @@
 :host {
   display: block;
   width: 100%;
-}
-
-// ── 发射视频模拟卡片 ──────────────────────
-
-.launch-card {
+  height: 100%;
   position: relative;
-  width: min(1080px, calc(100vw - 48px));
-  height: 320px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #050505;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.65);
 }
 
-// ── 深空大气背景 ─────────────────────────
+// ── 深空发射视频氛围背景 ──────────────────
 
-.launch-card__atmosphere {
+.atmosphere {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-.launch-card__haze {
+.atmosphere__stars {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(30, 40, 60, 0.6), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 30% 90%, rgba(180, 120, 60, 0.12), transparent 60%),
-    linear-gradient(180deg, #020208 0%, #0a0a12 50%, #14141e 100%);
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 34% 8%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 56% 22%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 78% 12%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 88% 28%, rgba(255, 255, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 22% 35%, rgba(255, 255, 255, 0.25), transparent),
+    radial-gradient(1px 1px at 65% 32%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 45% 5%, rgba(200, 220, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 92% 15%, rgba(255, 255, 255, 0.35), transparent),
+    radial-gradient(1px 1px at 8% 28%, rgba(255, 255, 255, 0.2), transparent);
 }
 
-.launch-card__horizon {
+.atmosphere__haze {
   position: absolute;
-  bottom: 44%;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 140% 60% at 50% 100%, rgba(20, 28, 50, 0.7), transparent 65%),
+    radial-gradient(ellipse 80% 50% at 30% 95%, rgba(160, 100, 40, 0.08), transparent 50%),
+    linear-gradient(180deg,
+      rgba(2, 2, 10, 1) 0%,
+      rgba(4, 4, 16, 0.98) 30%,
+      rgba(8, 8, 20, 0.95) 55%,
+      rgba(16, 16, 28, 0.9) 100%
+    );
+}
+
+.atmosphere__horizon {
+  position: absolute;
+  bottom: 48%;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 5%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.08) 70%, transparent 95%);
+  background: linear-gradient(90deg,
+    transparent 8%,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.06) 75%,
+    transparent 92%
+  );
 }
 
-.launch-card__glow {
+.atmosphere__glow {
   position: absolute;
-  bottom: 38%;
+  bottom: 40%;
   left: 50%;
   transform: translateX(-50%);
-  width: 180px;
-  height: 80px;
+  width: 260px;
+  height: 100px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(255, 160, 60, 0.08), transparent 70%);
-  filter: blur(20px);
+  background: radial-gradient(ellipse,
+    rgba(255, 160, 60, 0.06) 0%,
+    rgba(255, 120, 40, 0.03) 40%,
+    transparent 70%
+  );
+  filter: blur(24px);
 }
 
-// ── HUD 面板 ─────────────────────────────
+.atmosphere__tower {
+  position: absolute;
+  bottom: 44%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 38px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.08));
+  opacity: 0.5;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 1px;
+    height: 22px;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.06));
+  }
+
+  &::before {
+    left: -6px;
+    transform: rotate(-4deg);
+  }
+
+  &::after {
+    right: -6px;
+    transform: rotate(4deg);
+  }
+}
+
+// ── HUD 遥测面板 ─────────────────────────
 
 .hud {
   position: absolute;
@@ -67,40 +118,44 @@
   right: 0;
   z-index: 2;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 0 24px 0;
-  gap: 16px;
-  height: 170px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.55) 35%, rgba(0, 0, 0, 0.85) 100%);
+  flex-direction: column;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 20%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-// ── 左侧 / 右侧仪表 ─────────────────────
+// ── 第一层：遥测主区 ─────────────────────
 
-.hud__left,
-.hud__right {
+.telemetry-main {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 28px 8px;
+  min-height: 100px;
+}
+
+.telemetry-main__left,
+.telemetry-main__right {
   display: flex;
   align-items: flex-end;
-  gap: 20px;
-  flex-shrink: 0;
-}
-
-.hud__right {
-  align-items: center;
   gap: 16px;
 }
 
-// ── 中间区域 ─────────────────────────────
+.telemetry-main__right {
+  align-items: center;
+}
 
-.hud__center {
-  flex: 1;
+.telemetry-main__center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
   gap: 6px;
   min-width: 0;
-  padding-bottom: 8px;
 }
 
 // ── 半圆仪表盘 ───────────────────────────
@@ -109,22 +164,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90px;
+  width: 82px;
 
-  &__arc {
-    width: 90px;
-    height: 54px;
-    margin-bottom: 2px;
+  &__svg {
+    width: 82px;
+    height: 50px;
+    margin-bottom: 4px;
   }
 
   &__label {
     font-family: var(--font-sans);
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.45);
-    margin-bottom: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2px;
   }
 
   &__value {
@@ -142,20 +197,7 @@
     font-weight: 500;
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.35);
-    margin-top: 1px;
-  }
-
-  &--compact {
-    width: 72px;
-
-    .gauge__arc {
-      width: 72px;
-      height: 44px;
-    }
-
-    .gauge__value {
-      font-size: 18px;
-    }
+    margin-top: 3px;
   }
 }
 
@@ -164,22 +206,21 @@
 .timeline {
   position: relative;
   width: 100%;
-  max-width: 420px;
-  margin-bottom: 4px;
+  max-width: 400px;
 }
 
 .timeline__track {
   position: absolute;
-  top: 4px;
+  top: 5px;
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .timeline__fill {
   height: 100%;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.5);
   transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -193,46 +234,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
 
 .timeline__dot {
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   background: transparent;
   transition: all 300ms var(--ease-out);
 
   .is-past & {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.2);
   }
 
   .is-active & {
     border-color: #ffffff;
     background: #ffffff;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
 }
 
 .timeline__text {
   font-family: var(--font-sans);
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.28);
   white-space: nowrap;
   transition: color 300ms var(--ease-out);
 
   .is-active & {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
   }
 
   .is-past & {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
   }
 }
 
@@ -241,37 +282,36 @@
 .countdown {
   display: flex;
   align-items: baseline;
-  gap: 4px;
-  margin-top: 2px;
+  gap: 6px;
+  margin-top: 4px;
 
   &__prefix {
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
     letter-spacing: 0.06em;
   }
 
   &__time {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.04em;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+    text-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
   }
 }
 
-// ── 任务名称 ─────────────────────────────
+// ── 任务编号 ─────────────────────────────
 
 .mission-id {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
-  margin-top: 1px;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 // ── 发动机阵列 ───────────────────────────
@@ -282,77 +322,77 @@
   justify-content: center;
 
   &__ring {
-    width: 56px;
-    height: 56px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     place-items: center;
-    gap: 2px;
-    padding: 6px;
+    gap: 3px;
+    padding: 8px;
   }
 
   &__dot {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     transition: all 400ms var(--ease-out);
 
     &.is-lit {
-      background: rgba(255, 180, 80, 0.5);
-      border-color: rgba(255, 180, 80, 0.3);
-      box-shadow: 0 0 8px rgba(255, 160, 60, 0.35);
+      background: rgba(255, 180, 80, 0.45);
+      border-color: rgba(255, 180, 80, 0.25);
+      box-shadow: 0 0 10px rgba(255, 160, 60, 0.3);
     }
   }
 }
 
-// ── 底部说明区 ───────────────────────────
+// ── 第二层：底部说明区 ───────────────────
 
-.hud__footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  padding: 10px 24px 12px;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+.telemetry-caption {
+  padding: 8px 28px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.hud__meta {
+.telemetry-caption__meta {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 4px;
 }
 
-.hud__author {
+.telemetry-caption__author {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.hud__date {
-  font-family: var(--font-sans);
+.telemetry-caption__sep {
   font-size: 10px;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.telemetry-caption__date {
+  font-family: var(--font-sans);
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.35);
 }
 
-.hud__desc {
+.telemetry-caption__body {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
 }
 
-.hud__desc-text {
+.telemetry-caption__text {
   font-family: var(--font-sans);
-  font-size: 11px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.4);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -360,18 +400,18 @@
   flex: 1;
 }
 
-.hud__expand {
+.telemetry-caption__expand {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.45);
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
   transition: color 200ms;
 
   &:hover {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
@@ -380,81 +420,81 @@
 // ============================================
 
 @media (max-width: 1199px) {
-  .launch-card {
-    width: min(1080px, calc(100vw - 32px));
-    height: 300px;
+  .telemetry-main {
+    grid-template-columns: 180px 1fr 180px;
+    gap: 16px;
+    padding: 14px 24px 6px;
   }
 }
 
 @media (max-width: 991px) {
-  .launch-card {
-    height: 280px;
-  }
-
-  .hud {
-    padding: 0 16px;
-    height: 150px;
+  .telemetry-main {
+    grid-template-columns: 160px 1fr 160px;
     gap: 12px;
+    padding: 12px 20px 4px;
+    min-height: 88px;
   }
 
   .gauge {
-    width: 72px;
+    width: 68px;
 
-    &__arc {
-      width: 72px;
-      height: 44px;
+    &__svg {
+      width: 68px;
+      height: 42px;
     }
 
     &__value {
       font-size: 18px;
     }
-  }
 
-  .gauge--compact {
-    width: 60px;
-
-    .gauge__arc {
-      width: 60px;
-      height: 36px;
-    }
-
-    .gauge__value {
-      font-size: 15px;
+    &__label {
+      font-size: 9px;
     }
   }
 
   .countdown__time {
-    font-size: 22px;
+    font-size: 28px;
   }
 
-  .timeline {
-    max-width: 320px;
+  .countdown__prefix {
+    font-size: 14px;
+  }
+
+  .engine-cluster__ring {
+    width: 56px;
+    height: 56px;
+    padding: 6px;
+  }
+
+  .engine-cluster__dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .telemetry-caption {
+    padding: 6px 20px 12px;
   }
 }
 
 @media (max-width: 767px) {
-  .launch-card {
-    width: calc(100vw - 24px);
-    height: 260px;
-    border-radius: 12px;
-  }
-
-  .hud {
-    height: 130px;
-    padding: 0 12px;
+  .telemetry-main {
+    grid-template-columns: 120px 1fr 120px;
     gap: 8px;
+    padding: 10px 16px 4px;
+    min-height: 76px;
   }
 
-  .hud__left {
+  .telemetry-main__left,
+  .telemetry-main__right {
     gap: 10px;
   }
 
   .gauge {
-    width: 56px;
+    width: 52px;
 
-    &__arc {
-      width: 56px;
-      height: 34px;
+    &__svg {
+      width: 52px;
+      height: 32px;
     }
 
     &__label {
@@ -462,7 +502,7 @@
     }
 
     &__value {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     &__unit {
@@ -470,111 +510,88 @@
     }
   }
 
-  .gauge--compact {
-    width: 48px;
-
-    .gauge__arc {
-      width: 48px;
-      height: 30px;
-    }
-
-    .gauge__value {
-      font-size: 13px;
-    }
-  }
-
-  .timeline {
-    max-width: 240px;
-  }
-
   .timeline__text {
-    font-size: 6px;
+    font-size: 7px;
     letter-spacing: 0.06em;
   }
 
   .timeline__dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .countdown__prefix {
+    font-size: 12px;
+  }
+
+  .countdown__time {
+    font-size: 22px;
+  }
+
+  .mission-id {
+    font-size: 9px;
+  }
+
+  .engine-cluster__ring {
+    width: 44px;
+    height: 44px;
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .engine-cluster__dot {
     width: 7px;
     height: 7px;
   }
 
-  .countdown__prefix {
+  .telemetry-caption {
+    padding: 6px 16px 10px;
+  }
+
+  .telemetry-caption__text {
     font-size: 11px;
+    -webkit-line-clamp: 2;
+  }
+
+  .atmosphere__tower {
+    display: none;
+  }
+}
+
+@media (max-width: 479px) {
+  .telemetry-main {
+    grid-template-columns: 90px 1fr;
+    gap: 6px;
+    padding: 8px 12px 4px;
+  }
+
+  .telemetry-main__right {
+    display: none;
+  }
+
+  .gauge {
+    width: 42px;
+
+    &__svg {
+      width: 42px;
+      height: 26px;
+    }
+
+    &__value {
+      font-size: 13px;
+    }
+  }
+
+  .timeline__text {
+    display: none;
   }
 
   .countdown__time {
     font-size: 18px;
   }
 
-  .mission-id {
-    font-size: 8px;
-  }
-
-  .engine-cluster__ring {
-    width: 40px;
-    height: 40px;
-    padding: 4px;
-    gap: 1px;
-  }
-
-  .engine-cluster__dot {
-    width: 6px;
-    height: 6px;
-  }
-
-  .hud__footer {
-    padding: 8px 12px 10px;
-  }
-
-  .hud__desc-text {
+  .telemetry-caption__text {
     font-size: 10px;
     -webkit-line-clamp: 1;
-  }
-}
-
-@media (max-width: 479px) {
-  .launch-card {
-    height: 230px;
-  }
-
-  .hud {
-    height: 110px;
-    gap: 6px;
-  }
-
-  .gauge {
-    width: 44px;
-
-    &__arc {
-      width: 44px;
-      height: 28px;
-    }
-
-    &__value {
-      font-size: 12px;
-    }
-  }
-
-  .gauge--compact {
-    display: none;
-  }
-
-  .engine-cluster {
-    display: none;
-  }
-
-  .timeline__text {
-    display: none;
-  }
-
-  .timeline {
-    max-width: 160px;
-  }
-
-  .countdown__time {
-    font-size: 16px;
-  }
-
-  .hud__right {
-    display: none;
   }
 }

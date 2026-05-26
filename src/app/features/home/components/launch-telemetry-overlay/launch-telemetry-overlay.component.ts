@@ -5,6 +5,15 @@ interface TelemetryPhase {
   active: boolean;
 }
 
+interface GaugeTick {
+  angle: number;
+  major: boolean;
+}
+
+interface EngineDot {
+  lit: boolean;
+}
+
 @Component({
   selector: 'app-launch-telemetry-overlay',
   templateUrl: './launch-telemetry-overlay.component.html',
@@ -37,7 +46,17 @@ export class LaunchTelemetryOverlayComponent {
   ];
 
   readonly activeIndex = this.phases.findIndex(p => p.active);
-  readonly tickCount = 24;
+
+  /** 11 条刻度线角度（从弧线左端到右端均匀分布） */
+  readonly ticks: GaugeTick[] = Array.from({ length: 11 }, (_, i) => ({
+    angle: (i + 1) * (Math.PI / 12),
+    major: i % 2 === 0,
+  }));
+
+  /** 3×3 发动机阵列，前 3 个点亮 */
+  readonly engineDots: EngineDot[] = Array.from({ length: 9 }, (_, i) => ({
+    lit: i < 3,
+  }));
 
   get phaseProgress(): number {
     const idx = this.activeIndex;
