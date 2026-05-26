@@ -1,93 +1,51 @@
-<!-- ============================================= -->
-<!-- Hero 首屏 — 太空光场 + 欢迎 + 按钮             -->
-<!-- ============================================= -->
-<section class="hero">
-  <!-- Three.js 光场背景 -->
-  @if (showScene) {
-    <app-three-canvas [sceneFactory]="sceneFactory" />
-  }
+<section class="eclipse-hero">
+  <!-- Three.js 慢速漂移深空星轨粒子背景 (已内置并保留) -->
+  <app-three-canvas [sceneFactory]="sceneFactory" class="backdrop-stars" />
 
-  <!-- CSS 光斑层 -->
-  <div class="hero__glows">
-    <div class="glow glow--1"></div>
-    <div class="glow glow--2"></div>
-    <div class="glow glow--3"></div>
+  <!-- 电影画质细腻胶片微粒噪点遮罩层 -->
+  <div class="grain-overlay"></div>
+
+  <!-- 顶部极简双翼导航 + 中央圆形头像 -->
+  <header class="minimal-header">
+    <a routerLink="/about" class="nav-link">About</a>
+    <div class="header-avatar">
+      <!-- 带有加载失败降级机制的头像 -->
+      <img 
+        src="assets/avatar.jpg" 
+        alt="Profile" 
+        class="avatar-img" 
+        #avatarImg
+        (error)="avatarImg.style.display = 'none'; fallbackAvatar.style.display = 'flex'" 
+      />
+      <div class="avatar-fallback" #fallbackAvatar style="display: none;">
+        <span>G</span>
+      </div>
+    </div>
+    <a routerLink="/projects" class="nav-link">Projects</a>
+  </header>
+
+  <!-- 黑曜石日食星体 (Conic-Radial Eclipse Flare & Mask) -->
+  <div class="eclipse-container">
+    <div class="eclipse-flare yellow-orange"></div>
+    <div class="eclipse-flare blue-purple"></div>
+    <div class="eclipse-mask"></div>
   </div>
 
-  <!-- 加载过渡 -->
-  @if (phase() === 'loading') {
-    <div class="hero__loader">
-      <div class="loader-dot"></div>
-    </div>
-  }
-
-  <!-- 中央文案 + 按钮 -->
-  <div class="hero__center" [class.is-visible]="showText">
-    <h1 class="hero__title" [class.is-visible]="showText">
-      {{ t('home.welcome') }}
-    </h1>
-    <div class="space-button-group hero__actions" [class.is-visible]="showButtons">
-      <button class="space-button space-button--md space-button--blue" (click)="onEnter()">
-        {{ t('home.enter') }}
+  <!-- 中央核心文字与 CTA 交互 -->
+  <div class="hero-content">
+    <h1 class="hero-title">Workflow changed.<br>Taste didn't.</h1>
+    <p class="hero-subtitle">Designing with systems, code and AI</p>
+    
+    <div class="cta-container">
+      <button class="pill-cta-button" (click)="onEnter()">
+        Let's build something
       </button>
-      <button class="space-button space-button--md space-button--white" (click)="onContact()">
-        {{ t('home.contact') }}
-      </button>
+      <a class="subtext-link" (click)="onContact()">Have a project?</a>
     </div>
   </div>
 
-  <!-- 向下滚动提示 -->
-  <div class="hero__scroll-hint" [class.is-visible]="showButtons">
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- ============================================= -->
-<!-- 3D Portal — 玻璃传送门 + 四个入口               -->
-<!-- ============================================= -->
-<section id="portal" class="portal-section">
-  <!-- 光场背景 -->
-  <div class="portal-bg">
-    <div class="portal-bg__glow"></div>
-  </div>
-
-  <!-- 传送门 -->
-  <div class="portal">
-    <!-- 发光圆环 -->
-    <div class="portal__ring">
-      <div class="portal__ring-inner"></div>
-      <div class="portal__ring-glow"></div>
-    </div>
-
-    <!-- 四个入口节点 -->
-    <div class="portal__nodes">
-      @for (node of portalNodes; track node.label) {
-        <a class="portal-node" [routerLink]="node.route">
-          <div class="portal-node__orb"></div>
-          <span class="portal-node__label">{{ node.label }}</span>
-          <span class="portal-node__subtitle">{{ node.subtitle }}</span>
-        </a>
-      }
-    </div>
-  </div>
-</section>
-
-<!-- ============================================= -->
-<!-- Contact                                        -->
-<!-- ============================================= -->
-<section id="contact" class="contact-section">
-  <div class="contact-card">
-    <h2 class="contact-card__title">{{ t('home.contactTitle') }}</h2>
-    <p class="contact-card__desc">{{ t('home.contactDesc') }}</p>
-    <div class="contact-card__links">
-      <a class="contact-pill" href="mailto:hello@spacelab.dev">
-        <span class="contact-pill__dot"></span>
-        <span>Email</span>
-      </a>
-      <a class="contact-pill" href="https://github.com/Wanfeng1028" target="_blank" rel="noopener">
-        <span class="contact-pill__dot"></span>
-        <span>GitHub</span>
-      </a>
-    </div>
-  </div>
+  <!-- 底部极简居中版权声明 -->
+  <footer class="minimal-footer">
+    Vibed by Gruev — 2026
+  </footer>
 </section>
