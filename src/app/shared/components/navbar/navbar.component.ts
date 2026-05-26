@@ -73,4 +73,20 @@ export class NavbarComponent implements OnInit {
   closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
   }
+
+  shareTwitterUrl(): string {
+    const text = encodeURIComponent('🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!');
+    const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');
+    return `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+  }
+
+  shareFacebookUrl(): string {
+    const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');
+    return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  }
+
+  shareLinkedinUrl(): string {
+    const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');
+    return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  }
 }
