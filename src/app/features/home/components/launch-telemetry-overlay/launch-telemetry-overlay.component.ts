@@ -69,6 +69,8 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   });
 
   private timerId: ReturnType<typeof setInterval> | null = null;
+  private connectionRef: EventTarget | null = null;
+  private connectionChangeHandler: (() => void) | null = null;
 
   @HostListener('window:online')
   onOnline(): void {
@@ -81,23 +83,40 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // 1. Initialize network status
+    // 1. Initialize network status and listen for connection changes
     this.updateNetworkStatus();
+    this.setupConnectionListener();
 
     // 2. Fetch location & weather
     this.initLocationAndWeather();
 
-    // 3. Set up 1s clock interval
+    // 3. Set up 1s clock interval (clock only, no network polling)
     this.timerId = setInterval(() => {
       this.currentTime.set(new Date());
-      // Periodically refresh network status to capture rtt/downlink fluctuations
-      this.updateNetworkStatus();
     }, 1000);
   }
 
   ngOnDestroy(): void {
     if (this.timerId !== null) {
       clearInterval(this.timerId);
+    }
+    this.teardownConnectionListener();
+  }
+
+  private setupConnectionListener(): void {
+    const conn = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+    if (conn) {
+      this.connectionRef = conn;
+      this.connectionChangeHandler = () => this.updateNetworkStatus();
+      conn.addEventListener('change', this.connectionChangeHandler);
+    }
+  }
+
+  private teardownConnectionListener(): void {
+    if (this.connectionRef && this.connectionChangeHandler) {
+      (this.connectionRef as any).removeEventListener('change', this.connectionChangeHandler);
+      this.connectionRef = null;
+      this.connectionChangeHandler = null;
     }
   }
 
@@ -195,11 +214,11 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       });
     } catch (e) {
       console.warn('Geocoding API failed, falling back to coordinates:', e);
-      // Fallback: display approximate coordinates
+      // Fallback: display approximate coordinates with correct hemisphere indicators
       this.locationInfo.set({
         status: 'success',
-        city: `${lat.toFixed(2)}°N`,
-        region: `${lon.toFixed(2)}°E`,
+        city: `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'}`,
+        region: `${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'W'}`,
         latitude: lat,
         longitude: lon
       });
