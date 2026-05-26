@@ -36,14 +36,14 @@ export class GalleryComponent {
   );
 
   readonly types = computed(() => {
-    const t = new Set(this.allItems.map((i) => i.type));
+    const t = new Set(this.allItems().map((i) => i.type));
     return ['all', ...Array.from(t)];
   });
 
   readonly filteredItems = computed(() => {
     const type = this.selectedType();
-    if (type === 'all') return this.allItems;
-    return this.allItems.filter((i) => i.type === type);
+    if (type === 'all') return this.allItems();
+    return this.allItems().filter((i) => i.type === type);
   });
 
   t(key: string): string {
