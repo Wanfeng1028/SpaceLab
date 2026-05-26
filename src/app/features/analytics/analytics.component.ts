@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { PulseMetricComponent } from '../../shared/components/pulse-metric/pulse-metric.component';
 
@@ -12,30 +12,54 @@ import { PulseMetricComponent } from '../../shared/components/pulse-metric/pulse
 export class AnalyticsComponent {
   private i18n = inject(I18nService);
 
-  readonly metrics = [
-    { value: '1,234', label: '总访问量' },
-    { value: '89', label: '今日访问' },
-    { value: '567', label: '本周访问' },
-    { value: '45', label: '独立访客' },
+  private readonly metricData = [
+    { value: '1,234', key: 'totalVisits' },
+    { value: '89', key: 'todayVisits' },
+    { value: '567', key: 'weekVisits' },
+    { value: '45', key: 'uniqueVisitors' },
   ];
 
-  readonly topPages = [
-    { path: '/', views: 320, title: '首页' },
-    { path: '/blog', views: 185, title: '博客列表' },
-    { path: '/article/hello-world', views: 142, title: '你好，世界' },
-    { path: '/projects', views: 98, title: '项目展示' },
-    { path: '/article/angular-21-overview', views: 76, title: 'Angular 21 新特性' },
+  readonly metrics = computed(() =>
+    this.metricData.map((m) => ({
+      value: m.value,
+      label: this.i18n.t(`analytics.${m.key}`),
+    }))
+  );
+
+  private readonly pageData = [
+    { path: '/', views: 320, key: 'page0' },
+    { path: '/blog', views: 185, key: 'page1' },
+    { path: '/article/hello-world', views: 142, key: 'page2' },
+    { path: '/projects', views: 98, key: 'page3' },
+    { path: '/article/angular-21-overview', views: 76, key: 'page4' },
   ];
 
-  readonly topArticles = [
-    { title: '你好，世界', slug: 'hello-world', views: 142, date: '2025-05-24' },
-    { title: 'Angular 21 新特性速览', slug: 'angular-21-overview', views: 76, date: '2025-05-20' },
+  readonly topPages = computed(() =>
+    this.pageData.map((p) => ({
+      path: p.path,
+      views: p.views,
+      title: this.i18n.t(`analytics.${p.key}`),
+    }))
+  );
+
+  private readonly articleData = [
+    { key: 'page2', slug: 'hello-world', views: 142, date: '2025-05-24' },
+    { key: 'page4', slug: 'angular-21-overview', views: 76, date: '2025-05-20' },
     { title: 'Three.js 粒子系统入门', slug: 'threejs-particles', views: 58, date: '2025-05-15' },
     { title: 'Glassmorphism 设计指南', slug: 'glassmorphism-guide', views: 45, date: '2025-05-10' },
     { title: '我的开发工具箱 2025', slug: 'dev-tools-2025', views: 32, date: '2025-05-05' },
   ];
 
-  readonly trendData = [45, 52, 38, 65, 72, 58, 89]; // 最近 7 天
+  readonly topArticles = computed(() =>
+    this.articleData.map((a) => ({
+      title: 'key' in a ? this.i18n.t(`analytics.${a.key}`) : a.title,
+      slug: a.slug,
+      views: a.views,
+      date: a.date,
+    }))
+  );
+
+  readonly trendData = [45, 52, 38, 65, 72, 58, 89];
 
   t(key: string): string {
     return this.i18n.t(key);
