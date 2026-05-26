@@ -23,12 +23,12 @@
             />
           }
         </svg>
-        <div class="gauge-label">LOCATION</div>
-        <div class="gauge-value" [title]="locationInfo().city">{{ locationInfo().city }}</div>
-        <div class="gauge-unit" [title]="locationInfo().region">{{ locationInfo().region }}</div>
+        <div class="gauge-label">{{ t('telemetry.location') }}</div>
+        <div class="gauge-value" [title]="t(locationInfo().city)">{{ t(locationInfo().city) }}</div>
+        <div class="gauge-unit" [title]="t(locationInfo().region)">{{ t(locationInfo().region) }}</div>
         @if (locationInfo().status === 'pending') {
-          <button class="consent-btn" (click)="grantLocationConsent()" aria-label="Enable location access">
-            Enable
+          <button class="consent-btn" (click)="grantLocationConsent()" [attr.aria-label]="t('telemetry.enableLocation')">
+            {{ t('telemetry.enable') }}
           </button>
         }
       </div>
@@ -54,9 +54,9 @@
             />
           }
         </svg>
-        <div class="gauge-label">WEATHER</div>
+        <div class="gauge-label">{{ t('telemetry.weather') }}</div>
         <div class="gauge-value" [title]="weatherInfo().temperature">{{ weatherInfo().temperature }}</div>
-        <div class="gauge-unit" [title]="weatherInfo().condition">{{ weatherInfo().condition }}</div>
+        <div class="gauge-unit" [title]="t(weatherInfo().condition)">{{ t(weatherInfo().condition) }}</div>
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@
             />
           }
         </svg>
-        <div class="gauge-label">NETWORK</div>
+        <div class="gauge-label">{{ t('telemetry.network') }}</div>
         <div class="gauge-value">{{ networkInfo().status }}</div>
         <div class="gauge-unit">{{ networkInfo().detail }}</div>
       </div>
@@ -134,7 +134,7 @@
                 [attr.opacity]="networkLevel >= 5 ? '1' : '0.3'" />
         </svg>
         <div class="network-status__label" [class.is-offline]="networkInfo().status === 'OFFLINE'">
-          {{ networkInfo().status === 'OFFLINE' ? 'OFFLINE' : 'SIGNAL ACTIVE' }}
+          {{ networkInfo().status === 'OFFLINE' ? t('telemetry.offline') : t('telemetry.signalActive') }}
         </div>
       </div>
     </div>
@@ -143,6 +143,6 @@
 
 <!-- 底部状态栏 -->
 <div class="telemetry-caption">
-  <span>LOCAL ENVIRONMENT</span>
-  <span>UPDATED &middot; {{ formattedDateTime }} &middot; {{ userTimeZone }}</span>
+  <span>{{ t('telemetry.localEnv') }}</span>
+  <span>{{ t('telemetry.updated') }} &middot; {{ formattedDateTime }} &middot; {{ userTimeZone }}</span>
 </div>

@@ -23,7 +23,7 @@
               <div class="bar" [style.height.%]="getBarHeight(value)">
                 <span class="bar__value">{{ value }}</span>
               </div>
-              <span class="bar__label">{{ $index === 6 ? '今天' : '' }}</span>
+              <span class="bar__label">{{ $index === 6 ? t('common.today') : '' }}</span>
             </div>
           }
         </div>

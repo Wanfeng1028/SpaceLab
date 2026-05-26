@@ -10,6 +10,7 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
   selector: 'space-glass-modal',
@@ -19,6 +20,11 @@ import {
 })
 export class SpaceGlassModalComponent implements AfterViewInit, OnDestroy {
   private elRef = inject(ElementRef);
+  private i18n = inject(I18nService);
+
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
 
   /** 弹窗尺寸变体 */
   readonly size = input<'sm' | 'md' | 'lg'>('md');

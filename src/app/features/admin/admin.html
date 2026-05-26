@@ -25,7 +25,7 @@
             type="text"
             [value]="title()"
             (input)="title.set($any($event.target).value)"
-            placeholder="文章标题..."
+            placeholder="{{ t('admin.titlePlaceholder') }}"
           />
         </div>
 
@@ -36,16 +36,16 @@
             type="text"
             [value]="tags()"
             (input)="tags.set($any($event.target).value)"
-            placeholder="用逗号分隔标签，如：Angular, 前端"
+            placeholder="{{ t('admin.tagsPlaceholder') }}"
           />
         </div>
 
         <div class="form-field">
           <label class="form-label">{{ t('admin.category') }}</label>
           <select class="form-select" [value]="category()" (change)="category.set($any($event.target).value)">
-            <option value="技术">技术</option>
-            <option value="设计">设计</option>
-            <option value="随笔">随笔</option>
+            <option value="技术">{{ t('admin.catTech') }}</option>
+            <option value="设计">{{ t('admin.catDesign') }}</option>
+            <option value="随笔">{{ t('admin.catEssay') }}</option>
           </select>
         </div>
 
@@ -55,7 +55,7 @@
             class="form-textarea"
             [value]="content()"
             (input)="content.set($any($event.target).value)"
-            placeholder="输入 Markdown 内容..."
+            placeholder="{{ t('admin.contentPlaceholder') }}"
             rows="20"
           ></textarea>
         </div>
@@ -63,7 +63,7 @@
     } @else {
       <!-- Preview Mode -->
       <div class="preview-area">
-        <h2 class="preview-title">{{ title() || '（无标题）' }}</h2>
+        <h2 class="preview-title">{{ title() || t('admin.untitled') }}</h2>
         <div class="preview-content markdown-body">{{ content() }}</div>
       </div>
     }

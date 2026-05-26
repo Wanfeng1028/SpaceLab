@@ -31,51 +31,27 @@ export class BlogComponent {
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
 
-  readonly allPosts: BlogPost[] = [
-    {
-      title: '你好，世界',
-      slug: 'hello-world',
-      excerpt: '这是 SpaceLab 的第一篇文章，记录建站的初衷和未来的规划。从零开始搭建一个个人数字空间，记录技术与生活。',
-      date: '2025-05-24',
-      tags: ['随笔', '建站'],
-      category: '随笔',
-    },
-    {
-      title: 'Angular 21 新特性速览',
-      slug: 'angular-21-overview',
-      excerpt: 'Angular 21 带来了全新的信号系统、改进的变更检测和更好的开发体验。本文带你了解最重要的变化。',
-      date: '2025-05-20',
-      tags: ['Angular', '前端'],
-      category: '技术',
-    },
-    {
-      title: 'Three.js 粒子系统入门',
-      slug: 'threejs-particles',
-      excerpt: '使用 Three.js 创建令人惊叹的粒子效果，从基础概念到完整实现，一步步带你构建自己的粒子场。',
-      date: '2025-05-15',
-      tags: ['Three.js', 'WebGL', '3D'],
-      category: '技术',
-    },
-    {
-      title: 'Glassmorphism 设计指南',
-      slug: 'glassmorphism-guide',
-      excerpt: '玻璃拟态设计风格的完整指南，包括原理、实现方法和最佳实践。让你的 UI 拥有高级质感。',
-      date: '2025-05-10',
-      tags: ['设计', 'CSS'],
-      category: '设计',
-    },
-    {
-      title: '我的开发工具箱 2025',
-      slug: 'dev-tools-2025',
-      excerpt: '2025 年我日常使用的开发工具、编辑器配置、浏览器插件和效率工具分享。',
-      date: '2025-05-05',
-      tags: ['工具', '效率'],
-      category: '随笔',
-    },
+  private readonly postData = [
+    { key: 'post0', slug: 'hello-world', date: '2025-05-24', tags: ['随笔', '建站'], category: '随笔' },
+    { key: 'post1', slug: 'angular-21-overview', date: '2025-05-20', tags: ['Angular', '前端'], category: '技术' },
+    { key: 'post2', slug: 'threejs-particles', date: '2025-05-15', tags: ['Three.js', 'WebGL', '3D'], category: '技术' },
+    { key: 'post3', slug: 'glassmorphism-guide', date: '2025-05-10', tags: ['设计', 'CSS'], category: '设计' },
+    { key: 'post4', slug: 'dev-tools-2025', date: '2025-05-05', tags: ['工具', '效率'], category: '随笔' },
   ];
 
+  readonly allPosts = computed<BlogPost[]>(() =>
+    this.postData.map((p) => ({
+      title: this.i18n.t(`blog.${p.key}_title`),
+      slug: p.slug,
+      excerpt: this.i18n.t(`blog.${p.key}_excerpt`),
+      date: p.date,
+      tags: p.tags,
+      category: p.category,
+    }))
+  );
+
   readonly categories = computed(() => {
-    const cats = new Set(this.allPosts.map((p) => p.category));
+    const cats = new Set(this.allPosts().map((p) => p.category));
     return ['all', ...Array.from(cats)];
   });
 
@@ -83,7 +59,7 @@ export class BlogComponent {
     const query = this.searchQuery().toLowerCase();
     const category = this.selectedCategory();
 
-    return this.allPosts.filter((post) => {
+    return this.allPosts().filter((post) => {
       const matchesSearch =
         !query ||
         post.title.toLowerCase().includes(query) ||

@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { I18nService } from '../../core/services/i18n.service';
 
 @Component({
   selector: 'app-not-found',
@@ -8,4 +9,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './not-found.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundComponent {}
+export class NotFoundComponent {
+  private i18n = inject(I18nService);
+
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
+}

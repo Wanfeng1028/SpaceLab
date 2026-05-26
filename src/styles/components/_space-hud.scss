@@ -1,0 +1,148 @@
+// ============================================
+// Space HUD — 全局 HUD 设计系统变量与通用样式
+// ============================================
+
+:root {
+  --space-bg: #03050b;
+  --space-panel: rgba(8, 14, 24, 0.58);
+  --space-border: rgba(120, 220, 255, 0.22);
+  --space-cyan: #00f5ff;
+  --space-blue: #5f8cff;
+  --space-purple: #b77cff;
+  --space-text: rgba(255, 255, 255, 0.88);
+  --space-muted: rgba(255, 255, 255, 0.48);
+}
+
+// ── Section 通用布局 ──
+
+.space-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--space-bg);
+
+  .webgl-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hud-layer {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(24px, 4vw, 60px);
+
+    > * {
+      pointer-events: auto;
+    }
+  }
+}
+
+// ── HUD 文字排版 ──
+
+.hud-section-number {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--space-cyan);
+  opacity: 0.6;
+}
+
+.hud-section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--space-muted);
+}
+
+.hud-section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--space-text);
+  line-height: 1.05;
+}
+
+.hud-section-subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--space-muted);
+  margin-top: 8px;
+}
+
+.hud-body-text {
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1.4vw, 17px);
+  line-height: 1.7;
+  color: var(--space-muted);
+  max-width: 360px;
+}
+
+// ── HUD 动画入场 ──
+
+.hud-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.hud-fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// ── 扫描线纹理 (section 内使用) ──
+
+.section-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.015) 2px,
+    rgba(0, 0, 0, 0.015) 4px
+  );
+  z-index: 3;
+}
+
+// ── 移动端降级 ──
+
+@media (max-width: 768px) {
+  .space-section {
+    .hud-layer {
+      padding: 20px 16px;
+    }
+  }
+
+  .hud-section-title {
+    font-size: clamp(22px, 6vw, 32px);
+  }
+}
+
+// ── reduced-motion 降级 ──
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-fade-in {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

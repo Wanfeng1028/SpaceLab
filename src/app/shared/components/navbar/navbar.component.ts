@@ -85,6 +85,10 @@ export class NavbarComponent implements OnInit {
     this.showShareModal.set(true);
   }
 
+  get currentUrl(): string {
+    return window.location.origin;
+  }
+
   shareTwitterUrl(): string {
     const text = encodeURIComponent('🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!');
     const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');

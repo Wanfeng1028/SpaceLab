@@ -8,7 +8,15 @@
     "more": "查看更多",
     "search": "搜索",
     "all": "全部",
-    "none": "暂无内容"
+    "none": "暂无内容",
+    "live": "● Live",
+    "comingSoon": "Coming Soon",
+    "close": "关闭",
+    "today": "今天",
+    "copyLinkBadge": "🔗 链接已复制",
+    "copyLinkMsg": "链接已复制到剪贴板！快去分享给好友吧 🚀",
+    "share": "分享",
+    "enableSound": "🔊 点击任意位置启用机械音效"
   },
   "nav": {
     "blog": "Blog",
@@ -29,7 +37,22 @@
     "labSubtitle": "动效与交互实验",
     "galleryPreview": "画廊",
     "contactTitle": "联系我",
-    "contactDesc": "如果你对我的项目感兴趣，或者想交流技术，欢迎联系我。"
+    "contactDesc": "如果你对我的项目感兴趣，或者想交流技术，欢迎联系我。",
+    "diagnosticsTag": "// 系统诊断与核心模拟器",
+    "diagnosticsTitle": "交互式太空控制台",
+    "diagnosticsDesc": "左侧监控来自轨道核心的实时量子遥测日志，右侧面板可定制高保真 WebGL 大气散射日食模拟参数。",
+    "quantumTelemetry": "量子遥测接收器",
+    "coreParamCustomizer": "核心参数定制器",
+    "chromaPreset": "色彩预设",
+    "coronaIntensity": "日冕耀斑强度",
+    "orbitalSpeed": "轨道旋转速度",
+    "filmGrain": "太空胶片颗粒",
+    "orbitalScan": "轨道扫描阵列",
+    "scanning": "扫描中...",
+    "holoIco": "全息二十面体",
+    "globeOrbit": "线框地球与轨道",
+    "active": "运行中",
+    "audioTip": "🔊 点击任意位置启用机械音效"
   },
   "portal": {
     "blog": "Blog",
@@ -51,11 +74,22 @@
   },
   "blog": {
     "title": "Blog",
+    "desc": "记录技术思考与生活感悟",
     "searchPlaceholder": "搜索文章...",
     "noArticles": "暂无文章",
     "readMore": "阅读全文",
     "views": "阅读",
-    "minutes": "分钟"
+    "minutes": "分钟",
+    "post0_title": "你好，世界",
+    "post0_excerpt": "这是 SpaceLab 的第一篇文章，记录建站的初衷和未来的规划。从零开始搭建一个个人数字空间，记录技术与生活。",
+    "post1_title": "Angular 21 新特性速览",
+    "post1_excerpt": "Angular 21 带来了全新的信号系统、改进的变更检测和更好的开发体验。本文带你了解最重要的变化。",
+    "post2_title": "Three.js 粒子系统入门",
+    "post2_excerpt": "使用 Three.js 创建令人惊叹的粒子效果，从基础概念到完整实现，一步步带你构建自己的粒子场。",
+    "post3_title": "Glassmorphism 设计指南",
+    "post3_excerpt": "玻璃拟态设计风格的完整指南，包括原理、实现方法和最佳实践。让你的 UI 拥有高级质感。",
+    "post4_title": "我的开发工具箱 2025",
+    "post4_excerpt": "2025 年我日常使用的开发工具、编辑器配置、浏览器插件和效率工具分享。"
   },
   "article": {
     "backToBlog": "返回 Blog",
@@ -67,28 +101,67 @@
   },
   "projects": {
     "title": "Projects",
+    "desc": "探索我的项目作品",
     "preview": "Preview",
     "detail": "Detail",
     "github": "GitHub",
-    "liveDemo": "在线预览"
+    "liveDemo": "在线预览",
+    "proj0_desc": "个人数字空间网站 — 3D 粒子背景、玻璃拟态设计、文章发布系统",
+    "proj1_desc": "基于 WebGL 的交互式粒子画廊，支持鼠标交互和实时渲染",
+    "proj2_desc": "一套完整的玻璃拟态 UI 组件库，支持主题切换和响应式",
+    "proj3_desc": "极简主义任务管理工具，支持拖拽排序和数据可视化",
+    "proj4_desc": "动效实验集合 — 缓动曲线可视化、3D 变换、粒子系统",
+    "proj5_desc": "数据可视化工具集，包含图表组件和交互式仪表盘"
   },
   "lab": {
     "title": "Lab",
+    "desc": "动效与交互实验空间",
     "viewDemo": "查看 Demo",
-    "viewSource": "查看源码"
+    "viewSource": "查看源码",
+    "exp0_title": "粒子光场",
+    "exp0_desc": "Three.js 粒子系统 + 鼠标视差",
+    "exp1_title": "玻璃拟态卡片",
+    "exp1_desc": "8 种 Glassmorphism 变体",
+    "exp2_title": "缓动曲线可视化",
+    "exp2_desc": "可视化对比不同缓动函数",
+    "exp3_title": "3D 文字变形",
+    "exp3_desc": "文字到粒子的 3D 变换动画",
+    "exp4_title": "流体模拟",
+    "exp4_desc": "WebGL 流体动力学模拟",
+    "exp5_title": "音频可视化",
+    "exp5_desc": "Web Audio API 频谱分析"
   },
   "gallery": {
     "title": "Gallery",
+    "desc": "媒体与实验作品集",
     "all": "全部",
     "images": "图片",
     "videos": "视频",
-    "gifs": "GIF"
+    "gifs": "GIF",
+    "item0": "光场实验 #1",
+    "item1": "粒子系统",
+    "item2": "玻璃拟态",
+    "item3": "流体模拟",
+    "item4": "缓动曲线",
+    "item5": "3D 文字",
+    "item6": "音频可视化",
+    "item7": "数据图表",
+    "item8": "交互动画"
   },
   "about": {
     "title": "About",
+    "bio": "热爱前端技术与 3D 可视化的开发者。致力于构建高性能、高质感的 Web 体验。",
     "currentFocus": "当前方向",
     "skills": "技能标签",
-    "contact": "联系方式"
+    "contact": "联系方式",
+    "area0_title": "Web 全栈开发",
+    "area0_desc": "Angular / React + Node.js 全栈应用",
+    "area1_title": "3D 可视化",
+    "area1_desc": "Three.js / WebGL 交互式 3D 体验",
+    "area2_title": "动效设计",
+    "area2_desc": "GSAP / CSS 高性能动画与微交互",
+    "area3_title": "设计系统",
+    "area3_desc": "Glassmorphism / 组件库 / 设计规范"
   },
   "archive": {
     "title": "Archive"
@@ -103,10 +176,16 @@
     "unpublish": "取消发布",
     "delete": "删除",
     "title": "标题",
+    "titlePlaceholder": "文章标题...",
     "summary": "摘要",
     "content": "内容",
+    "contentPlaceholder": "输入 Markdown 内容...",
     "tags": "标签",
+    "tagsPlaceholder": "用逗号分隔标签，如：Angular, 前端",
     "category": "分类",
+    "catTech": "技术",
+    "catDesign": "设计",
+    "catEssay": "随笔",
     "language": "语言",
     "slug": "Slug",
     "cover": "封面",
@@ -114,7 +193,8 @@
     "preview": "预览",
     "editor": "编辑器",
     "meta": "信息",
-    "media": "媒体"
+    "media": "媒体",
+    "untitled": "（无标题）"
   },
   "analytics": {
     "title": "Analytics",
@@ -125,7 +205,16 @@
     "thisMonth": "本月访问",
     "topPages": "热门页面",
     "topArticles": "热门文章",
-    "trend": "访问趋势"
+    "trend": "访问趋势",
+    "totalVisits": "总访问量",
+    "todayVisits": "今日访问",
+    "weekVisits": "本周访问",
+    "uniqueVisitors": "独立访客",
+    "page0": "首页",
+    "page1": "博客列表",
+    "page2": "你好，世界",
+    "page3": "项目展示",
+    "page4": "Angular 21 新特性"
   },
   "pulse": {
     "totalVisits": "总访问",
@@ -138,5 +227,46 @@
     "title": "Contact",
     "email": "Email",
     "github": "GitHub"
+  },
+  "notFound": {
+    "message": "页面未找到",
+    "desc": "你访问的页面不存在或已被移除",
+    "backHome": "返回首页"
+  },
+  "telemetry": {
+    "location": "位置",
+    "enable": "开启",
+    "weather": "天气",
+    "network": "网络",
+    "dawn": "黎明",
+    "morning": "上午",
+    "midday": "正午",
+    "afternoon": "下午",
+    "night": "夜晚",
+    "offline": "离线",
+    "signalActive": "信号在线",
+    "localEnv": "本地环境",
+    "updated": "已更新",
+    "locating": "定位中...",
+    "permissionRequired": "需要授权",
+    "enableLocation": "点击开启定位",
+    "locationPermRequired": "需要位置权限",
+    "unavailable": "不可用",
+    "locationDisabled": "定位已禁用",
+    "locatingFailed": "定位失败",
+    "weatherNA": "天气不可用",
+    "clear": "晴",
+    "cloudy": "多云",
+    "foggy": "雾",
+    "drizzle": "毛毛雨",
+    "rainy": "雨",
+    "snowy": "雪",
+    "showers": "阵雨",
+    "storm": "暴风雨"
+  },
+  "notFoundPage": {
+    "message": "页面未找到",
+    "desc": "你访问的页面不存在或已被移除",
+    "backHome": "返回首页"
   }
 }

@@ -8,7 +8,15 @@
     "more": "View More",
     "search": "Search",
     "all": "All",
-    "none": "No content yet"
+    "none": "No content yet",
+    "live": "● Live",
+    "comingSoon": "Coming Soon",
+    "close": "Close",
+    "today": "Today",
+    "copyLinkBadge": "🔗 LINK COPIED",
+    "copyLinkMsg": "Link copied to clipboard! Share it with your friends 🚀",
+    "share": "Share",
+    "enableSound": "🔊 Click anywhere to enable mechanical sounds"
   },
   "nav": {
     "blog": "Blog",
@@ -29,7 +37,22 @@
     "labSubtitle": "Motion & Interaction Experiments",
     "galleryPreview": "Gallery",
     "contactTitle": "Contact Me",
-    "contactDesc": "If you're interested in my projects or want to discuss tech, feel free to reach out."
+    "contactDesc": "If you're interested in my projects or want to discuss tech, feel free to reach out.",
+    "diagnosticsTag": "// SYSTEM DIAGNOSTICS & CORE SIMULATOR",
+    "diagnosticsTitle": "Interactive Space Deck",
+    "diagnosticsDesc": "Monitor real-time quantum telemetry logs scrolling from the orbital core on the left, and use the right systems panel to customize the high-fidelity WebGL atmospheric scattering solar eclipse simulation.",
+    "quantumTelemetry": "QUANTUM TELEMETRY RECEIVER",
+    "coreParamCustomizer": "CORE PARAMETER CUSTOMIZER",
+    "chromaPreset": "CHROMA PRESET",
+    "coronaIntensity": "CORONA FLARE INTENSITY",
+    "orbitalSpeed": "ORBITAL ROTATION SPEED",
+    "filmGrain": "SPACE FILM GRAIN",
+    "orbitalScan": "ORBITAL SCAN ARRAY",
+    "scanning": "SCANNING...",
+    "holoIco": "HOLOGRAPHIC ICOSAHEDRON",
+    "globeOrbit": "WIREFRAME GLOBE & ORBITS",
+    "active": "ACTIVE",
+    "audioTip": "🔊 Click anywhere to enable mechanical sounds"
   },
   "portal": {
     "blog": "Blog",
@@ -51,11 +74,22 @@
   },
   "blog": {
     "title": "Blog",
+    "desc": "Technical thoughts and life reflections",
     "searchPlaceholder": "Search articles...",
     "noArticles": "No articles yet",
     "readMore": "Read More",
     "views": "views",
-    "minutes": "min"
+    "minutes": "min",
+    "post0_title": "Hello, World",
+    "post0_excerpt": "This is the first article on SpaceLab, documenting the motivation behind building the site and plans for the future.",
+    "post1_title": "Angular 21 New Features Overview",
+    "post1_excerpt": "Angular 21 brings a brand-new signal system, improved change detection, and a better developer experience. This article covers the most important changes.",
+    "post2_title": "Getting Started with Three.js Particles",
+    "post2_excerpt": "Create stunning particle effects with Three.js, from basic concepts to a complete implementation, step by step.",
+    "post3_title": "Glassmorphism Design Guide",
+    "post3_excerpt": "A complete guide to glassmorphism design, including principles, implementation methods, and best practices for a premium UI finish.",
+    "post4_title": "My Dev Toolbox 2025",
+    "post4_excerpt": "A share of my daily development tools, editor configs, browser extensions, and productivity tools in 2025."
   },
   "article": {
     "backToBlog": "Back to Blog",
@@ -67,28 +101,67 @@
   },
   "projects": {
     "title": "Projects",
+    "desc": "Explore my project works",
     "preview": "Preview",
     "detail": "Detail",
     "github": "GitHub",
-    "liveDemo": "Live Demo"
+    "liveDemo": "Live Demo",
+    "proj0_desc": "Personal digital space — 3D particle background, glassmorphism design, article publishing system",
+    "proj1_desc": "WebGL-based interactive particle gallery with mouse interaction and real-time rendering",
+    "proj2_desc": "A complete glassmorphism UI component library with theme switching and responsive design",
+    "proj3_desc": "Minimalist task management tool with drag-and-drop sorting and data visualization",
+    "proj4_desc": "Motion experiment collection — easing curve visualization, 3D transforms, particle systems",
+    "proj5_desc": "Data visualization toolkit with chart components and interactive dashboards"
   },
   "lab": {
     "title": "Lab",
+    "desc": "Motion & interaction experiment space",
     "viewDemo": "View Demo",
-    "viewSource": "View Source"
+    "viewSource": "View Source",
+    "exp0_title": "Particle Light Field",
+    "exp0_desc": "Three.js particle system + mouse parallax",
+    "exp1_title": "Glassmorphism Cards",
+    "exp1_desc": "8 Glassmorphism variants",
+    "exp2_title": "Easing Curve Visualizer",
+    "exp2_desc": "Visual comparison of different easing functions",
+    "exp3_title": "3D Text Morphing",
+    "exp3_desc": "Text-to-particle 3D transformation animation",
+    "exp4_title": "Fluid Simulation",
+    "exp4_desc": "WebGL fluid dynamics simulation",
+    "exp5_title": "Audio Visualizer",
+    "exp5_desc": "Web Audio API spectrum analysis"
   },
   "gallery": {
     "title": "Gallery",
+    "desc": "Media & experiment portfolio",
     "all": "All",
     "images": "Images",
     "videos": "Videos",
-    "gifs": "GIFs"
+    "gifs": "GIFs",
+    "item0": "Light Field Experiment #1",
+    "item1": "Particle System",
+    "item2": "Glassmorphism",
+    "item3": "Fluid Simulation",
+    "item4": "Easing Curves",
+    "item5": "3D Text",
+    "item6": "Audio Visualizer",
+    "item7": "Data Charts",
+    "item8": "Interactive Animation"
   },
   "about": {
     "title": "About",
+    "bio": "A developer passionate about frontend technology and 3D visualization. Dedicated to building high-performance, premium-quality web experiences.",
     "currentFocus": "Current Focus",
     "skills": "Skills",
-    "contact": "Contact"
+    "contact": "Contact",
+    "area0_title": "Full-Stack Web Dev",
+    "area0_desc": "Angular / React + Node.js full-stack applications",
+    "area1_title": "3D Visualization",
+    "area1_desc": "Three.js / WebGL interactive 3D experiences",
+    "area2_title": "Motion Design",
+    "area2_desc": "GSAP / CSS high-performance animations & micro-interactions",
+    "area3_title": "Design Systems",
+    "area3_desc": "Glassmorphism / Component libraries / Design specs"
   },
   "archive": {
     "title": "Archive"
@@ -103,10 +176,16 @@
     "unpublish": "Unpublish",
     "delete": "Delete",
     "title": "Title",
+    "titlePlaceholder": "Article title...",
     "summary": "Summary",
     "content": "Content",
+    "contentPlaceholder": "Enter Markdown content...",
     "tags": "Tags",
+    "tagsPlaceholder": "Comma-separated tags, e.g.: Angular, Frontend",
     "category": "Category",
+    "catTech": "Tech",
+    "catDesign": "Design",
+    "catEssay": "Essay",
     "language": "Language",
     "slug": "Slug",
     "cover": "Cover",
@@ -114,7 +193,8 @@
     "preview": "Preview",
     "editor": "Editor",
     "meta": "Meta",
-    "media": "Media"
+    "media": "Media",
+    "untitled": "(Untitled)"
   },
   "analytics": {
     "title": "Analytics",
@@ -125,7 +205,16 @@
     "thisMonth": "This Month",
     "topPages": "Top Pages",
     "topArticles": "Top Articles",
-    "trend": "Visit Trend"
+    "trend": "Visit Trend",
+    "totalVisits": "Total Visits",
+    "todayVisits": "Today Visits",
+    "weekVisits": "Week Visits",
+    "uniqueVisitors": "Unique Visitors",
+    "page0": "Home",
+    "page1": "Blog List",
+    "page2": "Hello, World",
+    "page3": "Projects",
+    "page4": "Angular 21 New Features"
   },
   "pulse": {
     "totalVisits": "Total Visits",
@@ -138,5 +227,46 @@
     "title": "Contact",
     "email": "Email",
     "github": "GitHub"
+  },
+  "notFound": {
+    "message": "Page Not Found",
+    "desc": "The page you're looking for doesn't exist or has been removed",
+    "backHome": "Back to Home"
+  },
+  "telemetry": {
+    "location": "LOCATION",
+    "enable": "Enable",
+    "weather": "WEATHER",
+    "network": "NETWORK",
+    "dawn": "DAWN",
+    "morning": "MORNING",
+    "midday": "MIDDAY",
+    "afternoon": "AFTERNOON",
+    "night": "NIGHT",
+    "offline": "OFFLINE",
+    "signalActive": "SIGNAL ACTIVE",
+    "localEnv": "LOCAL ENVIRONMENT",
+    "updated": "UPDATED",
+    "locating": "Locating...",
+    "permissionRequired": "Permission Required",
+    "enableLocation": "Click to enable",
+    "locationPermRequired": "Location permission required",
+    "unavailable": "Unavailable",
+    "locationDisabled": "Location Disabled",
+    "locatingFailed": "Locating Failed",
+    "weatherNA": "Weather N/A",
+    "clear": "Clear",
+    "cloudy": "Cloudy",
+    "foggy": "Foggy",
+    "drizzle": "Drizzle",
+    "rainy": "Rainy",
+    "snowy": "Snowy",
+    "showers": "Showers",
+    "storm": "Storm"
+  },
+  "notFoundPage": {
+    "message": "Page Not Found",
+    "desc": "The page you're looking for doesn't exist or has been removed",
+    "backHome": "Back to Home"
   }
 }

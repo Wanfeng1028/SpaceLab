@@ -78,8 +78,8 @@
 
     <!-- 音效激活提示 (漂浮在右上角的精致小组件) -->
     @if (audioCtxSuspended()) {
-      <div class="audio-tip" role="button" aria-label="Enable sound effects">
-        🔊 Click anywhere to enable mechanical sounds
+      <div class="audio-tip" role="button" [attr.aria-label]="t('home.audioTip')">
+        {{ t('home.audioTip') }}
       </div>
     }
 
@@ -92,10 +92,10 @@
     <div class="diagnostics-content">
       <!-- 诊断中心头部标题区 -->
       <div class="diagnostics-header">
-        <div class="diagnostics-tag">// SYSTEM DIAGNOSTICS & CORE SIMULATOR</div>
-        <h2 class="diagnostics-title glitch-text" data-text="Interactive Space Deck">Interactive Space Deck</h2>
+        <div class="diagnostics-tag">{{ t('home.diagnosticsTag') }}</div>
+        <h2 class="diagnostics-title glitch-text" [attr.data-text]="t('home.diagnosticsTitle')">{{ t('home.diagnosticsTitle') }}</h2>
         <p class="diagnostics-desc">
-          Monitor real-time quantum telemetry logs scrolling from the orbital core on the left, and use the right systems panel to customize the high-fidelity WebGL atmospheric scattering solar eclipse simulation.
+          {{ t('home.diagnosticsDesc') }}
         </p>
       </div>
 
@@ -111,7 +111,7 @@
           </div>
           <div class="panel-header">
             <span class="pulse-ring pulse-ring--green"></span>
-            <span class="panel-title">QUANTUM TELEMETRY RECEIVER</span>
+            <span class="panel-title">{{ t('home.quantumTelemetry') }}</span>
           </div>
           <div class="terminal-screen-large">
             @for (log of telemetryLogs(); track log) {
@@ -125,12 +125,12 @@
         <div class="systems-control-card">
           <div class="panel-header">
             <span class="pulse-ring pulse-ring--blue"></span>
-            <span class="panel-title">CORE PARAMETER CUSTOMIZER</span>
+            <span class="panel-title">{{ t('home.coreParamCustomizer') }}</span>
           </div>
           
           <div class="control-grid-layout">
             <div class="control-item">
-              <div class="control-label">CHROMA PRESET</div>
+              <div class="control-label">{{ t('home.chromaPreset') }}</div>
               <div class="preset-buttons">
                 <button class="preset-btn" [class.is-active]="activePreset() === 'ECLIPSE'" (click)="activePreset.set('ECLIPSE')">ECLIPSE</button>
                 <button class="preset-btn" [class.is-active]="activePreset() === 'PULSAR'" (click)="activePreset.set('PULSAR')">PULSAR</button>
@@ -140,7 +140,7 @@
             
             <div class="control-item">
               <div class="slider-header">
-                <div class="control-label">CORONA FLARE INTENSITY</div>
+                <div class="control-label">{{ t('home.coronaIntensity') }}</div>
                 <div class="slider-value">{{ coronaIntensity().toFixed(1) }}x</div>
               </div>
               <input type="range" class="control-slider" min="1.0" max="5.0" step="0.1" [value]="coronaIntensity()" (input)="coronaIntensity.set(+$any($event.target).value)" />
@@ -148,14 +148,14 @@
             
             <div class="control-item">
               <div class="slider-header">
-                <div class="control-label">ORBITAL ROTATION SPEED</div>
+                <div class="control-label">{{ t('home.orbitalSpeed') }}</div>
                 <div class="slider-value">{{ orbitalSpeed().toFixed(2) }}x</div>
               </div>
               <input type="range" class="control-slider" min="0.0" max="3.0" step="0.05" [value]="orbitalSpeed()" (input)="orbitalSpeed.set(+$any($event.target).value)" />
             </div>
             
             <div class="control-item row-layout">
-              <div class="control-label">SPACE FILM GRAIN</div>
+              <div class="control-label">{{ t('home.filmGrain') }}</div>
               <label class="toggle-switch">
                 <input type="checkbox" [checked]="filmNoise()" (change)="filmNoise.set($any($event.target).checked)" />
                 <span class="toggle-slider"></span>
@@ -177,8 +177,8 @@
             }
           </div>
         </div>
-        <div class="radar-label">ORBITAL SCAN ARRAY</div>
-        <div class="radar-status">SCANNING...</div>
+        <div class="radar-label">{{ t('home.orbitalScan') }}</div>
+        <div class="radar-status">{{ t('home.scanning') }}</div>
       </div>
 
       <!-- Three.js 3D 场景卡片 -->
@@ -189,8 +189,8 @@
             <app-three-canvas [sceneFactory]="holoIcoFactory" />
           </div>
           <div class="three-d-info">
-            <div class="three-d-title">HOLOGRAPHIC ICOSAHEDRON</div>
-            <div class="three-d-status">ACTIVE</div>
+            <div class="three-d-title">{{ t('home.holoIco') }}</div>
+            <div class="three-d-status">{{ t('home.active') }}</div>
           </div>
         </div>
 
@@ -200,8 +200,8 @@
             <app-three-canvas [sceneFactory]="globeOrbitFactory" />
           </div>
           <div class="three-d-info">
-            <div class="three-d-title">WIREFRAME GLOBE & ORBITS</div>
-            <div class="three-d-status">ACTIVE</div>
+            <div class="three-d-title">{{ t('home.globeOrbit') }}</div>
+            <div class="three-d-status">{{ t('home.active') }}</div>
           </div>
         </div>
       </div>
@@ -230,19 +230,6 @@
         </div>
       </space-glass-modal>
     </div>
-  }
-
-  <!-- 分享弹窗 -->
-  @if (showShareModal()) {
-    <space-glass-modal size="sm" (closed)="showShareModal.set(false)">
-      <div modalBadge>
-        <span class="contact-badge">🔗 LINK COPIED</span>
-      </div>
-      <div class="share-modal-body">
-        <p class="share-modal-text">链接已复制到剪贴板！快去分享到你的社交平台吧 🚀</p>
-        <div class="share-modal-url">https://spacelab.dev</div>
-      </div>
-    </space-glass-modal>
   }
 
 </div>

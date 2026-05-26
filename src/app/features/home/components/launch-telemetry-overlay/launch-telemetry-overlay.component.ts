@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, signal, computed, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, signal, computed, HostListener, inject } from '@angular/core';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 interface TelemetryPhase {
   label: string;
@@ -17,26 +18,31 @@ interface GaugeTick {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
+  private readonly i18n = inject(I18nService);
+
   readonly Math = Math;
+
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
 
   readonly activeIndex = computed(() => {
     const hours = this.currentTime().getHours();
-    if (hours >= 5 && hours < 9) return 0;   // 05:00 - 08:59 (DAWN)
-    if (hours >= 9 && hours < 12) return 1;  // 09:00 - 11:59 (MORNING)
-    if (hours >= 12 && hours < 14) return 2; // 12:00 - 13:59 (MIDDAY)
-    if (hours >= 14 && hours < 19) return 3; // 14:00 - 18:59 (AFTERNOON)
-    return 4;                                // 19:00 - 04:59 (NIGHT)
+    if (hours >= 5 && hours < 9) return 0;
+    if (hours >= 9 && hours < 12) return 1;
+    if (hours >= 12 && hours < 14) return 2;
+    if (hours >= 14 && hours < 19) return 3;
+    return 4;
   });
+
+  readonly phaseKeys = ['telemetry.dawn', 'telemetry.morning', 'telemetry.midday', 'telemetry.afternoon', 'telemetry.night'] as const;
 
   readonly phases = computed<TelemetryPhase[]>(() => {
     const idx = this.activeIndex();
-    return [
-      { label: 'DAWN', active: idx === 0 },
-      { label: 'MORNING', active: idx === 1 },
-      { label: 'MIDDAY', active: idx === 2 },
-      { label: 'AFTERNOON', active: idx === 3 },
-      { label: 'NIGHT', active: idx === 4 },
-    ];
+    return this.phaseKeys.map((key, i) => ({
+      label: this.i18n.t(key),
+      active: i === idx,
+    }));
   });
 
   /** 11 条刻度线角度（从弧线左端到右端均匀分布） */
@@ -50,8 +56,8 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
 
   readonly locationInfo = signal({
     status: 'loading',
-    city: 'Locating...',
-    region: 'Permission Required',
+    city: 'telemetry.locating',
+    region: 'telemetry.permissionRequired',
     latitude: null as number | null,
     longitude: null as number | null
   });
@@ -59,7 +65,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   readonly weatherInfo = signal({
     status: 'loading',
     temperature: '--',
-    condition: 'Loading'
+    condition: 'telemetry.locating'
   });
 
   readonly networkInfo = signal({
@@ -84,6 +90,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.i18n.loadTranslations('zh-CN');
     this.abortController = new AbortController();
 
     // 1. Initialize network status and listen for connection changes
@@ -170,8 +177,8 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('geoConsent') !== 'true') {
       this.locationInfo.set({
         status: 'pending',
-        city: 'Click to enable',
-        region: 'Location permission required',
+        city: 'telemetry.enableLocation',
+        region: 'telemetry.locationPermRequired',
         latitude: null,
         longitude: null
       });
@@ -205,15 +212,15 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     const isDenied = reason === 'denied';
     this.locationInfo.set({
       status: reason,
-      city: 'Unavailable',
-      region: isDenied ? 'Location Disabled' : 'Locating Failed',
+      city: 'telemetry.unavailable',
+      region: isDenied ? 'telemetry.locationDisabled' : 'telemetry.locatingFailed',
       latitude: null,
       longitude: null
     });
     this.weatherInfo.set({
       status: 'unavailable',
       temperature: '--',
-      condition: 'Weather N/A'
+      condition: 'telemetry.weatherNA'
     });
   }
 
@@ -273,22 +280,21 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       this.weatherInfo.set({
         status: 'unavailable',
         temperature: '--',
-        condition: 'Weather N/A'
+        condition: 'telemetry.weatherNA'
       });
     }
   }
 
   private mapWeatherCode(code: number): string {
-    // Open-Meteo WMO weather codes mapping:
-    if (code === 0) return 'Clear';
-    if (code >= 1 && code <= 3) return 'Cloudy';
-    if (code === 45 || code === 48) return 'Foggy';
-    if (code >= 51 && code <= 55) return 'Drizzle';
-    if (code >= 61 && code <= 65) return 'Rainy';
-    if (code >= 71 && code <= 75) return 'Snowy';
-    if (code >= 80 && code <= 82) return 'Showers';
-    if (code >= 95 && code <= 99) return 'Storm';
-    return 'Cloudy';
+    if (code === 0) return 'telemetry.clear';
+    if (code >= 1 && code <= 3) return 'telemetry.cloudy';
+    if (code === 45 || code === 48) return 'telemetry.foggy';
+    if (code >= 51 && code <= 55) return 'telemetry.drizzle';
+    if (code >= 61 && code <= 65) return 'telemetry.rainy';
+    if (code >= 71 && code <= 75) return 'telemetry.snowy';
+    if (code >= 80 && code <= 82) return 'telemetry.showers';
+    if (code >= 95 && code <= 99) return 'telemetry.storm';
+    return 'telemetry.cloudy';
   }
 
   private updateNetworkStatus(): void {

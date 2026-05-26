@@ -76,63 +76,190 @@
 }
 
 // ============================================
-// Nav Links (Desktop)
+// Nav Links (Desktop) — Sparkle Buttons
 // ============================================
 
 .navbar__links {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: 6px;
 }
 
-.navbar__link {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  padding: var(--space-xs) 0;
-  position: relative;
-  transition: color 0.2s;
+.sparkle-btn {
+  --btn_radius: 9999px;
+  --btn_transition: 0.3s ease-in-out;
 
-  &::after {
-    content: '';
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transform-origin: center;
+  padding: 0.4rem 0.85rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--btn_radius);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  transform: scale(calc(1 + (var(--active, 0) * 0.06)));
+  transition: transform var(--btn_transition);
+
+  // Background glow
+  &::before {
+    content: "";
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--color-text);
-    border-radius: 1px;
-    transition: width 0.3s var(--ease-out);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: var(--btn_radius);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 0.5px hsla(0, 0%, 100%, 0.1),
+      0px 2px 6px -2px hsla(0 0% 0% / calc(1 - var(--active, 0))),
+      0 0 0 calc(var(--active, 0) * 0.25rem) hsla(260, 97%, 50%, 0.4);
+    transition: all var(--btn_transition);
+    z-index: 0;
   }
 
-  &:hover,
-  &.is-active {
-    color: var(--color-text);
+  // Purple glow overlay on hover
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: hsla(260, 97%, 61%, 0.5);
+    background-image:
+      radial-gradient(at 51% 89%, hsla(266, 45%, 74%, 1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
+      radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
+    background-position: top;
+    opacity: var(--active, 0);
+    border-radius: var(--btn_radius);
+    transition: opacity var(--btn_transition);
+    z-index: 2;
+  }
 
-    &::after {
-      width: 100%;
+  &:is(:hover, :focus-visible) {
+    --active: 1;
+    color: #fff;
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+
+  // Active route — always has subtle glow
+  &.is-active {
+    color: #fff;
+    &::before {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow:
+        inset 0 0.5px hsla(0, 0%, 100%, 0.15),
+        0 0 12px hsla(260, 97%, 50%, 0.25);
     }
   }
 }
 
-// ============================================
-// Language Toggle
-// ============================================
+// Flowing light sweep border (流光效果)
+.sparkle-btn__dots {
+  --size_border: calc(100% + 2px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--size_border);
+  height: var(--size_border);
+  background: conic-gradient(
+    from var(--flow-angle, 0deg),
+    transparent 0%,
+    rgba(168, 85, 247, 0.8) 10%,
+    rgba(236, 72, 153, 0.6) 20%,
+    transparent 30%
+  );
+  border-radius: var(--btn_radius);
+  z-index: -1;
+  animation: flow-sweep 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  padding: 1.5px;
 
-.navbar__lang-toggle {
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-full);
-  background: rgba(0, 0, 0, 0.06);
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.1);
-    color: var(--color-text);
+  .sparkle-btn:hover &,
+  .sparkle-btn:focus-visible &,
+  .sparkle-btn.is-active & {
+    opacity: 1;
   }
+}
+
+@keyframes flow-sweep {
+  to { --flow-angle: 360deg; }
+}
+
+// Register CSS custom property for animation
+@property --flow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+// Sparkle SVG
+.sparkle-btn__sparkle {
+  position: relative;
+  z-index: 10;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sparkle-btn__path {
+  fill: currentColor;
+  stroke: currentColor;
+  transform-origin: center;
+}
+
+.sparkle-btn:is(:hover, :focus) .sparkle-btn__path {
+  animation: sparkle-path 1.5s linear 0.5s infinite;
+}
+
+.sparkle-btn__path:nth-child(1) { --scale_path: 1.2; }
+.sparkle-btn__path:nth-child(2) { --scale_path: 1.2; }
+.sparkle-btn__path:nth-child(3) { --scale_path: 1.2; }
+
+@keyframes sparkle-path {
+  0%, 34%, 71%, 100% { transform: scale(1); }
+  17% { transform: scale(var(--scale_path, 1)); }
+  49% { transform: scale(var(--scale_path, 1)); }
+  83% { transform: scale(var(--scale_path, 1)); }
+}
+
+// Button text
+.sparkle-btn__text {
+  position: relative;
+  z-index: 10;
+  background-image: linear-gradient(
+    90deg,
+    hsla(0, 0%, 100%, 1) 0%,
+    hsla(0, 0%, 100%, var(--active, 0.7)) 120%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
 // ============================================
@@ -199,7 +326,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 80px var(--space-xl) var(--space-xl);
-    gap: var(--space-md);
+    gap: var(--space-sm);
     background: var(--color-bg);
     transform: translateX(100%);
     transition: transform 0.3s var(--ease-out);
@@ -210,9 +337,9 @@
     }
   }
 
-  .navbar__link {
-    font-size: 1rem;
-    padding: var(--space-sm) 0;
+  .sparkle-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
   }
 }
 
@@ -222,7 +349,7 @@
 
 .share-tooltip-container {
   position: relative;
-  margin-left: 12px;
+  margin-left: 6px;
 
   .share-button-content {
     display: inline-flex;
@@ -340,13 +467,53 @@
 }
 
 // ============================================
+// Share Modal
+// ============================================
+
+.share-badge {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.share-modal-body {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.share-modal-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.share-modal-url {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 14px;
+  letter-spacing: 0.03em;
+}
+
+// ============================================
 // Reduced Motion
 // ============================================
 
 @media (prefers-reduced-motion: reduce) {
   .navbar,
   .navbar__links,
-  .hamburger-line {
+  .hamburger-line,
+  .sparkle-btn,
+  .sparkle-btn__dots::before {
+    animation: none;
     transition: none;
   }
 }
