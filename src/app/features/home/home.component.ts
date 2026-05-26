@@ -168,6 +168,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showShareModal.set(true);
   }
 
+  shareTwitterUrl(): string {
+    const text = encodeURIComponent('Check out SpaceLab — an immersive interactive space simulation portfolio 🌌');
+    const url = encodeURIComponent('https://spacelab.dev');
+    return `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+  }
+
+  shareFacebookUrl(): string {
+    const url = encodeURIComponent('https://spacelab.dev');
+    return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  }
+
+  shareLinkedinUrl(): string {
+    const url = encodeURIComponent('https://spacelab.dev');
+    const title = encodeURIComponent('SpaceLab — Interactive Space Deck');
+    return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  }
+
   private startTypewriter(): void {
     this.typedText.set('');
     this.typingIndex = 0;
