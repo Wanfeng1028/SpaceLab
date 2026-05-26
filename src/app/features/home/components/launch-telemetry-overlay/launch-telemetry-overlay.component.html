@@ -108,11 +108,26 @@
       <div class="gauge-unit">G</div>
     </div>
 
-    <div class="engine-cluster">
-      <div class="engine-cluster__ring">
-        @for (dot of engineDots; track $index) {
-          <span class="engine-cluster__dot" [class.is-lit]="dot.lit"></span>
-        }
+    <div class="network-status">
+      <svg class="signal-svg" viewBox="0 0 54 36" fill="none">
+        <rect x="2" y="28" width="6" height="8" rx="2" 
+              [attr.fill]="isOnline() ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
+              [attr.opacity]="isOnline() ? '1' : '0.5'" />
+        <rect x="12" y="22" width="6" height="14" rx="2" 
+              [attr.fill]="isOnline() && rtt() < 300 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
+              [attr.opacity]="isOnline() && rtt() < 300 ? '1' : '0.5'" />
+        <rect x="22" y="16" width="6" height="20" rx="2" 
+              [attr.fill]="isOnline() && rtt() < 150 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
+              [attr.opacity]="isOnline() && rtt() < 150 ? '1' : '0.5'" />
+        <rect x="32" y="10" width="6" height="26" rx="2" 
+              [attr.fill]="isOnline() && rtt() < 100 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
+              [attr.opacity]="isOnline() && rtt() < 100 ? '1' : '0.5'" />
+        <rect x="42" y="4" width="6" height="32" rx="2" 
+              [attr.fill]="isOnline() && rtt() < 70 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
+              [attr.opacity]="isOnline() && rtt() < 70 ? '1' : '0.5'" />
+      </svg>
+      <div class="network-status__label" [class.is-offline]="!isOnline()">
+        {{ isOnline() ? 'SIGNAL · ' + rtt() + 'MS' : 'OFFLINE' }}
       </div>
     </div>
   </div>
