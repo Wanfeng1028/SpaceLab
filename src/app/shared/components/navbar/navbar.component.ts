@@ -122,6 +122,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.closeMobileMenu();
   }
 
+  onLinkClick(link: any, event: Event): void {
+    if (link.route === '/home') {
+      this.onHomeClick(event);
+    } else {
+      this.closeMobileMenu();
+    }
+  }
+
   async onShare(): Promise<void> {
     try {
       await navigator.clipboard.writeText(window.location.origin);
