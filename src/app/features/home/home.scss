@@ -76,25 +76,24 @@
 // 左上方的橘黄至太阳初露强渐变
 .yellow-orange {
   position: absolute;
-  top: 15%;
-  left: 15%;
-  width: 420px;
-  height: 420px;
+  top: 10%;
+  left: 10%;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 140, 0, 0.6) 0%,
-    rgba(255, 69, 0, 0.3) 40%,
-    rgba(255, 210, 31, 0.12) 65%,
-    transparent 80%
+    rgba(255, 140, 0, 0.35) 0%,
+    rgba(255, 69, 0, 0.18) 30%,
+    rgba(255, 210, 31, 0.08) 55%,
+    transparent 75%
   );
-  filter: blur(30px);
   mix-blend-mode: screen;
   animation: flareBreatheYellow 8s ease-in-out infinite alternate;
 
   @media (max-width: 767px) {
-    width: 260px;
-    height: 260px;
+    width: 300px;
+    height: 300px;
   }
 }
 
