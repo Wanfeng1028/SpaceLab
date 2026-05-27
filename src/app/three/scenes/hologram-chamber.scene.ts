@@ -401,6 +401,8 @@ export class HologramChamberScene {
       cancelAnimationFrame(this.animationId);
     }
     window.removeEventListener('resize', this.resizeHandler);
+    this.canvas.removeEventListener('pointermove', this.pointerMoveHandler);
+    this.canvas.removeEventListener('pointerleave', this.pointerLeaveHandler);
 
     for (const panel of this.panels) {
       panel.geometry.dispose();

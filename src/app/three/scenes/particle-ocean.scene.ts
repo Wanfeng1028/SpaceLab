@@ -38,6 +38,8 @@ export class ParticleOceanScene {
   private rippleX = 0;
   private rippleY = 0;
 
+  private pointerDownHandler!: (e: PointerEvent) => void;
+
   private particleCount: number;
 
   constructor(private canvas: HTMLCanvasElement) {
