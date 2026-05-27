@@ -26,30 +26,45 @@
   }
 }
 
-// Center text
-.neural-center-text {
+// Header styles
+.neural-header {
   position: absolute;
   top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+  left: 5%;
   z-index: 2;
-  pointer-events: none;
+  max-width: 350px;
+}
+
+.neural-number {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: #8f7cff;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(143, 124, 255, 0.5);
+  letter-spacing: 0.1em;
 }
 
 .neural-title {
-  font-family: 'Orbitron', 'SF Mono', monospace;
-  font-size: clamp(1rem, 2.5vw, 1.8rem);
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: #a855f7;
-  margin: 0 0 1rem 0;
-  text-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 600;
+  color: #8f7cff;
+  margin: 0.5rem 0 1rem 0;
+  letter-spacing: 0.15em;
+}
+
+.neural-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: #69d7ff;
+  margin: 0 0 0.5rem 0;
+  font-style: italic;
 }
 
 .neural-desc {
   font-family: 'Roboto Mono', monospace;
-  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
