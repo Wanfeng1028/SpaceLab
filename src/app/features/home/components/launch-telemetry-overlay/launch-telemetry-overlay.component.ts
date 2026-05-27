@@ -202,6 +202,22 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     this.requestGeolocation();
   }
 
+  revokeLocationConsent(): void {
+    localStorage.removeItem('geoConsent');
+    this.locationInfo.set({
+      status: 'pending',
+      city: 'telemetry.enableLocation',
+      region: 'telemetry.locationPermRequired',
+      latitude: null,
+      longitude: null
+    });
+    this.weatherInfo.set({
+      status: 'loading',
+      temperature: '--',
+      condition: 'telemetry.locating'
+    });
+  }
+
   private requestGeolocation(): void {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -210,7 +226,6 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
         this.fetchGeocodingAndWeather(lat, lon);
       },
       (error) => {
-        console.warn('Geolocation error:', error);
         this.handleLocationError(error.code === error.PERMISSION_DENIED ? 'denied' : 'failed');
       },
       { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
