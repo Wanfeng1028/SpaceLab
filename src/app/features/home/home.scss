@@ -206,6 +206,7 @@
 
 // ── 纯 CSS 午夜星空 + 流星 + 月牙装饰层 (uiverse) ──
 .uiverse-midnight-sky {
+  will-change: transform;
   position: absolute;
   inset: 0;
   z-index: 1;

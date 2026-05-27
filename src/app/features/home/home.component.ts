@@ -307,6 +307,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     const chars = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ABCDEF';
     return Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
   }
-
-  // startBrightnessPolling method removed, merged into startCombinedTimer
 }
