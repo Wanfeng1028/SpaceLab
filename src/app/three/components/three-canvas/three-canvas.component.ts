@@ -52,7 +52,7 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.01, rootMargin: '0px 0px 100px 0px' }
     );
     this.observer.observe(this.canvasRef.nativeElement);
   }
