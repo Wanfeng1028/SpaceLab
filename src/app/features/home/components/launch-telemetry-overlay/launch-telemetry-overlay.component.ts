@@ -249,16 +249,21 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   private async fetchGeocodingAndWeather(lat: number, lon: number): Promise<void> {
+    // NOTE: This method sends coordinates to third-party APIs for reverse geocoding and weather:
+    // - BigDataCloud (api.bigdatacloud.net) — reverse geocoding (free, keyless)
+    // - Open-Meteo (api.open-meteo.com) — weather data (free, keyless)
+    // User must grant consent via grantLocationConsent() before this is called.
+
     // 1. Fetch location name via BigDataCloud Reverse Geocoding API (free, keyless)
     try {
       const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`;
       const geoRes = await fetch(geoUrl, { signal: this.abortController?.signal });
       if (!geoRes.ok) throw new Error('Geocoding response failed');
       const geoData = await geoRes.json();
-      
+
       const city = geoData.city || geoData.locality || geoData.principalSubdivision || 'Unknown';
-      const region = geoData.principalSubdivision && geoData.countryCode 
-        ? `${geoData.principalSubdivision} / ${geoData.countryCode}` 
+      const region = geoData.principalSubdivision && geoData.countryCode
+        ? `${geoData.principalSubdivision} / ${geoData.countryCode}`
         : geoData.countryName || 'Unknown';
 
       this.locationInfo.set({
@@ -268,8 +273,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
         latitude: lat,
         longitude: lon
       });
-    } catch (e) {
-      console.warn('Geocoding API failed, falling back to coordinates:', e);
+    } catch {
       // Fallback: display approximate coordinates with correct hemisphere indicators
       this.locationInfo.set({
         status: 'success',
@@ -299,8 +303,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
         temperature: `${temp}°`,
         condition
       });
-    } catch (e) {
-      console.warn('Weather API failed:', e);
+    } catch {
       this.weatherInfo.set({
         status: 'unavailable',
         temperature: '--',
