@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly isLightTheme = signal(false);
 
   readonly navLinks = [
+    { route: '/home', labelKey: 'nav.home' },
     { route: '/blog', labelKey: 'nav.blog' },
     { route: '/projects', labelKey: 'nav.projects' },
     { route: '/lab', labelKey: 'nav.lab' },
