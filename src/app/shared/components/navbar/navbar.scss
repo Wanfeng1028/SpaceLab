@@ -55,7 +55,47 @@
   cursor: pointer;
 }
 
+// ============================================
+// Avatar Spinner Ring
+// ============================================
+
+.avatar-spinner {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-spinner__ring {
+  position: absolute;
+  inset: -4px;
+  background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
+  border-radius: 50%;
+  animation: avatar-spin 1.7s linear infinite;
+  filter: blur(1px);
+  box-shadow:
+    0px -5px 20px 0px rgb(186, 66, 255),
+    0px 5px 20px 0px rgb(0, 225, 255);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background-color: rgb(36, 36, 36);
+    border-radius: 50%;
+    filter: blur(4px);
+  }
+}
+
+@keyframes avatar-spin {
+  to { transform: rotate(360deg); }
+}
+
 .navbar__avatar {
+  position: relative;
+  z-index: 1;
   width: 32px;
   height: 32px;
   border-radius: 50%;
