@@ -143,9 +143,12 @@ app-telemetry-bar {
     top: 45%;
   }
 
-  .orbital-center-text {
-    bottom: 10%;
+  .orbital-header {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 90%;
+    max-width: 400px;
   }
 
   .orbital-right {
