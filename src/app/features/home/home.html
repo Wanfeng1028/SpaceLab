@@ -112,10 +112,11 @@
 
   <!-- 联系弹窗 -->
   @if (showContactModal()) {
-    <space-glass-modal size="md" (closed)="showContactModal.set(false)">
+    <space-glass-modal size="sm" (closed)="showContactModal.set(false)">
       <div class="contact-modal-content">
         <h3 class="contact-modal-title">{{ t('home.contactTitle') }}</h3>
         <p class="contact-modal-desc">{{ t('home.contactDesc') }}</p>
+        <hr class="line" />
         <ul class="contact-modal-list">
           <li>service.ai@outlook.com</li>
           <li>GitHub — Wanfeng1028</li>
