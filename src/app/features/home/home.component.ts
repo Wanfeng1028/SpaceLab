@@ -20,6 +20,7 @@ import { EarthObservatorySection } from './components/earth-observatory/earth-ob
 import { NeuralCoreSection } from './components/neural-core/neural-core.component';
 import { VisualSystemsSection } from './components/visual-systems/visual-systems.component';
 import { OrbitalLearningSection } from './components/orbital-learning/orbital-learning.component';
+import { PortalGallerySection } from './components/stargate-dock/stargate-dock.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 
 @Component({
@@ -35,6 +36,7 @@ import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-
     NeuralCoreSection,
     VisualSystemsSection,
     OrbitalLearningSection,
+    PortalGallerySection,
     CockpitDashboardSection,
   ],
 })
