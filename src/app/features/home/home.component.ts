@@ -332,22 +332,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     return Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
   }
 
-  private startBrightnessPolling(): void {
-    this.brightnessTimer = setInterval(() => {
-      if (!this.activeScene) return;
-      const raw = this.activeScene.getCenterBrightness();
-
-      // 指数移动平均平滑
-      this.brightnessSmoothed = this.brightnessSmoothed * 0.8 + raw * 0.2;
-
-      // 滞回阈值防抖：亮→暗 阈值低，暗→亮 阈值高
-      if (!this.isBrightState && this.brightnessSmoothed > 0.10) {
-        this.isBrightState = true;
-        this.isBright.set(true);
-      } else if (this.isBrightState && this.brightnessSmoothed < 0.05) {
-        this.isBrightState = false;
-        this.isBright.set(false);
-      }
-    }, 500); // 原来是150ms，降低频率以减少gl.readPixels调用
-  }
+  // startBrightnessPolling method removed, merged into startCombinedTimer
 }
