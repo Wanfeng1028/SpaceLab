@@ -1,21 +1,17 @@
 <div class="neural-core">
-  <!-- 垂直标题 (左侧) -->
-  <app-vertical-section-title
-    number="03"
-    title="NEURAL CORE"
-    [telemetryText]="telemetryText()" />
+  <!-- 左侧竖排标题 -->
+  <div class="neural-header">
+    <h1 class="neural-number">03</h1>
+    <h2 class="neural-title">NEURAL CORE</h2>
+    <p class="neural-subtitle">Artificial intelligence, machine learning and language models.</p>
+    <p class="neural-desc">
+      Exploring models that learn, reason and generate.
+    </p>
+  </div>
 
   <!-- Three.js 神经网络画布 -->
   <div class="neural-canvas-container">
     <app-three-canvas [sceneFactory]="neuralFactory" />
-  </div>
-
-  <!-- 中央文字 -->
-  <div class="neural-center-text">
-    <h2 class="neural-title">ARTIFICIAL INTELLIGENCE</h2>
-    <p class="neural-desc">
-      Exploring models that learn, reason and generate.
-    </p>
   </div>
 
   <!-- 右侧推理状态 HUD -->
