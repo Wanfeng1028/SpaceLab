@@ -112,21 +112,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor() {
     effect(() => {
-      const scene = this.activeScene;
-      if (!scene) return;
-
-      scene.updateIntensity(this.coronaIntensity());
-      scene.updateRotationSpeed(this.orbitalSpeed());
-
-      const preset = this.activePreset();
-      if (preset === 'ECLIPSE') {
-        scene.updateTints('#b2a8ff', '#fcff42');
-      } else if (preset === 'PULSAR') {
-        scene.updateTints('#00f0ff', '#ff007b');
-      } else if (preset === 'AURORA') {
-        scene.updateTints('#00ff87', '#60efe0');
-      }
+      this.applySceneConfig();
     });
+  }
+
+  private applySceneConfig(): void {
+    const scene = this.activeScene;
+    if (!scene) return;
+
+    scene.updateIntensity(this.coronaIntensity());
+    scene.updateRotationSpeed(this.orbitalSpeed());
+
+    const preset = this.activePreset();
+    if (preset === 'ECLIPSE') {
+      scene.updateTints('#b2a8ff', '#fcff42');
+    } else if (preset === 'PULSAR') {
+      scene.updateTints('#00f0ff', '#ff007b');
+    } else if (preset === 'AURORA') {
+      scene.updateTints('#00ff87', '#60efe0');
+    }
   }
 
   @HostListener('document:click')
