@@ -69,9 +69,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   // 亮度自适应按钮状态
   isBright = signal<boolean>(false);
   showContactModal = signal<boolean>(false);
-  private brightnessSmoothed = 0;
-  private isBrightState = false;
-  private brightnessTimer: any = null;
 
   // Live scrolling sci-fi diagnostic terminal logs
   telemetryLogs = signal<string[]>([]);
