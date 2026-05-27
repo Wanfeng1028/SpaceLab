@@ -11,6 +11,7 @@ import {
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { I18nService } from '../../../core/services/i18n.service';
 import { SpaceGlassModalComponent } from '../glass/modal/space-glass-modal.component';
+import { SpaceCapsuleModalComponent } from '../space-capsule-modal/space-capsule-modal.component';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -27,7 +28,7 @@ const LIGHT_THEME_ROUTES = ['/blog', '/article'];
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive, SpaceGlassModalComponent],
+  imports: [RouterLink, RouterLinkActive, SpaceGlassModalComponent, SpaceCapsuleModalComponent],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -40,6 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly mobileMenuOpen = signal(false);
   readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
   readonly showShareModal = signal(false);
+  readonly showCapsuleModal = signal(false);
   readonly githubStars = signal(0);
   readonly soundEnabled = signal<boolean>(true);
   readonly isLightTheme = signal(false);
