@@ -184,6 +184,7 @@ export class EarthObservatoryScene {
       `,
       fragmentShader: `
         precision highp float;
+        uniform float uOpacity;
         varying vec3 vNormal;
         varying vec3 vViewPosition;
         void main() {
@@ -192,7 +193,8 @@ export class EarthObservatoryScene {
           vec3 cyan = vec3(0.0, 0.9, 1.0);
           vec3 blue = vec3(0.1, 0.4, 0.9);
           vec3 color = mix(cyan, blue, fresnel);
-          gl_FragColor = vec4(color * fresnel, fresnel * 0.6);
+          float alpha = fresnel * 0.6 * uOpacity;
+          gl_FragColor = vec4(color * fresnel, alpha);
         }
       `,
       uniforms: {
@@ -442,6 +444,10 @@ export class EarthObservatoryScene {
       (tiles.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
     });
     (this.starDust.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
+
+    // Update atmosphere opacity based on scroll progress
+    const atmosphereOpacity = Math.min(this.scrollProgress * 2, 1.0);
+    (this.atmosphere.material as ShaderMaterial).uniforms['uOpacity'].value = atmosphereOpacity;
 
     this.renderer.render(this.scene, this.camera);
   }
