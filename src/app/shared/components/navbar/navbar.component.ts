@@ -107,12 +107,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return window.location.origin;
   }
 
-  private async fetchGithubStars(): Promise<void> {
+  private async loadGithubStars(): Promise<void> {
+    // Try session cache first
     try {
-      const res = await fetch('https://api.github.com/repos/Wanfeng1028/SpaceLab');
+      const cached = sessionStorage.getItem(GITHUB_STARS_CACHE_KEY);
+      if (cached) {
+        this.githubStars.set(Number(cached));
+        return;
+      }
+    } catch {
+      // sessionStorage may be unavailable
+    }
+
+    this.starsAbort?.abort();
+    this.starsAbort = new AbortController();
+
+    try {
+      const res = await fetch(GITHUB_API_URL, { signal: this.starsAbort.signal });
       if (res.ok) {
         const data = await res.json();
-        this.githubStars.set(data.stargazers_count ?? 0);
+        const count = data.stargazers_count ?? 0;
+        this.githubStars.set(count);
+        try {
+          sessionStorage.setItem(GITHUB_STARS_CACHE_KEY, String(count));
+        } catch {
+          // Ignore storage errors
+        }
       }
     } catch {
       // Silently fail — keep default 0
@@ -120,18 +140,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   shareTwitterUrl(): string {
-    const text = encodeURIComponent('🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!');
-    const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');
+    const text = encodeURIComponent(SHARE_TEXT);
+    const url = encodeURIComponent(GITHUB_REPO_URL);
     return `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
   }
 
   shareFacebookUrl(): string {
-    const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');
+    const url = encodeURIComponent(GITHUB_REPO_URL);
     return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
   }
 
   shareLinkedinUrl(): string {
-    const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');
+    const url = encodeURIComponent(GITHUB_REPO_URL);
     return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
   }
 }
