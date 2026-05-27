@@ -1302,14 +1302,21 @@
 
 .contact-modal-title {
   font-size: 1rem;
-  font-weight: 600;
-  color: var(--white, hsl(0, 0%, 100%));
+  color: hsl(0, 0%, 100%);
 }
 
 .contact-modal-desc {
-  font-size: 0.75rem;
-  color: var(--paragraph, hsl(0, 0%, 83%));
-  line-height: 1.6;
+  margin-top: 0.25rem;
+  width: 65%;
+  font-size: 0.5rem;
+  color: hsl(0, 0%, 83%);
+}
+
+.contact-modal-content .line {
+  width: 100%;
+  height: 0.1rem;
+  background-color: hsl(240, 9%, 17%);
+  border: none;
 }
 
 .contact-modal-list {
@@ -1324,9 +1331,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--white, hsl(0, 0%, 100%));
+    color: hsl(0, 0%, 100%);
   }
 }
 
