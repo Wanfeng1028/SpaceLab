@@ -25,6 +25,7 @@ export class HeroLightFieldScene {
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private disposed = false;
+  private contextLostHandler: ((e: Event) => void) | null = null;
   private lastFrameTime = performance.now();
   private currentDpr: number;
   private readonly TARGET_FPS = 50;
@@ -58,6 +59,10 @@ export class HeroLightFieldScene {
       alpha: false,
       powerPreference: 'high-performance',
     });
+    this.contextLostHandler = (e: Event) => {
+      e.preventDefault();
+    };
+    this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(0x000000, 1);
@@ -368,6 +373,10 @@ export class HeroLightFieldScene {
   }
 
   destroy(): void {
+    if (this.contextLostHandler) {
+      this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLostHandler);
+      this.contextLostHandler = null;
+    }
     this.disposed = true;
     this.pause();
     window.removeEventListener('resize', this.resizeHandler);
