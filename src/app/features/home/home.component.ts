@@ -144,9 +144,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     // 直接显示完整文本
     this.typedText.set(this.fullText);
     // 延迟2秒后启动打字机循环（确保音频上下文可能需要用户交互）
-    setTimeout(() => {
-      // 如果音频上下文仍挂起，则启动无音频的打字机
-      if (this.audioCtxSuspended()) {
+    this.initDelayTimer = setTimeout(() => {
+      if (!this.destroyed && this.audioCtxSuspended()) {
         this.startTypewriter();
       }
     }, 2000);
@@ -154,9 +153,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.typingTimer) {
-      clearTimeout(this.typingTimer);
-    }
+    this.destroyed = true;
+    clearTimeout(this.typingTimer);
+    clearTimeout(this.initDelayTimer);
+    clearTimeout(this.bellTimer);
+    clearTimeout(this.restartTimer);
     if (this.combinedTimer) {
       clearInterval(this.combinedTimer);
     }
