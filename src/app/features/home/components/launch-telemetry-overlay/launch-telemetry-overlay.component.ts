@@ -48,11 +48,19 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     }));
   });
 
-  /** 11 条刻度线角度（从弧线左端到右端均匀分布） */
-  readonly ticks: GaugeTick[] = Array.from({ length: 11 }, (_, i) => ({
-    angle: (i + 1) * (Math.PI / 12),
-    major: i % 2 === 0,
-  }));
+  /** 11 条刻度线坐标（预计算，避免模板中重复计算三角函数） */
+  readonly ticks: GaugeTick[] = Array.from({ length: 11 }, (_, i) => {
+    const angle = (i + 1) * (Math.PI / 12);
+    const cosVal = Math.cos(Math.PI - angle);
+    const sinVal = Math.sin(angle);
+    return {
+      x1: 60 + 42 * cosVal,
+      y1: 66 - 42 * sinVal,
+      x2: 60 + 48 * cosVal,
+      y2: 66 - 48 * sinVal,
+      major: i % 2 === 0,
+    };
+  });
 
   // Signals for holding telemetry states
   readonly currentTime = signal(new Date());

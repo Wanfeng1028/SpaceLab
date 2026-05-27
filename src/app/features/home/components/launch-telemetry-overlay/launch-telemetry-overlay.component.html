@@ -14,10 +14,10 @@
                 [attr.stroke-dashoffset]="locationInfo().status === 'success' ? '0' : '157'" />
           @for (tick of ticks; track $index) {
             <line
-              [attr.x1]="60 + 42 * Math.cos(Math.PI - tick.angle)"
-              [attr.y1]="66 - 42 * Math.sin(tick.angle)"
-              [attr.x2]="60 + 48 * Math.cos(Math.PI - tick.angle)"
-              [attr.y2]="66 - 48 * Math.sin(tick.angle)"
+              [attr.x1]="tick.x1"
+              [attr.y1]="tick.y1"
+              [attr.x2]="tick.x2"
+              [attr.y2]="tick.y2"
               [attr.stroke]="tick.major ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.18)'"
               [attr.stroke-width]="tick.major ? 1.5 : 1"
             />
