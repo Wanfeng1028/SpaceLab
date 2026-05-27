@@ -56,7 +56,7 @@ export class GlobeOrbitScene {
       antialias: true,
       alpha: true,
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setClearColor(0x000000, 0);
 
     this.resizeRenderer();
