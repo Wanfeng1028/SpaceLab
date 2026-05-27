@@ -68,8 +68,9 @@
 
     @for (link of navLinks; track link.route) {
       <a class="sparkle-btn"
-         [routerLink]="link.route !== '/home' ? link.route : null"
+         [routerLink]="link.route"
          routerLinkActive="is-active"
+         [routerLinkActiveOptions]="{ exact: link.route === '/' }"
          (click)="onLinkClick(link, $event)">
         <div class="sparkle-btn__dots"></div>
         <svg class="sparkle-btn__sparkle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
