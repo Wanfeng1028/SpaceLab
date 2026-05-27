@@ -29,7 +29,7 @@ export class HeroLightFieldScene {
   private currentDpr: number;
   private readonly TARGET_FPS = 50;
   private readonly MAX_FRAME_TIME = 1000 / this.TARGET_FPS;
-  private startTime = Date.now();
+  private startTime = performance.now();
   private readonly boundAnimate = this.animate.bind(this);
 
   private readonly dpr: number;
