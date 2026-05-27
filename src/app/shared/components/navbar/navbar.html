@@ -3,16 +3,18 @@
      [class.mobile-open]="mobileMenuOpen()">
 
   <!-- Logo / Site Name -->
-  <a class="navbar__brand" routerLink="/">
-    <span class="navbar__logo">✦</span>
-    <span class="navbar__name">SpaceLab</span>
-    <button class="navbar__avatar-link">
+  <div class="navbar__brand">
+    <a class="navbar__brand-logo" routerLink="/">
+      <span class="navbar__logo">✦</span>
+      <span class="navbar__name">SpaceLab</span>
+    </a>
+    <a class="navbar__avatar-link" routerLink="/">
       <div class="avatar-spinner">
         <div class="avatar-spinner__ring"></div>
         <img class="navbar__avatar" src="touxiang.png" alt="avatar" />
       </div>
-    </button>
-  </a>
+    </a>
+  </div>
 
   <!-- Desktop Nav Links -->
   <div class="navbar__links" [class.is-open]="mobileMenuOpen()">
