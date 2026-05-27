@@ -137,8 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.i18n.loadTranslations('zh-CN');
     // 打字机延迟到用户交互后启动（浏览器要求用户手势才能播放音频）
-    this.startTelemetryLogs();
-    this.startBrightnessPolling();
+    this.startCombinedTimer();
   }
 
   ngOnDestroy(): void {
