@@ -3,6 +3,7 @@ import {
   inject,
   signal,
   OnInit,
+  OnDestroy,
   HostListener,
   ChangeDetectionStrategy,
   DestroyRef,
@@ -13,6 +14,11 @@ import { SpaceGlassModalComponent } from '../glass/modal/space-glass-modal.compo
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+const GITHUB_REPO_URL = 'https://wanfeng1028.github.io/SpaceLab/';
+const GITHUB_API_URL = 'https://api.github.com/repos/Wanfeng1028/SpaceLab';
+const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
+const SHARE_TEXT = '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
@@ -20,10 +26,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, RouterLinkActive, SpaceGlassModalComponent],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private i18n = inject(I18nService);
   private destroyRef = inject(DestroyRef);
+  private starsAbort: AbortController | null = null;
 
   readonly isHome = signal(true);
   readonly isScrolled = signal(false);
@@ -31,7 +38,7 @@ export class NavbarComponent implements OnInit {
   readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
   readonly showShareModal = signal(false);
   readonly githubStars = signal(0);
-  readonly soundEnabled = signal<boolean>(true); // 打字机音效开关
+  readonly soundEnabled = signal<boolean>(true);
 
   readonly navLinks = [
     { route: '/blog', labelKey: 'nav.blog' },
