@@ -12,7 +12,6 @@ import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
-import { VerticalSectionTitleComponent } from '../../../../shared/components/hud/vertical-section-title.component';
 import { EarthObservatoryScene } from '../../../../three/scenes/earth-observatory.scene';
 
 interface ScaleTick {
@@ -30,7 +29,6 @@ interface ScaleTick {
     HudFrameComponent,
     HudMetricComponent,
     TelemetryBarComponent,
-    VerticalSectionTitleComponent,
   ],
 })
 export class EarthObservatorySection implements OnInit, OnDestroy {
