@@ -11,7 +11,10 @@
   <!-- Desktop Nav Links -->
   <div class="navbar__links" [class.is-open]="mobileMenuOpen()">
     <a class="navbar__avatar-link" routerLink="/" (click)="closeMobileMenu()">
-      <img class="navbar__avatar" src="touxiang.png" alt="avatar" />
+      <div class="avatar-spinner">
+        <div class="avatar-spinner__ring"></div>
+        <img class="navbar__avatar" src="touxiang.png" alt="avatar" />
+      </div>
     </a>
 
     <!-- Share Tooltip (紧挨头像) -->
