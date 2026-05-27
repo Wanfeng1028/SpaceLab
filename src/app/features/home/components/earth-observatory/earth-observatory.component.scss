@@ -200,6 +200,14 @@ app-telemetry-bar {
   .observatory-right {
     display: none;
   }
+
+  .observatory-header {
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    max-width: none;
+    text-align: center;
+  }
 }
 
 // Reduced motion
