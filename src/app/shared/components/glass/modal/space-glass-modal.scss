@@ -1,16 +1,6 @@
 // ============================================
-// SpaceGlassModal — 深色 HUD 玻璃弹窗
+// SpaceGlassModal — 深色 HUD 卡片弹窗
 // ============================================
-
-.sgm-overlay {
-  --hud-primary: hsl(189, 92%, 58%);
-  --hud-primary-deep: hsl(189, 99%, 26%);
-  --hud-primary-dark: hsl(188, 94%, 13%);
-  --hud-bg: hsl(240, 15%, 9%);
-  --hud-line: hsl(240, 9%, 17%);
-  --hud-text: hsl(0, 0%, 100%);
-  --hud-text-muted: hsl(0, 0%, 83%);
-}
 
 // ---- 遮罩层 ----
 .sgm-overlay {
@@ -28,39 +18,43 @@
 
 // ---- 弹窗面板 ----
 .sgm-panel {
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(240, 15%, 9%);
+  --paragraph: hsl(0, 0%, 83%);
+  --line: hsl(240, 9%, 17%);
+  --primary: hsl(189, 92%, 58%);
+
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: min(760px, calc(100vw - 40px));
+  padding: 1rem;
+  width: min(19rem, calc(100vw - 40px));
   min-height: 200px;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   overflow-x: hidden;
-  padding: clamp(28px, 4vw, 44px);
-  border-radius: 1rem;
-  background-color: var(--hud-bg);
+  background-color: hsla(240, 15%, 9%, 1);
   background-image:
-    radial-gradient(at 88% 40%, var(--hud-bg) 0px, transparent 85%),
-    radial-gradient(at 49% 30%, var(--hud-bg) 0px, transparent 85%),
-    radial-gradient(at 14% 26%, var(--hud-bg) 0px, transparent 85%),
-    radial-gradient(at 0% 64%, var(--hud-primary-deep) 0px, transparent 85%),
+    radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 0% 64%, hsl(189, 99%, 26%) 0px, transparent 85%),
     radial-gradient(at 41% 94%, hsl(189, 97%, 36%) 0px, transparent 85%),
-    radial-gradient(at 100% 99%, var(--hud-primary-dark) 0px, transparent 85%);
-  box-shadow:
-    0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset,
-    0 14px 40px rgba(0, 0, 0, 0.5);
+    radial-gradient(at 100% 99%, hsl(188, 94%, 13%) 0px, transparent 85%);
+  border-radius: 1rem;
+  box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
   animation: sgmPanelIn 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 
   &--sm {
-    width: min(440px, calc(100vw - 40px));
+    width: min(19rem, calc(100vw - 40px));
     min-height: 160px;
   }
 
   &--lg {
-    width: min(900px, calc(100vw - 40px));
+    width: min(30rem, calc(100vw - 40px));
   }
 }
 
@@ -96,8 +90,8 @@
     background-image: linear-gradient(
       0deg,
       hsla(0, 0%, 100%, 0) 0%,
-      var(--hud-primary) 40%,
-      var(--hud-primary) 60%,
+      hsl(189, 100%, 50%) 40%,
+      hsl(189, 100%, 50%) 60%,
       hsla(0, 0%, 40%, 0) 100%
     );
     animation: sgmBorderRotate 8s linear infinite;
@@ -106,37 +100,36 @@
 
 // ---- 关闭按钮 ----
 .sgm-close {
+  cursor: pointer;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1rem;
+  right: 1rem;
   z-index: 3;
-  width: 40px;
-  height: 40px;
+  width: 1.5rem;
+  height: 1.5rem;
   display: grid;
   place-items: center;
-  border: 1px solid var(--hud-line);
+  padding: 0;
+  border: none;
   border-radius: 50%;
   background: transparent;
-  color: var(--hud-text-muted);
-  cursor: pointer;
+  color: var(--paragraph);
   transition:
     transform 240ms var(--ease-out),
-    color 240ms var(--ease-out),
-    border-color 240ms var(--ease-out);
+    color 240ms var(--ease-out);
 
   &:hover {
-    transform: rotate(90deg) scale(1.08);
-    color: var(--hud-text);
-    border-color: var(--hud-primary);
+    transform: rotate(90deg) scale(1.1);
+    color: var(--white);
   }
 
   &:active {
-    transform: rotate(90deg) scale(0.94);
+    transform: rotate(90deg) scale(0.9);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--hud-primary);
-    outline-offset: 3px;
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
   }
 }
 
@@ -194,14 +187,8 @@
     width: 100%;
     max-height: 85dvh;
     border-radius: 1rem 1rem 0 0;
-    padding: 28px 20px calc(20px + env(safe-area-inset-bottom, 0px));
-  }
-
-  .sgm-close {
-    top: 16px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
+    padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   }
 }
 
