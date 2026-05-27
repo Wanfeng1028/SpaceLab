@@ -188,6 +188,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       // Reached the end of line, ring the typewriter bell!
       setTimeout(() => this.playBellSound(), 100);
+      // 等待2秒后重新开始打字（循环）
+      setTimeout(() => {
+        this.typedText.set('');
+        this.typingIndex = 0;
+        this.typeNextChar();
+      }, 2000);
     }
   }
 
