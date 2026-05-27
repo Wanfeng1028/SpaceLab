@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
   readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
   readonly showShareModal = signal(false);
   readonly githubStars = signal(0);
+  readonly soundEnabled = signal<boolean>(true); // 打字机音效开关
 
   readonly navLinks = [
     { route: '/blog', labelKey: 'nav.blog' },
