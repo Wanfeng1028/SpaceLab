@@ -9,7 +9,6 @@ import {
   inject,
 } from '@angular/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
-import { VerticalSectionTitleComponent } from '../../../../shared/components/hud/vertical-section-title.component';
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
@@ -22,7 +21,6 @@ import { NeuralCoreScene } from '../../../../three/scenes/neural-core.scene';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ThreeCanvasComponent,
-    VerticalSectionTitleComponent,
     HudFrameComponent,
     HudMetricComponent,
     TelemetryBarComponent,
