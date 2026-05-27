@@ -19,7 +19,7 @@ export class I18nService {
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
   private readonly _locale = signal<SupportedLocale>(this.getInitialLocale());
-  private _translations: Record<string, any> = {};
+  private _flatMap: Record<string, string> = {};
 
   readonly locale = this._locale.asReadonly();
 
@@ -27,7 +27,7 @@ export class I18nService {
   readonly isEn = computed(() => this._locale() === 'en-US');
 
   loadTranslations(locale: SupportedLocale): void {
-    this._translations = TRANSLATIONS[locale] ?? {};
+    this._flatMap = this.flatten(TRANSLATIONS[locale] ?? {});
     this._locale.set(locale);
     if (this.isBrowser) {
       try {
@@ -39,7 +39,7 @@ export class I18nService {
   }
 
   t(key: string): string {
-    return key.split('.').reduce((obj: any, k) => obj?.[k], this._translations) ?? key;
+    return this._flatMap[key] ?? key;
   }
 
   toggleLocale(): void {
