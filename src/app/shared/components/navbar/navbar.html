@@ -118,13 +118,20 @@
 <!-- Share Modal -->
 @if (showShareModal()) {
   <space-glass-modal size="sm" (closed)="showShareModal.set(false)">
-    <div modalBadge>
-      <span class="share-badge">{{ t('common.copyLinkBadge') }}</span>
+    <div class="card_title__container">
+      <span class="card_title">{{ t('common.copyLinkBadge') }}</span>
+      <p class="card_paragraph">{{ t('common.copyLinkMsg') }}</p>
     </div>
-    <div class="share-modal-body">
-      <p class="share-modal-text">{{ t('common.copyLinkMsg') }}</p>
-      <hr class="line" />
-      <div class="share-modal-url">{{ currentUrl }}</div>
-    </div>
+    <hr class="line" />
+    <ul class="card__list">
+      <li class="card__list_item">
+        <span class="check">
+          <svg class="check_svg" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" fill-rule="evenodd"></path>
+          </svg>
+        </span>
+        <span class="list_text">{{ currentUrl }}</span>
+      </li>
+    </ul>
   </space-glass-modal>
 }
