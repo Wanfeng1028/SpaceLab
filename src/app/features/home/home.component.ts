@@ -92,6 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Typewriter properties
   typedText = signal<string>('');
   audioCtxSuspended = signal<boolean>(true);
+  soundEnabled = signal<boolean>(true); // 打字机音效开关
 
   private fullText = 'Life is coding...';
   private typingIndex = 0;
