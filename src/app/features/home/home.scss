@@ -1457,3 +1457,157 @@
   text-shadow: none;
   filter: dropshadow(none);
 }
+
+// ============================================
+// 移动端首屏布局全面优化 (≤767px)
+// ============================================
+@media (max-width: 767px) {
+
+  // ── 首屏容器：使用 svh + 安全区 ──
+  .eclipse-hero {
+    height: 100svh;
+    height: 100dvh;
+    min-height: 100svh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    overflow: hidden;
+  }
+
+  // ── 星球缩小、下移、作为背景层 ──
+  .eclipse-container {
+    width: 135vw;
+    height: 135vw;
+    max-width: none;
+    top: 170px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.78;
+    z-index: 0;
+  }
+
+  // ── 月亮缩小 ──
+  .uiverse-midnight-sky .moon {
+    width: 36px;
+    height: 36px;
+    top: 6%;
+    right: 5%;
+    box-shadow: 7px 7px 0 0 #fdfbd3;
+  }
+
+  // ── Hero 文案区域：从绝对居中改为顶部偏移 ──
+  .hero-content {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    z-index: 5;
+    padding-top: 160px;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  // ── 欢迎标语 ──
+  .hero-welcome {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    margin-bottom: 10px;
+  }
+
+  .hero-welcome-row {
+    margin-bottom: 10px;
+  }
+
+  // ── 标题 ──
+  .typewriter-container {
+    font-size: clamp(30px, 8vw, 38px);
+    line-height: 1.08;
+    margin-bottom: 32px;
+    min-height: 1.2em;
+  }
+
+  .typewriter-cursor {
+    width: 2px;
+    height: 0.8em;
+    margin-left: 4px;
+  }
+
+  // ── 按钮组 ──
+  .hero__actions {
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+
+    .space-button {
+      min-height: 44px;
+      padding: 10px 22px;
+      font-size: 13px;
+    }
+  }
+
+  // ── On/Off 开关：右上角导航栏下方 ──
+  .fx-block {
+    top: 82px;
+    right: 28px;
+    z-index: 8;
+    transform: scale(0.86);
+    transform-origin: top right;
+  }
+
+  // ── 遥测 HUD 展示区 ──
+  .launch-showcase {
+    position: relative;
+    z-index: 3;
+    margin-top: 40px;
+    padding-inline: 16px;
+  }
+
+  // ── 底部版权精简 ──
+  .minimal-footer {
+    position: relative;
+    z-index: 3;
+    padding: 20px 16px 24px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .minimal-footer > *:not(:first-child) {
+    display: none;
+  }
+
+  // ── 装饰光球缩小 ──
+  .energy-orb-wrapper {
+    right: 12px;
+    bottom: 200px;
+    opacity: 0.35;
+  }
+
+  .energy-orb {
+    width: 40px;
+    height: 40px;
+  }
+
+  // ── 滚动提示隐藏 ──
+  .scroll-indicator {
+    display: none;
+  }
+
+  // ── 音效提示隐藏 ──
+  .audio-tip {
+    display: none;
+  }
+}
+
+// ============================================
+// 移动端超小屏幕 (≤380px) — 按钮竖排
+// ============================================
+@media (max-width: 380px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
