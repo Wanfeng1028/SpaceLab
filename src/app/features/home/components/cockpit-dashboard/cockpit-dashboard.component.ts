@@ -36,6 +36,9 @@ interface LogEntry {
 export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
   private scene: CockpitDashboardScene | null = null;
+  private timeInterval: ReturnType<typeof setInterval> | null = null;
+  private handleOnline: (() => void) | null = null;
+  private handleOffline: (() => void) | null = null;
 
   readonly telemetryText = signal('COCKPIT DASHBOARD // ONLINE');
 
@@ -74,7 +77,7 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.telemetryText.set('COCKPIT DASHBOARD // ACTIVE');
 
     // Update time periodically
-    const timeInterval = setInterval(() => {
+    this.timeInterval = setInterval(() => {
       this.visitorInfo.update(info => ({
         ...info,
         localTime: this.formatCurrentTime(),
@@ -82,19 +85,32 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     }, 1000);
 
     // Monitor online status
-    const handleOnline = () => {
+    this.handleOnline = () => {
       this.visitorInfo.update(info => ({ ...info, network: 'Online' }));
       this.addLogEntry('Network reconnected', 'visitor');
     };
-    const handleOffline = () => {
+    this.handleOffline = () => {
       this.visitorInfo.update(info => ({ ...info, network: 'Offline' }));
       this.addLogEntry('Network disconnected', 'visitor');
     };
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener('online', this.handleOnline);
+    window.addEventListener('offline', this.handleOffline);
   }
 
   ngOnDestroy(): void {
+    if (this.timeInterval) {
+      clearInterval(this.timeInterval);
+      this.timeInterval = null;
+    }
+    if (this.handleOnline) {
+      window.removeEventListener('online', this.handleOnline);
+      this.handleOnline = null;
+    }
+    if (this.handleOffline) {
+      window.removeEventListener('offline', this.handleOffline);
+      this.handleOffline = null;
+    }
+    this.scene?.destroy();
     this.scene = null;
   }
 

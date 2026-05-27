@@ -16,10 +16,6 @@ import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
 import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { SpaceGlassModalComponent } from '../../shared/components/glass/modal/space-glass-modal.component';
-import { EclipseObservatorySection } from './components/eclipse-observatory/eclipse-observatory.component';
-import { ParticleOceanSection } from './components/particle-ocean/particle-ocean.component';
-import { HologramChamberSection } from './components/hologram-chamber/hologram-chamber.component';
-import { StargateDockSection } from './components/stargate-dock/stargate-dock.component';
 import { EarthObservatorySection } from './components/earth-observatory/earth-observatory.component';
 import { NeuralCoreSection } from './components/neural-core/neural-core.component';
 import { VisualSystemsSection } from './components/visual-systems/visual-systems.component';
@@ -35,10 +31,6 @@ import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-
     ThreeCanvasComponent,
     LaunchTelemetryOverlayComponent,
     SpaceGlassModalComponent,
-    EclipseObservatorySection,
-    ParticleOceanSection,
-    HologramChamberSection,
-    StargateDockSection,
     EarthObservatorySection,
     NeuralCoreSection,
     VisualSystemsSection,

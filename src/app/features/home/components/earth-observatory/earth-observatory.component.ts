@@ -36,6 +36,7 @@ interface ScaleTick {
 export class EarthObservatorySection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
   private scene: EarthObservatoryScene | null = null;
+  private telemetryTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly telemetryText = signal('EARTH OBSERVATORY // SCANNING');
 
@@ -54,6 +55,11 @@ export class EarthObservatorySection implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.telemetryTimer) {
+      clearTimeout(this.telemetryTimer);
+      this.telemetryTimer = null;
+    }
+    this.scene?.destroy();
     this.scene = null;
   }
 
@@ -71,8 +77,12 @@ export class EarthObservatorySection implements OnInit, OnDestroy {
     if (!this.scene) return;
     this.scene.triggerScanWave();
     this.telemetryText.set('EARTH OBSERVATORY // AREA LOCKED');
-    setTimeout(() => {
+    if (this.telemetryTimer) {
+      clearTimeout(this.telemetryTimer);
+    }
+    this.telemetryTimer = setTimeout(() => {
       this.telemetryText.set('EARTH OBSERVATORY // SCANNING');
+      this.telemetryTimer = null;
     }, 2000);
   }
 }

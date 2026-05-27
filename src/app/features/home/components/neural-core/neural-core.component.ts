@@ -31,6 +31,7 @@ import { NeuralCoreScene } from '../../../../three/scenes/neural-core.scene';
 export class NeuralCoreSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
   private scene: NeuralCoreScene | null = null;
+  private telemetryTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly telemetryText = signal('NEURAL CORE // PROCESSING');
 
@@ -44,6 +45,11 @@ export class NeuralCoreSection implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.telemetryTimer) {
+      clearTimeout(this.telemetryTimer);
+      this.telemetryTimer = null;
+    }
+    this.scene?.destroy();
     this.scene = null;
   }
 
@@ -61,8 +67,12 @@ export class NeuralCoreSection implements OnInit, OnDestroy {
     if (!this.scene) return;
     this.scene.triggerTokenBurst();
     this.telemetryText.set('NEURAL CORE // TOKEN BURST');
-    setTimeout(() => {
+    if (this.telemetryTimer) {
+      clearTimeout(this.telemetryTimer);
+    }
+    this.telemetryTimer = setTimeout(() => {
       this.telemetryText.set('NEURAL CORE // ACTIVE');
+      this.telemetryTimer = null;
     }, 2000);
   }
 }
