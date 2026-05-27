@@ -50,6 +50,7 @@ export class EarthObservatoryScene {
   private mouseY = 0;
   private currentRotX = 0;
   private currentRotY = 0;
+  private earthInitialX = 2; // Initial X position (right side)
 
   private scanProgress = 0;
 
