@@ -80,13 +80,6 @@
       </a>
     }
 
-    <!-- 打字机音效开关 -->
-    <button class="nav-effect-toggle"
-            [class.is-on]="soundEnabled()"
-            (click)="toggleSound(); closeMobileMenu()"
-            [attr.aria-label]="'Toggle sound effect'">
-      {{ soundEnabled() ? 'FX ON' : 'FX OFF' }}
-    </button>
 
     <!-- i18n Toggle -->
     <button class="sparkle-btn"
