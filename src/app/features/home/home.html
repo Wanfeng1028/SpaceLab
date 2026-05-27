@@ -58,16 +58,6 @@
     <!-- SpaceX 发发射遥测 HUD 模块组 -->
     <section class="launch-showcase" aria-label="Space launch telemetry preview">
       <app-launch-telemetry-overlay />
-    <!-- 打字机音效开关 -->
-    <div class="fx-block">
-      <div class="toggle">
-        <div>
-          <input type="checkbox" id="toggles" [checked]="soundEnabled()" (change)="soundEnabled.set($any($event.target).checked)">
-          <div data-unchecked="On" data-checked="Off">
-          </div>
-        </div>
-      </div>
-    </div>
 
     </section>
 
