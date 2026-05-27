@@ -14,7 +14,7 @@
 .earth-canvas-container {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 60%;
   transform: translate(-50%, -50%);
   width: 55%;
   height: 80%;
@@ -230,4 +230,48 @@ app-telemetry-bar {
     animation: none;
     opacity: 0.6;
   }
+}
+
+// Header styles for new layout
+.observatory-header {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+  z-index: 2;
+  max-width: 400px;
+}
+
+.observatory-number {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: #69d7ff;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(105, 215, 255, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.observatory-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 600;
+  color: #69d7ff;
+  margin: 0.5rem 0 1rem 0;
+  letter-spacing: 0.15em;
+}
+
+.observatory-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: #56f0c2;
+  margin: 0 0 0.5rem 0;
+  font-style: italic;
+}
+
+.observatory-desc {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
 }
