@@ -55,10 +55,11 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
     if (this.closing()) return;
     this.closing.set(true);
     // Emit immediately so parent can hide the component via @if
-    // before the effect re-triggers onOpen on input change
     this.closed.emit();
     document.body.style.overflow = '';
-    this.restoreFocus();
+    // Do NOT restoreFocus here — if user pressed Enter/Space to close,
+    // focusing the avatar would let the keyup re-trigger openCapsule.
+    // restoreFocus runs safely in ngOnDestroy instead.
     setTimeout(() => {
       this.closing.set(false);
     }, 280);
