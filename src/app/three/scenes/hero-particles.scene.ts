@@ -32,8 +32,7 @@ export class HeroLightFieldScene {
 
   constructor(private canvas: HTMLCanvasElement) {
     const isMobile = window.innerWidth < 768;
-    // 降低DPR以提升性能：桌面端从2降到1.5，移动端保持1.5
-    this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.5);
+    this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.0 : 1.5);
   }
 
   init(): void {
@@ -50,13 +49,13 @@ export class HeroLightFieldScene {
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
-      antialias: true,
-      alpha: true,
-      preserveDrawingBuffer: true,
+      antialias: false,
+      alpha: false,
+      powerPreference: 'high-performance',
     });
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0x000000, 0);
+    this.renderer.setClearColor(0x000000, 1);
 
     const geometry = new PlaneGeometry(2, 2);
 

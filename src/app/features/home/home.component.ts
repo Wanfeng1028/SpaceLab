@@ -289,7 +289,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private startTelemetryLogs(): void {
+  private startCombinedTimer(): void {
     // Initial logs
     this.telemetryLogs.set([
       '[SYS] System initializing...',
@@ -298,17 +298,33 @@ export class HomeComponent implements OnInit, OnDestroy {
       '[HUD] Diagnostic telemetry online'
     ]);
 
-    // Periodically add new scrolling log
-    this.logTimer = setInterval(() => {
-      const current = this.telemetryLogs();
-      const nextLog = this.possibleLogs[Math.floor(Math.random() * this.possibleLogs.length)];
-
-      let updated = [...current, nextLog];
-      if (updated.length > 5) {
-        updated.shift(); // Keep maximum 5 logs to avoid scrolling overflow
+    let tick = 0;
+    this.combinedTimer = setInterval(() => {
+      // 更新亮度（每500ms）
+      if (this.activeScene) {
+        const raw = this.activeScene.getCenterBrightness();
+        this.brightnessSmoothed = this.brightnessSmoothed * 0.8 + raw * 0.2;
+        if (!this.isBrightState && this.brightnessSmoothed > 0.10) {
+          this.isBrightState = true;
+          this.isBright.set(true);
+        } else if (this.isBrightState && this.brightnessSmoothed < 0.05) {
+          this.isBrightState = false;
+          this.isBright.set(false);
+        }
       }
-      this.telemetryLogs.set(updated);
-    }, 4500);
+
+      // 更新遥测日志（每4500ms）
+      tick++;
+      if (tick % 9 === 0) {
+        const current = this.telemetryLogs();
+        const nextLog = this.possibleLogs[Math.floor(Math.random() * this.possibleLogs.length)];
+        let updated = [...current, nextLog];
+        if (updated.length > 5) {
+          updated.shift();
+        }
+        this.telemetryLogs.set(updated);
+      }
+    }, 500);
   }
 
   private generateMatrixChars(): string {
