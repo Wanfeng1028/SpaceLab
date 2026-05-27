@@ -27,7 +27,7 @@
       <!-- Prev / Next Navigation -->
       <nav class="article-nav">
         @if (art.prevSlug) {
-          <a class="article-nav__link article-nav__link--prev glass-card-hover" [routerLink]="['/article', art.prevSlug]">
+          <a class="article-nav__link article-nav__link--prev" [routerLink]="['/article', art.prevSlug]">
             <span class="article-nav__label">{{ t('article.prev') }}</span>
             <span class="article-nav__title">{{ art.prevTitle }}</span>
           </a>
@@ -36,7 +36,7 @@
         }
 
         @if (art.nextSlug) {
-          <a class="article-nav__link article-nav__link--next glass-card-hover" [routerLink]="['/article', art.nextSlug]">
+          <a class="article-nav__link article-nav__link--next" [routerLink]="['/article', art.nextSlug]">
             <span class="article-nav__label">{{ t('article.next') }}</span>
             <span class="article-nav__title">{{ art.nextTitle }}</span>
           </a>
