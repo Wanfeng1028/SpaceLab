@@ -32,7 +32,8 @@ export class HeroLightFieldScene {
 
   constructor(private canvas: HTMLCanvasElement) {
     const isMobile = window.innerWidth < 768;
-    this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
+    // 降低DPR以提升性能：桌面端从2降到1.5，移动端保持1.5
+    this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.5);
   }
 
   init(): void {
