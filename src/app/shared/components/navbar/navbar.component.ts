@@ -91,6 +91,18 @@ export class NavbarComponent implements OnInit {
     return window.location.origin;
   }
 
+  private async fetchGithubStars(): Promise<void> {
+    try {
+      const res = await fetch('https://api.github.com/repos/Wanfeng1028/SpaceLab');
+      if (res.ok) {
+        const data = await res.json();
+        this.githubStars.set(data.stargazers_count ?? 0);
+      }
+    } catch {
+      // Silently fail — keep default 0
+    }
+  }
+
   shareTwitterUrl(): string {
     const text = encodeURIComponent('🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!');
     const url = encodeURIComponent('https://wanfeng1028.github.io/SpaceLab/');

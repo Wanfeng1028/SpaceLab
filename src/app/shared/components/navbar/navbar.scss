@@ -37,11 +37,14 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  z-index: 101;
+}
+
+.navbar__brand-logo {
   text-decoration: none;
   color: var(--color-text);
   font-weight: 600;
   font-size: 1rem;
-  z-index: 101;
 }
 
 .navbar__logo {
