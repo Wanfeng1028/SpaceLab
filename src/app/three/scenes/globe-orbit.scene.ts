@@ -195,6 +195,7 @@ export class GlobeOrbitScene {
     });
 
     const stars = new Points(geometry, material);
+    this.starfield = stars;
     this.scene.add(stars);
   }
 
@@ -255,6 +256,21 @@ export class GlobeOrbitScene {
       cancelAnimationFrame(this.animationId);
     }
     window.removeEventListener('resize', this.resizeHandler);
+
+    this.scene.traverse(obj => {
+      const mesh = obj as any;
+      if (mesh.geometry) mesh.geometry.dispose();
+      if (mesh.material) {
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((m: any) => m.dispose());
+        } else {
+          mesh.material.dispose();
+        }
+      }
+    });
+
     this.renderer.dispose();
+    this.starfield = null;
+    this.satellites = [];
   }
 }
