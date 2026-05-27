@@ -1,0 +1,58 @@
+<div class="earth-observatory">
+  <!-- 垂直标题 (左侧) -->
+  <app-vertical-section-title
+    number="02"
+    title="EARTH OBSERVATORY"
+    [telemetryText]="telemetryText()" />
+
+  <!-- Three.js 地球画布 -->
+  <div class="earth-canvas-container">
+    <app-three-canvas [sceneFactory]="earthFactory" />
+  </div>
+
+  <!-- 左侧文字 + HUD -->
+  <div class="observatory-left">
+    <div class="observatory-text">
+      <h2 class="observatory-title">EARTH SCIENCE</h2>
+      <p class="observatory-desc">
+        Observing terrain, vegetation and atmosphere through spatial data.
+      </p>
+    </div>
+
+    <!-- 遥感参数 HUD -->
+    <app-hud-frame class="sensor-hud">
+      <div class="hud-metrics">
+        <app-hud-metric label="SENSOR" value="MULTISPECTRAL" />
+        <app-hud-metric label="RESOLUTION" value="0.025 m" />
+        <app-hud-metric label="ORBIT" value="POLAR" />
+        <app-hud-metric label="SCAN MODE" value="ACTIVE" />
+      </div>
+    </app-hud-frame>
+  </div>
+
+  <!-- 右侧垂直扫描标尺 + 频谱条 -->
+  <div class="observatory-right">
+    <!-- 垂直扫描标尺 -->
+    <div class="scan-scale">
+      @for (tick of scaleTicks; track tick.value) {
+        <div class="scale-tick" [class.scale-tick--major]="tick.major">
+          <span class="tick-label">{{ tick.value }}°</span>
+        </div>
+      }
+    </div>
+
+    <!-- 频谱条 -->
+    <div class="spectrum-bars">
+      <div class="spectrum-bar" style="--bar-height: 60%; --bar-color: #00f0ff;"></div>
+      <div class="spectrum-bar" style="--bar-height: 80%; --bar-color: #00ffc4;"></div>
+      <div class="spectrum-bar" style="--bar-height: 45%; --bar-color: #7b00ff;"></div>
+      <div class="spectrum-bar" style="--bar-height: 90%; --bar-color: #00f0ff;"></div>
+      <div class="spectrum-bar" style="--bar-height: 55%; --bar-color: #00ffc4;"></div>
+    </div>
+  </div>
+
+  <!-- 底部遥感数据状态栏 -->
+  <app-telemetry-bar
+    [text]="'LANDSAT STREAM · UAV ORTHOIMAGE · NDVI GRID · TERRAIN SIGNAL ONLINE'"
+    status="online" />
+</div>
