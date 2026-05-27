@@ -1,0 +1,307 @@
+// Cockpit Dashboard Section Styles
+// Final screen with system controls and navigation
+
+.cockpit-dashboard {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center bottom, #0a1a2a 0%, #000510 100%);
+}
+
+// Three.js cockpit canvas
+.cockpit-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  app-three-canvas {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Header
+.cockpit-header {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cockpit-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: rgba(0, 240, 255, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.cockpit-title {
+  font-family: 'Orbitron', 'SF Mono', monospace;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #00f0ff;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+}
+
+.cockpit-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+// Left panel - visitor info
+.cockpit-left {
+  position: absolute;
+  left: 3%;
+  top: 20%;
+  width: 20%;
+  z-index: 2;
+}
+
+.visitor-hud {
+  width: 100%;
+}
+
+// Right panel - system info
+.cockpit-right {
+  position: absolute;
+  right: 3%;
+  top: 20%;
+  width: 20%;
+  z-index: 2;
+}
+
+.system-hud {
+  width: 100%;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.panel-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #00f0ff;
+}
+
+.pulse-ring {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+
+  &--cyan {
+    background: #00f0ff;
+    box-shadow: 0 0 10px #00f0ff;
+  }
+
+  &--green {
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+.hud-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+// Bottom section - command log + controls
+.cockpit-bottom {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// Command log
+.command-log {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 4px;
+  padding: 0.75rem;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.7rem;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &--system .log-type { color: #00f0ff; }
+  &--visitor .log-type { color: #00ffc4; }
+  &--webgl .log-type { color: #a855f7; }
+  &--nav .log-type { color: #ffaa00; }
+}
+
+.log-time {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.log-type {
+  color: #00f0ff;
+  min-width: 70px;
+}
+
+.log-message {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+// Control buttons
+.cockpit-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cockpit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 240, 255, 0.2);
+    border-color: #00f0ff;
+    transform: translateY(-2px);
+  }
+
+  &--primary {
+    background: rgba(0, 240, 255, 0.2);
+    border-color: #00f0ff;
+
+    &:hover {
+      background: rgba(0, 240, 255, 0.3);
+    }
+  }
+}
+
+.btn-icon {
+  font-size: 1rem;
+  color: #00f0ff;
+}
+
+.btn-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+// Telemetry bar
+app-telemetry-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .cockpit-dashboard {
+    min-height: 500px;
+  }
+
+  .cockpit-left,
+  .cockpit-right {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    padding: 0 5%;
+  }
+
+  .cockpit-left {
+    margin-top: 15%;
+  }
+
+  .cockpit-right {
+    margin-top: 1rem;
+  }
+
+  .cockpit-bottom {
+    bottom: 8%;
+    width: 95%;
+  }
+
+  .cockpit-controls {
+    flex-wrap: wrap;
+  }
+
+  .cockpit-btn {
+    flex: 1;
+    min-width: 100px;
+    justify-content: center;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring {
+    animation: none;
+    opacity: 0.8;
+  }
+
+  .cockpit-btn {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 
 @Component({
-  selector: 'hud-telemetry-bar',
+  selector: 'app-telemetry-bar',
   template: `
-    <div class="telemetry-bar">
+    <div class="telemetry-bar" [class.telemetry-bar--online]="status() === 'online'">
       <span class="telemetry-bar__dot"></span>
       <span class="telemetry-bar__text">{{ text() }}</span>
     </div>
@@ -32,6 +32,10 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
       box-shadow: 0 0 8px var(--space-cyan, #00f5ff);
       animation: telemetry-blink 2s ease-in-out infinite;
     }
+    .telemetry-bar--online .telemetry-bar__dot {
+      background: #00ff88;
+      box-shadow: 0 0 8px #00ff88;
+    }
     @keyframes telemetry-blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
@@ -50,4 +54,5 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 })
 export class TelemetryBarComponent {
   text = input.required<string>();
+  status = input<'online' | 'offline' | 'warning'>('offline');
 }

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'hud-magnetic-button',
+  selector: 'app-magnetic-button',
   template: `
     <button
       #btn

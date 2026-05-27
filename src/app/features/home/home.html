@@ -1,7 +1,7 @@
 <div class="home-container">
-  
-  <!-- 第一部分：极简黑曜石日食主屏幕 -->
-  <section class="eclipse-hero">
+
+  <!-- 第 1 屏：LANDING (完全保留现有设计，不动) -->
+  <section class="eclipse-hero" id="section-landing" data-section="0">
     <!-- 电影画质细腻胶片微粒噪点遮罩层 -->
     <div class="grain-overlay" [style.opacity]="filmNoise() ? 0.055 : 0"></div>
 
@@ -83,142 +83,39 @@
       </div>
     }
 
-  </section>
-
-  <!-- 第二部分：系统实验室与诊断中心 (Systems Diagnostics Deck) -->
-  <section class="systems-diagnostics-section">
-    <div class="grain-overlay" [style.opacity]="filmNoise() ? 0.055 : 0"></div>
-    
-    <div class="diagnostics-content">
-      <!-- 诊断中心头部标题区 -->
-      <div class="diagnostics-header">
-        <div class="diagnostics-tag">{{ t('home.diagnosticsTag') }}</div>
-        <h2 class="diagnostics-title glitch-text" [attr.data-text]="t('home.diagnosticsTitle')">{{ t('home.diagnosticsTitle') }}</h2>
-        <p class="diagnostics-desc">
-          {{ t('home.diagnosticsDesc') }}
-        </p>
+    <!-- 滚动提示 -->
+    <div class="scroll-indicator">
+      <div class="scroll-indicator__mouse">
+        <div class="scroll-indicator__wheel"></div>
       </div>
-
-      <!-- 网格面板容器 -->
-      <div class="diagnostics-grid">
-        <!-- 实时量子遥测控制台 -->
-        <div class="terminal-logs-card">
-          <!-- Matrix 数字雨背景 -->
-          <div class="matrix-rain-container">
-            @for (col of matrixColumns; track col.char) {
-              <div class="matrix-column">{{ col.char }}</div>
-            }
-          </div>
-          <div class="panel-header">
-            <span class="pulse-ring pulse-ring--green"></span>
-            <span class="panel-title">{{ t('home.quantumTelemetry') }}</span>
-          </div>
-          <div class="terminal-screen-large">
-            @for (log of telemetryLogs(); track log) {
-              <div class="log-line-large">{{ log }}</div>
-            }
-            <div class="log-line-large cursor-line-large">_</div>
-          </div>
-        </div>
-
-        <!-- 星体物理控制器 -->
-        <div class="systems-control-card">
-          <div class="panel-header">
-            <span class="pulse-ring pulse-ring--blue"></span>
-            <span class="panel-title">{{ t('home.coreParamCustomizer') }}</span>
-          </div>
-          
-          <div class="control-grid-layout">
-            <div class="control-item">
-              <div class="control-label">{{ t('home.chromaPreset') }}</div>
-              <div class="preset-buttons">
-                <button class="preset-btn" [class.is-active]="activePreset() === 'ECLIPSE'" (click)="activePreset.set('ECLIPSE')">ECLIPSE</button>
-                <button class="preset-btn" [class.is-active]="activePreset() === 'PULSAR'" (click)="activePreset.set('PULSAR')">PULSAR</button>
-                <button class="preset-btn" [class.is-active]="activePreset() === 'AURORA'" (click)="activePreset.set('AURORA')">AURORA</button>
-              </div>
-            </div>
-            
-            <div class="control-item">
-              <div class="slider-header">
-                <div class="control-label">{{ t('home.coronaIntensity') }}</div>
-                <div class="slider-value">{{ coronaIntensity().toFixed(1) }}x</div>
-              </div>
-              <input type="range" class="control-slider" min="1.0" max="5.0" step="0.1" [value]="coronaIntensity()" (input)="coronaIntensity.set(+$any($event.target).value)" />
-            </div>
-            
-            <div class="control-item">
-              <div class="slider-header">
-                <div class="control-label">{{ t('home.orbitalSpeed') }}</div>
-                <div class="slider-value">{{ orbitalSpeed().toFixed(2) }}x</div>
-              </div>
-              <input type="range" class="control-slider" min="0.0" max="3.0" step="0.05" [value]="orbitalSpeed()" (input)="orbitalSpeed.set(+$any($event.target).value)" />
-            </div>
-            
-            <div class="control-item row-layout">
-              <div class="control-label">{{ t('home.filmGrain') }}</div>
-              <label class="toggle-switch">
-                <input type="checkbox" [checked]="filmNoise()" (change)="filmNoise.set($any($event.target).checked)" />
-                <span class="toggle-slider"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 雷达扫描动画卡片 -->
-      <div class="radar-card">
-        <div class="radar-container">
-          <div class="radar-rings"></div>
-          <div class="radar-ring-center"></div>
-          <div class="radar-sweep"></div>
-          <div class="radar-blips">
-            @for (blip of radarBlips; track blip) {
-              <div class="radar-blip"></div>
-            }
-          </div>
-        </div>
-        <div class="radar-label">{{ t('home.orbitalScan') }}</div>
-        <div class="radar-status">{{ t('home.scanning') }}</div>
-      </div>
-
-      <!-- Three.js 3D 场景卡片 -->
-      <div class="three-d-cards">
-        <!-- 全息二十面体 -->
-        <div class="three-d-card">
-          <div class="three-d-canvas-wrapper">
-            <app-three-canvas [sceneFactory]="holoIcoFactory" />
-          </div>
-          <div class="three-d-info">
-            <div class="three-d-title">{{ t('home.holoIco') }}</div>
-            <div class="three-d-status">{{ t('home.active') }}</div>
-          </div>
-        </div>
-
-        <!-- 线框地球 + 轨道线 -->
-        <div class="three-d-card">
-          <div class="three-d-canvas-wrapper">
-            <app-three-canvas [sceneFactory]="globeOrbitFactory" />
-          </div>
-          <div class="three-d-info">
-            <div class="three-d-title">{{ t('home.globeOrbit') }}</div>
-            <div class="three-d-status">{{ t('home.active') }}</div>
-          </div>
-        </div>
-      </div>
+      <span class="scroll-indicator__text">SCROLL TO EXPLORE</span>
     </div>
   </section>
 
-  <!-- 第三部分：日蚀观测站 (Eclipse Observatory) -->
-  <app-eclipse-observatory />
+  <!-- 第 2 屏：EARTH OBSERVATORY (地球科学与遥感) -->
+  <section class="earth-observatory-section" id="section-earth" data-section="1">
+    <app-earth-observatory />
+  </section>
 
-  <!-- 第四部分：粒子海洋 (Particle Ocean) -->
-  <app-particle-ocean />
+  <!-- 第 3 屏：NEURAL CORE (人工智能/机器学习/大语言模型) -->
+  <section class="neural-core-section" id="section-neural" data-section="2">
+    <app-neural-core />
+  </section>
 
-  <!-- 第五部分：全息室 (Hologram Chamber) -->
-  <app-hologram-chamber />
+  <!-- 第 4 屏：VISUAL SYSTEMS (创意编程与数据可视化) -->
+  <section class="visual-systems-section" id="section-visual" data-section="3">
+    <app-visual-systems />
+  </section>
 
-  <!-- 第六部分：星际之门 (Stargate Dock) -->
-  <app-stargate-dock />
+  <!-- 第 5 屏：ORBITAL LEARNING (STEM/科学学习与探索) -->
+  <section class="orbital-learning-section" id="section-orbital" data-section="4">
+    <app-orbital-learning />
+  </section>
+
+  <!-- 第 6 屏：COCKPIT DASHBOARD (驾驶舱总控台) -->
+  <section class="cockpit-dashboard-section" id="section-cockpit" data-section="5">
+    <app-cockpit-dashboard />
+  </section>
 
   <!-- 联系弹窗 -->
   @if (showContactModal()) {

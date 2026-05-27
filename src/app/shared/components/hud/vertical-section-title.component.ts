@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 
 @Component({
-  selector: 'hud-vertical-title',
+  selector: 'app-vertical-section-title',
   template: `
     <div class="vtitle">
       <span class="vtitle__number">{{ number() }}</span>
@@ -39,4 +39,5 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 export class VerticalSectionTitleComponent {
   number = input.required<string>();
   title = input.required<string>();
+  telemetryText = input<string>('');
 }

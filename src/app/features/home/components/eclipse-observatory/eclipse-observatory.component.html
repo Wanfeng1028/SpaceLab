@@ -17,18 +17,18 @@
 
     <!-- Left Metrics Panel -->
     <div class="eclipse-metrics">
-      <hud-frame>
-        <hud-metric
+      <app-hud-frame>
+        <app-hud-metric
           label="Corona Temp"
           value="1.5M K"
           color="var(--space-cyan)"
           [animated]="true"
         />
-        <hud-metric label="Umbra Radius" value="2,684 km" />
-        <hud-metric label="Shadow Speed" value="3,400 km/h" />
-        <hud-metric label="Duration" value="4m 33s" />
-        <hud-metric label="Saros Cycle" value="136" />
-      </hud-frame>
+        <app-hud-metric label="Umbra Radius" value="2,684 km" />
+        <app-hud-metric label="Shadow Speed" value="3,400 km/h" />
+        <app-hud-metric label="Duration" value="4m 33s" />
+        <app-hud-metric label="Saros Cycle" value="136" />
+      </app-hud-frame>
     </div>
 
     <!-- Right Scale Ticks -->
@@ -45,7 +45,7 @@
 
     <!-- Bottom Telemetry Bar -->
     <div class="eclipse-footer">
-      <hud-telemetry-bar [text]="telemetryText()" />
+      <app-telemetry-bar [text]="telemetryText()" />
     </div>
   </div>
 </section>

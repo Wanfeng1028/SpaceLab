@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 
 @Component({
-  selector: 'hud-metric',
+  selector: 'app-hud-metric',
   template: `
     <div class="metric" [class.metric--animated]="animated()">
       <span class="metric__label">{{ label() }}</span>

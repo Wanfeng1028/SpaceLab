@@ -20,6 +20,11 @@ import { EclipseObservatorySection } from './components/eclipse-observatory/ecli
 import { ParticleOceanSection } from './components/particle-ocean/particle-ocean.component';
 import { HologramChamberSection } from './components/hologram-chamber/hologram-chamber.component';
 import { StargateDockSection } from './components/stargate-dock/stargate-dock.component';
+import { EarthObservatorySection } from './components/earth-observatory/earth-observatory.component';
+import { NeuralCoreSection } from './components/neural-core/neural-core.component';
+import { VisualSystemsSection } from './components/visual-systems/visual-systems.component';
+import { OrbitalLearningSection } from './components/orbital-learning/orbital-learning.component';
+import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +39,11 @@ import { StargateDockSection } from './components/stargate-dock/stargate-dock.co
     ParticleOceanSection,
     HologramChamberSection,
     StargateDockSection,
+    EarthObservatorySection,
+    NeuralCoreSection,
+    VisualSystemsSection,
+    OrbitalLearningSection,
+    CockpitDashboardSection,
   ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -159,7 +169,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onEnter(): void {
-    const target = document.querySelector('.systems-diagnostics-section');
+    const target = document.getElementById('section-earth');
     target?.scrollIntoView({ behavior: 'smooth' });
   }
 

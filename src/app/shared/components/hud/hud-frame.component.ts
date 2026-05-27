@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CornerBracketsComponent } from './corner-brackets.component';
 
 @Component({
-  selector: 'hud-frame',
+  selector: 'app-hud-frame',
   imports: [CornerBracketsComponent],
   template: `
     <div class="hud-frame" [class.hud-frame--glow]="glow()">

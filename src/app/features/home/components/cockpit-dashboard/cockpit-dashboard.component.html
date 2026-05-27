@@ -1,0 +1,82 @@
+<div class="cockpit-dashboard">
+  <!-- Three.js 驾驶舱画布 -->
+  <div class="cockpit-canvas-container">
+    <app-three-canvas [sceneFactory]="cockpitFactory" />
+  </div>
+
+  <!-- 顶部标题 -->
+  <div class="cockpit-header">
+    <div class="cockpit-tag">06</div>
+    <h2 class="cockpit-title">COCKPIT DASHBOARD</h2>
+    <p class="cockpit-subtitle">SpaceLab system control center</p>
+  </div>
+
+  <!-- 左侧：访问者信息面板 -->
+  <div class="cockpit-left">
+    <app-hud-frame class="visitor-hud">
+      <div class="panel-header">
+        <span class="pulse-ring pulse-ring--cyan"></span>
+        <span class="panel-title">VISITOR SIGNAL</span>
+      </div>
+      <div class="hud-metrics">
+        <app-hud-metric label="LOCATION" [value]="visitorInfo().location" />
+        <app-hud-metric label="WEATHER" [value]="visitorInfo().weather" />
+        <app-hud-metric label="LOCAL TIME" [value]="visitorInfo().localTime" />
+        <app-hud-metric label="DEVICE" [value]="visitorInfo().device" />
+        <app-hud-metric label="NETWORK" [value]="visitorInfo().network" />
+      </div>
+    </app-hud-frame>
+  </div>
+
+  <!-- 右侧：系统状态面板 -->
+  <div class="cockpit-right">
+    <app-hud-frame class="system-hud">
+      <div class="panel-header">
+        <span class="pulse-ring pulse-ring--green"></span>
+        <span class="panel-title">SYSTEM STATUS</span>
+      </div>
+      <div class="hud-metrics">
+        <app-hud-metric label="RENDERER" [value]="systemInfo().renderer" />
+        <app-hud-metric label="FRAME RATE" [value]="systemInfo().frameRate" />
+        <app-hud-metric label="MOTION" [value]="systemInfo().motion" />
+        <app-hud-metric label="THEME" [value]="systemInfo().theme" />
+        <app-hud-metric label="LANGUAGE" [value]="systemInfo().language" />
+      </div>
+    </app-hud-frame>
+  </div>
+
+  <!-- 底部：命令行日志 + 按钮 -->
+  <div class="cockpit-bottom">
+    <!-- 命令行日志 -->
+    <div class="command-log">
+      @for (entry of commandLog(); track entry.time) {
+        <div class="log-entry" [class]="'log-entry--' + entry.type">
+          <span class="log-time">[{{ entry.time }}]</span>
+          <span class="log-type">[{{ entry.type }}]</span>
+          <span class="log-message">{{ entry.message }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- 控制按钮 -->
+    <div class="cockpit-controls">
+      <button class="cockpit-btn" (click)="onReturnTop()">
+        <span class="btn-icon">↑</span>
+        <span class="btn-text">RETURN TOP</span>
+      </button>
+      <button class="cockpit-btn" (click)="onRestartOrbit()">
+        <span class="btn-icon">↻</span>
+        <span class="btn-text">RESTART ORBIT</span>
+      </button>
+      <button class="cockpit-btn cockpit-btn--primary" (click)="onEnterSite()">
+        <span class="btn-icon">→</span>
+        <span class="btn-text">ENTER SITE</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 底部状态栏 -->
+  <app-telemetry-bar
+    [text]="'COCKPIT SYSTEMS · ALL STATIONS NOMINAL · READY FOR COMMAND'"
+    status="online" />
+</div>
