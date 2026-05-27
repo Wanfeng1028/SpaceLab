@@ -57,4 +57,17 @@ export class I18nService {
     }
     return 'zh-CN';
   }
+
+  private flatten(obj: Record<string, any>, prefix = ''): Record<string, string> {
+    const result: Record<string, string> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+      if (typeof value === 'object' && value !== null) {
+        Object.assign(result, this.flatten(value, fullKey));
+      } else {
+        result[fullKey] = String(value);
+      }
+    }
+    return result;
+  }
 }
