@@ -385,6 +385,11 @@ export class EarthObservatoryLightScene {
     this.mouseY = ny;
   }
 
+  triggerScanWave(): void {
+    // Trigger a scan wave effect by resetting scan progress
+    this.scanProgress = 0;
+  }
+
   // ── Events & resize ──────────────────────────────────────────────────
   private bindEvents(): void {
     this.resizeHandler = () => this.resizeRenderer();
