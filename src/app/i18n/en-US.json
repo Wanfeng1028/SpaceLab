@@ -20,6 +20,7 @@
     "starOnGitHub": "Star on GitHub"
   },
   "nav": {
+    "home": "Home",
     "blog": "Blog",
     "projects": "Projects",
     "lab": "Lab",
@@ -269,5 +270,12 @@
     "message": "Page Not Found",
     "desc": "The page you're looking for doesn't exist or has been removed",
     "backHome": "Back to Home"
+  },
+  "projectDetail": {
+    "title": "Project Detail",
+    "comingSoon": "Coming soon...",
+    "github": "GitHub",
+    "preview": "Preview",
+    "backToProjects": "Back to Projects"
   }
 }

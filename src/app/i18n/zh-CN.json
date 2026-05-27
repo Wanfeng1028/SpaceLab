@@ -270,5 +270,12 @@
     "message": "页面未找到",
     "desc": "你访问的页面不存在或已被移除",
     "backHome": "返回首页"
+  },
+  "projectDetail": {
+    "title": "项目详情",
+    "comingSoon": "即将推出...",
+    "github": "GitHub",
+    "preview": "预览",
+    "backToProjects": "返回项目"
   }
 }
