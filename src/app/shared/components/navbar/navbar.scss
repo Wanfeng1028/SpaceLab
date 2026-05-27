@@ -186,7 +186,21 @@
 
 @media (max-width: 767px) {
   .navbar__avatar-link {
-    display: none;
+    display: flex;
+  }
+
+  .avatar-spinner {
+    width: 28px;
+    height: 28px;
+  }
+
+  .navbar__avatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .avatar-spinner__ring {
+    inset: -3px;
   }
 }
 
