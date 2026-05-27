@@ -8,6 +8,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
+import { SearchBoxComponent } from '../../shared/components/search-box';
 
 interface BlogPost {
   title: string;
@@ -23,7 +24,7 @@ interface BlogPost {
   templateUrl: './blog.html',
   styleUrl: './blog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, ArticleCardComponent],
+  imports: [FormsModule, ArticleCardComponent, SearchBoxComponent],
 })
 export class BlogComponent {
   private i18n = inject(I18nService);
@@ -76,10 +77,6 @@ export class BlogComponent {
     return this.i18n.t(key);
   }
 
-  onSearch(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchQuery.set(value);
-  }
 
   selectCategory(category: string): void {
     this.selectedCategory.set(category);

@@ -8,17 +8,12 @@
 
     <!-- Search & Filters -->
     <div class="blog-toolbar">
-      <div class="search-box">
-        <span class="search-box__icon">🔍</span>
-        <input
-          class="search-box__input"
-          type="text"
-          [placeholder]="t('blog.searchPlaceholder')"
-          [value]="searchQuery()"
-          (input)="onSearch($event)"
-          [attr.aria-label]="t('blog.searchPlaceholder')"
-        />
-      </div>
+      <app-search-box
+        [placeholder]="t('blog.searchPlaceholder')"
+        [value]="searchQuery()"
+        (valueChange)="searchQuery.set($event)"
+        (search)="searchQuery.set($event)"
+      />
 
       <div class="category-filters">
         @for (cat of categories(); track cat) {

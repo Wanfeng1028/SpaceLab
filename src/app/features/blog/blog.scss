@@ -48,40 +48,11 @@
   margin-bottom: var(--space-2xl);
 }
 
-// Search Box
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-2xl);
-  background: rgba(0, 0, 0, 0.04);
-  transition: background 0.2s, box-shadow 0.2s;
-  max-width: 480px;
-
-  &:focus-within {
-    background: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-  }
-
-  &__icon {
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
-
-  &__input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: 0.9rem;
-    color: var(--color-text);
-    outline: none;
-
-    &::placeholder {
-      color: var(--color-text-tertiary);
-    }
-  }
+app-search-box {
+  display: block;
+  width: fit-content;
 }
+
 
 // Category Filters
 .category-filters {
