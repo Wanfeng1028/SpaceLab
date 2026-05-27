@@ -55,6 +55,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 767px) {
+  .navbar__avatar-link {
+    display: none;
+  }
+}
+
 // ============================================
 // Avatar Spinner Ring
 // ============================================
