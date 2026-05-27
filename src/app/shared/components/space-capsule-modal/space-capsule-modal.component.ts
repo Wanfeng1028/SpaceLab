@@ -54,11 +54,13 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
   close(): void {
     if (this.closing()) return;
     this.closing.set(true);
+    // Emit immediately so parent can hide the component via @if
+    // before the effect re-triggers onOpen on input change
+    this.closed.emit();
+    document.body.style.overflow = '';
+    this.restoreFocus();
     setTimeout(() => {
       this.closing.set(false);
-      this.closed.emit();
-      document.body.style.overflow = '';
-      this.restoreFocus();
     }, 280);
   }
 
