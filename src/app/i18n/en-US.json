@@ -283,6 +283,21 @@
     "toggleMenu": "Toggle menu",
     "shareOnTwitter": "Share on Twitter",
     "shareOnFacebook": "Share on Facebook",
-    "shareOnLinkedIn": "Share on LinkedIn"
+    "shareOnLinkedIn": "Share on LinkedIn",
+    "openProfile": "Open profile"
+  },
+  "capsule": {
+    "headerTitle": "SPACE CAPSULE",
+    "welcome": "WELCOME ABOARD",
+    "subtitle": "PERSONAL SIGNAL CONNECTED",
+    "description": "This is SpaceLab, a personal digital space for code, science and visual experiments.",
+    "contactBtn": "Contact Me",
+    "githubBtn": "GitHub",
+    "tagRemote": "Remote Sensing",
+    "tagAI": "AI / LLM",
+    "tagWebGL": "WebGL",
+    "signalReady": "Signal ready · Last sync",
+    "footerMsg": "SIGNAL READY · SYSTEM ONLINE",
+    "systemOnline": "SYSTEM ONLINE"
   }
 }

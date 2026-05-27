@@ -283,6 +283,21 @@
     "toggleMenu": "切换菜单",
     "shareOnTwitter": "在 Twitter 上分享",
     "shareOnFacebook": "在 Facebook 上分享",
-    "shareOnLinkedIn": "在 LinkedIn 上分享"
+    "shareOnLinkedIn": "在 LinkedIn 上分享",
+    "openProfile": "打开个人资料"
+  },
+  "capsule": {
+    "headerTitle": "SPACE CAPSULE",
+    "welcome": "欢迎登舱",
+    "subtitle": "个人信号已连接",
+    "description": "这里是 SpaceLab，一个关于代码、科学可视化和 WebGL 实验的个人数字空间。",
+    "contactBtn": "联系我",
+    "githubBtn": "GitHub",
+    "tagRemote": "遥感",
+    "tagAI": "人工智能",
+    "tagWebGL": "WebGL",
+    "signalReady": "信号就绪 · 上次同步",
+    "footerMsg": "信号就绪 · 系统在线",
+    "systemOnline": "系统在线"
   }
 }
