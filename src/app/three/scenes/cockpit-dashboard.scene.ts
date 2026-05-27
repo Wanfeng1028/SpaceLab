@@ -208,20 +208,7 @@ export class CockpitDashboardScene {
   // ── HUD Crosshair ────────────────────────────────────────────────────
   private createCrosshair(): void {
     const size = 0.8;
-    const thickness = 0.02;
     const gap = 0.15;
-
-    // Create crosshair using lines
-    const points: Vector3[] = [
-      new Vector3(-size, 0, 0),
-      new Vector3(-gap, 0, 0),
-      new Vector3(gap, 0, 0),
-      new Vector3(size, 0, 0),
-      new Vector3(0, -size, 0),
-      new Vector3(0, -gap, 0),
-      new Vector3(0, gap, 0),
-      new Vector3(0, size, 0),
-    ];
 
     // We'll use a simple plane for the crosshair
     const geo = new PlaneGeometry(0.02, 1.6);
