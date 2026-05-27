@@ -74,6 +74,18 @@
       </div>
       <span class="scroll-indicator__text"></span>
     </div>
+
+    <!-- 打字机音效开关 -->
+    <div class="fx-block">
+      <div class="toggle">
+        <div>
+          <input type="checkbox" id="toggles" [checked]="soundEnabled()" (change)="soundEnabled.set($any($event.target).checked)">
+          <div data-unchecked="On" data-checked="Off">
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- 第 2 屏：EARTH OBSERVATORY (地球科学与遥感) -->
