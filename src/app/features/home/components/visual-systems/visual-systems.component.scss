@@ -1,0 +1,164 @@
+// Visual Systems Section Styles
+// Holographic data visualization panels with drag interaction
+
+.visual-systems {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// Three.js holographic panels canvas
+.visual-canvas-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 60%;
+  z-index: 1;
+
+  app-three-canvas {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Header text
+.visual-header {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.visual-title {
+  font-family: 'Orbitron', 'SF Mono', monospace;
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: #00f0ff;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+}
+
+.visual-desc {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+// Bottom left HUD
+.visual-bottom-left {
+  position: absolute;
+  bottom: 12%;
+  left: 5%;
+  width: 18%;
+  z-index: 2;
+}
+
+.display-hud {
+  width: 100%;
+}
+
+.hud-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Bottom right interaction hint
+.visual-bottom-right {
+  position: absolute;
+  bottom: 12%;
+  right: 5%;
+  z-index: 2;
+}
+
+.interaction-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 4px;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+.hint-icon {
+  font-size: 1.2rem;
+  color: #00f0ff;
+}
+
+.hint-text {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.1em;
+}
+
+@keyframes hintPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+// Telemetry bar positioning
+app-telemetry-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .visual-systems {
+    min-height: 500px;
+  }
+
+  .visual-canvas-container {
+    width: 95%;
+    height: 45%;
+    top: 45%;
+  }
+
+  .visual-header {
+    top: 3%;
+  }
+
+  .visual-bottom-left {
+    display: none;
+  }
+
+  .visual-bottom-right {
+    bottom: 8%;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .interaction-hint {
+    animation: none;
+    opacity: 0.8;
+  }
+}

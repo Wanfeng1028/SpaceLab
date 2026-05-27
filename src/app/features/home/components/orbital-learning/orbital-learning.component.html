@@ -1,0 +1,34 @@
+<div class="orbital-learning">
+  <!-- 垂直标题 (左侧) -->
+  <app-vertical-section-title
+    number="05"
+    title="ORBITAL LEARNING"
+    [telemetryText]="telemetryText()" />
+
+  <!-- Three.js 知识星图画布 -->
+  <div class="orbital-canvas-container">
+    <app-three-canvas [sceneFactory]="orbitalFactory" />
+  </div>
+
+  <!-- 中央文字 -->
+  <div class="orbital-center-text">
+    <h2 class="orbital-title">STEM EXPLORATION</h2>
+    <p class="orbital-desc">
+      A personal orbit of science, code and imagination.
+    </p>
+  </div>
+
+  <!-- 右侧领域标签 -->
+  <div class="orbital-right">
+    <div class="stem-labels">
+      @for (label of stemLabels; track label) {
+        <div class="stem-label">{{ label }}</div>
+      }
+    </div>
+  </div>
+
+  <!-- 底部状态栏 -->
+  <app-telemetry-bar
+    [text]="'KNOWLEDGE MAP · STEM ORBIT · SIGNAL LINKED · READY FOR COCKPIT'"
+    status="online" />
+</div>

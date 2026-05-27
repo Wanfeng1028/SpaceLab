@@ -1,0 +1,45 @@
+<div class="visual-systems">
+  <!-- 垂直标题 (左侧) -->
+  <app-vertical-section-title
+    number="04"
+    title="VISUAL SYSTEMS"
+    [telemetryText]="telemetryText()" />
+
+  <!-- Three.js 全息面板画布 -->
+  <div class="visual-canvas-container">
+    <app-three-canvas [sceneFactory]="visualFactory" />
+  </div>
+
+  <!-- 顶部标题 -->
+  <div class="visual-header">
+    <h2 class="visual-title">CREATIVE CODING</h2>
+    <p class="visual-desc">
+      Interfaces, shaders and data stories built for exploration.
+    </p>
+  </div>
+
+  <!-- 左下 HUD -->
+  <div class="visual-bottom-left">
+    <app-hud-frame class="display-hud">
+      <div class="hud-metrics">
+        <app-hud-metric label="DISPLAY" value="HOLOGRAPHIC" />
+        <app-hud-metric label="LAYERS" value="08" />
+        <app-hud-metric label="DEPTH" value="3D" />
+        <app-hud-metric label="INPUT" value="CURSOR" />
+      </div>
+    </app-hud-frame>
+  </div>
+
+  <!-- 右下交互提示 -->
+  <div class="visual-bottom-right">
+    <div class="interaction-hint">
+      <span class="hint-icon">↔</span>
+      <span class="hint-text">DRAG TO ROTATE</span>
+    </div>
+  </div>
+
+  <!-- 底部状态栏 -->
+  <app-telemetry-bar
+    [text]="'SHADER GRID · DATA PANEL · MOTION SYSTEM · VISUALIZATION ONLINE'"
+    status="online" />
+</div>

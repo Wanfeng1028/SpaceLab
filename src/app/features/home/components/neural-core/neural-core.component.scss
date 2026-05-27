@@ -1,0 +1,114 @@
+// Neural Core Section Styles
+// Central 3D neural network with cyan + purple theme
+
+.neural-core {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+}
+
+// Three.js neural network canvas
+.neural-canvas-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 70%;
+  z-index: 1;
+
+  app-three-canvas {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Center text
+.neural-center-text {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.neural-title {
+  font-family: 'Orbitron', 'SF Mono', monospace;
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: #a855f7;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+}
+
+.neural-desc {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+// Right side inference HUD
+.neural-right {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18%;
+  z-index: 2;
+}
+
+.inference-hud {
+  width: 100%;
+}
+
+.hud-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Telemetry bar positioning
+app-telemetry-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .neural-core {
+    min-height: 500px;
+  }
+
+  .neural-canvas-container {
+    width: 90%;
+    height: 50%;
+    top: 45%;
+  }
+
+  .neural-center-text {
+    top: 5%;
+    width: 90%;
+  }
+
+  .neural-right {
+    display: none;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .neural-title {
+    animation: none;
+  }
+}
