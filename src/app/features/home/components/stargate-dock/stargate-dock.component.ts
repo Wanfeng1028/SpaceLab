@@ -12,16 +12,16 @@ import { TelemetryBarComponent } from '../../../../shared/components/hud/telemet
 import { StargateScene } from '../../../../three/scenes/stargate.scene';
 
 @Component({
-  selector: 'app-stargate-dock',
+  selector: 'app-portal-gallery',
   templateUrl: './stargate-dock.component.html',
   styleUrl: './stargate-dock.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ThreeCanvasComponent, MagneticButtonComponent, TelemetryBarComponent],
 })
-export class StargateDockSection implements OnInit {
+export class PortalGallerySection implements OnInit {
   private readonly router = inject(Router);
 
-  readonly telemetryText = signal('STARGATE DOCK // AWAITING COMMAND');
+  readonly telemetryText = signal('PORTAL GALLERY // AWAITING COMMAND');
 
   readonly stargateFactory = (canvas: HTMLCanvasElement) =>
     new StargateScene(canvas);
@@ -29,7 +29,7 @@ export class StargateDockSection implements OnInit {
   readonly currentYear = new Date().getFullYear();
 
   ngOnInit(): void {
-    this.telemetryText.set('STARGATE DOCK // GATE SYSTEM ONLINE');
+    this.telemetryText.set('PORTAL GALLERY // GATE SYSTEM ONLINE');
   }
 
   onEnter(): void {
