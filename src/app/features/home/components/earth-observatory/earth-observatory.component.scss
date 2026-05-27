@@ -98,7 +98,7 @@
     right: calc(100% + 25px);
     width: 1px;
     height: 100%;
-    background: rgba(0, 240, 255, 0.1);
+    background: rgba(105, 215, 255, 0.1);
     opacity: 0;
   }
 
@@ -106,11 +106,11 @@
     &::before {
       width: 30px;
       height: 2px;
-      background: rgba(0, 240, 255, 0.6);
+      background: rgba(105, 215, 255, 0.6);
     }
 
     .tick-label {
-      color: #00f0ff;
+      color: #69d7ff;
       font-weight: 600;
     }
   }
