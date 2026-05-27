@@ -113,7 +113,7 @@
     rgba(143, 124, 255, 0.08) 70%,
     transparent 80%
   );
-  filter: blur(65px);
+  filter: blur(35px);
   mix-blend-mode: screen;
   animation: flareBreatheBlue 8s ease-in-out infinite alternate-reverse;
 
@@ -401,7 +401,7 @@
 }
 
 .loader svg #orb-clipping polygon {
-  filter: blur(7px);
+  filter: blur(4px);
 }
 
 .loader svg #orb-clipping polygon:nth-child(1) {
