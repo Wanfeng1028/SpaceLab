@@ -314,6 +314,17 @@ export class HeroLightFieldScene {
     if (this.disposed) return;
     this.animationId = requestAnimationFrame(this.boundAnimate);
 
+    const now = performance.now();
+    const frameTime = now - this.lastFrameTime;
+    this.lastFrameTime = now;
+
+    // 动态质量调节：如果帧时间超过阈值，降低DPR
+    if (frameTime > this.MAX_FRAME_TIME && this.currentDpr > 1.0) {
+      this.currentDpr = Math.max(1.0, this.currentDpr - 0.1);
+      this.renderer.setPixelRatio(this.currentDpr);
+      this.onResize(); // 重新设置分辨率
+    }
+
     const elapsedSeconds = (Date.now() - this.startTime) / 1000;
     this.material.uniforms['uTime'].value = elapsedSeconds;
 
