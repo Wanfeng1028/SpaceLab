@@ -99,6 +99,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private fullText = 'Life is coding...';
   private typingIndex = 0;
   private typingTimer: any = null;
+  private initDelayTimer: any = null;
+  private bellTimer: any = null;
+  private restartTimer: any = null;
+  private destroyed = false;
 
   // Web Audio Context for synthesized sound effects
   private audioCtx: AudioContext | null = null;
