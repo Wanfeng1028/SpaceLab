@@ -25,6 +25,10 @@ export class HeroLightFieldScene {
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private disposed = false;
+  private lastFrameTime = performance.now();
+  private currentDpr: number;
+  private readonly TARGET_FPS = 50;
+  private readonly MAX_FRAME_TIME = 1000 / this.TARGET_FPS;
   private startTime = Date.now();
   private readonly boundAnimate = this.animate.bind(this);
 
