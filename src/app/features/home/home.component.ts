@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   sceneFactory = (canvas: HTMLCanvasElement) => {
     this.activeScene = new HeroLightFieldScene(canvas);
+    this.applySceneConfig();
     return this.activeScene;
   };
 

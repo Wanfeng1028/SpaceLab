@@ -218,7 +218,10 @@ scene.add(particles);</code></pre>
     return this.i18n.t(key);
   }
 
-  // TODO: 当接入 Supabase 后端时，应使用 DOMPurify 对内容进行 XSS 过滤
+  // NOTE: 当前内容为硬编码静态数据，bypassSecurityTrustHtml 是安全的。
+  // 接入 Supabase 后端时，必须引入 DOMPurify 对用户提交的内容进行 XSS 过滤：
+  //   import DOMPurify from 'dompurify';
+  //   return this.sanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(html));
   sanitizeContent(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
