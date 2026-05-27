@@ -195,7 +195,9 @@ export class EarthObservatoryScene {
           gl_FragColor = vec4(color * fresnel, fresnel * 0.6);
         }
       `,
-      uniforms: {},
+      uniforms: {
+        uOpacity: { value: 0.0 } // Start invisible
+      },
     });
     this.atmosphere = new Mesh(geo, mat);
     this.earthGroup.add(this.atmosphere);
