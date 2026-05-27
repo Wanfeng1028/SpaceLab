@@ -148,9 +148,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.logTimer) {
       clearInterval(this.logTimer);
     }
-    if (this.brightnessTimer) {
-      clearInterval(this.brightnessTimer);
-    }
     if (this.audioCtx) {
       this.audioCtx.close();
     }
@@ -295,33 +292,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       '[HUD] Diagnostic telemetry online'
     ]);
 
-    let tick = 0;
     this.combinedTimer = setInterval(() => {
-      // 更新亮度（每500ms）
-      if (this.activeScene) {
-        const raw = this.activeScene.getCenterBrightness();
-        this.brightnessSmoothed = this.brightnessSmoothed * 0.8 + raw * 0.2;
-        if (!this.isBrightState && this.brightnessSmoothed > 0.10) {
-          this.isBrightState = true;
-          this.isBright.set(true);
-        } else if (this.isBrightState && this.brightnessSmoothed < 0.05) {
-          this.isBrightState = false;
-          this.isBright.set(false);
-        }
+      const current = this.telemetryLogs();
+      const nextLog = this.possibleLogs[Math.floor(Math.random() * this.possibleLogs.length)];
+      let updated = [...current, nextLog];
+      if (updated.length > 5) {
+        updated.shift();
       }
-
-      // 更新遥测日志（每4500ms）
-      tick++;
-      if (tick % 9 === 0) {
-        const current = this.telemetryLogs();
-        const nextLog = this.possibleLogs[Math.floor(Math.random() * this.possibleLogs.length)];
-        let updated = [...current, nextLog];
-        if (updated.length > 5) {
-          updated.shift();
-        }
-        this.telemetryLogs.set(updated);
-      }
-    }, 500);
+      this.telemetryLogs.set(updated);
+    }, 4500);
   }
 
   private generateMatrixChars(): string {
