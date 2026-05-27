@@ -49,6 +49,9 @@ export class HologramChamberScene {
   private mouseX = 0;
   private mouseY = 0;
 
+  private pointerMoveHandler!: (e: PointerEvent) => void;
+  private pointerLeaveHandler!: () => void;
+
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();
   }
@@ -313,15 +316,17 @@ export class HologramChamberScene {
     this.resizeHandler = () => this.resizeRenderer();
     window.addEventListener('resize', this.resizeHandler);
 
-    this.canvas.addEventListener('pointermove', (e: PointerEvent) => {
+    this.pointerMoveHandler = (e: PointerEvent) => {
       const rect = this.canvas.getBoundingClientRect();
       this.pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       this.pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-    });
-
-    this.canvas.addEventListener('pointerleave', () => {
+    };
+    this.pointerLeaveHandler = () => {
       this.pointer.set(-10, -10);
-    });
+    };
+
+    this.canvas.addEventListener('pointermove', this.pointerMoveHandler);
+    this.canvas.addEventListener('pointerleave', this.pointerLeaveHandler);
   }
 
   private resizeRenderer(): void {
