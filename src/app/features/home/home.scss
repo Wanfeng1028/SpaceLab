@@ -1430,13 +1430,15 @@
 .toggle > div > input[type=checkbox] ~ div:after {
   content: attr(data-checked);
   color: #df0000;
-  text-shadow: 0 1px 0 #fff, 0px 0 7px #df0000;
+  text-shadow: 0 1px 0 #fff, 0px 0 4px #df0000;
   filter: dropshadow(color=#df0000, offx=0, offy=0);
   display: block;
   position: absolute;
-  border-radius: 10px;
-  top: 27px;
-  left: 100px;
+  border-radius: 4px;
+  top: 6px;
+  left: 42px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .toggle > div > input[type=checkbox]:checked ~ div:before {
