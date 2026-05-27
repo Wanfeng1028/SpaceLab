@@ -325,7 +325,7 @@ export class HeroLightFieldScene {
       this.onResize(); // 重新设置分辨率
     }
 
-    const elapsedSeconds = (Date.now() - this.startTime) / 1000;
+    const elapsedSeconds = (performance.now() - this.startTime) / 1000;
     this.material.uniforms['uTime'].value = elapsedSeconds;
 
     this.renderer.render(this.scene, this.camera);
