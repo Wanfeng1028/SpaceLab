@@ -35,10 +35,6 @@ export class SpaceGlassModalComponent implements AfterViewInit, OnDestroy {
   /** 是否点击遮罩关闭 */
   readonly closeOnOverlay = input(true);
 
-  /** 遮罩层光斑颜色 — 默认暖黄+冷蓝 */
-  readonly orbColor1 = input('rgba(255, 210, 31, 0.14)');
-  readonly orbColor2 = input('rgba(120, 170, 255, 0.12)');
-
   /** 关闭事件 */
   readonly closed = output<void>();
 
