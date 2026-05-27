@@ -130,3 +130,9 @@
     </ul>
   </space-glass-modal>
 }
+
+<!-- Profile Capsule Modal -->
+<space-capsule-modal
+  [isOpen]="showCapsuleModal()"
+  [triggerEl]="avatarTriggerEl()"
+  (closed)="showCapsuleModal.set(false)" />
