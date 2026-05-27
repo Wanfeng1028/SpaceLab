@@ -1,4 +1,4 @@
-<section class="space-section" id="stargate-dock">
+<section class="space-section" id="portal-gallery">
   <!-- WebGL 3D Layer -->
   <div class="webgl-layer">
     <app-three-canvas [sceneFactory]="stargateFactory" />
@@ -7,14 +7,14 @@
   <!-- HUD Overlay Layer -->
   <div class="hud-layer">
     <!-- Centered Title + Subtitle + Buttons -->
-    <div class="stargate-content">
-      <span class="stargate-content__number">05</span>
-      <h2 class="stargate-content__title">Stargate<br />Dock</h2>
-      <p class="stargate-content__subtitle">
-        Hyperspace transit &amp; deep-space navigation hub
+    <div class="portal-content">
+      <span class="portal-content__number">06</span>
+      <h2 class="portal-content__title">Portal<br />Gallery</h2>
+      <p class="portal-content__subtitle">
+        Gateway to immersive experiences &amp; deep space exploration
       </p>
 
-      <div class="stargate-buttons">
+      <div class="portal-buttons">
         <app-magnetic-button (clicked)="onEnter()">
           Enter the Lab
         </app-magnetic-button>
@@ -28,17 +28,17 @@
     </div>
 
     <!-- Footer Copyright -->
-    <div class="stargate-footer-row">
-      <span class="stargate-copyright">
+    <div class="portal-footer-row">
+      <span class="portal-copyright">
         &copy; {{ currentYear }} SpaceLab. All rights reserved.
       </span>
-      <span class="stargate-coordinates">
+      <span class="portal-coordinates">
         LAT 0.000 &middot; LON 0.000 &middot; ALT 36,000 km
       </span>
     </div>
 
     <!-- Telemetry Bar -->
-    <div class="stargate-footer">
+    <div class="portal-footer">
       <app-telemetry-bar [text]="telemetryText()" />
     </div>
   </div>
