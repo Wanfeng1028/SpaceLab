@@ -1,5 +1,5 @@
 // ============================================
-// StargateDockSection — 星际之门
+// PortalGallerySection — 明暗过渡传送门
 // ============================================
 
 :host {
@@ -8,7 +8,7 @@
 
 // ── Centered Content ──
 
-.stargate-content {
+.portal-content {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -16,44 +16,51 @@
   justify-content: center;
   text-align: center;
   gap: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 2rem;
 }
 
-.stargate-content__number {
+.portal-content__number {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.15em;
-  color: var(--space-cyan, #00f5ff);
-  opacity: 0.6;
+  color: #69d7ff;
+  opacity: 0.8;
   margin-bottom: 8px;
 }
 
-.stargate-content__title {
+.portal-content__title {
   font-family: var(--font-sans);
   font-size: clamp(36px, 7vw, 80px);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--space-text, rgba(255, 255, 255, 0.88));
+  color: rgba(255, 255, 255, 0.95);
   line-height: 1.0;
   margin: 0;
   text-shadow:
-    0 0 60px rgba(0, 245, 255, 0.2),
-    0 0 120px rgba(0, 245, 255, 0.08);
+    0 0 60px rgba(105, 215, 255, 0.3),
+    0 0 120px rgba(105, 215, 255, 0.1);
 }
 
-.stargate-content__subtitle {
+.portal-content__subtitle {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--space-muted, rgba(255, 255, 255, 0.48));
+  color: rgba(255, 255, 255, 0.6);
   margin-top: 16px;
   margin-bottom: 40px;
+  max-width: 400px;
 }
 
 // ── Button Row ──
 
-.stargate-buttons {
+.portal-buttons {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
@@ -68,7 +75,7 @@
 
 // ── Footer Copyright Row ──
 
-.stargate-footer-row {
+.portal-footer-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,25 +83,25 @@
   padding: 0;
 }
 
-.stargate-copyright {
+.portal-copyright {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.08em;
-  color: var(--space-muted, rgba(255, 255, 255, 0.35));
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
 }
 
-.stargate-coordinates {
+.portal-coordinates {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.08em;
-  color: var(--space-muted, rgba(255, 255, 255, 0.35));
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
 }
 
 // ── Footer Telemetry Bar ──
 
-.stargate-footer {
+.portal-footer {
   width: 100%;
   margin-top: 12px;
 }
@@ -102,15 +109,15 @@
 // ── Mobile Responsive ──
 
 @media (max-width: 768px) {
-  .stargate-content__title {
+  .portal-content__title {
     font-size: clamp(28px, 8vw, 48px);
   }
 
-  .stargate-content__subtitle {
+  .portal-content__subtitle {
     margin-bottom: 28px;
   }
 
-  .stargate-footer-row {
+  .portal-footer-row {
     flex-direction: column;
     align-items: center;
     gap: 6px;
@@ -120,12 +127,17 @@
   .hud-layer {
     padding: 20px 16px !important;
   }
+
+  .portal-content {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
 }
 
 // ── Reduced Motion ──
 
 @media (prefers-reduced-motion: reduce) {
-  .stargate-content__title {
+  .portal-content__title {
     text-shadow: none;
   }
 }
