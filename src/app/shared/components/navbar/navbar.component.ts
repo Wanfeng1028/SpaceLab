@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit {
   readonly mobileMenuOpen = signal(false);
   readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
   readonly showShareModal = signal(false);
+  readonly githubStars = signal(0);
 
   readonly navLinks = [
     { route: '/blog', labelKey: 'nav.blog' },
@@ -51,6 +52,7 @@ export class NavbarComponent implements OnInit {
       });
 
     this.i18n.loadTranslations(this.currentLang());
+    this.fetchGithubStars();
   }
 
   @HostListener('window:scroll')
