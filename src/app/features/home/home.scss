@@ -36,14 +36,20 @@
 }
 
 // ── 电影画质高精胶片颗粒噪点 ────────────────
+// 用轻量 CSS 渐变替代 SVG feTurbulence（避免持续重绘开销）
 .grain-overlay {
   position: absolute;
   inset: 0;
-  z-index: 4; // Move grain overlay to z-index 4 to be on top of everything
+  z-index: 4;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.055; // 极其微弱细腻，凸显高端质感
-  will-change: opacity;
+  background-image:
+    repeating-radial-gradient(circle at 17% 32%, rgba(255,255,255,0.03) 0px, transparent 1px),
+    repeating-radial-gradient(circle at 73% 68%, rgba(255,255,255,0.025) 0px, transparent 1px),
+    repeating-radial-gradient(circle at 41% 89%, rgba(255,255,255,0.02) 0px, transparent 1px),
+    repeating-radial-gradient(circle at 92% 11%, rgba(255,255,255,0.028) 0px, transparent 1px);
+  background-size: 3px 3px, 4px 4px, 5px 5px, 3px 3px;
+  opacity: 1;
+  mix-blend-mode: overlay;
 }
 
 

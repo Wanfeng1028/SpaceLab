@@ -37,6 +37,7 @@ export class HeroLightFieldScene {
   constructor(private canvas: HTMLCanvasElement) {
     const isMobile = window.innerWidth < 768;
     this.dpr = Math.min(window.devicePixelRatio, isMobile ? 1.0 : 1.5);
+    this.currentDpr = this.dpr;
   }
 
   init(): void {
