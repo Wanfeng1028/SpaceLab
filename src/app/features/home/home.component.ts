@@ -273,6 +273,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private playBellSound(): void {
+    if (!this.soundEnabled()) return; // 如果音效关闭，则直接返回
     try {
       this.initAudioContext();
       if (!this.audioCtx || this.audioCtx.state === 'suspended') return;
