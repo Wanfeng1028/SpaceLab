@@ -4,16 +4,20 @@
   display: block;
 }
 
+// ============================================
+// Blog Page - Minimalist Modern Style
+// ============================================
+
 .blog-page {
-  padding-top: 100px; // navbar height + spacing
-  padding-bottom: var(--space-4xl);
   min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 120px 0 80px;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-xl);
 }
 
 // ============================================
@@ -21,19 +25,20 @@
 // ============================================
 
 .blog-header {
-  margin-bottom: var(--space-3xl);
+  margin-bottom: 48px;
 
   &__title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
-    color: var(--color-text);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 700;
+    color: #1a1a1a;
     letter-spacing: -0.03em;
-    margin-bottom: var(--space-sm);
+    margin-bottom: 12px;
   }
 
   &__desc {
-    font-size: 1rem;
-    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+    color: #6c757d;
+    font-family: 'Georgia', 'Times New Roman', serif;
   }
 }
 
@@ -44,8 +49,8 @@
 .blog-toolbar {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-2xl);
+  gap: 24px;
+  margin-bottom: 48px;
 }
 
 app-search-box {
@@ -53,16 +58,32 @@ app-search-box {
   width: fit-content;
 }
 
-
 // Category Filters
 .category-filters {
   display: flex;
-  gap: var(--space-sm);
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .filter-chip {
-  // 样式由全局 _glass-buttons.scss 统一管理
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #495057;
+  background: rgba(0, 0, 0, 0.04);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  &.active {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
 }
 
 // ============================================
@@ -72,7 +93,7 @@ app-search-box {
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
+  gap: 32px;
 
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
@@ -89,14 +110,53 @@ app-search-box {
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  gap: var(--space-md);
+  gap: 16px;
 
   &__icon {
     font-size: 3rem;
+    opacity: 0.5;
   }
 
   p {
-    color: var(--color-text-tertiary);
-    font-size: 0.95rem;
+    color: #6c757d;
+    font-size: 1rem;
+  }
+}
+
+// ============================================
+// Decorative Elements
+// ============================================
+
+.blog-page::before {
+  content: '';
+  position: fixed;
+  top: 15%;
+  right: 5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(105, 215, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blog-page::after {
+  content: '';
+  position: fixed;
+  bottom: 25%;
+  left: 8%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(86, 240, 194, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+// ============================================
+// Reduced Motion
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-chip {
+    transition: none;
   }
 }
