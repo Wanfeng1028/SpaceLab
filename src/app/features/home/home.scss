@@ -100,25 +100,24 @@
 // 右下方的深邃电浆蓝紫星冕散逸
 .blue-purple {
   position: absolute;
-  bottom: 12%;
-  right: 12%;
-  width: 460px;
-  height: 460px;
+  bottom: 8%;
+  right: 8%;
+  width: 540px;
+  height: 540px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(10, 92, 255, 0.5) 0%,
-    rgba(189, 0, 255, 0.28) 45%,
-    rgba(143, 124, 255, 0.08) 70%,
-    transparent 80%
+    rgba(10, 92, 255, 0.3) 0%,
+    rgba(189, 0, 255, 0.16) 35%,
+    rgba(143, 124, 255, 0.05) 60%,
+    transparent 75%
   );
-  filter: blur(35px);
   mix-blend-mode: screen;
   animation: flareBreatheBlue 8s ease-in-out infinite alternate-reverse;
 
   @media (max-width: 767px) {
-    width: 290px;
-    height: 290px;
+    width: 340px;
+    height: 340px;
   }
 }
 
