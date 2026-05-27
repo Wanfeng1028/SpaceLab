@@ -251,7 +251,7 @@ export class EarthObservatoryScene {
       const mat = new LineBasicMaterial({
         color,
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.0, // Start invisible
         blending: AdditiveBlending,
       });
       const line = new Line(geo, mat);
@@ -448,6 +448,12 @@ export class EarthObservatoryScene {
     // Update atmosphere opacity based on scroll progress
     const atmosphereOpacity = Math.min(this.scrollProgress * 2, 1.0);
     (this.atmosphere.material as ShaderMaterial).uniforms['uOpacity'].value = atmosphereOpacity;
+
+    // Update satellite orbit opacity based on scroll progress
+    const orbitOpacity = Math.min(this.scrollProgress * 1.5, 0.4);
+    this.satelliteOrbits.forEach((orbit) => {
+      (orbit.material as LineBasicMaterial).opacity = orbitOpacity;
+    });
 
     this.renderer.render(this.scene, this.camera);
   }
