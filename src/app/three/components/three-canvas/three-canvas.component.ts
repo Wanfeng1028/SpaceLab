@@ -34,18 +34,19 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
 
   private sceneInstance: { init(): void; destroy(): void; pause?(): void; resume?(): void } | null = null;
   private observer: IntersectionObserver | null = null;
+  private initialized = false;
 
   ngAfterViewInit(): void {
-    const canvas = this.canvasRef.nativeElement;
-    this.sceneInstance = this.sceneFactory(canvas);
-    this.sceneInstance.init();
-
-    // 离开视口暂停渲染
+    // 延迟初始化：仅当进入视口时才创建 Three.js 场景
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            this.sceneInstance?.resume?.();
+            if (!this.initialized) {
+              this.initializeScene();
+            } else {
+              this.sceneInstance?.resume?.();
+            }
           } else {
             this.sceneInstance?.pause?.();
           }
@@ -56,9 +57,17 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
     this.observer.observe(this.canvasRef.nativeElement);
   }
 
+  private initializeScene(): void {
+    const canvas = this.canvasRef.nativeElement;
+    this.sceneInstance = this.sceneFactory(canvas);
+    this.sceneInstance.init();
+    this.initialized = true;
+  }
+
   ngOnDestroy(): void {
     this.observer?.disconnect();
     this.sceneInstance?.destroy();
     this.sceneInstance = null;
+    this.initialized = false;
   }
 }
