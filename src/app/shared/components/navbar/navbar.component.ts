@@ -124,6 +124,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onLinkClick(link: any, event: Event): void {
     if (link.route === '/home') {
+      event.preventDefault();
       this.onHomeClick(event);
     } else {
       this.closeMobileMenu();
