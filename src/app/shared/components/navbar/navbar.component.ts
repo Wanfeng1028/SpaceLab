@@ -71,6 +71,10 @@ export class NavbarComponent implements OnInit {
     this.i18n.loadTranslations(newLang);
   }
 
+  toggleSound(): void {
+    this.soundEnabled.update(v => !v);
+  }
+
   toggleMobileMenu(): void {
     this.mobileMenuOpen.update((v) => !v);
   }

@@ -1,5 +1,6 @@
 // ============================================
 // SpaceGlassModal — 深色 HUD 卡片弹窗
+// 1:1 还原用户提供的 .card 样式
 // ============================================
 
 // ---- 遮罩层 ----
@@ -16,7 +17,7 @@
   animation: sgmOverlayIn 240ms ease both;
 }
 
-// ---- 弹窗面板 ----
+// ---- 弹窗面板（完全复用 .card）----
 .sgm-panel {
   --white: hsl(0, 0%, 100%);
   --black: hsl(240, 15%, 9%);
@@ -29,8 +30,8 @@
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  width: min(19rem, calc(100vw - 40px));
-  min-height: 200px;
+  width: 19rem;
+  max-width: calc(100vw - 40px);
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   overflow-x: hidden;
@@ -49,16 +50,15 @@
   scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 
   &--sm {
-    width: min(19rem, calc(100vw - 40px));
-    min-height: 160px;
+    width: 19rem;
   }
 
   &--lg {
-    width: min(30rem, calc(100vw - 40px));
+    width: 30rem;
   }
 }
 
-// ---- 旋转光环边框 ----
+// ---- 旋转光环边框（完全复用 .card__border）----
 .sgm-border {
   overflow: hidden;
   pointer-events: none;
@@ -79,7 +79,7 @@
   &::before {
     content: '';
     pointer-events: none;
-    position: fixed;
+    position: absolute;
     z-index: 200;
     top: 50%;
     left: 50%;
@@ -98,7 +98,7 @@
   }
 }
 
-// ---- 关闭按钮 ----
+// ---- 关闭按钮（额外添加，原卡片没有）----
 .sgm-close {
   cursor: pointer;
   position: absolute;
@@ -143,6 +143,85 @@
 .sgm-body {
   position: relative;
   z-index: 1;
+}
+
+// ---- 卡片内部通用样式 ----
+.sgm-panel {
+  .card_title__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card_title {
+    font-size: 1rem;
+    color: var(--white);
+  }
+
+  .card_paragraph {
+    margin-top: 0.25rem;
+    width: 65%;
+    font-size: 0.5rem;
+    color: var(--paragraph);
+  }
+
+  .line {
+    width: 100%;
+    height: 0.1rem;
+    background-color: var(--line);
+    border: none;
+  }
+
+  .card__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card__list_item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--primary);
+    border-radius: 50%;
+  }
+
+  .check_svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    fill: var(--black);
+  }
+
+  .list_text {
+    font-size: 0.75rem;
+    color: var(--white);
+  }
+
+  .card__button {
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 100%;
+    background-image: linear-gradient(
+      0deg,
+      hsl(189, 92%, 58%),
+      hsl(189, 99%, 26%) 100%
+    );
+    font-size: 0.75rem;
+    color: var(--white);
+    border: 0;
+    border-radius: 9999px;
+    box-shadow: inset 0 -2px 25px -4px var(--white);
+  }
 }
 
 // ============================================
