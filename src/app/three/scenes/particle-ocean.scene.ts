@@ -42,6 +42,8 @@ export class ParticleOceanScene {
 
   private particleCount: number;
 
+  private contextLostHandler: ((e: Event) => void) | null = null;
+
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();
     const isMobile =
@@ -70,6 +72,10 @@ export class ParticleOceanScene {
       alpha: false,
       powerPreference: 'high-performance',
     });
+    this.contextLostHandler = (e: Event) => {
+      e.preventDefault();
+    };
+    this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setClearColor(0x000000, 1);
 
@@ -271,6 +277,10 @@ export class ParticleOceanScene {
   }
 
   destroy(): void {
+    if (this.contextLostHandler) {
+      this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLostHandler);
+      this.contextLostHandler = null;
+    }
     this.disposed = true;
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);

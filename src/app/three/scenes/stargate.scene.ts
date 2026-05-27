@@ -32,6 +32,7 @@ export class StargateScene {
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private disposed = false;
+  private contextLostHandler: ((e: Event) => void) | null = null;
 
   private portalGroup!: Group;
   private outerRing!: Mesh;
@@ -75,6 +76,11 @@ export class StargateScene {
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setClearColor(0x000000, 1);
+
+    this.contextLostHandler = (e: Event) => {
+      e.preventDefault();
+    };
+    this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
 
     this.resizeRenderer();
 
@@ -419,6 +425,10 @@ export class StargateScene {
   }
 
   destroy(): void {
+    if (this.contextLostHandler) {
+      this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLostHandler);
+      this.contextLostHandler = null;
+    }
     this.disposed = true;
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);

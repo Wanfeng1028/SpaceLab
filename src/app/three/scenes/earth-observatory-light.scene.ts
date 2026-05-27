@@ -55,6 +55,8 @@ export class EarthObservatoryLightScene {
   private currentRotY = 0;
   private scanProgress = 1;
 
+  private contextLostHandler: ((e: Event) => void) | null = null;
+
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();
   }
@@ -82,6 +84,10 @@ export class EarthObservatoryLightScene {
       alpha: true, // 透明背景
       powerPreference: 'high-performance',
     });
+    this.contextLostHandler = (e: Event) => {
+      e.preventDefault();
+    };
+    this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setClearColor(0x000000, 0); // 透明背景
 
@@ -452,6 +458,10 @@ export class EarthObservatoryLightScene {
   }
 
   destroy(): void {
+    if (this.contextLostHandler) {
+      this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLostHandler);
+      this.contextLostHandler = null;
+    }
     this.disposed = true;
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);

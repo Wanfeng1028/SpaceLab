@@ -39,6 +39,7 @@ export class OrbitalLearningLightScene {
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private disposed = false;
+  private contextLostHandler: ((e: Event) => void) | null = null;
 
   private starMapGroup!: Group;
   private core!: Mesh;
@@ -93,6 +94,11 @@ export class OrbitalLearningLightScene {
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setClearColor(0x000000, 0); // 透明背景
+
+    this.contextLostHandler = (e: Event) => {
+      e.preventDefault();
+    };
+    this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
 
     this.resizeRenderer();
 
@@ -375,6 +381,10 @@ export class OrbitalLearningLightScene {
   }
 
   destroy(): void {
+    if (this.contextLostHandler) {
+      this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLostHandler);
+      this.contextLostHandler = null;
+    }
     this.disposed = true;
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);
