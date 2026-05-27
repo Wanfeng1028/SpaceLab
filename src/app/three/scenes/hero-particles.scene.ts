@@ -96,8 +96,8 @@ export class HeroLightFieldScene {
       const float PI      = 3.14159265359;
       const float MAX     = 10000.0;
       const float R_INNER = 1.0;
-      const int   NUM_OUT_SCATTER = 6;
-      const int   NUM_IN_SCATTER  = 24;
+      const int   NUM_OUT_SCATTER = 4;
+      const int   NUM_IN_SCATTER  = 16;
 
       vec2 ray_vs_sphere(vec3 p, vec3 dir, float r) {
         float b = dot(p, dir);
