@@ -96,7 +96,7 @@ export class HeroLightFieldScene {
       const float MAX     = 10000.0;
       const float R_INNER = 1.0;
       const int   NUM_OUT_SCATTER = 4;
-      const int   NUM_IN_SCATTER  = 16;
+      const int   NUM_IN_SCATTER  = 8;
 
       vec2 ray_vs_sphere(vec3 p, vec3 dir, float r) {
         float b = dot(p, dir);
@@ -349,30 +349,6 @@ export class HeroLightFieldScene {
         this.material.uniforms['uMieTint'].value.set(mieColor);
       }
     }
-  }
-
-  /** 采样画面中心区域的加权亮度 (0‒1)，用于驱动 UI 自适应 */
-  getCenterBrightness(): number {
-    if (this.disposed || !this.renderer) return 0;
-    const gl = this.renderer.getContext();
-    const sampleW = 8;   // 减少采样区域以提升性能
-    const sampleH = 8;
-    const canvasW = this.renderer.domElement.width;
-    const canvasH = this.renderer.domElement.height;
-    const x = Math.floor(canvasW / 2 - sampleW / 2);
-    const y = Math.floor(canvasH / 2 - sampleH / 2);
-    const pixels = new Uint8Array(sampleW * sampleH * 4);
-    gl.readPixels(x, y, sampleW, sampleH, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-    let total = 0;
-    const count = sampleW * sampleH;
-    for (let i = 0; i < count; i++) {
-      const r = pixels[i * 4] / 255;
-      const g = pixels[i * 4 + 1] / 255;
-      const b = pixels[i * 4 + 2] / 255;
-      const a = pixels[i * 4 + 3] / 255;
-      total += (0.2126 * r + 0.7152 * g + 0.0722 * b) * a;
-    }
-    return total / count;
   }
 
   destroy(): void {

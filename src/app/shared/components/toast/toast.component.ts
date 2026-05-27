@@ -40,11 +40,7 @@ export class ToastComponent implements OnInit, OnDestroy {
   readonly closed = output<string>();
 
   ngOnInit(): void {
-    // 初始有一些示例 Toast
-    this.toastService.success(
-      'Keys to Success',
-      'Best way to be success in your life.'
-    );
+    // Toasts are created on demand via ToastService
   }
 
   ngOnDestroy(): void {
