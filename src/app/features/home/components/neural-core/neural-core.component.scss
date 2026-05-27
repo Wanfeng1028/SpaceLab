@@ -111,9 +111,12 @@ app-telemetry-bar {
     top: 45%;
   }
 
-  .neural-center-text {
+  .neural-header {
     top: 5%;
-    width: 90%;
+    left: 5%;
+    right: 5%;
+    max-width: none;
+    text-align: center;
   }
 
   .neural-right {
