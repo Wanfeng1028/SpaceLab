@@ -60,7 +60,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       });
 
     this.i18n.loadTranslations(this.currentLang());
-    this.fetchGithubStars();
+    this.loadGithubStars();
+  }
+
+  ngOnDestroy(): void {
+    this.starsAbort?.abort();
   }
 
   @HostListener('window:scroll')
