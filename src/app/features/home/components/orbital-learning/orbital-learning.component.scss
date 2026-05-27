@@ -31,32 +31,46 @@
   }
 }
 
-// Center text
-.orbital-center-text {
+// Header styles
+.orbital-header {
   position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+  top: 15%;
+  left: 5%;
   z-index: 2;
-  pointer-events: none;
+  max-width: 400px;
+}
+
+.orbital-number {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: #171717;
+  margin: 0;
+  letter-spacing: 0.1em;
 }
 
 .orbital-title {
-  font-family: 'Orbitron', 'SF Mono', monospace;
-  font-size: clamp(1rem, 2.5vw, 1.8rem);
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: #00f0ff;
-  margin: 0 0 1rem 0;
-  text-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 600;
+  color: #171717;
+  margin: 0.5rem 0 1rem 0;
+  letter-spacing: 0.15em;
+}
+
+.orbital-subtitle {
+  font-family: 'Roboto Mono', monospace;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: #444;
+  margin: 0 0 0.5rem 0;
+  font-style: italic;
 }
 
 .orbital-desc {
   font-family: 'Roboto Mono', monospace;
-  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+  color: #555;
   margin: 0;
 }
 
