@@ -61,6 +61,11 @@ Pulse
 Motion
 Minimal Hero
 Creative Digital Space
+Light Space
+Liquid Glass
+Soft Glow
+Warm Minimal
+Science Visualization
 ```
 
 中文方向：
@@ -76,7 +81,14 @@ Creative Digital Space
 3D 主视觉
 极简欢迎
 个人数字空间
+浅色空间
+液态玻璃
+柔和光场
+温暖极简
+科学可视化
 ```
+
+SpaceLab 不做全站暗黑科幻风。深色太空视觉只作为局部沉浸区块使用，默认界面应保持浅色、通透、柔和、玻璃质感。
 
 ### 0.4 Design First 工作流
 
@@ -215,15 +227,15 @@ Home 是 SpaceLab 的入口页，不是信息堆叠页。
 ```txt
 Home
   01 Hero 极简欢迎区
-  02 3D Portal 入口区
-  03 Content Orbit 内容星环区
-  04 Featured Projects 精选项目区
-  05 Latest Articles 最新文章区
-  06 Lab Preview 动画实验预览区
-  07 Gallery Preview 媒体墙预览区
-  08 Site Pulse 访问可视化概览区
-  09 Contact 底部联系区
+  02 Earth Observatory 地球科学与遥感展示区
+  03 Neural Core 人工智能与大语言模型展示区
+  04 Visual Systems 创意编程与数据可视化展示区
+  05 Orbital Learning 科学学习与知识星图展示区
+  06 Cockpit Dashboard 驾驶舱系统总控区
+  07 Contact / Footer 轻量联系区
 ```
+
+注：首页不再直接展示项目列表、文章列表、媒体墙和完整访问分析。这些内容应该进入二级页面（Projects、Blog、Gallery、Analytics），不要堆在首页。
 
 ### 2.1.3 Hero 极简欢迎区
 
@@ -289,7 +301,9 @@ Gallery
 
 每张入口卡最多一行辅助说明，不写长段落。
 
-### 2.1.5 Content Orbit 内容星环区
+### 2.1.5 Content Orbit 内容星环区（二级页面内容）
+
+注：此区块已从首页移除，现作为二级页面内容，可用于博客、项目等页面的导航。
 
 作用：用 3D 或伪 3D 的方式展示网站内容结构。
 
@@ -313,7 +327,9 @@ Archive
 - 点击后进入页面
 - 低性能设备可降级为横向滚动卡片
 
-### 2.1.6 Featured Projects 精选项目区
+### 2.1.6 Featured Projects 精选项目区（二级页面内容）
+
+注：此区块已从首页移除，现作为二级页面内容，在 Projects 页面展示精选项目。
 
 展示 3 到 4 个精选项目。
 
@@ -334,7 +350,9 @@ Archive
 - 轻微 3D tilt
 - 鼠标移出时平滑复位
 
-### 2.1.7 Latest Articles 最新文章区
+### 2.1.7 Latest Articles 最新文章区（二级页面内容）
+
+注：此区块已从首页移除，现作为二级页面内容，在 Blog 页面展示最新文章。
 
 展示 3 到 6 篇最新文章。
 
@@ -354,7 +372,9 @@ Archive
 - 文章列表不要挤满首页
 - 点击进入 Article Detail
 
-### 2.1.8 Lab Preview 动画实验预览区
+### 2.1.8 Lab Preview 动画实验预览区（二级页面内容）
+
+注：此区块已从首页移除，现作为二级页面内容，在 Lab 页面展示交互动效和 3D 实验入口。
 
 展示交互动效和 3D 实验入口。
 
@@ -376,7 +396,9 @@ Archive
 - hover 后浮起
 - 点击进入 Lab 页面
 
-### 2.1.9 Gallery Preview 媒体墙预览区
+### 2.1.9 Gallery Preview 媒体墙预览区（二级页面内容）
+
+注：此区块已从首页移除，现作为二级页面内容，在 Gallery 页面展示精选图片、GIF、视频、3D 预览。
 
 展示精选图片、GIF、视频、3D 预览。
 
@@ -388,7 +410,9 @@ Archive
 - GIF 或 animated WebP 可直接展示
 - 点击进入 Gallery 或打开媒体详情
 
-### 2.1.10 Site Pulse 访问可视化概览区
+### 2.1.10 Site Pulse 访问可视化概览区（二级页面内容）
+
+注：此区块已从首页移除，现作为二级页面内容，在 Analytics 页面展示访问分析数据。
 
 首页展示公开的轻量访问概览，不展示敏感信息。
 
@@ -810,7 +834,17 @@ Analytics 是隐藏访问分析页，不放入普通导航。
 
 ### 3.2 背景
 
-全站背景为浅色暖灰 + 柔和光斑：
+全站默认背景为浅色暖灰 + 液态玻璃 + 柔和光斑，不是纯黑背景。
+
+允许深色背景的只有局部沉浸 WebGL 区、驾驶舱区、实验区。
+
+不允许所有 section 都是黑色背景。
+
+不允许所有卡片都做成暗黑 HUD 面板。
+
+不允许背景粒子过亮、过密、过曝。
+
+默认背景 CSS：
 
 ```css
 .app-shell {

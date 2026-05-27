@@ -355,8 +355,8 @@ export class HeroLightFieldScene {
   getCenterBrightness(): number {
     if (this.disposed || !this.renderer) return 0;
     const gl = this.renderer.getContext();
-    const sampleW = 16;
-    const sampleH = 16;
+    const sampleW = 8;   // 减少采样区域以提升性能
+    const sampleH = 8;
     const canvasW = this.renderer.domElement.width;
     const canvasH = this.renderer.domElement.height;
     const x = Math.floor(canvasW / 2 - sampleW / 2);

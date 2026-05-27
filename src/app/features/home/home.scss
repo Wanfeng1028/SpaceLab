@@ -1361,144 +1361,25 @@
 }
 
 // ── 联系弹窗样式 ──
-
-// 覆写模态框玻璃透明度
 .contact-modal-wrapper {
-  ::ng-deep {
-    .sgm-overlay {
-      background: rgba(0, 0, 0, 0.06);
-      backdrop-filter: blur(32px) saturate(140%);
-      -webkit-backdrop-filter: blur(32px) saturate(140%);
-    }
-
-    .sgm-panel {
-      background:
-        linear-gradient(
-          160deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0.04) 50%,
-          rgba(255, 255, 255, 0.07) 100%
-        );
-      border-color: rgba(255, 255, 255, 0.18);
-      box-shadow:
-        0 40px 120px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(40px) saturate(160%);
-      -webkit-backdrop-filter: blur(40px) saturate(160%);
-    }
-
-    .sgm-panel::before {
-      background:
-        radial-gradient(circle at 10% 15%, rgba(255, 255, 255, 0.15), transparent 22%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 40%);
-      opacity: 0.4;
-    }
-
-    .sgm-panel::after {
-      background: radial-gradient(circle,
-        rgba(120, 170, 255, 0.06) 0%,
-        rgba(255, 210, 31, 0.03) 40%,
-        transparent 100%);
-      filter: blur(30px);
-    }
-
-    .sgm-close {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.18);
-      color: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.22);
-        border-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-
-    .sgm-bubble {
-      border-color: rgba(255, 255, 255, 0.08);
-      background: radial-gradient(circle at 35% 35%,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.02) 60%,
-        transparent 100%);
-    }
-  }
-}
-
-.contact-badge {
-  display: inline-block;
-  padding: 4px 14px;
-  border-radius: 999px;
-  background: rgba(26, 115, 232, 0.1);
-  border: 1px solid rgba(26, 115, 232, 0.18);
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-}
+  animation: fadeIn 0.3s ease-out;
 
-.contact-modal-body {
-  .contact-desc {
-    margin: 0 0 24px;
-    font-size: 15px;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px) saturate(120%);
-    -webkit-backdrop-filter: blur(16px) saturate(120%);
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 14px;
-    font-weight: 600;
-    transition:
-      background 200ms var(--ease-out),
-      border-color 200ms var(--ease-out),
-      transform 200ms var(--ease-out),
-      box-shadow 200ms var(--ease-out);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-
-    &:active {
-      transform: translateY(0) scale(0.98);
+    to {
+      opacity: 1;
     }
-
-    &:focus-visible {
-      outline: 2px solid rgba(26, 115, 232, 0.5);
-      outline-offset: 2px;
-    }
-  }
-
-  .contact-link-icon {
-    font-size: 20px;
-    line-height: 1;
-  }
-
-  .contact-link-label {
-    word-break: break-all;
   }
 }
 

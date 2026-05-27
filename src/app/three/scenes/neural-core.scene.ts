@@ -7,6 +7,7 @@ import {
   Float32BufferAttribute,
   ShaderMaterial,
   Mesh,
+  Material,
   Points,
   Clock,
   AdditiveBlending,
@@ -39,7 +40,6 @@ export class NeuralCoreScene {
 
   private nodeCount: number;
   private nodePositions: Float32Array = new Float32Array(0);
-  private nodeVelocities: Float32Array = new Float32Array(0);
 
   private scrollProgress = 0;
   private mouseX = 0;
@@ -141,7 +141,6 @@ export class NeuralCoreScene {
     const randoms = new Float32Array(count);
 
     this.nodePositions = new Float32Array(count * 3);
-    this.nodeVelocities = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
       // Random spherical distribution
@@ -369,7 +368,9 @@ export class NeuralCoreScene {
   }
 
   triggerTokenBurst(): void {
-    // Trigger token expansion effect
+    // Trigger assembly animation - nodes gather from scattered to final positions
+    this.isAssembling = true;
+    this.assemblyProgress = 0;
   }
 
   // ── Events & resize ──────────────────────────────────────────────────
@@ -395,6 +396,15 @@ export class NeuralCoreScene {
 
     const elapsed = this.clock.getElapsedTime();
 
+    // Update assembly animation progress
+    if (this.isAssembling) {
+      this.assemblyProgress += 0.02; // Progress over ~50 frames
+      if (this.assemblyProgress >= 1.0) {
+        this.assemblyProgress = 1.0;
+        this.isAssembling = false;
+      }
+    }
+
     // Smooth rotation following mouse
     this.targetRotY = this.mouseX * 0.5;
     this.targetRotX = this.mouseY * 0.3;
@@ -410,6 +420,7 @@ export class NeuralCoreScene {
     // Update shader uniforms
     (this.core.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
     (this.nodes.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
+    (this.nodes.material as ShaderMaterial).uniforms['uAssembly'].value = this.assemblyProgress;
     (this.tokenParticles.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
 
     // Pulse connections
@@ -444,9 +455,12 @@ export class NeuralCoreScene {
     window.removeEventListener('resize', this.resizeHandler);
 
     this.networkGroup.traverse((child) => {
-      if ((child as Mesh).geometry) (child as Mesh).geometry.dispose();
-      if ((child as Mesh).material) {
-        const mat = (child as Mesh).material;
+      const obj = child as Mesh & { geometry?: BufferGeometry; material?: Material | Material[] };
+      if (obj.geometry) {
+        obj.geometry.dispose();
+      }
+      if (obj.material) {
+        const mat = obj.material;
         if (Array.isArray(mat)) {
           mat.forEach((m) => m.dispose());
         } else {

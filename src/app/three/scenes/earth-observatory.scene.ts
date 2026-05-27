@@ -9,6 +9,7 @@ import {
   ShaderMaterial,
   Mesh,
   MeshBasicMaterial,
+  Material,
   Points,
   Clock,
   AdditiveBlending,
@@ -373,7 +374,8 @@ export class EarthObservatoryScene {
   }
 
   triggerScanWave(): void {
-    // Could trigger a circular scan effect
+    // Trigger a scan wave effect by resetting scan progress
+    this.scanProgress = 0;
   }
 
   // ── Events & resize ──────────────────────────────────────────────────
@@ -459,9 +461,12 @@ export class EarthObservatoryScene {
     window.removeEventListener('resize', this.resizeHandler);
 
     this.earthGroup.traverse((child) => {
-      if ((child as Mesh).geometry) (child as Mesh).geometry.dispose();
-      if ((child as Mesh).material) {
-        const mat = (child as Mesh).material;
+      const obj = child as Mesh & { geometry?: BufferGeometry; material?: Material | Material[] };
+      if (obj.geometry) {
+        obj.geometry.dispose();
+      }
+      if (obj.material) {
+        const mat = obj.material;
         if (Array.isArray(mat)) {
           mat.forEach((m) => m.dispose());
         } else {
@@ -470,8 +475,12 @@ export class EarthObservatoryScene {
       }
     });
 
-    this.starDust.geometry.dispose();
-    (this.starDust.material as ShaderMaterial).dispose();
+    if (this.starDust) {
+      this.starDust.geometry?.dispose();
+      if (this.starDust.material) {
+        (this.starDust.material as ShaderMaterial).dispose();
+      }
+    }
 
     this.renderer.dispose();
   }
