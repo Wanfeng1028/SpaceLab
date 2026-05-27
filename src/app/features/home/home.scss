@@ -1408,7 +1408,11 @@
 
 /* 打字机音效开关样式 - 来自用户提供的CSS */
 .fx-block {
-  margin: 20px 0;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  margin: 0;
+  z-index: 10;
 }
 
 .toggle > div {
