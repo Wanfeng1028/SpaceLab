@@ -12,7 +12,7 @@ import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
-import { EarthObservatoryScene } from '../../../../three/scenes/earth-observatory.scene';
+import { EarthObservatoryLightScene } from '../../../../three/scenes/earth-observatory-light.scene';
 
 interface ScaleTick {
   value: number;
@@ -33,7 +33,7 @@ interface ScaleTick {
 })
 export class EarthObservatorySection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
-  private scene: EarthObservatoryScene | null = null;
+  private scene: EarthObservatoryLightScene | null = null;
   private telemetryTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly telemetryText = signal('EARTH OBSERVATORY // SCANNING');
@@ -44,7 +44,7 @@ export class EarthObservatorySection implements OnInit, OnDestroy {
   }));
 
   readonly earthFactory = (canvas: HTMLCanvasElement) => {
-    this.scene = new EarthObservatoryScene(canvas);
+    this.scene = new EarthObservatoryLightScene(canvas);
     return this.scene;
   };
 
