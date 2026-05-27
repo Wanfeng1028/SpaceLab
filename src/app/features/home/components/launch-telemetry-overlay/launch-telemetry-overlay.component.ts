@@ -23,8 +23,6 @@ interface GaugeTick {
 export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   private readonly i18n = inject(I18nService);
 
-  readonly Math = Math;
-
   t(key: string): string {
     return this.i18n.t(key);
   }

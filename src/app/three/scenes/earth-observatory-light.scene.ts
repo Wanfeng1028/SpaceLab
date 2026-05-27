@@ -53,6 +53,7 @@ export class EarthObservatoryLightScene {
   private targetRotY = 0;
   private currentRotX = 0;
   private currentRotY = 0;
+  private scanProgress = 1;
 
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();
