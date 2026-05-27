@@ -77,6 +77,7 @@ export class GlobeOrbitScene {
     const edges = new BufferGeometry().setFromPoints(
       this.getSphereEdges(geometry)
     );
+    geometry.dispose();
 
     const material = new LineBasicMaterial({
       color: 0x00ffc4,
