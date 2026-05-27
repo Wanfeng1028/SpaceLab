@@ -142,7 +142,7 @@
 .tick-label {
   font-family: 'Roboto Mono', monospace;
   font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: #666;
   white-space: nowrap;
 }
 
@@ -264,7 +264,7 @@ app-telemetry-bar {
   font-family: 'Orbitron', monospace;
   font-size: clamp(1.2rem, 2.5vw, 2rem);
   font-weight: 600;
-  color: #69d7ff;
+  color: #171717;
   margin: 0.5rem 0 1rem 0;
   letter-spacing: 0.15em;
 }
@@ -272,7 +272,7 @@ app-telemetry-bar {
 .observatory-subtitle {
   font-family: 'Roboto Mono', monospace;
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: #56f0c2;
+  color: #444;
   margin: 0 0 0.5rem 0;
   font-style: italic;
 }
@@ -281,6 +281,6 @@ app-telemetry-bar {
   font-family: 'Roboto Mono', monospace;
   font-size: clamp(0.8rem, 1.2vw, 1rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+  color: #555;
   margin: 0;
 }

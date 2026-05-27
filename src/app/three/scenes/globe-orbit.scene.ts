@@ -34,6 +34,7 @@ export class GlobeOrbitScene {
   private resizeHandler!: () => void;
   private disposed = false;
   private satellites: { mesh: Points; curve: CatmullRomCurve3; speed: number; offset: number }[] = [];
+  private starfield: Points | null = null;
 
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();

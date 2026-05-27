@@ -189,6 +189,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private typeNextChar(): void {
+    if (this.destroyed) return;
     if (this.typingIndex < this.fullText.length) {
       const char = this.fullText[this.typingIndex];
       this.typedText.update(val => val + char);
@@ -203,9 +204,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.typingTimer = setTimeout(() => this.typeNextChar(), baseDelay + variation);
     } else {
       // Reached the end of line, ring the typewriter bell!
-      setTimeout(() => this.playBellSound(), 100);
+      this.bellTimer = setTimeout(() => this.playBellSound(), 100);
       // 等待2秒后重新开始打字（循环）
-      setTimeout(() => {
+      this.restartTimer = setTimeout(() => {
+        if (this.destroyed) return;
         this.typedText.set('');
         this.typingIndex = 0;
         this.typeNextChar();
