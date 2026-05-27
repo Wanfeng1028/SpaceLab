@@ -15,7 +15,7 @@ import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
 import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
-import { SuccessCardComponent } from '../../shared/components/success-card/success-card.component';
+import { SpaceGlassModalComponent } from '../../shared/components/glass/modal/space-glass-modal.component';
 import { EarthObservatorySection } from './components/earth-observatory/earth-observatory.component';
 import { NeuralCoreSection } from './components/neural-core/neural-core.component';
 import { VisualSystemsSection } from './components/visual-systems/visual-systems.component';
@@ -30,7 +30,7 @@ import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-
   imports: [
     ThreeCanvasComponent,
     LaunchTelemetryOverlayComponent,
-    SuccessCardComponent,
+    SpaceGlassModalComponent,
     EarthObservatorySection,
     NeuralCoreSection,
     VisualSystemsSection,
