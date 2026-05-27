@@ -1,21 +1,17 @@
 <div class="visual-systems">
-  <!-- 垂直标题 (左侧) -->
-  <app-vertical-section-title
-    number="04"
-    title="VISUAL SYSTEMS"
-    [telemetryText]="telemetryText()" />
+  <!-- 顶部标题 -->
+  <div class="visual-header">
+    <h1 class="visual-number">04</h1>
+    <h2 class="visual-title">VISUAL SYSTEMS</h2>
+    <p class="visual-subtitle">Creative coding, shaders and data visualization.</p>
+    <p class="visual-desc">
+      Turning data into interactive form.
+    </p>
+  </div>
 
   <!-- Three.js 全息面板画布 -->
   <div class="visual-canvas-container">
     <app-three-canvas [sceneFactory]="visualFactory" />
-  </div>
-
-  <!-- 顶部标题 -->
-  <div class="visual-header">
-    <h2 class="visual-title">CREATIVE CODING</h2>
-    <p class="visual-desc">
-      Interfaces, shaders and data stories built for exploration.
-    </p>
   </div>
 
   <!-- 左下 HUD -->
