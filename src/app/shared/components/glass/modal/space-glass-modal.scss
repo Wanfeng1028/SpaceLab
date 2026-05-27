@@ -1,6 +1,5 @@
 // ============================================
-// SpaceGlassModal — 全站统一玻璃弹窗
-// 参考 PlanningGo FeatureModal + 用户截图
+// SpaceGlassModal — 深色 HUD 玻璃弹窗
 // ============================================
 
 // ---- 遮罩层 ----
@@ -11,9 +10,9 @@
   display: grid;
   place-items: center;
   padding: clamp(20px, 4vw, 48px);
-  background: rgba(18, 18, 18, 0.22);
-  backdrop-filter: blur(18px) saturate(118%);
-  -webkit-backdrop-filter: blur(18px) saturate(118%);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
   animation: sgmOverlayIn 240ms ease both;
 }
 
@@ -29,7 +28,7 @@
     height: 280px;
     top: -60px;
     right: -40px;
-    background: var(--orb-color-1, rgba(255, 210, 31, 0.14));
+    background: var(--orb-color-1, rgba(10, 92, 255, 0.12));
     filter: blur(80px);
     animation: sgmOrbIn 600ms 100ms var(--ease-out) forwards;
   }
@@ -39,7 +38,7 @@
     height: 220px;
     bottom: -40px;
     left: -30px;
-    background: var(--orb-color-2, rgba(120, 170, 255, 0.12));
+    background: var(--orb-color-2, rgba(0, 229, 113, 0.08));
     filter: blur(60px);
     animation: sgmOrbIn 600ms 200ms var(--ease-out) forwards;
   }
@@ -56,52 +55,16 @@
   overflow-x: hidden;
   padding: clamp(34px, 5vw, 56px);
   border-radius: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.48),
-      rgba(235, 233, 224, 0.34)
-    );
-  backdrop-filter: blur(24px) saturate(135%);
-  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 10, 22, 0.88);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
   box-shadow:
-    0 34px 100px rgba(24, 20, 14, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+    0 14px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
   animation: sgmPanelIn 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
   scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-
-  // 内部高光层
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    background:
-      radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.5), transparent 18%),
-      linear-gradient(120deg, rgba(255, 255, 255, 0.34), transparent 42%);
-    opacity: 0.62;
-  }
-
-  // 品牌色底部光晕
-  &::after {
-    content: '';
-    position: absolute;
-    inset: auto -8% -24% 38%;
-    height: 50%;
-    border-radius: 50%;
-    pointer-events: none;
-    background: radial-gradient(circle,
-      rgba(255, 204, 51, 0.08) 0%,
-      rgba(255, 255, 255, 0.03) 54%,
-      transparent 100%);
-    filter: blur(18px);
-    opacity: 0.4;
-    transform: rotate(-10deg);
-  }
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 
   &--sm {
     width: min(440px, calc(100vw - 40px));
@@ -123,25 +86,27 @@
   height: 52px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
-  color: rgba(20, 20, 20, 0.58);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   box-shadow:
-    0 12px 34px rgba(24, 20, 14, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition:
     transform 240ms var(--ease-out),
     background 240ms var(--ease-out),
-    border-color 240ms var(--ease-out);
+    border-color 240ms var(--ease-out),
+    color 240ms var(--ease-out);
 
   &:hover {
     transform: rotate(90deg) scale(1.04);
-    background: rgba(255, 255, 255, 0.58);
-    border-color: rgba(255, 255, 255, 0.76);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   &:active {
@@ -149,7 +114,7 @@
   }
 
   &:focus-visible {
-    outline: 3px solid rgba(255, 210, 31, 0.45);
+    outline: 3px solid rgba(10, 92, 255, 0.5);
     outline-offset: 4px;
   }
 }
@@ -165,44 +130,6 @@
 .sgm-body {
   position: relative;
   z-index: 1;
-}
-
-// ---- 浮动玻璃气泡装饰 ----
-.sgm-bubble {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: radial-gradient(circle at 35% 35%,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.08) 60%,
-    transparent 100%);
-  opacity: 0;
-  animation: sgmBubbleFloat 8s ease-in-out infinite;
-
-  &--1 {
-    width: 24px;
-    height: 24px;
-    top: 15%;
-    right: 12%;
-    animation-delay: 0s;
-  }
-
-  &--2 {
-    width: 16px;
-    height: 16px;
-    bottom: 20%;
-    left: 10%;
-    animation-delay: 2.5s;
-  }
-
-  &--3 {
-    width: 12px;
-    height: 12px;
-    top: 60%;
-    right: 8%;
-    animation-delay: 5s;
-  }
 }
 
 // ============================================
@@ -232,23 +159,6 @@
   to { opacity: 0.25; }
 }
 
-@keyframes sgmBubbleFloat {
-  0%, 100% {
-    opacity: 0;
-    transform: translateY(0) scale(1);
-  }
-  15% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 0.3;
-    transform: translateY(-20px) scale(1.08);
-  }
-  85% {
-    opacity: 0.45;
-  }
-}
-
 // ============================================
 // Mobile — 底部抽屉模式
 // ============================================
@@ -272,10 +182,6 @@
     width: 44px;
     height: 44px;
   }
-
-  .sgm-bubble {
-    display: none;
-  }
 }
 
 // ============================================
@@ -288,11 +194,6 @@
   .sgm-orb {
     animation: none;
     opacity: 1;
-  }
-
-  .sgm-bubble {
-    animation: none;
-    opacity: 0;
   }
 
   .sgm-close {
