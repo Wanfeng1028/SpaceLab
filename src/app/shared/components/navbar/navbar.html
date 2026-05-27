@@ -9,7 +9,7 @@
       <span class="navbar__logo">✦</span>
       <span class="navbar__name">SpaceLab</span>
     </a>
-    <a class="navbar__avatar-link" routerLink="/">
+    <a class="navbar__avatar-link" (click)="openCapsule($event)" role="button" tabindex="0" [attr.aria-label]="t('navAria.openProfile')">
       <div class="avatar-spinner">
         <div class="avatar-spinner__ring"></div>
         <img class="navbar__avatar" src="touxiang.png" alt="avatar" />

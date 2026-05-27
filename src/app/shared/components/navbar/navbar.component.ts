@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly githubStars = signal(0);
   readonly soundEnabled = signal<boolean>(true);
   readonly isLightTheme = signal(false);
+  readonly avatarTriggerEl = signal<HTMLElement | null>(null);
 
   readonly navLinks = [
     { route: '/', labelKey: 'nav.home' },
@@ -122,6 +123,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     }
     this.closeMobileMenu();
+  }
+
+  openCapsule(event: Event): void {
+    event.preventDefault();
+    this.avatarTriggerEl.set(event.currentTarget as HTMLElement);
+    this.showCapsuleModal.set(true);
   }
 
   onLinkClick(link: any, event: Event): void {
