@@ -1,0 +1,84 @@
+<div class="scm-overlay"
+     [class.scm-overlay--closing]="closing()"
+     (click)="onOverlayClick($event)"
+     (keydown)="onKeyDown($event)">
+  <div class="scm-panel"
+       [class.scm-panel--closing]="closing()"
+       role="dialog"
+       aria-modal="true"
+       [attr.aria-label]="t('capsule.headerTitle')"
+       (click)="$event.stopPropagation()">
+
+    <!-- Top Bar -->
+    <div class="scm-topbar">
+      <div class="scm-topbar__left">
+        <span class="scm-status-dot"></span>
+        <span class="scm-topbar__title">{{ t('capsule.headerTitle') }}</span>
+      </div>
+      <div class="scm-topbar__line"></div>
+      <button class="scm-close" type="button" [attr.aria-label]="t('common.close')" (click)="close()">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="scm-content">
+      <!-- Avatar Section -->
+      <div class="scm-avatar-section">
+        <div class="scm-avatar-orbit">
+          <div class="scm-avatar-orbit__ring1"></div>
+          <div class="scm-avatar-orbit__ring2"></div>
+          <img class="scm-avatar-orbit__img" src="touxiang.png" alt="avatar" />
+        </div>
+        <div class="scm-avatar-name">WANFENG</div>
+        <div class="scm-avatar-status">
+          <span class="scm-avatar-status__dot"></span>
+          {{ t('capsule.systemOnline') }}
+        </div>
+      </div>
+
+      <!-- Right: Info -->
+      <div class="scm-info">
+        <h2 class="scm-info__title" id="scm-title">{{ t('capsule.welcome') }}</h2>
+        <p class="scm-info__subtitle">{{ t('capsule.subtitle') }}</p>
+        <p class="scm-info__desc">{{ t('capsule.description') }}</p>
+
+        <div class="scm-info__actions">
+          <button class="scm-btn scm-btn--primary" type="button" (click)="close()">
+            <span class="scm-btn__icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+            {{ t('capsule.contactBtn') }}
+          </button>
+          <a class="scm-btn scm-btn--ghost" href="https://github.com/Wanfeng1028/SpaceLab" target="_blank" rel="noopener">
+            <span class="scm-btn__icon">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </span>
+            GitHub
+          </a>
+        </div>
+
+        <div class="scm-tags">
+          <span class="scm-tag">{{ t('capsule.tagRemote') }}</span>
+          <span class="scm-tag">{{ t('capsule.tagAI') }}</span>
+          <span class="scm-tag">{{ t('capsule.tagWebGL') }}</span>
+        </div>
+
+        <div class="scm-signal">{{ t('capsule.signalReady') }}</div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="scm-bottombar">
+      <span class="scm-bottombar__dot"></span>
+      <span class="scm-bottombar__text">{{ t('capsule.footerMsg') }}</span>
+    </div>
+  </div>
+</div>
