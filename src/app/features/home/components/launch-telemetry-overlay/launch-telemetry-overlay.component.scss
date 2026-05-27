@@ -429,20 +429,31 @@
 
 @media (max-width: 640px) {
   :host {
-    padding: 0 24px;
-    gap: 16px;
+    padding: 0 16px;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .telemetry-cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   .telemetry-card {
     width: 100% !important;
     flex: none !important;
     height: auto;
-    min-height: 140px;
+    min-height: 120px;
     border-radius: 16px;
+    padding: 14px 16px;
     transform: none !important;
 
     &--center {
-      order: 1; // Countdown panel at the very top on mobile
+      order: 1; // 时间卡片排第一
     }
     &--left {
       order: 2;
@@ -456,6 +467,23 @@
     justify-content: space-around;
   }
 
+  .gauge {
+    width: 80px;
+    flex-basis: 80px;
+  }
+
+  .gauge-svg {
+    height: 40px;
+  }
+
+  .gauge-value {
+    font-size: 14px;
+  }
+
+  .gauge-label {
+    font-size: 9px;
+  }
+
   .network-status {
     display: none;
   }
@@ -465,7 +493,11 @@
   }
 
   .countdown {
-    font-size: 28px;
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .telemetry-card__footer {
+    font-size: 9px;
   }
 }
 
