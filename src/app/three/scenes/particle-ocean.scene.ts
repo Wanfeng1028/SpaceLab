@@ -210,12 +210,13 @@ export class ParticleOceanScene {
     this.resizeHandler = () => this.resizeRenderer();
     window.addEventListener('resize', this.resizeHandler);
 
-    this.canvas.addEventListener('pointerdown', (e: PointerEvent) => {
+    this.pointerDownHandler = (e: PointerEvent) => {
       const rect = this.canvas.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const ny = -((e.clientY - rect.top) / rect.height) * 2 + 1;
       this.triggerRipple(nx, ny);
-    });
+    };
+    this.canvas.addEventListener('pointerdown', this.pointerDownHandler);
   }
 
   private resizeRenderer(): void {
@@ -275,6 +276,7 @@ export class ParticleOceanScene {
       cancelAnimationFrame(this.animationId);
     }
     window.removeEventListener('resize', this.resizeHandler);
+    this.canvas.removeEventListener('pointerdown', this.pointerDownHandler);
     this.renderer.dispose();
     this.points.geometry.dispose();
     (this.points.material as ShaderMaterial).dispose();
