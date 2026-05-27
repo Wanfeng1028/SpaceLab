@@ -69,11 +69,12 @@ export class StargateScene {
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
-      antialias: true,
-      alpha: true,
+      antialias: false,
+      alpha: false,
+      powerPreference: 'high-performance',
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x000000, 0);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    this.renderer.setClearColor(0x000000, 1);
 
     this.resizeRenderer();
 
