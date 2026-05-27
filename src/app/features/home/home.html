@@ -79,9 +79,8 @@
     <div class="fx-block">
       <div class="toggle">
         <div>
-          <input type="checkbox" id="toggles" [checked]="soundEnabled()" (change)="soundEnabled.set($any($event.target).checked)">
-          <div data-unchecked="On" data-checked="Off">
-          </div>
+          <input type="checkbox" id="sound-toggle" [checked]="soundEnabled()" (change)="soundEnabled.set($any($event.target).checked)" aria-label="Toggle typewriter sound effects">
+          <label for="sound-toggle" data-unchecked="On" data-checked="Off"></label>
         </div>
       </div>
     </div>
