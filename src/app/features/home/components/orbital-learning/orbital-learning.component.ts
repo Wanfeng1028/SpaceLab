@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { VerticalSectionTitleComponent } from '../../../../shared/components/hud/vertical-section-title.component';
-import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { OrbitalLearningScene } from '../../../../three/scenes/orbital-learning.scene';
 
@@ -22,7 +21,6 @@ import { OrbitalLearningScene } from '../../../../three/scenes/orbital-learning.
   imports: [
     ThreeCanvasComponent,
     VerticalSectionTitleComponent,
-    HudFrameComponent,
     TelemetryBarComponent,
   ],
 })
