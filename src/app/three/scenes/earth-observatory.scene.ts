@@ -414,6 +414,10 @@ export class EarthObservatoryScene {
     // Slow idle rotation
     this.earthGroup.rotation.y += elapsed * 0.05;
 
+    // Earth position: slide from right to center based on scroll progress
+    const targetX = this.earthInitialX * (1 - Math.min(this.scrollProgress, 1));
+    this.earthGroup.position.x += (targetX - this.earthGroup.position.x) * 0.05;
+
     // Scan line rotation
     this.scanLine.rotation.y = elapsed * 0.3;
 
