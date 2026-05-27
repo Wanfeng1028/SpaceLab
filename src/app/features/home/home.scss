@@ -290,8 +290,9 @@
     height: 60px;
     border-radius: 50%;
     background: transparent;
-    box-shadow: 12px 12px 0 0 #fdfbd3;
-    filter: drop-shadow(0 0 12px rgba(253, 251, 211, 0.3));
+    box-shadow:
+      12px 12px 0 0 #fdfbd3,
+      12px 12px 20px 4px rgba(253, 251, 211, 0.3);
     opacity: 0.5;
 
     @media (max-width: 767px) {
