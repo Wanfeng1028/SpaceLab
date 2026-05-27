@@ -105,6 +105,23 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.mobileMenuOpen.set(false);
   }
 
+  onHomeClick(event: Event): void {
+    event.preventDefault();
+    if (this.isHome()) {
+      // Already on home page, scroll to top (first screen)
+      const element = document.getElementById('section-landing');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      // Navigate to home page
+      this.router.navigate(['/']);
+    }
+    this.closeMobileMenu();
+  }
+
   async onShare(): Promise<void> {
     try {
       await navigator.clipboard.writeText(window.location.origin);
