@@ -109,8 +109,8 @@ export class VisualSystemsScene {
 
   // ── Create individual panel with data visualization ──────────────────
   private createPanel(type: string, index: number): Mesh {
-    const width = 1.8;
-    const height = 1.4;
+    const width = 3.6; // Increased from 1.8 to 3.6 (2x)
+    const height = 2.8; // Increased from 1.4 to 2.8 (2x)
     const geo = new PlaneGeometry(width, height, 32, 32);
 
     const mat = new ShaderMaterial({
