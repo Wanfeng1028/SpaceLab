@@ -76,6 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Live scrolling sci-fi diagnostic terminal logs
   telemetryLogs = signal<string[]>([]);
   private logTimer: any = null;
+  private combinedTimer: any = null;
   private possibleLogs = [
     '[SYS] Rayleigh coefficient aligned: 3.81',
     '[NAV] Orbiting solar trajectory stable',
@@ -143,6 +144,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.typingTimer) {
       clearTimeout(this.typingTimer);
+    }
+    if (this.combinedTimer) {
+      clearInterval(this.combinedTimer);
     }
     if (this.logTimer) {
       clearInterval(this.logTimer);
