@@ -1,21 +1,17 @@
 <div class="orbital-learning">
-  <!-- 垂直标题 (左侧) -->
-  <app-vertical-section-title
-    number="05"
-    title="ORBITAL LEARNING"
-    [telemetryText]="telemetryText()" />
+  <!-- 左侧标题 -->
+  <div class="orbital-header">
+    <h1 class="orbital-number">05</h1>
+    <h2 class="orbital-title">KNOWLEDGE ORBIT</h2>
+    <p class="orbital-subtitle">STEM exploration through science, code and imagination.</p>
+    <p class="orbital-desc">
+      Mapping ideas as a living constellation.
+    </p>
+  </div>
 
   <!-- Three.js 知识星图画布 -->
   <div class="orbital-canvas-container">
     <app-three-canvas [sceneFactory]="orbitalFactory" />
-  </div>
-
-  <!-- 中央文字 -->
-  <div class="orbital-center-text">
-    <h2 class="orbital-title">STEM EXPLORATION</h2>
-    <p class="orbital-desc">
-      A personal orbit of science, code and imagination.
-    </p>
   </div>
 
   <!-- 右侧领域标签 -->
@@ -29,6 +25,6 @@
 
   <!-- 底部状态栏 -->
   <app-telemetry-bar
-    [text]="'KNOWLEDGE MAP · STEM ORBIT · SIGNAL LINKED · READY FOR COCKPIT'"
+    [text]="'KNOWLEDGE MAP · STEM ORBIT · SIGNAL LINKED · READY FOR PORTAL'"
     status="online" />
 </div>

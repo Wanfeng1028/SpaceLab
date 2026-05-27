@@ -1,5 +1,5 @@
 // Orbital Learning Section Styles
-// Knowledge star map with STEM nodes
+// Knowledge star map with STEM nodes - Light glass style
 
 .orbital-learning {
   position: relative;
@@ -7,7 +7,12 @@
   height: 100vh;
   min-height: 600px;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 210, 31, 0.22), transparent 28%),
+    radial-gradient(circle at 80% 18%, rgba(105, 215, 255, 0.22), transparent 32%),
+    radial-gradient(circle at 70% 78%, rgba(143, 124, 255, 0.18), transparent 36%),
+    linear-gradient(135deg, #f3efe7, #e8e3d8);
+  color: #171717;
 }
 
 // Three.js star map canvas
