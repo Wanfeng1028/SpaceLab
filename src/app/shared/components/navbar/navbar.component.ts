@@ -19,6 +19,9 @@ const GITHUB_API_URL = 'https://api.github.com/repos/Wanfeng1028/SpaceLab';
 const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
 const SHARE_TEXT = '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
 
+// 浅色页面路由
+const LIGHT_THEME_ROUTES = ['/blog', '/article'];
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
@@ -39,6 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly showShareModal = signal(false);
   readonly githubStars = signal(0);
   readonly soundEnabled = signal<boolean>(true);
+  readonly isLightTheme = signal(false);
 
   readonly navLinks = [
     { route: '/blog', labelKey: 'nav.blog' },
@@ -55,9 +59,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((e) => {
-        this.isHome.set(e.urlAfterRedirects === '/' || e.urlAfterRedirects === '/home');
+        const url = e.urlAfterRedirects;
+        this.isHome.set(url === '/' || url === '/home');
+        this.isLightTheme.set(LIGHT_THEME_ROUTES.some(route => url.startsWith(route)));
         this.mobileMenuOpen.set(false);
       });
+
+    // Check initial route
+    const currentUrl = this.router.url;
+    this.isLightTheme.set(LIGHT_THEME_ROUTES.some(route => currentUrl.startsWith(route)));
 
     this.i18n.loadTranslations(this.currentLang());
     this.loadGithubStars();
