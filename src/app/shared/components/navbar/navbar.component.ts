@@ -123,7 +123,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onLinkClick(link: any, event: Event): void {
-    if (link.route === '/home') {
+    if (link.route === '/') {
       event.preventDefault();
       this.onHomeClick(event);
     } else {
