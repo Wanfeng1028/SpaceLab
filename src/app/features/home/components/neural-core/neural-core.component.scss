@@ -1,5 +1,5 @@
 // Neural Core Section Styles
-// Central 3D neural network with cyan + purple theme
+// Central 3D neural network with purple + cyan theme
 
 .neural-core {
   position: relative;
@@ -7,7 +7,7 @@
   height: 100vh;
   min-height: 600px;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+  background: radial-gradient(ellipse at 70% 50%, #0a0618 0%, #050612 100%);
 }
 
 // Three.js neural network canvas
