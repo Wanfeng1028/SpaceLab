@@ -1,5 +1,6 @@
 import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
+import { PROFILE } from '../../../generated/content.generated';
 
 @Component({
   selector: 'app-about',
@@ -10,11 +11,7 @@ import { I18nService } from '../../core/services/i18n.service';
 export class AboutComponent {
   private i18n = inject(I18nService);
 
-  readonly skills = [
-    'Angular', 'TypeScript', 'Three.js', 'GSAP', 'SCSS',
-    'Node.js', 'React', 'WebGL', 'Canvas', 'Figma',
-    'Git', 'Docker', 'Supabase', 'PostgreSQL',
-  ];
+  readonly skills = PROFILE.skills;
 
   private readonly areaData = [
     { key: 'area0', icon: '🌐', tags: ['Angular / React', 'Node.js'] },
@@ -33,8 +30,12 @@ export class AboutComponent {
   );
 
   readonly contacts = [
-    { icon: '✉️', label: 'Email', value: 'hello@spacelab.dev', href: 'mailto:hello@spacelab.dev' },
-    { icon: '🐙', label: 'GitHub', value: 'Wanfeng1028', href: 'https://github.com/Wanfeng1028' },
+    ...(PROFILE.email
+      ? [{ icon: '✉️', label: 'Email', value: PROFILE.email, href: `mailto:${PROFILE.email}` }]
+      : []),
+    ...(PROFILE.github
+      ? [{ icon: '🐙', label: 'GitHub', value: PROFILE.github.split('/').pop() ?? '', href: PROFILE.github }]
+      : []),
   ];
 
   t(key: string): string {

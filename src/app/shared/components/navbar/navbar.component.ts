@@ -12,6 +12,7 @@ import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/ro
 import { I18nService } from '../../../core/services/i18n.service';
 import { SpaceGlassModalComponent } from '../glass/modal/space-glass-modal.component';
 import { SpaceCapsuleModalComponent } from '../space-capsule-modal/space-capsule-modal.component';
+import { SITE } from '../../../../generated/content.generated';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -52,14 +53,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly isLightTheme = signal(false);
   readonly avatarTriggerEl = signal<HTMLElement | null>(null);
 
-  readonly navLinks: NavLink[] = [
-    { route: '/', labelKey: 'nav.home' },
-    { route: '/blog', labelKey: 'nav.blog' },
-    { route: '/projects', labelKey: 'nav.projects' },
-    { route: '/lab', labelKey: 'nav.lab' },
-    { route: '/gallery', labelKey: 'nav.gallery' },
-    { route: '/about', labelKey: 'nav.about' },
-  ];
+  readonly navLinks: NavLink[] = SITE.nav.map((n) => ({
+    route: n.href,
+    labelKey: n.labelKey,
+  }));
 
   ngOnInit(): void {
     this.router.events

@@ -7,17 +7,10 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
+import { PostService } from '../../core/services/post.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
-
-interface BlogPost {
-  title: string;
-  slug: string;
-  excerpt: string;
-  date: string;
-  tags: string[];
-  category: string;
-}
+import type { GeneratedPost } from '../../../generated/content.generated';
 
 @Component({
   selector: 'app-blog',
@@ -28,31 +21,15 @@ interface BlogPost {
 })
 export class BlogComponent {
   private i18n = inject(I18nService);
+  private postService = inject(PostService);
 
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
 
-  private readonly postData = [
-    { key: 'post0', slug: 'hello-world', date: '2025-05-24', tags: ['随笔', '建站'], category: '随笔' },
-    { key: 'post1', slug: 'angular-21-overview', date: '2025-05-20', tags: ['Angular', '前端'], category: '技术' },
-    { key: 'post2', slug: 'threejs-particles', date: '2025-05-15', tags: ['Three.js', 'WebGL', '3D'], category: '技术' },
-    { key: 'post3', slug: 'glassmorphism-guide', date: '2025-05-10', tags: ['设计', 'CSS'], category: '设计' },
-    { key: 'post4', slug: 'dev-tools-2025', date: '2025-05-05', tags: ['工具', '效率'], category: '随笔' },
-  ];
-
-  readonly allPosts = computed<BlogPost[]>(() =>
-    this.postData.map((p) => ({
-      title: this.i18n.t(`blog.${p.key}_title`),
-      slug: p.slug,
-      excerpt: this.i18n.t(`blog.${p.key}_excerpt`),
-      date: p.date,
-      tags: p.tags,
-      category: p.category,
-    }))
-  );
+  readonly allPosts = computed(() => this.postService.posts());
 
   readonly categories = computed(() => {
-    const cats = new Set(this.allPosts().map((p) => p.category));
+    const cats = new Set(this.allPosts().map((p) => p.category).filter(Boolean));
     return ['all', ...Array.from(cats)];
   });
 
@@ -64,7 +41,7 @@ export class BlogComponent {
       const matchesSearch =
         !query ||
         post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
+        post.summary.toLowerCase().includes(query) ||
         post.tags.some((t) => t.toLowerCase().includes(query));
 
       const matchesCategory = category === 'all' || post.category === category;
@@ -76,7 +53,6 @@ export class BlogComponent {
   t(key: string): string {
     return this.i18n.t(key);
   }
-
 
   selectCategory(category: string): void {
     this.selectedCategory.set(category);

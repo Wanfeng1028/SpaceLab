@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node scripts/build-content.mjs && ng serve",
+    "prebuild": "node scripts/build-content.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:jest": "jest",
+    "new:post": "node scripts/new-post.mjs",
+    "new:project": "node scripts/new-project.mjs"
   },
   "private": true,
   "packageManager": "npm@11.11.0",
@@ -32,7 +36,12 @@
     "@angular/cli": "^21.2.12",
     "@angular/compiler-cli": "^21.2.0",
     "@types/dompurify": "^3.0.5",
+    "@types/jest": "^29.5.12",
     "@types/three": "^0.184.1",
+    "gray-matter": "^4.0.3",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.4.2",
+    "marked": "^15.0.12",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   }

@@ -10,6 +10,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { I18nService } from '../../../core/services/i18n.service';
+import { PROFILE } from '../../../../generated/content.generated';
 
 @Component({
   selector: 'space-capsule-modal',
@@ -27,6 +28,11 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
 
   readonly closing = signal(false);
   private previousActiveElement: HTMLElement | null = null;
+
+  readonly profileName = PROFILE.name;
+  readonly profileAvatar = PROFILE.avatar;
+  readonly profileGithub = PROFILE.github;
+  readonly profileInterests = PROFILE.interests;
 
   constructor() {
     effect(() => {
@@ -54,12 +60,8 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
   close(): void {
     if (this.closing()) return;
     this.closing.set(true);
-    // Emit immediately so parent can hide the component via @if
     this.closed.emit();
     document.body.style.overflow = '';
-    // Do NOT restoreFocus here — if user pressed Enter/Space to close,
-    // focusing the avatar would let the keyup re-trigger openCapsule.
-    // restoreFocus runs safely in ngOnDestroy instead.
     setTimeout(() => {
       this.closing.set(false);
     }, 280);

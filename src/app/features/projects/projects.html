@@ -24,12 +24,12 @@
       <div class="projects-grid">
         @for (project of filteredProjects(); track project.slug) {
           <app-project-card
-            [title]="project.title"
+            [title]="project.name"
             [slug]="project.slug"
             [icon]="project.icon"
             [description]="project.description"
             [accentColor]="project.accentColor"
-            [stack]="project.stack"
+            [stack]="project.tags"
           />
         }
       </div>

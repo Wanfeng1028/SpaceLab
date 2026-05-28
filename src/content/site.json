@@ -1,0 +1,16 @@
+{
+  "siteName": "SpaceLab",
+  "description": "A personal digital space for code, science visualization and WebGL experiments.",
+  "defaultLanguage": "zh",
+  "nav": [
+    { "labelKey": "nav.home", "href": "/" },
+    { "labelKey": "nav.blog", "href": "/blog" },
+    { "labelKey": "nav.projects", "href": "/projects" },
+    { "labelKey": "nav.lab", "href": "/lab" },
+    { "labelKey": "nav.gallery", "href": "/gallery" },
+    { "labelKey": "nav.about", "href": "/about" }
+  ],
+  "socialLinks": {
+    "github": "https://github.com/Wanfeng1028"
+  }
+}
