@@ -53,6 +53,7 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
 
   onOverlayClick(e: MouseEvent): void {
     if ((e.target as HTMLElement).classList.contains('scm-overlay')) {
+      e.stopPropagation();
       this.close();
     }
   }
