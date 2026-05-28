@@ -229,6 +229,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
+    border-radius: 50%;
+    animation: avatar-orbit-pulse 8s ease-in-out infinite;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.28;
+  }
+
+  &::after {
+    animation-delay: 4s;
+  }
 }
 
 .avatar-spinner__ring {
@@ -252,60 +269,33 @@
   }
 }
 
-.avatar-spinner {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
-    border-radius: 50%;
-    animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-    z-index: -1;
-  }
-
-  &::before {
-    color: #8b00ff;
-    animation-delay: 0s;
-  }
-
-  &::after {
-    color: #00e571;
-    animation-delay: 0.2s;
-  }
-}
-
 @keyframes avatar-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-3px, 3px);
-  }
-  40% {
-    transform: translate(-3px, -3px);
-  }
-  60% {
-    transform: translate(3px, 3px);
-  }
-  80% {
-    transform: translate(3px, -3px);
-  }
+@keyframes avatar-orbit-pulse {
+  0%,
   100% {
-    transform: translate(0);
+    opacity: 0.28;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.04);
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .avatar-spinner__ring {
+    animation: none;
+  }
+
+  .avatar-spinner::before,
+  .avatar-spinner::after {
+    animation: none;
   }
 }
 
