@@ -1191,8 +1191,8 @@
 
   @for $i from 1 through 6 {
     &:nth-child(#{$i}) {
-      top: #{15 + math.random(70) + 0}% 0;
-      left: #{15 + math.random(70) + 0}% 0;
+      top: #{15 + math.random(70)}%;
+      left: #{15 + math.random(70)}%;
       animation-delay: #{$i * 0.6}s;
     }
   }
