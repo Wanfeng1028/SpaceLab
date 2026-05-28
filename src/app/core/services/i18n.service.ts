@@ -32,6 +32,7 @@ export class I18nService {
     if (this.isBrowser) {
       try {
         localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+        document.documentElement.lang = locale === 'zh-CN' ? 'zh-CN' : 'en';
       } catch {
         // Storage quota exceeded or unavailable
       }
