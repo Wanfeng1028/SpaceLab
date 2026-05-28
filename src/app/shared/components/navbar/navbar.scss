@@ -233,33 +233,11 @@
   inset: -4px;
   background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
   border-radius: 50%;
-  animation: glitch-spin 1.7s linear infinite;
+  animation: avatar-spin 1.7s linear infinite;
   filter: blur(1px);
   box-shadow:
     0px -5px 20px 0px rgb(186, 66, 255),
     0px 5px 20px 0px rgb(0, 225, 255);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: inherit;
-    border-radius: 50%;
-    animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-  }
-
-  &::before {
-    color: #8b00ff;
-    z-index: -1;
-    animation-delay: 0s;
-  }
-
-  &::after {
-    color: #00e571;
-    z-index: -2;
-    animation-delay: 0.2s;
-  }
 
   &::after {
     content: '';
@@ -268,17 +246,41 @@
     background-color: rgb(36, 36, 36);
     border-radius: 50%;
     filter: blur(4px);
-    animation: none;
   }
 }
 
-@keyframes glitch-spin {
-  0% { transform: rotate(0deg); }
-  20% { transform: rotate(72deg); }
-  40% { transform: rotate(144deg); }
-  60% { transform: rotate(216deg); }
-  80% { transform: rotate(288deg); }
-  100% { transform: rotate(360deg); }
+.avatar-spinner {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
+    border-radius: 50%;
+    animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    z-index: -1;
+  }
+
+  &::before {
+    color: #8b00ff;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    color: #00e571;
+    animation-delay: 0.2s;
+  }
+}
+
+@keyframes avatar-spin {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes glitch {
