@@ -9,14 +9,14 @@
     <!-- Centered Title + Subtitle + Buttons -->
     <div class="portal-content">
       <span class="portal-content__number">06</span>
-      <h2 class="portal-content__title">Portal<br />Gallery</h2>
+      <h2 class="portal-content__title">AI<br />Frontline</h2>
       <p class="portal-content__subtitle">
-        Gateway to immersive experiences &amp; deep space exploration
+        {{ 'portal.aiFrontlineDesc' | translate }}
       </p>
 
       <div class="portal-buttons">
         <app-magnetic-button (clicked)="onEnter()">
-          Enter the Lab
+          {{ 'common.more' | translate }}
         </app-magnetic-button>
         <app-magnetic-button (clicked)="onExplore()">
           Explore Projects
