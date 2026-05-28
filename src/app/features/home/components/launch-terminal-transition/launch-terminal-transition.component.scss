@@ -1,25 +1,27 @@
 // ============================================
 // Launch Terminal Transition — 启动终端过渡动画
-// 飞船启动 HUD 风格，深色玻璃，蓝紫/青柔光
+// Mac style terminal, inspired by Aceternity UI
 // ============================================
 
 // 导入项目设计系统
 @use 'sass:math';
 
 // 变量
-$panel-width: min(680px, calc(100vw - 48px));
-$panel-radius: 24px;
-$header-height: 44px;
-$blur-amount: 8px;
-$panel-blur: 22px;
+$panel-width: min(720px, calc(100vw - 64px));
+$panel-radius: 18px;
+$header-height: 42px;
+$blur-amount: 6px;
+$panel-blur: 0px; // No backdrop blur for terminal panel
 
-// 颜色
-$cyan: #69d7ff;
-$purple: #8f7cff;
-$green: #56f0c2;
-$yellow: #ffd21f;
-$white: rgba(255, 255, 255, 0.82);
-$white-muted: rgba(255, 255, 255, 0.62);
+// 颜色 - 更接近 Aceternity 的深色终端
+$bg-dark: rgba(3, 7, 18, 0.94);
+$bg-header: rgba(15, 23, 42, 0.72);
+$cyan: #38bdf8;
+$purple: #a78bfa;
+$green: #34d399;
+$yellow: #facc15;
+$white: rgba(226, 232, 240, 0.92);
+$white-muted: rgba(148, 163, 184, 0.92);
 
 .launch-terminal-transition {
   position: absolute;
@@ -49,11 +51,9 @@ $white-muted: rgba(255, 255, 255, 0.62);
 .launch-terminal-transition__backdrop {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 50% 45%, rgba(105, 215, 255, 0.12), transparent 38%),
-    rgba(3, 5, 12, 0.38);
-  backdrop-filter: blur($blur-amount) saturate(120%);
-  -webkit-backdrop-filter: blur($blur-amount) saturate(120%);
+  background: rgba(2, 6, 23, 0.38);
+  backdrop-filter: blur($blur-amount) saturate(110%);
+  -webkit-backdrop-filter: blur($blur-amount) saturate(110%);
   opacity: 0;
   transition: opacity 0.4s ease;
   
@@ -66,33 +66,20 @@ $white-muted: rgba(255, 255, 255, 0.62);
 .launch-terminal-transition__panel {
   position: relative;
   width: $panel-width;
+  max-height: 460px;
   border-radius: $panel-radius;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
-    rgba(5, 8, 18, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: $bg-dark;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 30px 120px rgba(0, 0, 0, 0.46),
-    0 0 44px rgba(105, 215, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur($panel-blur) saturate(150%);
-  -webkit-backdrop-filter: blur($panel-blur) saturate(150%);
+    0 24px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 40px rgba(105, 215, 255, 0.12);
   overflow: hidden;
   pointer-events: none;
   opacity: 0;
-  transform: translateY(16px) scale(0.98);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(12px) scale(0.985);
+  transition: opacity 0.28s ease, transform 0.28s ease;
   will-change: opacity, transform;
-  
-  // 发光边框
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: $panel-radius;
-    background: radial-gradient(circle at 50% 0%, rgba(105, 215, 255, 0.08), transparent 70%);
-    pointer-events: none;
-  }
 }
 
 // 顶部状态栏
