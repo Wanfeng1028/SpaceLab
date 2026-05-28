@@ -80,6 +80,7 @@ export class SpaceGlassModalComponent implements AfterViewInit, OnDestroy {
 
   onOverlayClick(e: MouseEvent): void {
     if (this.closeOnOverlay() && (e.target as HTMLElement).classList.contains('sgm-overlay')) {
+      e.stopPropagation();
       this.closed.emit();
     }
   }
