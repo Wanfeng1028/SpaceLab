@@ -141,19 +141,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     const now = Date.now();
-    // Prevent rapid re‑opens (debounce 500 ms)
+    // Prevent rapid toggles (debounce 500 ms)
     if (now - this.lastOpenTime < 500) {
       console.log('[navbar] Debounced, ignoring');
       return;
     }
     this.lastOpenTime = now;
-    // Only open if not already open
-    if (!this.showCapsuleModal()) {
+    if (this.showCapsuleModal()) {
+      // If already open, close it (toggle behavior)
+      console.log('[navbar] Closing capsule modal via toggle');
+      this.onCapsuleClosed();
+    } else {
       console.log('[navbar] Opening capsule modal');
       this.avatarTriggerEl.set(event.currentTarget as HTMLElement);
       this.showCapsuleModal.set(true);
-    } else {
-      console.log('[navbar] Already open, skipping');
     }
   }
 
