@@ -51,7 +51,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly isHome = signal(true);
   readonly isScrolled = signal(false);
   readonly mobileMenuOpen = signal(false);
-  readonly currentLang = signal<'zh-CN' | 'en-US'>('zh-CN');
+  readonly currentLang = signal<'zh-CN' | 'en-US'>(this.i18n.locale());
   readonly showShareModal = signal(false);
   readonly showCapsuleModal = signal(false);
   readonly githubStars = signal(0);
