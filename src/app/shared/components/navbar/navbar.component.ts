@@ -123,6 +123,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.isScrolled.set(window.scrollY > 20);
   }
 
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.mobileMenuOpen()) {
+      this.closeMobileMenu();
+    }
+  }
+
   t(key: string): string {
     return this.i18n.t(key);
   }
