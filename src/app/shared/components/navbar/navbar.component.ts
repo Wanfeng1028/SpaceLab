@@ -159,8 +159,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onCapsuleClosed(): void {
-    console.log('[navbar] Capsule modal closed');
-    this.showCapsuleModal.set(false);
+    if (this.showCapsuleModal()) {
+      console.log('[navbar] Capsule modal closed');
+      this.showCapsuleModal.set(false);
+    }
   }
 
   onLinkClick(link: NavLink, event: Event): void {
