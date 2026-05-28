@@ -24,29 +24,26 @@ while ($true) {
         Write-Host "Code formatting changes detected:" -ForegroundColor Yellow
         Write-Host $gitStatus -ForegroundColor Gray
 
-        # Step 3: Commit formatting changes
-        git add -A
-        $commitMessage = "style: 代码格式化 - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-        git commit -m $commitMessage
-        Write-Host "Committed formatting changes: $commitMessage" -ForegroundColor Green
-
-        # Step 4: Run build to ensure no errors introduced
-        Write-Host "Running build to verify..." -ForegroundColor Cyan
+        # Step 3: Run build check before committing
+        Write-Host "Running build check before commit..." -ForegroundColor Cyan
         $buildResult = npm run build 2>&1
         if ($LASTEXITCODE -eq 0) {
-            Write-Host "Build successful after formatting" -ForegroundColor Green
+            Write-Host "Build successful. Proceeding with commit." -ForegroundColor Green
             
+            # Step 4: Commit formatting changes
+            git add -A
+            $commitMessage = "style: 代码格式化 - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+            git commit -m $commitMessage
+            Write-Host "Committed formatting changes: $commitMessage" -ForegroundColor Green
+
             # Push changes
             git pull --rebase origin main
             git push origin main
             Write-Host "Pushed formatting changes to remote" -ForegroundColor Green
         } else {
-            Write-Host "Build failed after formatting:" -ForegroundColor Red
+            Write-Host "Build failed. Skipping commit." -ForegroundColor Red
             Write-Host $buildResult -ForegroundColor Red
-            Write-Host "Reverting formatting changes..." -ForegroundColor Yellow
-            git reset --hard HEAD~1
-            git clean -fd
-            Write-Host "Reverted changes" -ForegroundColor Gray
+            # No need to revert since changes are not committed
         }
     } else {
         Write-Host "No formatting changes needed" -ForegroundColor Gray

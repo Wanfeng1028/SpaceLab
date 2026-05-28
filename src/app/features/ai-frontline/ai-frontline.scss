@@ -71,10 +71,21 @@
 }
 
 @keyframes scan {
-  0%, 100% { transform: translateY(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(200px); opacity: 0; }
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200px);
+    opacity: 0;
+  }
 }
 
 .ai-frontline-kicker {
@@ -171,7 +182,9 @@
     font-size: 15px;
     outline: none;
     backdrop-filter: blur(14px) saturate(135%);
-    transition: border-color 200ms, background 200ms;
+    transition:
+      border-color 200ms,
+      background 200ms;
 
     &::placeholder {
       color: rgba(255, 255, 255, 0.4);
@@ -445,7 +458,6 @@
     color: rgba(255, 255, 255, 0.6);
     font-size: 12px;
   }
-
 }
 
 // Read Source Button
@@ -480,23 +492,58 @@
 
 // Category color variations
 .ai-news-card {
-  &.card-model { border-left: 3px solid #69d7ff; }
-  &.card-product { border-left: 3px solid #8f7cff; }
-  &.card-funding { border-left: 3px solid #ff6b9d; }
-  &.card-opensource { border-left: 3px solid #4ade80; }
-  &.card-agent { border-left: 3px solid #fbbf24; }
-  &.card-tool { border-left: 3px solid #f472b6; }
-  &.card-industry { border-left: 3px solid #94a3b8; }
+  &.card-model {
+    border-left: 3px solid #69d7ff;
+  }
+  &.card-product {
+    border-left: 3px solid #8f7cff;
+  }
+  &.card-funding {
+    border-left: 3px solid #ff6b9d;
+  }
+  &.card-opensource {
+    border-left: 3px solid #4ade80;
+  }
+  &.card-agent {
+    border-left: 3px solid #fbbf24;
+  }
+  &.card-tool {
+    border-left: 3px solid #f472b6;
+  }
+  &.card-industry {
+    border-left: 3px solid #94a3b8;
+  }
 }
 
 // Category badge colors
-.category-model { background: rgba(105, 215, 255, 0.2); color: #69d7ff; }
-.category-product { background: rgba(143, 124, 255, 0.2); color: #8f7cff; }
-.category-funding { background: rgba(255, 107, 157, 0.2); color: #ff6b9d; }
-.category-opensource { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
-.category-agent { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
-.category-tool { background: rgba(244, 114, 182, 0.2); color: #f472b6; }
-.category-industry { background: rgba(148, 163, 184, 0.2); color: #94a3b8; }
+.category-model {
+  background: rgba(105, 215, 255, 0.2);
+  color: #69d7ff;
+}
+.category-product {
+  background: rgba(143, 124, 255, 0.2);
+  color: #8f7cff;
+}
+.category-funding {
+  background: rgba(255, 107, 157, 0.2);
+  color: #ff6b9d;
+}
+.category-opensource {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+}
+.category-agent {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+.category-tool {
+  background: rgba(244, 114, 182, 0.2);
+  color: #f472b6;
+}
+.category-industry {
+  background: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+}
 
 // ============================================
 // States: Loading, Error, Empty
@@ -528,7 +575,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .empty-icon {

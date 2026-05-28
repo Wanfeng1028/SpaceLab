@@ -10,7 +10,8 @@
         @if (source(); as src) {
           <span class="last-sync">
             <span class="sync-icon">⟲</span>
-            <span>{{ t('aiFrontline.lastSync') }}</span>: {{ src.lastFetchedAt | date: 'MM-dd HH:mm' }}
+            <span>{{ t('aiFrontline.lastSync') }}</span
+            >: {{ src.lastFetchedAt | date: 'MM-dd HH:mm' }}
           </span>
         }
         <span class="data-source-badge">
@@ -61,7 +62,12 @@
       <div class="sidebar-section">
         <h3 class="sidebar-title">数据来源</h3>
         <p class="sidebar-text">AI工具集 每日AI快讯</p>
-        <a href="https://ai-bot.cn/daily-ai-news/" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+        <a
+          href="https://ai-bot.cn/daily-ai-news/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="sidebar-link"
+        >
           访问源站 →
         </a>
       </div>
@@ -121,7 +127,9 @@
                 @for (item of group[1]; track trackByNews($index, item)) {
                   <article class="ai-news-card">
                     <div class="ai-news-card__meta">
-                      <span class="ai-news-card__category">{{ getCategoryLabel(item.category) }}</span>
+                      <span class="ai-news-card__category">{{
+                        getCategoryLabel(item.category)
+                      }}</span>
                       <span class="ai-news-card__source">{{ item.source }}</span>
                     </div>
 
@@ -152,7 +160,8 @@
   <!-- Footer Disclaimer -->
   <footer class="ai-frontline-disclaimer">
     <p class="disclaimer-source">
-      <span>{{ t('aiFrontline.dataSource') }}</span>：
+      <span>{{ t('aiFrontline.dataSource') }}</span
+      >：
       <a href="https://ai-bot.cn/daily-ai-news/" target="_blank" rel="noopener noreferrer">
         AI工具集 每日AI快讯
       </a>

@@ -20,16 +20,26 @@ while ($true) {
         Write-Host "Changes detected:" -ForegroundColor Yellow
         Write-Host $gitStatus -ForegroundColor Gray
 
-        # Auto commit changes
-        git add -A
-        $commitMessage = "auto: 自动提交 - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-        git commit -m $commitMessage
-        Write-Host "Committed changes: $commitMessage" -ForegroundColor Green
+        # Run build check before committing
+        Write-Host "Running build check before commit..." -ForegroundColor Cyan
+        $buildResult = npm run build 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "Build successful. Proceeding with commit." -ForegroundColor Green
+            
+            # Auto commit changes
+            git add -A
+            $commitMessage = "auto: 自动提交 - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+            git commit -m $commitMessage
+            Write-Host "Committed changes: $commitMessage" -ForegroundColor Green
 
-        # Pull and push
-        git pull --rebase origin main
-        git push origin main
-        Write-Host "Pushed to remote" -ForegroundColor Green
+            # Pull and push
+            git pull --rebase origin main
+            git push origin main
+            Write-Host "Pushed to remote" -ForegroundColor Green
+        } else {
+            Write-Host "Build failed. Skipping commit." -ForegroundColor Red
+            Write-Host $buildResult -ForegroundColor Red
+        }
     } else {
         Write-Host "No changes detected. Skipping commit." -ForegroundColor Gray
     }
