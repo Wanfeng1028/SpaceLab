@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { MagneticButtonComponent } from '../../../../shared/components/hud/magnetic-button.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
@@ -16,12 +17,12 @@ import { StargateScene } from '../../../../three/scenes/stargate.scene';
   templateUrl: './stargate-dock.component.html',
   styleUrl: './stargate-dock.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, MagneticButtonComponent, TelemetryBarComponent],
+  imports: [ThreeCanvasComponent, MagneticButtonComponent, TelemetryBarComponent, TranslateModule],
 })
 export class PortalGallerySection implements OnInit {
   private readonly router = inject(Router);
 
-  readonly telemetryText = signal('PORTAL GALLERY // AWAITING COMMAND');
+  readonly telemetryText = signal('AI FRONTLINE // DAILY SIGNALS AWAITING');
 
   readonly stargateFactory = (canvas: HTMLCanvasElement) =>
     new StargateScene(canvas);
@@ -29,11 +30,11 @@ export class PortalGallerySection implements OnInit {
   readonly currentYear = new Date().getFullYear();
 
   ngOnInit(): void {
-    this.telemetryText.set('PORTAL GALLERY // GATE SYSTEM ONLINE');
+    this.telemetryText.set('AI FRONTLINE // SIGNALS ONLINE');
   }
 
   onEnter(): void {
-    this.router.navigate(['/lab']);
+    this.router.navigate(['/ai-frontline']);
   }
 
   onReturnTop(): void {
