@@ -72,6 +72,13 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
     }, 260);
   }
 
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.isOpen()) {
+      this.close();
+    }
+  }
+
   onKeyDown(e: KeyboardEvent): void {
     if (e.key === 'Escape') {
       this.close();
