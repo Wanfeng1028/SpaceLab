@@ -20,6 +20,12 @@
   background: transparent;
   backdrop-filter: none;
 
+  // 首页导航栏文字颜色（深色背景下需要白色）
+  .navbar__brand-logo,
+  .navbar__name {
+    color: #ffffff;
+  }
+
   &.is-scrolled {
     background: rgba(4, 4, 12, 0.72);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
