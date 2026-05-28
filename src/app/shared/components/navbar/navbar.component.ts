@@ -23,6 +23,11 @@ const SHARE_TEXT = '🚀 SpaceLab — An interactive space-themed portfolio buil
 // 浅色页面路由
 const LIGHT_THEME_ROUTES = ['/blog', '/article'];
 
+interface NavLink {
+  route: string;
+  labelKey: string;
+}
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
@@ -47,7 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly isLightTheme = signal(false);
   readonly avatarTriggerEl = signal<HTMLElement | null>(null);
 
-  readonly navLinks = [
+  readonly navLinks: NavLink[] = [
     { route: '/', labelKey: 'nav.home' },
     { route: '/blog', labelKey: 'nav.blog' },
     { route: '/projects', labelKey: 'nav.projects' },
@@ -131,7 +136,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.showCapsuleModal.set(true);
   }
 
-  onLinkClick(link: any, event: Event): void {
+  onLinkClick(link: NavLink, event: Event): void {
     if (link.route === '/') {
       event.preventDefault();
       this.onHomeClick(event);

@@ -10,6 +10,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
+import DOMPurify from 'dompurify';
 
 interface ArticleData {
   title: string;
@@ -218,11 +219,7 @@ scene.add(particles);</code></pre>
     return this.i18n.t(key);
   }
 
-  // NOTE: 当前内容为硬编码静态数据，bypassSecurityTrustHtml 是安全的。
-  // 接入 Supabase 后端时，必须引入 DOMPurify 对用户提交的内容进行 XSS 过滤：
-  //   import DOMPurify from 'dompurify';
-  //   return this.sanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(html));
   sanitizeContent(html: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
+    return this.sanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(html));
   }
 }
