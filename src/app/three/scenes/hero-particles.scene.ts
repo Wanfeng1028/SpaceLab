@@ -357,6 +357,16 @@ export class HeroLightFieldScene {
     const elapsedSeconds = (performance.now() - this.startTime) / 1000;
     this.material.uniforms['uTime'].value = elapsedSeconds;
 
+    // 每 60 帧输出一次调试信息
+    if (Math.floor(elapsedSeconds * 60) % 60 === 0) {
+      console.log('[HeroLightFieldScene] animate frame', {
+        elapsedSeconds,
+        frameTime,
+        currentDpr: this.currentDpr,
+        disposed: this.disposed
+      });
+    }
+
     this.renderer.render(this.scene, this.camera);
   }
 
