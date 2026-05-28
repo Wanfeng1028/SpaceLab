@@ -1,4 +1,11 @@
-<section class="launch-terminal-transition" [class.active]="isActive()">
+<section 
+  class="launch-terminal-transition" 
+  [class.active]="isActive()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Launch Terminal Transition"
+  aria-describedby="launch-terminal-description"
+>
   <!-- 背景模糊/变暗层 -->
   <div class="launch-terminal-transition__backdrop"></div>
 
@@ -50,6 +57,11 @@
         class="launch-terminal-transition__progress-fill" 
         [style.width.%]="progress()">
       </div>
+    </div>
+
+    <!-- 隐藏的描述 -->
+    <div id="launch-terminal-description" class="sr-only">
+      System boot sequence in progress. Please wait for the launch to complete.
     </div>
   </div>
 </section>
