@@ -2,7 +2,7 @@
 // SpaceLab Home — 黑曜石日食星体 (Solar Eclipse) 极简主页
 // ============================================
 
-@use "sass:math";
+@use 'sass:math';
 
 :host {
   display: block;
@@ -43,15 +43,18 @@
   z-index: 4;
   pointer-events: none;
   background-image:
-    repeating-radial-gradient(circle at 17% 32%, rgba(255,255,255,0.03) 0px, transparent 1px),
-    repeating-radial-gradient(circle at 73% 68%, rgba(255,255,255,0.025) 0px, transparent 1px),
-    repeating-radial-gradient(circle at 41% 89%, rgba(255,255,255,0.02) 0px, transparent 1px),
-    repeating-radial-gradient(circle at 92% 11%, rgba(255,255,255,0.028) 0px, transparent 1px);
-  background-size: 3px 3px, 4px 4px, 5px 5px, 3px 3px;
+    repeating-radial-gradient(circle at 17% 32%, rgba(255, 255, 255, 0.03) 0px, transparent 1px),
+    repeating-radial-gradient(circle at 73% 68%, rgba(255, 255, 255, 0.025) 0px, transparent 1px),
+    repeating-radial-gradient(circle at 41% 89%, rgba(255, 255, 255, 0.02) 0px, transparent 1px),
+    repeating-radial-gradient(circle at 92% 11%, rgba(255, 255, 255, 0.028) 0px, transparent 1px);
+  background-size:
+    3px 3px,
+    4px 4px,
+    5px 5px,
+    3px 3px;
   opacity: 1;
   mix-blend-mode: overlay;
 }
-
 
 // ── 黑曜石日食星体 (Conic-Radial Eclipse Flare & Mask) ──
 .eclipse-container {
@@ -141,13 +144,25 @@
 }
 
 @keyframes flareBreatheYellow {
-  0% { transform: translate(-10px, -8px) scale(0.96); opacity: 0.85; }
-  100% { transform: translate(10px, 8px) scale(1.04); opacity: 0.95; }
+  0% {
+    transform: translate(-10px, -8px) scale(0.96);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(10px, 8px) scale(1.04);
+    opacity: 0.95;
+  }
 }
 
 @keyframes flareBreatheBlue {
-  0% { transform: translate(8px, 12px) scale(1.04); opacity: 0.78; }
-  100% { transform: translate(-8px, -12px) scale(0.96); opacity: 0.88; }
+  0% {
+    transform: translate(8px, 12px) scale(1.04);
+    opacity: 0.78;
+  }
+  100% {
+    transform: translate(-8px, -12px) scale(0.96);
+    opacity: 0.88;
+  }
 }
 
 // ── 中央核心文字与 CTA 交互 ───────────────
@@ -204,8 +219,13 @@
 }
 
 @keyframes blink {
-  from, to { background-color: transparent }
-  50% { background-color: #ffffff }
+  from,
+  to {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #ffffff;
+  }
 }
 
 // ── 纯 CSS 午夜星空 + 流星 + 月牙装饰层 (uiverse) ──
@@ -268,7 +288,7 @@
     opacity: 0;
 
     & ::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -278,9 +298,21 @@
     }
   }
 
-  .m1 { top: 10%; left: 110%; animation: shoot 8s linear infinite; }
-  .m2 { top: 30%; left: 110%; animation: shoot 12s linear infinite 4s; }
-  .m3 { top: 50%; left: 110%; animation: shoot 10s linear infinite 2s; }
+  .m1 {
+    top: 10%;
+    left: 110%;
+    animation: shoot 8s linear infinite;
+  }
+  .m2 {
+    top: 30%;
+    left: 110%;
+    animation: shoot 12s linear infinite 4s;
+  }
+  .m3 {
+    top: 50%;
+    left: 110%;
+    animation: shoot 10s linear infinite 2s;
+  }
 
   .moon {
     position: absolute;
@@ -306,15 +338,31 @@
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
 }
 
 @keyframes shoot {
-  0% { transform: translateX(0) translateY(0) rotate(-35deg); opacity: 0; }
-  5% { opacity: 1; }
-  15% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; }
-  100% { transform: translateX(-1500px) translateY(1000px) rotate(-35deg); opacity: 0; }
+  0% {
+    transform: translateX(0) translateY(0) rotate(-35deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  15% {
+    transform: translateX(-1500px) translateY(1000px) rotate(-35deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-1500px) translateY(1000px) rotate(-35deg);
+    opacity: 0;
+  }
 }
 
 // ── 装饰性发光能量核心 ──
@@ -335,23 +383,29 @@
 }
 
 @keyframes orbFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 .energy-orb {
   width: 65px;
   height: 65px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%,
+  background: radial-gradient(
+    circle at 35% 35%,
     #ffbf48 0%,
     #e88a1d 40%,
     #be4a1d 70%,
-    rgba(190,74,29,0.4) 100%
+    rgba(190, 74, 29, 0.4) 100%
   );
   box-shadow:
-    0 0 20px 8px rgba(255,191,72,0.4),
-    0 0 60px 20px rgba(191,74,29,0.2);
+    0 0 20px 8px rgba(255, 191, 72, 0.4),
+    0 0 60px 20px rgba(191, 74, 29, 0.2);
   animation: orbColorize 6s ease-in-out infinite;
 
   @media (max-width: 767px) {
@@ -361,12 +415,24 @@
 }
 
 @keyframes orbColorize {
-  0% { filter: hue-rotate(0deg); }
-  20% { filter: hue-rotate(-15deg); }
-  40% { filter: hue-rotate(-30deg); }
-  60% { filter: hue-rotate(-45deg); }
-  80% { filter: hue-rotate(-20deg); }
-  100% { filter: hue-rotate(0deg); }
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    filter: hue-rotate(-15deg);
+  }
+  40% {
+    filter: hue-rotate(-30deg);
+  }
+  60% {
+    filter: hue-rotate(-45deg);
+  }
+  80% {
+    filter: hue-rotate(-20deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
 }
 
 // ── 欢迎标语行 (文字 + 分享按钮) ────────────
@@ -450,13 +516,21 @@
     background: rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.7);
     border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 }
 
 @keyframes pulseAudioTip {
-  0% { opacity: 0.65; transform: scale(0.98); }
-  100% { opacity: 0.95; transform: scale(1.02); }
+  0% {
+    opacity: 0.65;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 0.95;
+    transform: scale(1.02);
+  }
 }
 
 // ── 亮度自适应按钮：日食高亮时深黑 + 流光 ─────
@@ -506,8 +580,13 @@
 }
 
 @keyframes btn-shimmer {
-  0%, 100% { transform: translateX(-150%); }
-  50%      { transform: translateX(250%); }
+  0%,
+  100% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(250%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -547,11 +626,14 @@
   align-items: center;
   justify-content: center;
   background-color: #030305; // 极其深邃的微蓝色调底色，代表飞船内部控制室
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 50%, rgba(10, 92, 255, 0.04) 0%, transparent 65%),
-    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-  background-size: 100% 100%, 30px 30px, 30px 30px;
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    30px 30px,
+    30px 30px;
   overflow: hidden;
 
   // 保证第二部分的背景中也包含电影微粒感
@@ -561,11 +643,15 @@
     z-index: 1;
     pointer-events: none;
     background-image:
-      repeating-radial-gradient(circle at 17% 32%, rgba(255,255,255,0.03) 0px, transparent 1px),
-      repeating-radial-gradient(circle at 73% 68%, rgba(255,255,255,0.025) 0px, transparent 1px),
-      repeating-radial-gradient(circle at 41% 89%, rgba(255,255,255,0.02) 0px, transparent 1px),
-      repeating-radial-gradient(circle at 92% 11%, rgba(255,255,255,0.028) 0px, transparent 1px);
-    background-size: 3px 3px, 4px 4px, 5px 5px, 3px 3px;
+      repeating-radial-gradient(circle at 17% 32%, rgba(255, 255, 255, 0.03) 0px, transparent 1px),
+      repeating-radial-gradient(circle at 73% 68%, rgba(255, 255, 255, 0.025) 0px, transparent 1px),
+      repeating-radial-gradient(circle at 41% 89%, rgba(255, 255, 255, 0.02) 0px, transparent 1px),
+      repeating-radial-gradient(circle at 92% 11%, rgba(255, 255, 255, 0.028) 0px, transparent 1px);
+    background-size:
+      3px 3px,
+      4px 4px,
+      5px 5px,
+      3px 3px;
     opacity: 1;
     mix-blend-mode: overlay;
     transition: opacity 300ms ease;
@@ -636,7 +722,7 @@
   padding: 24px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.02);
   transition: all 400ms var(--ease-out);
@@ -644,7 +730,7 @@
   &:hover {
     background: rgba(255, 255, 255, 0.022);
     border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 
+    box-shadow:
       0 20px 50px rgba(0, 0, 0, 0.75),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
@@ -662,7 +748,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    
+
     &--green {
       background: #00ffc4;
       box-shadow: 0 0 10px #00ffc4;
@@ -687,8 +773,12 @@
 }
 
 @keyframes pulseBlink {
-  0% { opacity: 0.3; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 // ── 全息扫描线叠加效果 ──────────────────────────
@@ -712,7 +802,9 @@
       rgba(0, 255, 196, 0.4) 80%,
       transparent 100%
     );
-    box-shadow: 0 0 15px rgba(0, 255, 196, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
+    box-shadow:
+      0 0 15px rgba(0, 255, 196, 0.5),
+      0 0 30px rgba(0, 240, 255, 0.3);
     animation: holoScan 4s linear infinite;
     pointer-events: none;
     z-index: 10;
@@ -720,8 +812,12 @@
 }
 
 @keyframes holoScan {
-  0% { top: -5%; }
-  100% { top: 105%; }
+  0% {
+    top: -5%;
+  }
+  100% {
+    top: 105%;
+  }
 }
 
 // ── 故障文字效果 ──────────────────────────────
@@ -754,21 +850,57 @@
 }
 
 @keyframes glitch-1 {
-  0% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 2px); }
-  20% { clip-path: inset(60% 0 10% 0); transform: translate(3px, -1px); }
-  40% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 1px); }
-  60% { clip-path: inset(80% 0 5% 0); transform: translate(1px, -2px); }
-  80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 2px); }
-  100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -1px); }
+  0% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-3px, 2px);
+  }
+  20% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(3px, -1px);
+  }
+  40% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(-2px, 1px);
+  }
+  60% {
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(1px, -2px);
+  }
+  80% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-1px, 2px);
+  }
+  100% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(2px, -1px);
+  }
 }
 
 @keyframes glitch-2 {
-  0% { clip-path: inset(70% 0 10% 0); transform: translate(3px, -2px); }
-  20% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 1px); }
-  40% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -1px); }
-  60% { clip-path: inset(30% 0 50% 0); transform: translate(-1px, 2px); }
-  80% { clip-path: inset(60% 0 20% 0); transform: translate(1px, -2px); }
-  100% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 1px); }
+  0% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(3px, -2px);
+  }
+  20% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-3px, 1px);
+  }
+  40% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(2px, -1px);
+  }
+  60% {
+    clip-path: inset(30% 0 50% 0);
+    transform: translate(-1px, 2px);
+  }
+  80% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(1px, -2px);
+  }
+  100% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-2px, 1px);
+  }
 }
 
 // ── 呼吸脉冲环增强 ──────────────────────────────
@@ -853,8 +985,12 @@
 }
 
 @keyframes matrixFall {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(200vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200vh);
+  }
 }
 
 // ── 左侧日志大终端样式 ──────────────────────────
@@ -894,8 +1030,13 @@
 }
 
 @keyframes blinkCaret {
-  from, to { opacity: 0 }
-  50% { opacity: 1 }
+  from,
+  to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 // ── 右侧控制组大面板样式 ──────────────────────────
@@ -1041,7 +1182,7 @@
 
     &:before {
       position: absolute;
-      content: "";
+      content: '';
       height: 10px;
       width: 10px;
       left: 3px;
@@ -1112,19 +1253,19 @@
   left: 50%;
   width: 50%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 255, 196, 0.8) 0%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, rgba(0, 255, 196, 0.8) 0%, transparent 100%);
   transform-origin: left center;
   animation: radarSweep 4s linear infinite;
   box-shadow: 0 0 10px rgba(0, 255, 196, 0.5);
 }
 
 @keyframes radarSweep {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .radar-rings {
@@ -1191,17 +1332,27 @@
 
   @for $i from 1 through 6 {
     &:nth-child(#{$i}) {
-      top: #{15 + math.random(70)}%;
-      left: #{15 + math.random(70)}%;
+      top: (15 + math.random(70)) * 1%;
+      left: (15 + math.random(70)) * 1%;
       animation-delay: #{$i * 0.6}s;
     }
   }
 }
 
 @keyframes radarBlipFade {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  20% { opacity: 1; transform: scale(1.5); }
-  40% { opacity: 0.6; transform: scale(1); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  40% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
 }
 
 .radar-label {
@@ -1335,7 +1486,8 @@
 }
 
 @keyframes scrollIndicatorFade {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
   }
   50% {
@@ -1385,12 +1537,14 @@
   width: 80px;
   height: 36px;
   border-radius: 18px;
-  box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, .5), 0px 1px 1px 0 rgba(255, 255, 255, 1);
+  box-shadow:
+    0 -1px 1px 0 rgba(0, 0, 0, 0.5),
+    0px 1px 1px 0 rgba(255, 255, 255, 1);
   background: rgb(189, 191, 193);
   background: linear-gradient(to bottom, rgba(189, 191, 193, 1) 0%, rgba(249, 251, 254, 1) 100%);
 }
 
-.toggle > div > input[type=checkbox] {
+.toggle > div > input[type='checkbox'] {
   position: absolute;
   opacity: 0;
   top: 4px;
@@ -1401,7 +1555,7 @@
   cursor: pointer;
 }
 
-.toggle > div > input[type=checkbox] ~ label {
+.toggle > div > input[type='checkbox'] ~ label {
   position: relative;
   display: block;
   cursor: pointer;
@@ -1409,18 +1563,30 @@
   height: 28px;
   border-radius: 14px;
   border: 1px solid #979797;
-  box-shadow: inset 2px 0 0 0 rgba(0, 0, 0, .1), inset -2px 0 0 0 rgba(0, 0, 0, .1), inset -3px 0 0 0 rgba(255, 255, 255, .5), inset -2px 3px 5px -2px rgba(0, 0, 0, .2), inset 1px 1px 0 0 rgba(255, 255, 255, 1), -3px 2px 5px -4px rgba(0, 0, 0, .5);
+  box-shadow:
+    inset 2px 0 0 0 rgba(0, 0, 0, 0.1),
+    inset -2px 0 0 0 rgba(0, 0, 0, 0.1),
+    inset -3px 0 0 0 rgba(255, 255, 255, 0.5),
+    inset -2px 3px 5px -2px rgba(0, 0, 0, 0.2),
+    inset 1px 1px 0 0 rgba(255, 255, 255, 1),
+    -3px 2px 5px -4px rgba(0, 0, 0, 0.5);
   background: rgb(253, 252, 251);
   background: linear-gradient(to right, rgba(253, 252, 251, 1) 37%, rgba(229, 229, 229, 1) 61%);
 }
 
-.toggle > div > input[type=checkbox]:checked ~ label {
-  box-shadow: inset -2px 0 0 0 rgba(0, 0, 0, .1), inset 2px 0 0 0 rgba(0, 0, 0, .1), inset 3px 0 0 0 rgba(255, 255, 255, .5), inset -2px 3px 5px -2px rgba(0, 0, 0, .2), inset 1px 1px 0 0 rgba(255, 255, 255, 1), -3px 2px 5px -4px rgba(0, 0, 0, .5);
+.toggle > div > input[type='checkbox']:checked ~ label {
+  box-shadow:
+    inset -2px 0 0 0 rgba(0, 0, 0, 0.1),
+    inset 2px 0 0 0 rgba(0, 0, 0, 0.1),
+    inset 3px 0 0 0 rgba(255, 255, 255, 0.5),
+    inset -2px 3px 5px -2px rgba(0, 0, 0, 0.2),
+    inset 1px 1px 0 0 rgba(255, 255, 255, 1),
+    -3px 2px 5px -4px rgba(0, 0, 0, 0.5);
   background: rgb(229, 229, 229);
   background: linear-gradient(to right, rgba(229, 229, 229, 1) 39%, rgba(253, 252, 251, 1) 63%);
 }
 
-.toggle > div > input[type=checkbox] ~ label:before {
+.toggle > div > input[type='checkbox'] ~ label:before {
   content: attr(data-unchecked);
   display: block;
   position: absolute;
@@ -1432,10 +1598,12 @@
   color: #333;
 }
 
-.toggle > div > input[type=checkbox] ~ label:after {
+.toggle > div > input[type='checkbox'] ~ label:after {
   content: attr(data-checked);
   color: #df0000;
-  text-shadow: 0 1px 0 #fff, 0px 0 4px #df0000;
+  text-shadow:
+    0 1px 0 #fff,
+    0px 0 4px #df0000;
   filter: dropshadow(color=#df0000, offx=0, offy=0);
   display: block;
   position: absolute;
@@ -1446,13 +1614,15 @@
   font-weight: bold;
 }
 
-.toggle > div > input[type=checkbox]:checked ~ div:before {
+.toggle > div > input[type='checkbox']:checked ~ div:before {
   color: #119400;
-  text-shadow: 0 1px 0 #fff, 0px 0 4px #007a08;
+  text-shadow:
+    0 1px 0 #fff,
+    0px 0 4px #007a08;
   filter: dropshadow(color=#007a08, offx=0, offy=0);
 }
 
-.toggle > div > input[type=checkbox]:checked ~ div:after {
+.toggle > div > input[type='checkbox']:checked ~ div:after {
   color: #000;
   text-shadow: none;
   filter: dropshadow(none);
@@ -1462,7 +1632,6 @@
 // 移动端首屏布局全面优化 (≤767px)
 // ============================================
 @media (max-width: 767px) {
-
   // ── 首屏容器：使用 svh + 安全区 ──
   .eclipse-hero {
     height: 100svh;
