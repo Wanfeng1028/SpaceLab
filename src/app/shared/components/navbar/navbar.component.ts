@@ -129,8 +129,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   openCapsule(event: Event): void {
     event.preventDefault();
-    this.avatarTriggerEl.set(event.currentTarget as HTMLElement);
-    this.showCapsuleModal.set(true);
+    event.stopPropagation();
+    // Only open if not already open
+    if (!this.showCapsuleModal()) {
+      this.avatarTriggerEl.set(event.currentTarget as HTMLElement);
+      this.showCapsuleModal.set(true);
+    }
   }
 
   onLinkClick(link: NavLink, event: Event): void {
