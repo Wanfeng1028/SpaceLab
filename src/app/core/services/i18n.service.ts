@@ -20,6 +20,7 @@ export class I18nService {
 
   private readonly _locale = signal<SupportedLocale>(this.getInitialLocale());
   private _flatMap: Record<string, string> = {};
+  private _zhFlatMap: Record<string, string> = {};
 
   readonly locale = this._locale.asReadonly();
 
@@ -28,6 +29,10 @@ export class I18nService {
 
   loadTranslations(locale: SupportedLocale): void {
     this._flatMap = this.flatten(TRANSLATIONS[locale] ?? {});
+    // Ensure Chinese fallback map is always available
+    if (Object.keys(this._zhFlatMap).length === 0) {
+      this._zhFlatMap = this.flatten(TRANSLATIONS['zh-CN'] ?? {});
+    }
     this._locale.set(locale);
     if (this.isBrowser) {
       try {
@@ -40,7 +45,7 @@ export class I18nService {
   }
 
   t(key: string): string {
-    return this._flatMap[key] ?? key;
+    return this._flatMap[key] ?? this._zhFlatMap[key] ?? key;
   }
 
   toggleLocale(): void {

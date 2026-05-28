@@ -22,6 +22,7 @@ import { VisualSystemsSection } from './components/visual-systems/visual-systems
 import { OrbitalLearningSection } from './components/orbital-learning/orbital-learning.component';
 import { PortalGallerySection } from './components/stargate-dock/stargate-dock.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
+import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,7 @@ import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-
     OrbitalLearningSection,
     PortalGallerySection,
     CockpitDashboardSection,
+    LaunchTerminalTransitionComponent,
   ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -72,6 +74,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   // 亮度自适应按钮状态
   isBright = signal<boolean>(false);
   showContactModal = signal<boolean>(false);
+  
+  // Launch Terminal Transition 状态
+  isLaunchTransitionActive = signal<boolean>(false);
+  launchCompleted = signal<boolean>(false);
 
   // Live scrolling sci-fi diagnostic terminal logs
   telemetryLogs = signal<string[]>([]);
@@ -179,8 +185,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onEnter(): void {
+    // 启动 Launch Terminal Transition
+    if (this.isLaunchTransitionActive()) return;
+    this.isLaunchTransitionActive.set(true);
+    this.launchCompleted.set(false);
+  }
+  
+  // Launch Terminal Transition 完成回调
+  onLaunchComplete(): void {
+    this.launchCompleted.set(true);
+    
+    setTimeout(() => {
+      this.isLaunchTransitionActive.set(false);
+      this.scrollToEarthObservatory();
+    }, 600);
+  }
+  
+  // 滚动到 Earth Observatory
+  private scrollToEarthObservatory(): void {
     const target = document.getElementById('section-earth');
-    target?.scrollIntoView({ behavior: 'smooth' });
+    target?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   }
 
   onContact(): void {

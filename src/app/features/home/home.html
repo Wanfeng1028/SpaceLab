@@ -84,6 +84,13 @@
       </div>
     </div>
 
+    <!-- Launch Terminal Transition -->
+    @if (isLaunchTransitionActive()) {
+      <app-launch-terminal-transition
+        (completed)="onLaunchComplete()"
+      />
+    }
+
   </section>
 
   <!-- 第 2 屏：EARTH OBSERVATORY (地球科学与遥感) -->
