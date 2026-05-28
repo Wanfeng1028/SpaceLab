@@ -11,12 +11,12 @@
       <span class="portal-content__number">06</span>
       <h2 class="portal-content__title">AI<br />Frontline</h2>
       <p class="portal-content__subtitle">
-        Explore the AI Frontline and daily signals
+        {{ t('portal.aiFrontlineDesc') }}
       </p>
 
       <div class="portal-buttons">
         <app-magnetic-button (clicked)="onEnter()">
-          More
+          {{ t('common.more') }}
         </app-magnetic-button>
         <app-magnetic-button (clicked)="onExplore()">
           Explore Projects
