@@ -170,22 +170,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   openCapsule(event: Event): void {
-    console.log('[navbar] openCapsule called', event.target);
     event.preventDefault();
     event.stopPropagation();
     const now = Date.now();
     // Prevent rapid toggles (debounce 500 ms)
     if (now - this.lastOpenTime < 500) {
-      console.log('[navbar] Debounced, ignoring');
       return;
     }
     this.lastOpenTime = now;
     if (this.showCapsuleModal()) {
       // If already open, close it (toggle behavior)
-      console.log('[navbar] Closing capsule modal via toggle');
       this.onCapsuleClosed();
     } else {
-      console.log('[navbar] Opening capsule modal');
       this.avatarTriggerEl.set(event.currentTarget as HTMLElement);
       this.showCapsuleModal.set(true);
     }
@@ -193,7 +189,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onCapsuleClosed(): void {
     if (this.showCapsuleModal()) {
-      console.log('[navbar] Capsule modal closed');
       this.showCapsuleModal.set(false);
     }
   }
