@@ -1,5 +1,5 @@
-<section 
-  class="launch-terminal-transition" 
+<section
+  class="launch-terminal-transition"
   [class.active]="isActive()"
   role="dialog"
   aria-modal="true"
@@ -23,42 +23,47 @@
     </div>
 
     <!-- 命令行内容 -->
-    <div class="launch-terminal-transition__body">
+    <div class="terminal-body">
       @for (cmd of getVisibleCommands(); track cmd.command; let i = $index) {
         <div class="command-block" [class.typing]="isTyping(i)">
           <!-- 命令行 -->
           <div class="command-line">
-            <span class="prompt">$</span>
-            <span class="command-text" [class.animate-typing]="isTyping(i)">{{ cmd.command.substring(2) }}</span>
+            <span class="terminal-prompt">$</span>
+            <span class="terminal-command"> boot spacelab </span>
+            <span class="terminal-flag">--mode=orbit</span>
           </div>
-          
+
           <!-- 输出行 -->
           @for (output of getOutputs(cmd); track output) {
-            <div class="output-line" [class]="output.includes('[OK]') ? 'output-ok' : output.includes('[READY]') ? 'output-ready' : ''">
-              {{ output }}
+            <div class="terminal-output" [class]="output.includes('[OK]') ? 'terminal-ok' : output.includes('[READY]') ? 'terminal-ready' : ''">
+              @if (output.includes('[OK]') || output.includes('[READY]')) {
+                <span class="output-status">{{ output.includes('[OK]') ? '[OK]' : '[READY]' }}</span>
+                <span class="output-text">{{ output.includes('[OK]') ? output.replace('[OK] ', '') : output.replace('[READY] ', '') }}</span>
+              } @else {
+                {{ output }}
+              }
             </div>
           }
         </div>
       }
-      
+
       <!-- 光标 -->
       @if (!showSystemReady()) {
         <span class="terminal-cursor"></span>
       }
     </div>
 
-    <!-- SYSTEM READY 显示 -->
+    <!-- 完成消息 -->
     @if (showSystemReady()) {
       <div class="system-ready">
-        <div class="system-ready__title">SYSTEM READY</div>
-        <div class="system-ready__subtitle">Entering Earth Observatory...</div>
+        <span class="system-ready__text">System ready. Entering Earth Observatory...</span>
       </div>
     }
 
     <!-- 进度条 -->
-    <div class="launch-terminal-transition__progress">
-      <div 
-        class="launch-terminal-transition__progress-fill" 
+    <div class="terminal-progress">
+      <div
+        class="terminal-progress-fill"
         [style.width.%]="progress()">
       </div>
     </div>
