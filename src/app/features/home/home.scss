@@ -845,7 +845,7 @@
   @for $i from 1 through 20 {
     &:nth-child(#{$i}) {
       left: #{$i * 5 - 2}%;
-      animation-duration: #{3 + math.random(4)}s;
+      animation-duration: #{3 + math.random() * 4}s;
       animation-delay: #{math.random(3)}s;
       opacity: #{0.3 + math.div(math.random(7), 10)};
     }
