@@ -60,6 +60,17 @@ while ($true) {
                         } elseif ($conclusion -eq "failure") {
                             Write-Host "CI failed! ❌" -ForegroundColor Red
                             Write-Host "Please check: https://github.com/Wanfeng1028/SpaceLab/actions" -ForegroundColor Yellow
+                            
+                            # Run local build check to diagnose
+                            Write-Host "Running local build to diagnose..." -ForegroundColor Cyan
+                            $localBuildResult = npm run build 2>&1
+                            if ($LASTEXITCODE -eq 0) {
+                                Write-Host "Local build succeeded. CI failure may be environment-related." -ForegroundColor Yellow
+                                Write-Host "Consider running: gh run rerun $latestRun.id" -ForegroundColor Gray
+                            } else {
+                                Write-Host "Local build also failed. Fix the following errors:" -ForegroundColor Red
+                                Write-Host $localBuildResult -ForegroundColor Red
+                            }
                         } else {
                             Write-Host "CI conclusion: $conclusion" -ForegroundColor Yellow
                         }
