@@ -131,6 +131,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   openCapsule(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
+    const now = Date.now();
+    // Prevent rapid re‑opens (debounce 500 ms)
+    if (now - this.lastOpenTime < 500) {
+      return;
+    }
+    this.lastOpenTime = now;
     // Only open if not already open
     if (!this.showCapsuleModal()) {
       this.avatarTriggerEl.set(event.currentTarget as HTMLElement);
