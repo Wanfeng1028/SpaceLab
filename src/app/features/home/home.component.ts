@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
+import { LenisScrollService } from '../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
