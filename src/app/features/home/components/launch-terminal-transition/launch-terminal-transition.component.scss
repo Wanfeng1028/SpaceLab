@@ -251,67 +251,40 @@ $white-muted: rgba(148, 163, 184, 0.92);
   46%, 100% { opacity: 0; }
 }
 
-// SYSTEM READY 显示
+// 系统就绪消息
 .system-ready {
-  text-align: center;
-  padding: 24px;
-  margin-top: 12px;
+  padding: 16px 20px;
   animation: system-ready-appear 0.4s ease;
-  
-  &__title {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 600;
-    color: $cyan;
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-    text-shadow: 0 0 20px rgba(105, 215, 255, 0.4);
-    animation: system-ready-pulse 1.5s ease-in-out infinite;
-  }
-  
-  &__subtitle {
+
+  &__text {
     font-family: var(--font-mono);
     font-size: 13px;
-    color: $white-muted;
-    letter-spacing: 0.05em;
+    color: rgba(148, 163, 184, 0.92);
   }
 }
 
 @keyframes system-ready-appear {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes system-ready-pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.02);
+    transform: translateY(0);
   }
 }
 
 // 进度条
-.launch-terminal-transition__progress {
-  height: 3px;
-  background: rgba(255, 255, 255, 0.1);
-  margin-top: auto;
-  
-  &-fill {
-    height: 100%;
-    background: linear-gradient(90deg, $cyan, $purple);
-    box-shadow: 0 0 12px rgba(105, 215, 255, 0.3);
-    transition: width 0.3s ease;
-    border-radius: 0 2px 2px 0;
-  }
+.terminal-progress {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.terminal-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, $cyan, $purple);
+  opacity: 0.8;
+  transition: width 0.26s ease;
 }
 
 // 移动端适配
