@@ -167,6 +167,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }, 2000);
     this.startCombinedTimer();
+    
+    // 临时调试：打印初始状态
+    console.log('[Home init]', {
+      isLaunchTransitionActive: this.isLaunchTransitionActive(),
+      launchCompleted: this.launchCompleted(),
+      isHeroDimmed: this.isHeroDimmed
+    });
   }
 
   ngOnDestroy(): void {
