@@ -290,48 +290,43 @@ $white-muted: rgba(148, 163, 184, 0.92);
 // 移动端适配
 @media (max-width: 768px) {
   .launch-terminal-transition__panel {
-    width: calc(100vw - 32px);
-    border-radius: 18px;
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    width: calc(100vw - 28px);
+    border-radius: 16px;
   }
-  
-  .launch-terminal-transition__header {
+
+  .terminal-titlebar {
     height: 38px;
-    font-size: 10px;
-    gap: 8px;
-    padding: 0 14px;
-    
-    .header-subtext {
-      display: none;
-    }
+    padding: 0 12px;
   }
-  
-  .launch-terminal-transition__body {
-    font-size: 12px;
-    line-height: 1.7;
-    padding: 16px 18px 18px;
-    min-height: 150px;
-    max-height: 250px;
-  }
-  
-  .command-line {
-    margin-left: 0;
-  }
-  
-  .output-line {
-    margin-left: 14px;
+
+  .terminal-title {
     font-size: 11px;
   }
-  
+
+  .terminal-shell {
+    display: none;
+  }
+
+  .terminal-body {
+    padding: 14px 14px 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    max-height: 300px;
+  }
+
+  .command-block {
+    margin-bottom: 14px;
+  }
+
+  .terminal-output {
+    margin-left: 18px;
+    font-size: 11px;
+  }
+
   .system-ready {
-    padding: 18px;
-    
-    &__title {
-      font-size: 22px;
-    }
-    
-    &__subtitle {
+    padding: 14px 16px;
+
+    &__text {
       font-size: 12px;
     }
   }
