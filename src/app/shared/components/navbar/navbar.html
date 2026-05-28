@@ -86,7 +86,7 @@
 
     <!-- i18n Toggle -->
     <button class="sparkle-btn"
-            (click)="toggleLang(); closeMobileMenu()"
+            (click)="toggleLang()"
             [attr.aria-label]="t('navAria.toggleLanguage')">
       <div class="sparkle-btn__dots"></div>
       <svg class="sparkle-btn__sparkle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -129,7 +129,7 @@
             }
           }
           @case ('lang') {
-            <button class="mobile-menu-link" (click)="toggleLang(); closeMobileMenu()">
+            <button class="mobile-menu-link" (click)="toggleLang()">
               <span>{{ currentLang() === 'zh-CN' ? 'EN' : '中' }}</span>
             </button>
           }
