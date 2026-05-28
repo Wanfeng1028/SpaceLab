@@ -1,26 +1,44 @@
-<div class="mac-terminal-modal" (click)="onBackdropClick($event)" [class.open]="isOpen()">
-  <div class="mac-terminal-modal__panel" [style.width]="panelWidth()">
+<section
+  class="mac-terminal-modal"
+  [class.mac-terminal-modal--open]="isOpen()"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="title"
+  (click)="onBackdropClick($event)"
+>
+  <!-- 背景模糊层 -->
+  <div class="mac-terminal-modal__backdrop"></div>
+
+  <!-- 终端面板 -->
+  <div 
+    class="mac-terminal-modal__panel"
+    [style.width]="panelWidth()"
+  >
     <!-- Mac 风格顶部标题栏 -->
     <div class="terminal-titlebar">
       <div class="terminal-window-dots">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
+        @if (closable) {
+          <span class="dot dot-red" (click)="close()" tabindex="0" role="button" aria-label="Close"></span>
+        } @else {
+          <span class="dot dot-red dot--disabled"></span>
+        }
+        <span class="dot dot-yellow dot--disabled"></span>
+        <span class="dot dot-green dot--disabled"></span>
       </div>
       <div class="terminal-title">{{ title }}</div>
       <div class="terminal-shell">bash</div>
     </div>
 
-    <!-- 内容区域 -->
-    <div class="terminal-content">
+    <!-- 终端内容区 -->
+    <div class="terminal-body">
       <ng-content></ng-content>
     </div>
 
-    <!-- 进度条 -->
+    <!-- 进度条（可选） -->
     @if (showProgress) {
       <div class="terminal-progress">
         <div class="terminal-progress-fill" [style.width.%]="progressValue"></div>
       </div>
     }
   </div>
-</div>
+</section>
