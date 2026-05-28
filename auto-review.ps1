@@ -39,11 +39,41 @@ while ($true) {
     $buildResult = npm run build 2>&1
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Build successful" -ForegroundColor Green
+        
+        # Check CI status if GitHub CLI is available and authenticated
+        Write-Host "Checking CI status..." -ForegroundColor Cyan
+        try {
+            $ciRun = gh run list --limit 1 --json conclusion,name,createdAt 2>&1
+            if ($LASTEXITCODE -eq 0) {
+                $runData = $ciRun | ConvertFrom-Json
+                if ($runData.Count -gt 0) {
+                    $latestRun = $runData[0]
+                    $conclusion = $latestRun.conclusion
+                    $name = $latestRun.name
+                    $createdAt = $latestRun.createdAt
+                    Write-Host "Latest CI run: $name ($createdAt)" -ForegroundColor Gray
+                    if ($conclusion -eq "success") {
+                        Write-Host "CI passed ✓" -ForegroundColor Green
+                    } elseif ($conclusion -eq "failure") {
+                        Write-Host "CI failed! ❌" -ForegroundColor Red
+                        Write-Host "Please check: https://github.com/Wanfeng1028/SpaceLab/actions" -ForegroundColor Yellow
+                    } else {
+                        Write-Host "CI status: $conclusion" -ForegroundColor Yellow
+                    }
+                } else {
+                    Write-Host "No CI runs found" -ForegroundColor Gray
+                }
+            } else {
+                Write-Host "GitHub CLI not authenticated. Run 'gh auth login' to enable CI checks." -ForegroundColor Yellow
+            }
+        } catch {
+            Write-Host "CI check skipped (GitHub CLI not available)" -ForegroundColor Gray
+        }
     } else {
         Write-Host "Build failed:" -ForegroundColor Red
         Write-Host $buildResult -ForegroundColor Red
     }
-    
+
     # Wait for interval
     Write-Host "Waiting $intervalMinutes minutes..." -ForegroundColor Gray
     Start-Sleep -Seconds ($intervalMinutes * 60)
