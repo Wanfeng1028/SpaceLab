@@ -65,6 +65,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     labelKey: n.labelKey,
   }));
 
+  readonly mobileMenuItems: MobileMenuItem[] = [
+    { type: 'github' },
+    ...this.navLinks
+      .filter(link => link.route === '/')
+      .map(link => ({ type: 'link' as const, link })),
+    ...this.navLinks
+      .filter(link => link.route !== '/')
+      .map(link => ({ type: 'link' as const, link })),
+    { type: 'lang' }
+  ];
+
   constructor() {
     effect(() => {
       const isOpen = this.showCapsuleModal();
