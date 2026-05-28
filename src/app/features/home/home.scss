@@ -24,7 +24,7 @@
   justify-content: flex-end; // 将底部 HUD 和 Footer 推至最下方，而 Hero 核心文字使用绝对定位居中
   align-items: center;
   background-color: #000000; // 纯黑曜石底色
-  background-image: radial-gradient(ellipse at 50% 50%, rgba(10, 92, 255, 0.08), transparent 70%); // 备用背景，防 Three.js 加载失败
+  background-image: radial-gradient(ellipse at 50% 50%, rgba(10, 92, 255, 0.2), transparent 80%); // 备用背景，防 Three.js 加载失败
   overflow: hidden;
 }
 
