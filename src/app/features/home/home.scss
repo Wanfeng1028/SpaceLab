@@ -26,6 +26,7 @@
   background-color: #000000; // 纯黑曜石底色
   background-image: radial-gradient(ellipse at 50% 50%, rgba(10, 92, 255, 0.08), transparent 70%); // 备用背景，防 Three.js 加载失败
   overflow: hidden;
+  border: 5px solid red; /* 临时调试边框 */
 }
 
 // ── Three.js 深空粒子层 ────────────────────
