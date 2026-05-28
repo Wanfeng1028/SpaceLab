@@ -79,7 +79,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor() {
     effect(() => {
       const isOpen = this.showCapsuleModal();
-      console.log(`[navbar] showCapsuleModal changed to ${isOpen}`);
+      // Debug log removed for production
     });
   }
 
