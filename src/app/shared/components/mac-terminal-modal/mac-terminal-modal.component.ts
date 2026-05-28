@@ -51,10 +51,8 @@ export class MacTerminalModalComponent implements AfterViewInit, OnDestroy {
   panelWidth = computed(() => this.sizeMap[this.size]);
 
   ngAfterViewInit(): void {
-    // Auto-open after a short delay for animation
-    setTimeout(() => {
-      this.open();
-    }, 50);
+    // Immediately open for animation
+    this.open();
   }
 
   ngOnDestroy(): void {
@@ -76,14 +74,9 @@ export class MacTerminalModalComponent implements AfterViewInit, OnDestroy {
 
   close(): void {
     if (!this.closable) return;
-
     this.isOpen.set(false);
     this.restoreBodyScroll();
-
-    // Delay emit to allow animation to complete
-    setTimeout(() => {
-      this.closed.emit();
-    }, 300);
+    this.closed.emit();
   }
 
   onBackdropClick(event: MouseEvent): void {
