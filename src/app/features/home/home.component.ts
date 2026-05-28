@@ -17,6 +17,7 @@ import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
 import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { SpaceGlassModalComponent } from '../../shared/components/glass/modal/space-glass-modal.component';
+import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
 import { EarthObservatorySection } from './components/earth-observatory/earth-observatory.component';
 import { NeuralCoreSection } from './components/neural-core/neural-core.component';
 import { VisualSystemsSection } from './components/visual-systems/visual-systems.component';
@@ -34,6 +35,7 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
     ThreeCanvasComponent,
     LaunchTelemetryOverlayComponent,
     SpaceGlassModalComponent,
+    MacTerminalModalComponent,
     EarthObservatorySection,
     NeuralCoreSection,
     VisualSystemsSection,

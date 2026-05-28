@@ -260,34 +260,40 @@
   </div>
 }
 
-<!-- Share Modal -->
+<!-- Share Modal (Mac 终端风格) -->
 @if (showShareModal()) {
-  <space-glass-modal size="sm" (closed)="showShareModal.set(false)">
-    <div class="card_title__container">
-      <span class="card_title">{{ t('common.copyLinkBadge') }}</span>
-      <p class="card_paragraph">{{ t('common.copyLinkMsg') }}</p>
+  <app-mac-terminal-modal
+    size="sm"
+    title="share @spacelab: ~/link"
+    (closed)="showShareModal.set(false)"
+  >
+    <div class="terminal-prompt">$</div>
+    <div class="terminal-command" style="margin-bottom: 16px">echo "Share this page"</div>
+
+    <div class="terminal-output terminal-ok">
+      <span class="terminal-ok">[OK]</span> {{ t('common.copyLinkMsg') }}
     </div>
-    <hr class="line" />
-    <ul class="card__list">
-      <li class="card__list_item">
-        <span class="check">
-          <svg
-            class="check_svg"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              clip-rule="evenodd"
-              d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
-              fill-rule="evenodd"
-            ></path>
-          </svg>
-        </span>
-        <span class="list_text">{{ currentUrl }}</span>
-      </li>
-    </ul>
-  </space-glass-modal>
+    <div style="height: 12px"></div>
+
+    <div
+      style="
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        font-size: 13px;
+        word-break: break-all;
+      "
+    >
+      🔗 {{ currentUrl }}
+    </div>
+
+    <div
+      style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1)"
+    >
+      <span class="terminal-prompt">$</span>
+      <span class="terminal-cursor"></span>
+    </div>
+  </app-mac-terminal-modal>
 }
 
 <!-- Profile Capsule Modal -->

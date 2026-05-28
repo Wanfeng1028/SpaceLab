@@ -1,0 +1,26 @@
+<div class="mac-terminal-modal" (click)="onBackdropClick($event)" [class.open]="isOpen()">
+  <div class="mac-terminal-modal__panel" [style.width]="panelWidth()">
+    <!-- Mac 风格顶部标题栏 -->
+    <div class="terminal-titlebar">
+      <div class="terminal-window-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <div class="terminal-title">{{ title }}</div>
+      <div class="terminal-shell">bash</div>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="terminal-content">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- 进度条 -->
+    @if (showProgress) {
+      <div class="terminal-progress">
+        <div class="terminal-progress-fill" [style.width.%]="progressValue"></div>
+      </div>
+    }
+  </div>
+</div>

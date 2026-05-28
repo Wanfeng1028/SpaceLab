@@ -1,108 +1,153 @@
+<!-- Mac 终端风格个人资料弹窗 -->
 <div
-  class="scm-overlay"
+  class="scm-overlay mac-terminal-modal"
   [class.scm-overlay--closing]="closing()"
   (click)="onOverlayClick($event)"
   (keydown)="onKeyDown($event)"
 >
   <div
-    class="scm-panel"
+    class="mac-terminal-modal__panel scm-panel"
     [class.scm-panel--closing]="closing()"
+    style="width: min(520px, calc(100vw - 48px))"
     role="dialog"
     aria-modal="true"
     [attr.aria-label]="t('capsule.headerTitle')"
     (click)="$event.stopPropagation()"
   >
-    <!-- Top Bar -->
-    <div class="scm-topbar">
-      <div class="scm-topbar__left">
-        <span class="scm-status-dot"></span>
-        <span class="scm-topbar__title">{{ t('capsule.headerTitle') }}</span>
+    <!-- Mac 风格标题栏 -->
+    <div class="terminal-titlebar">
+      <div class="terminal-window-dots">
+        <span
+          class="dot dot-red"
+          (click)="close()"
+          tabindex="0"
+          role="button"
+          aria-label="Close"
+        ></span>
+        <span class="dot dot-yellow dot--disabled"></span>
+        <span class="dot dot-green dot--disabled"></span>
       </div>
-      <div class="scm-topbar__line"></div>
-      <button
-        class="scm-close"
-        type="button"
-        [attr.aria-label]="t('common.close')"
-        (click)="close()"
-      >
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-          <path
-            d="M5 5l10 10M15 5L5 15"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
+      <div class="terminal-title">profile @spacelab: ~/about</div>
+      <div class="terminal-shell">bash</div>
     </div>
 
-    <!-- Content -->
-    <div class="scm-content">
-      <!-- Avatar Section -->
-      <div class="scm-avatar-section">
-        <div class="scm-avatar-orbit">
-          <div class="scm-avatar-orbit__ring1"></div>
-          <div class="scm-avatar-orbit__ring2"></div>
-          <img class="scm-avatar-orbit__img" [src]="profileAvatar" alt="avatar" />
+    <!-- 终端内容区 -->
+    <div class="terminal-body">
+      <!-- 命令行 -->
+      <div class="terminal-prompt">$</div>
+      <div class="terminal-command" style="margin-bottom: 20px">cat profile.json</div>
+
+      <!-- 头像和基本信息 -->
+      <div style="display: flex; gap: 24px; margin-bottom: 24px">
+        <div style="flex-shrink: 0">
+          <img
+            [src]="profileAvatar"
+            alt="avatar"
+            style="
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+              border: 2px solid rgba(186, 66, 255, 0.5);
+              box-shadow: 0 0 20px rgba(186, 66, 255, 0.3);
+            "
+          />
         </div>
-        <div class="scm-avatar-name">{{ profileName }}</div>
-        <div class="scm-avatar-status">
-          <span class="scm-avatar-status__dot"></span>
-          {{ t('capsule.systemOnline') }}
+        <div style="flex: 1">
+          <div style="font-size: 18px; font-weight: 600; color: #38bdf8; margin-bottom: 4px">
+            {{ profileName }}
+          </div>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-size: 12px;
+              color: rgba(52, 211, 153, 0.9);
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              style="
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background: #34d399;
+                border-radius: 50%;
+              "
+            ></span>
+            {{ t('capsule.systemOnline') }}
+          </div>
+          <div class="terminal-output terminal-ok">
+            <span class="terminal-ok">[OK]</span> {{ t('capsule.subtitle') }}
+          </div>
         </div>
       </div>
 
-      <!-- Right: Info -->
-      <div class="scm-info">
-        <h2 class="scm-info__title" id="scm-title">{{ t('capsule.welcome') }}</h2>
-        <p class="scm-info__subtitle">{{ t('capsule.subtitle') }}</p>
-        <p class="scm-info__desc">{{ t('capsule.description') }}</p>
+      <!-- 描述 -->
+      <div style="margin-bottom: 20px; line-height: 1.6; color: rgba(226, 232, 240, 0.8)">
+        {{ t('capsule.description') }}
+      </div>
 
-        <div class="scm-info__actions">
-          <button class="scm-btn scm-btn--primary" type="button" (click)="close()">
-            <span class="scm-btn__icon">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                />
-                <path
-                  d="M22 6l-10 7L2 6"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </span>
-            {{ t('capsule.contactBtn') }}
-          </button>
-          <a class="scm-btn scm-btn--ghost" [href]="profileGithub" target="_blank" rel="noopener">
-            <span class="scm-btn__icon">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                <path
-                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
-                />
-              </svg>
-            </span>
-            GitHub
-          </a>
-        </div>
-
-        <div class="scm-tags">
+      <!-- 兴趣标签 -->
+      <div style="margin-bottom: 20px">
+        <span class="terminal-output" style="display: block; margin-bottom: 8px"
+          >// interests.json</span
+        >
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
           @for (interest of profileInterests; track interest) {
-            <span class="scm-tag">{{ interest }}</span>
+            <span
+              style="
+                padding: 4px 12px;
+                background: rgba(186, 66, 255, 0.2);
+                border: 1px solid rgba(186, 66, 255, 0.4);
+                border-radius: 12px;
+                font-size: 12px;
+                color: #a78bfa;
+              "
+            >
+              {{ interest }}
+            </span>
           }
         </div>
-
-        <div class="scm-signal">{{ t('capsule.signalReady') }}</div>
       </div>
-    </div>
 
-    <!-- Bottom Bar -->
-    <div class="scm-bottombar">
-      <span class="scm-bottombar__dot"></span>
-      <span class="scm-bottombar__text">{{ t('capsule.footerMsg') }}</span>
+      <!-- 操作按钮 -->
+      <div style="display: flex; gap: 12px; margin-bottom: 20px">
+        <a
+          [href]="profileGithub"
+          target="_blank"
+          rel="noopener"
+          style="
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            border-radius: 8px;
+            color: #38bdf8;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+          "
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            />
+          </svg>
+          GitHub
+        </a>
+      </div>
+
+      <!-- 底部提示 -->
+      <div style="padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1)">
+        <span class="terminal-output">{{ t('capsule.signalReady') }}</span>
+        <div style="margin-top: 12px">
+          <span class="terminal-prompt">$</span>
+          <span class="terminal-cursor"></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

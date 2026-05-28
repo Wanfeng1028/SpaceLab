@@ -13,6 +13,7 @@ import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/ro
 import { I18nService } from '../../../core/services/i18n.service';
 import { SpaceGlassModalComponent } from '../glass/modal/space-glass-modal.component';
 import { SpaceCapsuleModalComponent } from '../space-capsule-modal/space-capsule-modal.component';
+import { MacTerminalModalComponent } from '../mac-terminal-modal/mac-terminal-modal.component';
 import { SITE } from '../../../../generated/content.generated';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -41,7 +42,13 @@ interface MobileMenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive, SpaceGlassModalComponent, SpaceCapsuleModalComponent],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    SpaceGlassModalComponent,
+    SpaceCapsuleModalComponent,
+    MacTerminalModalComponent,
+  ],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
@@ -112,7 +119,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.i18n.loadTranslations(this.currentLang());
     this.loadGithubStars();
-
   }
 
   ngOnDestroy(): void {

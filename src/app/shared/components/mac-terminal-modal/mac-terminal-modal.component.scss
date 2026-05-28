@@ -1,0 +1,317 @@
+// Mac Terminal Modal — Mac 风格终端弹窗组件
+// ============================================
+
+@use 'sass:math';
+
+// 变量
+$panel-radius: 18px;
+$header-height: 42px;
+$blur-amount: 8px;
+
+// 颜色 - 深色终端主题
+$bg-dark: rgba(3, 7, 18, 0.96);
+$bg-header: rgba(15, 23, 42, 0.85);
+$cyan: #38bdf8;
+$purple: #a78bfa;
+$green: #34d399;
+$yellow: #facc15;
+$red: #ff5f57;
+$white: rgba(226, 232, 240, 0.92);
+$white-muted: rgba(148, 163, 184, 0.92);
+
+// 弹窗容器
+.mac-terminal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition:
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+
+    .mac-terminal-modal__panel {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .mac-terminal-modal__backdrop {
+      opacity: 1;
+    }
+  }
+}
+
+// 背景模糊层
+.mac-terminal-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.65);
+  backdrop-filter: blur($blur-amount) saturate(120%);
+  -webkit-backdrop-filter: blur($blur-amount) saturate(120%);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// 终端面板
+.mac-terminal-modal__panel {
+  position: relative;
+  width: min(600px, calc(100vw - 48px));
+  max-height: calc(100vh - 80px);
+  border-radius: $panel-radius;
+  background: $bg-dark;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 32px 100px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 60px rgba(105, 215, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(12px) scale(0.985);
+  transition:
+    opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+
+  // 移动端适配
+  @media (max-width: 640px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 85vh;
+    border-radius: $panel-radius $panel-radius 0 0;
+    transform: translateY(100%);
+
+    .mac-terminal-modal--open & {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Mac 风格标题栏
+.terminal-titlebar {
+  height: $header-height;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: $bg-header;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.terminal-window-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--disabled {
+    cursor: default;
+    opacity: 0.6;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.dot-red {
+  background: $red;
+  box-shadow: 0 0 8px rgba(255, 95, 87, 0.4);
+
+  &::after {
+    content: '×';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
+  &.dot--disabled::after {
+    display: none;
+  }
+}
+
+.dot-yellow {
+  background: $yellow;
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.4);
+}
+
+.dot-green {
+  background: $green;
+  box-shadow: 0 0 8px rgba(40, 200, 64, 0.4);
+}
+
+.terminal-title {
+  text-align: center;
+  font-family: var(--font-mono, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 12px;
+}
+
+.terminal-shell {
+  font-family: var(--font-mono, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+// 终端内容区
+.terminal-body {
+  padding: 20px 24px 24px;
+  font-family: var(--font-mono, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace);
+  font-size: 14px;
+  line-height: 1.7;
+  color: $white;
+  min-height: 120px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+
+  // 自定义滚动条
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  // 移动端适配
+  @media (max-width: 640px) {
+    max-height: calc(85vh - 100px);
+    padding: 16px 18px 20px;
+    font-size: 13px;
+  }
+}
+
+// 终端提示符样式（供内容使用）
+.terminal-prompt {
+  color: $green;
+  font-weight: 600;
+}
+
+.terminal-command {
+  color: $white;
+}
+
+.terminal-output {
+  color: $white-muted;
+  margin-top: 4px;
+}
+
+.terminal-ok {
+  color: $green;
+}
+
+.terminal-ready {
+  color: $cyan;
+}
+
+.terminal-error {
+  color: $red;
+}
+
+.terminal-warning {
+  color: $yellow;
+}
+
+// 光标动画
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 18px;
+  background: $cyan;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+// 进度条
+.terminal-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.terminal-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, $cyan, $purple);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px $cyan;
+}
+
+// 减少动画偏好支持
+@media (prefers-reduced-motion: reduce) {
+  .mac-terminal-modal,
+  .mac-terminal-modal__panel,
+  .mac-terminal-modal__backdrop {
+    transition: none;
+  }
+
+  .terminal-cursor {
+    animation: none;
+    opacity: 1;
+  }
+}
