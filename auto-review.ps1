@@ -1,8 +1,9 @@
 ﻿# Auto Review Script for SpaceLab
-# Runs every 5 minutes: checks git status, builds, commits changes
+# Runs every 5 minutes: checks git status, builds, commits changes (if enabled)
 
 $intervalMinutes = 5
 $projectRoot = "E:\code\javascript\project\SpaceLab"
+$autoCommit = $false  # Set to $true to enable auto-commit, $false for check-only mode
 
 Write-Host "Starting auto review loop for SpaceLab (every $intervalMinutes minutes)" -ForegroundColor Cyan
 Write-Host "Press Ctrl+C to stop" -ForegroundColor Yellow
@@ -20,16 +21,20 @@ while ($true) {
         Write-Host "Changes detected:" -ForegroundColor Yellow
         Write-Host $gitStatus -ForegroundColor Gray
         
-        # Auto commit changes
-        git add -A
-        $commitMessage = "auto: 自动提交 - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-        git commit -m $commitMessage
-        Write-Host "Committed changes: $commitMessage" -ForegroundColor Green
-        
-        # Pull and push
-        git pull --rebase origin main
-        git push origin main
-        Write-Host "Pushed to remote" -ForegroundColor Green
+        if ($autoCommit) {
+            # Auto commit changes
+            git add -A
+            $commitMessage = "auto: 自动提交 - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+            git commit -m $commitMessage
+            Write-Host "Committed changes: $commitMessage" -ForegroundColor Green
+
+            # Pull and push
+            git pull --rebase origin main
+            git push origin main
+            Write-Host "Pushed to remote" -ForegroundColor Green
+        } else {
+            Write-Host "Auto-commit disabled. Skipping commit." -ForegroundColor Yellow
+        }
     } else {
         Write-Host "No changes detected" -ForegroundColor Gray
     }
