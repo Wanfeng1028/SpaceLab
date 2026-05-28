@@ -10,15 +10,18 @@
   <div class="mac-terminal-modal__backdrop"></div>
 
   <!-- 终端面板 -->
-  <div 
-    class="mac-terminal-modal__panel"
-    [style.width]="panelWidth()"
-  >
+  <div class="mac-terminal-modal__panel" [style.width]="panelWidth()">
     <!-- Mac 风格顶部标题栏 -->
     <div class="terminal-titlebar">
       <div class="terminal-window-dots">
         @if (closable) {
-          <span class="dot dot-red" (click)="close()" tabindex="0" role="button" aria-label="Close"></span>
+          <span
+            class="dot dot-red"
+            (click)="close()"
+            tabindex="0"
+            role="button"
+            aria-label="Close"
+          ></span>
         } @else {
           <span class="dot dot-red dot--disabled"></span>
         }
