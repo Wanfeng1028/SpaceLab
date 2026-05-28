@@ -1,10 +1,11 @@
-// Cockpit Dashboard Section Styles
-// Final screen with system controls and navigation
+// Cockpit Dashboard — final screen, system controls and navigation
+// HUD-style dark cockpit with cyan accents
 
 .cockpit-dashboard {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 600px;
   overflow: hidden;
   background: radial-gradient(ellipse at center bottom, #0a1a2a 0%, #000510 100%);
@@ -37,7 +38,7 @@
 }
 
 .cockpit-tag {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   color: rgba(0, 240, 255, 0.5);
@@ -45,19 +46,20 @@
 }
 
 .cockpit-title {
-  font-family: 'Orbitron', 'SF Mono', monospace;
+  font-family: var(--font-sans);
   font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  color: #00f0ff;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(0, 240, 255, 0.9);
   margin: 0 0 0.5rem 0;
-  text-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+  text-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+  text-transform: uppercase;
 }
 
 .cockpit-subtitle {
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
   margin: 0;
   letter-spacing: 0.1em;
 }
@@ -94,15 +96,15 @@
   gap: 0.5rem;
   margin-bottom: 0.75rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.15);
 }
 
 .panel-title {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.15em;
-  color: #00f0ff;
+  color: rgba(0, 240, 255, 0.8);
 }
 
 .pulse-ring {
@@ -113,12 +115,12 @@
 
   &--cyan {
     background: #00f0ff;
-    box-shadow: 0 0 10px #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
   }
 
   &--green {
     background: #00ff88;
-    box-shadow: 0 0 10px #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
   }
 }
 
@@ -156,10 +158,10 @@
 // Command log
 .command-log {
   background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  border-radius: 4px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 8px;
   padding: 0.75rem;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   max-height: 100px;
   overflow-y: auto;
@@ -169,7 +171,7 @@
   display: flex;
   gap: 0.5rem;
   padding: 0.2rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 
   &:last-child {
     border-bottom: none;
@@ -182,7 +184,7 @@
 }
 
 .log-time {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .log-type {
@@ -191,7 +193,7 @@
 }
 
 .log-message {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 // Control buttons
@@ -205,25 +207,32 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.4);
-  border-radius: 4px;
+  padding: 0.7rem 1.4rem;
+  background: rgba(0, 240, 255, 0.06);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-height: 44px;
 
   &:hover {
-    background: rgba(0, 240, 255, 0.2);
-    border-color: #00f0ff;
-    transform: translateY(-2px);
+    background: rgba(0, 240, 255, 0.15);
+    border-color: rgba(0, 240, 255, 0.6);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(0, 240, 255, 0.6);
+    outline-offset: 2px;
   }
 
   &--primary {
-    background: rgba(0, 240, 255, 0.2);
-    border-color: #00f0ff;
+    background: rgba(0, 240, 255, 0.15);
+    border-color: rgba(0, 240, 255, 0.5);
 
     &:hover {
-      background: rgba(0, 240, 255, 0.3);
+      background: rgba(0, 240, 255, 0.25);
+      border-color: #00f0ff;
     }
   }
 }
@@ -234,7 +243,7 @@
 }
 
 .btn-text {
-  font-family: 'Orbitron', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -250,28 +259,38 @@ app-telemetry-bar {
   z-index: 3;
 }
 
-// Mobile responsive
+// ── Mobile ──
+
 @media (max-width: 768px) {
   .cockpit-dashboard {
-    min-height: 500px;
+    min-height: 100svh;
+  }
+
+  .cockpit-header {
+    top: 4%;
+  }
+
+  .cockpit-title {
+    font-size: 1.1rem;
   }
 
   .cockpit-left,
   .cockpit-right {
-    position: relative;
+    position: absolute;
     top: auto;
-    left: auto;
-    right: auto;
-    width: 100%;
-    padding: 0 5%;
+    width: auto;
   }
 
   .cockpit-left {
-    margin-top: 15%;
+    left: 4%;
+    right: 52%;
+    bottom: 36%;
   }
 
   .cockpit-right {
-    margin-top: 1rem;
+    left: 52%;
+    right: 4%;
+    bottom: 36%;
   }
 
   .cockpit-bottom {
@@ -279,18 +298,45 @@ app-telemetry-bar {
     width: 95%;
   }
 
+  .command-log {
+    max-height: 70px;
+    font-size: 0.6rem;
+  }
+
   .cockpit-controls {
-    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .cockpit-btn {
+    padding: 0.5rem 0.8rem;
     flex: 1;
-    min-width: 100px;
     justify-content: center;
+  }
+
+  .btn-text {
+    font-size: 0.6rem;
   }
 }
 
-// Reduced motion
+@media (max-width: 480px) {
+  .cockpit-left,
+  .cockpit-right {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    padding: 0 5%;
+    margin-top: 1rem;
+  }
+
+  .cockpit-bottom {
+    bottom: 12%;
+  }
+}
+
+// ── Reduced motion ──
+
 @media (prefers-reduced-motion: reduce) {
   .pulse-ring {
     animation: none;
