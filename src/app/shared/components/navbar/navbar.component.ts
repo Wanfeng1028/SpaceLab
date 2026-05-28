@@ -102,6 +102,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.i18n.loadTranslations(this.currentLang());
     this.loadGithubStars();
+
+    // Mobile menu body scroll lock
+    effect(() => {
+      const isOpen = this.mobileMenuOpen();
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
   }
 
   ngOnDestroy(): void {
