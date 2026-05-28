@@ -261,18 +261,41 @@ export class HomeComponent implements OnInit, OnDestroy {
       console.log('[Home overlay elements]', overlayElements);
     }, 200);
 
-    // 检查 WebGL 支持
+    // 检查 WebGL 支持和 canvas 元素
     setTimeout(() => {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      // 检查 WebGL 支持
+      const testCanvas = document.createElement('canvas');
+      const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
       const hasWebGL = !!gl;
-      const hasWebGL2 = !!canvas.getContext('webgl2');
+      const hasWebGL2 = !!testCanvas.getContext('webgl2');
       
       console.log('[WebGL support]', {
         hasWebGL,
         hasWebGL2,
         renderer: gl ? (gl as WebGLRenderingContext).getParameter((gl as WebGLRenderingContext).RENDERER) : 'none',
         vendor: gl ? (gl as WebGLRenderingContext).getParameter((gl as WebGLRenderingContext).VENDOR) : 'none'
+      });
+
+      // 检查 Three.js canvas 元素
+      const threeCanvas = document.querySelector('app-three-canvas');
+      const canvasElement = document.querySelector('canvas');
+      
+      console.log('[Three.js canvas check]', {
+        threeCanvasFound: !!threeCanvas,
+        threeCanvasTag: threeCanvas?.tagName,
+        threeCanvasClass: threeCanvas?.className,
+        threeCanvasStyle: threeCanvas ? {
+          display: window.getComputedStyle(threeCanvas).display,
+          visibility: window.getComputedStyle(threeCanvas).visibility,
+          opacity: window.getComputedStyle(threeCanvas).opacity,
+          width: window.getComputedStyle(threeCanvas).width,
+          height: window.getComputedStyle(threeCanvas).height,
+          position: window.getComputedStyle(threeCanvas).position,
+          zIndex: window.getComputedStyle(threeCanvas).zIndex
+        } : 'not found',
+        canvasElementFound: !!canvasElement,
+        canvasWidth: canvasElement?.width,
+        canvasHeight: canvasElement?.height
       });
     }, 300);
   }
