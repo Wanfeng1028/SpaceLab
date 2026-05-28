@@ -844,8 +844,139 @@
   }
 }
 
-// 移动端适配
+// ============================================
+// Mobile Header & Menu Overlay
+// ============================================
+
 @media (max-width: 767px) {
+  // Unified header height
+  .navbar {
+    height: 64px;
+    padding: 0 20px;
+  }
+
+  // Hide desktop nav links
+  .navbar__links {
+    display: none !important;
+  }
+
+  // Mobile menu overlay
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 850;
+    padding-top: 64px;
+    // Default to light theme
+    background:
+      radial-gradient(circle at 50% 20%, rgba(105, 215, 255, 0.16), transparent 34%),
+      rgba(243, 239, 231, 0.72);
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+    opacity: 0;
+    animation: fade-in 0.25s ease forwards;
+  }
+
+  .mobile-menu-panel {
+    width: min(320px, calc(100vw - 48px));
+    margin: 32px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transform: translateY(-8px);
+    animation: slide-up 0.3s ease forwards;
+  }
+
+  .mobile-menu-link {
+    min-height: 48px;
+    border-radius: 999px;
+    border: 1px solid rgba(23, 23, 23, 0.1);
+    background: rgba(255, 255, 255, 0.42);
+    color: rgba(23, 23, 23, 0.86);
+    backdrop-filter: blur(14px) saturate(130%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 12px 30px rgba(34, 28, 18, 0.08);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.is-active {
+      background: linear-gradient(135deg, rgba(143, 124, 255, 0.82), rgba(105, 215, 255, 0.48));
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.48);
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  // Home page dark theme
+  .navbar.is-home .mobile-menu-overlay {
+    background:
+      radial-gradient(circle at 50% 20%, rgba(105, 215, 255, 0.14), transparent 34%),
+      rgba(3, 5, 12, 0.72);
+  }
+
+  .navbar.is-home .mobile-menu-link {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+
+    &.is-active {
+      background: linear-gradient(135deg, rgba(143, 124, 255, 0.72), rgba(105, 215, 255, 0.36));
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #fff;
+      box-shadow: 0 12px 32px rgba(143, 124, 255, 0.28);
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  // Header colors for home and inner pages
+  .navbar.is-home {
+    background: linear-gradient(
+      180deg,
+      rgba(3, 5, 12, 0.82),
+      rgba(3, 5, 12, 0.28)
+    );
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+    .navbar__brand-logo,
+    .navbar__name {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .hamburger-line {
+      background: rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  .navbar.is-light-theme {
+    background: rgba(243, 239, 231, 0.78);
+    border-bottom: 1px solid rgba(23, 23, 23, 0.08);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+    .navbar__brand-logo,
+    .navbar__name {
+      color: rgba(23, 23, 23, 0.88);
+    }
+
+    .hamburger-line {
+      background: rgba(23, 23, 23, 0.82);
+    }
+  }
+
+  // Nav effect toggle (existing)
   .nav-effect-toggle {
     height: 30px;
     min-width: 64px;
@@ -856,6 +987,26 @@
       right: 10px;
       width: 6px;
       height: 6px;
+    }
+  }
+
+  // Animations
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { transform: translateY(-8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-overlay,
+    .mobile-menu-panel {
+      animation: none;
+      transition: none;
     }
   }
 }
