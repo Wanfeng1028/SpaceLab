@@ -151,7 +151,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.i18n.loadTranslations('zh-CN');
     // 直接显示完整文本
     this.typedText.set(this.fullText);
     // 延迟2秒后启动打字机循环（确保音频上下文可能需要用户交互）

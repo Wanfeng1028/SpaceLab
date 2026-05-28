@@ -99,7 +99,6 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.i18n.loadTranslations('zh-CN');
     this.abortController = new AbortController();
 
     // 1. Initialize network status and listen for connection changes
