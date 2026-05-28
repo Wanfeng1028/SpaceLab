@@ -82,6 +82,7 @@ $white-muted: rgba(255, 255, 255, 0.62);
   opacity: 0;
   transform: translateY(16px) scale(0.98);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: opacity, transform;
   
   // 发光边框
   &::before {
