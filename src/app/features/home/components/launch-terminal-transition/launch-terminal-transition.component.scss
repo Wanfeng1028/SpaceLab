@@ -200,16 +200,30 @@ $white-muted: rgba(148, 163, 184, 0.92);
 
 // 输出行
 .terminal-output {
-  margin-left: 20px;
+  margin-left: 22px;
+  margin-bottom: 6px;
   opacity: 0;
   transform: translateY(4px);
   animation: fade-in 0.3s ease forwards;
-  
-  &.output-ok {
+}
+
+.output-status {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.output-text {
+  color: rgba(203, 213, 225, 0.88);
+}
+
+.terminal-ok {
+  .output-status {
     color: $green;
   }
-  
-  &.output-ready {
+}
+
+.terminal-ready {
+  .output-status {
     color: $yellow;
   }
 }
@@ -224,9 +238,12 @@ $white-muted: rgba(148, 163, 184, 0.92);
 // 终端光标
 .terminal-cursor {
   display: inline-block;
+  width: 7px;
+  height: 1.1em;
   margin-left: 2px;
-  color: $cyan;
-  animation: terminal-blink 0.8s steps(2, start) infinite;
+  transform: translateY(2px);
+  background: rgba(226, 232, 240, 0.92);
+  animation: terminal-blink 1s steps(2, start) infinite;
 }
 
 @keyframes terminal-blink {
