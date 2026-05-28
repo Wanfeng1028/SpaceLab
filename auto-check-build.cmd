@@ -9,5 +9,5 @@ if %errorlevel%==0 (
     findstr /i "ERROR" build_output.txt
 )
 echo [%time%] 下次检查: 5分钟后
-timeout /t 300 /nobreak >nul
+ping -n 301 127.0.0.1 >nul
 goto loop
