@@ -186,6 +186,27 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  private cleanupBodyClasses(): void {
+    const body = document.body;
+    const html = document.documentElement;
+    const classesToRemove = [
+      'modal-open',
+      'menu-open',
+      'launching',
+      'is-launching',
+      'is-transitioning',
+      'is-loading',
+      'page-hidden'
+    ];
+    classesToRemove.forEach(cls => {
+      body.classList.remove(cls);
+      html.classList.remove(cls);
+    });
+    // 恢复滚动
+    body.style.overflow = '';
+    html.style.overflow = '';
+  }
+
   t(key: string): string {
     return this.i18n.t(key);
   }
