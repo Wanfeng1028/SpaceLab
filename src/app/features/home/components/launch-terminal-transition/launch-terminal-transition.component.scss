@@ -1,0 +1,411 @@
+// ============================================
+// Launch Terminal Transition — 启动终端过渡动画
+// 飞船启动 HUD 风格，深色玻璃，蓝紫/青柔光
+// ============================================
+
+// 导入项目设计系统
+@use 'sass:math';
+
+// 变量
+$panel-width: min(680px, calc(100vw - 48px));
+$panel-radius: 24px;
+$header-height: 44px;
+$blur-amount: 8px;
+$panel-blur: 22px;
+
+// 颜色
+$cyan: #69d7ff;
+$purple: #8f7cff;
+$green: #56f0c2;
+$yellow: #ffd21f;
+$white: rgba(255, 255, 255, 0.82);
+$white-muted: rgba(255, 255, 255, 0.62);
+
+.launch-terminal-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  
+  &.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    
+    .launch-terminal-transition__panel {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+// 背景模糊层
+.launch-terminal-transition__backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(105, 215, 255, 0.12), transparent 38%),
+    rgba(3, 5, 12, 0.38);
+  backdrop-filter: blur($blur-amount) saturate(120%);
+  -webkit-backdrop-filter: blur($blur-amount) saturate(120%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  
+  .active & {
+    opacity: 1;
+  }
+}
+
+// 终端面板
+.launch-terminal-transition__panel {
+  position: relative;
+  width: $panel-width;
+  border-radius: $panel-radius;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+    rgba(5, 8, 18, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 30px 120px rgba(0, 0, 0, 0.46),
+    0 0 44px rgba(105, 215, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur($panel-blur) saturate(150%);
+  -webkit-backdrop-filter: blur($panel-blur) saturate(150%);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  
+  // 发光边框
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: $panel-radius;
+    background: radial-gradient(circle at 50% 0%, rgba(105, 215, 255, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+}
+
+// 顶部状态栏
+.launch-terminal-transition__header {
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: $white-muted;
+  
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $cyan;
+    box-shadow: 0 0 8px $cyan;
+    animation: pulse-dot 1.5s infinite alternate;
+  }
+  
+  .header-text {
+    font-weight: 600;
+    color: $white;
+  }
+  
+  .header-subtext {
+    margin-left: auto;
+    opacity: 0.7;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+}
+
+@keyframes pulse-dot {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+// 命令行内容区
+.launch-terminal-transition__body {
+  padding: 20px 22px 22px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.8;
+  color: $white;
+  min-height: 180px;
+  max-height: 300px;
+  overflow-y: auto;
+  
+  // 滚动条样式
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(105, 215, 255, 0.3);
+    border-radius: 2px;
+  }
+}
+
+// 命令块
+.command-block {
+  margin-bottom: 12px;
+  
+  &.typing {
+    .command-text {
+      border-right: 2px solid transparent;
+      animation: typing-cursor 0.8s steps(2, start) infinite;
+    }
+  }
+}
+
+.command-line {
+  color: $white;
+  
+  .prompt {
+    color: $cyan;
+    margin-right: 8px;
+  }
+  
+  .command-text {
+    &.animate-typing {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing-appear 1s steps(20, end);
+    }
+  }
+}
+
+@keyframes typing-appear {
+  from { max-width: 0; }
+  to { max-width: 100%; }
+}
+
+@keyframes typing-cursor {
+  0%, 45% { border-color: $cyan; }
+  46%, 100% { border-color: transparent; }
+}
+
+// 输出行
+.output-line {
+  margin-left: 20px;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: fade-in 0.3s ease forwards;
+  
+  &.output-ok {
+    color: $green;
+  }
+  
+  &.output-ready {
+    color: $yellow;
+  }
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 终端光标
+.terminal-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: $cyan;
+  animation: terminal-blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes terminal-blink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+// SYSTEM READY 显示
+.system-ready {
+  text-align: center;
+  padding: 24px;
+  margin-top: 12px;
+  animation: system-ready-appear 0.4s ease;
+  
+  &__title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    color: $cyan;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(105, 215, 255, 0.4);
+    animation: system-ready-pulse 1.5s ease-in-out infinite;
+  }
+  
+  &__subtitle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: $white-muted;
+    letter-spacing: 0.05em;
+  }
+}
+
+@keyframes system-ready-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes system-ready-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+// 进度条
+.launch-terminal-transition__progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  
+  &-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $cyan, $purple);
+    box-shadow: 0 0 12px rgba(105, 215, 255, 0.3);
+    transition: width 0.3s ease;
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .launch-terminal-transition__panel {
+    width: calc(100vw - 32px);
+    border-radius: 18px;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+  
+  .launch-terminal-transition__header {
+    height: 38px;
+    font-size: 10px;
+    gap: 8px;
+    padding: 0 14px;
+    
+    .header-subtext {
+      display: none;
+    }
+  }
+  
+  .launch-terminal-transition__body {
+    font-size: 12px;
+    line-height: 1.7;
+    padding: 16px 18px 18px;
+    min-height: 150px;
+    max-height: 250px;
+  }
+  
+  .command-line {
+    margin-left: 0;
+  }
+  
+  .output-line {
+    margin-left: 14px;
+    font-size: 11px;
+  }
+  
+  .system-ready {
+    padding: 18px;
+    
+    &__title {
+      font-size: 22px;
+    }
+    
+    &__subtitle {
+      font-size: 12px;
+    }
+  }
+}
+
+// 小屏幕适配
+@media (max-width: 375px) {
+  .launch-terminal-transition__panel {
+    width: calc(100vw - 24px);
+  }
+  
+  .launch-terminal-transition__body {
+    font-size: 11px;
+    padding: 14px 16px 16px;
+    min-height: 120px;
+    max-height: 200px;
+  }
+  
+  .system-ready__title {
+    font-size: 20px;
+  }
+}
+
+// 减少动画模式
+@media (prefers-reduced-motion: reduce) {
+  .launch-terminal-transition {
+    transform: none;
+    
+    &.active {
+      transform: none;
+    }
+  }
+  
+  .launch-terminal-transition__panel {
+    transform: none;
+    
+    .active & {
+      transform: none;
+    }
+  }
+  
+  .command-text.animate-typing {
+    animation: none;
+    max-width: 100%;
+  }
+  
+  .terminal-cursor {
+    animation: none;
+    opacity: 1;
+  }
+  
+  .system-ready__title {
+    animation: none;
+  }
+  
+  .output-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .status-dot {
+    animation: none;
+    opacity: 1;
+  }
+}
