@@ -224,6 +224,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     window.addEventListener('error', (event) => {
       console.error('[Home JS Error]', event.error);
     });
+    
+    // 临时调试：添加红色边框来检查 .hero-content 是否可见
+    setTimeout(() => {
+      const heroContent = document.querySelector('.hero-content') as HTMLElement;
+      if (heroContent) {
+        heroContent.style.border = '2px solid red';
+        heroContent.style.background = 'rgba(255, 0, 0, 0.1)';
+      }
+    }, 200);
   }
 
   ngOnDestroy(): void {
