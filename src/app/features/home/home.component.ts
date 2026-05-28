@@ -295,9 +295,28 @@ export class HomeComponent implements OnInit, OnDestroy {
         } : 'not found',
         canvasElementFound: !!canvasElement,
         canvasWidth: canvasElement?.width,
-        canvasHeight: canvasElement?.height
+        canvasHeight: canvasElement?.height,
+        canvasStyle: canvasElement ? {
+          display: window.getComputedStyle(canvasElement).display,
+          visibility: window.getComputedStyle(canvasElement).visibility,
+          opacity: window.getComputedStyle(canvasElement).opacity,
+          width: window.getComputedStyle(canvasElement).width,
+          height: window.getComputedStyle(canvasElement).height
+        } : 'not found'
       });
-    }, 300);
+
+      // 检查是否有 WebGL context
+      if (canvasElement) {
+        const ctx = canvasElement.getContext('webgl') || canvasElement.getContext('webgl2') || canvasElement.getContext('experimental-webgl');
+        console.log('[WebGL context check]', {
+          hasContext: !!ctx,
+          canvasWidth: canvasElement.width,
+          canvasHeight: canvasElement.height,
+          drawingBufferWidth: ctx ? (ctx as WebGLRenderingContext).drawingBufferWidth : 0,
+          drawingBufferHeight: ctx ? (ctx as WebGLRenderingContext).drawingBufferHeight : 0
+        });
+      }
+    }, 500);
   }
 
   ngOnDestroy(): void {
