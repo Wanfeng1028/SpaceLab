@@ -79,6 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Launch Terminal Transition 状态
   isLaunchTransitionActive = signal<boolean>(false);
   launchCompleted = signal<boolean>(false);
+  isHeroDimmed = signal<boolean>(false);
 
   // Live scrolling sci-fi diagnostic terminal logs
   telemetryLogs = signal<string[]>([]);
@@ -156,6 +157,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // 重置所有临时UI状态
     this.isLaunchTransitionActive.set(false);
     this.launchCompleted.set(false);
+    this.isHeroDimmed.set(false);
     // 清理可能残留的 body/html class
     this.cleanupBodyClasses();
     // 直接显示完整文本
@@ -172,7 +174,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log('[Home init]', {
       isLaunchTransitionActive: this.isLaunchTransitionActive(),
       launchCompleted: this.launchCompleted(),
-      isHeroDimmed: this.isHeroDimmed
+      isHeroDimmed: this.isHeroDimmed()
     });
   }
 
