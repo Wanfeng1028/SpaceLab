@@ -105,9 +105,37 @@
   </button>
 </nav>
 
-<!-- Mobile Overlay -->
+<!-- Mobile Menu Overlay -->
 @if (mobileMenuOpen()) {
-  <div class="navbar__overlay" (click)="closeMobileMenu()"></div>
+  <div class="mobile-menu-overlay" (click)="closeMobileMenu()">
+    <nav class="mobile-menu-panel" (click)="$event.stopPropagation()">
+      @for (item of mobileMenuItems; track item) {
+        @switch (item.type) {
+          @case ('github') {
+            <a href="https://github.com/Wanfeng1028/SpaceLab" target="_blank" rel="noopener" class="mobile-menu-link">
+              <span>{{ t('common.starOnGitHub') }}</span>
+            </a>
+          }
+          @case ('link') {
+            @if (item.link) {
+              <a class="mobile-menu-link"
+                 [routerLink]="item.link.route"
+                 routerLinkActive="is-active"
+                 [routerLinkActiveOptions]="{ exact: item.link.route === '/' }"
+                 (click)="onLinkClick(item.link, $event)">
+                <span>{{ t(item.link.labelKey) }}</span>
+              </a>
+            }
+          }
+          @case ('lang') {
+            <button class="mobile-menu-link" (click)="toggleLang(); closeMobileMenu()">
+              <span>{{ currentLang() === 'zh-CN' ? 'EN' : '中' }}</span>
+            </button>
+          }
+        }
+      }
+    </nav>
+  </div>
 }
 
 <!-- Share Modal -->
