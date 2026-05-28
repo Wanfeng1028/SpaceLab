@@ -132,7 +132,9 @@
 }
 
 <!-- Profile Capsule Modal -->
-<space-capsule-modal
-  [isOpen]="showCapsuleModal()"
-  [triggerEl]="avatarTriggerEl()"
-  (closed)="onCapsuleClosed()" />
+@if (showCapsuleModal()) {
+  <space-capsule-modal
+    [isOpen]="showCapsuleModal()"
+    [triggerEl]="avatarTriggerEl()"
+    (closed)="onCapsuleClosed()" />
+}
