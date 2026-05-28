@@ -6,7 +6,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { MagneticButtonComponent } from '../../../../shared/components/hud/magnetic-button.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
@@ -17,7 +16,7 @@ import { StargateScene } from '../../../../three/scenes/stargate.scene';
   templateUrl: './stargate-dock.component.html',
   styleUrl: './stargate-dock.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, MagneticButtonComponent, TelemetryBarComponent, TranslateModule],
+  imports: [ThreeCanvasComponent, MagneticButtonComponent, TelemetryBarComponent],
 })
 export class PortalGallerySection implements OnInit {
   private readonly router = inject(Router);
