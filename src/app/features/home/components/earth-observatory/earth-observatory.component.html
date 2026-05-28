@@ -16,7 +16,6 @@
 
   <!-- 左侧HUD面板 -->
   <div class="observatory-left">
-    <!-- 遥感参数 HUD -->
     <app-hud-frame class="sensor-hud">
       <div class="hud-metrics">
         <app-hud-metric label="SENSOR" value="MULTISPECTRAL" />
@@ -29,7 +28,6 @@
 
   <!-- 右侧垂直扫描标尺 + 频谱条 -->
   <div class="observatory-right">
-    <!-- 垂直扫描标尺 -->
     <div class="scan-scale">
       @for (tick of scaleTicks; track tick.value) {
         <div class="scale-tick" [class.scale-tick--major]="tick.major">
@@ -38,7 +36,6 @@
       }
     </div>
 
-    <!-- 频谱条 -->
     <div class="spectrum-bars">
       <div class="spectrum-bar" style="--bar-height: 60%; --bar-color: #69d7ff;"></div>
       <div class="spectrum-bar" style="--bar-height: 80%; --bar-color: #56f0c2;"></div>
