@@ -37,10 +37,15 @@ export const routes: Routes = [
       import('./features/lab/lab.component').then(m => m.LabComponent),
   },
   {
-    path: 'gallery',
-    title: 'Gallery — SpaceLab',
+    path: 'ai-frontline',
+    title: 'AI Frontline — SpaceLab',
     loadComponent: () =>
-      import('./features/gallery/gallery.component').then(m => m.GalleryComponent),
+      import('./features/ai-frontline/ai-frontline.component').then(m => m.AiFrontlineComponent),
+  },
+  {
+    path: 'gallery',
+    redirectTo: 'ai-frontline',
+    pathMatch: 'full',
   },
   {
     path: 'about',
