@@ -75,7 +75,7 @@
     "archive": "Archive"
   },
   "blog": {
-    "title": "Blog",
+    "title": "文章",
     "desc": "记录技术思考与生活感悟",
     "searchPlaceholder": "搜索文章...",
     "noArticles": "暂无文章",
@@ -94,7 +94,7 @@
     "post4_excerpt": "2025 年我日常使用的开发工具、编辑器配置、浏览器插件和效率工具分享。"
   },
   "article": {
-    "backToBlog": "返回 Blog",
+    "backToBlog": "返回文章",
     "prev": "上一篇",
     "next": "下一篇",
     "notFound": "文章不存在",
