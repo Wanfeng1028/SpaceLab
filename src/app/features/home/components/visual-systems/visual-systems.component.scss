@@ -1,27 +1,23 @@
-// Visual Systems Section Styles
-// Holographic data visualization panels with drag interaction
+// Visual Systems — RGB dots + holographic panels, black canvas
+// Left: Three.js canvas, Right: floating glass panels
 
 .visual-systems {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 600px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 30%, #0a1020 0%, #061018 100%);
-  cursor: grab;
-
-  &:active {
-    cursor: grabbing;
-  }
+  background: #000;
 }
 
-// Three.js holographic panels canvas
+// Left side — Three.js canvas
 .visual-canvas-container {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 28%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 60%;
   height: 60%;
   z-index: 1;
 
@@ -31,110 +27,131 @@
   }
 }
 
-// Header text
+// Header area
 .visual-header {
   position: absolute;
-  top: 8%;
-  left: 5%;
+  top: 10%;
+  right: 7%;
+  text-align: right;
   z-index: 2;
   max-width: 400px;
 }
 
 .visual-number {
-  font-family: 'Orbitron', monospace;
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-family: var(--font-mono);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
   font-weight: 700;
-  color: #69d7ff;
+  color: #ff6c8f;
   margin: 0;
-  text-shadow: 0 0 20px rgba(105, 215, 255, 0.5);
-  letter-spacing: 0.1em;
+  text-shadow: 0 0 24px rgba(255, 108, 143, 0.35);
+  letter-spacing: 0.12em;
+  opacity: 0.85;
 }
 
 .visual-title {
-  font-family: 'Orbitron', monospace;
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
-  font-weight: 600;
-  color: #69d7ff;
-  margin: 0.5rem 0 1rem 0;
-  letter-spacing: 0.15em;
+  font-family: var(--font-sans);
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0.4rem 0 0.8rem 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .visual-subtitle {
-  font-family: 'Roboto Mono', monospace;
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: #56f0c2;
-  margin: 0 0 0.5rem 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+  color: rgba(255, 150, 180, 0.7);
+  margin: 0 0 0.4rem 0;
   font-style: italic;
 }
 
 .visual-desc {
-  font-family: 'Roboto Mono', monospace;
-  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.1vw, 0.85rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.4);
   margin: 0;
 }
 
-// Bottom left HUD
-.visual-bottom-left {
+// Right side — glass panels
+.visual-right {
   position: absolute;
-  bottom: 12%;
-  left: 5%;
-  width: 18%;
+  right: 7%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26%;
   z-index: 2;
-}
-
-.display-hud {
-  width: 100%;
-}
-
-.hud-metrics {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
-// Bottom right interaction hint
-.visual-bottom-right {
-  position: absolute;
-  bottom: 12%;
-  right: 5%;
-  z-index: 2;
+.visual-panel {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 112, 166, 0.08) 0%,
+    rgba(255, 112, 166, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 112, 166, 0.18);
+  border-radius: 14px;
+  padding: 0.8rem 1.1rem;
+  backdrop-filter: blur(12px) saturate(1.2);
+  transition: border-color 0.4s, box-shadow 0.4s;
+  cursor: default;
+
+  &:hover {
+    border-color: rgba(255, 112, 166, 0.45);
+    box-shadow:
+      0 4px 32px rgba(255, 112, 166, 0.1),
+      inset 0 0 18px rgba(255, 112, 166, 0.05);
+  }
 }
 
-.interaction-hint {
+.panel-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  border-radius: 4px;
-  animation: hintPulse 2s ease-in-out infinite;
+  margin-bottom: 0.3rem;
 }
 
-.hint-icon {
-  font-size: 1.2rem;
-  color: #00f0ff;
-}
-
-.hint-text {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
+.panel-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 170, 190, 0.7);
   letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-@keyframes hintPulse {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
+.panel-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: rgba(255, 112, 166, 0.6);
+  letter-spacing: 0.1em;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid rgba(255, 112, 166, 0.2);
+  border-radius: 8px;
 }
 
-// Telemetry bar positioning
+.panel-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.panel-desc {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0.3rem 0 0 0;
+  line-height: 1.5;
+}
+
+// Telemetry bar
 app-telemetry-bar {
   position: absolute;
   bottom: 0;
@@ -143,41 +160,72 @@ app-telemetry-bar {
   z-index: 3;
 }
 
-// Mobile responsive
+// ── Mobile ──
+
 @media (max-width: 768px) {
   .visual-systems {
-    min-height: 500px;
+    min-height: 100svh;
   }
 
   .visual-canvas-container {
-    width: 95%;
-    height: 45%;
-    top: 45%;
+    width: 80%;
+    height: 40%;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .visual-header {
-    top: 3%;
-    left: 5%;
+    top: 6%;
     right: 5%;
+    left: 5%;
+    text-align: left;
     max-width: none;
-    text-align: center;
   }
 
-  .visual-bottom-left {
-    display: none;
+  .visual-number {
+    font-size: 1.5rem;
   }
 
-  .visual-bottom-right {
-    bottom: 8%;
-    right: 50%;
-    transform: translateX(50%);
+  .visual-title {
+    font-size: 1.1rem;
+  }
+
+  .visual-right {
+    right: 5%;
+    left: 5%;
+    top: auto;
+    bottom: 14%;
+    width: auto;
+    transform: none;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .visual-panel {
+    min-width: 180px;
+    flex-shrink: 0;
   }
 }
 
-// Reduced motion
+@media (max-width: 480px) {
+  .visual-right {
+    gap: 0.4rem;
+  }
+
+  .visual-panel {
+    min-width: 160px;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+// ── Reduced motion ──
+
 @media (prefers-reduced-motion: reduce) {
-  .interaction-hint {
-    animation: none;
-    opacity: 0.8;
+  .visual-panel {
+    transition: none;
   }
 }
