@@ -135,6 +135,10 @@ export class AiFrontlineComponent implements OnInit {
     return this.i18n.t(key);
   }
 
+  getCategoryCount(category: string): number {
+    return this.news().filter((item) => item.category === category).length;
+  }
+
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
     const now = new Date();
