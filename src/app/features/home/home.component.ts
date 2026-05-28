@@ -187,7 +187,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onEnter(): void {
     // 启动 Launch Terminal Transition
-    if (this.isLaunchTransitionActive()) return;
+    if (this.isLaunchTransitionActive()) {
+      // 如果正在播放，重新启动
+      this.isLaunchTransitionActive.set(false);
+      setTimeout(() => {
+        this.isLaunchTransitionActive.set(true);
+        this.launchCompleted.set(false);
+      }, 50);
+      return;
+    }
     this.isLaunchTransitionActive.set(true);
     this.launchCompleted.set(false);
   }
