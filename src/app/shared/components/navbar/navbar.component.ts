@@ -30,6 +30,11 @@ interface NavLink {
   labelKey: string;
 }
 
+interface MobileMenuItem {
+  type: 'github' | 'link' | 'lang';
+  link?: NavLink;
+}
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.html',
