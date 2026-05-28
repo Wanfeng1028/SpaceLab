@@ -56,19 +56,40 @@ export class HeroLightFieldScene {
     // Orthographic Camera to render a flat 2D full-screen quad
     this.camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
+    console.log('[HeroLightFieldScene] Creating WebGLRenderer', {
+      canvas: this.canvas,
+      canvasWidth: this.canvas.width,
+      canvasHeight: this.canvas.height
+    });
+    
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
       antialias: false,
       alpha: false,
       powerPreference: 'high-performance',
     });
+    
+    console.log('[HeroLightFieldScene] WebGLRenderer created', {
+      domElement: this.renderer.domElement,
+      context: this.renderer.getContext()
+    });
+    
     this.contextLostHandler = (e: Event) => {
       e.preventDefault();
+      console.log('[HeroLightFieldScene] WebGL context lost');
     };
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(0x000000, 1);
+    
+    console.log('[HeroLightFieldScene] WebGLRenderer configured', {
+      pixelRatio: this.renderer.getPixelRatio(),
+      size: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+    });
 
     const geometry = new PlaneGeometry(2, 2);
 
