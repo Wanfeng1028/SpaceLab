@@ -729,7 +729,7 @@
   position: relative;
   display: inline-block;
 
-  &::before,
+  & ::before,
   & ::after {
     content: attr(data-text);
     position: absolute;
@@ -740,7 +740,7 @@
     opacity: 0.8;
   }
 
-  &::before {
+  & ::before {
     color: #00ffc4;
     z-index: -1;
     animation: glitch-1 3s infinite linear alternate-reverse;
@@ -778,7 +778,7 @@
   height: 8px;
   border-radius: 50%;
 
-  &::before,
+  & ::before,
   & ::after {
     content: '';
     position: absolute;
@@ -788,7 +788,7 @@
     opacity: 0;
   }
 
-  &::before {
+  & ::before {
     animation: pulseRingExpand 2s ease-out infinite;
   }
 
@@ -1132,7 +1132,7 @@
   inset: 0;
   border-radius: 50%;
 
-  &::before,
+  & ::before,
   & ::after {
     content: '';
     position: absolute;
@@ -1140,7 +1140,7 @@
     border: 1px solid rgba(0, 255, 196, 0.1);
   }
 
-  &::before {
+  & ::before {
     inset: 15%;
     animation: radarRingPulse 3s ease-out infinite;
   }
