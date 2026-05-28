@@ -1,7 +1,7 @@
 ﻿# Auto Review Script for SpaceLab
 # Runs every 10 minutes: checks git status, builds, commits changes
 
-$intervalMinutes = 10
+$intervalMinutes = 1
 $projectRoot = "E:\code\javascript\project\SpaceLab"
 
 Write-Host "Starting auto review loop for SpaceLab (every $intervalMinutes minutes)" -ForegroundColor Cyan
