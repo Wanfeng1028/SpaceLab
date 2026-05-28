@@ -42,12 +42,15 @@ export class HeroLightFieldScene {
   }
 
   init(): void {
+    console.log('[HeroLightFieldScene] init() called');
     this.initScene();
     this.bindEvents();
     this.animate();
+    console.log('[HeroLightFieldScene] init() completed');
   }
 
   private initScene(): void {
+    console.log('[HeroLightFieldScene] initScene() called');
     this.scene = new Scene();
 
     // Orthographic Camera to render a flat 2D full-screen quad
