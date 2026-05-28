@@ -52,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly soundEnabled = signal<boolean>(true);
   readonly isLightTheme = signal(false);
   readonly avatarTriggerEl = signal<HTMLElement | null>(null);
+  private lastOpenTime = 0;
 
   readonly navLinks: NavLink[] = SITE.nav.map((n) => ({
     route: n.href,
