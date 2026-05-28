@@ -1,10 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../../../core/services/i18n.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
@@ -25,8 +19,7 @@ export class PortalGallerySection implements OnInit {
 
   readonly telemetryText = signal('AI FRONTLINE // DAILY SIGNALS AWAITING');
 
-  readonly stargateFactory = (canvas: HTMLCanvasElement) =>
-    new StargateScene(canvas);
+  readonly stargateFactory = (canvas: HTMLCanvasElement) => new StargateScene(canvas);
 
   readonly currentYear = new Date().getFullYear();
 

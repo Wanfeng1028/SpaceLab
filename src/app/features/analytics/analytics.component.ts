@@ -23,7 +23,7 @@ export class AnalyticsComponent {
     this.metricData.map((m) => ({
       value: m.value,
       label: this.i18n.t(`analytics.${m.key}`),
-    }))
+    })),
   );
 
   private readonly pageData = [
@@ -39,7 +39,7 @@ export class AnalyticsComponent {
       path: p.path,
       views: p.views,
       title: this.i18n.t(`analytics.${p.key}`),
-    }))
+    })),
   );
 
   private readonly articleData = [
@@ -56,7 +56,7 @@ export class AnalyticsComponent {
       slug: a.slug,
       views: a.views,
       date: a.date,
-    }))
+    })),
   );
 
   readonly trendData = [45, 52, 38, 65, 72, 58, 89];

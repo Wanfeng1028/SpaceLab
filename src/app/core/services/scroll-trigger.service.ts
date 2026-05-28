@@ -37,7 +37,7 @@ export class ScrollTriggerService implements OnDestroy {
       onLeave?: () => void;
       onEnterBack?: () => void;
       onLeaveBack?: () => void;
-    } = {}
+    } = {},
   ) {
     const defaults = {
       pin: true,
@@ -79,7 +79,7 @@ export class ScrollTriggerService implements OnDestroy {
       start?: string;
       end?: string;
       toggleActions?: string;
-    } = {}
+    } = {},
   ) {
     const defaults = {
       start: 'top 80%',
@@ -107,7 +107,7 @@ export class ScrollTriggerService implements OnDestroy {
             end: config.end,
             toggleActions: config.toggleActions,
           },
-        }
+        },
       );
 
       return st;

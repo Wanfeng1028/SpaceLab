@@ -462,7 +462,7 @@ export class EclipseCoreScene {
 
     // Update shader uniforms
     const coreMat = this.scene.children[0]
-      ? (this.coreGroup.children[0] as Mesh).material as ShaderMaterial
+      ? ((this.coreGroup.children[0] as Mesh).material as ShaderMaterial)
       : null;
     if (coreMat && coreMat.uniforms) {
       coreMat.uniforms['uTime'].value = elapsed;
@@ -470,8 +470,7 @@ export class EclipseCoreScene {
     (this.corona.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
     (this.stars.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
     (this.pulseRing.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
-    (this.pulseRing.material as ShaderMaterial).uniforms['uStartTime'].value =
-      this.pulseStartTime;
+    (this.pulseRing.material as ShaderMaterial).uniforms['uStartTime'].value = this.pulseStartTime;
 
     this.renderer.render(this.scene, this.camera);
   }

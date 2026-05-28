@@ -261,10 +261,10 @@ Home
 
 按钮：
 
-| 按钮 | 风格 | 行为 |
-|---|---|---|
-| 进入 | Google Blue CTA | 平滑滚动到 3D Portal 入口区 |
-| 联系我 | Glass Button | 跳转到 Contact 区或打开联系方式 |
+| 按钮   | 风格            | 行为                            |
+| ------ | --------------- | ------------------------------- |
+| 进入   | Google Blue CTA | 平滑滚动到 3D Portal 入口区     |
+| 联系我 | Glass Button    | 跳转到 Contact 区或打开联系方式 |
 
 Hero 首屏动效：
 
@@ -1150,22 +1150,23 @@ SpaceLab 使用 L3 immersive 动效，但必须有降级。
 
 ```css
 :root {
-  --font-sans: "Noto Sans SC", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Noto Sans SC", "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-sans:
+    'Noto Sans SC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Noto Sans SC', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 }
 ```
 
 ### 7.2 字号规则
 
-| 场景 | 桌面端 | 移动端 |
-|---|---:|---:|
-| Hero 欢迎 | 72px - 112px | 44px - 64px |
-| Section Title | 36px - 64px | 28px - 40px |
-| Card Title | 22px - 34px | 20px - 26px |
-| Body | 16px - 17px | 16px |
-| Article Body | 17px | 16px |
-| Label | 12px - 14px | 12px |
+| 场景          |       桌面端 |      移动端 |
+| ------------- | -----------: | ----------: |
+| Hero 欢迎     | 72px - 112px | 44px - 64px |
+| Section Title |  36px - 64px | 28px - 40px |
+| Card Title    |  22px - 34px | 20px - 26px |
+| Body          |  16px - 17px |        16px |
+| Article Body  |         17px |        16px |
+| Label         |  12px - 14px |        12px |
 
 ### 7.3 中英文
 

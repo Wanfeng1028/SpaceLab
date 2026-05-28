@@ -4,14 +4,22 @@
     <div class="gauge-container">
       <div class="gauge">
         <svg class="gauge-svg" viewBox="0 0 120 72" fill="none">
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
-                stroke-linecap="round" />
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="#00ffc4" stroke-width="2.5" fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="157" 
-                [attr.stroke-dashoffset]="locationInfo().status === 'success' ? '0' : '157'" />
+          <path
+            d="M10 66 A50 50 0 0 1 110 66"
+            stroke="rgba(255,255,255,0.08)"
+            stroke-width="2.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M10 66 A50 50 0 0 1 110 66"
+            stroke="#00ffc4"
+            stroke-width="2.5"
+            fill="none"
+            stroke-linecap="round"
+            stroke-dasharray="157"
+            [attr.stroke-dashoffset]="locationInfo().status === 'success' ? '0' : '157'"
+          />
           @for (tick of ticks; track $index) {
             <line
               [attr.x1]="tick.x1"
@@ -25,9 +33,15 @@
         </svg>
         <div class="gauge-label">{{ t('telemetry.location') }}</div>
         <div class="gauge-value" [title]="t(locationInfo().city)">{{ t(locationInfo().city) }}</div>
-        <div class="gauge-unit" [title]="t(locationInfo().region)">{{ t(locationInfo().region) }}</div>
+        <div class="gauge-unit" [title]="t(locationInfo().region)">
+          {{ t(locationInfo().region) }}
+        </div>
         @if (locationInfo().status === 'pending') {
-          <button class="consent-btn" (click)="grantLocationConsent()" [attr.aria-label]="t('telemetry.enableLocation')">
+          <button
+            class="consent-btn"
+            (click)="grantLocationConsent()"
+            [attr.aria-label]="t('telemetry.enableLocation')"
+          >
             {{ t('telemetry.enable') }}
           </button>
         }
@@ -35,14 +49,22 @@
 
       <div class="gauge">
         <svg class="gauge-svg" viewBox="0 0 120 72" fill="none">
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
-                stroke-linecap="round" />
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="#00ffc4" stroke-width="2.5" fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="157" 
-                [attr.stroke-dashoffset]="weatherInfo().status === 'success' ? '40' : '157'" />
+          <path
+            d="M10 66 A50 50 0 0 1 110 66"
+            stroke="rgba(255,255,255,0.08)"
+            stroke-width="2.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M10 66 A50 50 0 0 1 110 66"
+            stroke="#00ffc4"
+            stroke-width="2.5"
+            fill="none"
+            stroke-linecap="round"
+            stroke-dasharray="157"
+            [attr.stroke-dashoffset]="weatherInfo().status === 'success' ? '40' : '157'"
+          />
           @for (tick of ticks; track $index) {
             <line
               [attr.x1]="tick.x1"
@@ -55,8 +77,12 @@
           }
         </svg>
         <div class="gauge-label">{{ t('telemetry.weather') }}</div>
-        <div class="gauge-value" [title]="weatherInfo().temperature">{{ weatherInfo().temperature }}</div>
-        <div class="gauge-unit" [title]="t(weatherInfo().condition)">{{ t(weatherInfo().condition) }}</div>
+        <div class="gauge-value" [title]="weatherInfo().temperature">
+          {{ weatherInfo().temperature }}
+        </div>
+        <div class="gauge-unit" [title]="t(weatherInfo().condition)">
+          {{ t(weatherInfo().condition) }}
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +95,11 @@
       </div>
       <div class="phase-timeline__nodes">
         @for (phase of phases(); track phase.label) {
-          <div class="phase-timeline__node" [class.is-active]="phase.active" [class.is-past]="$index < activeIndex()">
+          <div
+            class="phase-timeline__node"
+            [class.is-active]="phase.active"
+            [class.is-past]="$index < activeIndex()"
+          >
             <span class="phase-timeline__dot"></span>
             <span class="phase-timeline__label">{{ phase.label }}</span>
           </div>
@@ -91,14 +121,24 @@
     <div class="gauge-container">
       <div class="gauge">
         <svg class="gauge-svg" viewBox="0 0 120 72" fill="none">
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="rgba(255,255,255,0.08)" stroke-width="2.5" fill="none"
-                stroke-linecap="round" />
-          <path d="M10 66 A50 50 0 0 1 110 66"
-                stroke="#00ffc4" stroke-width="2.5" fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="157" 
-                [attr.stroke-dashoffset]="networkInfo().status !== 'OFFLINE' ? (157 - (networkInfo().level * 31.4)) : '157'" />
+          <path
+            d="M10 66 A50 50 0 0 1 110 66"
+            stroke="rgba(255,255,255,0.08)"
+            stroke-width="2.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M10 66 A50 50 0 0 1 110 66"
+            stroke="#00ffc4"
+            stroke-width="2.5"
+            fill="none"
+            stroke-linecap="round"
+            stroke-dasharray="157"
+            [attr.stroke-dashoffset]="
+              networkInfo().status !== 'OFFLINE' ? 157 - networkInfo().level * 31.4 : '157'
+            "
+          />
           @for (tick of ticks; track $index) {
             <line
               [attr.x1]="tick.x1"
@@ -117,24 +157,58 @@
 
       <div class="network-status">
         <svg class="signal-svg" viewBox="0 0 54 36" fill="none">
-          <rect x="2" y="28" width="6" height="8" rx="2" 
-                [attr.fill]="networkLevel >= 1 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
-                [attr.opacity]="networkLevel >= 1 ? '1' : '0.3'" />
-          <rect x="12" y="22" width="6" height="14" rx="2" 
-                [attr.fill]="networkLevel >= 2 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
-                [attr.opacity]="networkLevel >= 2 ? '1' : '0.3'" />
-          <rect x="22" y="16" width="6" height="20" rx="2" 
-                [attr.fill]="networkLevel >= 3 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
-                [attr.opacity]="networkLevel >= 3 ? '1' : '0.3'" />
-          <rect x="32" y="10" width="6" height="26" rx="2" 
-                [attr.fill]="networkLevel >= 4 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
-                [attr.opacity]="networkLevel >= 4 ? '1' : '0.3'" />
-          <rect x="42" y="4" width="6" height="32" rx="2" 
-                [attr.fill]="networkLevel >= 5 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'" 
-                [attr.opacity]="networkLevel >= 5 ? '1' : '0.3'" />
+          <rect
+            x="2"
+            y="28"
+            width="6"
+            height="8"
+            rx="2"
+            [attr.fill]="networkLevel >= 1 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'"
+            [attr.opacity]="networkLevel >= 1 ? '1' : '0.3'"
+          />
+          <rect
+            x="12"
+            y="22"
+            width="6"
+            height="14"
+            rx="2"
+            [attr.fill]="networkLevel >= 2 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'"
+            [attr.opacity]="networkLevel >= 2 ? '1' : '0.3'"
+          />
+          <rect
+            x="22"
+            y="16"
+            width="6"
+            height="20"
+            rx="2"
+            [attr.fill]="networkLevel >= 3 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'"
+            [attr.opacity]="networkLevel >= 3 ? '1' : '0.3'"
+          />
+          <rect
+            x="32"
+            y="10"
+            width="6"
+            height="26"
+            rx="2"
+            [attr.fill]="networkLevel >= 4 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'"
+            [attr.opacity]="networkLevel >= 4 ? '1' : '0.3'"
+          />
+          <rect
+            x="42"
+            y="4"
+            width="6"
+            height="32"
+            rx="2"
+            [attr.fill]="networkLevel >= 5 ? '#00ffc4' : 'rgba(255, 255, 255, 0.08)'"
+            [attr.opacity]="networkLevel >= 5 ? '1' : '0.3'"
+          />
         </svg>
         <div class="network-status__label" [class.is-offline]="networkInfo().status === 'OFFLINE'">
-          {{ networkInfo().status === 'OFFLINE' ? t('telemetry.offline') : t('telemetry.signalActive') }}
+          {{
+            networkInfo().status === 'OFFLINE'
+              ? t('telemetry.offline')
+              : t('telemetry.signalActive')
+          }}
         </div>
       </div>
     </div>
@@ -144,5 +218,7 @@
 <!-- 底部状态栏 -->
 <div class="telemetry-caption">
   <span>{{ t('telemetry.localEnv') }}</span>
-  <span>{{ t('telemetry.updated') }} &middot; {{ formattedDateTime }} &middot; {{ userTimeZone }}</span>
+  <span
+    >{{ t('telemetry.updated') }} &middot; {{ formattedDateTime }} &middot; {{ userTimeZone }}</span
+  >
 </div>

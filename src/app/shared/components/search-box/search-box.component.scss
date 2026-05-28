@@ -6,7 +6,8 @@
 .grid {
   height: 800px;
   width: 800px;
-  background-image: linear-gradient(to right, #0f0f10 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, #0f0f10 1px, transparent 1px),
     linear-gradient(to bottom, #0f0f10 1px, transparent 1px);
   background-size: 1rem 1rem;
   background-position: center center;
@@ -98,7 +99,7 @@
 }
 
 .white::before {
-  content: "";
+  content: '';
   z-index: -2;
   text-align: center;
   top: 50%;
@@ -130,7 +131,7 @@
 }
 
 .border::before {
-  content: "";
+  content: '';
   z-index: -2;
   text-align: center;
   top: 50%;
@@ -160,7 +161,7 @@
 }
 
 .darkBorderBg::before {
-  content: "";
+  content: '';
   z-index: -2;
   text-align: center;
   top: 50%;
@@ -243,7 +244,7 @@
 }
 
 .glow:before {
-  content: "";
+  content: '';
   z-index: -2;
   text-align: center;
   top: 50%;
@@ -255,14 +256,7 @@
   background-repeat: no-repeat;
   background-position: 0 0;
   /*border color, change middle color*/
-  background-image: conic-gradient(
-    #000,
-    #402fb5 5%,
-    #000 38%,
-    #000 50%,
-    #cf30aa 60%,
-    #000 87%
-  );
+  background-image: conic-gradient(#000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87%);
   /* change speed here */
   //animation: rotate 4s 0.3s linear infinite;
   transition: all 2s;
@@ -334,7 +328,7 @@
 }
 
 .filterBorder::before {
-  content: "";
+  content: '';
 
   text-align: center;
   top: 50%;

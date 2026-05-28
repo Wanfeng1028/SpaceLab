@@ -124,7 +124,9 @@
   border-radius: var(--radius-full);
   background: rgba(0, 0, 0, 0.05);
   color: var(--color-text-secondary);
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 
   &:hover {
     background: rgba(0, 0, 0, 0.1);

@@ -17,7 +17,9 @@
               @if (exp.status === 'live') {
                 <span class="lab-card__status lab-card__status--live">{{ t('common.live') }}</span>
               } @else {
-                <span class="lab-card__status lab-card__status--coming">{{ t('common.comingSoon') }}</span>
+                <span class="lab-card__status lab-card__status--coming">{{
+                  t('common.comingSoon')
+                }}</span>
               }
             </div>
           </div>

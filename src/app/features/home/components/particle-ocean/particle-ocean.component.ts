@@ -18,11 +18,7 @@ import { ParticleOceanScene } from '../../../../three/scenes/particle-ocean.scen
   templateUrl: './particle-ocean.component.html',
   styleUrl: './particle-ocean.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    VerticalSectionTitleComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, VerticalSectionTitleComponent, TelemetryBarComponent],
 })
 export class ParticleOceanSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);

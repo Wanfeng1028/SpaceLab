@@ -60,19 +60,13 @@ const projects = JSON.parse(
 );
 
 // ── Profile ────────────────────────────────────────────
-const profile = JSON.parse(
-  fs.readFileSync(path.join(CONTENT_DIR, 'profile.json'), 'utf-8'),
-);
+const profile = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'profile.json'), 'utf-8'));
 
 // ── Site ───────────────────────────────────────────────
-const site = JSON.parse(
-  fs.readFileSync(path.join(CONTENT_DIR, 'site.json'), 'utf-8'),
-);
+const site = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'site.json'), 'utf-8'));
 
 // ── Gallery ────────────────────────────────────────────
-const gallery = JSON.parse(
-  fs.readFileSync(path.join(CONTENT_DIR, 'gallery.json'), 'utf-8'),
-);
+const gallery = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'gallery.json'), 'utf-8'));
 
 // ── AI Frontline ──────────────────────────────────────
 const aiFrontlineNews = JSON.parse(
@@ -167,7 +161,11 @@ export interface AiFrontlineSource {
 
 export const POSTS: GeneratedPost[] = ${JSON.stringify(postsWithNav, null, 2)};
 
-export const ALL_POSTS: GeneratedPost[] = ${JSON.stringify(allPosts.map(p => ({ ...p, prevSlug: null, prevTitle: null, nextSlug: null, nextTitle: null })), null, 2)};
+export const ALL_POSTS: GeneratedPost[] = ${JSON.stringify(
+  allPosts.map((p) => ({ ...p, prevSlug: null, prevTitle: null, nextSlug: null, nextTitle: null })),
+  null,
+  2,
+)};
 
 export const PROJECTS: GeneratedProject[] = ${JSON.stringify(projects, null, 2)};
 

@@ -305,7 +305,7 @@ export class EarthObservatoryLightScene {
     orbits.forEach((orbit, i) => {
       const points = [];
       const segments = 100;
-      
+
       for (let j = 0; j <= segments; j++) {
         const angle = (j / segments) * Math.PI * 2;
         const x = Math.cos(angle) * orbit.radius;

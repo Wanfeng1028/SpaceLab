@@ -1,10 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  signal,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, OnInit, OnDestroy } from '@angular/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
@@ -21,12 +15,7 @@ interface ScaleTick {
   templateUrl: './eclipse-observatory.component.html',
   styleUrl: './eclipse-observatory.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    HudFrameComponent,
-    HudMetricComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, HudFrameComponent, HudMetricComponent, TelemetryBarComponent],
 })
 export class EclipseObservatorySection implements OnInit, OnDestroy {
   readonly telemetryText = signal('ECLIPSE OBSERVATORY // STANDBY');
@@ -38,8 +27,7 @@ export class EclipseObservatorySection implements OnInit, OnDestroy {
 
   private pulseTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  readonly eclipseFactory = (canvas: HTMLCanvasElement) =>
-    new EclipseCoreScene(canvas);
+  readonly eclipseFactory = (canvas: HTMLCanvasElement) => new EclipseCoreScene(canvas);
 
   ngOnInit(): void {
     this.telemetryText.set('ECLIPSE OBSERVATORY // CALIBRATING OPTICS');

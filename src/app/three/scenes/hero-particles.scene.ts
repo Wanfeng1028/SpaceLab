@@ -12,7 +12,7 @@ import {
 
 /**
  * SpaceLab WebGL Volumetric Scattering Solar Eclipse Scene
- * 
+ *
  * Replicates the physical Rayleigh and Mie atmospheric scattering solar eclipse
  * shader from the reference Svelte implementation using Three.js and full-screen shader materials.
  */
@@ -276,7 +276,9 @@ export class HeroLightFieldScene {
       fragmentShader,
       uniforms: {
         uTime: { value: 0 },
-        uResolution: { value: new Vector2(window.innerWidth * this.dpr, window.innerHeight * this.dpr) },
+        uResolution: {
+          value: new Vector2(window.innerWidth * this.dpr, window.innerHeight * this.dpr),
+        },
         uBackgroundColor: { value: new Color('#000000') },
         uRotationSpeed: { value: 1.05 },
         uCameraDistance: { value: 2.6 },

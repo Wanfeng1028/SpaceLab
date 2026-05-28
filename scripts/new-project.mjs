@@ -11,14 +11,19 @@ if (!name) {
   process.exit(1);
 }
 
-const slug = name
-  .toLowerCase()
-  .replace(/[^a-zA-Z0-9\u4e00-\u9fff]+/g, '-')
-  .replace(/^-+|-+$/g, '')
-  || 'untitled';
+const slug =
+  name
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9\u4e00-\u9fff]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'untitled';
 
 const projectsPath = path.resolve(
-  import.meta.dirname, '..', 'src', 'content', 'projects', 'projects.json',
+  import.meta.dirname,
+  '..',
+  'src',
+  'content',
+  'projects',
+  'projects.json',
 );
 const projects = JSON.parse(fs.readFileSync(projectsPath, 'utf-8'));
 

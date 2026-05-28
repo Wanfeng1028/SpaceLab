@@ -125,7 +125,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -177,10 +178,18 @@
     border-bottom: none;
   }
 
-  &--system .log-type { color: #00f0ff; }
-  &--visitor .log-type { color: #00ffc4; }
-  &--webgl .log-type { color: #a855f7; }
-  &--nav .log-type { color: #ffaa00; }
+  &--system .log-type {
+    color: #00f0ff;
+  }
+  &--visitor .log-type {
+    color: #00ffc4;
+  }
+  &--webgl .log-type {
+    color: #a855f7;
+  }
+  &--nav .log-type {
+    color: #ffaa00;
+  }
 }
 
 .log-time {

@@ -53,7 +53,7 @@ export class ToastService {
 
   /** 添加通知 */
   private addToast(toast: ToastItem): void {
-    this.toasts.update(list => [...list, toast]);
+    this.toasts.update((list) => [...list, toast]);
 
     const duration = toast.duration || 5000;
     if (duration > 0) {
@@ -65,7 +65,7 @@ export class ToastService {
 
   /** 移除通知 */
   removeToast(id: string): void {
-    this.toasts.update(list => list.filter(t => t.id !== id));
+    this.toasts.update((list) => list.filter((t) => t.id !== id));
   }
 
   /** 清除所有通知 */

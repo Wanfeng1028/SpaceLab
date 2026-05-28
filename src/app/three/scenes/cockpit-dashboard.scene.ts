@@ -191,11 +191,13 @@ export class CockpitDashboardScene {
       const points: Vector3[] = [];
       for (let i = 0; i <= 64; i++) {
         const angle = (i / 64) * Math.PI * 2;
-        points.push(new Vector3(
-          Math.cos(angle) * radius,
-          Math.sin(angle) * radius * 0.3,
-          -10 + Math.sin(angle) * 2
-        ));
+        points.push(
+          new Vector3(
+            Math.cos(angle) * radius,
+            Math.sin(angle) * radius * 0.3,
+            -10 + Math.sin(angle) * 2,
+          ),
+        );
       }
       const geo = new BufferGeometry().setFromPoints(points);
       const mat = new LineBasicMaterial({

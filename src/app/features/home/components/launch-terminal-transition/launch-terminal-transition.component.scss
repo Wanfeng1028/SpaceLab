@@ -33,13 +33,15 @@ $white-muted: rgba(148, 163, 184, 0.92);
   pointer-events: none;
   opacity: 0;
   transform: translateY(16px) scale(0.98);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+
   &.active {
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: auto;
-    
+
     .launch-terminal-transition__panel {
       opacity: 1;
       transform: translateY(0) scale(1);
@@ -56,7 +58,7 @@ $white-muted: rgba(148, 163, 184, 0.92);
   -webkit-backdrop-filter: blur($blur-amount) saturate(110%);
   opacity: 0;
   transition: opacity 0.4s ease;
-  
+
   .active & {
     opacity: 1;
   }
@@ -78,7 +80,9 @@ $white-muted: rgba(148, 163, 184, 0.92);
   pointer-events: none;
   opacity: 0;
   transform: translateY(12px) scale(0.985);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
   will-change: opacity, transform;
 }
 
@@ -104,9 +108,15 @@ $white-muted: rgba(148, 163, 184, 0.92);
   border-radius: 999px;
 }
 
-.dot-red { background: #ff5f57; }
-.dot-yellow { background: #ffbd2e; }
-.dot-green { background: #28c840; }
+.dot-red {
+  background: #ff5f57;
+}
+.dot-yellow {
+  background: #ffbd2e;
+}
+.dot-green {
+  background: #28c840;
+}
 
 .terminal-title {
   text-align: center;
@@ -124,7 +134,7 @@ $white-muted: rgba(148, 163, 184, 0.92);
 // 命令行内容区
 .terminal-body {
   padding: 18px 20px 20px;
-  font-family: var(--font-mono), "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
   font-size: 13px;
   line-height: 1.65;
   color: rgba(226, 232, 240, 0.92);
@@ -172,7 +182,7 @@ $white-muted: rgba(148, 163, 184, 0.92);
 
 .terminal-command {
   color: rgba(226, 232, 240, 0.92);
-  
+
   &.animate-typing {
     overflow: hidden;
     white-space: nowrap;
@@ -189,13 +199,23 @@ $white-muted: rgba(148, 163, 184, 0.92);
 }
 
 @keyframes typing-appear {
-  from { max-width: 0; }
-  to { max-width: 100%; }
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 100%;
+  }
 }
 
 @keyframes typing-cursor {
-  0%, 45% { border-color: rgba(226, 232, 240, 0.92); }
-  46%, 100% { border-color: transparent; }
+  0%,
+  45% {
+    border-color: rgba(226, 232, 240, 0.92);
+  }
+  46%,
+  100% {
+    border-color: transparent;
+  }
 }
 
 // 输出行
@@ -247,8 +267,14 @@ $white-muted: rgba(148, 163, 184, 0.92);
 }
 
 @keyframes terminal-blink {
-  0%, 45% { opacity: 1; }
-  46%, 100% { opacity: 0; }
+  0%,
+  45% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
 }
 
 // 系统就绪消息
@@ -337,14 +363,14 @@ $white-muted: rgba(148, 163, 184, 0.92);
   .launch-terminal-transition__panel {
     width: calc(100vw - 24px);
   }
-  
+
   .launch-terminal-transition__body {
     font-size: 11px;
     padding: 14px 16px 16px;
     min-height: 120px;
     max-height: 200px;
   }
-  
+
   .system-ready__title {
     font-size: 20px;
   }
@@ -354,40 +380,40 @@ $white-muted: rgba(148, 163, 184, 0.92);
 @media (prefers-reduced-motion: reduce) {
   .launch-terminal-transition {
     transform: none;
-    
+
     &.active {
       transform: none;
     }
   }
-  
+
   .launch-terminal-transition__panel {
     transform: none;
-    
+
     .active & {
       transform: none;
     }
   }
-  
+
   .command-text.animate-typing {
     animation: none;
     max-width: 100%;
   }
-  
+
   .terminal-cursor {
     animation: none;
     opacity: 1;
   }
-  
+
   .system-ready__title {
     animation: none;
   }
-  
+
   .output-line {
     animation: none;
     opacity: 1;
     transform: none;
   }
-  
+
   .status-dot {
     animation: none;
     opacity: 1;

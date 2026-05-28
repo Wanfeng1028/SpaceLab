@@ -62,7 +62,7 @@ export class SpaceGlassModalComponent implements AfterViewInit, OnDestroy {
     if (!panel) return;
 
     const focusable = panel.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     if (focusable.length === 0) return;
 
@@ -93,7 +93,7 @@ export class SpaceGlassModalComponent implements AfterViewInit, OnDestroy {
     const panel = this.elRef.nativeElement.querySelector('.sgm-panel') as HTMLElement;
     if (!panel) return;
     const firstFocusable = panel.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     firstFocusable?.focus();
   }

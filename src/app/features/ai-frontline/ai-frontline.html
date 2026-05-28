@@ -9,7 +9,8 @@
         @if (source(); as src) {
           <span class="last-sync">
             <span class="sync-icon">⟲</span>
-            <span>{{ t('aiFrontline.lastSync') }}</span>: {{ src.lastFetchedAt | date:'MM-dd HH:mm' }}
+            <span>{{ t('aiFrontline.lastSync') }}</span
+            >: {{ src.lastFetchedAt | date: 'MM-dd HH:mm' }}
           </span>
         }
         <span class="data-source-badge">
@@ -117,7 +118,8 @@
   <footer class="disclaimer">
     <div class="disclaimer-content">
       <p class="disclaimer-source">
-        <span>{{ t('aiFrontline.dataSource') }}</span>：
+        <span>{{ t('aiFrontline.dataSource') }}</span
+        >：
         <a href="https://ai-bot.cn/daily-ai-news/" target="_blank" rel="noopener noreferrer">
           AI工具集 每日AI快讯
         </a>

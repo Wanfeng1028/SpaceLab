@@ -24,10 +24,10 @@ export const STORAGE_PATHS = {
 } as const;
 
 export const UPLOAD_LIMITS = {
-  IMAGE_MAX_SIZE: 5 * 1024 * 1024,   // 5MB
-  GIF_MAX_SIZE: 15 * 1024 * 1024,     // 15MB
-  VIDEO_MAX_SIZE: 80 * 1024 * 1024,   // 80MB
-  MODEL_MAX_SIZE: 30 * 1024 * 1024,   // 30MB
+  IMAGE_MAX_SIZE: 5 * 1024 * 1024, // 5MB
+  GIF_MAX_SIZE: 15 * 1024 * 1024, // 15MB
+  VIDEO_MAX_SIZE: 80 * 1024 * 1024, // 80MB
+  MODEL_MAX_SIZE: 30 * 1024 * 1024, // 30MB
 } as const;
 
 export const ACCEPTED_FILE_TYPES = {

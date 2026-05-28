@@ -26,12 +26,7 @@ interface LogEntry {
   templateUrl: './cockpit-dashboard.component.html',
   styleUrl: './cockpit-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    HudFrameComponent,
-    HudMetricComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, HudFrameComponent, HudMetricComponent, TelemetryBarComponent],
 })
 export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
@@ -78,7 +73,7 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
     // Update time periodically
     this.timeInterval = setInterval(() => {
-      this.visitorInfo.update(info => ({
+      this.visitorInfo.update((info) => ({
         ...info,
         localTime: this.formatCurrentTime(),
       }));
@@ -86,11 +81,11 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
     // Monitor online status
     this.handleOnline = () => {
-      this.visitorInfo.update(info => ({ ...info, network: 'Online' }));
+      this.visitorInfo.update((info) => ({ ...info, network: 'Online' }));
       this.addLogEntry('Network reconnected', 'visitor');
     };
     this.handleOffline = () => {
-      this.visitorInfo.update(info => ({ ...info, network: 'Offline' }));
+      this.visitorInfo.update((info) => ({ ...info, network: 'Offline' }));
       this.addLogEntry('Network disconnected', 'visitor');
     };
     window.addEventListener('online', this.handleOnline);
@@ -144,7 +139,7 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
       message,
       type,
     };
-    this.commandLog.update(log => [...log.slice(-4), entry]);
+    this.commandLog.update((log) => [...log.slice(-4), entry]);
   }
 
   private formatCurrentTime(): string {
@@ -154,7 +149,12 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   private formatTime(): string {
     const now = new Date();
-    return now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    return now.toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
   }
 
   private detectDevice(): string {

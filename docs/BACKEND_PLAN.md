@@ -51,12 +51,12 @@ src/generated/content.generated.ts  ← Angular 直接导入
 
 ### 可选功能
 
-| 功能 | Azure 服务 | 说明 |
-|------|-----------|------|
-| 联系表单 | Azure Functions (HTTP trigger) | 无服务器函数，接收表单 → 转发邮件 |
-| 图片/视频 CDN | Azure Blob Storage + CDN | 大文件托管，前端引用 Blob URL |
-| GLB/3D 模型 | Azure Blob Storage | Three.js 场景加载远程模型 |
-| 构建触发 | Azure Functions (GitHub Webhook) | 内容变更自动触发 rebuild |
+| 功能          | Azure 服务                       | 说明                              |
+| ------------- | -------------------------------- | --------------------------------- |
+| 联系表单      | Azure Functions (HTTP trigger)   | 无服务器函数，接收表单 → 转发邮件 |
+| 图片/视频 CDN | Azure Blob Storage + CDN         | 大文件托管，前端引用 Blob URL     |
+| GLB/3D 模型   | Azure Blob Storage               | Three.js 场景加载远程模型         |
+| 构建触发      | Azure Functions (GitHub Webhook) | 内容变更自动触发 rebuild          |
 
 ### 成本估算
 
@@ -72,13 +72,13 @@ src/generated/content.generated.ts  ← Angular 直接导入
 
 ### 可选方案
 
-| 功能 | 方案 | 说明 |
-|------|------|------|
-| 评论系统 | Supabase / Disqus / Giscus | Giscus 基于 GitHub Discussions，零成本 |
-| 访问统计 | Supabase + 自建 / Umami | 隐私友好的访问分析 |
-| CMS 后台 | Supabase + 自建 Admin | 站长登录后管理文章/项目 |
-| 搜索 | Algolia DocSearch / Pagefind | 静态站全文搜索 |
-| 国际化内容 | i18n + 动态路由 | 中英文文章分别管理 |
+| 功能       | 方案                         | 说明                                   |
+| ---------- | ---------------------------- | -------------------------------------- |
+| 评论系统   | Supabase / Disqus / Giscus   | Giscus 基于 GitHub Discussions，零成本 |
+| 访问统计   | Supabase + 自建 / Umami      | 隐私友好的访问分析                     |
+| CMS 后台   | Supabase + 自建 Admin        | 站长登录后管理文章/项目                |
+| 搜索       | Algolia DocSearch / Pagefind | 静态站全文搜索                         |
+| 国际化内容 | i18n + 动态路由              | 中英文文章分别管理                     |
 
 ### 数据库选型（如果需要）
 

@@ -49,13 +49,37 @@ export class OrbitalLearningLightScene {
 
   private nodes: OrbitalNode[] = [
     { label: 'SCIENCE', position: [0, 0, 0], color: 0x69d7ff, angle: 0, radius: 2.0 },
-    { label: 'TECHNOLOGY', position: [0, 0, 0], color: 0x56f0c2, angle: Math.PI * 0.5, radius: 2.2 },
+    {
+      label: 'TECHNOLOGY',
+      position: [0, 0, 0],
+      color: 0x56f0c2,
+      angle: Math.PI * 0.5,
+      radius: 2.2,
+    },
     { label: 'ENGINEERING', position: [0, 0, 0], color: 0x8f7cff, angle: Math.PI, radius: 1.8 },
-    { label: 'MATHEMATICS', position: [0, 0, 0], color: 0xffd21f, angle: Math.PI * 1.5, radius: 2.1 },
-    { label: 'REMOTE SENSING', position: [0, 0, 0], color: 0x69d7ff, angle: Math.PI * 0.25, radius: 2.5 },
+    {
+      label: 'MATHEMATICS',
+      position: [0, 0, 0],
+      color: 0xffd21f,
+      angle: Math.PI * 1.5,
+      radius: 2.1,
+    },
+    {
+      label: 'REMOTE SENSING',
+      position: [0, 0, 0],
+      color: 0x69d7ff,
+      angle: Math.PI * 0.25,
+      radius: 2.5,
+    },
     { label: 'AI', position: [0, 0, 0], color: 0xa855f7, angle: Math.PI * 0.75, radius: 1.9 },
     { label: 'WEBGL', position: [0, 0, 0], color: 0x56f0c2, angle: Math.PI * 1.25, radius: 2.3 },
-    { label: 'EDUCATION', position: [0, 0, 0], color: 0xffd21f, angle: Math.PI * 1.75, radius: 2.0 },
+    {
+      label: 'EDUCATION',
+      position: [0, 0, 0],
+      color: 0xffd21f,
+      angle: Math.PI * 1.75,
+      radius: 2.0,
+    },
   ];
 
   private scrollProgress = 0;
@@ -199,19 +223,25 @@ export class OrbitalLearningLightScene {
   private createConstellationLines(): void {
     // Connect nodes in a constellation pattern
     const connections = [
-      [0, 1], [1, 2], [2, 3], [3, 0], // Inner ring
-      [0, 4], [1, 5], [2, 6], [3, 7], // Outer connections
-      [4, 5], [5, 6], [6, 7], [7, 4], // Outer ring
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 0], // Inner ring
+      [0, 4],
+      [1, 5],
+      [2, 6],
+      [3, 7], // Outer connections
+      [4, 5],
+      [5, 6],
+      [6, 7],
+      [7, 4], // Outer ring
     ];
 
     connections.forEach(([a, b]) => {
       const nodeA = this.nodes[a];
       const nodeB = this.nodes[b];
 
-      const points = [
-        new Vector3(...nodeA.position),
-        new Vector3(...nodeB.position),
-      ];
+      const points = [new Vector3(...nodeA.position), new Vector3(...nodeB.position)];
 
       const geo = new BufferGeometry().setFromPoints(points);
       const mat = new LineBasicMaterial({
@@ -335,9 +365,18 @@ export class OrbitalLearningLightScene {
 
     // Update constellation lines
     const connections = [
-      [0, 1], [1, 2], [2, 3], [3, 0],
-      [0, 4], [1, 5], [2, 6], [3, 7],
-      [4, 5], [5, 6], [6, 7], [7, 4],
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 0],
+      [0, 4],
+      [1, 5],
+      [2, 6],
+      [3, 7],
+      [4, 5],
+      [5, 6],
+      [6, 7],
+      [7, 4],
     ];
 
     connections.forEach(([a, b], i) => {

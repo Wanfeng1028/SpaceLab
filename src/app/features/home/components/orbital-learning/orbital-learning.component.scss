@@ -117,10 +117,26 @@
   transition: all 0.3s ease;
   cursor: default;
 
-  &:nth-child(1) { border-left-color: #69d7ff; color: rgba(105, 215, 255, 0.7); background: rgba(105, 215, 255, 0.03); }
-  &:nth-child(2) { border-left-color: #56f0c2; color: rgba(86, 240, 194, 0.7); background: rgba(86, 240, 194, 0.03); }
-  &:nth-child(3) { border-left-color: #8f7cff; color: rgba(143, 124, 255, 0.7); background: rgba(143, 124, 255, 0.03); }
-  &:nth-child(4) { border-left-color: #ffd21f; color: rgba(255, 210, 31, 0.7); background: rgba(255, 210, 31, 0.03); }
+  &:nth-child(1) {
+    border-left-color: #69d7ff;
+    color: rgba(105, 215, 255, 0.7);
+    background: rgba(105, 215, 255, 0.03);
+  }
+  &:nth-child(2) {
+    border-left-color: #56f0c2;
+    color: rgba(86, 240, 194, 0.7);
+    background: rgba(86, 240, 194, 0.03);
+  }
+  &:nth-child(3) {
+    border-left-color: #8f7cff;
+    color: rgba(143, 124, 255, 0.7);
+    background: rgba(143, 124, 255, 0.03);
+  }
+  &:nth-child(4) {
+    border-left-color: #ffd21f;
+    color: rgba(255, 210, 31, 0.7);
+    background: rgba(255, 210, 31, 0.03);
+  }
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);

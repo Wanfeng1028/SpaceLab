@@ -24,12 +24,7 @@ interface ScaleTick {
   templateUrl: './earth-observatory.component.html',
   styleUrl: './earth-observatory.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    HudFrameComponent,
-    HudMetricComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, HudFrameComponent, HudMetricComponent, TelemetryBarComponent],
 })
 export class EarthObservatorySection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);

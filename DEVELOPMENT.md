@@ -864,11 +864,16 @@ var(--glass-shadow)
 组件应有清晰 BEM 或一致命名：
 
 ```scss
-.article-card {}
-.article-card__cover {}
-.article-card__title {}
-.article-card__meta {}
-.article-card--featured {}
+.article-card {
+}
+.article-card__cover {
+}
+.article-card__title {
+}
+.article-card__meta {
+}
+.article-card--featured {
+}
 ```
 
 ### 10.4 状态样式

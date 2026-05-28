@@ -82,14 +82,14 @@ export class VisualSystemsScene {
   // ── Create 8 holographic data panels ─────────────────────────────────
   private createPanels(): void {
     const panelTypes = [
-      'contours',      // 地形等高线
-      'pointcloud',    // 点云
-      'neural',        // 神经网络节点
-      'waveform',      // 波形图
-      'orbit',         // 轨道图
-      'heatmap',       // 热力网格
-      'scatter',       // 散点图
-      'timeseries',    // 时间序列
+      'contours', // 地形等高线
+      'pointcloud', // 点云
+      'neural', // 神经网络节点
+      'waveform', // 波形图
+      'orbit', // 轨道图
+      'heatmap', // 热力网格
+      'scatter', // 散点图
+      'timeseries', // 时间序列
     ];
 
     const panelCount = panelTypes.length;
@@ -153,7 +153,16 @@ export class VisualSystemsScene {
   }
 
   private getTypeIndex(type: string): number {
-    const types = ['contours', 'pointcloud', 'neural', 'waveform', 'orbit', 'heatmap', 'scatter', 'timeseries'];
+    const types = [
+      'contours',
+      'pointcloud',
+      'neural',
+      'waveform',
+      'orbit',
+      'heatmap',
+      'scatter',
+      'timeseries',
+    ];
     return types.indexOf(type);
   }
 

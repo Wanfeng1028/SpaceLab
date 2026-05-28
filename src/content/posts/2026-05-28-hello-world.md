@@ -1,11 +1,11 @@
 ---
-title: "你好，世界"
-slug: "hello-world"
-date: "2026-05-28"
-category: "随笔"
-tags: ["随笔", "建站"]
-cover: ""
-summary: "欢迎来到 SpaceLab — 我的个人数字空间。"
+title: '你好，世界'
+slug: 'hello-world'
+date: '2026-05-28'
+category: '随笔'
+tags: ['随笔', '建站']
+cover: ''
+summary: '欢迎来到 SpaceLab — 我的个人数字空间。'
 published: true
 ---
 

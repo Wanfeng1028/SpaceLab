@@ -1,4 +1,13 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, signal, computed, HostListener, inject } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  OnInit,
+  signal,
+  computed,
+  HostListener,
+  inject,
+} from '@angular/core';
 import { I18nService } from '../../../../core/services/i18n.service';
 
 interface TelemetryPhase {
@@ -36,7 +45,13 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     return 4;
   });
 
-  readonly phaseKeys = ['telemetry.dawn', 'telemetry.morning', 'telemetry.midday', 'telemetry.afternoon', 'telemetry.night'] as const;
+  readonly phaseKeys = [
+    'telemetry.dawn',
+    'telemetry.morning',
+    'telemetry.midday',
+    'telemetry.afternoon',
+    'telemetry.night',
+  ] as const;
 
   readonly phases = computed<TelemetryPhase[]>(() => {
     const idx = this.activeIndex();
@@ -68,19 +83,19 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
     city: 'telemetry.locating',
     region: 'telemetry.permissionRequired',
     latitude: null as number | null,
-    longitude: null as number | null
+    longitude: null as number | null,
   });
 
   readonly weatherInfo = signal({
     status: 'loading',
     temperature: '--',
-    condition: 'telemetry.locating'
+    condition: 'telemetry.locating',
   });
 
   readonly networkInfo = signal({
     status: 'UNKNOWN',
     detail: 'CHECKING',
-    level: 0
+    level: 0,
   });
 
   private timerId: ReturnType<typeof setInterval> | null = null;
@@ -123,7 +138,10 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   private setupConnectionListener(): void {
-    const conn = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+    const conn =
+      (navigator as any).connection ||
+      (navigator as any).mozConnection ||
+      (navigator as any).webkitConnection;
     if (conn) {
       this.connectionRef = conn;
       this.connectionChangeHandler = () => this.updateNetworkStatus();
@@ -188,7 +206,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
         city: 'telemetry.enableLocation',
         region: 'telemetry.locationPermRequired',
         latitude: null,
-        longitude: null
+        longitude: null,
       });
       return;
     }
@@ -208,12 +226,12 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       city: 'telemetry.enableLocation',
       region: 'telemetry.locationPermRequired',
       latitude: null,
-      longitude: null
+      longitude: null,
     });
     this.weatherInfo.set({
       status: 'loading',
       temperature: '--',
-      condition: 'telemetry.locating'
+      condition: 'telemetry.locating',
     });
   }
 
@@ -227,7 +245,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       (error) => {
         this.handleLocationError(error.code === error.PERMISSION_DENIED ? 'denied' : 'failed');
       },
-      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 },
     );
   }
 
@@ -238,12 +256,12 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       city: 'telemetry.unavailable',
       region: isDenied ? 'telemetry.locationDisabled' : 'telemetry.locatingFailed',
       latitude: null,
-      longitude: null
+      longitude: null,
     });
     this.weatherInfo.set({
       status: 'unavailable',
       temperature: '--',
-      condition: 'telemetry.weatherNA'
+      condition: 'telemetry.weatherNA',
     });
   }
 
@@ -261,16 +279,17 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       const geoData = await geoRes.json();
 
       const city = geoData.city || geoData.locality || geoData.principalSubdivision || 'Unknown';
-      const region = geoData.principalSubdivision && geoData.countryCode
-        ? `${geoData.principalSubdivision} / ${geoData.countryCode}`
-        : geoData.countryName || 'Unknown';
+      const region =
+        geoData.principalSubdivision && geoData.countryCode
+          ? `${geoData.principalSubdivision} / ${geoData.countryCode}`
+          : geoData.countryName || 'Unknown';
 
       this.locationInfo.set({
         status: 'success',
         city,
         region,
         latitude: lat,
-        longitude: lon
+        longitude: lon,
       });
     } catch {
       // Fallback: display approximate coordinates with correct hemisphere indicators
@@ -279,7 +298,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
         city: `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'}`,
         region: `${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'W'}`,
         latitude: lat,
-        longitude: lon
+        longitude: lon,
       });
     }
 
@@ -289,7 +308,7 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       const weatherRes = await fetch(weatherUrl, { signal: this.abortController?.signal });
       if (!weatherRes.ok) throw new Error('Weather response failed');
       const weatherData = await weatherRes.json();
-      
+
       const current = weatherData.current_weather;
       if (!current) throw new Error('No current weather data');
 
@@ -300,13 +319,13 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       this.weatherInfo.set({
         status: 'success',
         temperature: `${temp}°`,
-        condition
+        condition,
       });
     } catch {
       this.weatherInfo.set({
         status: 'unavailable',
         temperature: '--',
-        condition: 'telemetry.weatherNA'
+        condition: 'telemetry.weatherNA',
       });
     }
   }
@@ -331,16 +350,19 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       this.networkInfo.set({
         status: 'OFFLINE',
         detail: 'OFFLINE',
-        level: 0
+        level: 0,
       });
       return;
     }
 
-    const conn = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+    const conn =
+      (navigator as any).connection ||
+      (navigator as any).mozConnection ||
+      (navigator as any).webkitConnection;
     if (conn) {
       const type = conn.effectiveType || ''; // '4g', '3g', '2g', 'slow-2g'
-      const downlink = conn.downlink || 0;  // Mbps
-      const rtt = conn.rtt || 0;            // ms
+      const downlink = conn.downlink || 0; // Mbps
+      const rtt = conn.rtt || 0; // ms
 
       let status = 'GOOD';
       let level = 5;
@@ -364,14 +386,14 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
       this.networkInfo.set({
         status,
         detail: `ONLINE (${type.toUpperCase() || 'LTE'})`,
-        level
+        level,
       });
     } else {
       // Fallback if Network Information API is not supported
       this.networkInfo.set({
         status: 'GOOD',
         detail: 'ONLINE',
-        level: 4
+        level: 4,
       });
     }
   }

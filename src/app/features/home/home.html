@@ -1,5 +1,4 @@
 <div class="home-container">
-
   <!-- 第 1 屏：LANDING (完全保留现有设计，不动) -->
   <section class="eclipse-hero" id="section-landing" data-section="0">
     <!-- 电影画质细腻胶片微粒噪点遮罩层 -->
@@ -39,17 +38,20 @@
         <span class="typewriter-cursor"></span>
       </h1>
 
-
       <!-- 还原之前的精美双色玻璃质感按钮组 -->
       <div class="space-button-group hero__actions">
-        <button class="space-button space-button--md space-button--blue"
+        <button
+          class="space-button space-button--md space-button--blue"
           [class.space-button--eclipse-dark]="isBright()"
-          (click)="onEnter()">
+          (click)="onEnter()"
+        >
           {{ t('home.enter') }}
         </button>
-        <button class="space-button space-button--md space-button--white"
+        <button
+          class="space-button space-button--md space-button--white"
           [class.space-button--eclipse-dark]="isBright()"
-          (click)="onContact()">
+          (click)="onContact()"
+        >
           {{ t('home.contact') }}
         </button>
       </div>
@@ -65,7 +67,6 @@
       <div>@Wanfeng2026</div>
     </footer>
 
-
     <!-- 滚动提示 -->
     <div class="scroll-indicator">
       <div class="scroll-indicator__mouse">
@@ -78,7 +79,13 @@
     <div class="fx-block">
       <div class="toggle">
         <div>
-          <input type="checkbox" id="sound-toggle" [checked]="soundEnabled()" (change)="soundEnabled.set($any($event.target).checked)" aria-label="Toggle typewriter sound effects">
+          <input
+            type="checkbox"
+            id="sound-toggle"
+            [checked]="soundEnabled()"
+            (change)="soundEnabled.set($any($event.target).checked)"
+            aria-label="Toggle typewriter sound effects"
+          />
           <label for="sound-toggle" data-unchecked="On" data-checked="Off"></label>
         </div>
       </div>
@@ -86,11 +93,8 @@
 
     <!-- Launch Terminal Transition -->
     @if (isLaunchTransitionActive()) {
-      <app-launch-terminal-transition
-        (completed)="onLaunchComplete()"
-      />
+      <app-launch-terminal-transition (completed)="onLaunchComplete()" />
     }
-
   </section>
 
   <!-- 第 2 屏：EARTH OBSERVATORY (地球科学与遥感) -->
@@ -134,16 +138,34 @@
       <ul class="card__list">
         <li class="card__list_item">
           <span class="check">
-            <svg class="check_svg" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-              <path clip-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" fill-rule="evenodd"></path>
+            <svg
+              class="check_svg"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+                fill-rule="evenodd"
+              ></path>
             </svg>
           </span>
           <span class="list_text">service.ai@outlook.com</span>
         </li>
         <li class="card__list_item">
           <span class="check">
-            <svg class="check_svg" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-              <path clip-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" fill-rule="evenodd"></path>
+            <svg
+              class="check_svg"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
+                fill-rule="evenodd"
+              ></path>
             </svg>
           </span>
           <span class="list_text">GitHub — Wanfeng1028</span>
@@ -151,5 +173,4 @@
       </ul>
     </space-glass-modal>
   }
-
 </div>

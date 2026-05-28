@@ -18,10 +18,7 @@ import { VisualSystemsScene } from '../../../../three/scenes/visual-systems.scen
   templateUrl: './visual-systems.component.html',
   styleUrl: './visual-systems.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, TelemetryBarComponent],
   host: {
     '(pointerdown)': 'onPointerDown($event)',
     '(pointermove)': 'onPointerMove($event)',

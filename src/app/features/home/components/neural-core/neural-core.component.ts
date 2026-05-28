@@ -19,12 +19,7 @@ import { NeuralCoreScene } from '../../../../three/scenes/neural-core.scene';
   templateUrl: './neural-core.component.html',
   styleUrl: './neural-core.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    HudFrameComponent,
-    HudMetricComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, HudFrameComponent, HudMetricComponent, TelemetryBarComponent],
 })
 export class NeuralCoreSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);

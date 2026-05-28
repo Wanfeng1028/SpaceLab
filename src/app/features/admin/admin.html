@@ -42,7 +42,11 @@
 
         <div class="form-field">
           <label class="form-label">{{ t('admin.category') }}</label>
-          <select class="form-select" [value]="category()" (change)="category.set($any($event.target).value)">
+          <select
+            class="form-select"
+            [value]="category()"
+            (change)="category.set($any($event.target).value)"
+          >
             <option value="技术">{{ t('admin.catTech') }}</option>
             <option value="设计">{{ t('admin.catDesign') }}</option>
             <option value="随笔">{{ t('admin.catEssay') }}</option>

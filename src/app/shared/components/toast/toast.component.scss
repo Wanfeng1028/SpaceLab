@@ -24,11 +24,8 @@
   padding: 1rem;
   width: 19rem;
   background-color: hsla(240, 15%, 9%, 1);
-  background-image: radial-gradient(
-      at 88% 40%,
-      hsla(240, 15%, 9%, 1) 0px,
-      transparent 85%
-    ),
+  background-image:
+    radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 0% 64%, hsl(189, 99%, 26%) 0px, transparent 85%),
@@ -42,11 +39,8 @@
 
 .card--success {
   --primary: hsl(142, 76%, 36%);
-  background-image: radial-gradient(
-      at 88% 40%,
-      hsla(240, 15%, 9%, 1) 0px,
-      transparent 85%
-    ),
+  background-image:
+    radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 0% 64%, hsl(142, 99%, 26%) 0px, transparent 85%),
@@ -56,11 +50,8 @@
 
 .card--error {
   --primary: hsl(0, 84%, 60%);
-  background-image: radial-gradient(
-      at 88% 40%,
-      hsla(240, 15%, 9%, 1) 0px,
-      transparent 85%
-    ),
+  background-image:
+    radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 0% 64%, hsl(0, 99%, 26%) 0px, transparent 85%),
@@ -70,11 +61,8 @@
 
 .card--warning {
   --primary: hsl(38, 92%, 50%);
-  background-image: radial-gradient(
-      at 88% 40%,
-      hsla(240, 15%, 9%, 1) 0px,
-      transparent 85%
-    ),
+  background-image:
+    radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
     radial-gradient(at 0% 64%, hsl(38, 99%, 26%) 0px, transparent 85%),
@@ -94,17 +82,13 @@
 
   width: calc(100% + 2px);
   height: calc(100% + 2px);
-  background-image: linear-gradient(
-    0deg,
-    hsl(0, 0%, 100%) -50%,
-    hsl(0, 0%, 40%) 100%
-  );
+  background-image: linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%);
 
   border-radius: 1rem;
 }
 
 .card .card__border::before {
-  content: "";
+  content: '';
   pointer-events: none;
 
   position: fixed;
@@ -206,11 +190,7 @@
 
   padding: 0.5rem;
   width: 100%;
-  background-image: linear-gradient(
-    0deg,
-    hsl(189, 92%, 58%),
-    hsl(189, 99%, 26%) 100%
-  );
+  background-image: linear-gradient(0deg, hsl(189, 92%, 58%), hsl(189, 99%, 26%) 100%);
 
   font-size: 0.75rem;
   color: var(--white);

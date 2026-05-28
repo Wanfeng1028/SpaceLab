@@ -204,7 +204,7 @@ export class EarthObservatoryScene {
         }
       `,
       uniforms: {
-        uOpacity: { value: 0.0 } // Start invisible
+        uOpacity: { value: 0.0 }, // Start invisible
       },
     });
     this.atmosphere = new Mesh(geo, mat);

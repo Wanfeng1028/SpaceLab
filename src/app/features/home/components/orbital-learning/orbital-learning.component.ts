@@ -17,10 +17,7 @@ import { OrbitalLearningLightScene } from '../../../../three/scenes/orbital-lear
   templateUrl: './orbital-learning.component.html',
   styleUrl: './orbital-learning.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ThreeCanvasComponent,
-    TelemetryBarComponent,
-  ],
+  imports: [ThreeCanvasComponent, TelemetryBarComponent],
 })
 export class OrbitalLearningSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);

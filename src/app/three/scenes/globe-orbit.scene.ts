@@ -20,7 +20,7 @@ import {
 
 /**
  * Wireframe Globe with Orbital Lines Scene
- * 
+ *
  * A wireframe sphere representing a planet, with glowing orbital trajectory lines
  * and small satellite dots tracing elliptical paths.
  */
@@ -33,7 +33,8 @@ export class GlobeOrbitScene {
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private disposed = false;
-  private satellites: { mesh: Points; curve: CatmullRomCurve3; speed: number; offset: number }[] = [];
+  private satellites: { mesh: Points; curve: CatmullRomCurve3; speed: number; offset: number }[] =
+    [];
   private starfield: Points | null = null;
 
   private contextLostHandler: ((e: Event) => void) | null = null;
@@ -80,9 +81,7 @@ export class GlobeOrbitScene {
   private createGlobe(): void {
     // Wireframe sphere
     const geometry = new SphereGeometry(1, 24, 24);
-    const edges = new BufferGeometry().setFromPoints(
-      this.getSphereEdges(geometry)
-    );
+    const edges = new BufferGeometry().setFromPoints(this.getSphereEdges(geometry));
     geometry.dispose();
 
     const material = new LineBasicMaterial({
@@ -96,7 +95,7 @@ export class GlobeOrbitScene {
 
     // Latitude lines
     const latitudes = [-0.6, -0.3, 0, 0.3, 0.6];
-    latitudes.forEach(lat => {
+    latitudes.forEach((lat) => {
       const points: Vector3[] = [];
       const r = Math.cos(lat) * 1.01;
       const y = Math.sin(lat) * 1.01;
@@ -114,7 +113,7 @@ export class GlobeOrbitScene {
   private getSphereEdges(geometry: SphereGeometry): Vector3[] {
     const positions = geometry.getAttribute('position');
     const points: Vector3[] = [];
-    
+
     // Simplified: just create random points on sphere surface
     for (let i = 0; i < positions.count; i += 3) {
       const x = positions.getX(i);
@@ -122,7 +121,7 @@ export class GlobeOrbitScene {
       const z = positions.getZ(i);
       points.push(new Vector3(x, y, z));
     }
-    
+
     return points;
   }
 
@@ -134,7 +133,7 @@ export class GlobeOrbitScene {
       { inclination: 0.8, radius: 1.3, color: 0xb2a8ff },
     ];
 
-    orbitConfigs.forEach(config => {
+    orbitConfigs.forEach((config) => {
       // Create elliptical orbit curve
       const points: Vector3[] = [];
       for (let i = 0; i <= 100; i++) {
@@ -146,7 +145,7 @@ export class GlobeOrbitScene {
       }
 
       const curve = new CatmullRomCurve3(points, true);
-      
+
       // Orbit line
       const lineGeom = new BufferGeometry().setFromPoints(curve.getPoints(100));
       const lineMat = new LineBasicMaterial({
@@ -183,7 +182,7 @@ export class GlobeOrbitScene {
   private createStarfield(): void {
     const count = 200;
     const positions = new Float32Array(count * 3);
-    
+
     for (let i = 0; i < count; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 20;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
@@ -235,7 +234,7 @@ export class GlobeOrbitScene {
     this.group.rotation.x = Math.sin(elapsed * 0.1) * 0.1;
 
     // Animate satellites along orbits
-    this.satellites.forEach(sat => {
+    this.satellites.forEach((sat) => {
       const t = ((elapsed * sat.speed + sat.offset) % (Math.PI * 2)) / (Math.PI * 2);
       const pos = sat.curve.getPoint(t);
       sat.mesh.position.copy(pos);
@@ -268,7 +267,7 @@ export class GlobeOrbitScene {
     }
     window.removeEventListener('resize', this.resizeHandler);
 
-    this.scene.traverse(obj => {
+    this.scene.traverse((obj) => {
       const mesh = obj as any;
       if (mesh.geometry) mesh.geometry.dispose();
       if (mesh.material) {

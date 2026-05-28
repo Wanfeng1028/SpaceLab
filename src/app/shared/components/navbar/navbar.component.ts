@@ -20,7 +20,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 const GITHUB_REPO_URL = 'https://wanfeng1028.github.io/SpaceLab/';
 const GITHUB_API_URL = 'https://api.github.com/repos/Wanfeng1028/SpaceLab';
 const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
-const SHARE_TEXT = '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
+const SHARE_TEXT =
+  '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
 
 // 浅色页面路由
 const LIGHT_THEME_ROUTES = ['/blog', '/article', '/projects', '/lab', '/gallery', '/about'];
@@ -68,12 +69,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly mobileMenuItems: MobileMenuItem[] = [
     { type: 'github' },
     ...this.navLinks
-      .filter(link => link.route === '/')
-      .map(link => ({ type: 'link' as const, link })),
+      .filter((link) => link.route === '/')
+      .map((link) => ({ type: 'link' as const, link })),
     ...this.navLinks
-      .filter(link => link.route !== '/')
-      .map(link => ({ type: 'link' as const, link })),
-    { type: 'lang' }
+      .filter((link) => link.route !== '/')
+      .map((link) => ({ type: 'link' as const, link })),
+    { type: 'lang' },
   ];
 
   constructor() {
@@ -92,13 +93,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .subscribe((e) => {
         const url = e.urlAfterRedirects;
         this.isHome.set(url === '/' || url === '/home');
-        this.isLightTheme.set(LIGHT_THEME_ROUTES.some(route => url.startsWith(route)));
+        this.isLightTheme.set(LIGHT_THEME_ROUTES.some((route) => url.startsWith(route)));
         this.mobileMenuOpen.set(false);
       });
 
     // Check initial route
     const currentUrl = this.router.url;
-    this.isLightTheme.set(LIGHT_THEME_ROUTES.some(route => currentUrl.startsWith(route)));
+    this.isLightTheme.set(LIGHT_THEME_ROUTES.some((route) => currentUrl.startsWith(route)));
 
     this.i18n.loadTranslations(this.currentLang());
     this.loadGithubStars();
@@ -141,7 +142,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleSound(): void {
-    this.soundEnabled.update(v => !v);
+    this.soundEnabled.update((v) => !v);
   }
 
   toggleMobileMenu(): void {

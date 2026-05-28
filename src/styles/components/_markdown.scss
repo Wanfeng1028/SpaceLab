@@ -12,16 +12,29 @@
     font-size: 16px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-top: 1.8em;
     margin-bottom: 0.6em;
     color: var(--color-text);
   }
 
-  h1 { font-size: 2em; }
-  h2 { font-size: 1.6em; }
-  h3 { font-size: 1.35em; }
-  h4 { font-size: 1.15em; }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.6em;
+  }
+  h3 {
+    font-size: 1.35em;
+  }
+  h4 {
+    font-size: 1.15em;
+  }
 
   p {
     margin-bottom: 1em;
@@ -82,7 +95,8 @@
     }
   }
 
-  ul, ol {
+  ul,
+  ol {
     padding-left: 1.5em;
     margin-bottom: 1em;
 
@@ -108,7 +122,8 @@
     overflow: hidden;
   }
 
-  th, td {
+  th,
+  td {
     padding: var(--space-sm) var(--space-md);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     text-align: left;

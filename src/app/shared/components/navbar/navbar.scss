@@ -14,7 +14,10 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md) var(--space-xl);
-  transition: transform 0.4s var(--ease-out), background 0.3s, backdrop-filter 0.3s;
+  transition:
+    transform 0.4s var(--ease-out),
+    background 0.3s,
+    backdrop-filter 0.3s;
 
   // 默认透明
   background: transparent;
@@ -280,16 +283,30 @@
 }
 
 @keyframes avatar-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-3px, 3px); }
-  40% { transform: translate(-3px, -3px); }
-  60% { transform: translate(3px, 3px); }
-  80% { transform: translate(3px, -3px); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-3px, 3px);
+  }
+  40% {
+    transform: translate(-3px, -3px);
+  }
+  60% {
+    transform: translate(3px, 3px);
+  }
+  80% {
+    transform: translate(3px, -3px);
+  }
+  100% {
+    transform: translate(0);
+  }
 }
 
 .navbar__avatar {
@@ -301,7 +318,9 @@
   object-fit: cover;
   border: 1.5px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
 
   .navbar:hover & {
     border-color: rgba(255, 255, 255, 0.3);
@@ -349,7 +368,7 @@
 
   // Background glow
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -369,7 +388,7 @@
 
   // Purple glow overlay on hover
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
@@ -435,8 +454,13 @@
 }
 
 @keyframes btn-shimmer {
-  0%, 100% { transform: translateX(-150%); }
-  50%      { transform: translateX(250%); }
+  0%,
+  100% {
+    transform: translateX(-150%);
+  }
+  50% {
+    transform: translateX(250%);
+  }
 }
 
 // Sparkle SVG
@@ -459,15 +483,32 @@
   animation: sparkle-path 1.5s linear 0.5s infinite;
 }
 
-.sparkle-btn__path:nth-child(1) { --scale_path: 1.2; }
-.sparkle-btn__path:nth-child(2) { --scale_path: 1.2; }
-.sparkle-btn__path:nth-child(3) { --scale_path: 1.2; }
+.sparkle-btn__path:nth-child(1) {
+  --scale_path: 1.2;
+}
+.sparkle-btn__path:nth-child(2) {
+  --scale_path: 1.2;
+}
+.sparkle-btn__path:nth-child(3) {
+  --scale_path: 1.2;
+}
 
 @keyframes sparkle-path {
-  0%, 34%, 71%, 100% { transform: scale(1); }
-  17% { transform: scale(var(--scale_path, 1)); }
-  49% { transform: scale(var(--scale_path, 1)); }
-  83% { transform: scale(var(--scale_path, 1)); }
+  0%,
+  34%,
+  71%,
+  100% {
+    transform: scale(1);
+  }
+  17% {
+    transform: scale(var(--scale_path, 1));
+  }
+  49% {
+    transform: scale(var(--scale_path, 1));
+  }
+  83% {
+    transform: scale(var(--scale_path, 1));
+  }
 }
 
 // Button text
@@ -570,7 +611,9 @@
     width: 14px;
     height: 14px;
     fill: currentColor;
-    transition: fill 0.3s, transform 0.3s;
+    transition:
+      fill 0.3s,
+      transform 0.3s;
 
     .github-star-btn:hover & {
       fill: #f5c518;
@@ -618,7 +661,9 @@
   height: 2px;
   background: var(--color-text);
   border-radius: 1px;
-  transition: transform 0.3s, opacity 0.3s;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
 
   &.is-open:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
@@ -778,17 +823,23 @@
 
     &--twitter:hover {
       background: rgba(29, 161, 242, 0.2);
-      svg { fill: #1DA1F2; }
+      svg {
+        fill: #1da1f2;
+      }
     }
 
     &--facebook:hover {
       background: rgba(24, 119, 242, 0.2);
-      svg { fill: #1877F2; }
+      svg {
+        fill: #1877f2;
+      }
     }
 
     &--linkedin:hover {
       background: rgba(10, 102, 194, 0.2);
-      svg { fill: #0A66C2; }
+      svg {
+        fill: #0a66c2;
+      }
     }
   }
 }
@@ -980,11 +1031,7 @@
 
   // Header colors for home and inner pages
   .navbar.is-home {
-    background: linear-gradient(
-      180deg,
-      rgba(3, 5, 12, 0.82),
-      rgba(3, 5, 12, 0.28)
-    );
+    background: linear-gradient(180deg, rgba(3, 5, 12, 0.82), rgba(3, 5, 12, 0.28));
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -1031,13 +1078,23 @@
 
   // Animations
   @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes slide-up {
-    from { transform: translateY(-8px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+      transform: translateY(-8px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   // Reduced motion

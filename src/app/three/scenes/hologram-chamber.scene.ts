@@ -92,21 +92,21 @@ export class HologramChamberScene {
 
   // ── Procedural canvas textures ───────────────────────────────────────
   private static PANEL_DATA: { title: string; content: string; hue: number }[] = [
-    { title: 'NAV SYSTEM',   content: 'STAR VECTOR LOCK',        hue: 170 },
-    { title: 'SHEILD ARRAY',  content: 'DEFENSE GRID ACTIVE',    hue: 160 },
-    { title: 'WARP CORE',     content: 'PLASMA CONTAINMENT OK',   hue: 180 },
-    { title: 'SENSOR SWEEP',  content: 'SCANNING SECTOR 7-G',    hue: 150 },
-    { title: 'COMMS ARRAY',   content: 'SUBSPACE LINK STABLE',    hue: 190 },
-    { title: 'POWER GRID',    content: 'OUTPUT AT 94.7%',        hue: 175 },
-    { title: 'LIFE SUPPORT',  content: 'ATMOSPHERE NOMINAL',      hue: 155 },
-    { title: 'TACTICAL HUD',  content: 'THREAT LEVEL: GREEN',     hue: 185 },
+    { title: 'NAV SYSTEM', content: 'STAR VECTOR LOCK', hue: 170 },
+    { title: 'SHEILD ARRAY', content: 'DEFENSE GRID ACTIVE', hue: 160 },
+    { title: 'WARP CORE', content: 'PLASMA CONTAINMENT OK', hue: 180 },
+    { title: 'SENSOR SWEEP', content: 'SCANNING SECTOR 7-G', hue: 150 },
+    { title: 'COMMS ARRAY', content: 'SUBSPACE LINK STABLE', hue: 190 },
+    { title: 'POWER GRID', content: 'OUTPUT AT 94.7%', hue: 175 },
+    { title: 'LIFE SUPPORT', content: 'ATMOSPHERE NOMINAL', hue: 155 },
+    { title: 'TACTICAL HUD', content: 'THREAT LEVEL: GREEN', hue: 185 },
   ];
 
   private createPanelTexture(
     title: string,
     content: string,
     hue: number,
-    index: number
+    index: number,
   ): CanvasTexture {
     const w = 512;
     const h = 340;
@@ -279,11 +279,7 @@ export class HologramChamberScene {
       });
 
       const panel = new Mesh(geo, mat);
-      panel.position.set(
-        Math.sin(angle) * radius,
-        0,
-        Math.cos(angle) * radius - radius
-      );
+      panel.position.set(Math.sin(angle) * radius, 0, Math.cos(angle) * radius - radius);
       panel.lookAt(0, 0, -radius * 2);
 
       this.panelContainer.add(panel);
@@ -356,9 +352,8 @@ export class HologramChamberScene {
     this.raycaster.setFromCamera(this.pointer, this.camera);
     const intersects = this.raycaster.intersectObjects(this.panels);
 
-    const newHovered = intersects.length > 0
-      ? this.panels.indexOf(intersects[0].object as Mesh)
-      : -1;
+    const newHovered =
+      intersects.length > 0 ? this.panels.indexOf(intersects[0].object as Mesh) : -1;
     this._hoveredIndex = newHovered;
 
     // Update each panel
@@ -368,20 +363,17 @@ export class HologramChamberScene {
 
       // Smooth hover transition
       const targetHover = i === newHovered ? 1.0 : 0.0;
-      mat.uniforms['uHover'].value +=
-        (targetHover - mat.uniforms['uHover'].value) * 0.1;
+      mat.uniforms['uHover'].value += (targetHover - mat.uniforms['uHover'].value) * 0.1;
 
       // Gentle floating
-      this.panels[i].position.y =
-        Math.sin(elapsed * 0.8 + i * 0.5) * 0.08;
+      this.panels[i].position.y = Math.sin(elapsed * 0.8 + i * 0.5) * 0.08;
     }
 
     // Container rotation from scroll + mouse
     this.panelContainer.rotation.y +=
-      (this.scrollProgress * Math.PI * 0.5 + this.mouseX * 0.15 -
-        this.panelContainer.rotation.y) * 0.03;
-    this.panelContainer.rotation.x +=
-      (this.mouseY * 0.1 - this.panelContainer.rotation.x) * 0.03;
+      (this.scrollProgress * Math.PI * 0.5 + this.mouseX * 0.15 - this.panelContainer.rotation.y) *
+      0.03;
+    this.panelContainer.rotation.x += (this.mouseY * 0.1 - this.panelContainer.rotation.x) * 0.03;
 
     this.renderer.render(this.scene, this.camera);
   }

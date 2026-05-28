@@ -34,10 +34,25 @@
 
           <!-- 输出行 -->
           @for (output of getOutputs(cmd); track output) {
-            <div class="terminal-output" [class]="output.includes('[OK]') ? 'terminal-ok' : output.includes('[READY]') ? 'terminal-ready' : ''">
+            <div
+              class="terminal-output"
+              [class]="
+                output.includes('[OK]')
+                  ? 'terminal-ok'
+                  : output.includes('[READY]')
+                    ? 'terminal-ready'
+                    : ''
+              "
+            >
               @if (output.includes('[OK]') || output.includes('[READY]')) {
-                <span class="output-status">{{ output.includes('[OK]') ? '[OK]' : '[READY]' }}</span>
-                <span class="output-text">{{ output.includes('[OK]') ? output.replace('[OK] ', '') : output.replace('[READY] ', '') }}</span>
+                <span class="output-status">{{
+                  output.includes('[OK]') ? '[OK]' : '[READY]'
+                }}</span>
+                <span class="output-text">{{
+                  output.includes('[OK]')
+                    ? output.replace('[OK] ', '')
+                    : output.replace('[READY] ', '')
+                }}</span>
               } @else {
                 {{ output }}
               }
@@ -61,10 +76,7 @@
 
     <!-- 进度条 -->
     <div class="terminal-progress">
-      <div
-        class="terminal-progress-fill"
-        [style.width.%]="progress()">
-      </div>
+      <div class="terminal-progress-fill" [style.width.%]="progress()"></div>
     </div>
 
     <!-- 隐藏的描述 -->

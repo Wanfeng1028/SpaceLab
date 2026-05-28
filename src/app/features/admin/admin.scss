@@ -67,7 +67,9 @@
   background: rgba(255, 255, 255, 0.6);
   color: var(--color-text);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 
   &:focus {
     border-color: #1a73e8;

@@ -52,16 +52,17 @@ export class AiFrontlineComponent implements OnInit {
 
     // Filter by category
     if (this.selectedCategory() !== 'all') {
-      result = result.filter(item => item.category === this.selectedCategory());
+      result = result.filter((item) => item.category === this.selectedCategory());
     }
 
     // Filter by search query
     const query = this.searchQuery().toLowerCase().trim();
     if (query) {
-      result = result.filter(item =>
-        item.title.toLowerCase().includes(query) ||
-        item.source.toLowerCase().includes(query) ||
-        item.tags.some(tag => tag.toLowerCase().includes(query))
+      result = result.filter(
+        (item) =>
+          item.title.toLowerCase().includes(query) ||
+          item.source.toLowerCase().includes(query) ||
+          item.tags.some((tag) => tag.toLowerCase().includes(query)),
       );
     }
 
@@ -96,9 +97,8 @@ export class AiFrontlineComponent implements OnInit {
 
     try {
       // Try to load from generated content first
-      const { AI_FRONTLINE_NEWS, AI_FRONTLINE_SOURCE } = await import(
-        '../../../generated/ai-frontline.generated'
-      );
+      const { AI_FRONTLINE_NEWS, AI_FRONTLINE_SOURCE } =
+        await import('../../../generated/ai-frontline.generated');
       this.news.set(AI_FRONTLINE_NEWS);
       this.source.set(AI_FRONTLINE_SOURCE);
     } catch {

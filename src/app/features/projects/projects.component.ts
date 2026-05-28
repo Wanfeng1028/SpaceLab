@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { ProjectCardComponent } from '../../shared/components/cards/project-card.component';
 import { PROJECTS } from '../../../generated/content.generated';
@@ -24,7 +18,11 @@ export class ProjectsComponent {
   readonly allProjects = computed(() => PROJECTS);
 
   readonly categories = computed(() => {
-    const cats = new Set(this.allProjects().map((p) => p.category).filter(Boolean));
+    const cats = new Set(
+      this.allProjects()
+        .map((p) => p.category)
+        .filter(Boolean),
+    );
     return ['all', ...Array.from(cats)];
   });
 

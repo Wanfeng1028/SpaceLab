@@ -30,8 +30,14 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
   // Command sequence (desktop)
   private readonly desktopCommands = [
     { command: '$ boot spacelab --mode=orbit', outputs: ['[OK] WebGL renderer initialized'] },
-    { command: '$ load content --static', outputs: ['[OK] Markdown posts indexed', '[OK] Project registry online'] },
-    { command: '$ connect signal --visitor', outputs: ['[OK] Local environment linked', '[OK] Network channel stable'] },
+    {
+      command: '$ load content --static',
+      outputs: ['[OK] Markdown posts indexed', '[OK] Project registry online'],
+    },
+    {
+      command: '$ connect signal --visitor',
+      outputs: ['[OK] Local environment linked', '[OK] Network channel stable'],
+    },
     { command: '$ enter earth-observatory', outputs: ['[READY] Launch route calculated'] },
   ];
 
@@ -51,10 +57,10 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Check for reduced motion preference
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
+
     // Check screen size for command selection
     this.checkScreenSize();
-    
+
     // Start animation after a short delay
     setTimeout(() => {
       this.isActive.set(true);
@@ -82,7 +88,11 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     // Allow user to skip with Enter or Space
-    if ((event.key === 'Enter' || event.key === ' ') && this.isActive() && !this.showSystemReady()) {
+    if (
+      (event.key === 'Enter' || event.key === ' ') &&
+      this.isActive() &&
+      !this.showSystemReady()
+    ) {
       this.skipToComplete();
     }
   }
@@ -109,7 +119,7 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
       this.stepTimers.push(
         setTimeout(() => {
           this.currentStep.set(index);
-        }, delay)
+        }, delay),
       );
       // Approx 400ms per command + outputs
       totalDelay += 400;
@@ -130,14 +140,14 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
     const totalSteps = this.commands.length;
     const stepDuration = 400; // ms per command
     const totalDuration = totalSteps * stepDuration + 1000; // extra time for SYSTEM READY
-    
+
     let startTime = Date.now();
-    
+
     this.progressInterval = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const progressPercent = Math.min((elapsed / totalDuration) * 100, 100);
       this.progress.set(progressPercent);
-      
+
       if (progressPercent >= 100) {
         clearInterval(this.progressInterval);
       }
@@ -149,21 +159,21 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
     this.currentStep.set(this.commands.length - 1);
     this.showSystemReady.set(true);
     this.progress.set(100);
-    
+
     setTimeout(() => {
       this.completed.emit();
     }, 600);
   }
 
   private clearTimers(): void {
-    this.stepTimers.forEach(timer => clearTimeout(timer));
+    this.stepTimers.forEach((timer) => clearTimeout(timer));
     this.stepTimers = [];
-    
+
     if (this.completionTimer) {
       clearTimeout(this.completionTimer);
       this.completionTimer = null;
     }
-    
+
     if (this.progressInterval) {
       clearInterval(this.progressInterval);
       this.progressInterval = null;

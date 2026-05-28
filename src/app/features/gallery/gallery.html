@@ -12,7 +12,8 @@
           class="filter-chip"
           [class.is-active]="selectedType() === type"
           [attr.aria-pressed]="selectedType() === type"
-          (click)="selectType(type)">
+          (click)="selectType(type)"
+        >
           {{ type === 'all' ? t('gallery.all') : type }}
         </button>
       }

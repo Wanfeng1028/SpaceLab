@@ -26,7 +26,7 @@ export class AboutComponent {
       desc: this.i18n.t(`about.${a.key}_desc`),
       icon: a.icon,
       tags: a.tags,
-    }))
+    })),
   );
 
   readonly contacts = [
@@ -34,7 +34,14 @@ export class AboutComponent {
       ? [{ icon: '✉️', label: 'Email', value: PROFILE.email, href: `mailto:${PROFILE.email}` }]
       : []),
     ...(PROFILE.github
-      ? [{ icon: '🐙', label: 'GitHub', value: PROFILE.github.split('/').pop() ?? '', href: PROFILE.github }]
+      ? [
+          {
+            icon: '🐙',
+            label: 'GitHub',
+            value: PROFILE.github.split('/').pop() ?? '',
+            href: PROFILE.github,
+          },
+        ]
       : []),
   ];
 

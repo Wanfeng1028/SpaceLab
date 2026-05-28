@@ -56,9 +56,8 @@ export class NeuralCoreScene {
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();
     const isMobile =
-      /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      ) || window.innerWidth < 768;
+      /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      window.innerWidth < 768;
     this.nodeCount = isMobile ? 120 : 200;
   }
 

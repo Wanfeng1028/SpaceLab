@@ -36,7 +36,12 @@ function generateId(date, title) {
 function categorizeNews(title, summary) {
   const text = `${title} ${summary}`.toLowerCase();
 
-  if (text.includes('融资') || text.includes('投资') || text.includes('估值') || text.includes('funding')) {
+  if (
+    text.includes('融资') ||
+    text.includes('投资') ||
+    text.includes('估值') ||
+    text.includes('funding')
+  ) {
     return 'funding';
   }
   if (text.includes('开源') || text.includes('open source') || text.includes('github')) {
@@ -45,13 +50,31 @@ function categorizeNews(title, summary) {
   if (text.includes('agent') || text.includes('智能体')) {
     return 'agent';
   }
-  if (text.includes('模型') || text.includes('model') || text.includes('gpt') || text.includes('llama') || text.includes('claude') || text.includes('gemini')) {
+  if (
+    text.includes('模型') ||
+    text.includes('model') ||
+    text.includes('gpt') ||
+    text.includes('llama') ||
+    text.includes('claude') ||
+    text.includes('gemini')
+  ) {
     return 'model';
   }
-  if (text.includes('工具') || text.includes('tool') || text.includes('sdk') || text.includes('api') || text.includes('平台')) {
+  if (
+    text.includes('工具') ||
+    text.includes('tool') ||
+    text.includes('sdk') ||
+    text.includes('api') ||
+    text.includes('平台')
+  ) {
     return 'tool';
   }
-  if (text.includes('产品') || text.includes('product') || text.includes('发布') || text.includes('launch')) {
+  if (
+    text.includes('产品') ||
+    text.includes('product') ||
+    text.includes('发布') ||
+    text.includes('launch')
+  ) {
     return 'product';
   }
   return 'industry';
@@ -141,8 +164,8 @@ function saveSource(source) {
 function hasNewsChanged(oldNews, newNews) {
   if (oldNews.length !== newNews.length) return true;
 
-  const oldIds = new Set(oldNews.map(n => n.id));
-  const newIds = new Set(newNews.map(n => n.id));
+  const oldIds = new Set(oldNews.map((n) => n.id));
+  const newIds = new Set(newNews.map((n) => n.id));
 
   // Check for new items
   for (const id of newIds) {
@@ -150,7 +173,7 @@ function hasNewsChanged(oldNews, newNews) {
   }
 
   // Check for modified items
-  const oldMap = new Map(oldNews.map(n => [n.id, n]));
+  const oldMap = new Map(oldNews.map((n) => [n.id, n]));
   for (const item of newNews) {
     const oldItem = oldMap.get(item.id);
     if (!oldItem) return true;
@@ -187,7 +210,7 @@ function cleanNews(news) {
   cutoffDate.setDate(cutoffDate.getDate() - MAX_DAYS_OLD);
   const cutoffStr = cutoffDate.toISOString().slice(0, 10);
 
-  const filtered = sorted.filter(item => item.date >= cutoffStr);
+  const filtered = sorted.filter((item) => item.date >= cutoffStr);
 
   // Limit count
   return filtered.slice(0, MAX_NEWS_ITEMS);
@@ -204,7 +227,7 @@ async function fetchAndParseNews() {
     const response = await fetch('https://ai-bot.cn/daily-ai-news/', {
       headers: {
         'User-Agent': USER_AGENT,
-        'Accept': 'text/html,application/xhtml+xml',
+        Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
       },
     });
@@ -276,7 +299,6 @@ async function fetchAndParseNews() {
 
     console.log(`📊 Extracted ${newsItems.length} news items`);
     return newsItems;
-
   } catch (error) {
     console.error('❌ Failed to fetch news:', error.message);
     return null;
@@ -366,7 +388,7 @@ async function main() {
 }
 
 // Run
-main().catch(error => {
+main().catch((error) => {
   console.error('💥 Fatal error:', error);
   process.exit(1);
 });

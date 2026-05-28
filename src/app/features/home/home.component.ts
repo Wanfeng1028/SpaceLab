@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // 亮度自适应按钮状态
   isBright = signal<boolean>(false);
   showContactModal = signal<boolean>(false);
-  
+
   // Launch Terminal Transition 状态
   isLaunchTransitionActive = signal<boolean>(false);
   launchCompleted = signal<boolean>(false);
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     '[SYS] WebGL physical light field ready',
     '[NAV] Gravity assist coefficient: 1.0G',
     '[ENV] Solar wind density: 420 particles/cm³',
-    '[HUD] G-force compensator calibrated'
+    '[HUD] G-force compensator calibrated',
   ];
 
   // Typewriter properties
@@ -198,9 +198,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       'is-launching',
       'is-transitioning',
       'is-loading',
-      'page-hidden'
+      'page-hidden',
     ];
-    classesToRemove.forEach(cls => {
+    classesToRemove.forEach((cls) => {
       body.classList.remove(cls);
       html.classList.remove(cls);
     });
@@ -227,17 +227,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isLaunchTransitionActive.set(true);
     this.launchCompleted.set(false);
   }
-  
+
   // Launch Terminal Transition 完成回调
   onLaunchComplete(): void {
     this.launchCompleted.set(true);
-    
+
     setTimeout(() => {
       this.isLaunchTransitionActive.set(false);
       this.scrollToEarthObservatory();
     }, 600);
   }
-  
+
   // 滚动到 Earth Observatory
   private scrollToEarthObservatory(): void {
     const target = document.getElementById('section-earth');
@@ -261,7 +261,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.destroyed) return;
     if (this.typingIndex < this.fullText.length) {
       const char = this.fullText[this.typingIndex];
-      this.typedText.update(val => val + char);
+      this.typedText.update((val) => val + char);
       this.typingIndex++;
 
       // Play mechanical key sound
@@ -384,7 +384,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       '[SYS] System initializing...',
       '[SYS] Rayleigh scattering model: OK',
       '[NAV] Aligning solar sensor arrays...',
-      '[HUD] Diagnostic telemetry online'
+      '[HUD] Diagnostic telemetry online',
     ]);
 
     this.combinedTimer = setInterval(() => {
@@ -400,6 +400,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private generateMatrixChars(): string {
     const chars = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ABCDEF';
-    return Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    return Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join(
+      '',
+    );
   }
 }

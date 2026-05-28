@@ -26,7 +26,7 @@ export class LabComponent {
       desc: this.i18n.t(`lab.${e.key}_desc`),
       tech: e.tech,
       status: e.status,
-    }))
+    })),
   );
 
   t(key: string): string {

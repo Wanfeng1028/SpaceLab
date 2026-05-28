@@ -37,7 +37,12 @@
       <h2 class="about-section__title">{{ t('about.contact') }}</h2>
       <div class="contact-list">
         @for (contact of contacts; track contact.label) {
-          <a class="contact-item glass-card-hover" [href]="contact.href" target="_blank" rel="noopener">
+          <a
+            class="contact-item glass-card-hover"
+            [href]="contact.href"
+            target="_blank"
+            rel="noopener"
+          >
             <span class="contact-item__icon">{{ contact.icon }}</span>
             <div class="contact-item__info">
               <span class="contact-item__label">{{ contact.label }}</span>

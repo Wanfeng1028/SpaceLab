@@ -81,7 +81,9 @@
   width: 16px;
   height: 1px;
   background: rgba(255, 255, 255, 0.15);
-  transition: width 300ms var(--ease-out, ease-out), background 300ms;
+  transition:
+    width 300ms var(--ease-out, ease-out),
+    background 300ms;
 
   .eclipse-scale__tick--major & {
     width: 28px;

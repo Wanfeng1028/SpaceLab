@@ -3,12 +3,7 @@
     "name": "SpaceLab",
     "slug": "spacelab",
     "description": "一个个人数字空间与 WebGL 展示博客。",
-    "tags": [
-      "Angular",
-      "Three.js",
-      "GSAP",
-      "Supabase"
-    ],
+    "tags": ["Angular", "Three.js", "GSAP", "Supabase"],
     "status": "Building",
     "cover": "",
     "github": "https://github.com/Wanfeng1028/SpaceLab",
@@ -22,11 +17,7 @@
     "name": "Particle Gallery",
     "slug": "particle-gallery",
     "description": "基于 Three.js 的交互式粒子画廊，支持自定义着色器和动态效果。",
-    "tags": [
-      "Three.js",
-      "WebGL",
-      "GLSL"
-    ],
+    "tags": ["Three.js", "WebGL", "GLSL"],
     "status": "Completed",
     "cover": "",
     "github": "",
@@ -40,11 +31,7 @@
     "name": "Glass UI Kit",
     "slug": "glass-ui-kit",
     "description": "一套玻璃拟态风格的 UI 组件库，包含卡片、按钮、模态框等。",
-    "tags": [
-      "SCSS",
-      "CSS Variables",
-      "TypeScript"
-    ],
+    "tags": ["SCSS", "CSS Variables", "TypeScript"],
     "status": "Completed",
     "cover": "",
     "github": "",
@@ -58,11 +45,7 @@
     "name": "Task Flow",
     "slug": "task-flow",
     "description": "一个极简风格的看板式任务管理工具，支持拖拽和标签筛选。",
-    "tags": [
-      "React",
-      "Node.js",
-      "MongoDB"
-    ],
+    "tags": ["React", "Node.js", "MongoDB"],
     "status": "Archived",
     "cover": "",
     "github": "",
@@ -76,11 +59,7 @@
     "name": "Motion Lab",
     "slug": "motion-lab",
     "description": "CSS 动画与 GSAP 动效实验集合，探索 Web 动画的边界。",
-    "tags": [
-      "GSAP",
-      "Three.js",
-      "CSS Animations"
-    ],
+    "tags": ["GSAP", "Three.js", "CSS Animations"],
     "status": "Building",
     "cover": "",
     "github": "",
@@ -94,11 +73,7 @@
     "name": "Data Viz",
     "slug": "data-viz",
     "description": "数据可视化实验，使用 D3.js 和 Canvas 渲染图表与交互式数据面板。",
-    "tags": [
-      "D3.js",
-      "Canvas",
-      "SVG"
-    ],
+    "tags": ["D3.js", "Canvas", "SVG"],
     "status": "Draft",
     "cover": "",
     "github": "",

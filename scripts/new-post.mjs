@@ -12,11 +12,11 @@ if (!title) {
 }
 
 const date = new Date().toISOString().slice(0, 10);
-const slug = title
-  .toLowerCase()
-  .replace(/[^a-zA-Z0-9\u4e00-\u9fff]+/g, '-')
-  .replace(/^-+|-+$/g, '')
-  || 'untitled';
+const slug =
+  title
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9\u4e00-\u9fff]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'untitled';
 
 const fileName = `${date}-${slug}.md`;
 const postsDir = path.resolve(import.meta.dirname, '..', 'src', 'content', 'posts');

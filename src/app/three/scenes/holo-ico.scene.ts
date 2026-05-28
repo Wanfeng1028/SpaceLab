@@ -12,7 +12,7 @@ import {
 
 /**
  * Holographic Icosahedron Scene
- * 
+ *
  * A slowly rotating wireframe icosahedron with Fresnel edge glow and scanline shader.
  * Fits the "diagnostics" theme perfectly — looks like a holographic heads-up display projection.
  */

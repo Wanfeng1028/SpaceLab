@@ -72,15 +72,15 @@
 
 ## 🛠️ 技术栈
 
-| 层级 | 技术 | 用途 |
-|:---:|:---|:---|
-| **框架** | Angular 21.2 | Standalone Components · Signals · 新控制流语法 |
-| **语言** | TypeScript 5.9 | 严格类型 · 路径别名 |
-| **3D** | Three.js r170 | WebGL 着色器 · OrthographicCamera · PlaneGeometry |
-| **动画** | GSAP 3 | 时间线控制 · 缓动函数 |
-| **样式** | SCSS + CSS Variables | 设计令牌 · 玻璃拟态 mixin 集合 |
-| **音频** | Web Audio API | 振荡器合成 · 机械键盘 / 铃声音效 |
-| **后端** | Supabase (规划中) | 数据存储 · 认证 · 实时订阅 |
+|   层级   | 技术                 | 用途                                              |
+| :------: | :------------------- | :------------------------------------------------ |
+| **框架** | Angular 21.2         | Standalone Components · Signals · 新控制流语法    |
+| **语言** | TypeScript 5.9       | 严格类型 · 路径别名                               |
+|  **3D**  | Three.js r170        | WebGL 着色器 · OrthographicCamera · PlaneGeometry |
+| **动画** | GSAP 3               | 时间线控制 · 缓动函数                             |
+| **样式** | SCSS + CSS Variables | 设计令牌 · 玻璃拟态 mixin 集合                    |
+| **音频** | Web Audio API        | 振荡器合成 · 机械键盘 / 铃声音效                  |
+| **后端** | Supabase (规划中)    | 数据存储 · 认证 · 实时订阅                        |
 
 ---
 
@@ -137,13 +137,13 @@ src/
 
 ### 色板
 
-| 令牌 | 值 | 用途 |
-|:---|:---:|:---|
-| `--color-bg` | `#030308` | 深空背景 |
-| `--color-text` | `#ffffff` | 主文字 |
-| `--color-cyan` | `#00f0ff` | 品牌主色 |
-| `--color-accent-yellow` | `#ffd21f` | 强调色 |
-| `--color-violet` | `#bd00ff` | 渐变辅色 |
+| 令牌                    |    值     | 用途     |
+| :---------------------- | :-------: | :------- |
+| `--color-bg`            | `#030308` | 深空背景 |
+| `--color-text`          | `#ffffff` | 主文字   |
+| `--color-cyan`          | `#00f0ff` | 品牌主色 |
+| `--color-accent-yellow` | `#ffd21f` | 强调色   |
+| `--color-violet`        | `#bd00ff` | 渐变辅色 |
 
 ### 字体
 
@@ -153,13 +153,13 @@ src/
 
 ### 响应式断点
 
-| 名称 | 范围 |
-|:---:|:---:|
-| Desktop | `≥ 1200px` |
-| Laptop | `992 – 1199px` |
-| Tablet | `768 – 991px` |
-| Mobile | `< 768px` |
-| Small Mobile | `< 480px` |
+|     名称     |      范围      |
+| :----------: | :------------: |
+|   Desktop    |   `≥ 1200px`   |
+|    Laptop    | `992 – 1199px` |
+|    Tablet    | `768 – 991px`  |
+|    Mobile    |   `< 768px`    |
+| Small Mobile |   `< 480px`    |
 
 ---
 

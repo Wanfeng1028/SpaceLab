@@ -17,54 +17,56 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
       </div>
     </div>
   `,
-  styles: [`
-    .card-gallery {
-      border-radius: var(--radius-2xl);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.4s var(--ease-out);
+  styles: [
+    `
+      .card-gallery {
+        border-radius: var(--radius-2xl);
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.4s var(--ease-out);
 
-      &:hover {
-        transform: scale(1.03);
+        &:hover {
+          transform: scale(1.03);
+        }
       }
-    }
 
-    .card-gallery__preview {
-      aspect-ratio: 4 / 3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      .card-gallery__preview {
+        aspect-ratio: 4 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
-    }
 
-    .card-gallery__placeholder {
-      font-size: 2rem;
-    }
+      .card-gallery__placeholder {
+        font-size: 2rem;
+      }
 
-    .card-gallery__info {
-      padding: var(--space-md);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
+      .card-gallery__info {
+        padding: var(--space-md);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
 
-    .card-gallery__title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--color-text);
-    }
+      .card-gallery__title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--color-text);
+      }
 
-    .card-gallery__type {
-      font-size: 0.75rem;
-      color: var(--color-text-tertiary);
-    }
-  `],
+      .card-gallery__type {
+        font-size: 0.75rem;
+        color: var(--color-text-tertiary);
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryCardComponent {

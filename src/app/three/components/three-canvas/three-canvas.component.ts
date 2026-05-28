@@ -8,31 +8,39 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
-type SceneFactory = (canvas: HTMLCanvasElement) => { init(): void; destroy(): void; pause?(): void; resume?(): void };
+type SceneFactory = (canvas: HTMLCanvasElement) => {
+  init(): void;
+  destroy(): void;
+  pause?(): void;
+  resume?(): void;
+};
 
 @Component({
   selector: 'app-three-canvas',
   template: `<canvas #canvas class="three-canvas"></canvas>`,
-  styles: [`
-    :host {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .three-canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  `],
+  styles: [
+    `
+      :host {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .three-canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @Input({ required: true }) sceneFactory!: SceneFactory;
 
-  private sceneInstance: { init(): void; destroy(): void; pause?(): void; resume?(): void } | null = null;
+  private sceneInstance: { init(): void; destroy(): void; pause?(): void; resume?(): void } | null =
+    null;
   private observer: IntersectionObserver | null = null;
   private initialized = false;
 
@@ -52,7 +60,7 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
           }
         });
       },
-      { threshold: 0.01, rootMargin: '0px 0px 100px 0px' }
+      { threshold: 0.01, rootMargin: '0px 0px 100px 0px' },
     );
     this.observer.observe(this.canvasRef.nativeElement);
   }

@@ -175,7 +175,9 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     inset: -22px;
     border-radius: 50%;
     border: 1px dashed rgba(143, 124, 255, 0.28);
-    animation: scmOrbitSpin 22s linear infinite, scmRingFadeIn 800ms 500ms ease both;
+    animation:
+      scmOrbitSpin 22s linear infinite,
+      scmRingFadeIn 800ms 500ms ease both;
     opacity: 0;
   }
 }
@@ -394,13 +396,21 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 // ============================================
 
 @keyframes scmOverlayIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scmOverlayOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes scmPanelIn {
@@ -428,17 +438,28 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes scmOrbitSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes scmStatusPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 @keyframes scmRingFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 // ============================================

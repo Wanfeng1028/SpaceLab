@@ -19,16 +19,16 @@
 
 `src/styles/_glass.scss` 提供 **8 个 mixin**，分为三层：
 
-| 层级 | Mixin | 用途 |
-|------|-------|------|
-| **卡片底座** | `glass-card-base` | 核心玻璃层：边框、渐变背景、blur、阴影 |
-| **卡片装饰** | `glass-card-light` | `::before` 顶部高光 |
-| | `glass-card-glow` | `::after` 底部品牌色光晕 |
-| **卡片交互** | `glass-card-hover` | hover 上浮 + 阴影增强 |
-| | `glass-card-active` | 选中/激活状态 |
-| **卡片布局** | `glass-card-content-layer` | 子元素 z-index 置顶 |
-| **面板底座** | `glass-surface` | 轻量版 base，无 border-radius |
-| **面板交互** | `glass-surface-hover` | 轻量 hover（-1px） |
+| 层级         | Mixin                      | 用途                                   |
+| ------------ | -------------------------- | -------------------------------------- |
+| **卡片底座** | `glass-card-base`          | 核心玻璃层：边框、渐变背景、blur、阴影 |
+| **卡片装饰** | `glass-card-light`         | `::before` 顶部高光                    |
+|              | `glass-card-glow`          | `::after` 底部品牌色光晕               |
+| **卡片交互** | `glass-card-hover`         | hover 上浮 + 阴影增强                  |
+|              | `glass-card-active`        | 选中/激活状态                          |
+| **卡片布局** | `glass-card-content-layer` | 子元素 z-index 置顶                    |
+| **面板底座** | `glass-surface`            | 轻量版 base，无 border-radius          |
+| **面板交互** | `glass-surface-hover`      | 轻量 hover（-1px）                     |
 
 ---
 
@@ -43,10 +43,12 @@
   border: 1px solid rgb(255 255 255 / 0.46);
   border-radius: 30px;
   background:
-    linear-gradient(148deg,
+    linear-gradient(
+      148deg,
       rgb(255 255 255 / 0.22) 0%,
       rgb(255 255 255 / 0.1) 48%,
-      rgb(255 255 255 / 0.05) 100%),
+      rgb(255 255 255 / 0.05) 100%
+    ),
     rgb(255 255 255 / 0.04);
   box-shadow:
     0 14px 34px rgb(var(--color-text-primary-rgb) / 0.06),
@@ -55,23 +57,24 @@
   backdrop-filter: blur(26px) saturate(1.2);
   -webkit-backdrop-filter: blur(26px) saturate(1.2);
   overflow: hidden;
-  transition: transform 180ms var(--ease-out),
-              box-shadow 180ms var(--ease-out),
-              border-color 180ms var(--ease-out),
-              background 180ms var(--ease-out);
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    border-color 180ms var(--ease-out),
+    background 180ms var(--ease-out);
 }
 ```
 
 **关键参数：**
 
-| 属性 | 值 | 说明 |
-|------|-----|------|
-| `border` | `1px solid rgb(255 255 255 / 0.46)` | 半透明白边，模拟光线折射 |
-| `border-radius` | `30px` | 大圆角，项目统一风格 |
-| `background` | 双层：渐变 + 纯色 | 148° 方向渐变白→透，底部纯白底 |
-| `box-shadow` | 3 层 | 外阴影 + 内顶部高光 + 内底部暗线 |
-| `backdrop-filter` | `blur(26px) saturate(1.2)` | 核心模糊效果，26px 半径 + 饱和度提升 |
-| `overflow` | `hidden` | 裁剪伪元素溢出 |
+| 属性              | 值                                  | 说明                                 |
+| ----------------- | ----------------------------------- | ------------------------------------ |
+| `border`          | `1px solid rgb(255 255 255 / 0.46)` | 半透明白边，模拟光线折射             |
+| `border-radius`   | `30px`                              | 大圆角，项目统一风格                 |
+| `background`      | 双层：渐变 + 纯色                   | 148° 方向渐变白→透，底部纯白底       |
+| `box-shadow`      | 3 层                                | 外阴影 + 内顶部高光 + 内底部暗线     |
+| `backdrop-filter` | `blur(26px) saturate(1.2)`          | 核心模糊效果，26px 半径 + 饱和度提升 |
+| `overflow`        | `hidden`                            | 裁剪伪元素溢出                       |
 
 ### 3.2 `glass-card-light` — 顶部高光层
 
@@ -79,15 +82,13 @@
 
 ```scss
 @mixin glass-card-light {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 12%,
-      rgb(255 255 255 / 0.62), transparent 24%),
-    linear-gradient(135deg,
-      rgb(255 255 255 / 0.18), transparent 42%);
+    radial-gradient(circle at 18% 12%, rgb(255 255 255 / 0.62), transparent 24%),
+    linear-gradient(135deg, rgb(255 255 255 / 0.18), transparent 42%);
   opacity: 0.88;
 }
 ```
@@ -100,16 +101,18 @@
 
 ```scss
 @mixin glass-card-glow {
-  content: "";
+  content: '';
   position: absolute;
   inset: auto -8% -24% 38%;
   height: 50%;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle,
+  background: radial-gradient(
+    circle,
     rgb(var(--color-brand-rgb) / 0.1) 0%,
     rgb(255 255 255 / 0.03) 54%,
-    transparent 100%);
+    transparent 100%
+  );
   filter: blur(18px);
   opacity: 0.56;
   transform: rotate(-10deg);
@@ -139,10 +142,12 @@
 @mixin glass-card-active {
   border-color: rgb(var(--color-brand-rgb) / 0.45);
   background:
-    linear-gradient(148deg,
+    linear-gradient(
+      148deg,
       rgb(255 255 255 / 0.26) 0%,
       rgb(255 255 255 / 0.12) 48%,
-      rgb(var(--color-brand-rgb) / 0.06) 100%),
+      rgb(var(--color-brand-rgb) / 0.06) 100%
+    ),
     rgb(var(--color-brand-rgb) / 0.04);
   box-shadow:
     0 14px 34px rgb(var(--color-text-primary-rgb) / 0.06),
@@ -184,7 +189,7 @@
 ### 4.1 卡片组件（标准三件套）
 
 ```scss
-@use "../styles/glass" as glass;
+@use '../styles/glass' as glass;
 
 .card {
   @include glass.glass-card-base;
@@ -208,7 +213,7 @@
 ### 4.2 导航栏 / 面板
 
 ```scss
-@use "../styles/glass" as glass;
+@use '../styles/glass' as glass;
 
 .nav {
   @include glass.glass-surface;
@@ -221,7 +226,7 @@
 
 .nav::after {
   @include glass.glass-card-glow;
-  opacity: 0.38;  /* 光晕更淡 */
+  opacity: 0.38; /* 光晕更淡 */
 }
 
 .nav:hover {
@@ -232,7 +237,7 @@
 ### 4.3 模态框
 
 ```scss
-@use "../styles/glass" as glass;
+@use '../styles/glass' as glass;
 
 .overlay {
   position: fixed;
@@ -259,20 +264,20 @@
 
 ## 5. 各组件使用一览
 
-| 组件 | 使用的 Mixin | 特殊参数 |
-|------|-------------|---------|
-| **NavBar** | `glass-surface` + `glass-card-light` + `glass-card-glow` + `glass-surface-hover` | `border-radius: pill`，光晕 opacity 0.38 |
-| **BottomTabs** | 直接写 `backdrop-filter: blur(10px)` | 移动端底栏，未用 mixin |
-| **GlassToast** | `glass-card-base` + `glass-card-light` + `glass-card-glow` | `border-radius: 22px`，光晕 opacity 0.32 |
-| **AuthModal** | `glass-card-base` + `glass-card-light` + `glass-card-glow` | 遮罩 `blur(6px)`，内嵌卡片 `blur(8px)` |
-| **FeatureModal** | `glass-card-base` + `glass-card-light` + `glass-card-glow` | 遮罩 `blur(18px) saturate(1.3)` |
-| **WorkspaceModal** | `glass-card-base` + `glass-card-light` + `glass-card-glow` | 遮罩 `blur(18px)`，面板 `blur(26px)` |
-| **ProfilePage** | `glass-card-base` + `glass-card-light` + `glass-card-glow` + `glass-card-content-layer` | `.glassCard` 通用类 |
-| **Pages (首页)** | `glass-card-base` + 全套 | `.designCard` / `.whyChooseCard` / `.routeOverviewBoard` |
-| **FlowPage** | `glass-card-base` + 全套 + `glass-card-hover` | 5 个独立玻璃卡片 |
-| **FeaturesPage** | 混用 mixin + 手写 blur | 值范围 `8px` ~ `24px` |
-| **CasesPage** | `glass-card-base` + `glass-card-light` + `glass-card-glow` | 案例卡片 + 标签区 |
-| **DevelopersPage** | `glass-card-base` + `glass-card-light` + `glass-card-glow` + `glass-card-hover` | 7 个独立玻璃区块 |
+| 组件               | 使用的 Mixin                                                                            | 特殊参数                                                 |
+| ------------------ | --------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| **NavBar**         | `glass-surface` + `glass-card-light` + `glass-card-glow` + `glass-surface-hover`        | `border-radius: pill`，光晕 opacity 0.38                 |
+| **BottomTabs**     | 直接写 `backdrop-filter: blur(10px)`                                                    | 移动端底栏，未用 mixin                                   |
+| **GlassToast**     | `glass-card-base` + `glass-card-light` + `glass-card-glow`                              | `border-radius: 22px`，光晕 opacity 0.32                 |
+| **AuthModal**      | `glass-card-base` + `glass-card-light` + `glass-card-glow`                              | 遮罩 `blur(6px)`，内嵌卡片 `blur(8px)`                   |
+| **FeatureModal**   | `glass-card-base` + `glass-card-light` + `glass-card-glow`                              | 遮罩 `blur(18px) saturate(1.3)`                          |
+| **WorkspaceModal** | `glass-card-base` + `glass-card-light` + `glass-card-glow`                              | 遮罩 `blur(18px)`，面板 `blur(26px)`                     |
+| **ProfilePage**    | `glass-card-base` + `glass-card-light` + `glass-card-glow` + `glass-card-content-layer` | `.glassCard` 通用类                                      |
+| **Pages (首页)**   | `glass-card-base` + 全套                                                                | `.designCard` / `.whyChooseCard` / `.routeOverviewBoard` |
+| **FlowPage**       | `glass-card-base` + 全套 + `glass-card-hover`                                           | 5 个独立玻璃卡片                                         |
+| **FeaturesPage**   | 混用 mixin + 手写 blur                                                                  | 值范围 `8px` ~ `24px`                                    |
+| **CasesPage**      | `glass-card-base` + `glass-card-light` + `glass-card-glow`                              | 案例卡片 + 标签区                                        |
+| **DevelopersPage** | `glass-card-base` + `glass-card-light` + `glass-card-glow` + `glass-card-hover`         | 7 个独立玻璃区块                                         |
 
 ---
 
@@ -280,13 +285,13 @@
 
 项目中 `backdrop-filter: blur()` 的取值分布：
 
-| 等级 | Blur 值 | Saturate | 使用场景 |
-|------|---------|----------|---------|
-| **极轻** | `2px` ~ `6px` | — | 背景遮罩层、辅助提示 |
-| **轻** | `8px` ~ `12px` | — | Toast 弹窗、小模态框内层、底栏 |
-| **中** | `16px` ~ `20px` | `1.2` ~ `1.3` | 模态框遮罩、功能卡片 |
-| **标准** | `22px` ~ `26px` | `1.16` ~ `1.35` | 主卡片、导航栏、核心玻璃层 |
-| **强** | `28px` | `1.5` | 案例页焦点卡片 |
+| 等级     | Blur 值         | Saturate        | 使用场景                       |
+| -------- | --------------- | --------------- | ------------------------------ |
+| **极轻** | `2px` ~ `6px`   | —               | 背景遮罩层、辅助提示           |
+| **轻**   | `8px` ~ `12px`  | —               | Toast 弹窗、小模态框内层、底栏 |
+| **中**   | `16px` ~ `20px` | `1.2` ~ `1.3`   | 模态框遮罩、功能卡片           |
+| **标准** | `22px` ~ `26px` | `1.16` ~ `1.35` | 主卡片、导航栏、核心玻璃层     |
+| **强**   | `28px`          | `1.5`           | 案例页焦点卡片                 |
 
 > **建议：** 新组件统一使用 mixin 中的 `blur(26px) saturate(1.2)` 标准值，  
 > 仅在视觉层次需要区分时调整。
@@ -297,11 +302,11 @@
 
 以下场景使用 `filter: blur()` 做装饰效果，与磨砂玻璃无关：
 
-| 场景 | 值 | 说明 |
-|------|-----|------|
+| 场景         | 值                          | 说明           |
+| ------------ | --------------------------- | -------------- |
 | 背景渐变色块 | `blur(60px)` ~ `blur(80px)` | 大面积柔光装饰 |
-| 入场动画 | `blur(6px)` ~ `blur(8px)` | fadeIn 初始态 |
-| 光晕散射 | `blur(16px)` ~ `blur(22px)` | 品牌色光球 |
+| 入场动画     | `blur(6px)` ~ `blur(8px)`   | fadeIn 初始态  |
+| 光晕散射     | `blur(16px)` ~ `blur(22px)` | 品牌色光球     |
 
 ---
 

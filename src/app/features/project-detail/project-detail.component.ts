@@ -9,7 +9,13 @@ import { I18nService } from '../../core/services/i18n.service';
       <p>{{ t('projectDetail.comingSoon') }}</p>
     </div>
   `,
-  styles: [`:host { display: block; }`],
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
 export class ProjectDetailComponent {
   private i18n = inject(I18nService);

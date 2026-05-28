@@ -1,11 +1,11 @@
 ---
-title: "Glassmorphism 设计指南"
-slug: "glassmorphism-guide"
-date: "2026-05-15"
-category: "设计"
-tags: ["设计", "CSS"]
-cover: ""
-summary: "玻璃拟态是一种流行的 UI 设计风格，通过半透明、模糊和微妙的边框创造出玻璃般的质感。"
+title: 'Glassmorphism 设计指南'
+slug: 'glassmorphism-guide'
+date: '2026-05-15'
+category: '设计'
+tags: ['设计', 'CSS']
+cover: ''
+summary: '玻璃拟态是一种流行的 UI 设计风格，通过半透明、模糊和微妙的边框创造出玻璃般的质感。'
 published: true
 ---
 

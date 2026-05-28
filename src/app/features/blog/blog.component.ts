@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService } from '../../core/services/post.service';
@@ -29,7 +23,11 @@ export class BlogComponent {
   readonly allPosts = computed(() => this.postService.posts());
 
   readonly categories = computed(() => {
-    const cats = new Set(this.allPosts().map((p) => p.category).filter(Boolean));
+    const cats = new Set(
+      this.allPosts()
+        .map((p) => p.category)
+        .filter(Boolean),
+    );
     return ['all', ...Array.from(cats)];
   });
 

@@ -47,9 +47,8 @@ export class ParticleOceanScene {
   constructor(private canvas: HTMLCanvasElement) {
     this.clock = new Clock();
     const isMobile =
-      /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      ) || window.innerWidth < 768;
+      /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      window.innerWidth < 768;
     this.particleCount = isMobile ? 3000 : 12800;
   }
 

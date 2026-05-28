@@ -93,7 +93,10 @@ body {
     radial-gradient(circle at 50% 50%, rgba(10, 92, 255, 0.04) 0%, transparent 65%),
     linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-  background-size: 100% 100%, 30px 30px, 30px 30px;
+  background-size:
+    100% 100%,
+    30px 30px,
+    30px 30px;
   position: relative;
   overflow-x: hidden;
 }
