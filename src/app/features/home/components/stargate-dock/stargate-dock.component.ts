@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { I18nService } from '../../../../core/services/i18n.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { MagneticButtonComponent } from '../../../../shared/components/hud/magnetic-button.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
@@ -20,6 +21,7 @@ import { StargateScene } from '../../../../three/scenes/stargate.scene';
 })
 export class PortalGallerySection implements OnInit {
   private readonly router = inject(Router);
+  private readonly i18n = inject(I18nService);
 
   readonly telemetryText = signal('AI FRONTLINE // DAILY SIGNALS AWAITING');
 
@@ -30,6 +32,10 @@ export class PortalGallerySection implements OnInit {
 
   ngOnInit(): void {
     this.telemetryText.set('AI FRONTLINE // SIGNALS ONLINE');
+  }
+
+  t(key: string): string {
+    return this.i18n.t(key);
   }
 
   onEnter(): void {
