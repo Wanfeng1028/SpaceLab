@@ -117,6 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private router = inject(Router);
   private i18n = inject(I18nService);
+  private lenis = inject(LenisScrollService);
 
   constructor() {
     effect(() => {
@@ -204,10 +205,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   // 滚动到 Earth Observatory
   private scrollToEarthObservatory(): void {
     const target = document.getElementById('section-earth');
-    target?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (target) {
+      // 使用 Lenis 平滑滚动
+      this.lenis.scrollTo(target.offsetTop, { immediate: false });
+    }
   }
 
   onContact(): void {
