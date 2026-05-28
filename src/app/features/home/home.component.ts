@@ -232,6 +232,33 @@ export class HomeComponent implements OnInit, OnDestroy {
         heroContent.style.border = '2px solid red';
         heroContent.style.background = 'rgba(255, 0, 0, 0.1)';
       }
+      
+      // 临时调试：检查所有 position: fixed 或 absolute 且 inset: 0 的元素
+      const allElements = document.querySelectorAll('*');
+      const overlayElements = [];
+      for (let i = 0; i < allElements.length; i++) {
+        const el = allElements[i] as HTMLElement;
+        const style = window.getComputedStyle(el);
+        if ((style.position === 'fixed' || style.position === 'absolute') && 
+            style.inset === '0px' && 
+            el.offsetWidth > 0 && 
+            el.offsetHeight > 0) {
+          overlayElements.push({
+            tag: el.tagName,
+            className: el.className,
+            id: el.id,
+            zIndex: style.zIndex,
+            opacity: style.opacity,
+            visibility: style.visibility,
+            display: style.display,
+            pointerEvents: style.pointerEvents,
+            width: el.offsetWidth,
+            height: el.offsetHeight
+          });
+        }
+      }
+      
+      console.log('[Home overlay elements]', overlayElements);
     }, 200);
   }
 
