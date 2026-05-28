@@ -36,18 +36,17 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/lab/lab.component').then(m => m.LabComponent),
   },
-  // 暂时注释掉 ai-frontline 路由以解决构建错误
-  // {
-  //   path: 'ai-frontline',
-  //   title: 'AI Frontline — SpaceLab',
-  //   loadComponent: () =>
-  //     import('./features/ai-frontline/ai-frontline.component').then(m => m.AiFrontlineComponent),
-  // },
-  // {
-  //   path: 'gallery',
-  //   redirectTo: 'ai-frontline',
-  //   pathMatch: 'full',
-  // },
+  {
+    path: 'ai-frontline',
+    title: 'AI Frontline — SpaceLab',
+    loadComponent: () =>
+      import('./features/ai-frontline/ai-frontline.component').then(m => m.AiFrontlineComponent),
+  },
+  {
+    path: 'gallery',
+    redirectTo: 'ai-frontline',
+    pathMatch: 'full',
+  },
   {
     path: 'about',
     title: 'About — SpaceLab',
