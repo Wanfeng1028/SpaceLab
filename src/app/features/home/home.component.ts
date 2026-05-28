@@ -169,69 +169,69 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }, 2000);
     this.startCombinedTimer();
-    
-    // 调试代码已注释，避免干扰
-    // console.log('[Home init]', {
-    //   isLaunchTransitionActive: this.isLaunchTransitionActive(),
-    //   launchCompleted: this.launchCompleted(),
-    //   isHeroDimmed: this.isHeroDimmed()
-    // });
 
-    // // 检查首页元素是否可见
-    // setTimeout(() => {
-    //   const heroContent = document.querySelector('.hero-content');
-    //   const eclipseContainer = document.querySelector('.eclipse-container');
-    //   const homeContainer = document.querySelector('.home-container');
-    //   const eclipseHero = document.querySelector('.eclipse-hero');
-    //   const backdropStars = document.querySelector('.backdrop-stars');
+    // 临时调试：打印初始状态
+    console.log('[Home init]', {
+      isLaunchTransitionActive: this.isLaunchTransitionActive(),
+      launchCompleted: this.launchCompleted(),
+      isHeroDimmed: this.isHeroDimmed()
+    });
 
-    //   console.log('[Home visibility check]', {
-    //     heroContent: heroContent ? {
-    //       display: window.getComputedStyle(heroContent).display,
-    //       visibility: window.getComputedStyle(heroContent).visibility,
-    //       opacity: window.getComputedStyle(heroContent).opacity,
-    //       zIndex: window.getComputedStyle(heroContent).zIndex,
-    //       position: window.getComputedStyle(heroContent).position
-    //     } : 'not found',
-    //     eclipseContainer: eclipseContainer ? {
-    //       display: window.getComputedStyle(eclipseContainer).display,
-    //       visibility: window.getComputedStyle(eclipseContainer).visibility,
-    //       opacity: window.getComputedStyle(eclipseContainer).opacity
-    //     } : 'not found',
-    //     homeContainer: homeContainer ? {
-    //       display: window.getComputedStyle(homeContainer).display,
-    //       visibility: window.getComputedStyle(homeContainer).visibility,
-    //       opacity: window.getComputedStyle(homeContainer).opacity,
-    //       backgroundColor: window.getComputedStyle(homeContainer).backgroundColor
-    //     } : 'not found',
-    //     eclipseHero: eclipseHero ? {
-    //       display: window.getComputedStyle(eclipseHero).display,
-    //       visibility: window.getComputedStyle(eclipseHero).visibility,
-    //       opacity: window.getComputedStyle(eclipseHero).opacity,
-    //       backgroundColor: window.getComputedStyle(eclipseHero).backgroundColor,
-    //       height: window.getComputedStyle(eclipseHero).height
-    //     } : 'not found',
-    //     backdropStars: backdropStars ? {
-    //       display: window.getComputedStyle(backdropStars).display,
-    //       visibility: window.getComputedStyle(backdropStars).visibility,
-    //       opacity: window.getComputedStyle(backdropStars).opacity,
-    //       zIndex: window.getComputedStyle(backdropStars).zIndex
-    //     } : 'not found'
-    //   });
-    // }, 100);
+    // 临时调试：检查首页元素是否可见
+    setTimeout(() => {
+      const heroContent = document.querySelector('.hero-content');
+      const eclipseContainer = document.querySelector('.eclipse-container');
+      const homeContainer = document.querySelector('.home-container');
+      const eclipseHero = document.querySelector('.eclipse-hero');
+      const backdropStars = document.querySelector('.backdrop-stars');
 
-    // // 检查是否有 JavaScript 错误
-    // window.addEventListener('error', (event) => {
-    //   console.error('[Home JS Error]', event.error);
-    // });
+      console.log('[Home visibility check]', {
+        heroContent: heroContent ? {
+          display: window.getComputedStyle(heroContent).display,
+          visibility: window.getComputedStyle(heroContent).visibility,
+          opacity: window.getComputedStyle(heroContent).opacity,
+          zIndex: window.getComputedStyle(heroContent).zIndex,
+          position: window.getComputedStyle(heroContent).position
+        } : 'not found',
+        eclipseContainer: eclipseContainer ? {
+          display: window.getComputedStyle(eclipseContainer).display,
+          visibility: window.getComputedStyle(eclipseContainer).visibility,
+          opacity: window.getComputedStyle(eclipseContainer).opacity
+        } : 'not found',
+        homeContainer: homeContainer ? {
+          display: window.getComputedStyle(homeContainer).display,
+          visibility: window.getComputedStyle(homeContainer).visibility,
+          opacity: window.getComputedStyle(homeContainer).opacity,
+          backgroundColor: window.getComputedStyle(homeContainer).backgroundColor
+        } : 'not found',
+        eclipseHero: eclipseHero ? {
+          display: window.getComputedStyle(eclipseHero).display,
+          visibility: window.getComputedStyle(eclipseHero).visibility,
+          opacity: window.getComputedStyle(eclipseHero).opacity,
+          backgroundColor: window.getComputedStyle(eclipseHero).backgroundColor,
+          height: window.getComputedStyle(eclipseHero).height
+        } : 'not found',
+        backdropStars: backdropStars ? {
+          display: window.getComputedStyle(backdropStars).display,
+          visibility: window.getComputedStyle(backdropStars).visibility,
+          opacity: window.getComputedStyle(backdropStars).opacity,
+          zIndex: window.getComputedStyle(backdropStars).zIndex
+        } : 'not found'
+      });
+    }, 100);
 
-    // // 添加红色边框来检查 .hero-content 是否可见
-    // setTimeout(() => {
-    //   const heroContent = document.querySelector('.hero-content') as HTMLElement;
-    //   if (heroContent) {
-    //     heroContent.style.border = '2px solid red';
-    //     heroContent.style.background = 'rgba(255, 0, 0, 0.1)';
-    //   }
+    // 临时调试：检查是否有 JavaScript 错误
+    window.addEventListener('error', (event) => {
+      console.error('[Home JS Error]', event.error);
+    });
+
+    // 临时调试：添加红色边框来检查 .hero-content 是否可见
+    setTimeout(() => {
+      const heroContent = document.querySelector('.hero-content') as HTMLElement;
+      if (heroContent) {
+        heroContent.style.border = '2px solid red';
+        heroContent.style.background = 'rgba(255, 0, 0, 0.1)';
+      }
 
     //   // 检查所有 position: fixed 或 absolute 且 inset: 0 的元素
     //   const allElements = document.querySelectorAll('*');
