@@ -7,6 +7,7 @@ import {
   HostListener,
   ChangeDetectionStrategy,
   DestroyRef,
+  effect,
 } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { I18nService } from '../../../core/services/i18n.service';
