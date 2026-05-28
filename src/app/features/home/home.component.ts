@@ -153,6 +153,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // 重置所有临时UI状态
+    this.isLaunchTransitionActive.set(false);
+    this.launchCompleted.set(false);
+    // 清理可能残留的 body/html class
+    this.cleanupBodyClasses();
     // 直接显示完整文本
     this.typedText.set(this.fullText);
     // 延迟2秒后启动打字机循环（确保音频上下文可能需要用户交互）
