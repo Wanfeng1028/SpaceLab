@@ -176,6 +176,34 @@ export class HomeComponent implements OnInit, OnDestroy {
       launchCompleted: this.launchCompleted(),
       isHeroDimmed: this.isHeroDimmed()
     });
+    
+    // 临时调试：检查首页元素是否可见
+    setTimeout(() => {
+      const heroContent = document.querySelector('.hero-content');
+      const eclipseContainer = document.querySelector('.eclipse-container');
+      const homeContainer = document.querySelector('.home-container');
+      
+      console.log('[Home visibility check]', {
+        heroContent: heroContent ? {
+          display: window.getComputedStyle(heroContent).display,
+          visibility: window.getComputedStyle(heroContent).visibility,
+          opacity: window.getComputedStyle(heroContent).opacity,
+          zIndex: window.getComputedStyle(heroContent).zIndex,
+          position: window.getComputedStyle(heroContent).position
+        } : 'not found',
+        eclipseContainer: eclipseContainer ? {
+          display: window.getComputedStyle(eclipseContainer).display,
+          visibility: window.getComputedStyle(eclipseContainer).visibility,
+          opacity: window.getComputedStyle(eclipseContainer).opacity
+        } : 'not found',
+        homeContainer: homeContainer ? {
+          display: window.getComputedStyle(homeContainer).display,
+          visibility: window.getComputedStyle(homeContainer).visibility,
+          opacity: window.getComputedStyle(homeContainer).opacity,
+          backgroundColor: window.getComputedStyle(homeContainer).backgroundColor
+        } : 'not found'
+      });
+    }, 100);
   }
 
   ngOnDestroy(): void {
