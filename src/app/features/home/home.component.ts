@@ -182,6 +182,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       const heroContent = document.querySelector('.hero-content');
       const eclipseContainer = document.querySelector('.eclipse-container');
       const homeContainer = document.querySelector('.home-container');
+      const eclipseHero = document.querySelector('.eclipse-hero');
+      const backdropStars = document.querySelector('.backdrop-stars');
       
       console.log('[Home visibility check]', {
         heroContent: heroContent ? {
@@ -201,9 +203,27 @@ export class HomeComponent implements OnInit, OnDestroy {
           visibility: window.getComputedStyle(homeContainer).visibility,
           opacity: window.getComputedStyle(homeContainer).opacity,
           backgroundColor: window.getComputedStyle(homeContainer).backgroundColor
+        } : 'not found',
+        eclipseHero: eclipseHero ? {
+          display: window.getComputedStyle(eclipseHero).display,
+          visibility: window.getComputedStyle(eclipseHero).visibility,
+          opacity: window.getComputedStyle(eclipseHero).opacity,
+          backgroundColor: window.getComputedStyle(eclipseHero).backgroundColor,
+          height: window.getComputedStyle(eclipseHero).height
+        } : 'not found',
+        backdropStars: backdropStars ? {
+          display: window.getComputedStyle(backdropStars).display,
+          visibility: window.getComputedStyle(backdropStars).visibility,
+          opacity: window.getComputedStyle(backdropStars).opacity,
+          zIndex: window.getComputedStyle(backdropStars).zIndex
         } : 'not found'
       });
     }, 100);
+    
+    // 检查是否有 JavaScript 错误
+    window.addEventListener('error', (event) => {
+      console.error('[Home JS Error]', event.error);
+    });
   }
 
   ngOnDestroy(): void {
