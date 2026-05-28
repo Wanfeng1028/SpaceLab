@@ -36,6 +36,7 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
 
   constructor() {
     effect(() => {
+      console.log('[SpaceCapsule] isOpen:', this.isOpen());
       if (this.isOpen()) {
         this.onOpen();
       }
