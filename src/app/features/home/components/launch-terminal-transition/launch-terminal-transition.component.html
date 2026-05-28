@@ -1,0 +1,55 @@
+<section class="launch-terminal-transition" [class.active]="isActive()">
+  <!-- 背景模糊/变暗层 -->
+  <div class="launch-terminal-transition__backdrop"></div>
+
+  <!-- 终端面板 -->
+  <div class="launch-terminal-transition__panel">
+    <!-- 顶部状态栏 -->
+    <div class="launch-terminal-transition__header">
+      <span class="status-dot"></span>
+      <span class="header-text">LAUNCH TERMINAL</span>
+      <span class="header-subtext">SPACELAB BOOT SEQUENCE</span>
+    </div>
+
+    <!-- 命令行内容 -->
+    <div class="launch-terminal-transition__body">
+      @for (cmd of getVisibleCommands(); track cmd.command; let i = $index) {
+        <div class="command-block" [class.typing]="isTyping(i)">
+          <!-- 命令行 -->
+          <div class="command-line">
+            <span class="prompt">$</span>
+            <span class="command-text" [class.animate-typing]="isTyping(i)">{{ cmd.command.substring(2) }}</span>
+          </div>
+          
+          <!-- 输出行 -->
+          @for (output of getOutputs(cmd); track output) {
+            <div class="output-line" [class]="output.includes('[OK]') ? 'output-ok' : output.includes('[READY]') ? 'output-ready' : ''">
+              {{ output }}
+            </div>
+          }
+        </div>
+      }
+      
+      <!-- 光标 -->
+      @if (!showSystemReady()) {
+        <span class="terminal-cursor"></span>
+      }
+    </div>
+
+    <!-- SYSTEM READY 显示 -->
+    @if (showSystemReady()) {
+      <div class="system-ready">
+        <div class="system-ready__title">SYSTEM READY</div>
+        <div class="system-ready__subtitle">Entering Earth Observatory...</div>
+      </div>
+    }
+
+    <!-- 进度条 -->
+    <div class="launch-terminal-transition__progress">
+      <div 
+        class="launch-terminal-transition__progress-fill" 
+        [style.width.%]="progress()">
+      </div>
+    </div>
+  </div>
+</section>
