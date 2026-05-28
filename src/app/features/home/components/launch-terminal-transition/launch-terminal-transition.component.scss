@@ -122,37 +122,37 @@ $white-muted: rgba(148, 163, 184, 0.92);
 }
 
 // 命令行内容区
-.launch-terminal-transition__body {
-  padding: 20px 22px 22px;
-  font-family: var(--font-mono);
+.terminal-body {
+  padding: 18px 20px 20px;
+  font-family: var(--font-mono), "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   font-size: 13px;
-  line-height: 1.8;
-  color: $white;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.92);
   min-height: 180px;
-  max-height: 300px;
+  max-height: 360px;
   overflow-y: auto;
-  
+
   // 滚动条样式
   &::-webkit-scrollbar {
     width: 4px;
   }
-  
+
   &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: transparent;
   }
-  
+
   &::-webkit-scrollbar-thumb {
-    background: rgba(105, 215, 255, 0.3);
-    border-radius: 2px;
+    background: rgba(148, 163, 184, 0.22);
+    border-radius: 999px;
   }
 }
 
 // 命令块
 .command-block {
-  margin-bottom: 12px;
-  
+  margin-bottom: 16px;
+
   &.typing {
-    .command-text {
+    .terminal-command {
       border-right: 2px solid transparent;
       animation: typing-cursor 0.8s steps(2, start) infinite;
     }
@@ -160,20 +160,32 @@ $white-muted: rgba(148, 163, 184, 0.92);
 }
 
 .command-line {
+  display: flex;
+  align-items: center;
   color: $white;
+}
+
+.terminal-prompt {
+  color: $cyan;
+  margin-right: 8px;
+}
+
+.terminal-command {
+  color: rgba(226, 232, 240, 0.92);
   
-  .prompt {
-    color: $cyan;
-    margin-right: 8px;
+  &.animate-typing {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing-appear 1s steps(20, end);
   }
-  
-  .command-text {
-    &.animate-typing {
-      overflow: hidden;
-      white-space: nowrap;
-      animation: typing-appear 1s steps(20, end);
-    }
-  }
+}
+
+.terminal-flag {
+  color: $purple;
+}
+
+.terminal-path {
+  color: $yellow;
 }
 
 @keyframes typing-appear {
@@ -182,12 +194,12 @@ $white-muted: rgba(148, 163, 184, 0.92);
 }
 
 @keyframes typing-cursor {
-  0%, 45% { border-color: $cyan; }
+  0%, 45% { border-color: rgba(226, 232, 240, 0.92); }
   46%, 100% { border-color: transparent; }
 }
 
 // 输出行
-.output-line {
+.terminal-output {
   margin-left: 20px;
   opacity: 0;
   transform: translateY(4px);
