@@ -150,6 +150,36 @@
     "item7": "Data Charts",
     "item8": "Interactive Animation"
   },
+  "aiFrontline": {
+    "title": "AI Frontline",
+    "subtitle": "Daily signals from the AI frontier",
+    "desc": "Tracking AI products, models, funding, open source and industry trends",
+    "lastSync": "Last sync",
+    "searchPlaceholder": "Search news title or source...",
+    "allCategories": "All",
+    "categories": {
+      "model": "Model",
+      "product": "Product",
+      "funding": "Funding",
+      "opensource": "Open Source",
+      "agent": "Agent",
+      "tool": "Tool",
+      "industry": "Industry"
+    },
+    "readSource": "Read Source",
+    "noNews": "No news yet",
+    "dataSource": "Data Source",
+    "disclaimer": "AI Frontline content is aggregated from public online sources for learning and information navigation purposes only. All content rights belong to the original authors and source websites. Please contact us if there are any copyright issues.",
+    "fetchError": "Failed to fetch news, please try again later",
+    "items": {
+      "item0": "OpenAI releases GPT-5: Significant improvements in multimodal reasoning",
+      "item1": "Anthropic completes $2 billion funding round",
+      "item2": "Meta open-sources Llama 4 model series",
+      "item3": "Google DeepMind releases Gemini 2.0",
+      "item4": "Stability AI launches Stable Diffusion 4",
+      "item5": "ByteDance releases Doubao large model"
+    }
+  },
   "about": {
     "title": "About",
     "bio": "A developer passionate about frontend technology and 3D visualization. Dedicated to building high-performance, premium-quality web experiences.",

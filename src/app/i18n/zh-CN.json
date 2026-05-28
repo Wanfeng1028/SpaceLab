@@ -150,6 +150,36 @@
     "item7": "数据图表",
     "item8": "交互动画"
   },
+  "aiFrontline": {
+    "title": "AI 前线",
+    "subtitle": "Daily signals from the AI frontier",
+    "desc": "每日追踪 AI 产品、模型、融资、开源和行业动态",
+    "lastSync": "上次同步",
+    "searchPlaceholder": "搜索新闻标题或来源...",
+    "allCategories": "全部",
+    "categories": {
+      "model": "模型",
+      "product": "产品",
+      "funding": "融资",
+      "opensource": "开源",
+      "agent": "智能体",
+      "tool": "工具",
+      "industry": "行业"
+    },
+    "readSource": "查看原文",
+    "noNews": "暂无新闻",
+    "dataSource": "数据来源",
+    "disclaimer": "AI 前线内容来源于公开网络信息聚合，仅作学习与资讯导航使用。所有内容版权归原作者及来源网站所有，如有侵权请联系删除。",
+    "fetchError": "获取新闻失败，请稍后再试",
+    "items": {
+      "item0": "OpenAI 发布 GPT-5：多模态推理能力大幅提升",
+      "item1": "Anthropic 完成 20 亿美元融资",
+      "item2": "Meta 开源 Llama 4 模型系列",
+      "item3": "Google DeepMind 发布 Gemini 2.0",
+      "item4": "Stability AI 推出 Stable Diffusion 4",
+      "item5": "字节跳动发布豆包大模型"
+    }
+  },
   "about": {
     "title": "About",
     "bio": "热爱前端技术与 3D 可视化的开发者。致力于构建高性能、高质感的 Web 体验。",
