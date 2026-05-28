@@ -8,6 +8,7 @@ import {
   inject,
   effect,
   OnDestroy,
+  HostListener,
 } from '@angular/core';
 import { I18nService } from '../../../core/services/i18n.service';
 import { PROFILE } from '../../../../generated/content.generated';
@@ -62,11 +63,13 @@ export class SpaceCapsuleModalComponent implements OnDestroy {
   close(): void {
     if (this.closing()) return;
     this.closing.set(true);
-    this.closed.emit();
     document.body.style.overflow = '';
+
+    // Delay emit to allow close animation
     setTimeout(() => {
       this.closing.set(false);
-    }, 280);
+      this.closed.emit();
+    }, 260);
   }
 
   onKeyDown(e: KeyboardEvent): void {
