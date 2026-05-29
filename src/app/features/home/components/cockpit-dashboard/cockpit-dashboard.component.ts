@@ -2,11 +2,9 @@ import {
   Component,
   ChangeDetectionStrategy,
   signal,
-  HostListener,
   OnInit,
   OnDestroy,
   inject,
-  computed,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18nService } from '../../../../core/services/i18n.service';
@@ -20,7 +18,9 @@ import {
   PROJECTS,
   AI_FRONTLINE_NEWS,
   AI_FRONTLINE_SOURCE,
-  GALLERY,
+  LAB_AI_TOOLS,
+  LAB_AI_PROJECTS,
+  LAB_SOURCES,
 } from '../../../../../generated/content.generated';
 
 /* ── Log entry ─────────────────────────────────────────────────────── */
@@ -106,18 +106,39 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   private lastActivity = 0;
   private scrollThrottleId: number | null = null;
 
-  /* ── Site Pulse ─────────────────────────────────────────────────── */
+  /* ── KPI stats ──────────────────────────────────────────────────── */
 
   readonly postsCount = signal(POSTS.length);
   readonly projectsCount = signal(PROJECTS.length);
   readonly aiNewsCount = signal(AI_FRONTLINE_NEWS.length);
-  readonly galleryCount = signal(GALLERY.length);
+  readonly aiResourcesCount = signal(LAB_AI_TOOLS.length + LAB_AI_PROJECTS.length);
+
+  /* ── Site Pulse ─────────────────────────────────────────────────── */
+
+  readonly siteMode = signal('GitHub Pages Static');
+  readonly contentModeVal = signal('Markdown + JSON');
   readonly lastBuildTime = signal(this.formatDate(new Date()));
+  readonly lastSyncTime = signal(this.formatSyncTime(AI_FRONTLINE_SOURCE.lastFetchedAt));
+  readonly totalPages = signal(
+    POSTS.length +
+      PROJECTS.length +
+      AI_FRONTLINE_NEWS.length +
+      LAB_AI_TOOLS.length +
+      LAB_AI_PROJECTS.length +
+      6,
+  );
+  readonly currentLang = signal('');
 
   /* ── Content Sync ───────────────────────────────────────────────── */
 
-  readonly aiSyncTime = signal(this.formatSyncTime(AI_FRONTLINE_SOURCE.lastFetchedAt));
-  readonly aiSourceName = signal(AI_FRONTLINE_SOURCE.name);
+  readonly syncBlogPosts = signal(POSTS.length);
+  readonly syncProjects = signal(PROJECTS.length);
+  readonly syncAiNews = signal(AI_FRONTLINE_NEWS.length);
+  readonly syncAiTools = signal(LAB_AI_TOOLS.length);
+  readonly syncAiFrameworks = signal(LAB_AI_PROJECTS.length);
+  readonly syncLastAi = signal(this.formatSyncTime(AI_FRONTLINE_SOURCE.lastFetchedAt));
+  readonly syncLastLab = signal(this.formatSyncTime(LAB_SOURCES.lastFetchedAt));
+  readonly syncLastProject = signal(this.formatDate(new Date()));
 
   /* ── System Status ──────────────────────────────────────────────── */
 
@@ -125,9 +146,9 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   readonly fps = signal('--');
   readonly motionPref = signal('');
   readonly currentTheme = signal('');
-  readonly buildMode = signal('');
-  readonly contentMode = signal('');
-  readonly routerInfo = signal('');
+  readonly buildMode = signal('GitHub Pages');
+  readonly contentModeSys = signal('Markdown + JSON');
+  readonly routerInfo = signal('Angular Router');
   readonly onlineStatus = signal('');
   readonly assetsStatus = signal('');
 
@@ -154,11 +175,11 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.lastActivity = Date.now();
     this.entryRoute.set(this.router.url);
     this.currentPage.set(this.router.url);
+    this.currentLang.set(this.i18n.isZh() ? '中文' : 'English');
 
     this.initVisitorInfo();
     this.initSystemStatus();
     this.initAnalytics();
-    this.initCommandLog();
     this.startTimers();
     this.bindListeners();
 
@@ -198,7 +219,7 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   private initSystemStatus(): void {
     this.webglAvailable = this.checkWebGL();
-    this.rendererType.set(this.webglAvailable ? this.t('webglSupported') : this.t('cssFallback'));
+    this.rendererType.set(this.webglAvailable ? 'WebGL' : 'CSS Fallback');
     this.motionPref.set(
       matchMedia('(prefers-reduced-motion: reduce)').matches
         ? this.t('reduced')
@@ -207,9 +228,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.currentTheme.set(
       document.documentElement.classList.contains('light-theme') ? this.t('light') : this.t('dark'),
     );
-    this.buildMode.set(this.t('ghPages'));
-    this.contentMode.set(this.t('markdownJson'));
-    this.routerInfo.set(this.t('angularRouter'));
     this.onlineStatus.set(navigator.onLine ? this.t('onlineStatus') : this.t('offlineStatus'));
     this.assetsStatus.set(this.t('loaded'));
   }
@@ -222,11 +240,9 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.analyticsSource.set(this.t('notConnected'));
   }
 
-  private initCommandLog(): void {
-    this.commandLog.set([]);
-  }
-
   /* ── Timers ─────────────────────────────────────────────────────── */
+
+  private _fpsRaf = 0;
 
   private startTimers(): void {
     // Clock — 1s
@@ -253,18 +269,13 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
       this.fpsLastTime = now;
     }, 1000);
 
-    // Session time display
-    this.sessionInterval = setInterval(() => {
-      // Force change detection for session time
-    }, 5000);
+    // Force change detection for session time
+    this.sessionInterval = setInterval(() => {}, 5000);
   }
-
-  private _fpsRaf = 0;
 
   /* ── Event listeners ────────────────────────────────────────────── */
 
   private bindListeners(): void {
-    // Click counter
     const clickHandler = () => {
       this.clicks++;
       this.clickCount.set(this.clicks);
@@ -273,7 +284,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     document.addEventListener('click', clickHandler);
     this.cleanupFns.push(() => document.removeEventListener('click', clickHandler));
 
-    // Scroll depth (throttled via rAF)
     const scrollHandler = () => {
       if (this.scrollThrottleId) return;
       this.scrollThrottleId = requestAnimationFrame(() => {
@@ -287,7 +297,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     window.addEventListener('scroll', scrollHandler, { passive: true });
     this.cleanupFns.push(() => window.removeEventListener('scroll', scrollHandler));
 
-    // Route changes
     const routerSub = this.router.events.subscribe(() => {
       this.routeCount++;
       this.routeChanges.set(this.routeCount);
@@ -296,7 +305,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     });
     this.cleanupFns.push(() => routerSub.unsubscribe());
 
-    // Online / offline
     const onlineHandler = () => {
       this.network.set(this.t('onlineStatus'));
       this.onlineStatus.set(this.t('onlineStatus'));
@@ -314,14 +322,12 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
       window.removeEventListener('offline', offlineHandler);
     });
 
-    // Resize viewport
     const resizeHandler = () => {
       this.viewport.set(`${window.innerWidth}×${window.innerHeight}`);
     };
     window.addEventListener('resize', resizeHandler);
     this.cleanupFns.push(() => window.removeEventListener('resize', resizeHandler));
 
-    // Keyboard interaction
     const keyHandler = () => {
       this.lastActivity = Date.now();
     };
@@ -333,6 +339,11 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   onReturnTop(): void {
     this.pushLog('NAV', this.t('logReturnTop'));
+    this.lenis.scrollTo(0, { immediate: false });
+  }
+
+  onRestartOrbit(): void {
+    this.pushLog('NAV', this.t('logRestartOrbit'));
     this.lenis.scrollTo(0, { immediate: false });
   }
 
