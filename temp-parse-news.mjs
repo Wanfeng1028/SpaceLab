@@ -1,74 +1,67 @@
 import fs from 'node:fs';
-const h = fs.readFileSync('temp-daily-news.html', 'utf-8');
+const raw = fs.readFileSync('temp-daily-news.html', 'utf-8');
 
-// Split by news-list sections
-const sections = h.split(/<div class="news-list">/);
-const year = 2026;
-const dateMap = {
-  '1月': '01',
-  '2月': '02',
-  '3月': '03',
-  '4月': '04',
-  '5月': '05',
-  '6月': '06',
-  '7月': '07',
-  '8月': '08',
-  '9月': '09',
-  '10月': '10',
-  '11月': '11',
-  '12月': '12',
-};
+// Normalize: collapse all whitespace between tags
+const h = raw.replace(/>\s+</g, '><').replace(/\s+/g, ' ');
+
+// Find all news-date positions
+const datePattern = /class="news-date">(\d+)月(\d+)·[^<]+/g;
+const dateEntries = [];
+let dm;
+while ((dm = datePattern.exec(h)) !== null) {
+  dateEntries.push({
+    month: dm[1].padStart(2, '0'),
+    day: dm[2].padStart(2, '0'),
+    pos: dm.index,
+    endPos: dm.index + dm[0].length,
+  });
+}
+
+console.log(`Found ${dateEntries.length} date sections`);
 
 const results = [];
 
-for (const section of sections) {
-  const dateMatch = section.match(/news-date">(\d+)月(\d+)·[^<]+/);
-  if (!dateMatch) continue;
+for (let i = 0; i < dateEntries.length; i++) {
+  const entry = dateEntries[i];
+  const dateStr = `2026-${entry.month}-${entry.day}`;
+  const nextPos = i + 1 < dateEntries.length ? dateEntries[i + 1].pos : h.length;
+  const section = h.slice(entry.endPos, nextPos);
 
-  const month = dateMap[dateMatch[1] + '月'];
-  const day = dateMatch[2].padStart(2, '0');
-  const dateStr = `${year}-${month}-${day}`;
-
-  // Extract items
-  const items = [
-    ...section.matchAll(
-      /<h2>\s*<a[^>]*href="([^"]+)"[^>]*class="external"[^>]*>([^<]+)<\/a>\s*<\/h2>\s*<p[^>]*>([\s\S]*?)<\/p>/g,
-    ),
-  ];
-
-  for (const item of items) {
-    const url = item[1].trim();
-    const title = item[2].trim();
-    const pContent = item[3].trim();
-
-    // Extract source from <span class="news-time">
-    const sourceMatch = pContent.match(/来源[：:]([^<]+)/);
-    const source = sourceMatch ? sourceMatch[1].trim() : '';
-
-    // Extract summary (text before source span)
+  // Pattern: <h2><a href="URL" ... class="external">TITLE</a></h2><p ...>SUMMARY<span ...>来源：SRC</span></p>
+  const re =
+    /<h2><a[^>]*href="([^"]+)"[^>]*class="external"[^>]*>([^<]+)<\/a><\/h2><p[^>]*>(.*?)<\/p>/g;
+  let m;
+  while ((m = re.exec(section)) !== null) {
+    const url = m[1].trim();
+    const title = m[2].trim();
+    const pContent = m[3];
+    const srcMatch = pContent.match(/来源[：:]([^<]+)/);
+    const source = srcMatch ? srcMatch[1].trim() : '';
     const summary = pContent
-      .replace(/<span[^>]*news-time[^>]*>[\s\S]*?<\/span>/, '')
+      .replace(/<span[^>]*>.*?<\/span>/g, '')
       .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 200);
-
     results.push({ date: dateStr, title, summary, source, url });
   }
 }
 
-// Only keep >= 2026-05-25
 const filtered = results.filter((r) => r.date >= '2026-05-25');
-console.log(`Total items: ${results.length}, after filter (>=2026-05-25): ${filtered.length}\n`);
+console.log(`Total: ${results.length}, >=2026-05-25: ${filtered.length}\n`);
 
+// Group by date
+const byDate = {};
 for (const r of filtered) {
-  console.log(`${r.date} | ${r.source || '(无来源)'} | ${r.title}`);
-  if (r.summary && r.summary !== r.title) {
-    console.log(`  摘要: ${r.summary.slice(0, 80)}...`);
+  (byDate[r.date] ??= []).push(r);
+}
+for (const [date, items] of Object.entries(byDate).sort()) {
+  console.log(`\n${date} (${items.length} items):`);
+  for (const r of items) {
+    console.log(`  ${r.source || '(无来源)'} | ${r.title}`);
+    console.log(`    ${r.url}`);
   }
-  console.log(`  链接: ${r.url}`);
-  console.log();
 }
 
-// Save as JSON for reference
 fs.writeFileSync('temp-parsed-news.json', JSON.stringify(filtered, null, 2), 'utf-8');
