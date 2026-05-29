@@ -14,10 +14,14 @@ import { I18nService } from '../../../../core/services/i18n.service';
 export class EarthFlylineSectionComponent {
   private readonly i18n = inject(I18nService);
 
-  readonly sceneFactory = (canvas: HTMLCanvasElement) =>
-    new EarthFlylineScene(canvas, {
-      autoRotate: true,
-    });
+  readonly sceneFactory = (canvas: HTMLCanvasElement) => {
+    try {
+      return new EarthFlylineScene(canvas, { autoRotate: true });
+    } catch (e) {
+      console.warn('[EarthFlyline] Scene init failed:', e);
+      return { init() {}, destroy() {} };
+    }
+  };
 
   t(key: string): string {
     return this.i18n.t(key);

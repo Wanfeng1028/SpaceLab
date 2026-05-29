@@ -1,4 +1,5 @@
 import { Component, inject, signal, OnInit, DestroyRef } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
@@ -8,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, ToastComponent, FooterComponent],
+  imports: [NgIf, RouterOutlet, NavbarComponent, ToastComponent, FooterComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

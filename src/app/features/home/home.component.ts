@@ -41,9 +41,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   private activeScene: HeroLightFieldScene | null = null;
 
   sceneFactory = (canvas: HTMLCanvasElement) => {
-    this.activeScene = new HeroLightFieldScene(canvas);
-    this.applySceneConfig();
-    return this.activeScene;
+    try {
+      this.activeScene = new HeroLightFieldScene(canvas);
+      this.applySceneConfig();
+      return this.activeScene;
+    } catch (e) {
+      console.warn('[Home] HeroLightFieldScene init failed:', e);
+      return { init() {}, destroy() {} };
+    }
   };
 
   // Three.js scene factories for 3D cards
@@ -148,6 +153,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('[Home] mounted');
     // 重置所有临时UI状态
     this.isLaunchTransitionActive.set(false);
     this.launchCompleted.set(false);

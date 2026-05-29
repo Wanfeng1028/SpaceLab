@@ -21,7 +21,17 @@ import {
   RingGeometry,
   DoubleSide,
   BackSide,
+  TextureLoader,
+  CanvasTexture,
+  SpriteMaterial,
+  Sprite,
+  Vector2
 } from 'three';
+
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 import worldJSON from '../globe-stream/map/world.json';
 
@@ -62,13 +72,16 @@ interface TelemetryStream {
 
 export interface EarthFlylineOptions {
   autoRotate?: boolean;
+  colorMode?: 'blue' | 'cyan';
 }
 
 export class EarthFlylineScene {
   private scene!: Scene;
   private camera!: PerspectiveCamera;
   private renderer!: WebGLRenderer;
+  private composer!: EffectComposer;
   private globeGroup!: Group;
+  private scanGridMesh!: Mesh;
   private clock!: Clock;
 
   private animationId: number | null = null;
@@ -101,6 +114,9 @@ export class EarthFlylineScene {
   private readonly isMobile: boolean;
   private readonly prefersReducedMotion: boolean;
   private readonly speedFactor: number;
+  private readonly colorMode: 'blue' | 'cyan';
+
+  private textureLoader = new TextureLoader();
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -109,6 +125,7 @@ export class EarthFlylineScene {
     this.isMobile = window.innerWidth < 768;
     this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.speedFactor = this.prefersReducedMotion ? 0.05 : 1.0;
+    this.colorMode = options.colorMode || 'blue';
     this.clock = new Clock();
   }
 
@@ -121,14 +138,13 @@ export class EarthFlylineScene {
   private initScene(): void {
     this.scene = new Scene();
 
-    // 1. 设置极具空间感的 Perspective Camera 视野
     this.camera = new PerspectiveCamera(42, 1, 0.1, 200);
     this.camera.position.set(0, 0.1, this.isMobile ? 10.5 : 8.8);
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
       antialias: !this.isMobile,
-      alpha: true, // 透明背景配合宿主 CSS 深度星空渐变
+      alpha: false,
       powerPreference: 'high-performance',
     });
 
@@ -136,25 +152,40 @@ export class EarthFlylineScene {
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setClearColor(0x020509, 1.0);
+
+    // UnrealBloomPass Setup
+    this.composer = new EffectComposer(this.renderer);
+    const renderPass = new RenderPass(this.scene, this.camera);
+    this.composer.addPass(renderPass);
+
+    const bloomPass = new UnrealBloomPass(
+      new Vector2(this.canvas.clientWidth, this.canvas.clientHeight),
+      1.2, // strength
+      0.5, // radius
+      0.15, // threshold
+    );
+    this.composer.addPass(bloomPass);
+
+    const outputPass = new OutputPass();
+    this.composer.addPass(outputPass);
 
     this.globeGroup = new Group();
     this.scene.add(this.globeGroup);
 
-    // 2. 构造 3D 地球核心（完美避开扁平 2D 贴图）
     const R_value = this.isMobile ? 1.9 : 2.3;
     this.buildGlowingGlobe(R_value);
 
-    // 3. 构造太空中包围的流光星云和粒子
     this.createSpaceStarfield();
     this.createCosmicDust(R_value);
+    this.createBottomReflection(R_value);
   }
 
   private buildGlowingGlobe(R: number): void {
-    // A. 创建不透明的深黑色地球阻隔体 (Occlusion Sphere)
-    // 这是核心防穿帮关键：遮挡地球背面旋转过去的线条，使正面大陆轮廓更加清晰分明
+    // Occlusion Sphere
     const earthGeom = new SphereGeometry(R * 0.998, 48, 32);
     const earthMat = new MeshPhongMaterial({
-      color: 0x02040b, // 极致深邃的黑蓝深渊色
+      color: 0x02040b,
       transparent: false,
       shininess: 12,
       specular: 0x07112a,
@@ -162,7 +193,19 @@ export class EarthFlylineScene {
     const earthMesh = new Mesh(earthGeom, earthMat);
     this.globeGroup.add(earthMesh);
 
-    // B. 解析 world.json，将全球地理边界以高精度 3D 霓虹线条轮廓在球面绘制！
+    // SVG Map Texture
+    const mapTexture = this.textureLoader.load('three/globe-stream/image/map.svg');
+    const svgGeom = new SphereGeometry(R * 1.0005, 48, 32);
+    const svgMat = new MeshBasicMaterial({
+      map: mapTexture,
+      transparent: true,
+      opacity: 0.7,
+      side: DoubleSide,
+    });
+    const svgMesh = new Mesh(svgGeom, svgMat);
+    this.globeGroup.add(svgMesh);
+
+    // GeoJSON borders as fallback/enhancement
     const borderGroup = new Group();
     this.globeGroup.add(borderGroup);
 
@@ -182,9 +225,9 @@ export class EarthFlylineScene {
         if (points.length > 0) {
           const geo = new BufferGeometry().setFromPoints(points);
           const mat = new LineBasicMaterial({
-            color: 0x3b82f6, // 极致优雅的高科技霓虹宝蓝色
+            color: 0x3b82f6,
             transparent: true,
-            opacity: 0.38,
+            opacity: 0.25,
             blending: AdditiveBlending,
           });
           const line = new Line(geo, mat);
@@ -201,8 +244,22 @@ export class EarthFlylineScene {
       }
     });
 
-    // C. 创造多重发光大气圈 (Atmosphere Glow) - 严格对标电影画质发光
-    const atmoGeom = new SphereGeometry(R * 1.12, 48, 32);
+    // Scan Grid Overlay
+    const scanTexture = this.textureLoader.load('three/globe-stream/image/scanGird.png');
+    const scanGeom = new SphereGeometry(R * 1.02, 48, 32);
+    const scanMat = new MeshBasicMaterial({
+      map: scanTexture,
+      transparent: true,
+      opacity: 0.3,
+      blending: AdditiveBlending,
+      side: DoubleSide,
+    });
+    this.scanGridMesh = new Mesh(scanGeom, scanMat);
+    this.globeGroup.add(this.scanGridMesh);
+
+    // Atmosphere Glow
+    const atmoColor = this.colorMode === 'blue' ? 0x0066ff : 0x0088ff;
+    const atmoGeom = new SphereGeometry(R * 1.15, 48, 32);
     const atmoMat = new ShaderMaterial({
       vertexShader: `
         varying vec3 vNormal;
@@ -226,9 +283,9 @@ export class EarthFlylineScene {
         }
       `,
       uniforms: {
-        uGlowColor: { value: new Color(0x0088ff) }, // 梦幻的极光蔚蓝色
-        uPower: { value: 3.8 },
-        uIntensity: { value: 0.72 },
+        uGlowColor: { value: new Color(atmoColor) },
+        uPower: { value: 3.2 },
+        uIntensity: { value: 0.85 },
       },
       side: BackSide,
       blending: AdditiveBlending,
@@ -238,12 +295,10 @@ export class EarthFlylineScene {
     const atmosphere = new Mesh(atmoGeom, atmoMat);
     this.globeGroup.add(atmosphere);
 
-    // D. 注册全球核心枢纽节点，生成 3D 路径、脉冲雷达雷达波及流光飞线
     this.setupFlylineData(R);
   }
 
   private setupFlylineData(R: number): void {
-    // 全球学术与 SpaceLab 神经网络核心节点经纬度坐标
     const nodes = {
       beijing: { name: 'Neural Core (PEK)', lon: 116.4074, lat: 39.9042 },
       newyork: { name: 'Node (NYC)', lon: -74.006, lat: 40.7128 },
@@ -267,42 +322,29 @@ export class EarthFlylineScene {
       { from: nodes.singapore, to: nodes.sydney },
     ];
 
-    // 1. 创建城市发光核心与脉冲雷达波
     const allCities = Array.from(new Set(flyLines.flatMap((line) => [line.from, line.to])));
+    const primaryColor = this.colorMode === 'blue' ? 0x4488ff : 0x10f9af;
+    const scatterTex = this.textureLoader.load('three/globe-stream/image/scatter.png');
 
     allCities.forEach((city) => {
       const v = latLngToVec3(city.lat, city.lon, R * 1.002);
 
-      // 城市核心发光点精灵
-      const dotGeom = new BufferGeometry();
-      dotGeom.setAttribute('position', new Float32BufferAttribute([v.x, v.y, v.z], 3));
-      const dotMat = new ShaderMaterial({
-        vertexShader: `
-          void main() {
-            vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = 12.0 * (80.0 / -mvPos.z);
-            gl_Position = projectionMatrix * mvPos;
-          }
-        `,
-        fragmentShader: `
-          void main() {
-            float d = length(gl_PointCoord - 0.5) * 2.0;
-            float alpha = smoothstep(1.0, 0.0, d);
-            gl_FragColor = vec4(0.06, 0.98, 0.68, alpha * 0.95); // 极致闪耀的数字青绿
-          }
-        `,
+      const spriteMat = new SpriteMaterial({
+        map: scatterTex,
+        color: primaryColor,
         transparent: true,
         blending: AdditiveBlending,
         depthWrite: false,
       });
-      const cityPoint = new Points(dotGeom, dotMat);
-      this.globeGroup.add(cityPoint);
+      const sprite = new Sprite(spriteMat);
+      sprite.position.copy(v);
+      sprite.scale.set(0.15, 0.15, 1.0);
+      this.globeGroup.add(sprite);
 
-      // staggered 双层 concentric pulsing 脉冲雷达发光环，超高清对标
       for (let k = 0; k < 2; k++) {
         const ringGeom = new RingGeometry(0.01, 0.16, 32);
         const ringMat = new MeshBasicMaterial({
-          color: 0x10f9af, // 赛博发光数字青色
+          color: primaryColor,
           side: DoubleSide,
           transparent: true,
           opacity: 0.8,
@@ -323,37 +365,33 @@ export class EarthFlylineScene {
       }
     });
 
-    // 2. 构造 3D 弧线轨道和渐变飞线 tadpole 移动微粒流
     flyLines.forEach((line, idx) => {
       const start = latLngToVec3(line.from.lat, line.from.lon, R);
       const end = latLngToVec3(line.to.lat, line.to.lon, R);
 
-      // 弧形控制点高度计算
       const mid = start.clone().add(end).multiplyScalar(0.5);
       const dist = start.distanceTo(end);
       const control = mid.normalize().multiplyScalar(R + dist * 0.38);
 
       const curve = new QuadraticBezierCurve3(start, control, end);
 
-      // 绘制静止的纤细弧形轨迹线条
       const pathPoints = curve.getPoints(50);
       const pathGeom = new BufferGeometry().setFromPoints(pathPoints);
       const pathMat = new LineBasicMaterial({
-        color: 0x1e3a8a, // 优雅的幽暗蓝，极富细节但不抢镜
+        color: 0x1e3a8a,
         transparent: true,
         opacity: 0.35,
       });
       const pathLine = new Line(pathGeom, pathMat);
       this.globeGroup.add(pathLine);
 
-      // 构建流光飞线点云 (12 个粒子，头部大，尾部渐变缩小且淡出)
-      const particleCount = 12;
+      const particleCount = 16;
       const alphas = new Float32Array(particleCount);
       const sizes = new Float32Array(particleCount);
 
       for (let j = 0; j < particleCount; j++) {
-        alphas[j] = 1.0 - j / particleCount; // 彗星拖尾尾部淡出
-        sizes[j] = 1.0 - (j / particleCount) * 0.55; // 尾部彗尾缩小
+        alphas[j] = 1.0 - j / particleCount;
+        sizes[j] = 1.0 - (j / particleCount) * 0.55;
       }
 
       const streamGeom = new BufferGeometry();
@@ -366,7 +404,7 @@ export class EarthFlylineScene {
 
       const streamMat = new ShaderMaterial({
         uniforms: {
-          uColor: { value: new Color(0x10f9af) }, // 彗尾同款高科技青绿流光
+          uColor: { value: new Color(primaryColor) },
         },
         vertexShader: `
           attribute float aAlpha;
@@ -375,7 +413,7 @@ export class EarthFlylineScene {
           void main() {
             vAlpha = aAlpha;
             vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = aSize * (35.0 / -mvPos.z);
+            gl_PointSize = aSize * (50.0 / -mvPos.z);
             gl_Position = projectionMatrix * mvPos;
           }
         `,
@@ -399,12 +437,11 @@ export class EarthFlylineScene {
       this.telemetryStreams.push({
         curve,
         geom: streamGeom,
-        speed: 0.16 + Math.random() * 0.1, // 速度微调， staggered
-        offset: idx * 0.15, // 时序错开
+        speed: 0.16 + Math.random() * 0.1,
+        offset: idx * 0.15,
       });
     });
 
-    // 3. 构建赤道及极地遥测数据诊断环和卫星自转轨道
     this.scanningRingEquator = new Line(
       new BufferGeometry().setFromPoints(createCirclePoints(R * 1.25)),
       new LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.22 }),
@@ -419,14 +456,37 @@ export class EarthFlylineScene {
     this.scanningRingPolar.rotation.y = Math.PI / 4;
     this.globeGroup.add(this.scanningRingPolar);
 
-    // 轨道小卫星
     const satGeom = new SphereGeometry(0.045, 8, 8);
     const satMat = new MeshBasicMaterial({
-      color: 0x10f9af,
+      color: primaryColor,
       blending: AdditiveBlending,
     });
     this.satelliteMesh = new Mesh(satGeom, satMat);
     this.globeGroup.add(this.satelliteMesh);
+  }
+
+  private createBottomReflection(R: number): void {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d')!;
+    const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    grad.addColorStop(0, this.colorMode === 'blue' ? 'rgba(0,100,255,0.4)' : 'rgba(0,255,150,0.4)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 256, 256);
+    
+    const texture = new CanvasTexture(canvas);
+    const spriteMat = new SpriteMaterial({
+      map: texture,
+      transparent: true,
+      blending: AdditiveBlending,
+      depthWrite: false
+    });
+    const sprite = new Sprite(spriteMat);
+    sprite.position.set(0, -R * 1.3, 0);
+    sprite.scale.set(R * 4, R * 1.5, 1);
+    this.globeGroup.add(sprite);
   }
 
   private createSpaceStarfield(): void {
@@ -546,6 +606,7 @@ export class EarthFlylineScene {
     const w = parent.clientWidth;
     const h = parent.clientHeight;
     this.renderer.setSize(w, h);
+    this.composer.setSize(w, h);
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
   }
@@ -555,24 +616,24 @@ export class EarthFlylineScene {
     this.animationId = requestAnimationFrame(() => this.animate());
 
     const elapsed = this.clock.getElapsedTime();
-    const delta = this.clock.getDelta();
     const sf = this.speedFactor;
 
-    // 1. 鼠标悬停视差微动平滑插值自转
     this.globeGroup.rotation.y =
       this.globeGroup.rotation.y + (this.targetRotY - this.globeGroup.rotation.y) * 0.05 * sf;
     this.globeGroup.rotation.x =
       this.globeGroup.rotation.x + (this.targetRotX - this.globeGroup.rotation.x) * 0.05 * sf;
 
-    // 缓慢自动巡航自转
     this.globeGroup.rotation.y += 0.003 * sf;
+    
+    if (this.scanGridMesh) {
+      this.scanGridMesh.rotation.y += 0.002 * sf;
+    }
 
-    // 2. 驱动 tadpole 渐变飞线点流动
     this.telemetryStreams.forEach((stream) => {
       const t = (((elapsed * stream.speed + stream.offset) % 1.0) + 1.0) % 1.0;
       const posAttr = stream.geom.getAttribute('position') as Float32BufferAttribute;
 
-      for (let j = 0; j < 12; j++) {
+      for (let j = 0; j < 16; j++) {
         const p = Math.max(0.0, Math.min(1.0, t - j * 0.015));
         const vec = stream.curve.getPoint(p);
         posAttr.setXYZ(j, vec.x, vec.y, vec.z);
@@ -580,7 +641,6 @@ export class EarthFlylineScene {
       posAttr.needsUpdate = true;
     });
 
-    // 3. 驱动城市脉冲发光雷达环
     this.pulsingRings.forEach((ring) => {
       ring.scale += ring.speed * 0.016 * sf;
       if (ring.scale > ring.maxScale) {
@@ -588,12 +648,10 @@ export class EarthFlylineScene {
       }
       ring.mesh.scale.setScalar(ring.scale);
 
-      // 渐出计算
       const opacity = 1.0 - ring.scale / ring.maxScale;
       (ring.mesh.material as MeshBasicMaterial).opacity = opacity * 0.85;
     });
 
-    // 4. 驱动小卫星在赤道轨道上环绕飞行
     if (this.satelliteMesh) {
       const angle = elapsed * 0.5 * sf;
       const R_satellite = this.isMobile ? 1.9 * 1.25 : 2.3 * 1.25;
@@ -602,21 +660,18 @@ export class EarthFlylineScene {
         0,
         Math.sin(angle) * R_satellite,
       );
-      // 卫星赤道轨道缓慢旋转微调
       this.scanningRingEquator.rotation.z = elapsed * 0.05 * sf;
     }
 
-    // 5. 驱动星尘缓慢旋转
     if (this.cosmicDust) {
       this.cosmicDust.rotation.y = elapsed * 0.01 * sf;
     }
 
-    // 6. 更新各 Shader 的 Time uniform
     if (this.starfield && this.starfield.material) {
       (this.starfield.material as ShaderMaterial).uniforms.uTime.value = elapsed;
     }
 
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render();
   }
 
   pause(): void {
@@ -656,6 +711,7 @@ export class EarthFlylineScene {
     });
 
     this.renderer.dispose();
+    this.composer.dispose();
     this.pulsingRings = [];
     this.telemetryStreams = [];
     this.starfield = null;

@@ -1,6 +1,6 @@
 <app-navbar />
 <div class="app-shell" [class.theme-light]="!isHome()">
   <router-outlet />
-  <app-footer />
+  <app-footer *ngIf="!isHome()" />
 </div>
 <app-toast />

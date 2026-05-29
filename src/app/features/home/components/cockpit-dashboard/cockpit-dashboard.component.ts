@@ -79,8 +79,13 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   private scene: CockpitDashboardScene | null = null;
 
   readonly cockpitFactory = (canvas: HTMLCanvasElement) => {
-    this.scene = new CockpitDashboardScene(canvas);
-    return this.scene;
+    try {
+      this.scene = new CockpitDashboardScene(canvas);
+      return this.scene;
+    } catch (e) {
+      console.warn('[Cockpit] Scene init failed:', e);
+      return { init() {}, destroy() {} };
+    }
   };
 
   /* ── Timers & listeners ─────────────────────────────────────────── */

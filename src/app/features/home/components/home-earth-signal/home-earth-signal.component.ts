@@ -14,7 +14,14 @@ import { I18nService } from '../../../../core/services/i18n.service';
 export class HomeEarthSignalSection {
   private readonly i18n = inject(I18nService);
 
-  readonly sceneFactory = (canvas: HTMLCanvasElement) => new EarthSignalScene(canvas);
+  readonly sceneFactory = (canvas: HTMLCanvasElement) => {
+    try {
+      return new EarthSignalScene(canvas);
+    } catch (e) {
+      console.warn('[EarthSignal] Scene init failed:', e);
+      return { init() {}, destroy() {} };
+    }
+  };
 
   t(key: string): string {
     return this.i18n.t(key);
