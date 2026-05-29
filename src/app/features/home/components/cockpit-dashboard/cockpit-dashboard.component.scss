@@ -3,11 +3,10 @@
 
 // ── Variables ────────────────────────────────────────────────────────
 $panel-bg:
-  linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
-  rgba(3, 8, 18, 0.62);
-$panel-border: rgba(105, 215, 255, 0.16);
+  linear-gradient(135deg, rgba(4, 12, 28, 0.74), rgba(4, 12, 28, 0.42)), rgba(255, 255, 255, 0.035);
+$panel-border: rgba(105, 215, 255, 0.18);
 $panel-shadow:
-  0 18px 60px rgba(0, 0, 0, 0.34),
+  0 24px 80px rgba(0, 0, 0, 0.36),
   inset 0 1px 0 rgba(255, 255, 255, 0.08);
 $cyan: #69d7ff;
 $green: #00ff88;
@@ -25,7 +24,7 @@ $sans: var(--font-sans);
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  background: radial-gradient(ellipse at center bottom, #0a1a2a 0%, #000510 100%);
+  background: transparent;
 }
 
 .cockpit-inner {
@@ -478,7 +477,7 @@ app-telemetry-bar {
   border: 1px solid rgba(255, 255, 255, 0.16);
   background:
     linear-gradient(90deg, rgba(3, 7, 18, 0.84), rgba(3, 7, 18, 0.28)),
-    url('/cockpit-card-bg.webp') center center / cover no-repeat;
+    url('/cockpit-card-bg.png') center center / cover no-repeat;
   box-shadow:
     0 28px 90px rgba(0, 0, 0, 0.42),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
@@ -659,7 +658,7 @@ app-telemetry-bar {
     border-radius: 24px;
     background:
       linear-gradient(180deg, rgba(3, 7, 18, 0.86), rgba(3, 7, 18, 0.34)),
-      url('/cockpit-card-bg.webp') center center / cover no-repeat;
+      url('/cockpit-card-bg.png') center center / cover no-repeat;
 
     &__content {
       padding: 24px;
