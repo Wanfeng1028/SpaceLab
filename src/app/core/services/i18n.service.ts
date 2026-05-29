@@ -45,6 +45,8 @@ export class I18nService {
   }
 
   t(key: string): string {
+    // Touch locale signal so OnPush components re-render on locale change
+    this._locale();
     return this._flatMap[key] ?? this._zhFlatMap[key] ?? key;
   }
 

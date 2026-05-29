@@ -18,14 +18,14 @@
 
   <!-- Category Filters -->
   <section class="blog-filter-section">
-    @for (cat of categories(); track cat) {
+    @for (cat of categories; track cat.key) {
       <button
         class="filter-chip"
-        [class.is-active]="selectedCategory() === cat"
-        [attr.aria-pressed]="selectedCategory() === cat"
-        (click)="selectCategory(cat)"
+        [class.is-active]="selectedCategory() === cat.key"
+        [attr.aria-pressed]="selectedCategory() === cat.key"
+        (click)="selectCategory(cat.key)"
       >
-        {{ cat === 'all' ? t('common.all') : cat }}
+        {{ getCategoryLabel(cat) }}
       </button>
     }
   </section>

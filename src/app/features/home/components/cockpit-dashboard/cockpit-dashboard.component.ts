@@ -367,11 +367,11 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.startTimers();
     this.bindListeners();
 
-    this.pushLog('SYS', this.lang() === 'zh' ? '驾驶舱初始化完成' : 'Cockpit initialized');
-    this.pushLog('VISITOR', this.lang() === 'zh' ? '会话信号已连接' : 'Signal connected');
-    this.pushLog('CONTENT', this.lang() === 'zh' ? '静态内容已加载' : 'Static content loaded');
-    this.pushLog('AI', this.lang() === 'zh' ? 'AI 前线数据在线' : 'Frontline data online');
-    this.pushLog('WEBGL', this.lang() === 'zh' ? 'WebGL 渲染稳定' : 'Renderer stable');
+    this.pushLog('SYS', this.t('logInit'));
+    this.pushLog('VISITOR', this.t('logSignal'));
+    this.pushLog('CONTENT', this.t('logContentLoaded'));
+    this.pushLog('AI', this.t('logAiOnline'));
+    this.pushLog('WEBGL', this.t('logRendererStable'));
   }
 
   ngOnDestroy(): void {
@@ -505,12 +505,12 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     const onlineHandler = () => {
       this.network.set(this.t('onlineStatus'));
       this.onlineStatus.set(this.t('onlineStatus'));
-      this.pushLog('NET', this.lang() === 'zh' ? '网络已恢复' : 'Network reconnected');
+      this.pushLog('NET', this.t('logNetRestored'));
     };
     const offlineHandler = () => {
       this.network.set(this.t('offlineStatus'));
       this.onlineStatus.set(this.t('offlineStatus'));
-      this.pushLog('NET', this.lang() === 'zh' ? '网络已断开' : 'Network disconnected');
+      this.pushLog('NET', this.t('logNetDisconnected'));
     };
     window.addEventListener('online', onlineHandler);
     window.addEventListener('offline', offlineHandler);
@@ -537,12 +537,12 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   /* ── Actions ────────────────────────────────────────────────────── */
 
   onReturnTop(): void {
-    this.pushLog('NAV', this.lang() === 'zh' ? '返回顶部' : 'Returning to top');
+    this.pushLog('NAV', this.t('logReturnTop'));
     this.lenis.scrollTo(0, { immediate: false });
   }
 
   onEnterSite(): void {
-    this.pushLog('NAV', this.lang() === 'zh' ? '进入站点' : 'Entering site');
+    this.pushLog('NAV', this.t('logEnterSite'));
     this.router.navigate(['/blog']);
   }
 

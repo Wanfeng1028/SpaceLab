@@ -13,7 +13,8 @@ interface BlogCategory {
 
 const BLOG_CATEGORIES: BlogCategory[] = [
   { key: 'all', zh: '全部', en: 'All' },
-  { key: 'GIS 开发', zh: 'GIS 开发', en: 'GIS Dev' },
+  { key: 'GIS', zh: 'GIS', en: 'GIS' },
+  { key: '开发', zh: '开发', en: 'Dev' },
   { key: '算法', zh: '算法', en: 'Algorithm' },
   { key: '小羊毛', zh: '小羊毛', en: 'Tips' },
   { key: '其他', zh: '其他', en: 'Other' },

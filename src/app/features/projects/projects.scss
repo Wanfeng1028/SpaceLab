@@ -220,34 +220,6 @@
 }
 
 // ============================================
-// Decorative Background Orbs
-// ============================================
-
-.projects-page::before {
-  content: '';
-  position: fixed;
-  top: 12%;
-  right: 4%;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(105, 215, 255, 0.06) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.projects-page::after {
-  content: '';
-  position: fixed;
-  bottom: 20%;
-  left: 6%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(143, 124, 255, 0.05) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-// ============================================
 // Mobile Responsive
 // ============================================
 
