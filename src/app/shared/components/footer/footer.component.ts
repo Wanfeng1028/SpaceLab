@@ -43,9 +43,9 @@ export class FooterComponent {
         title: this.t('footer.exploreTitle'),
         links: [
           { label: this.t('footer.aiFrontline'), routerLink: '/ai-frontline' },
-          { label: this.t('footer.about'), routerLink: '/about' },
-          { label: this.t('footer.archive'), routerLink: '/archive' },
-          { label: this.t('footer.gallery'), routerLink: '/ai-frontline', disabled: false },
+          { label: this.t('footer.dashboard'), href: '/#cockpit' },
+          { label: this.t('footer.gallery'), routerLink: '/ai-frontline' },
+          { label: this.t('footer.articles'), routerLink: '/blog' },
         ],
       },
       {
@@ -53,17 +53,17 @@ export class FooterComponent {
         links: [
           { label: 'GitHub', href: this.githubUrl, external: true },
           { label: 'Email', href: `mailto:${this.email}` },
-          { label: 'RSS', href: '#', disabled: true },
+          { label: 'RSS', disabled: true },
           { label: this.t('footer.about'), routerLink: '/about' },
         ],
       },
       {
         title: this.t('footer.systemTitle'),
         links: [
-          { label: this.t('footer.sitemap'), href: '#', disabled: true },
-          { label: this.t('footer.privacy'), href: '#', disabled: true },
-          { label: this.t('footer.changelog'), href: '#', disabled: true },
-          { label: this.t('footer.status'), href: '#', disabled: true },
+          { label: this.t('footer.sitemap'), disabled: true },
+          { label: this.t('footer.privacy'), disabled: true },
+          { label: this.t('footer.changelog'), disabled: true },
+          { label: this.t('footer.status'), disabled: true },
         ],
       },
     ];

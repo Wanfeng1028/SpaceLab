@@ -98,7 +98,7 @@ export class AiFrontlineComponent implements OnInit {
     try {
       // Try to load from generated content first
       const { AI_FRONTLINE_NEWS, AI_FRONTLINE_SOURCE } =
-        await import('../../../generated/ai-frontline.generated');
+        await import('../../../generated/content.generated');
       this.news.set(AI_FRONTLINE_NEWS);
       this.source.set(AI_FRONTLINE_SOURCE);
     } catch {
