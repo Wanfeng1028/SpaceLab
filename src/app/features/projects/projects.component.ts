@@ -67,7 +67,7 @@ export class ProjectsComponent {
     ]);
   }
 
-  readonly contactEmail = 'hello@spacelab.dev';
+  readonly contactEmail = 'service.ai@outlook.com';
   readonly githubUrl = 'https://github.com/Wanfeng1028';
 
   t(key: string): string {

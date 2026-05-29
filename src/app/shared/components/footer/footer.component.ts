@@ -26,7 +26,7 @@ export class FooterComponent {
   private i18n = inject(I18nService);
 
   readonly githubUrl = 'https://github.com/Wanfeng1028';
-  readonly email = 'hello@spacelab.dev';
+  readonly email = 'service.ai@outlook.com';
 
   get groups(): FooterGroup[] {
     return [
