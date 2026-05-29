@@ -7,7 +7,7 @@
 
 // ── Gradient bridge: smooth transition from light pages ──
 .site-footer-bridge {
-  height: 120px;
+  height: 40px;
   background: linear-gradient(180deg, transparent 0%, #060810 100%);
   pointer-events: none;
 }
@@ -237,7 +237,7 @@
 // ============================================
 @include m.tablet {
   .site-footer-bridge {
-    height: 80px;
+    height: 32px;
   }
 
   .site-footer__main {
@@ -279,7 +279,7 @@
 // ============================================
 @include m.mobile {
   .site-footer-bridge {
-    height: 56px;
+    height: 24px;
   }
 
   .site-footer {

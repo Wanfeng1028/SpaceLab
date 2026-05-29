@@ -44,8 +44,18 @@ $sans: var(--font-sans);
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(circle at 50% 35%, rgba(5, 11, 20, 0.68), rgba(5, 11, 20, 0.25) 36%, transparent 64%),
-      linear-gradient(180deg, rgba(5, 11, 20, 0.72), rgba(5, 11, 20, 0.36) 45%, rgba(5, 11, 20, 0.78)),
+      radial-gradient(
+        circle at 50% 35%,
+        rgba(5, 11, 20, 0.68),
+        rgba(5, 11, 20, 0.25) 36%,
+        transparent 64%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(5, 11, 20, 0.72),
+        rgba(5, 11, 20, 0.36) 45%,
+        rgba(5, 11, 20, 0.78)
+      ),
       linear-gradient(90deg, rgba(5, 11, 20, 0.88), rgba(5, 11, 20, 0.28), rgba(5, 11, 20, 0.8));
   }
 }
