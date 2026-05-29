@@ -116,11 +116,13 @@ export class LabComponent implements OnInit {
     const data = tab === 'tools' ? this.toolsData() : this.projectsData();
     const category = this.selectedCategory();
     const query = this.searchQuery();
+    const range = this.selectedDateRange();
     const tabLabels =
       tab === 'tools' ? ['AI工具', 'AI Tools'] : ['AI项目和框架', 'AI Projects', 'Frameworks'];
 
     return data
       .filter((item) => isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date))
+      .filter((item) => matchesDateRange(item, range))
       .filter((item) => {
         const matchesCategory =
           category === 'all' ||
@@ -205,22 +207,36 @@ export class LabComponent implements OnInit {
     this.selectedCategory.set(cat);
   }
 
+  onDateRangeChange(range: DateRangeFilter) {
+    this.selectedDateRange.set(range);
+  }
+
   clearSearch() {
     this.searchQuery.set('');
   }
 
   clearFilters() {
     this.selectedCategory.set('all');
+    this.selectedDateRange.set('all');
   }
 
   clearAll() {
     this.searchQuery.set('');
     this.selectedCategory.set('all');
+    this.selectedDateRange.set('all');
   }
 
   getCategoryLabel(cat: string): string {
     if (cat === 'all') return this.t('lab.allCategories');
     return cat;
+  }
+
+  readonly dateRangeOptions: DateRangeFilter[] = ['all', 'today', 'yesterday', '7d', '30d'];
+
+  getDateRangeLabel(range: DateRangeFilter): string {
+    const key = `common.dateRange.${range}`;
+    const label = this.t(key);
+    return label === key ? range : label;
   }
 
   contentSinceText(): string {

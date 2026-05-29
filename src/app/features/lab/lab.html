@@ -43,15 +43,28 @@
 
   <!-- Filters -->
   <section class="lab-filters">
-    @for (cat of categories(); track cat) {
-      <button
-        class="lab-filter"
-        [class.is-active]="selectedCategory() === cat"
-        (click)="onCategoryChange(cat)"
-      >
-        {{ getCategoryLabel(cat) }}
-      </button>
-    }
+    <div class="lab-date-range">
+      @for (range of dateRangeOptions; track range) {
+        <button
+          class="lab-date-btn"
+          [class.is-active]="selectedDateRange() === range"
+          (click)="onDateRangeChange(range)"
+        >
+          {{ getDateRangeLabel(range) }}
+        </button>
+      }
+    </div>
+    <div class="lab-category-row">
+      @for (cat of categories(); track cat) {
+        <button
+          class="lab-filter"
+          [class.is-active]="selectedCategory() === cat"
+          (click)="onCategoryChange(cat)"
+        >
+          {{ getCategoryLabel(cat) }}
+        </button>
+      }
+    </div>
   </section>
 
   <!-- Status indicator -->

@@ -25,7 +25,14 @@
     "clearSearch": "Clear search",
     "clearFilter": "Clear filter",
     "clearAll": "Clear all",
-    "rightsReserved": "All rights reserved."
+    "rightsReserved": "All rights reserved.",
+    "dateRange": {
+      "all": "All",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "7d": "Last 7 Days",
+      "30d": "Last 30 Days"
+    }
   },
   "nav": {
     "home": "Home",

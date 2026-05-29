@@ -236,6 +236,43 @@
   width: min(100%, 920px);
   margin: 0 auto 28px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.lab-date-range {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lab-date-btn {
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary, #666);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  &.is-active {
+    background: var(--color-surface-dark, #1a1a2e);
+    color: #fff;
+    border-color: transparent;
+  }
+}
+
+.lab-category-row {
+  display: flex;
   gap: 6px;
   flex-wrap: wrap;
   justify-content: center;

@@ -38,19 +38,32 @@
 
   <!-- Filters -->
   <section class="ai-frontline-filters">
-    @for (cat of categories; track cat) {
-      <button
-        class="ai-frontline-filter"
-        [class.is-active]="selectedCategory() === cat"
-        (click)="onCategoryChange(cat)"
-      >
-        @if (cat === 'all') {
-          <span>{{ t('aiFrontline.allCategories') }}</span>
-        } @else {
-          <span>{{ getCategoryLabel(cat) }}</span>
-        }
-      </button>
-    }
+    <div class="ai-frontline-date-range">
+      @for (range of dateRangeOptions; track range) {
+        <button
+          class="ai-frontline-date-btn"
+          [class.is-active]="selectedDateRange() === range"
+          (click)="onDateRangeChange(range)"
+        >
+          {{ getDateRangeLabel(range) }}
+        </button>
+      }
+    </div>
+    <div class="ai-frontline-category-row">
+      @for (cat of categories; track cat) {
+        <button
+          class="ai-frontline-filter"
+          [class.is-active]="selectedCategory() === cat"
+          (click)="onCategoryChange(cat)"
+        >
+          @if (cat === 'all') {
+            <span>{{ t('aiFrontline.allCategories') }}</span>
+          } @else {
+            <span>{{ getCategoryLabel(cat) }}</span>
+          }
+        </button>
+      }
+    </div>
   </section>
 
   <!-- Main Layout: Sidebar + Feed -->

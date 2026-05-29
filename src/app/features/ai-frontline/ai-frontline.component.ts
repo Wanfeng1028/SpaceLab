@@ -37,6 +37,41 @@ function isAfterContentStartDate(itemDate: string | undefined): boolean {
   return itemDate.slice(0, 10) >= CONTENT_START_DATE;
 }
 
+type DateRangeFilter = 'all' | 'today' | 'yesterday' | '7d' | '30d';
+
+function getItemDate(item: AiNewsItem): string {
+  return item.date || item.fetchedAt?.slice(0, 10) || '';
+}
+
+function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
+  const date = getItemDate(item);
+  if (!date) return range === 'all';
+  if (!isAfterContentStartDate(date)) return false;
+  if (range === 'all') return true;
+
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+  if (range === 'today') return date === todayStr;
+  if (range === 'yesterday') return date === yesterdayStr;
+
+  const itemTime = new Date(`${date}T00:00:00`).getTime();
+  if (range === '7d') {
+    const start = new Date(today);
+    start.setDate(today.getDate() - 6);
+    return itemTime >= new Date(start.toISOString().slice(0, 10)).getTime();
+  }
+  if (range === '30d') {
+    const start = new Date(today);
+    start.setDate(today.getDate() - 29);
+    return itemTime >= new Date(start.toISOString().slice(0, 10)).getTime();
+  }
+  return true;
+}
+
 @Component({
   selector: 'app-ai-frontline',
   standalone: true,
@@ -56,6 +91,7 @@ export class AiFrontlineComponent implements OnInit {
   // Filters
   searchQuery = signal('');
   selectedCategory = signal<string>('all');
+  selectedDateRange = signal<DateRangeFilter>('all');
 
   // Pagination
   currentPage = signal(1);
@@ -67,9 +103,11 @@ export class AiFrontlineComponent implements OnInit {
   filteredNews = computed(() => {
     const category = this.selectedCategory();
     const query = this.searchQuery();
+    const range = this.selectedDateRange();
 
     return this.news()
       .filter((item) => isAfterContentStartDate(item.date))
+      .filter((item) => matchesDateRange(item, range))
       .filter((item) => {
         const matchesCategory =
           category === 'all' ||
@@ -141,12 +179,26 @@ export class AiFrontlineComponent implements OnInit {
 
   clearFilters(): void {
     this.selectedCategory.set('all');
+    this.selectedDateRange.set('all');
     this.currentPage.set(1);
   }
 
   clearAll(): void {
     this.clearSearch();
     this.clearFilters();
+  }
+
+  onDateRangeChange(range: DateRangeFilter): void {
+    this.selectedDateRange.set(range);
+    this.currentPage.set(1);
+  }
+
+  readonly dateRangeOptions: DateRangeFilter[] = ['all', 'today', 'yesterday', '7d', '30d'];
+
+  getDateRangeLabel(range: DateRangeFilter): string {
+    const key = `common.dateRange.${range}`;
+    const label = this.t(key);
+    return label === key ? range : label;
   }
 
   goToPage(page: number): void {
