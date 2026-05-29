@@ -211,7 +211,9 @@
     font-size: 14px;
     outline: none;
     backdrop-filter: blur(14px) saturate(135%);
-    transition: border-color 200ms, background 200ms;
+    transition:
+      border-color 200ms,
+      background 200ms;
 
     &::placeholder {
       color: rgba(255, 255, 255, 0.35);

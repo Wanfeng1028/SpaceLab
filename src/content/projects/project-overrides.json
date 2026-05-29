@@ -7,5 +7,47 @@
     "cover": "",
     "status": "Building",
     "include": true
+  },
+  "aichat_export_tools": {
+    "order": 3,
+    "description": "AI 聊天记录导出与格式转换工具。",
+    "tags": ["TypeScript", "CLI", "AI"],
+    "include": true
+  },
+  "ParrotSoundReVue": {
+    "order": 2,
+    "description": "鹦音坊 — 基于 AI 语音大模型的智能声音处理软件。",
+    "tags": ["Vue", "AI", "Audio"],
+    "include": true
+  },
+  "PlanningGo": {
+    "order": 4,
+    "description": "AI 驱动的本地路线规划器，个性化城市探索。",
+    "tags": ["TypeScript", "AI", "Maps"],
+    "include": true
+  },
+  "blog": {
+    "order": 5,
+    "description": "基于 Next.js App Router、Prisma 和 Tailwind CSS 构建的个人全栈博客。",
+    "tags": ["Next.js", "Prisma", "Tailwind"],
+    "include": true
+  },
+  "School-Insight-System": {
+    "order": 8,
+    "description": "校园信息系统。",
+    "tags": ["JavaScript", "Web"],
+    "include": true
+  },
+  "resume_autofill_universal": {
+    "order": 7,
+    "description": "简历自动填写工具。",
+    "tags": ["JavaScript", "Tool"],
+    "include": true
+  },
+  "MappingProgramDesign": {
+    "order": 9,
+    "description": "测绘程序设计。",
+    "tags": ["C#", "GIS"],
+    "include": true
   }
 }
