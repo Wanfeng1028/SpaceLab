@@ -62,14 +62,16 @@
   background-image:
     radial-gradient(circle, rgba(255, 255, 255, 0.76) 0 1px, transparent 1px),
     radial-gradient(circle, rgba(105, 215, 255, 0.56) 0 1px, transparent 1px);
-  background-size: 120px 120px, 180px 180px;
+  background-size:
+    120px 120px,
+    180px 180px;
   animation: starDrift 34s linear infinite;
 }
 
 .hero-eclipse {
   position: absolute;
   left: 50%;
-  top: 58%;
+  top: 50%;
   width: min(58vw, 760px);
   aspect-ratio: 1;
   border-radius: 50%;
@@ -108,7 +110,8 @@
 }
 
 @keyframes heroFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(-50%, -50%);
   }
   50% {
@@ -117,7 +120,8 @@
 }
 
 @keyframes glowPulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.48;
     transform: scale(1);
   }
@@ -851,13 +855,6 @@
   .next-orbit-card-section {
     padding: 32px 16px 48px;
   }
-}
-
-// Hide footer bridge on home page — cockpit and footer are both dark,
-// the 120px gradient bridge creates an unwanted black bar.
-.site-footer-bridge {
-  height: 0 !important;
-  display: none;
 }
 
 /* 打字机音效开关样式 - 来自用户提供的CSS */
