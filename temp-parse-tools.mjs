@@ -6,7 +6,8 @@ function parseAiBotListPage(htmlFile, label) {
 
   // Strategy: look for list-title links with title attribute
   // Pattern: <a href="URL" target="_blank" title="TOOL_NAME – DESCRIPTION" class="list-title ...">TEXT</a>
-  const re = /<a\s+href="(https:\/\/ai-bot\.cn\/[^"]+)"\s+target="_blank"\s+title="([^"]+)"\s+class="list-title[^"]*"[^>]*>[^<]*<\/a>/g;
+  const re =
+    /<a\s+href="(https:\/\/ai-bot\.cn\/[^"]+)"\s+target="_blank"\s+title="([^"]+)"\s+class="list-title[^"]*"[^>]*>[^<]*<\/a>/g;
 
   const items = [];
   let m;
