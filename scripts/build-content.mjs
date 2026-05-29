@@ -87,6 +87,11 @@ const site = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'site.json'), 'ut
 // ── Gallery ────────────────────────────────────────────
 const gallery = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'gallery.json'), 'utf-8'));
 
+// ── i18n Translations ─────────────────────────────────
+const i18nDir = path.join(CONTENT_DIR, 'i18n');
+const i18nZhCN = JSON.parse(fs.readFileSync(path.join(i18nDir, 'zh-CN.json'), 'utf-8'));
+const i18nEnUS = JSON.parse(fs.readFileSync(path.join(i18nDir, 'en-US.json'), 'utf-8'));
+
 // ── AI Frontline ──────────────────────────────────────
 const aiFrontlineNews = JSON.parse(
   fs.readFileSync(path.join(CONTENT_DIR, 'ai-frontline', 'news.json'), 'utf-8'),
@@ -244,11 +249,23 @@ export const LAB_AI_TOOLS: LabResourceItem[] = ${JSON.stringify(labAiTools, null
 export const LAB_AI_PROJECTS: LabResourceItem[] = ${JSON.stringify(labAiProjects, null, 2)};
 
 export const LAB_SOURCES: LabSources = ${JSON.stringify(labSources, null, 2)};
+
+// ── i18n ───────────────────────────────────────────────
+export type SupportedLocale = 'zh-CN' | 'en-US';
+
+export const I18N_ZH_CN: Record<string, unknown> = ${JSON.stringify(i18nZhCN, null, 2)};
+
+export const I18N_EN_US: Record<string, unknown> = ${JSON.stringify(i18nEnUS, null, 2)};
+
+export const I18N_DICTIONARIES: Record<SupportedLocale, Record<string, unknown>> = {
+  'zh-CN': I18N_ZH_CN,
+  'en-US': I18N_EN_US,
+};
 `;
 
 fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
 fs.writeFileSync(OUTPUT_FILE, ts, 'utf-8');
 
 console.log(
-  `✅ content.generated.ts — ${allPosts.length} posts, ${projects.length} projects, ${gallery.length} gallery items, ${aiFrontlineNews.length} AI news, ${labAiTools.length} lab tools, ${labAiProjects.length} lab projects`,
+  `✅ content.generated.ts — ${allPosts.length} posts, ${projects.length} projects, ${gallery.length} gallery items, ${aiFrontlineNews.length} AI news, ${labAiTools.length} lab tools, ${labAiProjects.length} lab projects, i18n: zh=${Object.keys(i18nZhCN).length} namespaces`,
 );

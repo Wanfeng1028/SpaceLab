@@ -53,14 +53,13 @@ interface MobileMenuItem {
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
-  private i18n = inject(I18nService);
+  readonly i18n = inject(I18nService);
   private destroyRef = inject(DestroyRef);
   private starsAbort: AbortController | null = null;
 
   readonly isHome = signal(true);
   readonly isScrolled = signal(false);
   readonly mobileMenuOpen = signal(false);
-  readonly currentLang = signal<'zh-CN' | 'en-US'>(this.i18n.locale());
   readonly showShareModal = signal(false);
   readonly showCapsuleModal = signal(false);
   readonly githubStars = signal(0);
@@ -118,7 +117,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const currentUrl = this.router.url;
     this.isLightTheme.set(LIGHT_THEME_ROUTES.some((route) => currentUrl.startsWith(route)));
 
-    this.i18n.loadTranslations(this.currentLang());
     this.loadGithubStars();
   }
 
@@ -143,9 +141,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleLang(): void {
-    const newLang = this.currentLang() === 'zh-CN' ? 'en-US' : 'zh-CN';
-    this.currentLang.set(newLang);
-    this.i18n.loadTranslations(newLang);
+    this.i18n.toggleLocale();
   }
 
   toggleSound(): void {
