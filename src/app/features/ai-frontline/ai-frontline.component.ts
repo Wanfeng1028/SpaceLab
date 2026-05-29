@@ -8,6 +8,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { I18nService } from '../../core/services/i18n.service';
 import {
   buildSearchText,
@@ -81,7 +87,16 @@ function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
 @Component({
   selector: 'app-ai-frontline',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatChipsModule,
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+  ],
   templateUrl: './ai-frontline.html',
   styleUrl: './ai-frontline.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

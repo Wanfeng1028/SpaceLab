@@ -57,7 +57,7 @@
   } @else if (error()) {
     <div class="aif-error">
       <p>{{ error() }}</p>
-      <button class="retry-btn" (click)="loadNews()">{{ t('common.retry') }}</button>
+      <button mat-stroked-button class="retry-btn" (click)="loadNews()">{{ t('common.retry') }}</button>
     </div>
   } @else {
     <div class="inbox-shell">
@@ -65,37 +65,41 @@
       <aside class="inbox-sidebar">
         <div class="inbox-sidebar__section">
           <h4 class="inbox-sidebar__title">{{ t('resourceInbox.categories') }}</h4>
-          <div class="inbox-sidebar__list">
+          <mat-nav-list class="inbox-sidebar__list">
             @for (cat of categories; track cat) {
-              <button
+              <a
+                mat-list-item
                 class="inbox-sidebar__item"
                 [class.is-active]="selectedCategory() === cat"
+                [matTooltip]="cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat)"
+                matTooltipPosition="right"
                 (click)="onCategoryChange(cat)"
               >
-                <span class="inbox-sidebar__label">
+                <span class="inbox-sidebar__label" matListItemTitle>
                   {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
                 </span>
-                <span class="inbox-sidebar__count">{{ getCategoryCount(cat) }}</span>
-              </button>
+                <span class="inbox-sidebar__count" matListItemMeta>{{ getCategoryCount(cat) }}</span>
+              </a>
             }
-          </div>
+          </mat-nav-list>
         </div>
         <div class="inbox-sidebar__section">
           <h4 class="inbox-sidebar__title">{{ t('resourceInbox.dateRange') }}</h4>
-          <div class="inbox-sidebar__list">
+          <mat-nav-list class="inbox-sidebar__list">
             @for (range of sidebarDateRangeOptions; track range) {
-              <button
+              <a
+                mat-list-item
                 class="inbox-sidebar__item"
                 [class.is-active]="selectedDateRange() === range"
                 (click)="onDateRangeChange(range)"
               >
-                <span class="inbox-sidebar__label">{{ sidebarDateLabel(range) }}</span>
-              </button>
+                <span class="inbox-sidebar__label" matListItemTitle>{{ sidebarDateLabel(range) }}</span>
+              </a>
             }
-          </div>
+          </mat-nav-list>
         </div>
         @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
-          <button class="inbox-sidebar__reset" (click)="clearAll()">
+          <button mat-stroked-button class="inbox-sidebar__reset" (click)="clearAll()">
             {{ t('resourceInbox.resetAll') }}
           </button>
         }
@@ -109,16 +113,16 @@
             <p>{{ t('resourceInbox.noResults') }}</p>
             <div class="inbox-empty__actions">
               @if (searchQuery()) {
-                <button class="inbox-clear-btn" (click)="clearSearch()">
+                <button mat-stroked-button class="inbox-clear-btn" (click)="clearSearch()">
                   {{ t('resourceInbox.clearSearch') }}
                 </button>
               }
               @if (selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
-                <button class="inbox-clear-btn" (click)="clearFilters()">
+                <button mat-stroked-button class="inbox-clear-btn" (click)="clearFilters()">
                   {{ t('resourceInbox.clearFilter') }}
                 </button>
               }
-              <button class="inbox-clear-btn inbox-clear-btn--all" (click)="clearAll()">
+              <button mat-stroked-button class="inbox-clear-btn inbox-clear-btn--all" (click)="clearAll()">
                 {{ t('resourceInbox.resetAll') }}
               </button>
             </div>
@@ -126,29 +130,29 @@
         } @else {
           <div class="inbox-items">
             @for (item of filteredNews(); track trackByNews($index, item)) {
-              <article
+              <mat-card
                 class="inbox-item"
                 [class.is-selected]="selectedItem()?.id === item.id"
-                [ngClass]="getCategoryClass(item.category)"
+                appearance="outlined"
                 (click)="selectItem(item)"
               >
-                <div class="inbox-item__main">
+                <mat-card-content class="inbox-item__main">
                   <div class="inbox-item__header">
-                    <span class="inbox-item__category">{{ getCategoryLabel(item.category) }}</span>
+                    <span class="inbox-item__category" [attr.data-category]="item.category">{{ getCategoryLabel(item.category) }}</span>
                     <span class="inbox-item__date">{{ formatDate(item.date) }}</span>
                   </div>
                   <h3 class="inbox-item__title">{{ item.title }}</h3>
                   <p class="inbox-item__summary">{{ item.summary }}</p>
                   <div class="inbox-item__footer">
-                    <div class="inbox-item__tags">
+                    <mat-chip-set class="inbox-item__tags">
                       @for (tag of item.tags.slice(0, 3); track tag) {
-                        <span class="inbox-item__tag">{{ tag }}</span>
+                        <mat-chip class="inbox-item__tag" [highlighted]="false">{{ tag }}</mat-chip>
                       }
-                    </div>
+                    </mat-chip-set>
                     <span class="inbox-item__source">{{ item.source }}</span>
                   </div>
-                </div>
-              </article>
+                </mat-card-content>
+              </mat-card>
             }
           </div>
         }
@@ -158,7 +162,7 @@
       <aside class="inbox-preview">
         @if (selectedItem(); as selected) {
           <div class="inbox-preview__content">
-            <span class="inbox-preview__category" [ngClass]="getCategoryClass(selected.category)">
+            <span class="inbox-preview__category" [attr.data-category]="selected.category">
               {{ getCategoryLabel(selected.category) }}
             </span>
             <h3 class="inbox-preview__title">{{ selected.title }}</h3>
@@ -167,13 +171,13 @@
               <span class="inbox-preview__source">{{ selected.source }}</span>
               <span class="inbox-preview__date">{{ formatDate(selected.date) }}</span>
             </div>
-            <div class="inbox-preview__tags">
+            <mat-chip-set class="inbox-preview__tags">
               @for (tag of selected.tags; track tag) {
-                <span class="inbox-preview__tag">{{ tag }}</span>
+                <mat-chip class="inbox-preview__tag" [highlighted]="false">{{ tag }}</mat-chip>
               }
-            </div>
-            <button class="inbox-preview__link" (click)="openSource(selected.url)">
-              {{ t('resourceInbox.viewSource') }} <span class="arrow">→</span>
+            </mat-chip-set>
+            <button mat-stroked-button class="inbox-preview__link" (click)="openSource(selected.url)">
+              {{ t('resourceInbox.viewSource') }} <mat-icon>open_in_new</mat-icon>
             </button>
           </div>
         } @else {

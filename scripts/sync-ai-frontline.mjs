@@ -19,6 +19,7 @@ const USER_AGENT = 'SpaceLabBot/1.0 (+https://github.com/Wanfeng1028/SpaceLab)';
 const MAX_NEWS_ITEMS = 300;
 const CONTENT_START_DATE = '2026-05-25';
 const CURRENT_YEAR = new Date().getFullYear();
+const TODAY = new Date().toISOString().slice(0, 10); // "2026-05-29"
 
 // ── Date label → ISO date ──────────────────────────────────────────────
 const MONTH_MAP = {
@@ -170,27 +171,44 @@ function saveJson(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf-8');
 }
 
-// ── Merge: existing items first (preserve dates), new items appended ───
+// ── Merge: fresh page data corrects dates/sources for matched items ────
 function mergeNews(existing, fresh) {
-  // Build lookup by title+url (stable key regardless of date)
   const keyOf = (n) => `${n.title}|${n.url}`;
-  const seen = new Map();
-
-  // Existing items first — their dates are authoritative
-  for (const item of existing) {
+  const freshByKey = new Map();
+  for (const item of fresh) {
     const key = keyOf(item);
-    if (!seen.has(key)) seen.set(key, item);
+    if (!freshByKey.has(key)) freshByKey.set(key, item);
   }
 
-  // Fresh items — only add if not already present
+  const seen = new Map();
+
+  // Existing items — update date/source from fresh page data when matched
+  for (const item of existing) {
+    const key = keyOf(item);
+    const freshItem = freshByKey.get(key);
+    if (freshItem) {
+      seen.set(key, {
+        ...item,
+        date: freshItem.date,
+        source: freshItem.source || item.source,
+        fetchedAt: freshItem.fetchedAt,
+      });
+    } else if (!seen.has(key)) {
+      seen.set(key, item);
+    }
+  }
+
+  // Fresh items not in existing — add new
   for (const item of fresh) {
     const key = keyOf(item);
     if (!seen.has(key)) seen.set(key, item);
   }
 
-  // Filter: only keep items after CONTENT_START_DATE
   return Array.from(seen.values())
-    .filter((n) => (n.date || '').slice(0, 10) >= CONTENT_START_DATE)
+    .filter((n) => {
+      const d = (n.date || '').slice(0, 10);
+      return d >= CONTENT_START_DATE && d <= TODAY;
+    })
     .sort(
       (a, b) =>
         b.date.localeCompare(a.date) || (b.fetchedAt || '').localeCompare(a.fetchedAt || ''),
