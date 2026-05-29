@@ -93,6 +93,8 @@ function matchesDateRange(item: LabResourceItem, range: DateRangeFilter): boolea
 
 type TabKey = 'tools' | 'projects';
 
+const PAGE_SIZE = 15;
+
 @Component({
   selector: 'app-lab',
   templateUrl: './lab.html',
@@ -142,6 +144,7 @@ export class LabComponent implements OnInit {
   selectedDateRange = signal<DateRangeFilter>('all');
   loading = signal(true);
   selectedItem = signal<LabResourceItem | null>(null);
+  currentPage = signal(1);
 
   toolsData = signal<LabResourceItem[]>([]);
   projectsData = signal<LabResourceItem[]>([]);
@@ -179,6 +182,25 @@ export class LabComponent implements OnInit {
 
         return matchesCategory && matchesQuery;
       });
+  });
+
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.currentData().length / PAGE_SIZE)),
+  );
+
+  readonly pagedData = computed(() => {
+    const start = (this.currentPage() - 1) * PAGE_SIZE;
+    return this.currentData().slice(start, start + PAGE_SIZE);
+  });
+
+  readonly pageNumbers = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const start = Math.max(1, current - 2);
+    const end = Math.min(total, start + 4);
+    const pages: number[] = [];
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
   });
 
   categories = computed(() => {
@@ -241,35 +263,46 @@ export class LabComponent implements OnInit {
     this.selectedItem.set(item);
   }
 
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages()) return;
+    this.currentPage.set(page);
+  }
+
   onTabChange(key: TabKey) {
     this.activeTab.set(key);
     this.selectedCategory.set('all');
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
+    this.currentPage.set(1);
   }
 
   onCategoryChange(cat: string) {
     this.selectedCategory.set(cat);
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   onDateRangeChange(range: DateRangeFilter) {
     this.selectedDateRange.set(range);
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   clearSearch() {
     this.searchQuery.set('');
+    this.currentPage.set(1);
   }
 
   clearFilters() {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   clearAll() {
@@ -277,6 +310,7 @@ export class LabComponent implements OnInit {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   getCategoryLabel(cat: string): string {

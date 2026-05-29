@@ -744,6 +744,22 @@
   }
 }
 
+.next-orbit-card-section {
+  position: relative;
+  width: 100%;
+  min-height: 86vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(72px, 10vh, 120px) 24px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(105, 215, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 72% 64%, rgba(143, 124, 255, 0.10), transparent 34%),
+    linear-gradient(180deg, #020611 0%, #071527 52%, #02040b 100%);
+  isolation: isolate;
+}
+
 @media (max-width: 767px) {
   .cockpit-dashboard-section {
     min-height: auto;
@@ -753,6 +769,11 @@
     background-size: auto 100%;
     background-position: center top;
     opacity: 0.72;
+  }
+
+  .next-orbit-card-section {
+    min-height: 70vh;
+    padding: 48px 16px;
   }
 }
 

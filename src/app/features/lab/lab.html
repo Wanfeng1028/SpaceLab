@@ -145,7 +145,7 @@
           </div>
         } @else {
           <div class="inbox-items">
-            @for (item of currentData(); track item.id) {
+            @for (item of pagedData(); track item.id) {
               <mat-card
                 class="inbox-item"
                 [class.is-selected]="selectedItem()?.id === item.id"
@@ -175,6 +175,37 @@
               </mat-card>
             }
           </div>
+          @if (totalPages() > 1) {
+            <nav class="lab-pagination" aria-label="Lab pagination">
+              <button
+                class="pagination-btn pagination-btn--prev"
+                [disabled]="currentPage() === 1"
+                (click)="goToPage(currentPage() - 1)"
+              >
+                ‹
+              </button>
+              <div class="pagination-pages">
+                @for (page of pageNumbers(); track page) {
+                  <button
+                    class="pagination-page"
+                    [class.is-active]="page === currentPage()"
+                    [attr.aria-current]="page === currentPage() ? 'page' : null"
+                    (click)="goToPage(page)"
+                  >
+                    {{ page }}
+                  </button>
+                }
+              </div>
+              <span class="pagination-info">{{ currentPage() }} / {{ totalPages() }}</span>
+              <button
+                class="pagination-btn pagination-btn--next"
+                [disabled]="currentPage() === totalPages()"
+                (click)="goToPage(currentPage() + 1)"
+              >
+                ›
+              </button>
+            </nav>
+          }
         }
       </section>
 
