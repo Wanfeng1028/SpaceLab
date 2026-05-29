@@ -9,11 +9,10 @@ on:
         default: 'false'
         type: boolean
 
+  # Scheduled - every 2 hours (UTC times)
+  # 00:21 UTC = 08:21 CST, 02:21 UTC = 10:21 CST, etc.
   schedule:
-    - cron: '21 1 * * *'
-    - cron: '21 7 * * *'
-    - cron: '21 13 * * *'
-    - cron: '21 19 * * *'
+    - cron: '21 */2 * * *'
 
 concurrency:
   group: sync-lab-resources
