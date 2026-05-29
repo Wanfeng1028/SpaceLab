@@ -423,12 +423,6 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
-@keyframes scmOrbitSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes scmStatusPulse {
   0%,
   100% {
@@ -439,23 +433,9 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
-@keyframes scmRingFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 // ============================================
 // Click‑through decorations & z‑index hierarchy
 // ============================================
-
-.scm-avatar-orbit__ring1,
-.scm-avatar-orbit__ring2 {
-  pointer-events: none;
-}
 
 .scm-panel {
   position: relative;
@@ -561,10 +541,6 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   .scm-panel--closing {
     opacity: 0;
     transition: opacity 200ms ease;
-  }
-
-  .scm-avatar-orbit__ring2 {
-    animation: scmRingFadeIn 0ms 0ms ease both;
   }
 
   .scm-status-dot,

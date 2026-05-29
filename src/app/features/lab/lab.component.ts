@@ -8,15 +8,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { I18nService } from '../../core/services/i18n.service';
 import {
   buildSearchText,
@@ -100,19 +91,7 @@ type TabKey = 'tools' | 'projects';
   templateUrl: './lab.html',
   styleUrl: './lab.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatChipsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatButtonToggleModule,
-  ],
+  imports: [CommonModule, FormsModule],
 })
 export class LabComponent implements OnInit {
   private readonly i18n = inject(I18nService);
@@ -284,7 +263,7 @@ export class LabComponent implements OnInit {
   }
 
   getCategoryLabel(cat: string): string {
-    if (cat === 'all') return this.t('lab.allCategories');
+    if (cat === 'all') return this.t('resourceInbox.all');
     return cat;
   }
 
