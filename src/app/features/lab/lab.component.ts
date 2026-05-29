@@ -67,9 +67,14 @@ export class LabComponent implements OnInit {
   sources = signal<LabSources | null>(null);
 
   currentData = computed(() => {
-    const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
+    const tab = this.activeTab();
+    const data = tab === 'tools' ? this.toolsData() : this.projectsData();
     const category = this.selectedCategory();
     const query = this.searchQuery();
+    const tabLabels =
+      tab === 'tools'
+        ? ['AI工具', 'AI Tools']
+        : ['AI项目和框架', 'AI Projects', 'Frameworks'];
 
     return data.filter((item) => {
       const matchesCategory =
@@ -77,7 +82,17 @@ export class LabComponent implements OnInit {
         normalizeSearchText(item.category) === normalizeSearchText(category) ||
         item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(category));
 
-      const matchesQuery = matchesSearchQuery(this.getLabItemSearchText(item), query);
+      const searchText = buildSearchText([
+        item.title,
+        item.summary,
+        item.category,
+        item.tags,
+        item.source,
+        item.url,
+        item.id,
+        tabLabels,
+      ]);
+      const matchesQuery = matchesSearchQuery(searchText, query);
 
       return matchesCategory && matchesQuery;
     });
@@ -158,23 +173,6 @@ export class LabComponent implements OnInit {
   getCategoryLabel(cat: string): string {
     if (cat === 'all') return this.t('lab.allCategories');
     return cat;
-  }
-
-  private getLabItemSearchText(item: LabResourceItem): string {
-    const tabLabels =
-      this.activeTab() === 'tools'
-        ? ['AI工具', 'AI Tools']
-        : ['AI项目和框架', 'AI Projects', 'Frameworks'];
-    return buildSearchText([
-      item.title,
-      item.summary,
-      item.category,
-      item.tags,
-      item.source,
-      item.url,
-      item.id,
-      tabLabels,
-    ]);
   }
 
   formatDate(dateStr: string): string {
