@@ -254,19 +254,16 @@
 // ============================================
 // Inbox Shell — 3-Column Layout
 // ============================================
-.inbox-shell {
+.lab-inbox-shell {
   width: min(100%, 1240px);
   margin: 28px auto 0;
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr) 340px;
-  gap: 16px;
-  align-items: start;
+  min-height: 60vh;
 }
 
 // ============================================
-// Sidebar — Glass Panel
+// Sidebar — Glass Panel (mat-drawer)
 // ============================================
-.inbox-sidebar {
+.lab-sidebar {
   border-radius: 26px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
   border: 1px solid rgba(255, 255, 255, 0.62);
@@ -433,13 +430,13 @@
 }
 
 // mat-nav-list as sidebar nav
-.inbox-sidebar .mat-mdc-nav-list {
+.lab-sidebar .mat-mdc-nav-list {
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
 
-  .inbox-sidebar__item.mat-mdc-list-item {
+  .lab-sidebar__item.mat-mdc-list-item {
     --mdc-list-list-item-one-line-container-height: 34px;
     --mdc-list-list-item-label-text-size: 13px;
     --mdc-list-list-item-label-text-color: var(--color-text-secondary);
@@ -464,7 +461,7 @@
 }
 
 // mat-stroked-button overrides
-.inbox-sidebar__reset.mat-mdc-outlined-button,
+.lab-sidebar__reset.mat-mdc-outlined-button,
 .inbox-clear-btn.mat-mdc-outlined-button {
   --mdc-outlined-button-outline-color: rgba(0, 0, 0, 0.08);
   --mdc-outlined-button-label-text-color: var(--color-text-secondary);
@@ -891,8 +888,8 @@
 // Tablet — Hide Preview, 2-Column
 // ============================================
 @media (max-width: 1100px) {
-  .inbox-shell {
-    grid-template-columns: 220px minmax(0, 1fr);
+  .lab-inbox-shell {
+    width: min(100%, 1240px);
   }
 
   .inbox-preview {
@@ -946,7 +943,7 @@
     padding: 0 4px 8px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    width: min(100%, 1280px);
+    width: min(100%, 1240px);
     margin: 0 auto 8px;
 
     &::-webkit-scrollbar {
@@ -979,12 +976,11 @@
     }
   }
 
-  .inbox-shell {
-    grid-template-columns: 1fr;
+  .lab-inbox-shell {
     margin-top: 16px;
   }
 
-  .inbox-sidebar {
+  .lab-sidebar {
     display: none;
   }
 
