@@ -109,11 +109,15 @@ $sans: var(--font-sans);
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 
   &:hover {
     border-color: rgba($cyan, 0.4);
-    box-shadow: 0 0 24px rgba($cyan, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 24px rgba($cyan, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   &__value {
