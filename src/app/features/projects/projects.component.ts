@@ -1,6 +1,7 @@
 import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { ProjectCardComponent } from '../../shared/components/cards/project-card.component';
+import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
 import { PROJECTS } from '../../../generated/content.generated';
 
 @Component({
@@ -8,11 +9,12 @@ import { PROJECTS } from '../../../generated/content.generated';
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProjectCardComponent],
+  imports: [ProjectCardComponent, MacTerminalModalComponent],
 })
 export class ProjectsComponent {
   private i18n = inject(I18nService);
 
+  readonly showContactModal = signal(false);
   readonly selectedFilter = signal('all');
 
   readonly allProjects = computed(() => PROJECTS);

@@ -288,3 +288,47 @@
     transition: none;
   }
 }
+
+// ============================================
+// Terminal Modal Content Styles
+// ============================================
+
+.terminal-prompt {
+  color: #34d399;
+  font-weight: 600;
+  font-family: var(--font-mono, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace);
+}
+
+.terminal-command {
+  color: rgba(226, 232, 240, 0.92);
+  font-family: var(--font-mono, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace);
+}
+
+.terminal-output {
+  color: rgba(148, 163, 184, 0.92);
+  font-family: var(--font-mono, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace);
+}
+
+.terminal-ok {
+  color: #34d399;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 18px;
+  background: #38bdf8;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

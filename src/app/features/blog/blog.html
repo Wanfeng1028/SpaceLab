@@ -18,12 +18,12 @@
 
   <!-- Category Filters -->
   <section class="blog-filter-section">
-    @for (cat of categories; track cat.key) {
+    @for (cat of categories(); track cat) {
       <button
         class="filter-chip"
-        [class.is-active]="selectedCategory() === cat.key"
-        [attr.aria-pressed]="selectedCategory() === cat.key"
-        (click)="selectCategory(cat.key)"
+        [class.is-active]="selectedCategory() === cat"
+        [attr.aria-pressed]="selectedCategory() === cat"
+        (click)="selectCategory(cat)"
       >
         {{ getCategoryLabel(cat) }}
       </button>

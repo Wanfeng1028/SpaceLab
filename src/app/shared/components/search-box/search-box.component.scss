@@ -359,3 +359,55 @@
   top: 15px;
   pointer-events: none;
 }
+
+// ============================================
+// Light Theme — inherited from .app-shell.theme-light
+// ============================================
+.theme-light {
+  .grid {
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  }
+
+  .input {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: var(--color-text);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .input::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  #input-mask {
+    background: linear-gradient(90deg, transparent, var(--color-bg-soft));
+  }
+
+  .white::before {
+    filter: brightness(0.8);
+    opacity: 0.3;
+  }
+
+  .border::before {
+    filter: brightness(0.7);
+    opacity: 0.2;
+  }
+
+  .darkBorderBg::before {
+    opacity: 0.15;
+  }
+
+  .glow {
+    opacity: 0.15;
+  }
+
+  #filter-icon {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.08));
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .filterBorder::before {
+    opacity: 0.2;
+  }
+}

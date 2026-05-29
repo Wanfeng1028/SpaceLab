@@ -110,7 +110,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .subscribe((e) => {
         const url = e.urlAfterRedirects;
         this.isHome.set(url === '/' || url === '/home');
-        this.isLightTheme.set(LIGHT_THEME_ROUTES.some((route) => url.startsWith(route)));
+        this.isLightTheme.set(!this.isHome());
         this.mobileMenuOpen.set(false);
       });
 

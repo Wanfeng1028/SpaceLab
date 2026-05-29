@@ -5,21 +5,6 @@ import { ArticleCardComponent } from '../../shared/components/cards/article-card
 import { SearchBoxComponent } from '../../shared/components/search-box';
 import type { GeneratedPost } from '../../../generated/content.generated';
 
-interface BlogCategory {
-  key: string;
-  zh: string;
-  en: string;
-}
-
-const BLOG_CATEGORIES: BlogCategory[] = [
-  { key: 'all', zh: '全部', en: 'All' },
-  { key: 'GIS', zh: 'GIS', en: 'GIS' },
-  { key: '开发', zh: '开发', en: 'Dev' },
-  { key: '算法', zh: '算法', en: 'Algorithm' },
-  { key: '小羊毛', zh: '小羊毛', en: 'Tips' },
-  { key: '其他', zh: '其他', en: 'Other' },
-];
-
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.html',
@@ -34,9 +19,16 @@ export class BlogComponent {
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
 
-  readonly categories = BLOG_CATEGORIES;
-
   readonly allPosts = computed(() => this.postService.posts());
+
+  readonly categories = computed(() => {
+    const cats = new Set(
+      this.allPosts()
+        .map((p) => p.category)
+        .filter(Boolean),
+    );
+    return ['all', ...Array.from(cats)];
+  });
 
   readonly filteredPosts = computed(() => {
     const query = this.searchQuery().toLowerCase();
@@ -59,12 +51,9 @@ export class BlogComponent {
     return this.i18n.t(key);
   }
 
-  getLang(): string {
-    return this.i18n.locale().startsWith('zh') ? 'zh' : 'en';
-  }
-
-  getCategoryLabel(cat: BlogCategory): string {
-    return this.getLang() === 'zh' ? cat.zh : cat.en;
+  getCategoryLabel(cat: string): string {
+    if (cat === 'all') return this.t('common.all');
+    return cat;
   }
 
   selectCategory(category: string): void {

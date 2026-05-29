@@ -42,12 +42,12 @@
       <h2 class="projects-contact__title">{{ t('projects.contactTitle') }}</h2>
       <p class="projects-contact__desc">{{ t('projects.contactDesc') }}</p>
       <div class="space-button-group">
-        <a
+        <button
           class="space-button space-button--blue space-button--md"
-          [href]="'mailto:' + contactEmail"
+          (click)="showContactModal.set(true)"
         >
           {{ t('projects.contactBtn') }}
-        </a>
+        </button>
         <a
           class="space-button space-button--black space-button--md"
           [href]="githubUrl"
@@ -59,4 +59,33 @@
       </div>
     </div>
   </section>
+
+  <!-- 联系弹窗 (Mac 终端风格) -->
+  @if (showContactModal()) {
+    <app-mac-terminal-modal
+      size="sm"
+      title="contact @spacelab: ~/info"
+      (closed)="showContactModal.set(false)"
+    >
+      <div class="terminal-prompt">$</div>
+      <div class="terminal-command" style="margin-bottom: 16px">cat contact-info.txt</div>
+
+      <div class="terminal-output terminal-ok">
+        <span class="terminal-ok">[OK]</span> {{ t('home.contactLoaded') }}
+      </div>
+      <div style="height: 12px"></div>
+
+      <div style="font-size: 14px; line-height: 2">
+        <div>📧 service.ai@outlook.com</div>
+        <div>💻 GitHub — Wanfeng1028</div>
+      </div>
+
+      <div
+        style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1)"
+      >
+        <span class="terminal-prompt">$</span>
+        <span class="terminal-cursor"></span>
+      </div>
+    </app-mac-terminal-modal>
+  }
 </div>
