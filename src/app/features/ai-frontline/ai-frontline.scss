@@ -24,7 +24,7 @@ $bp-mobile: 600px;
 .resource-shell {
   width: min(100% - 32px, #{$shell-max});
   margin: 0 auto;
-  padding: 40px 0 96px;
+  padding: clamp(88px, 10vh, 116px) 0 96px;
 }
 
 // ============================================
@@ -868,7 +868,7 @@ $bp-mobile: 600px;
 @media (max-width: $bp-mobile) {
   .resource-shell {
     width: min(100% - 20px, #{$shell-max});
-    padding: 28px 0 72px;
+    padding: clamp(76px, 10vh, 100px) 0 72px;
   }
 
   .resource-hero-card {
