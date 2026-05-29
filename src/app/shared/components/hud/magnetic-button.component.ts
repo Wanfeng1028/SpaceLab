@@ -83,6 +83,29 @@ import {
         outline: 2px solid var(--space-cyan, #00f5ff);
         outline-offset: 3px;
       }
+
+      @media (max-width: 767px) {
+        .mag-btn {
+          padding: 12px 28px;
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          min-height: 44px;
+        }
+
+        .mag-btn__glow {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .mag-btn {
+          transition: none;
+          will-change: auto;
+        }
+        .mag-btn__glow {
+          transition: none;
+        }
+      }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -36,6 +36,23 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
         color: var(--space-text, rgba(255, 255, 255, 0.88));
         line-height: 1.1;
       }
+
+      @media (max-width: 767px) {
+        .vtitle {
+          writing-mode: horizontal-tb;
+          flex-direction: row;
+          gap: 8px;
+          align-items: baseline;
+        }
+
+        .vtitle__text {
+          font-size: clamp(18px, 5vw, 28px);
+        }
+
+        .vtitle__number {
+          font-size: 10px;
+        }
+      }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
