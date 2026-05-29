@@ -7,44 +7,41 @@
   <!-- 右侧标题 -->
   <div class="visual-header">
     <h1 class="visual-number">04</h1>
-    <h2 class="visual-title">VISUAL SYSTEMS</h2>
-    <p class="visual-subtitle">Creative coding, shaders and data visualization.</p>
-    <p class="visual-desc">Turning data into interactive form.</p>
+    <h2 class="visual-title">{{ t('visualSystems.title') }}</h2>
+    <p class="visual-subtitle">{{ t('visualSystems.subtitle') }}</p>
+    <p class="visual-desc">{{ t('visualSystems.desc') }}</p>
   </div>
 
   <!-- 右侧全息面板 -->
   <div class="visual-right">
     <div class="visual-panel">
       <div class="panel-header">
-        <span class="panel-label">Shader Engine</span>
-        <span class="panel-badge">v3.2</span>
+        <span class="panel-label">{{ t('visualSystems.shaderEngine') }}</span>
+        <span class="panel-badge">{{ t('visualSystems.shaderEngineVer') }}</span>
       </div>
-      <p class="panel-value">46 shader points</p>
-      <p class="panel-desc">Vertex displacement · Fractal noise · Iridescence</p>
+      <p class="panel-value">{{ t('visualSystems.shaderEngineVal') }}</p>
+      <p class="panel-desc">{{ t('visualSystems.shaderEngineDesc') }}</p>
     </div>
 
     <div class="visual-panel">
       <div class="panel-header">
-        <span class="panel-label">Data Visualization</span>
-        <span class="panel-badge">real-time</span>
+        <span class="panel-label">{{ t('visualSystems.dataVis') }}</span>
+        <span class="panel-badge">{{ t('visualSystems.dataVisBadge') }}</span>
       </div>
-      <p class="panel-value">8k particle field</p>
-      <p class="panel-desc">Shader-driven · Interactive · Responsive</p>
+      <p class="panel-value">{{ t('visualSystems.dataVisVal') }}</p>
+      <p class="panel-desc">{{ t('visualSystems.dataVisDesc') }}</p>
     </div>
 
     <div class="visual-panel">
       <div class="panel-header">
-        <span class="panel-label">Display System</span>
-        <span class="panel-badge">WebGL 2.0</span>
+        <span class="panel-label">{{ t('visualSystems.displaySystem') }}</span>
+        <span class="panel-badge">{{ t('visualSystems.displaySystemBadge') }}</span>
       </div>
-      <p class="panel-value">7 layers</p>
-      <p class="panel-desc">Holographic projection · Three.js renderer</p>
+      <p class="panel-value">{{ t('visualSystems.displaySystemVal') }}</p>
+      <p class="panel-desc">{{ t('visualSystems.displaySystemDesc') }}</p>
     </div>
   </div>
 
   <!-- 底部状态栏 -->
-  <app-telemetry-bar
-    [text]="'SHADER GRID · DATA PANEL · MOTION SYSTEM · VISUALIZATION ONLINE'"
-    status="online"
-  />
+  <app-telemetry-bar [text]="t('visualSystems.telemetryOnline')" status="online" />
 </div>

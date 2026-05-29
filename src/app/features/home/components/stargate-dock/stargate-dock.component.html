@@ -9,7 +9,7 @@
     <!-- Centered Title + Subtitle + Buttons -->
     <div class="portal-content">
       <span class="portal-content__number">06</span>
-      <h2 class="portal-content__title">AI<br />Frontline</h2>
+      <h2 class="portal-content__title">AI<br />{{ t('nav.aiFrontline') }}</h2>
       <p class="portal-content__subtitle">
         {{ t('portal.aiFrontlineDesc') }}
       </p>
@@ -18,15 +18,19 @@
         <app-magnetic-button (clicked)="onEnter()">
           {{ t('common.more') }}
         </app-magnetic-button>
-        <app-magnetic-button (clicked)="onExplore()"> Explore Projects </app-magnetic-button>
-        <app-magnetic-button (clicked)="onReturnTop()"> Return to Top </app-magnetic-button>
+        <app-magnetic-button (clicked)="onExplore()">
+          {{ t('projects.title') }}
+        </app-magnetic-button>
+        <app-magnetic-button (clicked)="onReturnTop()">
+          {{ t('cockpit.returnTop') }}
+        </app-magnetic-button>
       </div>
     </div>
 
     <!-- Footer Copyright -->
     <div class="portal-footer-row">
       <span class="portal-copyright">
-        &copy; {{ currentYear }} SpaceLab. All rights reserved.
+        &copy; {{ currentYear }} SpaceLab. {{ t('common.all') }} rights reserved.
       </span>
       <span class="portal-coordinates"> LAT 0.000 &middot; LON 0.000 &middot; ALT 36,000 km </span>
     </div>

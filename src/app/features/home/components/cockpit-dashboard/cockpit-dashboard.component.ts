@@ -13,7 +13,6 @@ import { I18nService } from '../../../../core/services/i18n.service';
 import { LenisScrollService } from '../../../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
-import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { CockpitDashboardScene } from '../../../../three/scenes/cockpit-dashboard.scene';
 import {
@@ -22,11 +21,13 @@ import {
   AI_FRONTLINE_NEWS,
   AI_FRONTLINE_SOURCE,
   GALLERY,
-} from '../../../../generated/content.generated';
+} from '../../../../../generated/content.generated';
 
 /* ── i18n ──────────────────────────────────────────────────────────── */
 
-const TEXT = {
+type Lang = 'zh' | 'en';
+
+const TEXT: Record<Lang, Record<string, string>> = {
   zh: {
     sectionIndex: '07',
     title: '驾驶舱总控台',
@@ -118,6 +119,7 @@ const TEXT = {
     hourShort: '时',
     minShort: '分',
     secShort: '秒',
+    telemetryText: '驾驶舱系统 · 全站就绪 · 等待指令',
   },
   en: {
     sectionIndex: '07',
@@ -202,10 +204,9 @@ const TEXT = {
     hourShort: 'h',
     minShort: 'm',
     secShort: 's',
+    telemetryText: 'COCKPIT SYSTEMS · ALL STATIONS NOMINAL · READY FOR COMMAND',
   },
-} as const;
-
-type Lang = keyof typeof TEXT;
+};
 
 /* ── Log entry ─────────────────────────────────────────────────────── */
 
@@ -230,7 +231,7 @@ interface NetworkInformation {
   templateUrl: './cockpit-dashboard.component.html',
   styleUrl: './cockpit-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, HudFrameComponent, HudMetricComponent, TelemetryBarComponent],
+  imports: [ThreeCanvasComponent, HudFrameComponent, TelemetryBarComponent],
 })
 export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly router = inject(Router);
@@ -255,12 +256,10 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   /* ── i18n ───────────────────────────────────────────────────────── */
 
-  private readonly lang = computed<Lang>(() =>
-    this.i18n.locale() === 'zh-CN' ? 'zh' : 'en',
-  );
+  private readonly lang = computed<Lang>(() => (this.i18n.locale() === 'zh-CN' ? 'zh' : 'en'));
 
-  t<K extends keyof (typeof TEXT)['zh']>(key: K): string {
-    return TEXT[this.lang()][key] ?? TEXT['en'][key];
+  t(key: string): string {
+    return TEXT[this.lang()][key] ?? TEXT['en'][key] ?? key;
   }
 
   /* ── Visitor Signal ─────────────────────────────────────────────── */
@@ -393,9 +392,7 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
         : this.t('enabled'),
     );
     this.currentTheme.set(
-      document.documentElement.classList.contains('light-theme')
-        ? this.t('light')
-        : this.t('dark'),
+      document.documentElement.classList.contains('light-theme') ? this.t('light') : this.t('dark'),
     );
     this.buildMode.set(this.t('ghPages'));
     this.contentMode.set(this.t('markdownJson'));

@@ -1,44 +1,62 @@
 <div class="projects-page">
-  <div class="container">
-    <!-- Page Header -->
-    <div class="projects-header">
-      <h1 class="projects-header__title">{{ t('projects.title') }}</h1>
-      <p class="projects-header__desc">{{ t('projects.desc') }}</p>
-    </div>
+  <!-- Hero -->
+  <section class="projects-hero">
+    <p class="projects-kicker">PROJECTS</p>
+    <h1 class="projects-hero__title">{{ t('projects.heroTitle') }}</h1>
+    <p class="projects-hero__desc">{{ t('projects.heroDesc') }}</p>
+  </section>
 
-    <!-- Category Filters -->
-    <div class="category-filters">
-      @for (cat of categories(); track cat) {
+  <!-- Filter -->
+  <section class="projects-filter-section">
+    <div class="filter-scroll">
+      @for (tag of filterTags(); track tag) {
         <button
           class="filter-chip"
-          [class.is-active]="selectedCategory() === cat"
-          [attr.aria-pressed]="selectedCategory() === cat"
-          (click)="selectCategory(cat)"
+          [class.is-active]="selectedFilter() === tag"
+          [attr.aria-pressed]="selectedFilter() === tag"
+          (click)="selectFilter(tag)"
         >
-          {{ cat === 'all' ? t('common.all') : cat }}
+          {{ tag === 'all' ? t('common.all') : tag === 'featured' ? t('projects.featured') : tag }}
         </button>
       }
     </div>
+  </section>
 
-    <!-- Projects Grid -->
-    @if (filteredProjects().length > 0) {
-      <div class="projects-grid">
-        @for (project of filteredProjects(); track project.slug) {
-          <app-project-card
-            [title]="project.name"
-            [slug]="project.slug"
-            [icon]="project.icon"
-            [description]="project.description"
-            [accentColor]="project.accentColor"
-            [stack]="project.tags"
-          />
-        }
+  <!-- Projects List -->
+  @if (filteredProjects().length > 0) {
+    <section class="projects-list">
+      @for (project of filteredProjects(); track project.id) {
+        <app-project-card [project]="project" [formatDate]="formatDate.bind(this)" />
+      }
+    </section>
+  } @else {
+    <div class="projects-empty">
+      <span class="projects-empty__icon">📭</span>
+      <p>{{ t('common.none') }}</p>
+    </div>
+  }
+
+  <!-- Contact Section -->
+  <section class="projects-contact">
+    <div class="projects-contact__card">
+      <h2 class="projects-contact__title">{{ t('projects.contactTitle') }}</h2>
+      <p class="projects-contact__desc">{{ t('projects.contactDesc') }}</p>
+      <div class="space-button-group">
+        <a
+          class="space-button space-button--blue space-button--md"
+          [href]="'mailto:' + contactEmail"
+        >
+          {{ t('projects.contactBtn') }}
+        </a>
+        <a
+          class="space-button space-button--black space-button--md"
+          [href]="githubUrl"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ t('projects.githubBtn') }}
+        </a>
       </div>
-    } @else {
-      <div class="projects-empty">
-        <span class="projects-empty__icon">📭</span>
-        <p>{{ t('common.none') }}</p>
-      </div>
-    }
-  </div>
+    </div>
+  </section>
 </div>

@@ -3,8 +3,6 @@ import {
   PerspectiveCamera,
   WebGLRenderer,
   SphereGeometry,
-  RingGeometry,
-  PlaneGeometry,
   BufferGeometry,
   Float32BufferAttribute,
   ShaderMaterial,
@@ -13,17 +11,14 @@ import {
   Clock,
   AdditiveBlending,
   Group,
-  LineBasicMaterial,
-  Line,
-  Vector3,
   DoubleSide,
 } from 'three';
 
 /**
- * Cockpit Dashboard Scene
+ * Cockpit Dashboard Scene — subtle background
  *
- * View from cockpit window: starfield, Earth arc, orbit lines,
- * HUD crosshairs, targeting reticle, and cockpit glass frame.
+ * Starfield + faint Earth arc. No crosshair / targeting ring.
+ * Rendered at low opacity behind data panels.
  */
 export class CockpitDashboardScene {
   private scene!: Scene;
@@ -34,17 +29,9 @@ export class CockpitDashboardScene {
   private resizeHandler!: () => void;
   private disposed = false;
 
-  private cockpitGroup!: Group;
+  private bgGroup!: Group;
   private starField!: Points;
   private earthArc!: Mesh;
-  private orbitLines: Line[] = [];
-  private crosshair!: Mesh;
-  private targetingRing!: Mesh;
-  private cockpitGlass!: Mesh;
-
-  private scrollProgress = 0;
-  private mouseX = 0;
-  private mouseY = 0;
 
   private contextLostHandler: ((e: Event) => void) | null = null;
 
@@ -56,10 +43,6 @@ export class CockpitDashboardScene {
     this.initScene();
     this.createStarField();
     this.createEarthArc();
-    this.createOrbitLines();
-    this.createCrosshair();
-    this.createTargetingRing();
-    this.createCockpitGlass();
     this.bindEvents();
     this.animate();
   }
@@ -85,13 +68,13 @@ export class CockpitDashboardScene {
 
     this.resizeRenderer();
 
-    this.cockpitGroup = new Group();
-    this.scene.add(this.cockpitGroup);
+    this.bgGroup = new Group();
+    this.scene.add(this.bgGroup);
   }
 
-  // ── Background star field ────────────────────────────────────────────
+  // ── Star field ──────────────────────────────────────────────────────
   private createStarField(): void {
-    const count = 300;
+    const count = 200;
     const positions = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
 
@@ -132,17 +115,17 @@ export class CockpitDashboardScene {
           if (d > 0.5) discard;
           float alpha = smoothstep(0.5, 0.0, d);
           float twinkle = sin(uTime * (vSize * 1.5) + vSize * 100.0) * 0.2 + 0.8;
-          gl_FragColor = vec4(vec3(1.0), alpha * twinkle * 0.7);
+          gl_FragColor = vec4(vec3(1.0), alpha * twinkle * 0.5);
         }
       `,
       uniforms: { uTime: { value: 0 } },
     });
 
     this.starField = new Points(geo, mat);
-    this.cockpitGroup.add(this.starField);
+    this.bgGroup.add(this.starField);
   }
 
-  // ── Earth arc (bottom of view) ───────────────────────────────────────
+  // ── Earth arc ───────────────────────────────────────────────────────
   private createEarthArc(): void {
     const geo = new SphereGeometry(15, 64, 32, 0, Math.PI * 2, Math.PI * 0.6, Math.PI * 0.4);
     const mat = new ShaderMaterial({
@@ -152,24 +135,20 @@ export class CockpitDashboardScene {
       side: DoubleSide,
       vertexShader: `
         varying vec3 vNormal;
-        varying vec3 vPosition;
         void main() {
           vNormal = normalize(normalMatrix * normal);
-          vPosition = position;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
         precision highp float;
         varying vec3 vNormal;
-        varying vec3 vPosition;
         void main() {
-          // Earth atmosphere glow
           float fresnel = pow(1.0 - abs(dot(vec3(0.0, 0.0, 1.0), vNormal)), 2.0);
-          vec3 earthColor = vec3(0.0, 0.3, 0.5);
-          vec3 atmosphereColor = vec3(0.0, 0.6, 0.9);
+          vec3 earthColor = vec3(0.0, 0.2, 0.4);
+          vec3 atmosphereColor = vec3(0.0, 0.5, 0.8);
           vec3 color = mix(earthColor, atmosphereColor, fresnel);
-          float alpha = fresnel * 0.4;
+          float alpha = fresnel * 0.25;
           gl_FragColor = vec4(color, alpha);
         }
       `,
@@ -177,166 +156,15 @@ export class CockpitDashboardScene {
     });
     this.earthArc = new Mesh(geo, mat);
     this.earthArc.position.set(0, -8, -10);
-    this.cockpitGroup.add(this.earthArc);
+    this.bgGroup.add(this.earthArc);
   }
 
-  // ── Orbit lines ──────────────────────────────────────────────────────
-  private createOrbitLines(): void {
-    const orbitData = [
-      { radius: 12, tilt: 0.1, color: 0x00f0ff },
-      { radius: 14, tilt: -0.15, color: 0x00ffc4 },
-    ];
-
-    orbitData.forEach(({ radius, tilt, color }) => {
-      const points: Vector3[] = [];
-      for (let i = 0; i <= 64; i++) {
-        const angle = (i / 64) * Math.PI * 2;
-        points.push(
-          new Vector3(
-            Math.cos(angle) * radius,
-            Math.sin(angle) * radius * 0.3,
-            -10 + Math.sin(angle) * 2,
-          ),
-        );
-      }
-      const geo = new BufferGeometry().setFromPoints(points);
-      const mat = new LineBasicMaterial({
-        color,
-        transparent: true,
-        opacity: 0.4,
-        blending: AdditiveBlending,
-      });
-      const line = new Line(geo, mat);
-      line.rotation.x = tilt;
-      this.cockpitGroup.add(line);
-      this.orbitLines.push(line);
-    });
+  // ── Public API ──────────────────────────────────────────────────────
+  updateMouse(_nx: number, _ny: number): void {
+    // No interactive parallax — background only
   }
 
-  // ── HUD Crosshair ────────────────────────────────────────────────────
-  private createCrosshair(): void {
-    const size = 0.8;
-    const gap = 0.15;
-
-    // We'll use a simple plane for the crosshair
-    const geo = new PlaneGeometry(0.02, 1.6);
-    const mat = new ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: AdditiveBlending,
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        precision highp float;
-        uniform float uTime;
-        varying vec2 vUv;
-        void main() {
-          float pulse = sin(uTime * 2.0) * 0.2 + 0.8;
-          float alpha = pulse * 0.6;
-          gl_FragColor = vec4(vec3(0.0, 1.0, 0.8), alpha);
-        }
-      `,
-      uniforms: { uTime: { value: 0 } },
-    });
-    this.crosshair = new Mesh(geo, mat);
-    this.crosshair.position.z = 2;
-    this.cockpitGroup.add(this.crosshair);
-
-    // Horizontal line
-    const hGeo = new PlaneGeometry(1.6, 0.02);
-    const hLine = new Mesh(hGeo, mat.clone());
-    hLine.position.z = 2;
-    this.cockpitGroup.add(hLine);
-  }
-
-  // ── Targeting ring ───────────────────────────────────────────────────
-  private createTargetingRing(): void {
-    const geo = new RingGeometry(0.6, 0.65, 64);
-    const mat = new ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: AdditiveBlending,
-      side: DoubleSide,
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        precision highp float;
-        uniform float uTime;
-        varying vec2 vUv;
-        void main() {
-          float angle = atan(vUv.y - 0.5, vUv.x - 0.5);
-          float segment = step(0.0, sin(angle * 8.0 + uTime * 2.0));
-          float alpha = segment * 0.5 + 0.2;
-          gl_FragColor = vec4(vec3(0.0, 0.8, 1.0), alpha);
-        }
-      `,
-      uniforms: { uTime: { value: 0 } },
-    });
-    this.targetingRing = new Mesh(geo, mat);
-    this.targetingRing.position.z = 2;
-    this.cockpitGroup.add(this.targetingRing);
-  }
-
-  // ── Cockpit glass frame ──────────────────────────────────────────────
-  private createCockpitGlass(): void {
-    // Create a curved glass effect at the edges
-    const geo = new SphereGeometry(4, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.3);
-    const mat = new ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: AdditiveBlending,
-      side: DoubleSide,
-      vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vViewPosition;
-        void main() {
-          vNormal = normalize(normalMatrix * normal);
-          vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-          vViewPosition = -mvPos.xyz;
-          gl_Position = projectionMatrix * mvPos;
-        }
-      `,
-      fragmentShader: `
-        precision highp float;
-        varying vec3 vNormal;
-        varying vec3 vViewPosition;
-        void main() {
-          vec3 viewDir = normalize(vViewPosition);
-          float fresnel = pow(1.0 - abs(dot(viewDir, vNormal)), 3.0);
-          vec3 glassColor = vec3(0.0, 0.3, 0.5);
-          float alpha = fresnel * 0.15;
-          gl_FragColor = vec4(glassColor, alpha);
-        }
-      `,
-      uniforms: {},
-    });
-    this.cockpitGlass = new Mesh(geo, mat);
-    this.cockpitGlass.position.z = -2;
-    this.cockpitGlass.rotation.x = Math.PI;
-    this.cockpitGroup.add(this.cockpitGlass);
-  }
-
-  // ── Public API ───────────────────────────────────────────────────────
-  updateScroll(progress: number): void {
-    this.scrollProgress = progress;
-  }
-
-  updateMouse(nx: number, ny: number): void {
-    this.mouseX = nx;
-    this.mouseY = ny;
-  }
-
-  // ── Events & resize ──────────────────────────────────────────────────
+  // ── Events & resize ─────────────────────────────────────────────────
   private bindEvents(): void {
     this.resizeHandler = () => this.resizeRenderer();
     window.addEventListener('resize', this.resizeHandler);
@@ -352,50 +180,23 @@ export class CockpitDashboardScene {
     this.camera.updateProjectionMatrix();
   }
 
-  // ── Animation ────────────────────────────────────────────────────────
+  // ── Animation ───────────────────────────────────────────────────────
   private animate(): void {
     this.animationId = requestAnimationFrame(() => this.animate());
     if (this.disposed) return;
 
     const elapsed = this.clock.getElapsedTime();
 
-    // Slow star drift
-    this.starField.rotation.y = elapsed * 0.01;
-    this.starField.rotation.x = elapsed * 0.005;
+    this.starField.rotation.y = elapsed * 0.008;
+    this.starField.rotation.x = elapsed * 0.004;
+    this.earthArc.rotation.y = elapsed * 0.015;
 
-    // Earth arc slow rotation
-    this.earthArc.rotation.y = elapsed * 0.02;
-
-    // Orbit line rotation
-    this.orbitLines.forEach((line, i) => {
-      line.rotation.z = elapsed * 0.01 * (i + 1);
-    });
-
-    // Targeting ring rotation
-    this.targetingRing.rotation.z = elapsed * 0.5;
-
-    // Update shader uniforms
     (this.starField.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
-    (this.crosshair.material as ShaderMaterial).uniforms['uTime'].value = elapsed;
-    this.cockpitGroup.children.forEach((child) => {
-      if ((child as Mesh).material && (child as Mesh).material instanceof ShaderMaterial) {
-        const mat = (child as Mesh).material as ShaderMaterial;
-        if (mat.uniforms['uTime']) {
-          mat.uniforms['uTime'].value = elapsed;
-        }
-      }
-    });
-
-    // Mouse parallax
-    const targetRotX = this.mouseY * 0.1;
-    const targetRotY = this.mouseX * 0.15;
-    this.cockpitGroup.rotation.x += (targetRotX - this.cockpitGroup.rotation.x) * 0.05;
-    this.cockpitGroup.rotation.y += (targetRotY - this.cockpitGroup.rotation.y) * 0.05;
 
     this.renderer.render(this.scene, this.camera);
   }
 
-  // ── Lifecycle ────────────────────────────────────────────────────────
+  // ── Lifecycle ───────────────────────────────────────────────────────
   pause(): void {
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);
@@ -421,7 +222,7 @@ export class CockpitDashboardScene {
     }
     window.removeEventListener('resize', this.resizeHandler);
 
-    this.cockpitGroup.traverse((child) => {
+    this.bgGroup.traverse((child) => {
       if ((child as Mesh).geometry) (child as Mesh).geometry.dispose();
       if ((child as Mesh).material) {
         const mat = (child as Mesh).material;

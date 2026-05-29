@@ -1,30 +1,115 @@
-<div class="lab-page">
-  <div class="container">
-    <div class="lab-header">
-      <h1 class="lab-header__title">{{ t('lab.title') }}</h1>
-      <p class="lab-header__desc">{{ t('lab.desc') }}</p>
+<main class="lab-page">
+  <!-- Hero -->
+  <section class="lab-hero">
+    <p class="lab-kicker">AI RESOURCE LAB</p>
+    <h1>{{ t('lab.pageTitle') }}</h1>
+    <p class="lab-hero__desc">{{ t('lab.pageDesc') }}</p>
+    @if (sources(); as src) {
+      <div class="lab-hero__meta">
+        <span class="lab-meta-badge">
+          <span class="meta-icon">⟲</span>
+          {{ t('lab.lastSync') }}: {{ formatFetchTime(src.lastFetchedAt) }}
+        </span>
+        <span class="lab-meta-badge">
+          <span class="meta-icon">◈</span>
+          {{ t('lab.dataSource') }}
+        </span>
+      </div>
+    }
+  </section>
+
+  <!-- Tabs -->
+  <section class="lab-tabs">
+    @for (tab of tabs; track tab.key) {
+      <button
+        class="lab-tab"
+        [class.is-active]="activeTab() === tab.key"
+        (click)="onTabChange(tab.key)"
+      >
+        <span class="tab-label">{{ tab.label }}</span>
+      </button>
+    }
+  </section>
+
+  <!-- Toolbar -->
+  <section class="lab-toolbar">
+    <div class="lab-search">
+      <span class="search-icon">⌕</span>
+      <input
+        type="text"
+        [placeholder]="t('lab.searchPlaceholder')"
+        [value]="searchQuery()"
+        (input)="onSearchChange($event)"
+      />
     </div>
 
-    <div class="lab-grid">
-      @for (exp of experiments(); track exp.title) {
-        <div class="lab-card glass-card-hover" [class.is-coming]="exp.status === 'coming'">
-          <span class="lab-card__icon">{{ exp.icon }}</span>
-          <div class="lab-card__body">
-            <h3 class="lab-card__title">{{ exp.title }}</h3>
-            <p class="lab-card__desc">{{ exp.desc }}</p>
-            <div class="lab-card__meta">
-              <span class="lab-card__tech">{{ exp.tech }}</span>
-              @if (exp.status === 'live') {
-                <span class="lab-card__status lab-card__status--live">{{ t('common.live') }}</span>
-              } @else {
-                <span class="lab-card__status lab-card__status--coming">{{
-                  t('common.comingSoon')
-                }}</span>
-              }
-            </div>
-          </div>
-        </div>
+    <div class="lab-filters">
+      @for (cat of categories(); track cat) {
+        <button
+          class="lab-filter"
+          [class.is-active]="selectedCategory() === cat"
+          (click)="onCategoryChange(cat)"
+        >
+          {{ getCategoryLabel(cat) }}
+        </button>
       }
     </div>
-  </div>
-</div>
+  </section>
+
+  <!-- Resource List -->
+  <section class="lab-resource-list">
+    @if (loading()) {
+      <div class="lab-loading">
+        <div class="loader">
+          <div data-glitch="Loading..." class="glitch">Loading...</div>
+        </div>
+      </div>
+    } @else if (currentData().length === 0) {
+      <div class="lab-empty">
+        <div class="empty-icon">◇</div>
+        <p>{{ t('lab.noResults') }}</p>
+      </div>
+    } @else {
+      <div class="lab-grid">
+        @for (item of currentData(); track item.id) {
+          <article class="lab-card" (click)="openUrl(item.url)">
+            <div class="lab-card__header">
+              <span class="lab-card__category">{{ item.category }}</span>
+              <span class="lab-card__source">{{ item.source }}</span>
+            </div>
+
+            <h3 class="lab-card__title">{{ item.title }}</h3>
+
+            <p class="lab-card__summary">{{ item.summary }}</p>
+
+            <div class="lab-card__tags">
+              @for (tag of item.tags.slice(0, 4); track tag) {
+                <span class="lab-card__tag">{{ tag }}</span>
+              }
+            </div>
+
+            <div class="lab-card__footer">
+              @if (item.fetchedAt) {
+                <span class="lab-card__date">{{ formatDate(item.fetchedAt) }}</span>
+              }
+              <span class="lab-card__link">
+                {{ t('lab.readSource') }}
+                <span class="arrow">→</span>
+              </span>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Footer -->
+  <footer class="lab-footer">
+    <p class="footer-source">
+      {{ t('lab.footerSource') }}：
+      <a href="https://ai-bot.cn" target="_blank" rel="noopener noreferrer">AI工具集</a>
+      {{ t('lab.footerSourceNote') }}
+    </p>
+    <p class="footer-disclaimer">{{ t('lab.disclaimer') }}</p>
+  </footer>
+</main>

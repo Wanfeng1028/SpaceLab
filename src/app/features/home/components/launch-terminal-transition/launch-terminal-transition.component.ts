@@ -7,8 +7,34 @@ import {
   EventEmitter,
   signal,
   HostListener,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { I18nService } from '../../../../core/services/i18n.service';
+
+interface CommandDef {
+  commandKey: string;
+  outputKeys: string[];
+}
+
+const DESKTOP_COMMANDS: CommandDef[] = [
+  { commandKey: 'launchTerminal.bootCmd', outputKeys: ['launchTerminal.bootOutput'] },
+  {
+    commandKey: 'launchTerminal.loadCmd',
+    outputKeys: ['launchTerminal.loadOutput1', 'launchTerminal.loadOutput2'],
+  },
+  {
+    commandKey: 'launchTerminal.connectCmd',
+    outputKeys: ['launchTerminal.connectOutput1', 'launchTerminal.connectOutput2'],
+  },
+  { commandKey: 'launchTerminal.enterCmd', outputKeys: ['launchTerminal.enterOutput'] },
+];
+
+const MOBILE_COMMANDS: CommandDef[] = [
+  { commandKey: 'launchTerminal.bootCmdShort', outputKeys: ['launchTerminal.bootOutputShort'] },
+  { commandKey: 'launchTerminal.loadCmdShort', outputKeys: ['launchTerminal.loadOutputShort'] },
+  { commandKey: 'launchTerminal.enterCmdShort', outputKeys: ['launchTerminal.enterOutputShort'] },
+];
 
 @Component({
   selector: 'app-launch-terminal-transition',
@@ -20,48 +46,27 @@ import { CommonModule } from '@angular/common';
 export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
   @Output() completed = new EventEmitter<void>();
 
-  // State
+  private readonly i18n = inject(I18nService);
+
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
+
   isActive = signal(false);
   currentStep = signal(0);
   showSystemReady = signal(false);
   progress = signal(0);
   reducedMotion = false;
 
-  // Command sequence (desktop)
-  private readonly desktopCommands = [
-    { command: '$ boot spacelab --mode=orbit', outputs: ['[OK] WebGL renderer initialized'] },
-    {
-      command: '$ load content --static',
-      outputs: ['[OK] Markdown posts indexed', '[OK] Project registry online'],
-    },
-    {
-      command: '$ connect signal --visitor',
-      outputs: ['[OK] Local environment linked', '[OK] Network channel stable'],
-    },
-    { command: '$ enter earth-observatory', outputs: ['[READY] Launch route calculated'] },
-  ];
-
-  // Command sequence (mobile)
-  private readonly mobileCommands = [
-    { command: '$ boot spacelab', outputs: ['[OK] Renderer ready'] },
-    { command: '$ load content', outputs: ['[OK] Static layer online'] },
-    { command: '$ enter orbit', outputs: ['[READY] Launch route calculated'] },
-  ];
-
-  // Current command list based on screen size
-  private commands = this.desktopCommands;
+  private commandDefs = DESKTOP_COMMANDS;
   private stepTimers: any[] = [];
   private completionTimer: any = null;
   private progressInterval: any = null;
 
   ngOnInit(): void {
-    // Check for reduced motion preference
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Check screen size for command selection
     this.checkScreenSize();
 
-    // Start animation after a short delay
     setTimeout(() => {
       this.isActive.set(true);
       this.startSequence();
@@ -79,7 +84,6 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
 
   @HostListener('document:wheel', ['$event'])
   onScroll(event: WheelEvent): void {
-    // Allow user to skip animation by scrolling down
     if (event.deltaY > 50 && this.isActive() && !this.showSystemReady()) {
       this.skipToComplete();
     }
@@ -87,7 +91,6 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    // Allow user to skip with Enter or Space
     if (
       (event.key === 'Enter' || event.key === ' ') &&
       this.isActive() &&
@@ -99,37 +102,31 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
 
   private checkScreenSize(): void {
     const isMobile = window.innerWidth < 768;
-    this.commands = isMobile ? this.mobileCommands : this.desktopCommands;
+    this.commandDefs = isMobile ? MOBILE_COMMANDS : DESKTOP_COMMANDS;
   }
 
   private startSequence(): void {
     if (this.reducedMotion) {
-      // Skip animation for reduced motion
       this.skipToComplete();
       return;
     }
 
-    // Start progress bar animation
     this.startProgressAnimation();
 
-    // Schedule each command step
     let totalDelay = 0;
-    this.commands.forEach((cmd, index) => {
+    this.commandDefs.forEach((_, index) => {
       const delay = totalDelay;
       this.stepTimers.push(
         setTimeout(() => {
           this.currentStep.set(index);
         }, delay),
       );
-      // Approx 400ms per command + outputs
       totalDelay += 400;
     });
 
-    // Schedule completion
     const completionDelay = totalDelay + 400;
     this.completionTimer = setTimeout(() => {
       this.showSystemReady.set(true);
-      // Wait a bit then emit completion
       setTimeout(() => {
         this.completed.emit();
       }, 600);
@@ -137,11 +134,11 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
   }
 
   private startProgressAnimation(): void {
-    const totalSteps = this.commands.length;
-    const stepDuration = 400; // ms per command
-    const totalDuration = totalSteps * stepDuration + 1000; // extra time for SYSTEM READY
+    const totalSteps = this.commandDefs.length;
+    const stepDuration = 400;
+    const totalDuration = totalSteps * stepDuration + 1000;
 
-    let startTime = Date.now();
+    const startTime = Date.now();
 
     this.progressInterval = setInterval(() => {
       const elapsed = Date.now() - startTime;
@@ -156,7 +153,7 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
 
   private skipToComplete(): void {
     this.clearTimers();
-    this.currentStep.set(this.commands.length - 1);
+    this.currentStep.set(this.commandDefs.length - 1);
     this.showSystemReady.set(true);
     this.progress.set(100);
 
@@ -180,19 +177,20 @@ export class LaunchTerminalTransitionComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Helper to get current commands to display
-  getVisibleCommands(): any[] {
+  getVisibleCommands(): CommandDef[] {
     const step = this.currentStep();
-    return this.commands.slice(0, step + 1);
+    return this.commandDefs.slice(0, step + 1);
   }
 
-  // Check if a command is currently typing
   isTyping(index: number): boolean {
     return index === this.currentStep() && !this.showSystemReady();
   }
 
-  // Get output lines for a command
-  getOutputs(cmd: any): string[] {
-    return cmd.outputs || [];
+  getCommandText(def: CommandDef): string {
+    return this.t(def.commandKey);
+  }
+
+  getOutputText(key: string): string {
+    return this.t(key);
   }
 }

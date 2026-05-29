@@ -11,6 +11,7 @@
 
 .blog-page {
   min-height: 100vh;
+  background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
   padding: 120px 24px 80px;
   position: relative;
 }
@@ -61,7 +62,7 @@
 // ============================================
 
 .blog-search-section {
-  width: min(100%, 560px);
+  width: min(100%, 780px);
   margin: 0 auto 28px;
   display: flex;
   justify-content: center;
@@ -69,7 +70,6 @@
   app-search-box {
     display: block;
     width: 100%;
-    max-width: 560px;
   }
 }
 
@@ -303,10 +303,6 @@
   .blog-search-section {
     width: 100%;
     margin-bottom: 20px;
-
-    app-search-box {
-      max-width: 100%;
-    }
   }
 
   .blog-filter-section {

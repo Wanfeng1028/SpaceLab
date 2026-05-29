@@ -3,7 +3,7 @@
   [class.active]="isActive()"
   role="dialog"
   aria-modal="true"
-  aria-label="Launch Terminal Transition"
+  [attr.aria-label]="t('launch.ariaLabel')"
   aria-describedby="launch-terminal-description"
 >
   <!-- 背景模糊/变暗层 -->
@@ -24,38 +24,19 @@
 
     <!-- 命令行内容 -->
     <div class="terminal-body">
-      @for (cmd of getVisibleCommands(); track cmd.command; let i = $index) {
+      @for (cmd of getVisibleCommands(); track cmd.commandKey; let i = $index) {
         <div class="command-block" [class.typing]="isTyping(i)">
           <!-- 命令行 -->
           <div class="command-line">
             <span class="terminal-prompt">$</span>
-            <span class="terminal-command">{{ cmd.command.substring(2) }}</span>
+            <span class="terminal-command">{{ getCommandText(cmd) }}</span>
           </div>
 
           <!-- 输出行 -->
-          @for (output of getOutputs(cmd); track output) {
-            <div
-              class="terminal-output"
-              [class]="
-                output.includes('[OK]')
-                  ? 'terminal-ok'
-                  : output.includes('[READY]')
-                    ? 'terminal-ready'
-                    : ''
-              "
-            >
-              @if (output.includes('[OK]') || output.includes('[READY]')) {
-                <span class="output-status">{{
-                  output.includes('[OK]') ? '[OK]' : '[READY]'
-                }}</span>
-                <span class="output-text">{{
-                  output.includes('[OK]')
-                    ? output.replace('[OK] ', '')
-                    : output.replace('[READY] ', '')
-                }}</span>
-              } @else {
-                {{ output }}
-              }
+          @for (outputKey of cmd.outputKeys; track outputKey) {
+            <div class="terminal-output terminal-ok">
+              <span class="output-status">[OK]</span>
+              <span class="output-text">{{ getOutputText(outputKey) }}</span>
             </div>
           }
         </div>
@@ -70,7 +51,7 @@
     <!-- 完成消息 -->
     @if (showSystemReady()) {
       <div class="system-ready">
-        <span class="system-ready__text">System ready. Entering Earth Observatory...</span>
+        <span class="system-ready__text">{{ t('launch.systemReady') }}</span>
       </div>
     }
 
@@ -81,7 +62,7 @@
 
     <!-- 隐藏的描述 -->
     <div id="launch-terminal-description" class="sr-only">
-      System boot sequence in progress. Please wait for the launch to complete.
+      {{ t('launch.ariaDesc') }}
     </div>
   </div>
 </section>

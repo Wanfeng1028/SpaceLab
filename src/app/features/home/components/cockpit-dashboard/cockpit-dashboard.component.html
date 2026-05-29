@@ -1,83 +1,293 @@
 <div class="cockpit-dashboard">
-  <!-- Three.js 驾驶舱画布 -->
-  <div class="cockpit-canvas-container">
+  <!-- Three.js 背景画布 -->
+  <div class="cockpit-canvas-bg">
     <app-three-canvas [sceneFactory]="cockpitFactory" />
   </div>
 
   <!-- 顶部标题 -->
-  <div class="cockpit-header">
-    <div class="cockpit-tag">07</div>
-    <h2 class="cockpit-title">COCKPIT DASHBOARD</h2>
-    <p class="cockpit-subtitle">SpaceLab system control center</p>
-  </div>
+  <header class="cockpit-header">
+    <span class="cockpit-header__tag">{{ t('sectionIndex') }}</span>
+    <h2 class="cockpit-header__title">{{ t('title') }}</h2>
+    <p class="cockpit-header__subtitle">{{ t('subtitle') }}</p>
+  </header>
 
-  <!-- 左侧：访问者信息面板 -->
-  <div class="cockpit-left">
-    <app-hud-frame class="visitor-hud">
-      <div class="panel-header">
-        <span class="pulse-ring pulse-ring--cyan"></span>
-        <span class="panel-title">VISITOR SIGNAL</span>
-      </div>
-      <div class="hud-metrics">
-        <app-hud-metric label="LOCATION" [value]="visitorInfo().location" />
-        <app-hud-metric label="WEATHER" [value]="visitorInfo().weather" />
-        <app-hud-metric label="LOCAL TIME" [value]="visitorInfo().localTime" />
-        <app-hud-metric label="DEVICE" [value]="visitorInfo().device" />
-        <app-hud-metric label="NETWORK" [value]="visitorInfo().network" />
-      </div>
-    </app-hud-frame>
-  </div>
-
-  <!-- 右侧：系统状态面板 -->
-  <div class="cockpit-right">
-    <app-hud-frame class="system-hud">
-      <div class="panel-header">
-        <span class="pulse-ring pulse-ring--green"></span>
-        <span class="panel-title">SYSTEM STATUS</span>
-      </div>
-      <div class="hud-metrics">
-        <app-hud-metric label="RENDERER" [value]="systemInfo().renderer" />
-        <app-hud-metric label="FRAME RATE" [value]="systemInfo().frameRate" />
-        <app-hud-metric label="MOTION" [value]="systemInfo().motion" />
-        <app-hud-metric label="THEME" [value]="systemInfo().theme" />
-        <app-hud-metric label="LANGUAGE" [value]="systemInfo().language" />
-      </div>
-    </app-hud-frame>
-  </div>
-
-  <!-- 底部：命令行日志 + 按钮 -->
-  <div class="cockpit-bottom">
-    <!-- 命令行日志 -->
-    <div class="command-log">
-      @for (entry of commandLog(); track entry.time) {
-        <div class="log-entry" [class]="'log-entry--' + entry.type">
-          <span class="log-time">[{{ entry.time }}]</span>
-          <span class="log-type">[{{ entry.type }}]</span>
-          <span class="log-message">{{ entry.message }}</span>
+  <!-- 面板网格 -->
+  <div class="cockpit-grid">
+    <!-- ── 左列 ──────────────────────────────────────────── -->
+    <div class="cockpit-grid__left">
+      <!-- Visitor Signal -->
+      <app-hud-frame class="cockpit-panel">
+        <div class="panel-head">
+          <span class="panel-dot panel-dot--cyan"></span>
+          <span class="panel-head__title">{{ t('visitorSignal') }}</span>
         </div>
-      }
+        <div class="panel-body">
+          <div class="metric-row">
+            <span class="metric-label">{{ t('localTime') }}</span>
+            <span class="metric-value">{{ localTime() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('timezone') }}</span>
+            <span class="metric-value">{{ timezone() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('language') }}</span>
+            <span class="metric-value">{{ browserLang() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('device') }}</span>
+            <span class="metric-value">{{ device() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('viewport') }}</span>
+            <span class="metric-value">{{ viewport() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('dpr') }}</span>
+            <span class="metric-value">{{ dpr() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('browser') }}</span>
+            <span class="metric-value">{{ browser() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('os') }}</span>
+            <span class="metric-value">{{ os() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('network') }}</span>
+            <span class="metric-value">{{ network() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('connection') }}</span>
+            <span class="metric-value">{{ connection() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('location') }}</span>
+            <span class="metric-value">{{ locationStatus() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('weather') }}</span>
+            <span class="metric-value">{{ weatherStatus() }}</span>
+          </div>
+        </div>
+      </app-hud-frame>
+
+      <!-- Session Metrics -->
+      <app-hud-frame class="cockpit-panel">
+        <div class="panel-head">
+          <span class="panel-dot panel-dot--green"></span>
+          <span class="panel-head__title">{{ t('sessionMetrics') }}</span>
+        </div>
+        <div class="panel-body">
+          <div class="metric-row">
+            <span class="metric-label">{{ t('currentPage') }}</span>
+            <span class="metric-value">{{ currentPage() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('sessionTime') }}</span>
+            <span class="metric-value">{{ sessionTime() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('scrollDepth') }}</span>
+            <span class="metric-value">{{ scrollDepth() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('clickCount') }}</span>
+            <span class="metric-value">{{ clickCount() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('routeChanges') }}</span>
+            <span class="metric-value">{{ routeChanges() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('lastInteraction') }}</span>
+            <span class="metric-value">{{ lastInteraction() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('entryRoute') }}</span>
+            <span class="metric-value">{{ entryRoute() }}</span>
+          </div>
+        </div>
+      </app-hud-frame>
     </div>
 
-    <!-- 控制按钮 -->
-    <div class="cockpit-controls">
+    <!-- ── 中列 ──────────────────────────────────────────── -->
+    <div class="cockpit-grid__center">
+      <!-- Site Pulse -->
+      <app-hud-frame class="cockpit-panel cockpit-panel--hero">
+        <div class="panel-head">
+          <span class="panel-dot panel-dot--blue"></span>
+          <span class="panel-head__title">{{ t('sitePulse') }}</span>
+        </div>
+        <div class="panel-body pulse-grid">
+          <div class="pulse-stat">
+            <span class="pulse-stat__value">{{ postsCount() }}</span>
+            <span class="pulse-stat__label">{{ t('posts') }}</span>
+          </div>
+          <div class="pulse-stat">
+            <span class="pulse-stat__value">{{ projectsCount() }}</span>
+            <span class="pulse-stat__label">{{ t('projects') }}</span>
+          </div>
+          <div class="pulse-stat">
+            <span class="pulse-stat__value">{{ aiNewsCount() }}</span>
+            <span class="pulse-stat__label">{{ t('aiNews') }}</span>
+          </div>
+          <div class="pulse-stat">
+            <span class="pulse-stat__value">{{ galleryCount() }}</span>
+            <span class="pulse-stat__label">{{ t('gallery') }}</span>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="metric-row">
+            <span class="metric-label">{{ t('lastBuild') }}</span>
+            <span class="metric-value">{{ lastBuildTime() }}</span>
+          </div>
+        </div>
+      </app-hud-frame>
+
+      <!-- 小型雷达装饰 -->
+      <div class="cockpit-radar-wrap">
+        <div class="cockpit-radar">
+          <div class="radar-ring radar-ring--1"></div>
+          <div class="radar-ring radar-ring--2"></div>
+          <div class="radar-ring radar-ring--3"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-center"></div>
+        </div>
+      </div>
+
+      <!-- Content Sync -->
+      <app-hud-frame class="cockpit-panel">
+        <div class="panel-head">
+          <span class="panel-dot panel-dot--purple"></span>
+          <span class="panel-head__title">{{ t('contentSync') }}</span>
+        </div>
+        <div class="panel-body">
+          <div class="metric-row">
+            <span class="metric-label">{{ t('aiSync') }}</span>
+            <span class="metric-value">{{ aiSyncTime() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('source') }}</span>
+            <span class="metric-value">{{ aiSourceName() }}</span>
+          </div>
+        </div>
+      </app-hud-frame>
+    </div>
+
+    <!-- ── 右列 ──────────────────────────────────────────── -->
+    <div class="cockpit-grid__right">
+      <!-- System Status -->
+      <app-hud-frame class="cockpit-panel">
+        <div class="panel-head">
+          <span class="panel-dot panel-dot--green"></span>
+          <span class="panel-head__title">{{ t('systemStatus') }}</span>
+        </div>
+        <div class="panel-body">
+          <div class="metric-row">
+            <span class="metric-label">{{ t('renderer') }}</span>
+            <span class="metric-value">{{ rendererType() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('fps') }}</span>
+            <span class="metric-value">{{ fps() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('motion') }}</span>
+            <span class="metric-value">{{ motionPref() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('theme') }}</span>
+            <span class="metric-value">{{ currentTheme() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('buildMode') }}</span>
+            <span class="metric-value">{{ buildMode() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('contentMode') }}</span>
+            <span class="metric-value">{{ contentMode() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('router') }}</span>
+            <span class="metric-value">{{ routerInfo() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('online') }}</span>
+            <span class="metric-value">{{ onlineStatus() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('assets') }}</span>
+            <span class="metric-value">{{ assetsStatus() }}</span>
+          </div>
+        </div>
+      </app-hud-frame>
+
+      <!-- Analytics Status -->
+      <app-hud-frame class="cockpit-panel">
+        <div class="panel-head">
+          <span class="panel-dot panel-dot--amber"></span>
+          <span class="panel-head__title">{{ t('analyticsStatus') }}</span>
+        </div>
+        <div class="panel-body">
+          <div class="metric-row">
+            <span class="metric-label">{{ t('analyticsMode') }}</span>
+            <span class="metric-value">{{ analyticsMode() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('pv') }}</span>
+            <span class="metric-value">{{ pvValue() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('uv') }}</span>
+            <span class="metric-value">{{ uvValue() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('popularPage') }}</span>
+            <span class="metric-value">{{ popularPage() }}</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">{{ t('dataSource') }}</span>
+            <span class="metric-value">{{ analyticsSource() }}</span>
+          </div>
+        </div>
+      </app-hud-frame>
+    </div>
+  </div>
+
+  <!-- 底部：Command Log + Buttons -->
+  <div class="cockpit-footer">
+    <!-- Command Log -->
+    <div class="cockpit-log">
+      <div class="cockpit-log__head">
+        <span class="panel-dot panel-dot--cyan"></span>
+        <span class="cockpit-log__title">{{ t('commandLog') }}</span>
+      </div>
+      <div class="cockpit-log__body">
+        @for (entry of commandLog(); track entry.time + entry.tag) {
+          <div class="log-line">
+            <span class="log-line__time">[{{ entry.time }}]</span>
+            <span class="log-line__tag">[{{ entry.tag }}]</span>
+            <span class="log-line__msg">{{ entry.message }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="cockpit-actions">
       <button class="cockpit-btn" (click)="onReturnTop()">
-        <span class="btn-icon">↑</span>
-        <span class="btn-text">RETURN TOP</span>
-      </button>
-      <button class="cockpit-btn" (click)="onRestartOrbit()">
-        <span class="btn-icon">↻</span>
-        <span class="btn-text">RESTART ORBIT</span>
+        <span class="cockpit-btn__icon">↑</span>
+        <span class="cockpit-btn__text">{{ t('returnTop') }}</span>
       </button>
       <button class="cockpit-btn cockpit-btn--primary" (click)="onEnterSite()">
-        <span class="btn-icon">→</span>
-        <span class="btn-text">ENTER SITE</span>
+        <span class="cockpit-btn__icon">→</span>
+        <span class="cockpit-btn__text">{{ t('enterSite') }}</span>
       </button>
     </div>
   </div>
 
   <!-- 底部状态栏 -->
-  <app-telemetry-bar
-    [text]="'COCKPIT SYSTEMS · ALL STATIONS NOMINAL · READY FOR COMMAND'"
-    status="online"
-  />
+  <app-telemetry-bar [text]="t('telemetryText')" status="online" />
 </div>

@@ -11,6 +11,7 @@ import {
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { OrbitalLearningLightScene } from '../../../../three/scenes/orbital-learning-light.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-orbital-learning',
@@ -21,6 +22,7 @@ import { OrbitalLearningLightScene } from '../../../../three/scenes/orbital-lear
 })
 export class OrbitalLearningSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly i18n = inject(I18nService);
   private scene: OrbitalLearningLightScene | null = null;
 
   readonly telemetryText = signal('KNOWLEDGE ORBIT // MAPPING');
@@ -33,7 +35,11 @@ export class OrbitalLearningSection implements OnInit, OnDestroy {
   readonly stemLabels = ['SCIENCE', 'TECHNOLOGY', 'ENGINEERING', 'MATHEMATICS'];
 
   ngOnInit(): void {
-    this.telemetryText.set('KNOWLEDGE ORBIT // ACTIVE');
+    this.telemetryText.set(this.i18n.t('orbitalLearning.telemetryActive'));
+  }
+
+  t(key: string): string {
+    return this.i18n.t(key);
   }
 
   ngOnDestroy(): void {

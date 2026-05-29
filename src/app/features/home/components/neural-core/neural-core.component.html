@@ -2,9 +2,9 @@
   <!-- 左侧竖排标题 -->
   <div class="neural-header">
     <h1 class="neural-number">03</h1>
-    <h2 class="neural-title">NEURAL CORE</h2>
-    <p class="neural-subtitle">Artificial intelligence, machine learning and language models.</p>
-    <p class="neural-desc">Exploring models that learn, reason and generate.</p>
+    <h2 class="neural-title">{{ t('neuralCore.title') }}</h2>
+    <p class="neural-subtitle">{{ t('neuralCore.subtitle') }}</p>
+    <p class="neural-desc">{{ t('neuralCore.desc') }}</p>
   </div>
 
   <!-- Three.js 神经网络画布 -->
@@ -16,17 +16,20 @@
   <div class="neural-right">
     <app-hud-frame class="inference-hud">
       <div class="hud-metrics">
-        <app-hud-metric label="MODEL" value="LANGUAGE" />
-        <app-hud-metric label="TOKENS" value="STREAMING" />
-        <app-hud-metric label="ATTENTION" value="ACTIVE" />
-        <app-hud-metric label="INFERENCE" value="STABLE" />
+        <app-hud-metric [label]="t('neuralCore.model')" [value]="t('neuralCore.modelVal')" />
+        <app-hud-metric [label]="t('neuralCore.tokens')" [value]="t('neuralCore.tokensVal')" />
+        <app-hud-metric
+          [label]="t('neuralCore.attention')"
+          [value]="t('neuralCore.attentionVal')"
+        />
+        <app-hud-metric
+          [label]="t('neuralCore.inference')"
+          [value]="t('neuralCore.inferenceVal')"
+        />
       </div>
     </app-hud-frame>
   </div>
 
   <!-- 底部状态栏 -->
-  <app-telemetry-bar
-    [text]="'MACHINE LEARNING · LLM · EMBEDDING SPACE · NEURAL SIGNAL ONLINE'"
-    status="online"
-  />
+  <app-telemetry-bar [text]="t('neuralCore.telemetryOnline')" status="online" />
 </div>

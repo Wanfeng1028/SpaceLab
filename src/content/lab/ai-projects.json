@@ -1,0 +1,112 @@
+[
+  {
+    "id": "openai-gpt-5",
+    "title": "GPT-5",
+    "summary": "OpenAI 推出的新一代旗舰大语言模型，具备更强的多模态推理能力、更长上下文窗口和更精准的指令遵循能力。",
+    "category": "模型",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/chatgpt-5/",
+    "tags": ["模型", "OpenAI", "多模态"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "llama-4",
+    "title": "Llama 4",
+    "summary": "Meta 开源的最新一代大语言模型系列，包含多个规模变体，在多语言理解、代码生成和推理任务上表现优异。",
+    "category": "模型",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/llama-4/",
+    "tags": ["模型", "开源", "Meta"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "gemini-2-0",
+    "title": "Gemini 2.0",
+    "summary": "Google DeepMind 推出的多模态大模型，支持文本、图像、音频和视频的理解与生成，具备原生工具调用能力。",
+    "category": "模型",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/gemini-2-0/",
+    "tags": ["模型", "多模态", "Google"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "stable-diffusion-4",
+    "title": "Stable Diffusion 4",
+    "summary": "Stability AI 推出的最新图像生成模型，在画质、一致性和细节控制方面有显著提升，支持更高分辨率输出。",
+    "category": "框架",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/stable-diffusion-4/",
+    "tags": ["图像", "开源", "Stability AI"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "langchain-v3",
+    "title": "LangChain v3",
+    "summary": "最流行的 LLM 应用开发框架之一，提供链式调用、代理、记忆等抽象，帮助开发者快速构建基于大语言模型的应用。",
+    "category": "框架",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/langchain/",
+    "tags": ["框架", "Agent", "编程"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "dify",
+    "title": "Dify",
+    "summary": "开源的 LLM 应用开发平台，提供可视化编排、RAG 管道、Agent 能力和模型管理，支持快速搭建 AI 应用。",
+    "category": "框架",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/dify/",
+    "tags": ["框架", "开源", "Agent"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "crewai",
+    "title": "CrewAI",
+    "summary": "多 Agent 协作框架，支持定义具有不同角色和目标的 AI 代理，通过任务委派和协作完成复杂工作流。",
+    "category": "框架",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/crewai/",
+    "tags": ["Agent", "框架", "多Agent"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "comfyui",
+    "title": "ComfyUI",
+    "summary": "基于节点的 Stable Diffusion GUI，支持自定义工作流、批量生成和高级控制，是 AI 图像生成领域最流行的开源工具之一。",
+    "category": "AI项目",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/comfyui/",
+    "tags": ["图像", "开源", "工具"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "ollama",
+    "title": "Ollama",
+    "summary": "在本地运行大语言模型的轻量级工具，支持一键安装和运行 Llama、Mistral、Qwen 等主流开源模型。",
+    "category": "AI项目",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/ollama/",
+    "tags": ["开源", "本地部署", "工具"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  },
+  {
+    "id": "openclaw",
+    "title": "OpenClaw",
+    "summary": "开源的 AI Agent 框架，专注于长期协作型智能体的构建，支持记忆管理、工具调用和多步推理。",
+    "category": "框架",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/a/openclaw/",
+    "tags": ["Agent", "框架", "开源"],
+    "publishedAt": "",
+    "fetchedAt": "2026-05-29T00:00:00+08:00"
+  }
+]

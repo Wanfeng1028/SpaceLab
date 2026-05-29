@@ -1,24 +1,43 @@
-// Cockpit Dashboard — final screen, system controls and navigation
-// HUD-style dark cockpit with cyan accents
+// Cockpit Dashboard — data-panel layout with glass HUD cards
+// Space cockpit aesthetic, readable telemetry panels
 
+// ── Variables ────────────────────────────────────────────────────────
+$panel-bg:
+  linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+  rgba(3, 8, 18, 0.58);
+$panel-border: rgba(105, 215, 255, 0.16);
+$panel-shadow:
+  0 18px 60px rgba(0, 0, 0, 0.36),
+  inset 0 1px 0 rgba(255, 255, 255, 0.08);
+$cyan: #69d7ff;
+$green: #00ff88;
+$purple: #a855f7;
+$amber: #ffaa00;
+$blue: #3b82f6;
+$muted: rgba(255, 255, 255, 0.48);
+$mono: var(--font-mono);
+$sans: var(--font-sans);
+
+// ── Container ────────────────────────────────────────────────────────
 .cockpit-dashboard {
   position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 600px;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background: radial-gradient(ellipse at center bottom, #0a1a2a 0%, #000510 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 112px 48px 64px;
 }
 
-// Three.js cockpit canvas
-.cockpit-canvas-container {
+// ── Three.js background ──────────────────────────────────────────────
+.cockpit-canvas-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.35;
+  pointer-events: none;
 
   app-three-canvas {
     width: 100%;
@@ -26,105 +45,125 @@
   }
 }
 
-// Header
+// ── Header ───────────────────────────────────────────────────────────
 .cockpit-header {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  z-index: 1;
   text-align: center;
-  z-index: 2;
-  pointer-events: none;
+  margin-bottom: 40px;
+
+  &__tag {
+    display: block;
+    font-family: $mono;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: rgba($cyan, 0.5);
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-family: $sans;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: rgba($cyan, 0.9);
+    margin: 0 0 8px;
+    text-shadow: 0 0 30px rgba($cyan, 0.35);
+  }
+
+  &__subtitle {
+    font-family: $mono;
+    font-size: 0.85rem;
+    color: $muted;
+    margin: 0;
+    letter-spacing: 0.1em;
+  }
 }
 
-.cockpit-tag {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.3em;
-  color: rgba(0, 240, 255, 0.5);
-  margin-bottom: 0.5rem;
+// ── Grid layout ──────────────────────────────────────────────────────
+.cockpit-grid {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+  flex: 1;
+
+  &__left,
+  &__right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
-.cockpit-title {
-  font-family: var(--font-sans);
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  color: rgba(0, 240, 255, 0.9);
-  margin: 0 0 0.5rem 0;
-  text-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
-  text-transform: uppercase;
+// ── Panel base ───────────────────────────────────────────────────────
+.cockpit-panel {
+  display: block;
 }
 
-.cockpit-subtitle {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-  letter-spacing: 0.1em;
-}
-
-// Left panel - visitor info
-.cockpit-left {
-  position: absolute;
-  left: 3%;
-  top: 20%;
-  width: 20%;
-  z-index: 2;
-}
-
-.visitor-hud {
-  width: 100%;
-}
-
-// Right panel - system info
-.cockpit-right {
-  position: absolute;
-  right: 3%;
-  top: 20%;
-  width: 20%;
-  z-index: 2;
-}
-
-.system-hud {
-  width: 100%;
-}
-
-.panel-header {
+// ── Panel header ─────────────────────────────────────────────────────
+.panel-head {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba($cyan, 0.12);
+
+  &__title {
+    font-family: $mono;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: rgba($cyan, 0.8);
+    text-transform: uppercase;
+  }
 }
 
-.panel-title {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: rgba(0, 240, 255, 0.8);
-}
-
-.pulse-ring {
+.panel-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+  animation: dot-pulse 2s ease-in-out infinite;
 
   &--cyan {
-    background: #00f0ff;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    background: $cyan;
+    box-shadow: 0 0 10px rgba($cyan, 0.5);
   }
 
   &--green {
-    background: #00ff88;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    background: $green;
+    box-shadow: 0 0 10px rgba($green, 0.5);
+  }
+
+  &--blue {
+    background: $blue;
+    box-shadow: 0 0 10px rgba($blue, 0.5);
+  }
+
+  &--purple {
+    background: $purple;
+    box-shadow: 0 0 10px rgba($purple, 0.5);
+  }
+
+  &--amber {
+    background: $amber;
+    box-shadow: 0 0 10px rgba($amber, 0.5);
   }
 }
 
-@keyframes pulse {
+@keyframes dot-pulse {
   0%,
   100% {
     opacity: 1;
@@ -136,227 +175,375 @@
   }
 }
 
-.hud-metrics {
+// ── Metric rows ──────────────────────────────────────────────────────
+.panel-body {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 2px;
 }
 
-// Bottom section - command log + controls
-.cockpit-bottom {
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.metric-label {
+  color: $muted;
+  font-family: $mono;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.metric-value {
+  color: $cyan;
+  font-family: $mono;
+  font-weight: 600;
+  text-align: right;
+  word-break: break-all;
+  min-width: 0;
+}
+
+// ── Site Pulse hero grid ─────────────────────────────────────────────
+.pulse-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 8px 0 16px;
+}
+
+.pulse-stat {
+  text-align: center;
+  padding: 12px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba($cyan, 0.08);
+  border-radius: 12px;
+
+  &__value {
+    display: block;
+    font-family: $mono;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $cyan;
+    text-shadow: 0 0 20px rgba($cyan, 0.3);
+    line-height: 1.2;
+  }
+
+  &__label {
+    display: block;
+    font-family: $mono;
+    font-size: 0.65rem;
+    color: $muted;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+}
+
+// ── Mini radar decoration ────────────────────────────────────────────
+.cockpit-radar-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.cockpit-radar {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.radar-ring {
   position: absolute;
-  bottom: 5%;
+  border-radius: 50%;
+  border: 1px solid rgba($cyan, 0.12);
+
+  &--1 {
+    inset: 0;
+  }
+
+  &--2 {
+    inset: 20px;
+  }
+
+  &--3 {
+    inset: 40px;
+  }
+}
+
+.radar-sweep {
+  position: absolute;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 800px;
-  z-index: 2;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba($cyan, 0.6), transparent);
+  transform-origin: left center;
+  animation: radar-sweep 4s linear infinite;
+}
+
+.radar-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: $cyan;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba($cyan, 0.6);
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ── Footer ───────────────────────────────────────────────────────────
+.cockpit-footer {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1280px);
+  margin: 32px auto 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 20px;
 }
 
-// Command log
-.command-log {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  border-radius: 8px;
-  padding: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  max-height: 100px;
-  overflow-y: auto;
+// ── Command log ──────────────────────────────────────────────────────
+.cockpit-log {
+  background: $panel-bg;
+  border: 1px solid $panel-border;
+  border-radius: 18px;
+  padding: 16px;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: $panel-shadow;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba($cyan, 0.12);
+  }
+
+  &__title {
+    font-family: $mono;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: rgba($cyan, 0.8);
+    text-transform: uppercase;
+  }
+
+  &__body {
+    max-height: 120px;
+    overflow-y: auto;
+    font-family: $mono;
+    font-size: 11px;
+    line-height: 1.7;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba($cyan, 0.2);
+      border-radius: 2px;
+    }
+  }
 }
 
-.log-entry {
+.log-line {
   display: flex;
-  gap: 0.5rem;
-  padding: 0.2rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  gap: 8px;
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 
   &:last-child {
     border-bottom: none;
   }
 
-  &--system .log-type {
-    color: #00f0ff;
+  &__time {
+    color: rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
   }
-  &--visitor .log-type {
-    color: #00ffc4;
+
+  &__tag {
+    color: $cyan;
+    min-width: 60px;
+    flex-shrink: 0;
   }
-  &--webgl .log-type {
-    color: #a855f7;
-  }
-  &--nav .log-type {
-    color: #ffaa00;
+
+  &__msg {
+    color: rgba(255, 255, 255, 0.65);
   }
 }
 
-.log-time {
-  color: rgba(255, 255, 255, 0.35);
-}
-
-.log-type {
-  color: #00f0ff;
-  min-width: 70px;
-}
-
-.log-message {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-// Control buttons
-.cockpit-controls {
+// ── Action buttons ───────────────────────────────────────────────────
+.cockpit-actions {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .cockpit-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.4rem;
-  background: rgba(0, 240, 255, 0.06);
-  border: 1px solid rgba(0, 240, 255, 0.25);
-  border-radius: 8px;
+  gap: 8px;
+  padding: 12px 28px;
+  background: rgba($cyan, 0.06);
+  border: 1px solid rgba($cyan, 0.25);
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   min-height: 44px;
+  color: inherit;
 
   &:hover {
-    background: rgba(0, 240, 255, 0.15);
-    border-color: rgba(0, 240, 255, 0.6);
-    box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
+    background: rgba($cyan, 0.15);
+    border-color: rgba($cyan, 0.6);
+    box-shadow: 0 0 20px rgba($cyan, 0.12);
   }
 
   &:focus-visible {
-    outline: 2px solid rgba(0, 240, 255, 0.6);
+    outline: 2px solid rgba($cyan, 0.6);
     outline-offset: 2px;
   }
 
   &--primary {
-    background: rgba(0, 240, 255, 0.15);
-    border-color: rgba(0, 240, 255, 0.5);
+    background: rgba($cyan, 0.15);
+    border-color: rgba($cyan, 0.5);
 
     &:hover {
-      background: rgba(0, 240, 255, 0.25);
-      border-color: #00f0ff;
+      background: rgba($cyan, 0.25);
+      border-color: $cyan;
     }
+  }
+
+  &__icon {
+    font-size: 1rem;
+    color: $cyan;
+  }
+
+  &__text {
+    font-family: $mono;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.9);
   }
 }
 
-.btn-icon {
-  font-size: 1rem;
-  color: #00f0ff;
-}
-
-.btn-text {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-// Telemetry bar
+// ── Telemetry bar ────────────────────────────────────────────────────
 app-telemetry-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
+  position: relative;
+  z-index: 2;
+  margin-top: 32px;
 }
 
-// ── Mobile ──
-
+// ── Mobile (< 768px) ─────────────────────────────────────────────────
 @media (max-width: 768px) {
   .cockpit-dashboard {
-    min-height: 100svh;
+    padding: 80px 16px 48px;
   }
 
   .cockpit-header {
-    top: 4%;
+    margin-bottom: 28px;
+
+    &__title {
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+    }
   }
 
-  .cockpit-title {
-    font-size: 1.1rem;
+  .cockpit-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .cockpit-left,
-  .cockpit-right {
-    position: absolute;
-    top: auto;
-    width: auto;
+  .pulse-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .cockpit-left {
-    left: 4%;
-    right: 52%;
-    bottom: 36%;
+  .pulse-stat__value {
+    font-size: 1.3rem;
   }
 
-  .cockpit-right {
-    left: 52%;
-    right: 4%;
-    bottom: 36%;
+  .cockpit-radar {
+    width: 120px;
+    height: 120px;
   }
 
-  .cockpit-bottom {
-    bottom: 8%;
-    width: 95%;
+  .cockpit-log__body {
+    max-height: 80px;
+    font-size: 10px;
   }
 
-  .command-log {
-    max-height: 70px;
-    font-size: 0.6rem;
-  }
-
-  .cockpit-controls {
-    gap: 0.5rem;
+  .cockpit-actions {
+    flex-direction: column;
+    gap: 12px;
   }
 
   .cockpit-btn {
-    padding: 0.5rem 0.8rem;
-    flex: 1;
     justify-content: center;
-  }
-
-  .btn-text {
-    font-size: 0.6rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .cockpit-left,
-  .cockpit-right {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
     width: 100%;
-    padding: 0 5%;
-    margin-top: 1rem;
   }
 
-  .cockpit-bottom {
-    bottom: 12%;
+  .metric-row {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .metric-value {
+    text-align: left;
+    width: 100%;
   }
 }
 
-// ── Reduced motion ──
+// ── Small mobile (< 480px) ───────────────────────────────────────────
+@media (max-width: 480px) {
+  .cockpit-dashboard {
+    padding: 72px 12px 40px;
+  }
 
+  .cockpit-header__title {
+    font-size: 1rem;
+  }
+
+  .pulse-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+}
+
+// ── Reduced motion ───────────────────────────────────────────────────
 @media (prefers-reduced-motion: reduce) {
-  .pulse-ring {
+  .panel-dot {
     animation: none;
     opacity: 0.8;
   }
 
+  .radar-sweep {
+    animation: none;
+  }
+
   .cockpit-btn {
     transition: none;
-
-    &:hover {
-      transform: none;
-    }
   }
 }

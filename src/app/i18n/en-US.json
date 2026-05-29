@@ -228,16 +228,17 @@
   "projects": {
     "title": "Projects",
     "desc": "Explore my project works",
+    "heroTitle": "Building in public through code and experiments.",
+    "heroDesc": "A curated collection of repositories exploring frontend engineering, WebGL, AI, data visualization and experimental UI architecture.",
+    "featured": "Featured",
     "preview": "Preview",
     "detail": "Detail",
     "github": "GitHub",
     "liveDemo": "Live Demo",
-    "proj0_desc": "Personal digital space — 3D particle background, glassmorphism design, article publishing system",
-    "proj1_desc": "WebGL-based interactive particle gallery with mouse interaction and real-time rendering",
-    "proj2_desc": "A complete glassmorphism UI component library with theme switching and responsive design",
-    "proj3_desc": "Minimalist task management tool with drag-and-drop sorting and data visualization",
-    "proj4_desc": "Motion experiment collection — easing curve visualization, 3D transforms, particle systems",
-    "proj5_desc": "Data visualization toolkit with chart components and interactive dashboards"
+    "contactTitle": "Want to collaborate?",
+    "contactDesc": "I'm always looking for interesting open-source projects to contribute to or lead. If you have an idea, let's talk.",
+    "contactBtn": "Get in Touch",
+    "githubBtn": "Follow on GitHub"
   },
   "lab": {
     "title": "Lab",

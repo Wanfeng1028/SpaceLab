@@ -13,30 +13,48 @@ import { PROJECTS } from '../../../generated/content.generated';
 export class ProjectsComponent {
   private i18n = inject(I18nService);
 
-  readonly selectedCategory = signal('all');
+  readonly selectedFilter = signal('all');
 
   readonly allProjects = computed(() => PROJECTS);
 
-  readonly categories = computed(() => {
-    const cats = new Set(
-      this.allProjects()
-        .map((p) => p.category)
-        .filter(Boolean),
-    );
-    return ['all', ...Array.from(cats)];
+  readonly filterTags = computed(() => {
+    const tags = new Set<string>();
+    for (const p of this.allProjects()) {
+      for (const tag of p.tags) {
+        tags.add(tag);
+      }
+    }
+    return ['all', 'featured', ...Array.from(tags)];
   });
 
   readonly filteredProjects = computed(() => {
-    const category = this.selectedCategory();
-    if (category === 'all') return this.allProjects();
-    return this.allProjects().filter((p) => p.category === category);
+    const filter = this.selectedFilter();
+    if (filter === 'all') return this.allProjects();
+    if (filter === 'featured') return this.allProjects().filter((p) => p.featured);
+    return this.allProjects().filter(
+      (p) =>
+        p.tags.some((t) => t.toLowerCase() === filter.toLowerCase()) ||
+        p.language.toLowerCase() === filter.toLowerCase(),
+    );
   });
+
+  readonly contactEmail = 'hello@spacelab.dev';
+  readonly githubUrl = 'https://github.com/Wanfeng1028';
 
   t(key: string): string {
     return this.i18n.t(key);
   }
 
-  selectCategory(category: string): void {
-    this.selectedCategory.set(category);
+  selectFilter(tag: string): void {
+    this.selectedFilter.set(tag);
+  }
+
+  formatDate(iso: string): string {
+    try {
+      const d = new Date(iso);
+      return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short' });
+    } catch {
+      return '';
+    }
   }
 }

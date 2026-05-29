@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "key": "ai-tools",
+      "name": "AI工具集 - AI工具",
+      "url": "https://ai-bot.cn/ai-tools/",
+      "targetFile": "src/content/lab/ai-tools.json"
+    },
+    {
+      "key": "ai-projects",
+      "name": "AI工具集 - AI项目和框架",
+      "url": "https://ai-bot.cn/ai-research/",
+      "targetFile": "src/content/lab/ai-projects.json"
+    }
+  ],
+  "lastFetchedAt": "2026-05-29T00:00:00+08:00",
+  "notice": "内容来源于公开网络信息聚合，仅作学习与资源导航使用，保留原文链接与来源标注。"
+}

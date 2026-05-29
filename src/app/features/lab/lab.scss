@@ -1,140 +1,587 @@
+// Lab — AI Resource Lab
+// SpaceLab Glass / HUD Style
+
 :host {
   display: block;
 }
 
+// ============================================
+// Page Base
+// ============================================
 .lab-page {
-  padding-top: 100px;
-  padding-bottom: var(--space-4xl);
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 120px 24px 80px;
+  background:
+    radial-gradient(circle at 15% 8%, rgba(105, 215, 255, 0.14), transparent 28%),
+    radial-gradient(circle at 85% 20%, rgba(143, 124, 255, 0.12), transparent 28%),
+    linear-gradient(135deg, #05070d, #090b12 52%, #030305);
+  color: rgba(255, 255, 255, 0.9);
+  overflow-x: hidden;
 }
 
-.lab-page::before {
-  content: '';
-  position: fixed;
-  top: 15%;
-  right: 5%;
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(105, 215, 255, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+// ============================================
+// Hero
+// ============================================
+.lab-hero {
+  width: min(100%, 1080px);
+  margin: 0 auto 36px;
+  text-align: center;
+  padding: 40px 32px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
 
-.lab-page::after {
-  content: '';
-  position: fixed;
-  bottom: 25%;
-  left: 8%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(86, 240, 194, 0.06) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #69d7ff, #8f7cff, transparent);
+    animation: lab-scan 5s ease-in-out infinite;
+  }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-lg);
-}
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(105, 215, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(105, 215, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.5;
+    pointer-events: none;
+    border-radius: 28px;
+  }
 
-.lab-header {
-  margin-bottom: var(--space-3xl);
-
-  &__title {
-    font-size: clamp(2rem, 5vw, 3rem);
+  h1 {
+    margin: 8px 0 12px;
+    font-size: clamp(36px, 7vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.05em;
     font-weight: 800;
-    color: var(--color-text);
-    letter-spacing: -0.03em;
-    margin-bottom: var(--space-sm);
+    background: linear-gradient(135deg, #fff 0%, #69d7ff 50%, #8f7cff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   &__desc {
-    font-size: 1rem;
-    color: var(--color-text-secondary);
-  }
-}
-
-.lab-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
-
-  @media (max-width: 991px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.lab-card {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-lg);
-  padding: var(--space-xl);
-  border-radius: var(--radius-2xl);
-  transition: transform 0.3s var(--ease-out);
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-
-  &.is-coming {
-    opacity: 0.6;
-  }
-
-  &__icon {
-    font-size: 2rem;
-    flex-shrink: 0;
-  }
-
-  &__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    min-width: 0;
-  }
-
-  &__title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--color-text);
-  }
-
-  &__desc {
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
+    max-width: 540px;
+    margin: 0 auto 16px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 15px;
+    line-height: 1.7;
   }
 
   &__meta {
     display: flex;
+    gap: 12px;
+    justify-content: center;
     align-items: center;
-    gap: var(--space-sm);
-    margin-top: var(--space-xs);
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+}
+
+.lab-kicker {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #69d7ff;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.lab-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.meta-icon {
+  color: #69d7ff;
+}
+
+@keyframes lab-scan {
+  0%,
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// ============================================
+// Tabs — Glass Capsule
+// ============================================
+.lab-tabs {
+  width: min(100%, 1080px);
+  margin: 0 auto 24px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.lab-tab {
+  min-height: 44px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms;
+  backdrop-filter: blur(12px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
-  &__tech {
-    font-size: 0.7rem;
-    color: var(--color-text-tertiary);
-    background: rgba(0, 0, 0, 0.04);
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
+  &.is-active {
+    background: linear-gradient(135deg, rgba(105, 215, 255, 0.28), rgba(143, 124, 255, 0.34));
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: 0 4px 24px rgba(105, 215, 255, 0.18);
+  }
+}
+
+// ============================================
+// Toolbar
+// ============================================
+.lab-toolbar {
+  width: min(100%, 1080px);
+  margin: 0 auto 28px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.lab-search {
+  flex: 1 1 280px;
+  position: relative;
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 18px;
+    pointer-events: none;
   }
 
-  &__status {
-    font-size: 0.7rem;
+  input {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 18px 0 46px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    backdrop-filter: blur(14px) saturate(135%);
+    transition: border-color 200ms, background 200ms;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    &:focus {
+      border-color: rgba(105, 215, 255, 0.35);
+      background: rgba(255, 255, 255, 0.09);
+    }
+  }
+}
+
+.lab-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-width: 60%;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.lab-filter {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 200ms;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  &.is-active {
+    background: rgba(105, 215, 255, 0.18);
+    color: #69d7ff;
+    border-color: rgba(105, 215, 255, 0.35);
+  }
+}
+
+// ============================================
+// Resource Grid
+// ============================================
+.lab-resource-list {
+  width: min(100%, 1080px);
+  margin: 0 auto;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+// ============================================
+// Card — Glass HUD
+// ============================================
+.lab-card {
+  position: relative;
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)),
+    rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
+  cursor: pointer;
+  transition:
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 240ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(105, 215, 255, 0.3);
+    background:
+      linear-gradient(135deg, rgba(105, 215, 255, 0.12), rgba(143, 124, 255, 0.08)),
+      rgba(255, 255, 255, 0.07);
+
+    .lab-card__link {
+      color: #69d7ff;
+
+      .arrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  &__header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+
+  &__category {
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(105, 215, 255, 0.14);
+    color: #69d7ff;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
+
+  &__source {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &__title {
+    margin: 0 0 10px;
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.35;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  &__summary {
+    margin: 0 0 14px;
+    color: rgba(255, 255, 255, 0.58);
+    line-height: 1.7;
+    font-size: 13px;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+
+  &__tag {
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 11px;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
     font-weight: 500;
+    transition: color 200ms;
 
-    &--live {
-      color: #34a853;
+    .arrow {
+      transition: transform 200ms;
+    }
+  }
+}
+
+// ============================================
+// States
+// ============================================
+.lab-loading {
+  display: flex;
+  justify-content: center;
+  padding: 100px 20px;
+}
+
+.lab-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+  text-align: center;
+
+  .empty-icon {
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.25);
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+  }
+}
+
+// ============================================
+// Footer
+// ============================================
+.lab-footer {
+  width: min(100%, 1080px);
+  margin: 48px auto 0;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+
+  .footer-source {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+
+    a {
+      color: #69d7ff;
+      text-decoration: none;
+      transition: opacity 200ms;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer-disclaimer {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    line-height: 1.6;
+  }
+}
+
+// ============================================
+// Glitch Loader
+// ============================================
+.glitch {
+  position: relative;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  letter-spacing: 4px;
+  z-index: 1;
+  animation: lab-shift 1s ease-in-out infinite alternate;
+
+  &::before,
+  &::after {
+    display: block;
+    content: attr(data-glitch);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+  }
+
+  &::before {
+    animation: lab-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    color: #8f7cff;
+    z-index: -1;
+  }
+
+  &::after {
+    animation: lab-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+    color: #69d7ff;
+    z-index: -2;
+  }
+}
+
+@keyframes lab-glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-3px, 3px);
+  }
+  40% {
+    transform: translate(-3px, -3px);
+  }
+  60% {
+    transform: translate(3px, 3px);
+  }
+  80% {
+    transform: translate(3px, -3px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes lab-shift {
+  0% {
+    transform: skewX(0.6deg);
+  }
+  100% {
+    transform: skewX(-0.6deg);
+  }
+}
+
+// ============================================
+// Mobile
+// ============================================
+@media (max-width: 767px) {
+  .lab-page {
+    padding: 88px 16px 48px;
+  }
+
+  .lab-hero {
+    padding: 28px 20px;
+    border-radius: 20px;
+
+    h1 {
+      font-size: clamp(28px, 10vw, 48px);
     }
 
-    &--coming {
-      color: var(--color-text-tertiary);
+    &__desc {
+      font-size: 14px;
     }
+  }
+
+  .lab-tabs {
+    gap: 6px;
+  }
+
+  .lab-tab {
+    flex: 1;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  .lab-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lab-search {
+    flex: 1 1 100%;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .lab-filters {
+    max-width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-card {
+    padding: 18px;
+    border-radius: 20px;
   }
 }

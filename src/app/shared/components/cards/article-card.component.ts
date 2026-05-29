@@ -45,7 +45,8 @@ import { DatePipe } from '@angular/common';
       }
 
       .card-article {
-        display: block;
+        display: flex;
+        flex-direction: column;
         padding: 28px 32px;
         border-radius: var(--radius-xl);
         background:
@@ -158,6 +159,7 @@ import { DatePipe } from '@angular/common';
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        flex: 1;
         margin-bottom: 20px;
         position: relative;
         z-index: 1;
@@ -168,6 +170,7 @@ import { DatePipe } from '@angular/common';
         align-items: center;
         justify-content: space-between;
         gap: 16px;
+        margin-top: auto;
         position: relative;
         z-index: 1;
       }

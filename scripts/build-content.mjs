@@ -55,9 +55,28 @@ const postsWithNav = allPosts.map((post, i) => ({
 }));
 
 // ── Projects ───────────────────────────────────────────
-const projects = JSON.parse(
+const projectsRaw = JSON.parse(
   fs.readFileSync(path.join(CONTENT_DIR, 'projects', 'projects.json'), 'utf-8'),
 );
+
+// Normalize projects — ensure all required fields exist
+const projects = projectsRaw.map((p) => ({
+  id: p.id || p.name || '',
+  name: p.name || '',
+  description: p.description || '',
+  tags: p.tags || [],
+  language: p.language || '',
+  stars: p.stars ?? 0,
+  forks: p.forks ?? 0,
+  status: p.status || 'Building',
+  cover: p.cover || '',
+  github: p.github || '',
+  demo: p.demo || '',
+  featured: p.featured || false,
+  archived: p.archived || false,
+  fork: p.fork || false,
+  updatedAt: p.updatedAt || new Date().toISOString(),
+}));
 
 // ── Profile ────────────────────────────────────────────
 const profile = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'profile.json'), 'utf-8'));
@@ -75,6 +94,19 @@ const aiFrontlineNews = JSON.parse(
 
 const aiFrontlineSource = JSON.parse(
   fs.readFileSync(path.join(CONTENT_DIR, 'ai-frontline', 'source.json'), 'utf-8'),
+);
+
+// ── Lab AI Resources ─────────────────────────────────
+const labAiTools = JSON.parse(
+  fs.readFileSync(path.join(CONTENT_DIR, 'lab', 'ai-tools.json'), 'utf-8'),
+);
+
+const labAiProjects = JSON.parse(
+  fs.readFileSync(path.join(CONTENT_DIR, 'lab', 'ai-projects.json'), 'utf-8'),
+);
+
+const labSources = JSON.parse(
+  fs.readFileSync(path.join(CONTENT_DIR, 'lab', 'source.json'), 'utf-8'),
 );
 
 // ── Generate TypeScript ────────────────────────────────
@@ -99,18 +131,21 @@ export interface GeneratedPost {
 }
 
 export interface GeneratedProject {
+  id: string;
   name: string;
-  slug: string;
   description: string;
   tags: string[];
+  language: string;
+  stars: number;
+  forks: number;
   status: string;
   cover: string;
   github: string;
   demo: string;
   featured: boolean;
-  icon: string;
-  accentColor: string;
-  category: string;
+  archived: boolean;
+  fork: boolean;
+  updatedAt: string;
 }
 
 export interface GeneratedProfile {
@@ -159,6 +194,31 @@ export interface AiFrontlineSource {
   notice: string;
 }
 
+export interface LabResourceItem {
+  id: string;
+  title: string;
+  summary: string;
+  category: string;
+  source: string;
+  url: string;
+  tags: string[];
+  publishedAt: string;
+  fetchedAt: string;
+}
+
+export interface LabSource {
+  key: string;
+  name: string;
+  url: string;
+  targetFile: string;
+}
+
+export interface LabSources {
+  sources: LabSource[];
+  lastFetchedAt: string;
+  notice: string;
+}
+
 export const POSTS: GeneratedPost[] = ${JSON.stringify(postsWithNav, null, 2)};
 
 export const ALL_POSTS: GeneratedPost[] = ${JSON.stringify(
@@ -178,11 +238,17 @@ export const GALLERY: GeneratedGalleryItem[] = ${JSON.stringify(gallery, null, 2
 export const AI_FRONTLINE_NEWS: AiNewsItem[] = ${JSON.stringify(aiFrontlineNews, null, 2)};
 
 export const AI_FRONTLINE_SOURCE: AiFrontlineSource = ${JSON.stringify(aiFrontlineSource, null, 2)};
+
+export const LAB_AI_TOOLS: LabResourceItem[] = ${JSON.stringify(labAiTools, null, 2)};
+
+export const LAB_AI_PROJECTS: LabResourceItem[] = ${JSON.stringify(labAiProjects, null, 2)};
+
+export const LAB_SOURCES: LabSources = ${JSON.stringify(labSources, null, 2)};
 `;
 
 fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
 fs.writeFileSync(OUTPUT_FILE, ts, 'utf-8');
 
 console.log(
-  `✅ content.generated.ts — ${allPosts.length} posts, ${projects.length} projects, ${gallery.length} gallery items, ${aiFrontlineNews.length} AI news`,
+  `✅ content.generated.ts — ${allPosts.length} posts, ${projects.length} projects, ${gallery.length} gallery items, ${aiFrontlineNews.length} AI news, ${labAiTools.length} lab tools, ${labAiProjects.length} lab projects`,
 );

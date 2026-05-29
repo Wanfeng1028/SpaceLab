@@ -18,10 +18,22 @@
   <div class="observatory-left">
     <app-hud-frame class="sensor-hud">
       <div class="hud-metrics">
-        <app-hud-metric [label]="t('earthObservatory.sensor')" [value]="t('earthObservatory.sensorVal')" />
-        <app-hud-metric [label]="t('earthObservatory.resolution')" [value]="t('earthObservatory.resolutionVal')" />
-        <app-hud-metric [label]="t('earthObservatory.orbit')" [value]="t('earthObservatory.orbitVal')" />
-        <app-hud-metric [label]="t('earthObservatory.scanMode')" [value]="t('earthObservatory.scanModeVal')" />
+        <app-hud-metric
+          [label]="t('earthObservatory.sensor')"
+          [value]="t('earthObservatory.sensorVal')"
+        />
+        <app-hud-metric
+          [label]="t('earthObservatory.resolution')"
+          [value]="t('earthObservatory.resolutionVal')"
+        />
+        <app-hud-metric
+          [label]="t('earthObservatory.orbit')"
+          [value]="t('earthObservatory.orbitVal')"
+        />
+        <app-hud-metric
+          [label]="t('earthObservatory.scanMode')"
+          [value]="t('earthObservatory.scanModeVal')"
+        />
       </div>
     </app-hud-frame>
   </div>
@@ -46,8 +58,5 @@
   </div>
 
   <!-- 底部遥感数据状态栏 -->
-  <app-telemetry-bar
-    [text]="t('earthObservatory.telemetryOnline')"
-    status="online"
-  />
+  <app-telemetry-bar [text]="t('earthObservatory.telemetryOnline')" status="online" />
 </div>

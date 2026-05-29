@@ -13,6 +13,7 @@ import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.c
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { NeuralCoreScene } from '../../../../three/scenes/neural-core.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-neural-core',
@@ -23,6 +24,7 @@ import { NeuralCoreScene } from '../../../../three/scenes/neural-core.scene';
 })
 export class NeuralCoreSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly i18n = inject(I18nService);
   private scene: NeuralCoreScene | null = null;
   private telemetryTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -34,7 +36,11 @@ export class NeuralCoreSection implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.telemetryText.set('NEURAL CORE // ACTIVE');
+    this.telemetryText.set(this.i18n.t('neuralCore.telemetryActive'));
+  }
+
+  t(key: string): string {
+    return this.i18n.t(key);
   }
 
   ngOnDestroy(): void {
@@ -59,12 +65,12 @@ export class NeuralCoreSection implements OnInit, OnDestroy {
   onClick(event: MouseEvent): void {
     if (!this.scene) return;
     this.scene.triggerTokenBurst();
-    this.telemetryText.set('NEURAL CORE // TOKEN BURST');
+    this.telemetryText.set(this.i18n.t('neuralCore.telemetryBurst'));
     if (this.telemetryTimer) {
       clearTimeout(this.telemetryTimer);
     }
     this.telemetryTimer = setTimeout(() => {
-      this.telemetryText.set('NEURAL CORE // ACTIVE');
+      this.telemetryText.set(this.i18n.t('neuralCore.telemetryActive'));
       this.telemetryTimer = null;
     }, 2000);
   }

@@ -12,6 +12,7 @@ import {
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { VisualSystemsScene } from '../../../../three/scenes/visual-systems.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-visual-systems',
@@ -28,6 +29,7 @@ import { VisualSystemsScene } from '../../../../three/scenes/visual-systems.scen
 })
 export class VisualSystemsSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly i18n = inject(I18nService);
   private scene: VisualSystemsScene | null = null;
   private isDragging = false;
   private dragStartX = 0;
@@ -40,7 +42,11 @@ export class VisualSystemsSection implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.telemetryText.set('VISUAL SYSTEMS // ACTIVE');
+    this.telemetryText.set(this.i18n.t('visualSystems.telemetryActive'));
+  }
+
+  t(key: string): string {
+    return this.i18n.t(key);
   }
 
   ngOnDestroy(): void {
