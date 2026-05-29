@@ -15,7 +15,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { I18nService } from '../../core/services/i18n.service';
 import {
   buildSearchText,
@@ -109,7 +108,6 @@ type TabKey = 'tools' | 'projects';
     MatTooltipModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatSidenavModule,
   ],
 })
 export class LabComponent implements OnInit {

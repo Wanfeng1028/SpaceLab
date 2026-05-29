@@ -615,9 +615,9 @@
 }
 
 // ============================================
-// Inbox Preview — Right Panel
+// Inbox Preview — Right Panel (mat-card)
 // ============================================
-.inbox-preview {
+.lab-preview {
   border-radius: 26px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
   border: 1px solid rgba(255, 255, 255, 0.62);
@@ -625,7 +625,8 @@
   backdrop-filter: blur(18px) saturate(140%);
   padding: 24px;
   position: sticky;
-  top: 96px;
+  top: 112px;
+  align-self: start;
   min-height: 300px;
 
   &__empty {
@@ -895,11 +896,11 @@
 // Tablet — Hide Preview, 2-Column
 // ============================================
 @media (max-width: 1100px) {
-  .inbox-content {
-    grid-template-columns: 1fr;
+  .lab-grid {
+    grid-template-columns: 200px minmax(0, 1fr);
   }
 
-  .inbox-preview {
+  .lab-preview {
     display: none;
   }
 }
@@ -983,15 +984,20 @@
     }
   }
 
-  .lab-inbox-shell {
+  .lab-grid {
+    grid-template-columns: 1fr;
     margin-top: 16px;
   }
 
   .lab-sidebar {
-    display: none;
+    min-height: auto;
   }
 
-  .inbox-preview {
+  .lab-list {
+    width: 100%;
+  }
+
+  .lab-preview {
     display: none;
   }
 
