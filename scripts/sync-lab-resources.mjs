@@ -15,7 +15,7 @@ const PROJECTS_FILE = path.join(LAB_DIR, 'ai-projects.json');
 const SOURCE_FILE = path.join(LAB_DIR, 'source.json');
 
 const USER_AGENT = 'SpaceLabBot/1.0 (+https://github.com/Wanfeng1028/SpaceLab)';
-const MAX_ITEMS = 100;
+const MAX_ITEMS = 500;
 const REQUEST_DELAY_MS = 2000;
 
 // Only keep content fetched on or after this date
@@ -161,14 +161,13 @@ function hasChanged(oldData, newData) {
 }
 
 /**
- * Deduplicate by title + url
+ * Deduplicate by id (stable hash of title+url)
  */
 function deduplicate(items) {
   const seen = new Map();
   for (const item of items) {
-    const key = `${item.title}|${item.url}`;
-    if (!seen.has(key)) {
-      seen.set(key, item);
+    if (!seen.has(item.id)) {
+      seen.set(item.id, item);
     }
   }
   return Array.from(seen.values());
@@ -188,6 +187,7 @@ function parseResourcesFromHtml(html, sourceKey) {
 
   // Pattern: links with href containing /a/ (article pages)
   const linkBlocks = [];
+  const todayStr = new Date().toISOString().slice(0, 10);
   // Match blocks that contain a link and surrounding text
   const blockPattern = /<a[^>]*href="([^"]*(?:\/a\/|ai-bot\.cn\/a\/)[^"]*)"[^>]*>[\s\S]*?<\/a>/gi;
   let match;
@@ -237,6 +237,7 @@ function parseResourcesFromHtml(html, sourceKey) {
       source: '',
       url: fullUrl,
       tags,
+      date: todayStr,
       publishedAt: '',
       fetchedAt: now,
     });
@@ -266,6 +267,7 @@ function parseResourcesFromHtml(html, sourceKey) {
         source: '',
         url,
         tags,
+        date: todayStr,
         publishedAt: '',
         fetchedAt: now,
       });
@@ -334,8 +336,8 @@ async function main() {
       continue;
     }
 
-    // Merge: new items + existing items, deduplicate, filter by date, limit
-    const merged = deduplicate([...newItems, ...existing])
+    // Merge: existing items first (preserve dates), then new items, deduplicate by id, filter, limit
+    const merged = deduplicate([...existing, ...newItems])
       .filter(isAfterContentStart)
       .slice(0, MAX_ITEMS);
 

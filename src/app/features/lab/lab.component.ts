@@ -49,6 +49,41 @@ function isAfterContentStartDate(itemDate: string | undefined): boolean {
   return itemDate.slice(0, 10) >= CONTENT_START_DATE;
 }
 
+type DateRangeFilter = 'all' | 'today' | 'yesterday' | '7d' | '30d';
+
+function getItemDate(item: LabResourceItem): string {
+  return item.date || item.publishedAt?.slice(0, 10) || item.fetchedAt?.slice(0, 10) || '';
+}
+
+function matchesDateRange(item: LabResourceItem, range: DateRangeFilter): boolean {
+  const date = getItemDate(item);
+  if (!date) return range === 'all';
+  if (!isAfterContentStartDate(date)) return false;
+  if (range === 'all') return true;
+
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+  if (range === 'today') return date === todayStr;
+  if (range === 'yesterday') return date === yesterdayStr;
+
+  const itemTime = new Date(`${date}T00:00:00`).getTime();
+  if (range === '7d') {
+    const start = new Date(today);
+    start.setDate(today.getDate() - 6);
+    return itemTime >= new Date(start.toISOString().slice(0, 10)).getTime();
+  }
+  if (range === '30d') {
+    const start = new Date(today);
+    start.setDate(today.getDate() - 29);
+    return itemTime >= new Date(start.toISOString().slice(0, 10)).getTime();
+  }
+  return true;
+}
+
 type TabKey = 'tools' | 'projects';
 
 @Component({
@@ -69,6 +104,7 @@ export class LabComponent implements OnInit {
   activeTab = signal<TabKey>('tools');
   searchQuery = signal('');
   selectedCategory = signal('all');
+  selectedDateRange = signal<DateRangeFilter>('all');
   loading = signal(true);
 
   toolsData = signal<LabResourceItem[]>([]);
