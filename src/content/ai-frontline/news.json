@@ -7,7 +7,11 @@
     "source": "AI工具集 / OpenAI",
     "url": "https://openai.com/blog/gpt-5",
     "category": "model",
-    "tags": ["GPT-5", "OpenAI", "多模态"],
+    "tags": [
+      "GPT-5",
+      "OpenAI",
+      "多模态"
+    ],
     "fetchedAt": "2026-05-29T09:00:00+08:00"
   },
   {
@@ -18,8 +22,38 @@
     "source": "AI工具集 / TechCrunch",
     "url": "https://techcrunch.com/2026/05/29/anthropic-funding",
     "category": "funding",
-    "tags": ["Anthropic", "融资", "AI安全"],
+    "tags": [
+      "Anthropic",
+      "融资",
+      "AI安全"
+    ],
     "fetchedAt": "2026-05-29T09:00:00+08:00"
+  },
+  {
+    "id": "2026-05-29-小米具身智能团队开源自动驾驶大模型-xiaomi-onevl",
+    "date": "2026-05-29",
+    "title": "小米具身智能团队开源自动驾驶大模型 Xiaomi OneVL",
+    "summary": "小米具身智能团队开源自动驾驶大模型 Xiaomi OneVL",
+    "source": "AI工具集",
+    "url": "https://www.ithome.com/0/949/956.htm",
+    "category": "opensource",
+    "tags": [
+      "开源"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.963Z"
+  },
+  {
+    "id": "2026-05-29-runway推出ai视频创作智能体runway-agent",
+    "date": "2026-05-29",
+    "title": "Runway推出AI视频创作智能体Runway Agent",
+    "summary": "Runway推出AI视频创作智能体Runway Agent",
+    "source": "AI工具集",
+    "url": "https://runwayml.com/news/introducing-runway-agent",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.963Z"
   },
   {
     "id": "2026-05-29-豆包输入法推出macos版本",
@@ -30,7 +64,7 @@
     "url": "https://mp.weixin.qq.com/s/mWj7LKVLNf7iHptOa4Sxpg?scene=1",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.148Z"
+    "fetchedAt": "2026-05-29T08:52:44.963Z"
   },
   {
     "id": "2026-05-29-谷歌推出-gemini-电脑-googlebook-把-ai-塞进光标",
@@ -40,8 +74,11 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/2j5lju0TlYEgQbycpjTu9w",
     "category": "model",
-    "tags": ["Gemini", "Google"],
-    "fetchedAt": "2026-05-29T05:39:28.148Z"
+    "tags": [
+      "Gemini",
+      "Google"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.963Z"
   },
   {
     "id": "2026-05-29-minimax-推出-minimax-agent-升级版-mavis",
@@ -51,8 +88,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/TIL7o92f71DsPPLWT4_37A",
     "category": "agent",
-    "tags": ["Agent"],
-    "fetchedAt": "2026-05-29T05:39:28.148Z"
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.963Z"
   },
   {
     "id": "2026-05-29-林俊旸创业-新公司估值约20亿美金",
@@ -63,18 +102,7 @@
     "url": "https://mp.weixin.qq.com/s/eWxAChZE5Xkgi8xQdUdGJQ",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.148Z"
-  },
-  {
-    "id": "2026-05-29-openai推出ai网络防御工具daybreak-斥资40亿美元成立新公司",
-    "date": "2026-05-29",
-    "title": "OpenAI推出AI网络防御工具Daybreak，斥资40亿美元成立新公司",
-    "summary": "OpenAI推出AI网络防御工具Daybreak，斥资40亿美元成立新公司",
-    "source": "AI工具集",
-    "url": "https://mp.weixin.qq.com/s/0NL2sdsv9Ge3MzotCOTUgQ",
-    "category": "tool",
-    "tags": ["OpenAI"],
-    "fetchedAt": "2026-05-29T05:39:28.148Z"
+    "fetchedAt": "2026-05-29T08:52:44.963Z"
   },
   {
     "id": "2026-05-29-anthropic-融资-650-亿美元-融资后估值达9650亿美元",
@@ -84,8 +112,11 @@
     "source": "AI工具集",
     "url": "https://www.ithome.com/0/956/837.htm",
     "category": "funding",
-    "tags": ["Anthropic", "融资"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "Anthropic",
+      "融资"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-anthropic-推出旗舰级大语言模型-claude-opus-4-8",
@@ -95,8 +126,11 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/uPiuVhGw5vqo0qJSwaUpnw",
     "category": "model",
-    "tags": ["Claude", "Anthropic"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "Claude",
+      "Anthropic"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-通义千问推出文生图模型评测基准-qwen-image-bench",
@@ -104,10 +138,25 @@
     "title": "通义千问推出文生图模型评测基准 Qwen-Image-Bench",
     "summary": "通义千问推出文生图模型评测基准 Qwen-Image-Bench",
     "source": "AI工具集",
-    "url": "https://mp.weixin.qq.com/s/J3fHiF1w4NhvvnIgbDOJ3Q?scene=1&#038;click_id=7",
+    "url": "https://mp.weixin.qq.com/s/J3fHiF1w4NhvvnIgbDOJ3Q?scene=1&amp;click_id=7",
     "category": "model",
-    "tags": ["图像生成"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "图像生成"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
+  },
+  {
+    "id": "2026-05-29-astronclaw-上线-agent-team-模式",
+    "date": "2026-05-29",
+    "title": "AstronClaw 上线 Agent Team 模式",
+    "summary": "AstronClaw 上线 Agent Team 模式",
+    "source": "AI工具集",
+    "url": "https://mp.weixin.qq.com/s/r0xPlLmwzuX6hyOCPvFOfg",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-清华联合面壁智能开源-agent-操作系统-pilotdeck",
@@ -115,10 +164,13 @@
     "title": "清华联合面壁智能开源 Agent 操作系统 PilotDeck",
     "summary": "清华联合面壁智能开源 Agent 操作系统 PilotDeck",
     "source": "AI工具集",
-    "url": "https://mp.weixin.qq.com/s/NlrEYXVbkssFu4ZaWTdJxg?scene=1&#038;click_id=9",
+    "url": "https://mp.weixin.qq.com/s/NlrEYXVbkssFu4ZaWTdJxg?scene=1&amp;click_id=9",
     "category": "opensource",
-    "tags": ["开源", "Agent"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-腾讯推出ai游戏创作平台-代号craft",
@@ -129,7 +181,7 @@
     "url": "https://mp.weixin.qq.com/s/csZYzDmJVO__9UsuU_v3nA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-runway-推出-runway-mcp-服务器",
@@ -140,7 +192,7 @@
     "url": "https://runwayml.com/news/mcp",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-openrouter-完成1-13亿美元-series-b-融资",
@@ -150,8 +202,10 @@
     "source": "AI工具集",
     "url": "https://openrouter.ai/announcements/series-b",
     "category": "funding",
-    "tags": ["融资"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "融资"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-自变量机器人开源具身智能模型-wall-oss-0-5",
@@ -161,8 +215,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/N8WlG3OydsmcV_o9lIvaxw?scene=1",
     "category": "opensource",
-    "tags": ["开源"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-微软推出最强-ai-生图模型-mai-image-2-5",
@@ -172,8 +228,10 @@
     "source": "AI工具集",
     "url": "https://www.ithome.com/0/955/873.htm",
     "category": "model",
-    "tags": ["图像生成"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "图像生成"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-支付宝推出全球首个token-pay服务",
@@ -184,7 +242,7 @@
     "url": "https://mp.weixin.qq.com/s/cMVuGZyRzByYhODmMlRc5Q",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-小米宣布-mimo-v2-5-系列-api-永久降价",
@@ -195,7 +253,7 @@
     "url": "https://mp.weixin.qq.com/s/PuJcTCUO0MjB2V1D-V0_oA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-快手开源自研多模态大模型-keye-vl-2-0-30b-a3b",
@@ -205,8 +263,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/gomgqFAZrdbJFQlOfSJxpQ",
     "category": "opensource",
-    "tags": ["开源"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-天工ai推出高性能-agent-模型-skyclaw-v1-0",
@@ -216,8 +276,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/DhJJMZoHaGAL80YTjH1KjQ",
     "category": "agent",
-    "tags": ["Agent"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-小米推出全新世界模型xiaomi-auto-world-model",
@@ -228,7 +290,7 @@
     "url": "https://mp.weixin.qq.com/s/qI8Bx_VeSKKiSaCH5KijkA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里通义开源多智能体开发框架-agentscope-2-0",
@@ -238,8 +300,11 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/AcBTESODnZqpADRELcK5MQ",
     "category": "opensource",
-    "tags": ["开源", "Agent"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-面壁智能联合清华等开源端侧文本基座大模型-minicpm5-1b",
@@ -249,8 +314,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/vLBxru7RYPp-V8cPpTMMCA?scene=1",
     "category": "opensource",
-    "tags": ["开源"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-面壁智能联合清华开源端侧大模型-bitcpm-cann",
@@ -260,8 +327,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/MV9yx298b2Fx51hZC2-lyg",
     "category": "opensource",
-    "tags": ["开源"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-商汤办公小浣熊推出桌面智能体",
@@ -272,7 +341,7 @@
     "url": "https://mp.weixin.qq.com/s/HuNyO7jUnJv3bQjNQWFQcQ?scene=1&amp;click_id=35",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-腾讯全面开放-ima-copilot",
@@ -283,7 +352,7 @@
     "url": "https://mp.weixin.qq.com/s/R22ySmNraCJ4W4o2nbJu1w?scene=1&amp;click_id=39",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-deepseek-v4-pro-api永久降价为原定价的-1-4",
@@ -294,7 +363,7 @@
     "url": "https://www.ithome.com/0/954/188.htm",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-智谱清言上线-agentmore-skills-广场",
@@ -304,8 +373,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/xEsxKSsLwnxFpM771e1fkg?scene=1",
     "category": "agent",
-    "tags": ["Agent"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-智谱推出glm-5-1高速版api-glm-5-1-highspeed",
@@ -316,7 +387,7 @@
     "url": "https://mp.weixin.qq.com/s/TAVXB_Xuys7_R-SG4oFhOA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-美团开源数字人视频模型-longcat-video-avatar-1-5",
@@ -326,8 +397,11 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/NcnPZmO9I7dGXRMLy9c7Zw",
     "category": "opensource",
-    "tags": ["开源", "视频生成"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源",
+      "视频生成"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里生产级-ai-数字员工平台-qoderwake-开启全球公测",
@@ -338,7 +412,7 @@
     "url": "https://mp.weixin.qq.com/s/-VbGKxnASPhzm_lpTulEow",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-智谱推出下一代大模型推理网络架构-zcube",
@@ -349,7 +423,7 @@
     "url": "https://mp.weixin.qq.com/s/JYyLD4U2235obw9WH45v9g",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里-d20-全球设计院长峰会正式开票-堆友携手参会",
@@ -360,7 +434,7 @@
     "url": "https://mp.weixin.qq.com/s/LNkJK2LTC7tECV83LgCAlw",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-火山引擎agent-plan-coding-plan上新-新增deepseek-",
@@ -370,8 +444,11 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/vFRcBsnVoOiglszUx2KwsA",
     "category": "agent",
-    "tags": ["Agent", "代码"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "Agent",
+      "代码"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-腾讯混元开源-hy-mt2-翻译模型和hy-翻译小程序",
@@ -381,8 +458,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/a_GPa-brAIB5aqXyd8W4-Q",
     "category": "opensource",
-    "tags": ["开源"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "开源"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-腾达marvis正式上线-无需邀请码",
@@ -393,7 +472,7 @@
     "url": "https://www.ithome.com/0/953/096.htm",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里千问推出新一代旗舰模型-qwen3-7-max",
@@ -404,7 +483,7 @@
     "url": "https://mp.weixin.qq.com/s/aAWHw7itcNx9pIEinZIOPA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里通义推出实时同声传译模型-qwen3-5-livetranslate",
@@ -415,7 +494,7 @@
     "url": "https://mp.weixin.qq.com/s/N6mr3RPIzbLuU5lTgy4P-w",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里云推出全新maas模型服务平台-千问云",
@@ -426,7 +505,7 @@
     "url": "https://mp.weixin.qq.com/s/ERTLfMCEPQA7j00LYmMhsw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-智象未来推出旗舰级图像生成模型-hidream-o1-image-pro",
@@ -436,8 +515,10 @@
     "source": "AI工具集",
     "url": "https://mp.weixin.qq.com/s/-WO1kQc-rdW4zu84OV77NA",
     "category": "model",
-    "tags": ["图像生成"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "图像生成"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-微信读书官方推出-ai-助手扩展能力-微信读书skill",
@@ -448,7 +529,7 @@
     "url": "https://mp.weixin.qq.com/s/oiCpeZnOIfAtev1OO0NIGA",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-cursor-上线自研-agentic-编程模型-composer-2-5",
@@ -458,8 +539,10 @@
     "source": "AI工具集",
     "url": "https://www.ithome.com/0/952/106.htm",
     "category": "agent",
-    "tags": ["Agent"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-腾讯内测操作系统层个人-ai-助手腾讯marvis",
@@ -470,7 +553,7 @@
     "url": "https://mp.weixin.qq.com/s/UEKg2imwHA8hzV1kBR6e1g",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-xai推出首款终端原生-ai-编程智能体grok-build",
@@ -481,7 +564,7 @@
     "url": "https://mp.weixin.qq.com/s/6M0LqTnR9ufRXB3Zgw8hEw",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-libtv-推出专业级-ai-视频协作工作台-libtv团队版",
@@ -492,7 +575,7 @@
     "url": "https://mp.weixin.qq.com/s/23m68AGhOuA1RS4qdg2ouw",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-腾讯ai设计工具-ardot-正式全面公测",
@@ -503,7 +586,7 @@
     "url": "https://mp.weixin.qq.com/s/xdU7x-icqyXjUGQzi68m2g",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-月之暗面推出kimi-webbridge-让-ai-帮你操作浏览器",
@@ -514,7 +597,7 @@
     "url": "https://mp.weixin.qq.com/s/EUC1XLOkmo3MTblTvolFTg",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里推出qoder-1-0-从ai-ide升级为智能体自主开发工作台",
@@ -525,7 +608,7 @@
     "url": "https://mp.weixin.qq.com/s/iy0MjNjAj2Yb23CSDmx19w",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-阿里云推出企业级ai建站平台万小智2-0",
@@ -536,7 +619,7 @@
     "url": "https://mp.weixin.qq.com/s/W5sRI5aifxkNQm1_F-Usgg",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
   },
   {
     "id": "2026-05-29-墨刀ai上线ai生成app功能",
@@ -547,28 +630,46 @@
     "url": "https://mp.weixin.qq.com/s/iLVHvJkQDUrmTlSR2Zou8Q",
     "category": "industry",
     "tags": [],
+    "fetchedAt": "2026-05-29T08:52:44.962Z"
+  },
+  {
+    "id": "2026-05-29-openai推出ai网络防御工具daybreak-斥资40亿美元成立新公司",
+    "date": "2026-05-29",
+    "title": "OpenAI推出AI网络防御工具Daybreak，斥资40亿美元成立新公司",
+    "summary": "OpenAI推出AI网络防御工具Daybreak，斥资40亿美元成立新公司",
+    "source": "AI工具集",
+    "url": "https://mp.weixin.qq.com/s/0NL2sdsv9Ge3MzotCOTUgQ",
+    "category": "tool",
+    "tags": [
+      "OpenAI"
+    ],
+    "fetchedAt": "2026-05-29T05:39:28.148Z"
+  },
+  {
+    "id": "2026-05-29-通义千问推出文生图模型评测基准-qwen-image-bench",
+    "date": "2026-05-29",
+    "title": "通义千问推出文生图模型评测基准 Qwen-Image-Bench",
+    "summary": "通义千问推出文生图模型评测基准 Qwen-Image-Bench",
+    "source": "AI工具集",
+    "url": "https://mp.weixin.qq.com/s/J3fHiF1w4NhvvnIgbDOJ3Q?scene=1&#038;click_id=7",
+    "category": "model",
+    "tags": [
+      "图像生成"
+    ],
     "fetchedAt": "2026-05-29T05:39:28.147Z"
   },
   {
-    "id": "2026-05-29-小米具身智能团队开源自动驾驶大模型-xiaomi-onevl",
+    "id": "2026-05-29-清华联合面壁智能开源-agent-操作系统-pilotdeck",
     "date": "2026-05-29",
-    "title": "小米具身智能团队开源自动驾驶大模型 Xiaomi OneVL",
-    "summary": "小米具身智能团队开源自动驾驶大模型 Xiaomi OneVL",
+    "title": "清华联合面壁智能开源 Agent 操作系统 PilotDeck",
+    "summary": "清华联合面壁智能开源 Agent 操作系统 PilotDeck",
     "source": "AI工具集",
-    "url": "https://www.ithome.com/0/949/956.htm",
+    "url": "https://mp.weixin.qq.com/s/NlrEYXVbkssFu4ZaWTdJxg?scene=1&#038;click_id=9",
     "category": "opensource",
-    "tags": ["开源"],
-    "fetchedAt": "2026-05-29T05:39:28.147Z"
-  },
-  {
-    "id": "2026-05-29-runway推出ai视频创作智能体runway-agent",
-    "date": "2026-05-29",
-    "title": "Runway推出AI视频创作智能体Runway Agent",
-    "summary": "Runway推出AI视频创作智能体Runway Agent",
-    "source": "AI工具集",
-    "url": "https://runwayml.com/news/introducing-runway-agent",
-    "category": "agent",
-    "tags": ["Agent"],
+    "tags": [
+      "开源",
+      "Agent"
+    ],
     "fetchedAt": "2026-05-29T05:39:28.147Z"
   },
   {
@@ -579,7 +680,11 @@
     "source": "AI工具集 / Meta AI",
     "url": "https://ai.meta.com/llama/",
     "category": "opensource",
-    "tags": ["Llama", "Meta", "开源模型"],
+    "tags": [
+      "Llama",
+      "Meta",
+      "开源模型"
+    ],
     "fetchedAt": "2026-05-28T14:30:00+08:00"
   },
   {
@@ -590,7 +695,11 @@
     "source": "AI工具集 / Google",
     "url": "https://deepmind.google/technologies/gemini/",
     "category": "model",
-    "tags": ["Gemini", "Google", "DeepMind"],
+    "tags": [
+      "Gemini",
+      "Google",
+      "DeepMind"
+    ],
     "fetchedAt": "2026-05-28T10:00:00+08:00"
   },
   {
@@ -601,7 +710,11 @@
     "source": "AI工具集 / Stability AI",
     "url": "https://stability.ai/stable-diffusion-4",
     "category": "product",
-    "tags": ["Stable Diffusion", "图像生成", "视频生成"],
+    "tags": [
+      "Stable Diffusion",
+      "图像生成",
+      "视频生成"
+    ],
     "fetchedAt": "2026-05-27T16:00:00+08:00"
   },
   {
@@ -612,7 +725,11 @@
     "source": "AI工具集 / 字节跳动",
     "url": "https://www.doubao.com/pro",
     "category": "model",
-    "tags": ["豆包", "字节跳动", "国产大模型"],
+    "tags": [
+      "豆包",
+      "字节跳动",
+      "国产大模型"
+    ],
     "fetchedAt": "2026-05-27T11:00:00+08:00"
   },
   {
@@ -623,7 +740,11 @@
     "source": "AI工具集 / Runway",
     "url": "https://runwayml.com/blog/mcp-server",
     "category": "product",
-    "tags": ["Runway", "MCP", "Agent"],
+    "tags": [
+      "Runway",
+      "MCP",
+      "Agent"
+    ],
     "fetchedAt": "2026-05-26T09:30:00+08:00"
   },
   {
@@ -634,7 +755,11 @@
     "source": "AI工具集 / VentureBeat",
     "url": "https://venturebeat.com/ai/replicate-funding",
     "category": "funding",
-    "tags": ["Replicate", "融资", "模型部署"],
+    "tags": [
+      "Replicate",
+      "融资",
+      "模型部署"
+    ],
     "fetchedAt": "2026-05-26T08:00:00+08:00"
   },
   {
@@ -645,7 +770,11 @@
     "source": "AI工具集 / Anthropic",
     "url": "https://www.anthropic.com/claude/4",
     "category": "model",
-    "tags": ["Claude", "Anthropic", "编程"],
+    "tags": [
+      "Claude",
+      "Anthropic",
+      "编程"
+    ],
     "fetchedAt": "2026-05-25T15:00:00+08:00"
   },
   {
@@ -656,7 +785,11 @@
     "source": "AI工具集 / OpenAI",
     "url": "https://github.com/openai/agents-sdk",
     "category": "agent",
-    "tags": ["OpenAI", "Agent", "SDK"],
+    "tags": [
+      "OpenAI",
+      "Agent",
+      "SDK"
+    ],
     "fetchedAt": "2026-05-25T12:00:00+08:00"
   },
   {
@@ -667,7 +800,11 @@
     "source": "AI工具集 / GitHub",
     "url": "https://github.blog/copilot-v2",
     "category": "tool",
-    "tags": ["GitHub", "Copilot", "代码生成"],
+    "tags": [
+      "GitHub",
+      "Copilot",
+      "代码生成"
+    ],
     "fetchedAt": "2026-05-24T10:00:00+08:00"
   },
   {
@@ -678,7 +815,11 @@
     "source": "AI工具集 / NVIDIA",
     "url": "https://www.nvidia.com/jetson/orin-nano",
     "category": "product",
-    "tags": ["NVIDIA", "Jetson", "边缘推理"],
+    "tags": [
+      "NVIDIA",
+      "Jetson",
+      "边缘推理"
+    ],
     "fetchedAt": "2026-05-24T09:00:00+08:00"
   }
 ]
