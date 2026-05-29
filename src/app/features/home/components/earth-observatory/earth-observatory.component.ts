@@ -13,6 +13,7 @@ import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.c
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { EarthObservatoryLightScene } from '../../../../three/scenes/earth-observatory-light.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 interface ScaleTick {
   value: number;
@@ -28,6 +29,7 @@ interface ScaleTick {
 })
 export class EarthObservatorySection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly i18n = inject(I18nService);
   private scene: EarthObservatoryLightScene | null = null;
   private telemetryTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -44,7 +46,11 @@ export class EarthObservatorySection implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.telemetryText.set('EARTH OBSERVATORY // ACTIVE');
+    this.telemetryText.set(this.i18n.t('earthObservatory.telemetryActive'));
+  }
+
+  t(key: string): string {
+    return this.i18n.t(key);
   }
 
   ngOnDestroy(): void {
@@ -69,12 +75,12 @@ export class EarthObservatorySection implements OnInit, OnDestroy {
   onClick(event: MouseEvent): void {
     if (!this.scene) return;
     this.scene.triggerScanWave();
-    this.telemetryText.set('EARTH OBSERVATORY // AREA LOCKED');
+    this.telemetryText.set(this.i18n.t('earthObservatory.telemetryLocked'));
     if (this.telemetryTimer) {
       clearTimeout(this.telemetryTimer);
     }
     this.telemetryTimer = setTimeout(() => {
-      this.telemetryText.set('EARTH OBSERVATORY // SCANNING');
+      this.telemetryText.set(this.i18n.t('earthObservatory.telemetryScanning'));
       this.telemetryTimer = null;
     }, 2000);
   }

@@ -100,12 +100,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     '[HUD] G-force compensator calibrated',
   ];
 
+  private router = inject(Router);
+  private i18n = inject(I18nService);
+  private lenis = inject(LenisScrollService);
+
   // Typewriter properties
   typedText = signal<string>('');
   audioCtxSuspended = signal<boolean>(true);
   soundEnabled = signal<boolean>(true); // 打字机音效开关
 
-  private fullText = 'Life is coding...';
+  private fullText = this.i18n.t('home.typewriter');
   private typingIndex = 0;
   private typingTimer: any = null;
   private initDelayTimer: any = null;
@@ -116,13 +120,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Web Audio Context for synthesized sound effects
   private audioCtx: AudioContext | null = null;
 
-  private router = inject(Router);
-  private i18n = inject(I18nService);
-  private lenis = inject(LenisScrollService);
-
   constructor() {
     effect(() => {
       this.applySceneConfig();
+    });
+    // Restart typewriter when language changes
+    effect(() => {
+      const _locale = this.i18n.locale();
+      if (!this.destroyed) {
+        this.fullText = this.i18n.t('home.typewriter');
+        clearTimeout(this.typingTimer);
+        clearTimeout(this.restartTimer);
+        this.typedText.set(this.fullText);
+        this.typingIndex = this.fullText.length;
+      }
     });
   }
 

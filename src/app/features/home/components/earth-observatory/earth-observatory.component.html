@@ -2,10 +2,10 @@
   <!-- 左上标题区域 -->
   <div class="observatory-header">
     <h1 class="observatory-number">02</h1>
-    <h2 class="observatory-title">EARTH OBSERVATORY</h2>
-    <p class="observatory-subtitle">Remote sensing the living planet.</p>
+    <h2 class="observatory-title">{{ t('earthObservatory.title') }}</h2>
+    <p class="observatory-subtitle">{{ t('earthObservatory.subtitle') }}</p>
     <p class="observatory-desc">
-      Observing terrain, vegetation and atmosphere through spatial data.
+      {{ t('earthObservatory.desc') }}
     </p>
   </div>
 
@@ -18,10 +18,10 @@
   <div class="observatory-left">
     <app-hud-frame class="sensor-hud">
       <div class="hud-metrics">
-        <app-hud-metric label="SENSOR" value="MULTISPECTRAL" />
-        <app-hud-metric label="RESOLUTION" value="0.025 m" />
-        <app-hud-metric label="ORBIT" value="POLAR" />
-        <app-hud-metric label="SCAN MODE" value="ACTIVE" />
+        <app-hud-metric [label]="t('earthObservatory.sensor')" [value]="t('earthObservatory.sensorVal')" />
+        <app-hud-metric [label]="t('earthObservatory.resolution')" [value]="t('earthObservatory.resolutionVal')" />
+        <app-hud-metric [label]="t('earthObservatory.orbit')" [value]="t('earthObservatory.orbitVal')" />
+        <app-hud-metric [label]="t('earthObservatory.scanMode')" [value]="t('earthObservatory.scanModeVal')" />
       </div>
     </app-hud-frame>
   </div>
@@ -47,7 +47,7 @@
 
   <!-- 底部遥感数据状态栏 -->
   <app-telemetry-bar
-    [text]="'LANDSAT STREAM · UAV ORTHOIMAGE · NDVI GRID · TERRAIN SIGNAL ONLINE'"
+    [text]="t('earthObservatory.telemetryOnline')"
     status="online"
   />
 </div>

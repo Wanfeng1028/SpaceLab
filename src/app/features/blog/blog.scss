@@ -1,103 +1,103 @@
 @use '../../../styles/abstracts/glass' as g;
+@use '../../../styles/abstracts/mixins' as m;
 
 :host {
   display: block;
 }
 
 // ============================================
-// Blog Page - Minimalist Modern Style
+// Blog Page — SpaceLab Glass Style
 // ============================================
 
 .blog-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-  padding: 120px 0 80px;
+  padding: 120px 24px 80px;
+  position: relative;
 }
 
-.container {
-  max-width: 1200px;
+// ============================================
+// Hero Section
+// ============================================
+
+.blog-hero {
+  text-align: center;
+  margin-bottom: 36px;
+  width: min(100%, 880px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blog-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin-bottom: 12px;
+}
+
+.blog-hero__title {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  line-height: 1.15;
+}
+
+.blog-hero__desc {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 620px;
   margin: 0 auto;
-  padding: 0 var(--space-xl);
+  line-height: 1.7;
+  font-family: var(--font-display);
 }
 
 // ============================================
-// Header
+// Search Section
 // ============================================
 
-.blog-header {
-  margin-bottom: 48px;
+.blog-search-section {
+  width: min(100%, 560px);
+  margin: 0 auto 28px;
+  display: flex;
+  justify-content: center;
 
-  &__title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    font-weight: 700;
-    color: #1a1a1a;
-    letter-spacing: -0.03em;
-    margin-bottom: 12px;
-  }
-
-  &__desc {
-    font-size: 1.125rem;
-    color: #6c757d;
-    font-family: 'Georgia', 'Times New Roman', serif;
+  app-search-box {
+    display: block;
+    width: 100%;
+    max-width: 560px;
   }
 }
 
 // ============================================
-// Toolbar
+// Category Filters
 // ============================================
 
-.blog-toolbar {
+.blog-filter-section {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+  width: min(100%, 880px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// ============================================
+// Article List — Vertical Centered
+// ============================================
+
+.blog-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin-bottom: 48px;
-}
-
-app-search-box {
-  display: block;
-  width: fit-content;
-}
-
-// Category Filters
-.category-filters {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.filter-chip {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #495057;
-  background: rgba(0, 0, 0, 0.04);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-
-  &.active {
-    background: #1a1a1a;
-    color: #ffffff;
-  }
-}
-
-// ============================================
-// Grid
-// ============================================
-
-.blog-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr;
-  }
+  gap: 28px;
+  width: min(100%, 780px);
+  margin: 0 auto;
 }
 
 // ============================================
@@ -111,6 +111,8 @@ app-search-box {
   justify-content: center;
   min-height: 300px;
   gap: 16px;
+  width: min(100%, 780px);
+  margin: 0 auto;
 
   &__icon {
     font-size: 3rem;
@@ -118,23 +120,153 @@ app-search-box {
   }
 
   p {
-    color: #6c757d;
+    color: var(--color-text-secondary);
     font-size: 1rem;
   }
 }
 
 // ============================================
-// Decorative Elements
+// Subscribe Section
+// ============================================
+
+.blog-subscribe {
+  width: min(100%, 960px);
+  margin: 100px auto 0;
+}
+
+.blog-subscribe__card {
+  position: relative;
+  isolation: isolate;
+  padding: 48px 40px;
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.1) 48%,
+      rgba(255, 255, 255, 0.05) 100%
+    ),
+    rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  box-shadow:
+    0 14px 34px rgba(23, 23, 23, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  overflow: hidden;
+  text-align: center;
+}
+
+.blog-subscribe__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 42%);
+  opacity: 0.88;
+  border-radius: inherit;
+}
+
+.blog-subscribe__card::after {
+  content: '';
+  position: absolute;
+  inset: auto -8% -24% 38%;
+  height: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 204, 51, 0.1) 0%,
+    rgba(255, 255, 255, 0.03) 54%,
+    transparent 100%
+  );
+  filter: blur(18px);
+  opacity: 0.56;
+  transform: rotate(-10deg);
+}
+
+.blog-subscribe__title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+}
+
+.blog-subscribe__desc {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-subscribe__form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-subscribe__input {
+  flex: 1;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  background:
+    radial-gradient(circle at 28% 12%, rgba(255, 255, 255, 0.72), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.36));
+  backdrop-filter: blur(16px) saturate(135%);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  box-shadow:
+    0 8px 24px rgba(23, 23, 23, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  outline: none;
+  transition:
+    border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+
+  &::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  &:focus {
+    border-color: rgba(26, 115, 232, 0.4);
+    box-shadow:
+      0 8px 24px rgba(23, 23, 23, 0.04),
+      0 0 0 3px rgba(26, 115, 232, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  }
+}
+
+// ============================================
+// Decorative Background Orbs
 // ============================================
 
 .blog-page::before {
   content: '';
   position: fixed;
-  top: 15%;
-  right: 5%;
+  top: 12%;
+  right: 4%;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(105, 215, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(105, 215, 255, 0.06) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -142,13 +274,75 @@ app-search-box {
 .blog-page::after {
   content: '';
   position: fixed;
-  bottom: 25%;
-  left: 8%;
+  bottom: 20%;
+  left: 6%;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(86, 240, 194, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(143, 124, 255, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
+}
+
+// ============================================
+// Mobile Responsive
+// ============================================
+
+@include m.mobile {
+  .blog-page {
+    padding: 88px 16px 60px;
+  }
+
+  .blog-hero__title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  .blog-hero__desc {
+    font-size: 0.95rem;
+  }
+
+  .blog-search-section {
+    width: 100%;
+    margin-bottom: 20px;
+
+    app-search-box {
+      max-width: 100%;
+    }
+  }
+
+  .blog-filter-section {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .blog-list {
+    width: 100%;
+    gap: 20px;
+  }
+
+  .blog-subscribe {
+    width: 100%;
+    margin-top: 64px;
+  }
+
+  .blog-subscribe__card {
+    padding: 32px 20px;
+  }
+
+  .blog-subscribe__form {
+    flex-direction: column;
+  }
+
+  .blog-subscribe__input {
+    width: 100%;
+  }
 }
 
 // ============================================
@@ -156,7 +350,7 @@ app-search-box {
 // ============================================
 
 @media (prefers-reduced-motion: reduce) {
-  .filter-chip {
+  .blog-subscribe__input {
     transition: none;
   }
 }

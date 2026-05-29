@@ -1,5 +1,4 @@
 import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService } from '../../core/services/post.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
@@ -11,7 +10,7 @@ import type { GeneratedPost } from '../../../generated/content.generated';
   templateUrl: './blog.html',
   styleUrl: './blog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, ArticleCardComponent, SearchBoxComponent],
+  imports: [ArticleCardComponent, SearchBoxComponent],
 })
 export class BlogComponent {
   private i18n = inject(I18nService);
@@ -54,5 +53,9 @@ export class BlogComponent {
 
   selectCategory(category: string): void {
     this.selectedCategory.set(category);
+  }
+
+  onSubscribe(): void {
+    console.log('Subscribe clicked — static UI, no backend connected.');
   }
 }
