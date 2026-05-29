@@ -11,7 +11,7 @@
   height: 100dvh;
   min-height: 600px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 50%, #060d1a 0%, #020509 100%);
+  background: #020509; // Solid color matching Three.js renderer clearColor for seamless bloom compositing
   display: flex;
   align-items: center;
   justify-content: center;
