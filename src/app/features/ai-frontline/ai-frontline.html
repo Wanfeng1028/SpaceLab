@@ -177,6 +177,36 @@
             </div>
           }
         </div>
+
+        <!-- Pagination -->
+        @if (totalPages() > 1) {
+          <nav class="pagination">
+            <button class="pagination__btn" [disabled]="currentPage() === 1" (click)="prevPage()">
+              ‹
+            </button>
+            @for (p of pageNumbers(); track p) {
+              <button
+                class="pagination__btn"
+                [class.is-active]="p === currentPage()"
+                (click)="goToPage(p)"
+              >
+                {{ p }}
+              </button>
+            }
+            <button
+              class="pagination__btn"
+              [disabled]="currentPage() === totalPages()"
+              (click)="nextPage()"
+            >
+              ›
+            </button>
+            <span class="pagination__info">
+              {{ t('aiFrontline.pageInfo')
+                .replace('{{current}}', currentPage() + '')
+                .replace('{{total}}', totalPages() + '') }}
+            </span>
+          </nav>
+        }
       }
     </div>
   </section>

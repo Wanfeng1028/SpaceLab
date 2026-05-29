@@ -546,6 +546,58 @@
 }
 
 // ============================================
+// Pagination
+// ============================================
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px 0 8px;
+
+  &__btn {
+    min-width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--glass-bg-strong);
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 200ms;
+
+    &:hover:not(:disabled) {
+      background: rgba(105, 215, 255, 0.1);
+      border-color: rgba(105, 215, 255, 0.3);
+      color: var(--color-text);
+    }
+
+    &.is-active {
+      background: linear-gradient(135deg, rgba(105, 215, 255, 0.18), rgba(143, 124, 255, 0.22));
+      color: var(--color-text);
+      border-color: rgba(105, 215, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(105, 215, 255, 0.12);
+      font-weight: 600;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  &__info {
+    margin-left: 10px;
+    font-size: 13px;
+    color: var(--color-text-tertiary);
+  }
+}
+
+// ============================================
 // States: Loading, Error, Empty
 // ============================================
 .loading-state,
@@ -743,6 +795,21 @@
 
     &__title {
       font-size: 18px;
+    }
+  }
+
+  .pagination {
+    gap: 4px;
+    padding: 16px 0 8px;
+
+    &__btn {
+      min-width: 34px;
+      height: 34px;
+      font-size: 13px;
+    }
+
+    &__info {
+      font-size: 12px;
     }
   }
 }
