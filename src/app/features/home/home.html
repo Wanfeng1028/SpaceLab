@@ -1,6 +1,15 @@
 <div class="home-container">
   <!-- 第 1 屏：LANDING (完全保留现有设计，不动) -->
   <section class="eclipse-hero" id="section-landing" data-section="0">
+    <!-- CSS 动画背景层 (stars / eclipse / glow) -->
+    <div class="hero-background" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="hero-stars"></div>
+      <div class="hero-eclipse"></div>
+      <div class="hero-glow hero-glow--blue"></div>
+      <div class="hero-glow hero-glow--purple"></div>
+    </div>
+
     <!-- 电影画质细腻胶片微粒噪点遮罩层 -->
     <div class="grain-overlay" [style.opacity]="filmNoise() ? 0.055 : 0"></div>
 

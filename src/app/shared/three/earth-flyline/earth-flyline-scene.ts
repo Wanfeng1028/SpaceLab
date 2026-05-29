@@ -25,7 +25,7 @@ import {
   CanvasTexture,
   SpriteMaterial,
   Sprite,
-  Vector2
+  Vector2,
 } from 'three';
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -475,13 +475,13 @@ export class EarthFlylineScene {
     grad.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 256, 256);
-    
+
     const texture = new CanvasTexture(canvas);
     const spriteMat = new SpriteMaterial({
       map: texture,
       transparent: true,
       blending: AdditiveBlending,
-      depthWrite: false
+      depthWrite: false,
     });
     const sprite = new Sprite(spriteMat);
     sprite.position.set(0, -R * 1.3, 0);
@@ -624,7 +624,7 @@ export class EarthFlylineScene {
       this.globeGroup.rotation.x + (this.targetRotX - this.globeGroup.rotation.x) * 0.05 * sf;
 
     this.globeGroup.rotation.y += 0.003 * sf;
-    
+
     if (this.scanGridMesh) {
       this.scanGridMesh.rotation.y += 0.002 * sf;
     }

@@ -56,7 +56,8 @@ export class HeroLightFieldScene {
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
       antialias: false,
-      alpha: false,
+      alpha: true,
+      premultipliedAlpha: false,
       powerPreference: 'high-performance',
     });
     this.contextLostHandler = (e: Event) => {
@@ -65,7 +66,7 @@ export class HeroLightFieldScene {
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0x000000, 1);
+    this.renderer.setClearColor(0x000000, 0);
 
     const geometry = new PlaneGeometry(2, 2);
 
