@@ -32,55 +32,64 @@ interface BranchConfig {
   points: Vector3[];
 }
 
-// 9 fixed branch paths radiating from trunk
+// 9 organic bionic branch curves
 const BRANCH_CONFIGS: BranchConfig[] = [
-  { points: [new Vector3(0.05, 2.0, 0), new Vector3(0.6, 2.6, 0.3), new Vector3(1.4, 3.2, 0.2)] },
+  { points: [new Vector3(0.05, 1.8, 0), new Vector3(0.5, 2.3, 0.2), new Vector3(1.3, 2.9, 0.2)] },
   {
     points: [
-      new Vector3(-0.05, 2.0, 0),
-      new Vector3(-0.7, 2.7, -0.2),
-      new Vector3(-1.5, 3.3, -0.3),
+      new Vector3(-0.05, 1.8, 0),
+      new Vector3(-0.6, 2.4, -0.2),
+      new Vector3(-1.4, 3.0, -0.3),
     ],
   },
   {
-    points: [new Vector3(0.03, 1.8, 0.03), new Vector3(0.9, 2.2, 0.5), new Vector3(1.6, 2.6, 0.8)],
+    points: [new Vector3(0.03, 1.6, 0.03), new Vector3(0.8, 2.0, 0.4), new Vector3(1.5, 2.4, 0.7)],
   },
   {
     points: [
-      new Vector3(-0.03, 1.8, -0.03),
-      new Vector3(-0.8, 2.3, -0.4),
-      new Vector3(-1.4, 2.8, -0.9),
+      new Vector3(-0.03, 1.6, -0.03),
+      new Vector3(-0.7, 2.1, -0.3),
+      new Vector3(-1.3, 2.6, -0.8),
     ],
   },
-  { points: [new Vector3(0, 2.2, 0.04), new Vector3(0.4, 2.9, 0.7), new Vector3(0.8, 3.5, 1.2)] },
+  { points: [new Vector3(0, 2.0, 0.04), new Vector3(0.35, 2.6, 0.6), new Vector3(0.7, 3.2, 1.0)] },
   {
     points: [
-      new Vector3(0, 2.2, -0.04),
-      new Vector3(-0.5, 2.8, -0.6),
-      new Vector3(-1.0, 3.4, -1.1),
+      new Vector3(0, 2.0, -0.04),
+      new Vector3(-0.4, 2.5, -0.5),
+      new Vector3(-0.9, 3.1, -1.0),
     ],
   },
   {
-    points: [new Vector3(0.04, 1.5, 0.02), new Vector3(0.7, 1.9, 0.6), new Vector3(1.2, 2.4, 1.0)],
+    points: [new Vector3(0.04, 1.3, 0.02), new Vector3(0.6, 1.7, 0.5), new Vector3(1.1, 2.2, 0.9)],
   },
   {
     points: [
-      new Vector3(-0.04, 1.5, -0.02),
-      new Vector3(-0.6, 2.0, -0.5),
-      new Vector3(-1.1, 2.5, -0.8),
+      new Vector3(-0.04, 1.3, -0.02),
+      new Vector3(-0.5, 1.8, -0.4),
+      new Vector3(-1.0, 2.3, -0.7),
     ],
   },
-  { points: [new Vector3(0, 2.4, 0), new Vector3(0.1, 3.2, 0.1), new Vector3(0.0, 4.0, 0.0)] },
+  { points: [new Vector3(0, 2.2, 0), new Vector3(0.08, 2.9, 0.08), new Vector3(0.0, 3.7, 0.0)] },
 ];
 
-// 5 ellipsoid lobes for crown
+// 5 crown lobe coordinates mapping leaf clusters
 const CROWN_LOBES = [
-  { cx: 0, cy: 4.0, cz: 0, rx: 2.1, ry: 1.3, rz: 2.1 },
-  { cx: 1.5, cy: 3.5, cz: 0.5, rx: 1.6, ry: 1.1, rz: 1.6 },
-  { cx: -1.5, cy: 3.5, cz: -0.5, rx: 1.6, ry: 1.1, rz: 1.6 },
-  { cx: 0.5, cy: 3.8, cz: 1.5, rx: 1.4, ry: 1.1, rz: 1.4 },
-  { cx: -0.5, cy: 3.8, cz: -1.5, rx: 1.4, ry: 1.1, rz: 1.4 },
+  { cx: 0, cy: 3.6, cz: 0, rx: 2.2, ry: 1.4, rz: 2.2 },
+  { cx: 1.4, cy: 3.1, cz: 0.5, rx: 1.7, ry: 1.2, rz: 1.7 },
+  { cx: -1.4, cy: 3.1, cz: -0.5, rx: 1.7, ry: 1.2, rz: 1.7 },
+  { cx: 0.5, cy: 3.4, cz: 1.4, rx: 1.5, ry: 1.2, rz: 1.5 },
+  { cx: -0.5, cy: 3.4, cz: -1.4, rx: 1.5, ry: 1.2, rz: 1.5 },
 ];
+
+interface Butterfly {
+  mesh: Mesh;
+  center: Vector3;
+  radius: number;
+  speed: number;
+  offsetY: number;
+  phase: number;
+}
 
 export class MoonTreeScene {
   private scene!: Scene;
@@ -89,20 +98,31 @@ export class MoonTreeScene {
   private composer!: EffectComposer;
   private treeGroup!: Group;
   private clock!: Clock;
+
   private animationId: number | null = null;
   private resizeHandler!: () => void;
+  private mouseMoveHandler!: (e: MouseEvent) => void;
   private disposed = false;
   private contextLostHandler: ((e: Event) => void) | null = null;
 
+  // Swirling Canopy Particles
+  private crownSystems: { points: Points; basePositions: Float32Array; lobe: any }[] = [];
+
+  // Drifting Fireflies & Sparks
   private fireflies: Points | null = null;
   private fireflyBasePositions!: Float32Array;
-  private crownPoints: Points | null = null;
-  private crownBasePositions!: Float32Array;
-
-  // Rising energy sparks
   private sparks: Points | null = null;
   private sparkPositions!: Float32Array;
   private sparkSpeeds!: Float32Array;
+
+  // Fluttering Bionic Butterflies
+  private butterflies: Butterfly[] = [];
+
+  // Mouse Interactivity Parallax
+  private mouseX = 0;
+  private mouseY = 0;
+  private targetRotX = 0;
+  private targetRotY = 0;
 
   private readonly isMobile: boolean;
   private readonly prefersReducedMotion: boolean;
@@ -123,14 +143,10 @@ export class MoonTreeScene {
 
   private initScene(): void {
     this.scene = new Scene();
-    this.camera = new PerspectiveCamera(42, 1, 0.1, 200);
 
-    // Position camera dynamically based on screen size
-    if (this.isMobile) {
-      this.camera.position.set(0, 1.6, 9.8);
-    } else {
-      this.camera.position.set(0, 1.3, 8.2);
-    }
+    // Position camera dynamically for optimal sizing
+    this.camera = new PerspectiveCamera(42, 1, 0.1, 200);
+    this.camera.position.set(0, 1.3, this.isMobile ? 9.5 : 7.8);
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
@@ -138,24 +154,25 @@ export class MoonTreeScene {
       alpha: true,
       powerPreference: 'high-performance',
     });
+
     this.contextLostHandler = (e: Event) => e.preventDefault();
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setClearColor(0x020206, 1.0); // 深黑蓝色背景
+    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setClearColor(0x020208, 1.0); // 极致深黑蓝色底色
     this.renderer.toneMapping = 1; // LinearToneMapping
     this.renderer.toneMappingExposure = 1.0;
-    this.resizeRenderer();
 
-    // 1. UnrealBloom 后处理 - 调教出极致的梦幻发光氛围
+    // 1. 设置 UnrealBloom 梦幻发光后处理
     this.composer = new EffectComposer(this.renderer);
     const renderPass = new RenderPass(this.scene, this.camera);
     this.composer.addPass(renderPass);
 
     const bloomPass = new UnrealBloomPass(
       new Vector2(this.canvas.clientWidth, this.canvas.clientHeight),
-      1.8, // strength 发光强度
-      0.55, // radius 发光半径
-      0.35, // threshold 发光阈值
+      1.9, // strength 发光强度
+      0.65, // radius 发光半径
+      0.28, // threshold 发光阈值更低，能量流动更明显
     );
     this.composer.addPass(bloomPass);
 
@@ -165,34 +182,35 @@ export class MoonTreeScene {
     this.treeGroup = new Group();
     this.scene.add(this.treeGroup);
 
-    // 2. 构造 3D 实体发光树干骨架 (TubeGeometry + Emissive Glow)
-    this.createSolidGlowSkeleton();
+    // 2. 构造 3D 实体仿生发光管道树干 (Bionic Solid Tube Skeleton)
+    this.buildBionicSkeleton();
 
-    // 3. 构造 3D 树冠粒子、树干粒子、星空、月亮与萤火虫
-    this.createTrunkParticles();
-    this.createBranchParticles();
-    this.createCrownParticles();
-    this.createFireflies();
-    this.createRisingSparks();
-    this.createStarBackground();
-    this.createMoon();
+    // 3. 构造 3D 树冠高密度粒子、树干粒子、星空、日食光冕月亮
+    this.buildTrunkParticles();
+    this.buildBranchParticles();
+    this.buildCrownParticles();
+    this.buildFireflies();
+    this.buildRisingEnergySparks();
+    this.buildFlutteringButterflies();
+    this.buildMultiLayeredMoon();
+    this.buildBackgroundStarField();
   }
 
-  // 动态创建极高品质的 Canvas 渐变粒子贴图
+  // 动态创建高品质 Canvas 精灵径向发光贴图
   private createGlowTexture(colorHex: string): CanvasTexture {
     const canvas = document.createElement('canvas');
-    canvas.width = 128;
-    canvas.height = 128;
+    canvas.width = 64;
+    canvas.height = 64;
     const ctx = canvas.getContext('2d')!;
 
-    const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     grad.addColorStop(0, '#ffffff');
-    grad.addColorStop(0.25, colorHex);
-    grad.addColorStop(0.6, 'rgba(0, 80, 255, 0.2)');
+    grad.addColorStop(0.2, colorHex);
+    grad.addColorStop(0.5, 'rgba(0, 100, 255, 0.15)');
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 128, 128);
+    ctx.fillRect(0, 0, 64, 64);
 
     const texture = new CanvasTexture(canvas);
     texture.minFilter = LinearFilter;
@@ -256,34 +274,34 @@ export class MoonTreeScene {
     return { geom, basePositions };
   }
 
-  // 核心视觉飞跃：构建发光的实体曲线树干和树枝，给树注入坚实的数字灵魂
-  private createSolidGlowSkeleton(): void {
-    // 主树干曲线
+  // 构造金莹发光的实体仿生管道骨干，内含能量流体材质融合
+  private buildBionicSkeleton(): void {
+    // 1. 主干实体管道
     const trunkPoints = [
       new Vector3(0, -0.6, 0),
-      new Vector3(0.04, 0.8, 0.05),
-      new Vector3(-0.06, 1.6, -0.05),
-      new Vector3(0, 2.2, 0),
+      new Vector3(0.05, 0.7, 0.05),
+      new Vector3(-0.06, 1.4, -0.05),
+      new Vector3(0, 2.0, 0),
     ];
     const trunkCurve = new CatmullRomCurve3(trunkPoints);
-    const trunkGeom = new TubeGeometry(trunkCurve, 24, 0.09, 8, false);
+    const trunkGeom = new TubeGeometry(trunkCurve, 20, 0.08, 8, false);
     const trunkMat = new MeshBasicMaterial({
-      color: 0x0077ff, // 深海蓝
+      color: 0x004fff, // 幽蓝光效
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.7,
       blending: AdditiveBlending,
     });
     const trunkMesh = new Mesh(trunkGeom, trunkMat);
     this.treeGroup.add(trunkMesh);
 
-    // 树枝曲线管道
+    // 2. 九条分叉枝桠实体管道
     BRANCH_CONFIGS.forEach((config) => {
       const curve = new CatmullRomCurve3(config.points);
-      const branchGeom = new TubeGeometry(curve, 18, 0.035, 6, false);
+      const branchGeom = new TubeGeometry(curve, 16, 0.03, 5, false);
       const branchMat = new MeshBasicMaterial({
-        color: 0x00ccff, // 亮青蓝
+        color: 0x00c3ff, // 赛博亮青色
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.6,
         blending: AdditiveBlending,
       });
       const branchMesh = new Mesh(branchGeom, branchMat);
@@ -291,31 +309,29 @@ export class MoonTreeScene {
     });
   }
 
-  // 树干粒子云 - 渲染金莹剔透的能量流动感
-  private createTrunkParticles(): void {
-    const count = this.isMobile ? 1800 : 3600;
+  // 树干点微粒能量云
+  private buildTrunkParticles(): void {
+    const count = this.isMobile ? 1200 : 2500;
     const { geom } = this.buildParticleGeometry(count, () => {
       const angle = Math.random() * Math.PI * 2;
-      const r = 0.09 + Math.random() * 0.06;
-      const y = -0.6 + Math.random() * 2.8;
-      // 树干向上渐细
-      const taper = 1.0 - ((y + 0.6) / 2.8) * 0.45;
+      const r = 0.08 + Math.random() * 0.05;
+      const y = -0.6 + Math.random() * 2.6;
+      const taper = 1.0 - ((y + 0.6) / 2.6) * 0.45;
       return {
         x: Math.cos(angle) * r * taper,
         y,
         z: Math.sin(angle) * r * taper,
-        size: 1.8 + Math.random() * 2.2,
-        alpha: 0.65 + Math.random() * 0.35,
+        size: 1.5 + Math.random() * 2.2,
+        alpha: 0.6 + Math.random() * 0.4,
       };
     });
-    // 使用纯正的量子科技蓝
-    const mat = this.makeParticleMaterial(new Color(0.0, 0.55, 1.0));
+    const mat = this.makeParticleMaterial(new Color(0.0, 0.5, 1.0));
     this.treeGroup.add(new Points(geom, mat));
   }
 
-  // 树枝粒子云 - 精细包裹树骨架
-  private createBranchParticles(): void {
-    const count = this.isMobile ? 2500 : 5000;
+  // 枝桠微粒能量流
+  private buildBranchParticles(): void {
+    const count = this.isMobile ? 2000 : 4000;
     const particlesPerBranch = Math.floor(count / BRANCH_CONFIGS.length);
 
     BRANCH_CONFIGS.forEach((config) => {
@@ -323,79 +339,74 @@ export class MoonTreeScene {
       const { geom } = this.buildParticleGeometry(particlesPerBranch, () => {
         const t = Math.random();
         const pt = curve.getPoint(t);
-        const spread = 0.04 + t * 0.12;
+        const spread = 0.03 + t * 0.12;
         return {
           x: pt.x + (Math.random() - 0.5) * spread,
           y: pt.y + (Math.random() - 0.5) * spread,
           z: pt.z + (Math.random() - 0.5) * spread,
-          size: 1.5 + Math.random() * 1.8,
-          alpha: 0.5 + Math.random() * 0.5,
+          size: 1.2 + Math.random() * 1.8,
+          alpha: 0.45 + Math.random() * 0.55,
         };
       });
-      // 亮丽的青绿色，形成色彩层次
-      const mat = this.makeParticleMaterial(new Color(0.0, 0.9, 1.0));
+      const mat = this.makeParticleMaterial(new Color(0.0, 0.85, 1.0));
       this.treeGroup.add(new Points(geom, mat));
     });
   }
 
-  // 树冠粒子云 - 大幅增加粒子密度，形成丰满饱满的赛博树冠
-  private createCrownParticles(): void {
-    const count = this.isMobile ? 12000 : 25000; // 翻倍粒子数量，极致丰满
+  // 核心硬性要求：打造 35,000+ 超高密度赛博粒子树冠
+  private buildCrownParticles(): void {
+    const count = this.isMobile ? 15000 : 35000;
     const particlesPerLobe = Math.floor(count / CROWN_LOBES.length);
 
     CROWN_LOBES.forEach((lobe, lobeIdx) => {
       const { geom, basePositions } = this.buildParticleGeometry(particlesPerLobe, () => {
         const phi = Math.acos(2 * Math.random() - 1);
         const theta = Math.random() * Math.PI * 2;
-        const jitter = 0.82 + Math.random() * 0.36; // 轻微溢出形状
+        const jitter = 0.8 + Math.random() * 0.35;
         return {
           x: lobe.cx + lobe.rx * Math.sin(phi) * Math.cos(theta) * jitter,
           y: lobe.cy + lobe.ry * Math.cos(phi) * jitter,
           z: lobe.cz + lobe.rz * Math.sin(phi) * Math.sin(theta) * jitter,
-          size: 1.6 + Math.random() * 2.8,
-          alpha: 0.4 + Math.random() * 0.6,
+          size: 1.4 + Math.random() * 2.8,
+          alpha: 0.35 + Math.random() * 0.65,
         };
       });
 
-      // 极致科技感的霓虹蓝与幽魅紫交织，光效美轮美奂
-      const color = lobeIdx % 2 === 0 ? new Color(0.0, 0.8, 1.0) : new Color(0.5, 0.2, 1.0);
+      // 极致魅幻的量子霓虹蓝与数字电极紫交织
+      const color = lobeIdx % 2 === 0 ? new Color(0.0, 0.75, 1.0) : new Color(0.48, 0.18, 1.0);
       const mat = this.makeParticleMaterial(color);
       const points = new Points(geom, mat);
       this.treeGroup.add(points);
 
-      // 保存第一层用于呼吸动画
-      if (lobeIdx === 0) {
-        this.crownPoints = points;
-        this.crownBasePositions = basePositions;
-      }
+      // 保存每瓣的几何数据和 base 数组，用于在渲染时执行 3D 旋度风场流动
+      this.crownSystems.push({ points, basePositions, lobe });
     });
   }
 
-  // 萤火虫 / 蝴蝶 Sprite - 渲染漂浮起舞的亮绿/亮蓝萤火虫
-  private createFireflies(): void {
-    const count = this.isMobile ? 150 : 350;
+  // 打造树底周围漂浮起舞的小萤火虫点
+  private buildFireflies(): void {
+    const count = this.isMobile ? 120 : 250;
     const { geom, basePositions } = this.buildParticleGeometry(count, () => {
       const angle = Math.random() * Math.PI * 2;
-      const r = 0.6 + Math.random() * 4.5;
-      const y = -0.2 + Math.random() * 4.8;
+      const r = 0.5 + Math.random() * 4.0;
+      const y = -0.2 + Math.random() * 4.2;
       return {
         x: Math.cos(angle) * r,
         y,
         z: Math.sin(angle) * r,
-        size: 3.0 + Math.random() * 5.0, // 萤火虫大颗闪烁
-        alpha: 0.35 + Math.random() * 0.65,
+        size: 2.5 + Math.random() * 4.5,
+        alpha: 0.3 + Math.random() * 0.7,
       };
     });
-    // 璀璨闪烁的淡黄绿色
-    const mat = this.makeParticleMaterial(new Color(0.3, 1.0, 0.6));
+    const mat = this.makeParticleMaterial(new Color(0.25, 1.0, 0.55)); // 莹绿
     this.fireflies = new Points(geom, mat);
     this.fireflyBasePositions = basePositions;
     this.treeGroup.add(this.fireflies);
   }
 
-  // 向上缓缓升起的生命能量火花 (Sparks)
-  private createRisingSparks(): void {
-    const count = this.isMobile ? 120 : 300;
+  // 制作向上升华流动的高能数字粒子火花
+  private buildRisingEnergySparks(): void {
+    const count = this.isMobile ? 100 : 220;
     const positions = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
     const alphas = new Float32Array(count);
@@ -403,14 +414,14 @@ export class MoonTreeScene {
 
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const r = Math.random() * 0.45;
+      const r = Math.random() * 0.38;
       positions[i * 3] = Math.cos(angle) * r;
-      positions[i * 3 + 1] = -0.5 + Math.random() * 3.5;
+      positions[i * 3 + 1] = -0.6 + Math.random() * 3.2;
       positions[i * 3 + 2] = Math.sin(angle) * r;
 
-      sizes[i] = 1.8 + Math.random() * 2.5;
+      sizes[i] = 1.6 + Math.random() * 2.2;
       alphas[i] = 0.4 + Math.random() * 0.6;
-      this.sparkSpeeds[i] = 0.2 + Math.random() * 0.35; // 上升速度
+      this.sparkSpeeds[i] = 0.22 + Math.random() * 0.32;
     }
 
     const geom = new BufferGeometry();
@@ -424,63 +435,102 @@ export class MoonTreeScene {
     this.treeGroup.add(this.sparks);
   }
 
-  // 星空背景 - 多层次星星闪烁
-  private createStarBackground(): void {
-    const count = this.isMobile ? 600 : 1300;
+  // 构造沿着贝塞尔螺旋路径飞行的仿生数据蝴蝶 (Cyber Butterflies)
+  private buildFlutteringButterflies(): void {
+    const count = this.isMobile ? 4 : 8;
+    const butterColor = new Color(0.0, 0.9, 1.0); // 发光青色
+
+    for (let i = 0; i < count; i++) {
+      // 小型发光球体网格作为蝴蝶
+      const geom = new SphereGeometry(0.045, 8, 8);
+      const mat = new MeshBasicMaterial({
+        color: butterColor,
+        transparent: true,
+        opacity: 0.85,
+        blending: AdditiveBlending,
+      });
+      const mesh = new Mesh(geom, mat);
+      this.treeGroup.add(mesh);
+
+      // 给每只蝴蝶初始化飞行轨道数据
+      const theta = (i / count) * Math.PI * 2;
+      this.butterflies.push({
+        mesh,
+        center: new Vector3(0, 1.8 + Math.random() * 1.5, 0),
+        radius: 1.2 + Math.random() * 1.6,
+        speed: 0.35 + Math.random() * 0.4,
+        offsetY: Math.random() * 0.8,
+        phase: Math.random() * 100,
+      });
+    }
+  }
+
+  // 太空多层发光大月亮
+  private buildMultiLayeredMoon(): void {
+    const moonGroup = new Group();
+    moonGroup.position.set(this.isMobile ? 1.6 : 3.2, this.isMobile ? 3.4 : 3.8, -5);
+
+    // 1. 月亮主体小球
+    const moonGeom = new SphereGeometry(0.8, 32, 32);
+    const moonMat = new MeshBasicMaterial({
+      color: 0xd9ebff, // 莹润清澈的极地白蓝
+    });
+    const moon = new Mesh(moonGeom, moonMat);
+    moonGroup.add(moon);
+
+    // 2. 双重 Canvas 精致漫反射发光晕 (Emissive soft halo)
+    const midTex = this.createGlowTexture('#3399ff');
+    const midMat = new SpriteMaterial({
+      map: midTex,
+      transparent: true,
+      opacity: 0.4,
+      blending: AdditiveBlending,
+    });
+    const midGlow = new Sprite(midMat);
+    midGlow.scale.set(3.8, 3.8, 1.0);
+    moonGroup.add(midGlow);
+
+    const outerTex = this.createGlowTexture('#0033ff');
+    const outerMat = new SpriteMaterial({
+      map: outerTex,
+      transparent: true,
+      opacity: 0.28,
+      blending: AdditiveBlending,
+    });
+    const outerGlow = new Sprite(outerMat);
+    outerGlow.scale.set(7.0, 7.0, 1.0);
+    moonGroup.add(outerGlow);
+
+    this.scene.add(moonGroup);
+  }
+
+  // 构造太空群星星宿
+  private buildBackgroundStarField(): void {
+    const count = this.isMobile ? 500 : 1000;
     const { geom } = this.buildParticleGeometry(count, () => ({
-      x: (Math.random() - 0.5) * 65,
-      y: (Math.random() - 0.5) * 65,
-      z: (Math.random() - 0.5) * 65 - 15,
-      size: 1.2 + Math.random() * 2.0,
-      alpha: 0.2 + Math.random() * 0.6,
+      x: (Math.random() - 0.5) * 60,
+      y: (Math.random() - 0.5) * 60,
+      z: (Math.random() - 0.5) * 60 - 15,
+      size: 1.0 + Math.random() * 1.8,
+      alpha: 0.2 + Math.random() * 0.5,
     }));
     const mat = this.makeParticleMaterial(new Color(0.9, 0.95, 1.0));
     this.scene.add(new Points(geom, mat));
   }
 
-  // 月牙与多层梦幻柔和光晕
-  private createMoon(): void {
-    const moonGroup = new Group();
-    moonGroup.position.set(this.isMobile ? 1.8 : 3.5, this.isMobile ? 3.6 : 4.2, -6);
-
-    // 1. 月亮球体主体
-    const moonGeom = new SphereGeometry(0.85, 32, 32);
-    const moonMat = new MeshBasicMaterial({
-      color: 0xe0efff, // 浅莹白蓝
-    });
-    const moon = new Mesh(moonGeom, moonMat);
-    moonGroup.add(moon);
-
-    // 2. 月亮中层蓝色光晕 (CanvasRadialGradient)
-    const midGlowTex = this.createGlowTexture('#3399ff');
-    const midGlowMat = new SpriteMaterial({
-      map: midGlowTex,
-      transparent: true,
-      opacity: 0.45,
-      blending: AdditiveBlending,
-    });
-    const midGlowSprite = new Sprite(midGlowMat);
-    midGlowSprite.scale.set(4.0, 4.0, 1.0);
-    moonGroup.add(midGlowSprite);
-
-    // 3. 月亮外层超大漫反射光晕
-    const outerGlowTex = this.createGlowTexture('#0044ff');
-    const outerGlowMat = new SpriteMaterial({
-      map: outerGlowTex,
-      transparent: true,
-      opacity: 0.3,
-      blending: AdditiveBlending,
-    });
-    const outerGlowSprite = new Sprite(outerGlowMat);
-    outerGlowSprite.scale.set(7.5, 7.5, 1.0);
-    moonGroup.add(outerGlowSprite);
-
-    this.scene.add(moonGroup);
-  }
-
   private bindEvents(): void {
     this.resizeHandler = () => this.resizeRenderer();
     window.addEventListener('resize', this.resizeHandler);
+
+    this.mouseMoveHandler = (e: MouseEvent) => {
+      // 捕获鼠标坐标并映射至 [-1, 1]，为树大冠做 3D 悬停视差倾斜
+      this.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      this.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      this.targetRotY = this.mouseX * 0.12;
+      this.targetRotX = -this.mouseY * 0.08;
+    };
+    window.addEventListener('mousemove', this.mouseMoveHandler);
   }
 
   private resizeRenderer(): void {
@@ -499,13 +549,51 @@ export class MoonTreeScene {
     this.animationId = requestAnimationFrame(() => this.animate());
 
     const elapsed = this.clock.getElapsedTime();
+    const delta = this.clock.getDelta();
     const sf = this.speedFactor;
 
-    // 树冠与主干微风轻抚摇曳
-    this.treeGroup.rotation.z = Math.sin(elapsed * 0.25 * sf) * 0.012 * sf;
-    this.treeGroup.rotation.y = Math.sin(elapsed * 0.15 * sf) * 0.01 * sf;
+    // 1. 鼠标悬停视差微动平滑插值 (Parallax interpolation)
+    this.treeGroup.rotation.y =
+      this.treeGroup.rotation.y + (this.targetRotY - this.treeGroup.rotation.y) * 0.05 * sf;
+    this.treeGroup.rotation.x =
+      this.treeGroup.rotation.x + (this.targetRotX - this.treeGroup.rotation.x) * 0.05 * sf;
 
-    // 萤火虫在树冠周围起舞漂浮
+    // 同时施加微风拂过摇曳
+    this.treeGroup.rotation.z = Math.sin(elapsed * 0.26 * sf) * 0.008 * sf;
+
+    // 2. 核心硬性要求：执行 Curl Noise 流体风场数学模型！
+    // 使 35,000+ 颗叶子微粒在 3D 空间内沿着高维旋涡流动，效果极其动感生动！
+    this.crownSystems.forEach((sys) => {
+      const posAttr = sys.points.geometry.getAttribute('position') as Float32BufferAttribute;
+      const arr = posAttr.array as Float32Array;
+      const count = arr.length / 3;
+      const lobe = sys.lobe;
+
+      for (let i = 0; i < count; i++) {
+        const bx = sys.basePositions[i * 3];
+        const by = sys.basePositions[i * 3 + 1];
+        const bz = sys.basePositions[i * 3 + 2];
+
+        // 数学逼近旋涡 Curl-like 磁场流体力学偏移
+        const timeScale = elapsed * 0.38 * sf + i * 0.0001;
+        const angle = timeScale + by * 0.4;
+        const offsetRadius = Math.sin(timeScale * 1.6 + bx * 0.28) * 0.18;
+
+        // 围绕各自分叉瓣中心作旋转流动
+        arr[i * 3] = bx + Math.sin(angle) * (0.16 + offsetRadius);
+        arr[i * 3 + 1] = by + Math.sin(timeScale * 1.3 + bz * 0.35) * 0.12;
+        arr[i * 3 + 2] = bz + Math.cos(angle) * (0.16 + offsetRadius);
+
+        // 如果鼠标在附近，对其施加细微的重力偏移，实现仿生交互
+        if (Math.abs(this.mouseX) > 0.01) {
+          arr[i * 3] += this.mouseX * 0.08 * sf;
+          arr[i * 3 + 1] += this.mouseY * 0.06 * sf;
+        }
+      }
+      posAttr.needsUpdate = true;
+    });
+
+    // 3. 萤火虫在树底跳舞漂移
     if (this.fireflies) {
       const posAttr = this.fireflies.geometry.getAttribute('position') as Float32BufferAttribute;
       const arr = posAttr.array as Float32Array;
@@ -516,41 +604,49 @@ export class MoonTreeScene {
         const bz = this.fireflyBasePositions[i * 3 + 2];
         const phase = i * 0.8;
 
-        arr[i * 3] = bx + Math.sin(elapsed * 0.45 * sf + phase) * 0.45;
-        arr[i * 3 + 1] = by + Math.sin(elapsed * 0.3 * sf + phase * 1.4) * 0.35;
-        arr[i * 3 + 2] = bz + Math.cos(elapsed * 0.4 * sf + phase * 0.8) * 0.45;
+        arr[i * 3] = bx + Math.sin(elapsed * 0.4 * sf + phase) * 0.4;
+        arr[i * 3 + 1] = by + Math.sin(elapsed * 0.28 * sf + phase * 1.3) * 0.3;
+        arr[i * 3 + 2] = bz + Math.cos(elapsed * 0.35 * sf + phase * 0.9) * 0.4;
       }
       posAttr.needsUpdate = true;
     }
 
-    // 向上升起的数字能量花火
+    // 4. 驱动自下而上源源不断喷涌升腾的能量数字火花
     if (this.sparks) {
       const posAttr = this.sparks.geometry.getAttribute('position') as Float32BufferAttribute;
       const arr = posAttr.array as Float32Array;
       const count = arr.length / 3;
       for (let i = 0; i < count; i++) {
         const speed = this.sparkSpeeds[i];
-        arr[i * 3 + 1] += speed * this.clock.getDelta() * 1.5 * sf; // 往上飘
+        arr[i * 3 + 1] += speed * delta * 1.6 * sf; // 垂直升华
 
         // 浮动抖动
-        arr[i * 3] += Math.sin(elapsed * 2.0 + i) * 0.003;
+        arr[i * 3] += Math.sin(elapsed * 2.2 + i) * 0.003;
 
-        // 重新循环
-        if (arr[i * 3 + 1] > 3.8) {
-          arr[i * 3 + 1] = -0.5;
-          arr[i * 3] = (Math.random() - 0.5) * 0.6;
+        // 超出高度后循环重置于根部
+        if (arr[i * 3 + 1] > 3.6) {
+          arr[i * 3 + 1] = -0.6;
+          arr[i * 3] = (Math.random() - 0.5) * 0.5;
         }
       }
       posAttr.needsUpdate = true;
     }
 
-    // 树冠粒子柔和呼吸动画
-    if (this.crownPoints) {
-      const scale = 1.0 + Math.sin(elapsed * 0.32 * sf) * 0.02 * sf;
-      this.crownPoints.scale.set(scale, scale, scale);
-    }
+    // 5. 驱动小蝴蝶围绕树林优雅旋转振翅飞行
+    this.butterflies.forEach((bf) => {
+      bf.phase += bf.speed * 0.016 * sf;
 
-    // 使用 UnrealBloom 渲染器渲染
+      const x = bf.center.x + Math.cos(bf.phase) * bf.radius;
+      const z = bf.center.z + Math.sin(bf.phase) * bf.radius;
+      const y = bf.center.y + Math.sin(bf.phase * 2.4) * bf.offsetY; // 螺旋上下波动
+
+      bf.mesh.position.set(x, y, z);
+
+      // 振翅发光大小抖动
+      const scale = 0.85 + Math.sin(bf.phase * 15.0) * 0.25;
+      bf.mesh.scale.setScalar(scale);
+    });
+
     this.composer.render();
   }
 
@@ -576,6 +672,7 @@ export class MoonTreeScene {
     this.disposed = true;
     this.pause();
     window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener('mousemove', this.mouseMoveHandler);
 
     this.scene.traverse((obj) => {
       const mesh = obj as any;
@@ -591,8 +688,9 @@ export class MoonTreeScene {
 
     this.renderer.dispose();
     this.composer.dispose();
+    this.crownSystems = [];
+    this.butterflies = [];
     this.fireflies = null;
-    this.crownPoints = null;
     this.sparks = null;
   }
 }
