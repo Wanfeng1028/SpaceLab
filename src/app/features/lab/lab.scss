@@ -252,24 +252,19 @@
 }
 
 // ============================================
-// Inbox Shell — mat-drawer-container
+// Grid Shell — CSS Grid 3-Column Layout
 // ============================================
-.lab-inbox-shell {
+.lab-grid {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 340px;
+  gap: 16px;
   width: min(100%, 1240px);
   margin: 28px auto 0;
-  min-height: 60vh;
-}
-
-// Content area: List + Preview side-by-side
-.inbox-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 16px;
   align-items: start;
 }
 
 // ============================================
-// Sidebar — Glass Panel (mat-drawer)
+// Sidebar — mat-card glass panel
 // ============================================
 .lab-sidebar {
   width: 240px;
@@ -374,8 +369,11 @@
 // ============================================
 // Inbox List — Middle Column
 // ============================================
-.inbox-list {
-  min-height: 200px;
+.lab-list {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  align-self: start;
 }
 
 .inbox-items {

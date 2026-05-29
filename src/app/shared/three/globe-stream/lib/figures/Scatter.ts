@@ -1,5 +1,5 @@
-import pointImg from '../../../../../../assets/three/globe-stream/image/point.png';
-import scatterImg from '../../../../../../assets/three/globe-stream/image/scatter.png';
+// import pointImg from '../../../../../../assets/three/globe-stream/image/point.png';
+// import scatterImg from '../../../../../../assets/three/globe-stream/image/scatter.png';
 import { lon2xyz } from '../utils/math';
 import { Coordinates, ScatterStyle, StoreConfig } from '../interface';
 import { setTween } from '../utils/tween';
@@ -8,8 +8,8 @@ import Store from '../store/store';
 import { cloneDeep } from 'lodash-es';
 
 const textureLoader = new TextureLoader();
-const POINT_TEXTURE = textureLoader.load(pointImg);
-const SCATTER_TEXTURE = textureLoader.load(scatterImg);
+const POINT_TEXTURE = textureLoader.load('/three/globe-stream/image/point.png');
+const SCATTER_TEXTURE = textureLoader.load('/three/globe-stream/image/scatter.png');
 
 export default class Scatter {
   private readonly _config: StoreConfig;

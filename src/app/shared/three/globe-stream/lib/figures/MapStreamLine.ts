@@ -8,8 +8,8 @@ import {
   ShaderMaterial,
   Vector3,
 } from 'three';
-import vertexShader from '../../shaders/map_line_vertexShader.glsl';
-import fragmentShader from '../../shaders/map_line_fragmentShader.glsl';
+import vertexShader from '../../shaders/map_line_vertexShader';
+import fragmentShader from '../../shaders/map_line_fragmentShader';
 import { MapStreamStyle, StoreConfig } from '../interface';
 import Store from '../store/store';
 import { Position } from 'geojson';

@@ -305,7 +305,7 @@ $preview-w: 340px;
 }
 
 // mat-nav-list as sidebar nav
-.inbox-sidebar .mat-mdc-nav-list {
+.ai-frontline-sidebar .mat-mdc-nav-list {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -369,42 +369,35 @@ $preview-w: 340px;
 }
 
 // ============================================
-// Inbox Shell — 3-Column Layout
+// Inbox Shell — CSS Grid 3-Column Layout
 // ============================================
-.inbox-shell {
+.ai-frontline-grid {
   display: grid;
   grid-template-columns: $sidebar-w minmax(0, 1fr) $preview-w;
-  gap: 0;
+  gap: 16px;
   max-width: $bp-desktop;
   margin: 0 auto 48px;
-  min-height: 560px;
-  border-radius: 24px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(16px) saturate(140%);
-  overflow: hidden;
-
-  &--empty {
-    grid-template-columns: $sidebar-w minmax(0, 1fr);
-    .inbox-preview {
-      display: none;
-    }
-  }
+  align-items: start;
 }
 
 // ============================================
-// Sidebar
+// Sidebar — mat-card glass panel
 // ============================================
-.inbox-sidebar {
+.ai-frontline-sidebar {
   padding: 20px 16px;
-  border-right: 1px solid var(--glass-border);
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: 0 22px 70px rgba(34, 28, 18, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
+  border-radius: 26px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
+  gap: 16px;
+  position: sticky;
+  top: 96px;
+  align-self: start;
   max-height: 70vh;
+  overflow-y: auto;
 }
 
 .inbox-sidebar__section {
@@ -424,12 +417,11 @@ $preview-w: 340px;
 // ============================================
 // Inbox List (middle column)
 // ============================================
-.inbox-list {
-  border-right: 1px solid var(--glass-border);
-  overflow-y: auto;
-  max-height: 70vh;
-  display: flex;
-  flex-direction: column;
+.ai-frontline-list {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  align-self: start;
 }
 
 .inbox-items {
@@ -529,24 +521,28 @@ $preview-w: 340px;
 }
 
 // ============================================
-// Inbox Preview (right panel) — Glass Card
+// Inbox Preview (right panel) — mat-card glass
 // ============================================
-.inbox-preview {
+.ai-frontline-preview {
   padding: 24px 20px;
-  overflow-y: auto;
-  max-height: 70vh;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.32));
-  border-radius: 0;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: 0 22px 70px rgba(34, 28, 18, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
+  position: sticky;
+  top: 112px;
+  align-self: start;
   display: flex;
   flex-direction: column;
 
-  &__content {
+  .inbox-preview__content {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  &__category {
+  .inbox-preview__category {
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
@@ -585,7 +581,7 @@ $preview-w: 340px;
     }
   }
 
-  &__title {
+  .inbox-preview__title {
     margin: 0;
     font-size: 18px;
     font-weight: 700;
@@ -593,14 +589,14 @@ $preview-w: 340px;
     color: var(--color-text);
   }
 
-  &__summary {
+  .inbox-preview__summary {
     font-size: 14px;
     line-height: 1.8;
     color: var(--color-text-secondary);
     margin: 0;
   }
 
-  &__meta {
+  .inbox-preview__meta {
     display: flex;
     gap: 16px;
     align-items: center;
@@ -609,11 +605,11 @@ $preview-w: 340px;
     padding-top: 8px;
   }
 
-  &__link {
+  .inbox-preview__link {
     margin-top: 8px;
   }
 
-  &__empty {
+  .inbox-preview__empty {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -736,15 +732,11 @@ $preview-w: 340px;
 
 // Tablet: hide preview panel
 @media (max-width: $bp-preview-hide) {
-  .inbox-shell {
+  .ai-frontline-grid {
     grid-template-columns: $sidebar-w minmax(0, 1fr);
-
-    &--empty {
-      grid-template-columns: $sidebar-w minmax(0, 1fr);
-    }
   }
 
-  .inbox-preview {
+  .ai-frontline-preview {
     display: none;
   }
 }
@@ -777,19 +769,16 @@ $preview-w: 340px;
     display: block;
   }
 
-  .inbox-shell {
+  .ai-frontline-grid {
     grid-template-columns: 1fr;
-    border-radius: 18px;
+  }
+
+  .ai-frontline-sidebar {
     min-height: auto;
   }
 
-  .inbox-sidebar {
-    display: none;
-  }
-
-  .inbox-list {
-    border-right: none;
-    max-height: none;
+  .ai-frontline-list {
+    width: 100%;
   }
 
   .inbox-item__title {
@@ -800,7 +789,7 @@ $preview-w: 340px;
     font-size: 11px;
   }
 
-  .inbox-preview {
+  .ai-frontline-preview {
     display: none;
   }
 }

@@ -1,0 +1,35 @@
+<div class="earth-flyline-wrapper">
+  <!-- Three.js Globe Canvas -->
+  <app-three-canvas [sceneFactory]="sceneFactory" />
+
+  <!-- Overlay Content -->
+  <div class="earth-flyline-overlay">
+    <!-- Left panel -->
+    <div class="left-panel">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <p class="info-label">Research Nodes</p>
+          <p class="info-value">12</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Center content -->
+    <div class="center-content">
+      <p class="ef-telemetry">{{ t('homeEarthFlyline.telemetry') }}</p>
+      <h2 class="ef-title">{{ t('homeEarthFlyline.title') }}</h2>
+      <p class="ef-subtitle">{{ t('homeEarthFlyline.subtitle') }}</p>
+      <p class="ef-desc">{{ t('homeEarthFlyline.desc') }}</p>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <p class="info-label">Active Links</p>
+          <p class="info-value">14</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
