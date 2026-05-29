@@ -1,56 +1,93 @@
-<div class="about-page">
-  <div class="container">
-    <!-- Header -->
-    <div class="about-header">
-      <h1 class="about-header__title">{{ t('about.title') }}</h1>
-      <p class="about-header__bio">
-        {{ t('about.bio') }}
-      </p>
+<main class="about-page">
+  <!-- Hero: Digital Identity Capsule -->
+  <section class="about-hero">
+    <div class="about-profile-card">
+      <div class="profile-card__avatar-wrap">
+        <img class="profile-card__avatar" [src]="avatar" [alt]="name" />
+      </div>
+      <h2 class="profile-card__name">{{ name }}</h2>
+      <p class="profile-card__role">Frontend / Full-stack / AI</p>
+      <div class="profile-card__status">
+        <span class="status-dot"></span>
+        {{ t('about.status') }}
+      </div>
+      <div class="profile-card__github">
+        <span class="profile-card__github-label">{{ t('about.github') }}:</span>
+        <span class="profile-card__github-user">Wanfeng1028</span>
+      </div>
     </div>
 
-    <!-- Current Focus -->
-    <section class="about-section">
-      <h2 class="about-section__title">{{ t('about.currentFocus') }}</h2>
-      <div class="focus-grid">
-        @for (area of focusAreas(); track area.title) {
-          <div class="focus-card glass-card-hover">
-            <span class="focus-card__icon">{{ area.icon }}</span>
-            <h3 class="focus-card__title">{{ area.title }}</h3>
-            <p class="focus-card__desc">{{ area.desc }}</p>
-          </div>
-        }
+    <div class="about-intro">
+      <span class="about-intro__kicker">{{ t('about.kicker') }}</span>
+      <h1 class="about-intro__title">{{ t('about.title') }}</h1>
+      <p class="about-intro__subtitle">{{ t('about.subtitle') }}</p>
+      <p class="about-intro__desc">{{ t('about.description') }}</p>
+      <div class="about-intro__actions">
+        <a class="btn btn--primary" [href]="github" target="_blank" rel="noopener">
+          {{ t('about.viewGithub') }}
+        </a>
+        <a class="btn btn--ghost" [href]="'mailto:' + email">
+          {{ t('about.contactMe') }}
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Skills -->
-    <section class="about-section">
-      <h2 class="about-section__title">{{ t('about.skills') }}</h2>
-      <div class="skills-list">
-        @for (skill of skills; track skill) {
-          <span class="skill-tag">{{ skill }}</span>
-        }
-      </div>
-    </section>
+  <!-- Focus: Current Focus Areas -->
+  <section class="about-focus">
+    <h2 class="about-section-title">{{ t('about.focusTitle') }}</h2>
+    <div class="focus-grid">
+      @for (area of focusAreas; track area.key) {
+        <div class="focus-card">
+          <span class="focus-card__icon">{{ area.icon }}</span>
+          <h3 class="focus-card__title">{{ t('about.focus.' + area.key + '.title') }}</h3>
+          <p class="focus-card__desc">{{ t('about.focus.' + area.key + '.desc') }}</p>
+        </div>
+      }
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section class="about-section">
-      <h2 class="about-section__title">{{ t('about.contact') }}</h2>
-      <div class="contact-list">
-        @for (contact of contacts; track contact.label) {
-          <a
-            class="contact-item glass-card-hover"
-            [href]="contact.href"
-            target="_blank"
-            rel="noopener"
-          >
-            <span class="contact-item__icon">{{ contact.icon }}</span>
-            <div class="contact-item__info">
-              <span class="contact-item__label">{{ contact.label }}</span>
-              <span class="contact-item__value">{{ contact.value }}</span>
-            </div>
-          </a>
-        }
+  <!-- SpaceLab: What is SpaceLab -->
+  <section class="about-spacelab">
+    <h2 class="about-section-title">{{ t('about.spacelabTitle') }}</h2>
+    <p class="about-spacelab__desc">{{ t('about.spacelabDesc') }}</p>
+    <div class="module-grid">
+      @for (mod of spacelabModules; track mod.key) {
+        <div class="module-card">
+          <span class="module-card__icon">{{ mod.icon }}</span>
+          <h3 class="module-card__title">{{ t('about.module.' + mod.key + '.title') }}</h3>
+          <p class="module-card__desc">{{ t('about.module.' + mod.key + '.desc') }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="about-contact">
+    <h2 class="about-section-title">{{ t('about.contactTitle') }}</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="contact-item__icon">🐙</span>
+        <div class="contact-item__info">
+          <span class="contact-item__label">{{ t('about.github') }}</span>
+          <span class="contact-item__value">Wanfeng1028</span>
+        </div>
       </div>
-    </section>
-  </div>
-</div>
+      <div class="contact-item">
+        <span class="contact-item__icon">✉️</span>
+        <div class="contact-item__info">
+          <span class="contact-item__label">{{ t('about.email') }}</span>
+          <span class="contact-item__value">{{ email }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-actions">
+      <a class="btn btn--primary" [href]="github" target="_blank" rel="noopener">
+        {{ t('about.openGithub') }}
+      </a>
+      <a class="btn btn--ghost" [href]="'mailto:' + email">
+        {{ t('about.sendEmail') }}
+      </a>
+    </div>
+  </section>
+</main>

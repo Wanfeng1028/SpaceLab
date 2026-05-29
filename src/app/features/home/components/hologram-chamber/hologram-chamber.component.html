@@ -9,8 +9,8 @@
     <!-- Centered Header -->
     <div class="hologram-header">
       <span class="hologram-header__number">04</span>
-      <h2 class="hologram-header__title">Hologram<br />Chamber</h2>
-      <p class="hologram-header__subtitle">Volumetric display &amp; spatial reconstruction</p>
+      <h2 class="hologram-header__title" [innerHTML]="t('hologramChamber.title')"></h2>
+      <p class="hologram-header__subtitle">{{ t('hologramChamber.subtitle') }}</p>
     </div>
 
     <!-- Display Info (bottom-left) -->

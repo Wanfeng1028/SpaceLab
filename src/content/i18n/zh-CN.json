@@ -401,17 +401,38 @@
     "contactMe": "联系我",
     "focusTitle": "当前关注方向",
     "focus": {
-      "ai": { "title": "AI / LLM 应用开发", "desc": "关注大语言模型、AI 工具链、智能体应用和 AI 产品形态，尝试把 AI 能力接入真实的 Web 场景。" },
-      "gis": { "title": "GIS 与空间数据", "desc": "关注地图、遥感、空间数据处理和地理可视化，希望把 GIS 能力和前端交互体验结合起来。" },
-      "algorithm": { "title": "算法与数据可视化", "desc": "关注算法逻辑、数据表达和可视化呈现，让复杂信息以更清晰、更直观的方式被理解。" },
-      "fullstack": { "title": "Web 全栈开发", "desc": "从前端工程出发，逐步拓展到 Node.js、数据库、内容系统、部署和自动化工作流。" },
-      "resource": { "title": "资源整理与前沿追踪", "desc": "持续整理 AI 新闻、AI 工具、开源项目和技术资源，把 SpaceLab 建设成可长期更新的资源合集站。" }
+      "ai": {
+        "title": "AI / LLM 应用开发",
+        "desc": "关注大语言模型、AI 工具链、智能体应用和 AI 产品形态，尝试把 AI 能力接入真实的 Web 场景。"
+      },
+      "gis": {
+        "title": "GIS 与空间数据",
+        "desc": "关注地图、遥感、空间数据处理和地理可视化，希望把 GIS 能力和前端交互体验结合起来。"
+      },
+      "algorithm": {
+        "title": "算法与数据可视化",
+        "desc": "关注算法逻辑、数据表达和可视化呈现，让复杂信息以更清晰、更直观的方式被理解。"
+      },
+      "fullstack": {
+        "title": "Web 全栈开发",
+        "desc": "从前端工程出发，逐步拓展到 Node.js、数据库、内容系统、部署和自动化工作流。"
+      },
+      "resource": {
+        "title": "资源整理与前沿追踪",
+        "desc": "持续整理 AI 新闻、AI 工具、开源项目和技术资源，把 SpaceLab 建设成可长期更新的资源合集站。"
+      }
     },
     "spacelabTitle": "SpaceLab 是什么？",
     "spacelabDesc": "SpaceLab 对我来说不是单纯的作品集，也不是普通博客。它更像一个个人资源合集站：一边展示我正在做的项目和实验，一边持续整理 AI 前线、AI 工具、项目框架、技术文章和可视化灵感。",
     "module": {
-      "aiFrontline": { "title": "AI 前线", "desc": "每日追踪 AI 新闻、模型、产品、融资和开源动态。" },
-      "lab": { "title": "AI 资源实验室", "desc": "整理 AI 工具、AI 项目和框架，形成可检索的资源入口。" },
+      "aiFrontline": {
+        "title": "AI 前线",
+        "desc": "每日追踪 AI 新闻、模型、产品、融资和开源动态。"
+      },
+      "lab": {
+        "title": "AI 资源实验室",
+        "desc": "整理 AI 工具、AI 项目和框架，形成可检索的资源入口。"
+      },
       "projects": { "title": "项目展示", "desc": "同步 GitHub 仓库，展示我正在构建和维护的项目。" },
       "articles": { "title": "技术文章", "desc": "记录前端、AI、GIS、算法、部署和工程实践。" }
     },

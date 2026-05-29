@@ -11,6 +11,7 @@ import {
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { HologramChamberScene } from '../../../../three/scenes/hologram-chamber.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-hologram-chamber',
@@ -21,18 +22,23 @@ import { HologramChamberScene } from '../../../../three/scenes/hologram-chamber.
 })
 export class HologramChamberSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly i18n = inject(I18nService);
 
   private scene: HologramChamberScene | null = null;
 
-  readonly telemetryText = signal('HOLOGRAM CHAMBER // HOVER TO INTERACT');
+  readonly telemetryText = signal('');
 
   readonly hologramFactory = (canvas: HTMLCanvasElement) => {
     this.scene = new HologramChamberScene(canvas);
     return this.scene;
   };
 
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
+
   ngOnInit(): void {
-    this.telemetryText.set('HOLOGRAM CHAMBER // VOLUMETRIC DISPLAY ACTIVE');
+    this.telemetryText.set(this.i18n.t('hologramChamber.telemetryActive'));
   }
 
   ngOnDestroy(): void {

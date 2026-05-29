@@ -57,18 +57,20 @@
   <!-- Status indicator -->
   @if (searchQuery() && selectedCategory() !== 'all') {
     <div class="lab-status">
-      正在搜索 "<strong>{{ searchQuery() }}</strong
-      >" · 当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
+      {{ t('common.searching') }} "<strong>{{ searchQuery() }}</strong
+      >" · {{ t('common.currentFilter') }} "<strong>{{
+        getCategoryLabel(selectedCategory())
+      }}</strong
       >"
     </div>
   } @else if (searchQuery()) {
     <div class="lab-status">
-      正在搜索 "<strong>{{ searchQuery() }}</strong
+      {{ t('common.searching') }} "<strong>{{ searchQuery() }}</strong
       >"
     </div>
   } @else if (selectedCategory() !== 'all') {
     <div class="lab-status">
-      当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
+      {{ t('common.currentFilter') }} "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
       >"
     </div>
   }
@@ -87,13 +89,19 @@
         <p>{{ t('lab.noResults') }}</p>
         <div class="lab-empty__actions">
           @if (searchQuery()) {
-            <button class="lab-clear-btn" (click)="clearSearch()">清除搜索</button>
+            <button class="lab-clear-btn" (click)="clearSearch()">
+              {{ t('common.clearSearch') }}
+            </button>
           }
           @if (selectedCategory() !== 'all') {
-            <button class="lab-clear-btn" (click)="clearFilters()">清除筛选</button>
+            <button class="lab-clear-btn" (click)="clearFilters()">
+              {{ t('common.clearFilter') }}
+            </button>
           }
           @if (searchQuery() || selectedCategory() !== 'all') {
-            <button class="lab-clear-btn lab-clear-btn--all" (click)="clearAll()">清除全部</button>
+            <button class="lab-clear-btn lab-clear-btn--all" (click)="clearAll()">
+              {{ t('common.clearAll') }}
+            </button>
           }
         </div>
       </div>

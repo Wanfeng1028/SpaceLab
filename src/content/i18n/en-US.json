@@ -401,19 +401,46 @@
     "contactMe": "Contact Me",
     "focusTitle": "Current Focus",
     "focus": {
-      "ai": { "title": "AI / LLM Application Development", "desc": "Exploring large language models, AI toolchains, agents and product-level AI experiences for real Web scenarios." },
-      "gis": { "title": "GIS & Spatial Data", "desc": "Focusing on maps, remote sensing, spatial data processing and geographic visualization through interactive Web interfaces." },
-      "algorithm": { "title": "Algorithms & Data Visualization", "desc": "Turning algorithmic logic and complex data into clear, understandable and interactive visual experiences." },
-      "fullstack": { "title": "Web Full-stack Development", "desc": "Starting from frontend engineering and expanding into Node.js, databases, content systems, deployment and automation workflows." },
-      "resource": { "title": "Resource Curation & Frontier Tracking", "desc": "Curating AI news, tools, open-source projects and technical resources into a long-term resource hub." }
+      "ai": {
+        "title": "AI / LLM Application Development",
+        "desc": "Exploring large language models, AI toolchains, agents and product-level AI experiences for real Web scenarios."
+      },
+      "gis": {
+        "title": "GIS & Spatial Data",
+        "desc": "Focusing on maps, remote sensing, spatial data processing and geographic visualization through interactive Web interfaces."
+      },
+      "algorithm": {
+        "title": "Algorithms & Data Visualization",
+        "desc": "Turning algorithmic logic and complex data into clear, understandable and interactive visual experiences."
+      },
+      "fullstack": {
+        "title": "Web Full-stack Development",
+        "desc": "Starting from frontend engineering and expanding into Node.js, databases, content systems, deployment and automation workflows."
+      },
+      "resource": {
+        "title": "Resource Curation & Frontier Tracking",
+        "desc": "Curating AI news, tools, open-source projects and technical resources into a long-term resource hub."
+      }
     },
     "spacelabTitle": "What is SpaceLab?",
     "spacelabDesc": "SpaceLab is not just a portfolio or a traditional blog. It is a personal resource hub where I collect AI signals, tools, frameworks, technical notes, GitHub projects and visual experiments.",
     "module": {
-      "aiFrontline": { "title": "AI Frontline", "desc": "Tracking AI news, models, products, funding and open-source signals." },
-      "lab": { "title": "AI Resource Lab", "desc": "Curating AI tools, projects and frameworks into a searchable resource entry." },
-      "projects": { "title": "Projects", "desc": "Syncing GitHub repositories and showcasing what I am building." },
-      "articles": { "title": "Articles", "desc": "Notes on frontend, AI, GIS, algorithms, deployment and engineering practice." }
+      "aiFrontline": {
+        "title": "AI Frontline",
+        "desc": "Tracking AI news, models, products, funding and open-source signals."
+      },
+      "lab": {
+        "title": "AI Resource Lab",
+        "desc": "Curating AI tools, projects and frameworks into a searchable resource entry."
+      },
+      "projects": {
+        "title": "Projects",
+        "desc": "Syncing GitHub repositories and showcasing what I am building."
+      },
+      "articles": {
+        "title": "Articles",
+        "desc": "Notes on frontend, AI, GIS, algorithms, deployment and engineering practice."
+      }
     },
     "contactTitle": "Contact",
     "email": "Email",

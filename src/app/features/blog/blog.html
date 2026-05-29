@@ -35,7 +35,7 @@
     <div class="blog-search-status">
       @if (searchQuery()) {
         <span
-          >正在搜索 "<strong>{{ searchQuery() }}</strong
+          >{{ t('common.searching') }} "<strong>{{ searchQuery() }}</strong
           >"</span
         >
       }
@@ -44,7 +44,9 @@
       }
       @if (selectedCategory() !== 'all') {
         <span
-          >当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
+          >{{ t('common.currentFilter') }} "<strong>{{
+            getCategoryLabel(selectedCategory())
+          }}</strong
           >"</span
         >
       }
@@ -72,13 +74,19 @@
       <p>{{ t('blog.noArticles') }}</p>
       <div class="blog-empty__actions">
         @if (searchQuery()) {
-          <button class="space-button space-button--sm" (click)="clearSearch()">清除搜索</button>
+          <button class="space-button space-button--sm" (click)="clearSearch()">
+            {{ t('common.clearSearch') }}
+          </button>
         }
         @if (selectedCategory() !== 'all') {
-          <button class="space-button space-button--sm" (click)="clearFilters()">清除筛选</button>
+          <button class="space-button space-button--sm" (click)="clearFilters()">
+            {{ t('common.clearFilter') }}
+          </button>
         }
         @if (searchQuery() && selectedCategory() !== 'all') {
-          <button class="space-button space-button--sm" (click)="clearAll()">清除全部</button>
+          <button class="space-button space-button--sm" (click)="clearAll()">
+            {{ t('common.clearAll') }}
+          </button>
         }
       </div>
     </div>

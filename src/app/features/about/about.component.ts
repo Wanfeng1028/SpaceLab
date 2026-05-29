@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { PROFILE } from '../../../generated/content.generated';
 
@@ -11,39 +11,25 @@ import { PROFILE } from '../../../generated/content.generated';
 export class AboutComponent {
   private i18n = inject(I18nService);
 
-  readonly skills = PROFILE.skills;
+  readonly avatar = PROFILE.avatar;
+  readonly name = PROFILE.name;
+  readonly github = PROFILE.github;
+  readonly email = PROFILE.email;
 
-  private readonly areaData = [
-    { key: 'area0', icon: '🌐', tags: ['Angular / React', 'Node.js'] },
-    { key: 'area1', icon: '🎨', tags: ['Three.js', 'WebGL'] },
-    { key: 'area2', icon: '✨', tags: ['GSAP', 'CSS'] },
-    { key: 'area3', icon: '📐', tags: ['Glassmorphism'], tagKeys: ['about.area3_tag1'] },
-  ];
+  readonly focusAreas = [
+    { key: 'ai', icon: '🧠' },
+    { key: 'gis', icon: '🌍' },
+    { key: 'algorithm', icon: '📊' },
+    { key: 'fullstack', icon: '💻' },
+    { key: 'resource', icon: '🗄️' },
+  ] as const;
 
-  readonly focusAreas = computed(() =>
-    this.areaData.map((a) => ({
-      title: this.i18n.t(`about.${a.key}_title`),
-      desc: this.i18n.t(`about.${a.key}_desc`),
-      icon: a.icon,
-      tags: [...a.tags, ...(a.tagKeys ?? []).map((k) => this.i18n.t(k))],
-    })),
-  );
-
-  readonly contacts = [
-    ...(PROFILE.email
-      ? [{ icon: '✉️', label: 'Email', value: PROFILE.email, href: `mailto:${PROFILE.email}` }]
-      : []),
-    ...(PROFILE.github
-      ? [
-          {
-            icon: '🐙',
-            label: 'GitHub',
-            value: PROFILE.github.split('/').pop() ?? '',
-            href: PROFILE.github,
-          },
-        ]
-      : []),
-  ];
+  readonly spacelabModules = [
+    { key: 'aiFrontline', icon: '📡' },
+    { key: 'lab', icon: '🧪' },
+    { key: 'projects', icon: '🚀' },
+    { key: 'articles', icon: '📝' },
+  ] as const;
 
   t(key: string): string {
     return this.i18n.t(key);

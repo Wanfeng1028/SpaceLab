@@ -9,7 +9,7 @@
   <!-- Search -->
   <section class="projects-search-section">
     <app-search-box
-      [placeholder]="'搜索项目...'"
+      [placeholder]="t('projects.searchPlaceholder')"
       [value]="searchQuery()"
       (valueChange)="searchQuery.set($event)"
     />
@@ -34,7 +34,9 @@
   <!-- Status indicator -->
   @if (searchQuery() && selectedFilter() !== 'all') {
     <div class="projects-status">
-      正在搜索 "{{ searchQuery() }}" · 当前筛选 "{{ selectedFilter() }}"
+      {{ t('common.searching') }} "{{ searchQuery() }}" · {{ t('common.currentFilter') }} "{{
+        selectedFilter()
+      }}"
     </div>
   }
 
@@ -48,16 +50,18 @@
   } @else {
     <div class="projects-empty">
       <span class="projects-empty__icon">📭</span>
-      <p>没有找到匹配内容</p>
+      <p>{{ t('common.noResults') }}</p>
       <div class="projects-empty__actions">
         @if (searchQuery()) {
-          <button class="filter-chip" (click)="clearSearch()">清除搜索</button>
+          <button class="filter-chip" (click)="clearSearch()">{{ t('common.clearSearch') }}</button>
         }
         @if (selectedFilter() !== 'all') {
-          <button class="filter-chip" (click)="clearFilters()">清除筛选</button>
+          <button class="filter-chip" (click)="clearFilters()">
+            {{ t('common.clearFilter') }}
+          </button>
         }
         @if (searchQuery() && selectedFilter() !== 'all') {
-          <button class="filter-chip" (click)="clearAll()">清除全部</button>
+          <button class="filter-chip" (click)="clearAll()">{{ t('common.clearAll') }}</button>
         }
       </div>
     </div>

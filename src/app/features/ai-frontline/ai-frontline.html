@@ -108,16 +108,22 @@
       } @else if (filteredNews().length === 0) {
         <div class="empty-state">
           <div class="empty-icon">📡</div>
-          <p>没有找到匹配内容</p>
+          <p>{{ t('common.noResults') }}</p>
           @if (searchQuery() || selectedCategory() !== 'all') {
             <div class="empty-actions">
               @if (searchQuery()) {
-                <button class="clear-btn" (click)="clearSearch()">清除搜索</button>
+                <button class="clear-btn" (click)="clearSearch()">
+                  {{ t('common.clearSearch') }}
+                </button>
               }
               @if (selectedCategory() !== 'all') {
-                <button class="clear-btn" (click)="clearFilters()">清除筛选</button>
+                <button class="clear-btn" (click)="clearFilters()">
+                  {{ t('common.clearFilter') }}
+                </button>
               }
-              <button class="clear-btn clear-btn--all" (click)="clearAll()">清除全部</button>
+              <button class="clear-btn clear-btn--all" (click)="clearAll()">
+                {{ t('common.clearAll') }}
+              </button>
             </div>
           }
         </div>
@@ -125,7 +131,9 @@
         <!-- Active filter status -->
         @if (searchQuery() && selectedCategory() !== 'all') {
           <div class="search-status">
-            正在搜索 "{{ searchQuery() }}" · 当前分类 "{{ getCategoryLabel(selectedCategory()) }}"
+            {{ t('common.searching') }} "{{ searchQuery() }}" · {{ t('common.currentFilter') }} "{{
+              getCategoryLabel(selectedCategory())
+            }}"
           </div>
         }
         <!-- Timeline -->
@@ -135,7 +143,9 @@
               <div class="date-marker">
                 <span class="date-dot"></span>
                 <span class="date-label">{{ formatDate(group[0]) }}</span>
-                <span class="date-count">{{ group[1].length }} {{ t('common.itemsCount') }}</span>
+                <span class="date-count"
+                  >{{ group[1].length }} {{ t('aiFrontline.itemsCount') }}</span
+                >
               </div>
 
               <div class="news-cards">
