@@ -331,6 +331,122 @@ $preview-w: 340px;
 }
 
 // ============================================
+// Angular Material Overrides — Glass Style
+// ============================================
+
+// mat-card as inbox-item
+.inbox-item.mat-mdc-card {
+  --mdc-elevated-card-container-shape: 0;
+  --mdc-outlined-card-container-shape: 0;
+  --mdc-outlined-card-outline-color: rgba(0, 0, 0, 0.04);
+  --mdc-elevated-card-container-color: transparent;
+
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background 180ms;
+  color: var(--color-text);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  &.is-selected {
+    background: linear-gradient(135deg, rgba(105, 215, 255, 0.1), rgba(143, 124, 255, 0.12));
+    border-left: 3px solid var(--color-cyan);
+    padding-left: 13px;
+  }
+
+  .mdc-card__content {
+    padding: 14px 16px;
+  }
+}
+
+// mat-chip-set / mat-chip as tags
+.inbox-item__tags.mat-mdc-chip-set,
+.inbox-preview__tags.mat-mdc-chip-set {
+  padding: 0;
+  gap: 6px;
+
+  .inbox-item__tag.mat-mdc-chip,
+  .inbox-preview__tag.mat-mdc-chip {
+    --mdc-chip-elevated-container-color: rgba(0, 0, 0, 0.05);
+    --mdc-chip-label-text-color: var(--color-text-secondary);
+    --mdc-chip-label-text-size: 12px;
+    --mdc-chip-container-shape: 999px;
+    --mdc-chip-container-height: 24px;
+    min-height: 24px;
+  }
+}
+
+// mat-nav-list as sidebar nav
+.inbox-sidebar .mat-mdc-nav-list {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .inbox-sidebar__item.mat-mdc-list-item {
+    --mdc-list-list-item-one-line-container-height: 34px;
+    --mdc-list-list-item-label-text-size: 13px;
+    --mdc-list-list-item-label-text-color: var(--color-text-secondary);
+    --mdc-list-list-item-hover-label-text-color: var(--color-text);
+    border-radius: 10px;
+    padding: 7px 10px;
+    cursor: pointer;
+    text-align: left;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    &.is-active {
+      background: linear-gradient(135deg, rgba(105, 215, 255, 0.15), rgba(143, 124, 255, 0.2));
+      --mdc-list-list-item-label-text-color: var(--color-text);
+      font-weight: 600;
+    }
+  }
+}
+
+// mat-stroked-button overrides
+.inbox-sidebar__reset.mat-mdc-outlined-button,
+.inbox-clear-btn.mat-mdc-outlined-button,
+.retry-btn.mat-mdc-outlined-button {
+  --mdc-outlined-button-outline-color: var(--glass-border);
+  --mdc-outlined-button-label-text-color: var(--color-text-secondary);
+  --mdc-outlined-button-label-text-size: 12px;
+  border-radius: 10px;
+  min-height: 34px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+    --mdc-outlined-button-label-text-color: var(--color-text);
+  }
+}
+
+.inbox-preview__link.mat-mdc-outlined-button {
+  --mdc-outlined-button-outline-color: var(--glass-border);
+  --mdc-outlined-button-label-text-color: var(--color-text-secondary);
+  --mdc-outlined-button-label-text-size: 13px;
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 0 18px;
+
+  &:hover {
+    background: rgba(105, 215, 255, 0.1);
+    --mdc-outlined-button-outline-color: rgba(105, 215, 255, 0.25);
+    --mdc-outlined-button-label-text-color: var(--color-text);
+  }
+
+  .mdc-button__icon {
+    margin-left: 4px;
+  }
+}
+
+// ============================================
 // Inbox Shell — 3-Column Layout
 // ============================================
 .inbox-shell {
