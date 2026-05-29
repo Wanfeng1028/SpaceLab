@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, OnInit, OnDestroy, inject } from '@angular/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { EclipseCoreScene } from '../../../../three/scenes/eclipse-core.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 interface ScaleTick {
   value: number;
@@ -18,7 +19,9 @@ interface ScaleTick {
   imports: [ThreeCanvasComponent, HudFrameComponent, HudMetricComponent, TelemetryBarComponent],
 })
 export class EclipseObservatorySection implements OnInit, OnDestroy {
-  readonly telemetryText = signal('ECLIPSE OBSERVATORY // STANDBY');
+  private readonly i18n = inject(I18nService);
+
+  readonly telemetryText = signal('');
 
   readonly scaleTicks: ScaleTick[] = Array.from({ length: 24 }, (_, i) => ({
     value: i * 15,
@@ -29,8 +32,12 @@ export class EclipseObservatorySection implements OnInit, OnDestroy {
 
   readonly eclipseFactory = (canvas: HTMLCanvasElement) => new EclipseCoreScene(canvas);
 
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
+
   ngOnInit(): void {
-    this.telemetryText.set('ECLIPSE OBSERVATORY // CALIBRATING OPTICS');
+    this.telemetryText.set(this.i18n.t('eclipseObservatory.telemetryCalibrating'));
   }
 
   ngOnDestroy(): void {
