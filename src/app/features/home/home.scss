@@ -1530,32 +1530,41 @@
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
+  background: #050b14;
+}
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(3, 7, 18, 0.78) 0%,
-      rgba(3, 7, 18, 0.58) 42%,
-      rgba(3, 7, 18, 0.86) 100%
-    ),
-    url('/cockpit-dashboard-bg.png') center center / cover no-repeat;
+.cockpit-bg-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/cockpit-dashboard-bg.png');
+  background-repeat: no-repeat;
+  background-position: center 46%;
+  background-size: min(150vw, 1900px) auto;
+  opacity: 0.9;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(circle at 50% 28%, rgba(105, 215, 255, 0.16), transparent 34%),
-      linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42));
-    z-index: 0;
+      radial-gradient(circle at 50% 28%, rgba(105, 215, 255, 0.08), transparent 34%),
+      linear-gradient(180deg, rgba(5, 11, 20, 0.12), rgba(5, 11, 20, 0.28));
   }
 }
 
 @media (max-width: 768px) {
   .cockpit-dashboard-section {
+    min-height: auto;
+    padding: 88px 16px 48px;
+  }
+
+  .cockpit-bg-frame {
+    background-size: auto 100%;
     background-position: center top;
-    padding: 88px 16px 40px;
+    opacity: 0.72;
   }
 }
 

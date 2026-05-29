@@ -24,17 +24,30 @@ $sans: var(--font-sans);
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  background: url('/cockpit-dashboard-bg.png') center center / cover no-repeat;
+  background: #050b14;
+}
 
-  &::before {
+// ── Background image layer ───────────────────────────────────────────
+.cockpit-bg-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/cockpit-dashboard-bg.png');
+  background-repeat: no-repeat;
+  background-position: 58% 46%;
+  background-size: min(135vw, 1700px) auto;
+  opacity: 0.9;
+
+  &::after {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
     background:
       radial-gradient(circle at 50% 30%, rgba(105, 215, 255, 0.08), transparent 36%),
-      radial-gradient(circle at 70% 72%, rgba(143, 124, 255, 0.06), transparent 34%);
+      radial-gradient(circle at 70% 72%, rgba(143, 124, 255, 0.06), transparent 34%),
+      linear-gradient(180deg, rgba(5, 11, 20, 0.12), rgba(5, 11, 20, 0.28));
   }
 }
 
@@ -47,6 +60,19 @@ $sans: var(--font-sans);
   padding: 112px 32px 72px;
   display: flex;
   flex-direction: column;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 72px auto auto 50%;
+    width: min(900px, 86vw);
+    height: 720px;
+    transform: translateX(-50%);
+    border-radius: 48px;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(5, 11, 20, 0.28), transparent 70%);
+    z-index: -1;
+  }
 }
 
 // ── Three.js background ──────────────────────────────────────────────
@@ -110,11 +136,12 @@ $sans: var(--font-sans);
   align-items: center;
   justify-content: center;
   padding: 20px 12px;
-  background: $panel-bg;
-  border: 1px solid $panel-border;
+  background:
+    linear-gradient(135deg, rgba(5, 18, 40, 0.46), rgba(5, 18, 40, 0.26)), rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(105, 215, 255, 0.24);
   border-radius: 18px;
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
   box-shadow: $panel-shadow;
   text-decoration: none;
   color: inherit;
@@ -160,11 +187,12 @@ $sans: var(--font-sans);
 .cockpit-panel {
   border-radius: 22px;
   padding: 18px;
-  background: $panel-bg;
-  border: 1px solid $panel-border;
+  background:
+    linear-gradient(135deg, rgba(5, 18, 40, 0.46), rgba(5, 18, 40, 0.26)), rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(105, 215, 255, 0.24);
   box-shadow: $panel-shadow;
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
 
   &--log {
     .log-body {
@@ -586,8 +614,24 @@ app-telemetry-bar {
 
 // ── Mobile (< 768px) ─────────────────────────────────────────────────
 @media (max-width: 768px) {
+  .cockpit-bg-frame {
+    background-size: auto 100%;
+    background-position: 58% top;
+    opacity: 0.72;
+  }
+
+  .cockpit-dashboard {
+    min-height: auto;
+  }
+
   .cockpit-inner {
     padding: 88px 16px 48px;
+
+    &::before {
+      inset: 48px auto auto 50%;
+      width: min(90vw, 400px);
+      height: 480px;
+    }
   }
 
   .cockpit-header {

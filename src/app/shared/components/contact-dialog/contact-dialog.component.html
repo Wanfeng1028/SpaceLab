@@ -24,26 +24,35 @@
 
     <div class="contact-info">
       <div class="contact-row">
-        <span class="contact-icon">📧</span>
-        <span class="contact-label">{{ t('about.email') }}:</span>
-        <span class="contact-value">{{ email }}</span>
-      </div>
-      <div class="contact-row">
         <span class="contact-icon">💻</span>
         <span class="contact-label">{{ t('about.github') }}:</span>
         <span class="contact-value">{{ githubUser }}</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-icon">📧</span>
+        <span class="contact-label">{{ t('about.email') }}:</span>
+        <span class="contact-value">{{ email }}</span>
       </div>
     </div>
 
     <div class="contact-actions">
       <button mat-flat-button class="action-btn action-btn--primary" (click)="openGithub()">
+        <mat-icon>open_in_new</mat-icon>
         {{ t('about.openGithub') }}
       </button>
       <button mat-stroked-button class="action-btn" (click)="copyEmail()">
+        <mat-icon>content_copy</mat-icon>
         {{ t('about.copyEmail') }}
       </button>
       <button mat-stroked-button class="action-btn" (click)="sendEmail()">
+        <mat-icon>mail_outline</mat-icon>
         {{ t('about.sendEmail') }}
+      </button>
+    </div>
+
+    <div class="contact-dialog__footer">
+      <button mat-button class="close-btn" (click)="close()">
+        {{ t('about.close') }}
       </button>
     </div>
 

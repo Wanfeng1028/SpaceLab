@@ -23,218 +23,240 @@
     </div>
   </section>
 
-  <!-- Toolbar: Search (Material Form Field) -->
-  <section class="ai-frontline-toolbar">
-    <mat-form-field appearance="outline" class="ai-frontline-search-field">
-      <mat-icon matPrefix>search</mat-icon>
+  <!-- Tabs -->
+  <nav class="ai-frontline-tabs">
+    @for (cat of categories; track cat) {
+      <button
+        class="frontline-tab"
+        [class.is-active]="selectedCategory() === cat"
+        (click)="onCategoryChange(cat)"
+      >
+        @if (cat === 'all') {
+          {{ t('aiFrontline.allCategories') }}
+        } @else {
+          {{ getCategoryLabel(cat) }}
+        }
+        <span class="frontline-tab__count">{{ getCategoryCount(cat) }}</span>
+      </button>
+    }
+  </nav>
+
+  <!-- Search (pure CSS glass search — NOT Material) -->
+  <section class="ai-frontline-search-section">
+    <div class="search-bar" [class.is-focused]="searchFocused">
+      <span class="search-bar__icon">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </span>
       <input
-        matInput
+        class="search-bar__input"
         type="text"
         [placeholder]="t('aiFrontline.searchPlaceholder')"
         [value]="searchQuery()"
         (input)="onSearchChange($event)"
+        (focus)="searchFocused = true"
+        (blur)="searchFocused = false"
       />
-    </mat-form-field>
-  </section>
-
-  <!-- Filters (Material Chips + Buttons) -->
-  <section class="ai-frontline-filters">
-    <div class="ai-frontline-date-range">
-      @for (range of dateRangeOptions; track range) {
+      @if (searchQuery()) {
         <button
-          mat-stroked-button
-          class="ai-frontline-date-btn"
-          [class.is-active]="selectedDateRange() === range"
-          (click)="onDateRangeChange(range)"
+          class="search-bar__clear"
+          (click)="clearSearch()"
+          [attr.aria-label]="t('resourceInbox.clearSearch')"
         >
-          {{ getDateRangeLabel(range) }}
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
         </button>
       }
     </div>
-    <mat-chip-set class="ai-frontline-category-chips">
-      @for (cat of categories; track cat) {
-        <mat-chip [highlighted]="selectedCategory() === cat" (click)="onCategoryChange(cat)">
-          @if (cat === 'all') {
-            {{ t('aiFrontline.allCategories') }}
-          } @else {
-            {{ getCategoryLabel(cat) }}
-          }
-        </mat-chip>
-      }
-    </mat-chip-set>
+    <p class="search-meta">{{ filteredNews().length }} {{ t('resourceInbox.items') }}</p>
   </section>
 
-  <!-- Main Layout: Sidebar + Feed -->
-  <section class="ai-frontline-layout">
-    <!-- Sidebar -->
-    <aside class="ai-frontline-sidebar">
-      <div class="sidebar-section">
-        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarSource') }}</h3>
-        <p class="sidebar-text">{{ t('aiFrontline.sidebarSourceDesc') }}</p>
-        <a
-          href="https://ai-bot.cn/daily-ai-news/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="sidebar-link"
+  <!-- Mobile Filter Chips -->
+  <section class="ai-frontline-mobile-chips">
+    <div class="chip-scroll">
+      @for (range of sidebarDateRangeOptions; track range) {
+        <button
+          class="filter-chip"
+          [class.is-active]="selectedDateRange() === range"
+          (click)="onDateRangeChange(range)"
         >
-          {{ t('aiFrontline.sidebarVisitSource') }}
-        </a>
-      </div>
-
-      <div class="sidebar-section">
-        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarCategoryStats') }}</h3>
-        <div class="category-stats">
-          @for (cat of categories; track cat) {
-            @if (cat !== 'all') {
-              <div class="stat-item">
-                <span class="stat-label">{{ getCategoryLabel(cat) }}</span>
-                <span class="stat-count">{{ getCategoryCount(cat) }}</span>
-              </div>
-            }
-          }
-        </div>
-      </div>
-
-      <div class="sidebar-section">
-        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarUpdateFreq') }}</h3>
-        <p class="sidebar-text">{{ t('aiFrontline.sidebarUpdateDesc') }}</p>
-        <p class="sidebar-text sidebar-text--small">{{ t('aiFrontline.sidebarUpdateTimes') }}</p>
-      </div>
-    </aside>
-
-    <!-- News Feed -->
-    <div class="ai-frontline-feed">
-      @if (loading()) {
-        <div class="loading-state">
-          <mat-spinner diameter="48"></mat-spinner>
-          <p>{{ t('common.loading') }}</p>
-        </div>
-      } @else if (error()) {
-        <div class="error-state">
-          <p>{{ error() }}</p>
-          <button mat-flat-button class="retry-btn" (click)="loadNews()">
-            <span>{{ t('common.retry') }}</span>
-          </button>
-        </div>
-      } @else if (filteredNews().length === 0) {
-        <div class="empty-state">
-          <div class="empty-icon">📡</div>
-          <p>{{ t('common.noResults') }}</p>
-          @if (searchQuery() || selectedCategory() !== 'all') {
-            <div class="empty-actions">
-              @if (searchQuery()) {
-                <button mat-stroked-button class="clear-btn" (click)="clearSearch()">
-                  {{ t('common.clearSearch') }}
-                </button>
-              }
-              @if (selectedCategory() !== 'all') {
-                <button mat-stroked-button class="clear-btn" (click)="clearFilters()">
-                  {{ t('common.clearFilter') }}
-                </button>
-              }
-              <button mat-stroked-button class="clear-btn clear-btn--all" (click)="clearAll()">
-                {{ t('common.clearAll') }}
-              </button>
-            </div>
-          }
-        </div>
-      } @else {
-        <!-- Active filter status -->
-        @if (searchQuery() && selectedCategory() !== 'all') {
-          <div class="search-status">
-            {{ t('common.searching') }} "{{ searchQuery() }}" · {{ t('common.currentFilter') }} "{{
-              getCategoryLabel(selectedCategory())
-            }}"
-          </div>
-        }
-        <!-- Timeline -->
-        <div class="ai-frontline-timeline">
-          @for (group of paginatedGroupedNews(); track trackByDate($index, group)) {
-            <div class="date-group">
-              <div class="date-marker">
-                <span class="date-dot"></span>
-                <span class="date-label">{{ formatDate(group[0]) }}</span>
-                <span class="date-count"
-                  >{{ group[1].length }} {{ t('aiFrontline.itemsCount') }}</span
-                >
-              </div>
-
-              <div class="news-cards">
-                @for (item of group[1]; track trackByNews($index, item)) {
-                  <mat-card class="ai-news-card" [class]="'card-' + item.category">
-                    <div class="ai-news-card__meta">
-                      <span class="ai-news-card__category">{{
-                        getCategoryLabel(item.category)
-                      }}</span>
-                    </div>
-
-                    <h3 class="ai-news-card__title">{{ item.title }}</h3>
-
-                    <p class="ai-news-card__summary">{{ item.summary }}</p>
-
-                    <div class="ai-news-card__tags">
-                      @for (tag of item.tags.slice(0, 3); track tag) {
-                        <span class="ai-news-card__tag">{{ tag }}</span>
-                      }
-                    </div>
-
-                    <button
-                      mat-stroked-button
-                      class="ai-news-card__source-btn"
-                      (click)="openSource(item.url)"
-                    >
-                      <span>{{ t('aiFrontline.readSource') }}</span>
-                      <span class="btn-arrow">→</span>
-                    </button>
-                  </mat-card>
-                }
-              </div>
-            </div>
-          }
-        </div>
-
-        <!-- Pagination -->
-        @if (totalPages() > 1) {
-          <nav class="pagination">
-            <button
-              mat-stroked-button
-              class="pagination__btn"
-              [disabled]="currentPage() === 1"
-              (click)="prevPage()"
-            >
-              ‹
-            </button>
-            @for (p of pageNumbers(); track p) {
-              <button
-                mat-stroked-button
-                class="pagination__btn"
-                [class.is-active]="p === currentPage()"
-                (click)="goToPage(p)"
-              >
-                {{ p }}
-              </button>
-            }
-            <button
-              mat-stroked-button
-              class="pagination__btn"
-              [disabled]="currentPage() === totalPages()"
-              (click)="nextPage()"
-            >
-              ›
-            </button>
-            <span class="pagination__info">
-              {{ t('aiFrontline.pageInfo')
-                .replace('{{current
-
-              }}', currentPage() + '') .replace('{{ total }}', totalPages() + '') }}
-            </span>
-          </nav>
-        }
+          {{ sidebarDateLabel(range) }}
+        </button>
       }
     </div>
   </section>
 
-  <!-- Footer Disclaimer -->
+  <!-- Inbox Shell: 3-column layout -->
+  <section
+    class="inbox-shell"
+    [class.inbox-shell--empty]="filteredNews().length === 0 && !loading()"
+  >
+    <!-- Sidebar: Categories + Date Ranges -->
+    <aside class="inbox-sidebar">
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">{{ t('resourceInbox.categories') }}</h3>
+        <nav class="sidebar-nav">
+          @for (cat of categories; track cat) {
+            <button
+              class="sidebar-nav__item"
+              [class.is-active]="selectedCategory() === cat"
+              (click)="onCategoryChange(cat)"
+            >
+              <span class="sidebar-nav__label">
+                @if (cat === 'all') {
+                  {{ t('aiFrontline.allCategories') }}
+                } @else {
+                  {{ getCategoryLabel(cat) }}
+                }
+              </span>
+              <span class="sidebar-nav__badge">{{ getCategoryCount(cat) }}</span>
+            </button>
+          }
+        </nav>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">{{ t('resourceInbox.dateRange') }}</h3>
+        <nav class="sidebar-nav">
+          @for (range of sidebarDateRangeOptions; track range) {
+            <button
+              class="sidebar-nav__item"
+              [class.is-active]="selectedDateRange() === range"
+              (click)="onDateRangeChange(range)"
+            >
+              <span class="sidebar-nav__label">{{ sidebarDateLabel(range) }}</span>
+              <span class="sidebar-nav__badge">{{ dateRangeCount(range) }}</span>
+            </button>
+          }
+        </nav>
+      </div>
+
+      <div class="sidebar-section sidebar-section--meta">
+        @if (source(); as src) {
+          <p class="sidebar-meta">
+            <span class="sidebar-meta__label">{{ t('resourceInbox.lastSync') }}</span>
+            <span>{{ src.lastFetchedAt | date: 'MM-dd HH:mm' }}</span>
+          </p>
+          <p class="sidebar-meta">
+            <span class="sidebar-meta__label">{{ t('resourceInbox.contentSince') }}</span>
+            <span>{{ src.contentStartDate || '2026-05-25' }}</span>
+          </p>
+        }
+        <button class="sidebar-reset" (click)="clearAll()">
+          {{ t('resourceInbox.resetAll') }}
+        </button>
+      </div>
+    </aside>
+
+    <!-- Middle: Item List -->
+    <div class="inbox-list">
+      @if (loading()) {
+        <div class="inbox-loading">
+          <div class="loading-state">
+            <div class="glitch-loader" aria-label="加载中">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p>{{ t('common.loading') }}</p>
+          </div>
+        </div>
+      } @else if (error()) {
+        <div class="inbox-empty">
+          <div class="inbox-empty__icon">⚠</div>
+          <p class="inbox-empty__text">{{ error() }}</p>
+          <button class="btn btn--outline btn--sm" (click)="loadNews()">
+            {{ t('common.retry') }}
+          </button>
+        </div>
+      } @else if (filteredNews().length === 0) {
+        <div class="inbox-empty">
+          <div class="inbox-empty__icon">📡</div>
+          <p class="inbox-empty__text">{{ t('resourceInbox.noResults') }}</p>
+          <button class="btn btn--outline btn--sm" (click)="clearAll()">
+            {{ t('resourceInbox.resetAll') }}
+          </button>
+        </div>
+      } @else {
+        <div class="inbox-list__scroll">
+          @for (item of filteredNews(); track trackByNews($index, item)) {
+            <button
+              class="inbox-item"
+              [class.is-selected]="selectedItem()?.id === item.id"
+              (click)="selectItem(item)"
+            >
+              <div class="inbox-item__dot" [attr.data-category]="item.category"></div>
+              <div class="inbox-item__body">
+                <div class="inbox-item__header">
+                  <span class="inbox-item__category" [attr.data-category]="item.category">{{
+                    getCategoryLabel(item.category)
+                  }}</span>
+                  <time class="inbox-item__date">{{ formatDate(item.date) }}</time>
+                </div>
+                <p class="inbox-item__title">{{ item.title }}</p>
+                <p class="inbox-item__preview">{{ item.summary }}</p>
+              </div>
+              <span class="inbox-item__arrow">›</span>
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Right: Preview Panel -->
+    <aside class="inbox-preview" [class.inbox-preview--empty]="!selectedItem()">
+      @if (selectedItem(); as item) {
+        <div class="inbox-preview__header">
+          <span class="inbox-preview__category" [attr.data-category]="item.category">{{
+            getCategoryLabel(item.category)
+          }}</span>
+          <time class="inbox-preview__date">{{ item.date }}</time>
+        </div>
+        <h2 class="inbox-preview__title">{{ item.title }}</h2>
+
+        <div class="inbox-preview__tags">
+          @for (tag of item.tags; track tag) {
+            <span class="tag-chip">{{ tag }}</span>
+          }
+        </div>
+
+        <div class="inbox-preview__summary">
+          {{ item.summary }}
+        </div>
+
+        <div class="inbox-preview__footer">
+          <span class="inbox-preview__source">{{ item.source }}</span>
+          <button class="btn btn--primary btn--sm" (click)="openSource(item.url)">
+            {{ t('aiFrontline.readSource') }} →
+          </button>
+        </div>
+      } @else {
+        <div class="inbox-preview__placeholder">
+          <span class="inbox-preview__placeholder-icon">⚡</span>
+          <span>{{ t('resourceInbox.selectToPreview') }}</span>
+        </div>
+      }
+    </aside>
+  </section>
+
+  <!-- Footer -->
   <footer class="ai-frontline-disclaimer">
     <p class="disclaimer-text">{{ t('aiFrontline.disclaimer') }}</p>
   </footer>

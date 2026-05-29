@@ -15,7 +15,7 @@
   box-shadow:
     0 24px 80px rgba(34, 28, 18, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  max-width: min(420px, calc(100vw - 32px));
+  max-width: min(520px, calc(100vw - 32px));
 
   // --- Title Bar ---
   &__titlebar {
@@ -31,6 +31,14 @@
 
   &__body {
     padding: 20px 22px 18px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -199,16 +207,37 @@
     font-weight: 600;
     transition: all 200ms;
 
+    .mat-icon {
+      margin-right: 4px;
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
     &--primary {
-      background: var(--color-google-blue, #1a73e8);
-      color: #fff;
-      border: none;
+      background: var(--color-google-blue, #1a73e8) !important;
+      color: #fff !important;
+      border: none !important;
       box-shadow: 0 8px 24px rgba(26, 115, 232, 0.18);
 
       &:hover {
         box-shadow: 0 12px 32px rgba(26, 115, 232, 0.28);
       }
     }
+  }
+}
+
+// Close button
+.close-btn {
+  min-height: 36px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-radius: 999px;
+  transition: all 200ms;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
   }
 }
 
@@ -223,6 +252,7 @@
 
     .action-btn {
       width: 100%;
+      min-height: 44px;
     }
   }
 }

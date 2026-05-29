@@ -289,3 +289,31 @@ body {
   // Ensure child text uses dark colors by default
   color: var(--color-text);
 }
+
+// ============================================
+// SpaceLab Dialog — Mac/玻璃风格覆盖
+// ============================================
+
+.spacelab-mac-dialog-panel .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: transparent;
+  padding: 0 !important;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.spacelab-dialog-backdrop {
+  background: rgba(8, 10, 16, 0.34) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+// SpaceLab Snackbar — 玻璃风格
+.spacelab-snackbar .mat-mdc-snack-bar-label {
+  border-radius: 999px;
+  background: rgba(34, 28, 18, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}

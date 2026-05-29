@@ -272,9 +272,11 @@ export class LabComponent implements OnInit {
       return this.currentData().length;
     }
     const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
+    const range = this.selectedDateRange();
     return data.filter(
       (item) =>
         isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date) &&
+        matchesDateRange(item, range) &&
         (normalizeSearchText(item.category) === normalizeSearchText(cat) ||
           item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(cat))),
     ).length;
@@ -289,6 +291,15 @@ export class LabComponent implements OnInit {
       '30d': 'resourceInbox.last30Days',
     };
     return this.t(map[range]);
+  }
+
+  dateRangeCount(range: DateRangeFilter): number {
+    const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
+    return data.filter(
+      (item) =>
+        isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date) &&
+        matchesDateRange(item, range),
+    ).length;
   }
 
   contentSinceText(): string {

@@ -336,7 +336,9 @@ async function main() {
       continue;
     }
 
-    // Merge: existing items first (preserve dates), then new items, deduplicate by id, filter, limit
+    // Merge: existing items first (preserve their dates), then new items.
+    // Deduplicate by id — first occurrence wins, so existing dates are kept.
+    // Genuinely new items (not in existing) get today's date from parseResourcesFromHtml.
     const merged = deduplicate([...existing, ...newItems])
       .filter(isAfterContentStart)
       .slice(0, MAX_ITEMS);

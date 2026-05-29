@@ -180,9 +180,7 @@ export class AiFrontlineComponent implements OnInit {
 
   dateRangeCount(range: DateRangeFilter): number {
     return this.news().filter(
-      (item) =>
-        isAfterContentStartDate(item.date) &&
-        matchesDateRange(item, range),
+      (item) => isAfterContentStartDate(item.date) && matchesDateRange(item, range),
     ).length;
   }
 

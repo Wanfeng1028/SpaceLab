@@ -464,6 +464,9 @@
       "articles": { "title": "技术文章", "desc": "记录前端、AI、GIS、算法、部署和工程实践。" }
     },
     "contactTitle": "联系方式",
+    "contactDialogTitle": "联系方式",
+    "contactDialogSubtitle": "通过 GitHub 或 Email 与我联系",
+    "emailCopied": "邮箱已复制",
     "email": "Email",
     "openGithub": "打开 GitHub",
     "sendEmail": "发送邮件",
