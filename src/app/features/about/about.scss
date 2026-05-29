@@ -50,6 +50,64 @@
 }
 
 // ============================================
+// SpaceLab Button System (Material base)
+// ============================================
+
+.spacelab-btn {
+  min-height: 46px !important;
+  padding: 0 24px !important;
+  border-radius: 999px !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  transition:
+    transform 240ms var(--ease-out),
+    box-shadow 240ms var(--ease-out),
+    background 240ms var(--ease-out) !important;
+  cursor: pointer;
+  text-decoration: none;
+
+  &--primary {
+    background: var(--color-google-blue) !important;
+    color: #fff !important;
+    border: 1px solid rgba(26, 115, 232, 0.18) !important;
+    box-shadow: 0 12px 28px rgba(26, 115, 232, 0.22);
+
+    &:hover {
+      background: var(--color-google-blue-hover) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 18px 42px rgba(26, 115, 232, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
+    }
+  }
+
+  &--glass {
+    background: rgba(255, 255, 255, 0.34) !important;
+    color: var(--color-text) !important;
+    border: 1px solid rgba(255, 255, 255, 0.46) !important;
+    backdrop-filter: blur(14px) saturate(135%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    box-shadow:
+      0 8px 24px rgba(34, 28, 18, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.5) !important;
+      border-color: rgba(255, 255, 255, 0.7) !important;
+      box-shadow: 0 14px 36px rgba(34, 28, 18, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
+    }
+  }
+}
+
+// ============================================
 // Hero: Profile Card + Intro
 // ============================================
 
@@ -63,17 +121,17 @@
   z-index: 1;
 }
 
-// ---- Profile Card (left) ----
+// ---- Profile Card (left) — mat-card ----
 .about-profile-card {
   flex-shrink: 0;
   width: 260px;
-  padding: 32px 24px;
-  border-radius: 28px;
+  padding: 32px 24px !important;
   text-align: center;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06)),
-    rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+    rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 28px !important;
   box-shadow:
     0 18px 60px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -246,67 +304,8 @@
   flex-wrap: wrap;
 }
 
-// ---- Buttons ----
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 46px;
-  padding: 0 24px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition:
-    transform 240ms var(--ease-out),
-    box-shadow 240ms var(--ease-out),
-    background 240ms var(--ease-out),
-    border-color 240ms var(--ease-out);
-}
-
-.btn--primary {
-  background: var(--color-google-blue);
-  color: #fff;
-  border: 1px solid rgba(26, 115, 232, 0.18);
-  box-shadow: 0 12px 28px rgba(26, 115, 232, 0.22);
-
-  &:hover {
-    background: var(--color-google-blue-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 18px 42px rgba(26, 115, 232, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.98);
-  }
-}
-
-.btn--ghost {
-  background: rgba(255, 255, 255, 0.34);
-  color: var(--color-text);
-  border: 1px solid rgba(255, 255, 255, 0.46);
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
-  box-shadow:
-    0 8px 24px rgba(34, 28, 18, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-
-  &:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 14px 36px rgba(34, 28, 18, 0.1);
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.98);
-  }
-}
-
 // ============================================
-// Focus: 5 Glass Cards
+// Focus: 5 Glass Cards — mat-card
 // ============================================
 
 .about-focus {
@@ -331,12 +330,12 @@
 }
 
 .focus-card {
-  padding: 26px;
-  border-radius: 24px;
+  padding: 26px !important;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05)),
-    rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+    rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 24px !important;
   box-shadow:
     0 14px 48px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.45);
@@ -375,7 +374,7 @@
 }
 
 // ============================================
-// SpaceLab: What is SpaceLab + Module Cards
+// SpaceLab: Module Cards — mat-card
 // ============================================
 
 .about-spacelab {
@@ -401,13 +400,13 @@
 }
 
 .module-card {
-  padding: 24px 20px;
-  border-radius: 22px;
+  padding: 24px 20px !important;
   text-align: center;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
-    rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+    rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 22px !important;
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
@@ -445,7 +444,7 @@
 }
 
 // ============================================
-// Contact
+// Contact — mat-card
 // ============================================
 
 .about-contact {
@@ -467,12 +466,12 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 18px 24px;
-  border-radius: 20px;
+  padding: 18px 24px !important;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
-    rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+    rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
   box-shadow:
     0 10px 36px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
@@ -598,7 +597,7 @@
   }
 
   .focus-card {
-    padding: 22px 20px;
+    padding: 22px 20px !important;
   }
 
   .module-grid {
@@ -607,7 +606,7 @@
   }
 
   .module-card {
-    padding: 20px 18px;
+    padding: 20px 18px !important;
   }
 
   .contact-grid {
@@ -626,13 +625,13 @@
     align-items: center;
     gap: 12px;
 
-    .btn {
+    .spacelab-btn {
       width: 100%;
       max-width: 280px;
     }
   }
 
-  .btn {
-    min-height: 44px;
+  .spacelab-btn {
+    min-height: 44px !important;
   }
 }

@@ -324,6 +324,25 @@
     "contactBtn": "取得联系",
     "githubBtn": "关注 GitHub"
   },
+  "resourceInbox": {
+    "all": "全部",
+    "categories": "分类",
+    "sources": "来源",
+    "dateRange": "日期范围",
+    "selectToPreview": "选择一条内容查看详情",
+    "viewSource": "查看原文",
+    "clearSearch": "清除搜索",
+    "clearFilter": "清除筛选",
+    "noResults": "没有找到匹配内容",
+    "today": "今天",
+    "yesterday": "昨天",
+    "last7Days": "最近 7 天",
+    "last30Days": "最近 30 天",
+    "lastSync": "上次同步",
+    "contentSince": "内容自 {{date}} 起更新",
+    "resetAll": "重置全部",
+    "items": "条"
+  },
   "lab": {
     "title": "Lab",
     "desc": "动效与交互实验空间",

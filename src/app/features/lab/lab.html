@@ -15,37 +15,41 @@
     }
   </section>
 
-  <!-- Tabs -->
+  <!-- Tabs (Material Button Toggle) -->
   <section class="lab-tabs">
-    @for (tab of tabs; track tab.key) {
-      <button
-        class="lab-tab"
-        [class.is-active]="activeTab() === tab.key"
-        (click)="onTabChange(tab.key)"
-      >
-        <span class="tab-label">{{ t(tab.labelKey) }}</span>
-      </button>
-    }
+    <mat-button-toggle-group
+      [value]="activeTab()"
+      (change)="onTabChange($event.value)"
+      class="lab-tab-group"
+    >
+      @for (tab of tabs; track tab.key) {
+        <mat-button-toggle [value]="tab.key">
+          {{ t(tab.labelKey) }}
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
   </section>
 
-  <!-- Toolbar -->
+  <!-- Toolbar: Search (Material Form Field) -->
   <section class="lab-toolbar">
-    <div class="lab-search">
-      <span class="search-icon">⌕</span>
+    <mat-form-field appearance="outline" class="lab-search-field">
+      <mat-icon matPrefix>search</mat-icon>
       <input
+        matInput
         type="text"
         [placeholder]="t('lab.searchPlaceholder')"
         [value]="searchQuery()"
         (input)="onSearchChange($event)"
       />
-    </div>
+    </mat-form-field>
   </section>
 
-  <!-- Filters -->
+  <!-- Filters (Material Chips) -->
   <section class="lab-filters">
     <div class="lab-date-range">
       @for (range of dateRangeOptions; track range) {
         <button
+          mat-stroked-button
           class="lab-date-btn"
           [class.is-active]="selectedDateRange() === range"
           (click)="onDateRangeChange(range)"
@@ -54,17 +58,13 @@
         </button>
       }
     </div>
-    <div class="lab-category-row">
+    <mat-chip-set class="lab-category-chips">
       @for (cat of categories(); track cat) {
-        <button
-          class="lab-filter"
-          [class.is-active]="selectedCategory() === cat"
-          (click)="onCategoryChange(cat)"
-        >
+        <mat-chip [highlighted]="selectedCategory() === cat" (click)="onCategoryChange(cat)">
           {{ getCategoryLabel(cat) }}
-        </button>
+        </mat-chip>
       }
-    </div>
+    </mat-chip-set>
   </section>
 
   <!-- Status indicator -->
@@ -92,9 +92,8 @@
   <section class="lab-resource-list">
     @if (loading()) {
       <div class="lab-loading">
-        <div class="loader">
-          <div data-glitch="Loading..." class="glitch">Loading...</div>
-        </div>
+        <mat-spinner diameter="48"></mat-spinner>
+        <p class="lab-loading__text">{{ t('common.loading') }}</p>
       </div>
     } @else if (currentData().length === 0) {
       <div class="lab-empty">
@@ -102,17 +101,21 @@
         <p>{{ t('lab.noResults') }}</p>
         <div class="lab-empty__actions">
           @if (searchQuery()) {
-            <button class="lab-clear-btn" (click)="clearSearch()">
+            <button mat-stroked-button class="lab-clear-btn" (click)="clearSearch()">
               {{ t('common.clearSearch') }}
             </button>
           }
           @if (selectedCategory() !== 'all') {
-            <button class="lab-clear-btn" (click)="clearFilters()">
+            <button mat-stroked-button class="lab-clear-btn" (click)="clearFilters()">
               {{ t('common.clearFilter') }}
             </button>
           }
           @if (searchQuery() || selectedCategory() !== 'all') {
-            <button class="lab-clear-btn lab-clear-btn--all" (click)="clearAll()">
+            <button
+              mat-stroked-button
+              class="lab-clear-btn lab-clear-btn--all"
+              (click)="clearAll()"
+            >
               {{ t('common.clearAll') }}
             </button>
           }
@@ -121,7 +124,11 @@
     } @else {
       <div class="lab-grid">
         @for (item of currentData(); track item.id) {
-          <article class="lab-card" (click)="openUrl(item.url)">
+          <mat-card
+            class="lab-card"
+            (click)="openUrl(item.url)"
+            matTooltip="{{ t('lab.readSource') }}"
+          >
             <div class="lab-card__header">
               <span class="lab-card__category">{{ item.category }}</span>
             </div>
@@ -145,7 +152,7 @@
                 <span class="arrow">→</span>
               </span>
             </div>
-          </article>
+          </mat-card>
         }
       </div>
     }

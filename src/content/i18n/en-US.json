@@ -324,6 +324,25 @@
     "contactBtn": "Get in Touch",
     "githubBtn": "Follow on GitHub"
   },
+  "resourceInbox": {
+    "all": "All",
+    "categories": "Categories",
+    "sources": "Sources",
+    "dateRange": "Date Range",
+    "selectToPreview": "Select an item to preview details",
+    "viewSource": "View Source",
+    "clearSearch": "Clear Search",
+    "clearFilter": "Clear Filter",
+    "noResults": "No matching items found",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "last7Days": "Last 7 Days",
+    "last30Days": "Last 30 Days",
+    "lastSync": "Last Sync",
+    "contentSince": "Content updates since {{date}}",
+    "resetAll": "Reset All",
+    "items": "items"
+  },
   "lab": {
     "title": "Lab",
     "desc": "Motion & interaction experiment space",

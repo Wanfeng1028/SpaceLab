@@ -1,7 +1,7 @@
 <main class="about-page">
   <!-- Hero: Digital Identity Capsule -->
   <section class="about-hero">
-    <div class="about-profile-card">
+    <mat-card class="about-profile-card">
       <div class="profile-card__avatar-wrap">
         <img class="profile-card__avatar" [src]="avatar" [alt]="name" />
       </div>
@@ -15,7 +15,7 @@
         <span class="profile-card__github-label">{{ t('about.github') }}:</span>
         <span class="profile-card__github-user">Wanfeng1028</span>
       </div>
-    </div>
+    </mat-card>
 
     <div class="about-intro">
       <span class="about-intro__kicker">{{ t('about.kicker') }}</span>
@@ -23,12 +23,24 @@
       <p class="about-intro__subtitle">{{ t('about.subtitle') }}</p>
       <p class="about-intro__desc">{{ t('about.description') }}</p>
       <div class="about-intro__actions">
-        <a class="btn btn--primary" [href]="github" target="_blank" rel="noopener">
+        <a
+          mat-flat-button
+          class="spacelab-btn spacelab-btn--primary"
+          [href]="github"
+          target="_blank"
+          rel="noopener"
+          [matTooltip]="t('about.viewGithub')"
+        >
           {{ t('about.viewGithub') }}
         </a>
-        <a class="btn btn--ghost" [href]="'mailto:' + email">
+        <button
+          mat-stroked-button
+          class="spacelab-btn spacelab-btn--glass"
+          (click)="openContactDialog()"
+          [matTooltip]="t('about.contactMe')"
+        >
           {{ t('about.contactMe') }}
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -38,11 +50,11 @@
     <h2 class="about-section-title">{{ t('about.focusTitle') }}</h2>
     <div class="focus-grid">
       @for (area of focusAreas; track area.key) {
-        <div class="focus-card">
+        <mat-card class="focus-card">
           <span class="focus-card__icon">{{ area.icon }}</span>
           <h3 class="focus-card__title">{{ t('about.focus.' + area.key + '.title') }}</h3>
           <p class="focus-card__desc">{{ t('about.focus.' + area.key + '.desc') }}</p>
-        </div>
+        </mat-card>
       }
     </div>
   </section>
@@ -53,11 +65,11 @@
     <p class="about-spacelab__desc">{{ t('about.spacelabDesc') }}</p>
     <div class="module-grid">
       @for (mod of spacelabModules; track mod.key) {
-        <div class="module-card">
+        <mat-card class="module-card">
           <span class="module-card__icon">{{ mod.icon }}</span>
           <h3 class="module-card__title">{{ t('about.module.' + mod.key + '.title') }}</h3>
           <p class="module-card__desc">{{ t('about.module.' + mod.key + '.desc') }}</p>
-        </div>
+        </mat-card>
       }
     </div>
   </section>
@@ -66,28 +78,38 @@
   <section class="about-contact">
     <h2 class="about-section-title">{{ t('about.contactTitle') }}</h2>
     <div class="contact-grid">
-      <div class="contact-item">
+      <mat-card class="contact-item">
         <span class="contact-item__icon">🐙</span>
         <div class="contact-item__info">
           <span class="contact-item__label">{{ t('about.github') }}</span>
           <span class="contact-item__value">Wanfeng1028</span>
         </div>
-      </div>
-      <div class="contact-item">
+      </mat-card>
+      <mat-card class="contact-item">
         <span class="contact-item__icon">✉️</span>
         <div class="contact-item__info">
           <span class="contact-item__label">{{ t('about.email') }}</span>
           <span class="contact-item__value">{{ email }}</span>
         </div>
-      </div>
+      </mat-card>
     </div>
     <div class="contact-actions">
-      <a class="btn btn--primary" [href]="github" target="_blank" rel="noopener">
+      <a
+        mat-flat-button
+        class="spacelab-btn spacelab-btn--primary"
+        [href]="github"
+        target="_blank"
+        rel="noopener"
+      >
         {{ t('about.openGithub') }}
       </a>
-      <a class="btn btn--ghost" [href]="'mailto:' + email">
-        {{ t('about.sendEmail') }}
-      </a>
+      <button
+        mat-stroked-button
+        class="spacelab-btn spacelab-btn--glass"
+        (click)="openContactDialog()"
+      >
+        {{ t('about.contactMe') }}
+      </button>
     </div>
   </section>
 </main>
