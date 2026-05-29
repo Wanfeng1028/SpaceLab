@@ -36,6 +36,115 @@
   overflow: hidden;
 }
 
+// ── CSS 动画背景层 (hero-background) ─────────
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.5;
+}
+
+.hero-stars {
+  position: absolute;
+  inset: -10%;
+  opacity: 0.72;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.76) 0 1px, transparent 1px),
+    radial-gradient(circle, rgba(105, 215, 255, 0.56) 0 1px, transparent 1px);
+  background-size: 120px 120px, 180px 180px;
+  animation: starDrift 34s linear infinite;
+}
+
+.hero-eclipse {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: min(58vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(160, 165, 255, 0.35), transparent 34%),
+    radial-gradient(circle, rgba(14, 24, 72, 0.92), rgba(3, 5, 18, 0.98) 62%, transparent 68%);
+  box-shadow:
+    0 0 120px rgba(105, 215, 255, 0.32),
+    0 0 220px rgba(143, 124, 255, 0.26);
+  animation: heroFloat 8s ease-in-out infinite;
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(40px);
+  opacity: 0.72;
+  animation: glowPulse 5s ease-in-out infinite;
+}
+
+.hero-glow--blue {
+  width: 260px;
+  height: 260px;
+  left: 58%;
+  top: 42%;
+  background: rgba(105, 215, 255, 0.42);
+}
+
+.hero-glow--purple {
+  width: 220px;
+  height: 220px;
+  left: 43%;
+  top: 54%;
+  background: rgba(143, 124, 255, 0.34);
+}
+
+@keyframes heroFloat {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 14px));
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.48;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.86;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes starDrift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-80px, 60px, 0);
+  }
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 // ── Three.js 深空粒子层 ────────────────────
 .backdrop-stars {
   position: absolute;
@@ -614,6 +723,13 @@
     animation: none !important;
   }
 
+  .hero-stars,
+  .hero-eclipse,
+  .hero-glow {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
   .energy-orb-wrapper {
     animation: none !important;
   }
@@ -864,6 +980,18 @@
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
     overflow: hidden;
+  }
+
+  // ── hero-background 移动端缩小 ──
+  .hero-eclipse {
+    width: 80vw;
+    top: 50%;
+  }
+
+  .hero-glow--blue,
+  .hero-glow--purple {
+    width: 140px;
+    height: 140px;
   }
 
   // ── 星球缩小、下移、作为背景层 ──
