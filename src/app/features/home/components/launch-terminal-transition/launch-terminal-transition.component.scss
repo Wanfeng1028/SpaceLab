@@ -314,7 +314,7 @@ $white-muted: rgba(148, 163, 184, 0.92);
 }
 
 // 移动端适配
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .launch-terminal-transition__panel {
     width: calc(100vw - 28px);
     border-radius: 16px;

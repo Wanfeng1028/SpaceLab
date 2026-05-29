@@ -613,7 +613,7 @@ app-telemetry-bar {
 }
 
 // ── Mobile (< 768px) ─────────────────────────────────────────────────
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .cockpit-bg-frame {
     background-size: cover;
     background-position: center top;
