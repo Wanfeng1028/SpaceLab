@@ -225,7 +225,12 @@
     "logNetDisconnected": "网络已断开",
     "logReturnTop": "返回顶部",
     "logRestartOrbit": "重启轨道序列",
-    "logEnterSite": "进入站点"
+    "logEnterSite": "进入站点",
+    "nextOrbit": "下一轨道",
+    "continueTitle": "继续探索 SpaceLab",
+    "continueDesc": "进入文章、项目、AI 前线和资源实验室，查看最新内容与实验。",
+    "enterAiFrontline": "进入 AI 前线",
+    "viewLab": "查看实验室"
   },
   "launchTerminal": {
     "title": "spacelab @orbit: ~/launch",

@@ -1532,7 +1532,12 @@
   overflow: hidden;
 
   background:
-    linear-gradient(180deg, rgba(3, 7, 18, 0.78) 0%, rgba(3, 7, 18, 0.58) 42%, rgba(3, 7, 18, 0.86) 100%),
+    linear-gradient(
+      180deg,
+      rgba(3, 7, 18, 0.78) 0%,
+      rgba(3, 7, 18, 0.58) 42%,
+      rgba(3, 7, 18, 0.86) 100%
+    ),
     url('/cockpit-dashboard-bg.png') center center / cover no-repeat;
 
   &::before {

@@ -11,6 +11,7 @@
           {{ t('lab.lastSync') }}: {{ formatFetchTime(src.lastFetchedAt) }}
         </span>
       </div>
+      <p class="lab-hero__since">{{ contentSinceText() }}</p>
     }
   </section>
 

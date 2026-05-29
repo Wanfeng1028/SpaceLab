@@ -13,6 +13,7 @@
             <span>{{ t('aiFrontline.lastSync') }}</span
             >: {{ src.lastFetchedAt | date: 'MM-dd HH:mm' }}
           </span>
+          <span class="content-since">{{ contentSinceText() }}</span>
         }
       </div>
     </div>

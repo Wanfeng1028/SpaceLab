@@ -225,7 +225,12 @@
     "logNetDisconnected": "Network disconnected",
     "logReturnTop": "Returning to top",
     "logRestartOrbit": "Restarting orbit sequence",
-    "logEnterSite": "Entering site"
+    "logEnterSite": "Entering site",
+    "nextOrbit": "Next Orbit",
+    "continueTitle": "Continue exploring SpaceLab",
+    "continueDesc": "Explore articles, projects, AI signals and resource lab updates.",
+    "enterAiFrontline": "Enter AI Frontline",
+    "viewLab": "View Resource Lab"
   },
   "launchTerminal": {
     "title": "spacelab @orbit: ~/launch",
