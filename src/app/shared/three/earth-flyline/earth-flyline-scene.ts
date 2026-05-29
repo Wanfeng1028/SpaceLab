@@ -150,10 +150,26 @@ export class EarthFlylineScene {
 
     // 载入地名文本标识，对标视频中的城市标记
     await this.chartScene.setData('textMark', [
-      { text: 'PEK', position: { lon: 116.4, lat: 42.0 }, style: { fontSize: 16, color: '#10f9af' } },
-      { text: 'NYC', position: { lon: -74.0, lat: 43.5 }, style: { fontSize: 16, color: '#10f9af' } },
-      { text: 'LHR', position: { lon: -0.1, lat: 53.5 }, style: { fontSize: 16, color: '#10f9af' } },
-      { text: 'NRT', position: { lon: 139.6, lat: 38.0 }, style: { fontSize: 16, color: '#10f9af' } },
+      {
+        text: 'PEK',
+        position: { lon: 116.4, lat: 42.0 },
+        style: { fontSize: 16, color: '#10f9af' },
+      },
+      {
+        text: 'NYC',
+        position: { lon: -74.0, lat: 43.5 },
+        style: { fontSize: 16, color: '#10f9af' },
+      },
+      {
+        text: 'LHR',
+        position: { lon: -0.1, lat: 53.5 },
+        style: { fontSize: 16, color: '#10f9af' },
+      },
+      {
+        text: 'NRT',
+        position: { lon: 139.6, lat: 38.0 },
+        style: { fontSize: 16, color: '#10f9af' },
+      },
     ]);
   }
 

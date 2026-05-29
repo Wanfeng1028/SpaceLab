@@ -4,9 +4,7 @@
     "title": "ChatGPT Plus 和 Claude Pro 会员代充值",
     "summary": "VipCheap - 首个 AI 会员权益折扣店，汇聚 ChatGPT Plus、Claude Pro 等热门AI工具官方直充",
     "category": "AI工具",
-    "tags": [
-      "Claude"
-    ],
+    "tags": ["Claude"],
     "url": "https://ai-bot.cn/vipcheap-banner-0210/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -18,11 +16,7 @@
     "title": "阿里云百炼 CLI",
     "summary": "阿里云百炼CLI是阿里云开源的AI Agent命令行工具，专为智能体场景设计。开发者一行命令，可让Agent自动调用阿里云百炼平台150+多模态模型、10+应用及知识库、...",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "模型"
-    ],
+    "tags": ["开源", "Agent", "模型"],
     "url": "https://ai-bot.cn/bailian-console-aliyun-cli/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -34,11 +28,7 @@
     "title": "Dynamic Workflows",
     "summary": "Dynamic Workflows 是 Claude Code 推出的动态工作流，目前处于研究预览阶段，支持 Claude 动态编写编排脚本，在单次会话中并行调度数十至数百个子 Agent 协...",
     "category": "AI工具",
-    "tags": [
-      "Agent",
-      "编程",
-      "Claude"
-    ],
+    "tags": ["Agent", "编程", "Claude"],
     "url": "https://ai-bot.cn/dynamic-workflows/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -50,10 +40,7 @@
     "title": "Hy-Memory",
     "summary": "Hy-Memory 是腾讯混元推出的专为 OpenClaw 等长期协作型 Agent 设计的记忆插件，通过 6 层记忆框架 × System1/System2 双系统 × 演化链三层架构，让 Agent 真...",
     "category": "AI工具",
-    "tags": [
-      "Agent",
-      "框架"
-    ],
+    "tags": ["Agent", "框架"],
     "url": "https://ai-bot.cn/hy-memory/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -65,11 +52,7 @@
     "title": "Step 3.7 Flash",
     "summary": "Step 3.7 Flash 是阶跃星辰面向 Agent 生产化阶段推出的新一代开源 Flash 模型，采用稀疏 MoE 架构，最高生成速度达 400 Tokens/s。",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "模型"
-    ],
+    "tags": ["开源", "Agent", "模型"],
     "url": "https://ai-bot.cn/step-3-7-flash/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -81,12 +64,7 @@
     "title": "Claude Opus 4.8",
     "summary": "Claude Opus 4.8 是 Anthropic 推出的旗舰级大语言模型，在 Opus 4.7 基础上提升判断力、诚实性和长时独立工作能力，在编程、智能体推理、多学科推理等基准测...",
     "category": "AI工具",
-    "tags": [
-      "Agent",
-      "模型",
-      "编程",
-      "Claude"
-    ],
+    "tags": ["Agent", "模型", "编程", "Claude"],
     "url": "https://ai-bot.cn/claude-opus-4-8/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -98,11 +76,7 @@
     "title": "Qwen-Image-Bench",
     "summary": "Qwen-Image-Bench 是通义千问团队推出的文生图模型评测数据集，规模为 1k 条测试样本，覆盖中英双语提示，支持多维度评测各类文生图模型的生成效果，采用 Apa...",
     "category": "AI工具",
-    "tags": [
-      "模型",
-      "图像",
-      "通义千问"
-    ],
+    "tags": ["模型", "图像", "通义千问"],
     "url": "https://ai-bot.cn/qwen-image-bench/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -114,10 +88,7 @@
     "title": "PilotDeck",
     "summary": "PilotDeck 是清华大学THUNLP实验室、面壁智能、OpenBMB与AI9stars联合开源的智能体操作系统。PilotDeck以WorkSpace为核心设计范式，为每个项目建立独立的文件...",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent"
-    ],
+    "tags": ["开源", "Agent"],
     "url": "https://ai-bot.cn/pilotdeck/",
     "source": "ai-bot.cn",
     "date": "2026-05-29",
@@ -129,10 +100,7 @@
     "title": "Wall-OSS-0.5",
     "summary": "Wall-OSS-0.5是自变量机器人开源的国产具身智能模型，属于视觉-语言-动作(VLA)大模型，具备无需任务微调即可在真实机器人上部署的'零样本'能力。模型通过创新...",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
+    "tags": ["开源", "模型"],
     "url": "https://ai-bot.cn/wall-oss-0-5/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -144,10 +112,7 @@
     "title": "Cloud Agents",
     "summary": "Cloud Agents 是阿里 Qoder 推出的全托管 AI Agent 运行平台，提供 Agent 底座、模型服务及运行环境等全栈能力，企业可通过 API 直接调用。",
     "category": "AI工具",
-    "tags": [
-      "Agent",
-      "模型"
-    ],
+    "tags": ["Agent", "模型"],
     "url": "https://ai-bot.cn/cloud-agents/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -159,11 +124,7 @@
     "title": "Fara1.5",
     "summary": "Fara1.5是微软研究院 AI Frontiers 实验室最新推出的浏览器端AI智能体（CUA）模型系列，包含 4B、9B、27B 三个参数版本。模型基于 Qwen3.5 微调，采用纯像素...",
     "category": "AI工具",
-    "tags": [
-      "Agent",
-      "模型",
-      "通义千问"
-    ],
+    "tags": ["Agent", "模型", "通义千问"],
     "url": "https://ai-bot.cn/fara1-5/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -187,12 +148,7 @@
     "title": "omp",
     "summary": "omp（oh-my-pi） 是基于 Pi 项目二次开发的开源 AI 终端编程智能体，核心代码约 2.7 万行 Rust，支持 40+ 模型供应商与 32+ 内置工具。",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "模型",
-      "编程"
-    ],
+    "tags": ["开源", "Agent", "模型", "编程"],
     "url": "https://ai-bot.cn/omp/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -204,12 +160,7 @@
     "title": "Runway MCP",
     "summary": "Runway MCP 是 Runway 推出的官方MCP 服务器，工具将 Gen-4.5、Seedance 2.0、Kling 3.0 等顶尖 AI 图像与视频生成模型接入 Claude、ChatGPT、Cursor 等 MCP ...",
     "category": "AI工具",
-    "tags": [
-      "模型",
-      "图像",
-      "视频",
-      "Claude"
-    ],
+    "tags": ["模型", "图像", "视频", "Claude"],
     "url": "https://ai-bot.cn/runway-mcp/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -221,10 +172,7 @@
     "title": "MAI-Image-2.5",
     "summary": "MAI-Image-2.5 是微软研究院推出的旗舰级文生图模型，为 MAI-Image 系列最强版本。模型在 Arena 文生图排行榜以 1,254 分冲上第 3 名，较前代提升 72 分，打...",
     "category": "AI工具",
-    "tags": [
-      "模型",
-      "图像"
-    ],
+    "tags": ["模型", "图像"],
     "url": "https://ai-bot.cn/mai-image-2-5/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -236,12 +184,7 @@
     "title": "ForgeTrain",
     "summary": "ForgeTrain 是面壁智能联合清华大学、OpenBMB 开源社区发布的全球首个完全由 AI 编写、零人类代码介入的生产级大模型预训练框架。",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "框架",
-      "编程"
-    ],
+    "tags": ["开源", "模型", "框架", "编程"],
     "url": "https://ai-bot.cn/forgetrain/",
     "source": "ai-bot.cn",
     "date": "2026-05-27",
@@ -265,11 +208,7 @@
     "title": "Keye-VL-2.0-30B-A3B",
     "summary": "Keye-VL-2.0-30B-A3B是快手开源的自研多模态大模型 ，为 30B 级主力基座。模型首次将 DSA 稀疏注意力引入多模态场景，支持 256K 超长上下文，实现小时级视频...",
     "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "视频"
-    ],
+    "tags": ["开源", "模型", "视频"],
     "url": "https://ai-bot.cn/keye-vl-2-0-30b-a3b/",
     "source": "ai-bot.cn",
     "date": "2026-05-27",
@@ -281,9 +220,7 @@
     "title": "NoteAI",
     "summary": "NoteAI 是面向学生、研究者、职场人士和内容创作者的 AI 一站式知识提取工具，支持 YouTube 视频、PDF、网页、音频及图片的快速摘要与结构化处理。",
     "category": "AI工具",
-    "tags": [
-      "视频"
-    ],
+    "tags": ["视频"],
     "url": "https://ai-bot.cn/noteai/",
     "source": "ai-bot.cn",
     "date": "2026-05-27",
