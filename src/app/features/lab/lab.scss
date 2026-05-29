@@ -30,7 +30,7 @@
   backdrop-filter: blur(14px);
   box-shadow: var(--glass-shadow);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 
   &::before {
     content: '';
@@ -52,8 +52,8 @@
   h1 {
     margin: 8px 0 12px;
     font-size: clamp(28px, 4.5vw, 48px);
-    line-height: 1;
-    letter-spacing: -0.05em;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     font-weight: 800;
     background: linear-gradient(
       135deg,

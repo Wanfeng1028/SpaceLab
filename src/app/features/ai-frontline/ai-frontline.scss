@@ -25,6 +25,7 @@
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(12px);
   box-shadow: var(--glass-shadow);
+  text-align: center;
 
   &__content {
     position: relative;
@@ -33,7 +34,7 @@
 
   &__subtitle {
     max-width: 620px;
-    margin: 0 0 16px;
+    margin: 0 auto 16px;
     color: var(--color-text-secondary);
     font-size: 16px;
     line-height: 1.7;
@@ -88,8 +89,8 @@
 .ai-frontline-hero h1 {
   margin: 8px 0 12px;
   font-size: clamp(42px, 8vw, 96px);
-  line-height: 0.95;
-  letter-spacing: -0.06em;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   font-weight: 800;
   background: linear-gradient(
     135deg,
@@ -106,6 +107,7 @@
   display: flex;
   gap: 16px;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   font-size: 13px;
   color: var(--color-text-tertiary);

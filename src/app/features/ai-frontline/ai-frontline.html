@@ -2,8 +2,8 @@
   <!-- Hero Section -->
   <section class="ai-frontline-hero">
     <div class="ai-frontline-hero__content">
-      <p class="ai-frontline-kicker">// AI INTELLIGENCE BOARD</p>
-      <h1>AI FRONTLINE</h1>
+      <p class="ai-frontline-kicker">{{ t('aiFrontline.kicker') }}</p>
+      <h1>{{ t('aiFrontline.title') }}</h1>
       <p class="ai-frontline-hero__subtitle">{{ t('aiFrontline.subtitle') }}</p>
 
       <div class="ai-frontline-meta">
@@ -56,9 +56,16 @@
     <!-- Sidebar -->
     <aside class="ai-frontline-sidebar">
       <div class="sidebar-section">
-        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarUpdateFreq') }}</h3>
-        <p class="sidebar-text">{{ t('aiFrontline.sidebarUpdateDesc') }}</p>
-        <p class="sidebar-text sidebar-text--small">08:00 / 12:00 / 18:00 / 22:00</p>
+        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarSource') }}</h3>
+        <p class="sidebar-text">{{ t('aiFrontline.sidebarSourceDesc') }}</p>
+        <a
+          href="https://ai-bot.cn/daily-ai-news/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="sidebar-link"
+        >
+          {{ t('aiFrontline.sidebarVisitSource') }}
+        </a>
       </div>
 
       <div class="sidebar-section">
@@ -76,9 +83,9 @@
       </div>
 
       <div class="sidebar-section">
-        <h3 class="sidebar-title">更新频率</h3>
-        <p class="sidebar-text">每日 4 次自动同步</p>
-        <p class="sidebar-text sidebar-text--small">08:00 / 12:00 / 18:00 / 22:00</p>
+        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarUpdateFreq') }}</h3>
+        <p class="sidebar-text">{{ t('aiFrontline.sidebarUpdateDesc') }}</p>
+        <p class="sidebar-text sidebar-text--small">{{ t('aiFrontline.sidebarUpdateTimes') }}</p>
       </div>
     </aside>
 
