@@ -420,7 +420,7 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     const h = Math.floor(totalSec / 3600);
     const m = Math.floor((totalSec % 3600) / 60);
     const s = totalSec % 60;
-    const zh = this.lang() === 'zh';
+    const zh = this.i18n.isZh();
     if (h > 0) return `${h}${zh ? '时' : 'h'} ${m}${zh ? '分' : 'm'} ${s}${zh ? '秒' : 's'}`;
     if (m > 0) return `${m}${zh ? '分' : 'm'} ${s}${zh ? '秒' : 's'}`;
     return `${s}${zh ? '秒' : 's'}`;

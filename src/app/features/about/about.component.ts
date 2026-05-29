@@ -17,7 +17,7 @@ export class AboutComponent {
     { key: 'area0', icon: '🌐', tags: ['Angular / React', 'Node.js'] },
     { key: 'area1', icon: '🎨', tags: ['Three.js', 'WebGL'] },
     { key: 'area2', icon: '✨', tags: ['GSAP', 'CSS'] },
-    { key: 'area3', icon: '📐', tags: ['Glassmorphism', '组件库'] },
+    { key: 'area3', icon: '📐', tags: ['Glassmorphism'], tagKeys: ['about.area3_tag1'] },
   ];
 
   readonly focusAreas = computed(() =>
@@ -25,7 +25,7 @@ export class AboutComponent {
       title: this.i18n.t(`about.${a.key}_title`),
       desc: this.i18n.t(`about.${a.key}_desc`),
       icon: a.icon,
-      tags: a.tags,
+      tags: [...a.tags, ...(a.tagKeys ?? []).map((k) => this.i18n.t(k))],
     })),
   );
 

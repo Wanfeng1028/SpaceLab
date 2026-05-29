@@ -47,9 +47,9 @@ type TabKey = 'tools' | 'projects';
 export class LabComponent implements OnInit {
   private readonly i18n = inject(I18nService);
 
-  readonly tabs: { key: TabKey; label: string; labelEn: string }[] = [
-    { key: 'tools', label: 'AI 工具', labelEn: 'AI Tools' },
-    { key: 'projects', label: 'AI 项目和框架', labelEn: 'AI Projects & Frameworks' },
+  readonly tabs: { key: TabKey; labelKey: string }[] = [
+    { key: 'tools', labelKey: 'lab.aiTools' },
+    { key: 'projects', labelKey: 'lab.aiProjects' },
   ];
 
   activeTab = signal<TabKey>('tools');

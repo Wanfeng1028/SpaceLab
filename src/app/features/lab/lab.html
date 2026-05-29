@@ -22,7 +22,7 @@
         [class.is-active]="activeTab() === tab.key"
         (click)="onTabChange(tab.key)"
       >
-        <span class="tab-label">{{ tab.label }}</span>
+        <span class="tab-label">{{ t(tab.labelKey) }}</span>
       </button>
     }
   </section>
