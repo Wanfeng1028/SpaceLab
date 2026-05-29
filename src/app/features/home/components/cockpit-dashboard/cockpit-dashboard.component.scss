@@ -1,13 +1,13 @@
-// Cockpit Dashboard — data-panel layout with glass HUD cards
-// Space cockpit aesthetic, readable telemetry panels
+// Cockpit Dashboard — 12-column grid dashboard layout
+// Unified panel system, glass HUD aesthetic
 
 // ── Variables ────────────────────────────────────────────────────────
 $panel-bg:
   linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
-  rgba(3, 8, 18, 0.58);
+  rgba(3, 8, 18, 0.62);
 $panel-border: rgba(105, 215, 255, 0.16);
 $panel-shadow:
-  0 18px 60px rgba(0, 0, 0, 0.36),
+  0 18px 60px rgba(0, 0, 0, 0.34),
   inset 0 1px 0 rgba(255, 255, 255, 0.08);
 $cyan: #69d7ff;
 $green: #00ff88;
@@ -26,9 +26,17 @@ $sans: var(--font-sans);
   min-height: 100dvh;
   overflow: hidden;
   background: radial-gradient(ellipse at center bottom, #0a1a2a 0%, #000510 100%);
+}
+
+.cockpit-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 112px 32px 72px;
   display: flex;
   flex-direction: column;
-  padding: 112px 48px 64px;
 }
 
 // ── Three.js background ──────────────────────────────────────────────
@@ -36,7 +44,7 @@ $sans: var(--font-sans);
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.3;
   pointer-events: none;
 
   app-three-canvas {
@@ -47,10 +55,8 @@ $sans: var(--font-sans);
 
 // ── Header ───────────────────────────────────────────────────────────
 .cockpit-header {
-  position: relative;
-  z-index: 1;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 
   &__tag {
     display: block;
@@ -58,57 +64,112 @@ $sans: var(--font-sans);
     font-size: 0.75rem;
     letter-spacing: 0.3em;
     color: rgba($cyan, 0.5);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   &__title {
     font-family: $sans;
-    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-size: clamp(1.3rem, 3vw, 2rem);
     font-weight: 800;
     letter-spacing: 0.2em;
     color: rgba($cyan, 0.9);
-    margin: 0 0 8px;
-    text-shadow: 0 0 30px rgba($cyan, 0.35);
+    margin: 0 0 6px;
+    text-shadow: 0 0 28px rgba($cyan, 0.3);
   }
 
   &__subtitle {
     font-family: $mono;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: $muted;
     margin: 0;
     letter-spacing: 0.1em;
   }
 }
 
-// ── Grid layout ──────────────────────────────────────────────────────
-.cockpit-grid {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 1280px);
-  margin: 0 auto;
+// ── KPI Grid ─────────────────────────────────────────────────────────
+.cockpit-kpi-grid {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr) 320px;
-  gap: 20px;
-  align-items: start;
-  flex: 1;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
 
-  &__left,
-  &__right {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 12px;
+  background: $panel-bg;
+  border: 1px solid $panel-border;
+  border-radius: 18px;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: $panel-shadow;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    border-color: rgba($cyan, 0.4);
+    box-shadow: 0 0 24px rgba($cyan, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  &__center {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  &__value {
+    font-family: $mono;
+    font-size: 2rem;
+    font-weight: 700;
+    color: $cyan;
+    text-shadow: 0 0 24px rgba($cyan, 0.3);
+    line-height: 1.2;
+  }
+
+  &__label {
+    font-family: $mono;
+    font-size: 0.68rem;
+    color: $muted;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 4px;
   }
 }
 
-// ── Panel base ───────────────────────────────────────────────────────
+// ── Main 12-column grid ──────────────────────────────────────────────
+.cockpit-main-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+// ── Unified panel ────────────────────────────────────────────────────
 .cockpit-panel {
-  display: block;
+  border-radius: 22px;
+  padding: 18px;
+  background: $panel-bg;
+  border: 1px solid $panel-border;
+  box-shadow: $panel-shadow;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  &--log {
+    .log-body {
+      max-height: 180px;
+      overflow-y: auto;
+      font-family: $mono;
+      font-size: 11px;
+      line-height: 1.7;
+
+      &::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba($cyan, 0.2);
+        border-radius: 2px;
+      }
+    }
+  }
 }
 
 // ── Panel header ─────────────────────────────────────────────────────
@@ -186,9 +247,9 @@ $sans: var(--font-sans);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 16px;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 12px;
 
   &:last-child {
@@ -201,6 +262,7 @@ $sans: var(--font-sans);
   font-family: $mono;
   letter-spacing: 0.04em;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .metric-value {
@@ -212,53 +274,30 @@ $sans: var(--font-sans);
   min-width: 0;
 }
 
-// ── Site Pulse hero grid ─────────────────────────────────────────────
-.pulse-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  padding: 8px 0 16px;
-}
-
-.pulse-stat {
-  text-align: center;
-  padding: 12px 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba($cyan, 0.08);
-  border-radius: 12px;
-
-  &__value {
-    display: block;
-    font-family: $mono;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: $cyan;
-    text-shadow: 0 0 20px rgba($cyan, 0.3);
-    line-height: 1.2;
-  }
-
-  &__label {
-    display: block;
-    font-family: $mono;
-    font-size: 0.65rem;
-    color: $muted;
-    letter-spacing: 0.1em;
-    margin-top: 4px;
-    text-transform: uppercase;
-  }
-}
-
-// ── Mini radar decoration ────────────────────────────────────────────
-.cockpit-radar-wrap {
+// ── Site Pulse with radar ────────────────────────────────────────────
+.pulse-content {
   display: flex;
-  justify-content: center;
-  padding: 8px 0;
+  gap: 16px;
+  align-items: flex-start;
 }
 
-.cockpit-radar {
+.pulse-data {
+  flex: 1;
+  min-width: 0;
+}
+
+.pulse-radar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.radar {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 130px;
+  height: 130px;
 }
 
 .radar-ring {
@@ -271,11 +310,11 @@ $sans: var(--font-sans);
   }
 
   &--2 {
-    inset: 20px;
+    inset: 22px;
   }
 
   &--3 {
-    inset: 40px;
+    inset: 42px;
   }
 }
 
@@ -311,63 +350,7 @@ $sans: var(--font-sans);
   }
 }
 
-// ── Footer ───────────────────────────────────────────────────────────
-.cockpit-footer {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 1280px);
-  margin: 32px auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-// ── Command log ──────────────────────────────────────────────────────
-.cockpit-log {
-  background: $panel-bg;
-  border: 1px solid $panel-border;
-  border-radius: 18px;
-  padding: 16px;
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: $panel-shadow;
-
-  &__head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba($cyan, 0.12);
-  }
-
-  &__title {
-    font-family: $mono;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    color: rgba($cyan, 0.8);
-    text-transform: uppercase;
-  }
-
-  &__body {
-    max-height: 120px;
-    overflow-y: auto;
-    font-family: $mono;
-    font-size: 11px;
-    line-height: 1.7;
-
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: rgba($cyan, 0.2);
-      border-radius: 2px;
-    }
-  }
-}
-
+// ── Log lines ────────────────────────────────────────────────────────
 .log-line {
   display: flex;
   gap: 8px;
@@ -385,8 +368,31 @@ $sans: var(--font-sans);
 
   &__tag {
     color: $cyan;
-    min-width: 60px;
+    min-width: 64px;
     flex-shrink: 0;
+    font-weight: 600;
+
+    &[data-tag='SYS'] {
+      color: $blue;
+    }
+    &[data-tag='VISITOR'] {
+      color: $green;
+    }
+    &[data-tag='CONTENT'] {
+      color: $purple;
+    }
+    &[data-tag='AI'] {
+      color: $amber;
+    }
+    &[data-tag='WEBGL'] {
+      color: $cyan;
+    }
+    &[data-tag='NET'] {
+      color: $green;
+    }
+    &[data-tag='NAV'] {
+      color: rgba(255, 255, 255, 0.6);
+    }
   }
 
   &__msg {
@@ -398,7 +404,8 @@ $sans: var(--font-sans);
 .cockpit-actions {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
+  margin-top: 18px;
 }
 
 .cockpit-btn {
@@ -453,51 +460,72 @@ $sans: var(--font-sans);
 app-telemetry-bar {
   position: relative;
   z-index: 2;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 // ── Mobile (< 768px) ─────────────────────────────────────────────────
 @media (max-width: 768px) {
-  .cockpit-dashboard {
-    padding: 80px 16px 48px;
+  .cockpit-inner {
+    padding: 88px 16px 48px;
   }
 
   .cockpit-header {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 
     &__title {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       letter-spacing: 0.12em;
     }
   }
 
-  .cockpit-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .pulse-grid {
+  .cockpit-kpi-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
+    margin-bottom: 14px;
   }
 
-  .pulse-stat__value {
-    font-size: 1.3rem;
+  .kpi-card {
+    padding: 14px 8px;
+
+    &__value {
+      font-size: 1.5rem;
+    }
   }
 
-  .cockpit-radar {
-    width: 120px;
-    height: 120px;
+  .cockpit-main-grid {
+    grid-template-columns: 1fr;
+
+    .cockpit-panel,
+    .cockpit-panel--log {
+      grid-column: auto !important;
+    }
   }
 
-  .cockpit-log__body {
-    max-height: 80px;
-    font-size: 10px;
+  .pulse-content {
+    flex-direction: column;
+  }
+
+  .pulse-radar {
+    align-self: center;
+  }
+
+  .radar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .radar-ring {
+    &--2 {
+      inset: 16px;
+    }
+    &--3 {
+      inset: 32px;
+    }
   }
 
   .cockpit-actions {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .cockpit-btn {
@@ -514,21 +542,25 @@ app-telemetry-bar {
     text-align: left;
     width: 100%;
   }
+
+  .log-body {
+    max-height: 120px !important;
+    font-size: 10px !important;
+  }
 }
 
 // ── Small mobile (< 480px) ───────────────────────────────────────────
 @media (max-width: 480px) {
-  .cockpit-dashboard {
-    padding: 72px 12px 40px;
+  .cockpit-inner {
+    padding: 80px 12px 40px;
   }
 
   .cockpit-header__title {
     font-size: 1rem;
   }
 
-  .pulse-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+  .kpi-card__value {
+    font-size: 1.3rem;
   }
 }
 
@@ -543,7 +575,8 @@ app-telemetry-bar {
     animation: none;
   }
 
-  .cockpit-btn {
+  .cockpit-btn,
+  .kpi-card {
     transition: none;
   }
 }

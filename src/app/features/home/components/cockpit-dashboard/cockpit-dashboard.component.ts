@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 import { I18nService } from '../../../../core/services/i18n.service';
 import { LenisScrollService } from '../../../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
-import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { CockpitDashboardScene } from '../../../../three/scenes/cockpit-dashboard.scene';
 import {
@@ -46,7 +45,7 @@ interface NetworkInformation {
   templateUrl: './cockpit-dashboard.component.html',
   styleUrl: './cockpit-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, HudFrameComponent, TelemetryBarComponent],
+  imports: [ThreeCanvasComponent, TelemetryBarComponent],
 })
 export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly router = inject(Router);
