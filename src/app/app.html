@@ -1,5 +1,5 @@
 <app-navbar />
-<div class="app-shell">
+<div class="app-shell" [class.theme-light]="!isHome()">
   <router-outlet />
 </div>
 <app-footer />

@@ -43,7 +43,7 @@ html {
 }
 
 body {
-  color-scheme: dark;
+  color-scheme: dark light;
   margin: 0;
   height: 100%;
 }
@@ -99,4 +99,17 @@ body {
     30px 30px;
   position: relative;
   overflow-x: hidden;
+}
+
+// ============================================
+// Light Theme — Non-home pages
+// ============================================
+
+.app-shell.theme-light {
+  background-color: var(--color-bg);
+  background-image: none;
+  color-scheme: light;
+
+  // Ensure child text uses dark colors by default
+  color: var(--color-text);
 }

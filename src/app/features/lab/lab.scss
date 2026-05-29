@@ -1,5 +1,5 @@
 // Lab — AI Resource Lab
-// SpaceLab Glass / HUD Style
+// SpaceLab Light Glass Style
 
 :host {
   display: block;
@@ -11,11 +11,8 @@
 .lab-page {
   min-height: 100vh;
   padding: 120px 24px 80px;
-  background:
-    radial-gradient(circle at 15% 8%, rgba(105, 215, 255, 0.14), transparent 28%),
-    radial-gradient(circle at 85% 20%, rgba(143, 124, 255, 0.12), transparent 28%),
-    linear-gradient(135deg, #05070d, #090b12 52%, #030305);
-  color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
+  color: var(--color-text);
   overflow-x: hidden;
 }
 
@@ -28,9 +25,10 @@
   text-align: center;
   padding: 40px 32px;
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   backdrop-filter: blur(14px);
+  box-shadow: var(--glass-shadow);
   position: relative;
   overflow: hidden;
 
@@ -41,21 +39,14 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #69d7ff, #8f7cff, transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-cyan),
+      var(--color-violet),
+      transparent
+    );
     animation: lab-scan 5s ease-in-out infinite;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(105, 215, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(105, 215, 255, 0.025) 1px, transparent 1px);
-    background-size: 48px 48px;
-    opacity: 0.5;
-    pointer-events: none;
-    border-radius: 28px;
   }
 
   h1 {
@@ -64,7 +55,12 @@
     line-height: 1;
     letter-spacing: -0.05em;
     font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #69d7ff 50%, #8f7cff 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-text) 0%,
+      var(--color-cyan) 50%,
+      var(--color-violet) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -73,7 +69,7 @@
   &__desc {
     max-width: 540px;
     margin: 0 auto 16px;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-text-secondary);
     font-size: 15px;
     line-height: 1.7;
   }
@@ -91,7 +87,7 @@
 .lab-kicker {
   font-size: 12px;
   letter-spacing: 0.2em;
-  color: #69d7ff;
+  color: var(--color-cyan);
   font-weight: 700;
   text-transform: uppercase;
   margin: 0 0 4px;
@@ -105,9 +101,9 @@
   gap: 6px;
   padding: 4px 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: var(--color-text-tertiary);
   font-size: 12px;
   font-weight: 500;
   position: relative;
@@ -115,7 +111,7 @@
 }
 
 .meta-icon {
-  color: #69d7ff;
+  color: var(--color-cyan);
 }
 
 @keyframes lab-scan {
@@ -151,9 +147,9 @@
   min-height: 44px;
   padding: 0 28px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--glass-bg);
+  color: var(--color-text-secondary);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -161,15 +157,15 @@
   backdrop-filter: blur(12px);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--glass-bg-strong);
+    border-color: rgba(0, 0, 0, 0.12);
   }
 
   &.is-active {
-    background: linear-gradient(135deg, rgba(105, 215, 255, 0.28), rgba(143, 124, 255, 0.34));
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.24);
-    box-shadow: 0 4px 24px rgba(105, 215, 255, 0.18);
+    background: linear-gradient(135deg, rgba(105, 215, 255, 0.18), rgba(143, 124, 255, 0.22));
+    color: var(--color-text);
+    border-color: rgba(105, 215, 255, 0.3);
+    box-shadow: 0 4px 24px rgba(105, 215, 255, 0.12);
   }
 }
 
@@ -195,7 +191,7 @@
     left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--color-text-tertiary);
     font-size: 18px;
     pointer-events: none;
   }
@@ -205,9 +201,9 @@
     min-height: 46px;
     padding: 0 18px 0 46px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--glass-bg);
+    color: var(--color-text);
     font-size: 14px;
     outline: none;
     backdrop-filter: blur(14px) saturate(135%);
@@ -216,12 +212,12 @@
       background 200ms;
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.35);
+      color: var(--color-text-tertiary);
     }
 
     &:focus {
-      border-color: rgba(105, 215, 255, 0.35);
-      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(105, 215, 255, 0.4);
+      background: var(--glass-bg-strong);
     }
   }
 }
@@ -243,9 +239,9 @@
   min-height: 36px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--color-text-secondary);
   font-size: 12px;
   cursor: pointer;
   transition: all 200ms;
@@ -253,14 +249,14 @@
   flex-shrink: 0;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.09);
-    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.1);
   }
 
   &.is-active {
-    background: rgba(105, 215, 255, 0.18);
-    color: #69d7ff;
-    border-color: rgba(105, 215, 255, 0.35);
+    background: rgba(105, 215, 255, 0.15);
+    color: var(--color-cyan);
+    border-color: rgba(105, 215, 255, 0.3);
   }
 }
 
@@ -279,35 +275,31 @@
 }
 
 // ============================================
-// Card — Glass HUD
+// Card — Light Glass
 // ============================================
 .lab-card {
   position: relative;
   padding: 22px;
   border-radius: 24px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)),
-    rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow:
-    0 16px 48px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   backdrop-filter: blur(18px) saturate(140%);
   cursor: pointer;
   transition:
     transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
     border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    background 240ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
     transform: translateY(-4px);
     border-color: rgba(105, 215, 255, 0.3);
-    background:
-      linear-gradient(135deg, rgba(105, 215, 255, 0.12), rgba(143, 124, 255, 0.08)),
-      rgba(255, 255, 255, 0.07);
+    box-shadow:
+      0 20px 60px rgba(34, 28, 18, 0.14),
+      var(--glass-inner);
 
     .lab-card__link {
-      color: #69d7ff;
+      color: var(--color-cyan);
 
       .arrow {
         transform: translateX(4px);
@@ -327,28 +319,28 @@
   &__category {
     padding: 3px 10px;
     border-radius: 999px;
-    background: rgba(105, 215, 255, 0.14);
-    color: #69d7ff;
+    background: rgba(105, 215, 255, 0.12);
+    color: var(--color-cyan);
     font-weight: 600;
     font-size: 11px;
     letter-spacing: 0.03em;
   }
 
   &__source {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--color-text-tertiary);
   }
 
   &__title {
     margin: 0 0 10px;
     font-size: clamp(16px, 2vw, 20px);
     line-height: 1.35;
-    color: #fff;
+    color: var(--color-text);
     font-weight: 600;
   }
 
   &__summary {
     margin: 0 0 14px;
-    color: rgba(255, 255, 255, 0.58);
+    color: var(--color-text-secondary);
     line-height: 1.7;
     font-size: 13px;
   }
@@ -363,8 +355,8 @@
   &__tag {
     padding: 3px 9px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.55);
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--color-text-secondary);
     font-size: 11px;
   }
 
@@ -376,7 +368,7 @@
 
   &__date {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--color-text-tertiary);
   }
 
   &__link {
@@ -384,7 +376,7 @@
     align-items: center;
     gap: 4px;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--color-text-secondary);
     font-weight: 500;
     transition: color 200ms;
 
@@ -413,12 +405,12 @@
 
   .empty-icon {
     font-size: 48px;
-    color: rgba(255, 255, 255, 0.25);
+    color: var(--color-text-tertiary);
     margin-bottom: 16px;
   }
 
   p {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-secondary);
     font-size: 15px;
   }
 }
@@ -431,17 +423,17 @@
   margin: 48px auto 0;
   padding: 24px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   text-align: center;
 
   .footer-source {
     margin: 0 0 8px;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-text-secondary);
 
     a {
-      color: #69d7ff;
+      color: var(--color-cyan);
       text-decoration: none;
       transition: opacity 200ms;
 
@@ -455,7 +447,7 @@
   .footer-disclaimer {
     margin: 0;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--color-text-tertiary);
     line-height: 1.6;
   }
 }
@@ -468,7 +460,7 @@
   font-size: 22px;
   font-weight: 700;
   line-height: 1.2;
-  color: #fff;
+  color: var(--color-text);
   letter-spacing: 4px;
   z-index: 1;
   animation: lab-shift 1s ease-in-out infinite alternate;
@@ -485,13 +477,13 @@
 
   &::before {
     animation: lab-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-    color: #8f7cff;
+    color: var(--color-violet);
     z-index: -1;
   }
 
   &::after {
     animation: lab-glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-    color: #69d7ff;
+    color: var(--color-cyan);
     z-index: -2;
   }
 }

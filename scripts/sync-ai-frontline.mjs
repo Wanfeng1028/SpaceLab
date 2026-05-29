@@ -287,7 +287,7 @@ async function fetchAndParseNews() {
         date: today,
         title: title,
         summary: truncateSummary(summary || title),
-        source: 'AI工具集',
+        source: '',
         url: url,
         category: categorizeNews(title, summary),
         tags: extractTags(title, summary),
@@ -323,7 +323,7 @@ async function main() {
 
     // Update source timestamp even if no news fetched
     const source = {
-      name: 'AI工具集 每日AI快讯',
+      name: '每日AI快讯',
       url: 'https://ai-bot.cn/daily-ai-news/',
       description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
       lastFetchedAt: new Date().toISOString(),
@@ -347,7 +347,7 @@ async function main() {
 
     // Update source timestamp
     const source = {
-      name: 'AI工具集 每日AI快讯',
+      name: '每日AI快讯',
       url: 'https://ai-bot.cn/daily-ai-news/',
       description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
       lastFetchedAt: new Date().toISOString(),
@@ -370,7 +370,7 @@ async function main() {
 
   // Save source info
   const source = {
-    name: 'AI工具集 每日AI快讯',
+    name: '每日AI快讯',
     url: 'https://ai-bot.cn/daily-ai-news/',
     description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
     lastFetchedAt: new Date().toISOString(),
