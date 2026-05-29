@@ -32,7 +32,7 @@ interface BranchConfig {
   points: Vector3[];
 }
 
-// 9 organic bionic branch curves
+// 9 organic bionic branch curves radiating from trunk
 const BRANCH_CONFIGS: BranchConfig[] = [
   { points: [new Vector3(0.05, 1.8, 0), new Vector3(0.5, 2.3, 0.2), new Vector3(1.3, 2.9, 0.2)] },
   {
@@ -98,7 +98,7 @@ export class MoonTreeScene {
   private composer!: EffectComposer;
   private treeGroup!: Group;
   private clock!: Clock;
-
+  
   private animationId: number | null = null;
   private resizeHandler!: () => void;
   private mouseMoveHandler!: (e: MouseEvent) => void;
@@ -107,7 +107,7 @@ export class MoonTreeScene {
 
   // Swirling Canopy Particles
   private crownSystems: { points: Points; basePositions: Float32Array; lobe: any }[] = [];
-
+  
   // Drifting Fireflies & Sparks
   private fireflies: Points | null = null;
   private fireflyBasePositions!: Float32Array;
@@ -143,7 +143,7 @@ export class MoonTreeScene {
 
   private initScene(): void {
     this.scene = new Scene();
-
+    
     // Position camera dynamically for optimal sizing
     this.camera = new PerspectiveCamera(42, 1, 0.1, 200);
     this.camera.position.set(0, 1.3, this.isMobile ? 9.5 : 7.8);
@@ -151,28 +151,26 @@ export class MoonTreeScene {
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
       antialias: !this.isMobile,
-      alpha: true,
+      alpha: false, // 禁用透明，采用 solid 深黑色天空，避免混合过载造成的白屏 BUG
       powerPreference: 'high-performance',
     });
-
+    
     this.contextLostHandler = (e: Event) => e.preventDefault();
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-    this.renderer.setClearColor(0x020208, 1.0); // 极致深黑蓝色底色
-    this.renderer.toneMapping = 1; // LinearToneMapping
-    this.renderer.toneMappingExposure = 1.0;
+    this.renderer.setClearColor(0x020208, 1.0); // 极致深黑蓝色天空
 
-    // 1. 设置 UnrealBloom 梦幻发光后处理
+    // 1. 设置 UnrealBloom 梦幻发光后处理，严格校准防曝光过载
     this.composer = new EffectComposer(this.renderer);
     const renderPass = new RenderPass(this.scene, this.camera);
     this.composer.addPass(renderPass);
 
     const bloomPass = new UnrealBloomPass(
       new Vector2(this.canvas.clientWidth, this.canvas.clientHeight),
-      1.9, // strength 发光强度
-      0.65, // radius 发光半径
-      0.28, // threshold 发光阈值更低，能量流动更明显
+      1.1,  // strength 调低发光强度，防止白色云雾曝光
+      0.45, // radius
+      0.72, // threshold 提高发光阈值，让叶子边缘颗粒清晰，保留满天繁星沙砾感
     );
     this.composer.addPass(bloomPass);
 
@@ -202,16 +200,16 @@ export class MoonTreeScene {
     canvas.width = 64;
     canvas.height = 64;
     const ctx = canvas.getContext('2d')!;
-
+    
     const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     grad.addColorStop(0, '#ffffff');
     grad.addColorStop(0.2, colorHex);
-    grad.addColorStop(0.5, 'rgba(0, 100, 255, 0.15)');
+    grad.addColorStop(0.5, 'rgba(0, 100, 255, 0.12)');
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
+    
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 64, 64);
-
+    
     const texture = new CanvasTexture(canvas);
     texture.minFilter = LinearFilter;
     return texture;
@@ -227,7 +225,7 @@ export class MoonTreeScene {
         void main() {
           vAlpha = aAlpha;
           vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = aSize * (300.0 / -mvPos.z);
+          gl_PointSize = aSize * (50.0 / -mvPos.z); // 极致精细粒子缩放大小
           gl_Position = projectionMatrix * mvPos;
         }
       `,
@@ -288,7 +286,7 @@ export class MoonTreeScene {
     const trunkMat = new MeshBasicMaterial({
       color: 0x004fff, // 幽蓝光效
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.65,
       blending: AdditiveBlending,
     });
     const trunkMesh = new Mesh(trunkGeom, trunkMat);
@@ -301,7 +299,7 @@ export class MoonTreeScene {
       const branchMat = new MeshBasicMaterial({
         color: 0x00c3ff, // 赛博亮青色
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.55,
         blending: AdditiveBlending,
       });
       const branchMesh = new Mesh(branchGeom, branchMat);
@@ -321,7 +319,7 @@ export class MoonTreeScene {
         x: Math.cos(angle) * r * taper,
         y,
         z: Math.sin(angle) * r * taper,
-        size: 1.5 + Math.random() * 2.2,
+        size: 1.0 + Math.random() * 1.8,
         alpha: 0.6 + Math.random() * 0.4,
       };
     });
@@ -344,7 +342,7 @@ export class MoonTreeScene {
           x: pt.x + (Math.random() - 0.5) * spread,
           y: pt.y + (Math.random() - 0.5) * spread,
           z: pt.z + (Math.random() - 0.5) * spread,
-          size: 1.2 + Math.random() * 1.8,
+          size: 1.0 + Math.random() * 1.5,
           alpha: 0.45 + Math.random() * 0.55,
         };
       });
@@ -367,7 +365,7 @@ export class MoonTreeScene {
           x: lobe.cx + lobe.rx * Math.sin(phi) * Math.cos(theta) * jitter,
           y: lobe.cy + lobe.ry * Math.cos(phi) * jitter,
           z: lobe.cz + lobe.rz * Math.sin(phi) * Math.sin(theta) * jitter,
-          size: 1.4 + Math.random() * 2.8,
+          size: 1.2 + Math.random() * 2.0, // 减小尺寸，对标视频中纤细分明的繁星微尘
           alpha: 0.35 + Math.random() * 0.65,
         };
       });
@@ -385,7 +383,7 @@ export class MoonTreeScene {
 
   // 打造树底周围漂浮起舞的小萤火虫点
   private buildFireflies(): void {
-    const count = this.isMobile ? 120 : 250;
+    const count = this.isMobile ? 100 : 200;
     const { geom, basePositions } = this.buildParticleGeometry(count, () => {
       const angle = Math.random() * Math.PI * 2;
       const r = 0.5 + Math.random() * 4.0;
@@ -394,7 +392,7 @@ export class MoonTreeScene {
         x: Math.cos(angle) * r,
         y,
         z: Math.sin(angle) * r,
-        size: 2.5 + Math.random() * 4.5,
+        size: 1.5 + Math.random() * 3.5,
         alpha: 0.3 + Math.random() * 0.7,
       };
     });
@@ -406,7 +404,7 @@ export class MoonTreeScene {
 
   // 制作向上升华流动的高能数字粒子火花
   private buildRisingEnergySparks(): void {
-    const count = this.isMobile ? 100 : 220;
+    const count = this.isMobile ? 80 : 180;
     const positions = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
     const alphas = new Float32Array(count);
@@ -418,8 +416,8 @@ export class MoonTreeScene {
       positions[i * 3] = Math.cos(angle) * r;
       positions[i * 3 + 1] = -0.6 + Math.random() * 3.2;
       positions[i * 3 + 2] = Math.sin(angle) * r;
-
-      sizes[i] = 1.6 + Math.random() * 2.2;
+      
+      sizes[i] = 1.2 + Math.random() * 1.8;
       alphas[i] = 0.4 + Math.random() * 0.6;
       this.sparkSpeeds[i] = 0.22 + Math.random() * 0.32;
     }
@@ -435,18 +433,18 @@ export class MoonTreeScene {
     this.treeGroup.add(this.sparks);
   }
 
-  // 构造沿着贝塞尔螺旋路径飞行的仿生数据蝴蝶 (Cyber Butterflies)
+  // 构造大体积明亮的仿生蝴蝶
   private buildFlutteringButterflies(): void {
     const count = this.isMobile ? 4 : 8;
     const butterColor = new Color(0.0, 0.9, 1.0); // 发光青色
-
+    
     for (let i = 0; i < count; i++) {
-      // 小型发光球体网格作为蝴蝶
-      const geom = new SphereGeometry(0.045, 8, 8);
+      // 放大蝴蝶发光体，对标 蓝月亮树.mp4 视频中的明亮展翅感
+      const geom = new SphereGeometry(0.08, 12, 12);
       const mat = new MeshBasicMaterial({
         color: butterColor,
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.95,
         blending: AdditiveBlending,
       });
       const mesh = new Mesh(geom, mat);
@@ -457,8 +455,8 @@ export class MoonTreeScene {
       this.butterflies.push({
         mesh,
         center: new Vector3(0, 1.8 + Math.random() * 1.5, 0),
-        radius: 1.2 + Math.random() * 1.6,
-        speed: 0.35 + Math.random() * 0.4,
+        radius: 1.4 + Math.random() * 1.8,
+        speed: 0.3 + Math.random() * 0.35,
         offsetY: Math.random() * 0.8,
         phase: Math.random() * 100,
       });
@@ -472,7 +470,7 @@ export class MoonTreeScene {
 
     // 1. 月亮主体小球
     const moonGeom = new SphereGeometry(0.8, 32, 32);
-    const moonMat = new MeshBasicMaterial({
+    const moonMat = new MeshBasicMaterial({ 
       color: 0xd9ebff, // 莹润清澈的极地白蓝
     });
     const moon = new Mesh(moonGeom, moonMat);
@@ -483,22 +481,22 @@ export class MoonTreeScene {
     const midMat = new SpriteMaterial({
       map: midTex,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.45,
       blending: AdditiveBlending,
     });
     const midGlow = new Sprite(midMat);
-    midGlow.scale.set(3.8, 3.8, 1.0);
+    midGlow.scale.set(4.0, 4.0, 1.0);
     moonGroup.add(midGlow);
 
     const outerTex = this.createGlowTexture('#0033ff');
     const outerMat = new SpriteMaterial({
       map: outerTex,
       transparent: true,
-      opacity: 0.28,
+      opacity: 0.3,
       blending: AdditiveBlending,
     });
     const outerGlow = new Sprite(outerMat);
-    outerGlow.scale.set(7.0, 7.0, 1.0);
+    outerGlow.scale.set(7.5, 7.5, 1.0);
     moonGroup.add(outerGlow);
 
     this.scene.add(moonGroup);
@@ -511,7 +509,7 @@ export class MoonTreeScene {
       x: (Math.random() - 0.5) * 60,
       y: (Math.random() - 0.5) * 60,
       z: (Math.random() - 0.5) * 60 - 15,
-      size: 1.0 + Math.random() * 1.8,
+      size: 0.8 + Math.random() * 1.5,
       alpha: 0.2 + Math.random() * 0.5,
     }));
     const mat = this.makeParticleMaterial(new Color(0.9, 0.95, 1.0));
@@ -523,12 +521,11 @@ export class MoonTreeScene {
     window.addEventListener('resize', this.resizeHandler);
 
     this.mouseMoveHandler = (e: MouseEvent) => {
-      // 捕获鼠标坐标并映射至 [-1, 1]，为树大冠做 3D 悬停视差倾斜
       this.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
       this.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-
-      this.targetRotY = this.mouseX * 0.12;
-      this.targetRotX = -this.mouseY * 0.08;
+      
+      this.targetRotY = this.mouseX * 0.08;
+      this.targetRotX = -this.mouseY * 0.05;
     };
     window.addEventListener('mousemove', this.mouseMoveHandler);
   }
@@ -553,42 +550,31 @@ export class MoonTreeScene {
     const sf = this.speedFactor;
 
     // 1. 鼠标悬停视差微动平滑插值 (Parallax interpolation)
-    this.treeGroup.rotation.y =
-      this.treeGroup.rotation.y + (this.targetRotY - this.treeGroup.rotation.y) * 0.05 * sf;
-    this.treeGroup.rotation.x =
-      this.treeGroup.rotation.x + (this.targetRotX - this.treeGroup.rotation.x) * 0.05 * sf;
+    this.treeGroup.rotation.y = this.treeGroup.rotation.y + (this.targetRotY - this.treeGroup.rotation.y) * 0.05 * sf;
+    this.treeGroup.rotation.x = this.treeGroup.rotation.x + (this.targetRotX - this.treeGroup.rotation.x) * 0.05 * sf;
 
     // 同时施加微风拂过摇曳
     this.treeGroup.rotation.z = Math.sin(elapsed * 0.26 * sf) * 0.008 * sf;
 
-    // 2. 核心硬性要求：执行 Curl Noise 流体风场数学模型！
-    // 使 35,000+ 颗叶子微粒在 3D 空间内沿着高维旋涡流动，效果极其动感生动！
+    // 2. 3D 旋度风场流动
     this.crownSystems.forEach((sys) => {
       const posAttr = sys.points.geometry.getAttribute('position') as Float32BufferAttribute;
       const arr = posAttr.array as Float32Array;
       const count = arr.length / 3;
-      const lobe = sys.lobe;
-
+      
       for (let i = 0; i < count; i++) {
         const bx = sys.basePositions[i * 3];
         const by = sys.basePositions[i * 3 + 1];
         const bz = sys.basePositions[i * 3 + 2];
-
-        // 数学逼近旋涡 Curl-like 磁场流体力学偏移
+        
+        // 围绕各自分叉中心作旋转流动
         const timeScale = elapsed * 0.38 * sf + i * 0.0001;
         const angle = timeScale + by * 0.4;
         const offsetRadius = Math.sin(timeScale * 1.6 + bx * 0.28) * 0.18;
-
-        // 围绕各自分叉瓣中心作旋转流动
+        
         arr[i * 3] = bx + Math.sin(angle) * (0.16 + offsetRadius);
         arr[i * 3 + 1] = by + Math.sin(timeScale * 1.3 + bz * 0.35) * 0.12;
         arr[i * 3 + 2] = bz + Math.cos(angle) * (0.16 + offsetRadius);
-
-        // 如果鼠标在附近，对其施加细微的重力偏移，实现仿生交互
-        if (Math.abs(this.mouseX) > 0.01) {
-          arr[i * 3] += this.mouseX * 0.08 * sf;
-          arr[i * 3 + 1] += this.mouseY * 0.06 * sf;
-        }
       }
       posAttr.needsUpdate = true;
     });
@@ -603,7 +589,7 @@ export class MoonTreeScene {
         const by = this.fireflyBasePositions[i * 3 + 1];
         const bz = this.fireflyBasePositions[i * 3 + 2];
         const phase = i * 0.8;
-
+        
         arr[i * 3] = bx + Math.sin(elapsed * 0.4 * sf + phase) * 0.4;
         arr[i * 3 + 1] = by + Math.sin(elapsed * 0.28 * sf + phase * 1.3) * 0.3;
         arr[i * 3 + 2] = bz + Math.cos(elapsed * 0.35 * sf + phase * 0.9) * 0.4;
@@ -611,7 +597,7 @@ export class MoonTreeScene {
       posAttr.needsUpdate = true;
     }
 
-    // 4. 驱动自下而上源源不断喷涌升腾的能量数字火花
+    // 4. 驱动自下而上能量数字火花
     if (this.sparks) {
       const posAttr = this.sparks.geometry.getAttribute('position') as Float32BufferAttribute;
       const arr = posAttr.array as Float32Array;
@@ -619,10 +605,10 @@ export class MoonTreeScene {
       for (let i = 0; i < count; i++) {
         const speed = this.sparkSpeeds[i];
         arr[i * 3 + 1] += speed * delta * 1.6 * sf; // 垂直升华
-
+        
         // 浮动抖动
         arr[i * 3] += Math.sin(elapsed * 2.2 + i) * 0.003;
-
+        
         // 超出高度后循环重置于根部
         if (arr[i * 3 + 1] > 3.6) {
           arr[i * 3 + 1] = -0.6;
@@ -632,16 +618,16 @@ export class MoonTreeScene {
       posAttr.needsUpdate = true;
     }
 
-    // 5. 驱动小蝴蝶围绕树林优雅旋转振翅飞行
+    // 5. 驱动大蝴蝶围绕树林优雅旋转振翅飞行
     this.butterflies.forEach((bf) => {
       bf.phase += bf.speed * 0.016 * sf;
-
+      
       const x = bf.center.x + Math.cos(bf.phase) * bf.radius;
       const z = bf.center.z + Math.sin(bf.phase) * bf.radius;
-      const y = bf.center.y + Math.sin(bf.phase * 2.4) * bf.offsetY; // 螺旋上下波动
-
+      const y = bf.center.y + Math.sin(bf.phase * 2.4) * bf.offsetY;
+      
       bf.mesh.position.set(x, y, z);
-
+      
       // 振翅发光大小抖动
       const scale = 0.85 + Math.sin(bf.phase * 15.0) * 0.25;
       bf.mesh.scale.setScalar(scale);
