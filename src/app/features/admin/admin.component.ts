@@ -15,7 +15,7 @@ export class AdminComponent {
   readonly title = signal('');
   readonly content = signal('');
   readonly tags = signal('');
-  readonly category = signal(this.i18n.t('admin.catTech'));
+  readonly category = signal('GIS');
   readonly isPreview = signal(false);
 
   t(key: string): string {

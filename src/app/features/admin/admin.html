@@ -47,9 +47,11 @@
             [value]="category()"
             (change)="category.set($any($event.target).value)"
           >
-            <option value="技术">{{ t('admin.catTech') }}</option>
-            <option value="设计">{{ t('admin.catDesign') }}</option>
+            <option value="GIS">{{ t('admin.catGis') }}</option>
+            <option value="开发">{{ t('admin.catDev') }}</option>
+            <option value="算法">{{ t('admin.catAlgorithm') }}</option>
             <option value="随笔">{{ t('admin.catEssay') }}</option>
+            <option value="薅羊毛攻略">{{ t('admin.catDeals') }}</option>
           </select>
         </div>
 

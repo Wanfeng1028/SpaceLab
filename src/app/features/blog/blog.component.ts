@@ -26,14 +26,7 @@ export class BlogComponent {
 
   readonly allPosts = computed(() => this.postService.posts());
 
-  readonly categories = computed(() => {
-    const cats = new Set(
-      this.allPosts()
-        .map((p) => p.category)
-        .filter(Boolean),
-    );
-    return ['all', ...Array.from(cats)];
-  });
+  readonly categories = signal<string[]>(['all', 'GIS', '开发', '算法', '随笔', '薅羊毛攻略']);
 
   readonly filteredPosts = computed(() => {
     const query = this.searchQuery();
@@ -54,8 +47,15 @@ export class BlogComponent {
   }
 
   getCategoryLabel(cat: string): string {
-    if (cat === 'all') return this.t('common.all');
-    return cat;
+    const labels: Record<string, string> = {
+      all: this.t('common.all'),
+      GIS: this.t('admin.catGis'),
+      '开发': this.t('admin.catDev'),
+      '算法': this.t('admin.catAlgorithm'),
+      '随笔': this.t('admin.catEssay'),
+      '薅羊毛攻略': this.t('admin.catDeals'),
+    };
+    return labels[cat] ?? cat;
   }
 
   selectCategory(category: string): void {

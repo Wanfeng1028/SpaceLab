@@ -2,7 +2,7 @@
 title: 'Three.js 粒子系统入门'
 slug: 'threejs-particles'
 date: '2026-05-20'
-category: '技术'
+category: '开发'
 tags: ['Three.js', 'WebGL', '3D']
 cover: ''
 summary: '使用 Three.js 创建粒子效果是 Web 3D 开发中最有趣的部分之一。'

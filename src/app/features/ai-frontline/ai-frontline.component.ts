@@ -257,6 +257,12 @@ export class AiFrontlineComponent implements OnInit {
     return allItems.filter((item) => item.category === category).length;
   }
 
+  dateRangeCount(range: DateRangeFilter): number {
+    return this.news().filter(
+      (item) => isAfterContentStartDate(item.date) && matchesDateRange(item, range),
+    ).length;
+  }
+
   formatDate(dateStr: string): string {
     if (!dateStr) return '';
     try {

@@ -2,7 +2,7 @@
 title: 'Angular 21 新特性速览'
 slug: 'angular-21-overview'
 date: '2026-05-25'
-category: '技术'
+category: '开发'
 tags: ['Angular', '前端']
 cover: ''
 summary: 'Angular 21 带来了许多令人兴奋的新特性，让我们一起来看看最重要的变化。'
