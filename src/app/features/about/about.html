@@ -1,6 +1,5 @@
 <main class="about-page">
   <div class="about-shell">
-
     <!-- 1 ─ Hero: Two-Column Layout -->
     <section class="about-hero">
       <!-- Left: Identity Card -->
@@ -70,7 +69,11 @@
       <h2 class="about-section-title">{{ about.focusTitle }}</h2>
       <div class="about-focus-grid">
         @for (area of focusAreas; track area.id) {
-          <mat-card class="about-focus-card about-glass-card" matTooltip="{{ area.description }}" matTooltipPosition="above">
+          <mat-card
+            class="about-focus-card about-glass-card"
+            matTooltip="{{ area.description }}"
+            matTooltipPosition="above"
+          >
             <mat-icon class="about-card-icon">{{ area.icon }}</mat-icon>
             <h3 class="about-card-title">{{ area.title }}</h3>
             <p class="about-card-desc">{{ area.description }}</p>
@@ -160,6 +163,5 @@
         </div>
       </mat-card>
     </section>
-
   </div>
 </main>
