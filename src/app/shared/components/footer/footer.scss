@@ -73,8 +73,13 @@
 }
 
 @keyframes footer-pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 // ── Navigation Columns ──
@@ -116,7 +121,9 @@
   font-size: 13px;
   color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
   display: inline-block;
   line-height: 1.4;
   cursor: pointer;
@@ -187,7 +194,10 @@
   padding: 8px 14px;
   border-radius: 999px;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
     color: rgba(255, 255, 255, 0.6);
