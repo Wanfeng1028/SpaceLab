@@ -12,7 +12,7 @@
             <li class="archive-item">
               <span class="archive-item__date">{{ article.date }}</span>
               <a class="archive-item__link" [routerLink]="['/article', article.slug]">
-                {{ article.title }}
+                {{ t(article.titleKey) }}
               </a>
             </li>
           }

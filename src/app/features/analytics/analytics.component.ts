@@ -45,14 +45,17 @@ export class AnalyticsComponent {
   private readonly articleData = [
     { key: 'page2', slug: 'hello-world', views: 142, date: '2025-05-24' },
     { key: 'page4', slug: 'angular-21-overview', views: 76, date: '2025-05-20' },
-    { title: 'Three.js 粒子系统入门', slug: 'threejs-particles', views: 58, date: '2025-05-15' },
-    { title: 'Glassmorphism 设计指南', slug: 'glassmorphism-guide', views: 45, date: '2025-05-10' },
-    { title: '我的开发工具箱 2025', slug: 'dev-tools-2025', views: 32, date: '2025-05-05' },
+    { titleKey: 'archive.post2_title', slug: 'threejs-particles', views: 58, date: '2025-05-15' },
+    { titleKey: 'archive.post3_title', slug: 'glassmorphism-guide', views: 45, date: '2025-05-10' },
+    { titleKey: 'archive.post4_title', slug: 'dev-tools-2025', views: 32, date: '2025-05-05' },
   ];
 
   readonly topArticles = computed(() =>
     this.articleData.map((a) => ({
-      title: 'key' in a ? this.i18n.t(`analytics.${a.key}`) : a.title,
+      title:
+        'key' in a
+          ? this.i18n.t(`analytics.${a.key}`)
+          : this.i18n.t((a as { titleKey: string }).titleKey),
       slug: a.slug,
       views: a.views,
       date: a.date,

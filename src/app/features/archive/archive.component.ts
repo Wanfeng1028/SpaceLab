@@ -2,9 +2,15 @@ import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
 
+interface ArchiveArticle {
+  titleKey: string;
+  slug: string;
+  date: string;
+}
+
 interface ArchiveYear {
   year: string;
-  articles: { title: string; slug: string; date: string }[];
+  articles: ArchiveArticle[];
 }
 
 @Component({
@@ -21,11 +27,11 @@ export class ArchiveComponent {
     {
       year: '2025',
       articles: [
-        { title: '你好，世界', slug: 'hello-world', date: '05-24' },
-        { title: 'Angular 21 新特性速览', slug: 'angular-21-overview', date: '05-20' },
-        { title: 'Three.js 粒子系统入门', slug: 'threejs-particles', date: '05-15' },
-        { title: 'Glassmorphism 设计指南', slug: 'glassmorphism-guide', date: '05-10' },
-        { title: '我的开发工具箱 2025', slug: 'dev-tools-2025', date: '05-05' },
+        { titleKey: 'archive.post0_title', slug: 'hello-world', date: '05-24' },
+        { titleKey: 'archive.post1_title', slug: 'angular-21-overview', date: '05-20' },
+        { titleKey: 'archive.post2_title', slug: 'threejs-particles', date: '05-15' },
+        { titleKey: 'archive.post3_title', slug: 'glassmorphism-guide', date: '05-10' },
+        { titleKey: 'archive.post4_title', slug: 'dev-tools-2025', date: '05-05' },
       ],
     },
   ];

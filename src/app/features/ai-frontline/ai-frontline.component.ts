@@ -109,7 +109,7 @@ export class AiFrontlineComponent implements OnInit {
         this.news.set(newsModule.default as AiNewsItem[]);
         this.source.set(sourceModule.default as AiFrontlineSource);
       } catch {
-        this.error.set('Failed to load news data');
+        this.error.set(this.i18n.t('aiFrontline.fetchError'));
         this.news.set([]);
       }
     } finally {

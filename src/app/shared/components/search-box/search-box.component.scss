@@ -1,6 +1,15 @@
 .search-box-container {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
+}
+
+#poda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
 }
 
 .grid {
@@ -21,13 +30,11 @@
 .darkBorderBg,
 .glow {
   max-height: 70px;
-  max-width: 314px;
   height: 100%;
   width: 100%;
   position: absolute;
   overflow: hidden;
   z-index: -1;
-  /* Border Radius */
   border-radius: 12px;
   filter: blur(3px);
 }
@@ -35,19 +42,12 @@
 .input {
   background-color: #010201;
   border: none;
-  /* padding:7px; */
-  width: 301px;
+  width: 100%;
   height: 56px;
   border-radius: 10px;
   color: white;
   padding-inline: 59px;
   font-size: 18px;
-}
-
-#poda {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .input::placeholder {
@@ -93,7 +93,6 @@
 
 .white {
   max-height: 63px;
-  max-width: 307px;
   border-radius: 10px;
   filter: blur(2px);
 }
@@ -125,7 +124,6 @@
 
 .border {
   max-height: 59px;
-  max-width: 303px;
   border-radius: 11px;
   filter: blur(0.5px);
 }
@@ -157,7 +155,6 @@
 
 .darkBorderBg {
   max-height: 65px;
-  max-width: 312px;
 }
 
 .darkBorderBg::before {
@@ -353,6 +350,7 @@
 
 #main {
   position: relative;
+  width: 100%;
 }
 
 #search-icon {
