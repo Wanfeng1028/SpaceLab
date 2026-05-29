@@ -146,39 +146,25 @@ $ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   width: 128px;
   height: 128px;
+}
 
-  &__img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    z-index: 1;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 32px rgba(105, 215, 255, 0.25);
+// Avatar spinner (shared effect with navbar)
+.scm-avatar-spinner {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+
+  .avatar-spinner__ring {
+    inset: -5px;
+
+    &::after {
+      inset: 4px;
+    }
   }
 
-  // Inner ring — cyan glow
-  &__ring1 {
-    position: absolute;
-    inset: -10px;
-    border-radius: 50%;
-    border: 1px solid rgba(105, 215, 255, 0.35);
-    box-shadow: 0 0 24px rgba(105, 215, 255, 0.28);
-    opacity: 0;
-    animation: scmRingFadeIn 800ms 300ms ease both;
-  }
-
-  // Outer ring — purple dashed orbit
-  &__ring2 {
-    position: absolute;
-    inset: -22px;
-    border-radius: 50%;
-    border: 1px dashed rgba(143, 124, 255, 0.28);
-    animation:
-      scmOrbitSpin 22s linear infinite,
-      scmRingFadeIn 800ms 500ms ease both;
-    opacity: 0;
+  .avatar-spinner__img {
+    width: 68px;
+    height: 68px;
   }
 }
 
