@@ -4,9 +4,32 @@
 
   <!-- Overlay Content -->
   <div class="earth-signal-overlay">
-    <p class="es-telemetry">{{ t('homeEarthSignal.telemetry') }}</p>
-    <h2 class="es-title">{{ t('homeEarthSignal.title') }}</h2>
-    <p class="es-subtitle">{{ t('homeEarthSignal.subtitle') }}</p>
-    <p class="es-desc">{{ t('homeEarthSignal.desc') }}</p>
+    <!-- Left panel -->
+    <div class="left-panel">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <p class="info-label">Research Nodes</p>
+          <p class="info-value">12</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Center content -->
+    <div class="center-content">
+      <p class="es-telemetry">{{ t('homeEarthSignal.telemetry') }}</p>
+      <h2 class="es-title">{{ t('homeEarthSignal.title') }}</h2>
+      <p class="es-subtitle">{{ t('homeEarthSignal.subtitle') }}</p>
+      <p class="es-desc">{{ t('homeEarthSignal.desc') }}</p>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <p class="info-label">Active Links</p>
+          <p class="info-value">14</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>

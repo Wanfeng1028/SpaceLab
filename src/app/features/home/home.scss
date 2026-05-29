@@ -1535,8 +1535,7 @@
 .cockpit-dashboard-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: auto;
   overflow: hidden;
   background: #050b14;
 }
@@ -1548,9 +1547,9 @@
   pointer-events: none;
   background-image: url('/cockpit-dashboard-bg.png');
   background-repeat: no-repeat;
-  background-position: center 46%;
-  background-size: min(150vw, 1900px) auto;
-  opacity: 0.9;
+  background-position: right center;
+  background-size: cover;
+  opacity: 0.5;
 
   &::after {
     content: '';
@@ -1558,21 +1557,31 @@
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(circle at 50% 28%, rgba(105, 215, 255, 0.08), transparent 34%),
-      linear-gradient(180deg, rgba(5, 11, 20, 0.12), rgba(5, 11, 20, 0.28));
+      radial-gradient(
+        circle at 50% 35%,
+        rgba(5, 11, 20, 0.68),
+        rgba(5, 11, 20, 0.25) 36%,
+        transparent 64%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(5, 11, 20, 0.72),
+        rgba(5, 11, 20, 0.36) 45%,
+        rgba(5, 11, 20, 0.78)
+      ),
+      linear-gradient(90deg, rgba(5, 11, 20, 0.88), rgba(5, 11, 20, 0.28), rgba(5, 11, 20, 0.8));
   }
 }
 
 @media (max-width: 767px) {
   .cockpit-dashboard-section {
     min-height: auto;
-    padding: 88px 16px 48px;
   }
 
   .cockpit-bg-frame {
-    background-size: auto 100%;
+    background-size: cover;
     background-position: center top;
-    opacity: 0.72;
+    opacity: 0.35;
   }
 }
 

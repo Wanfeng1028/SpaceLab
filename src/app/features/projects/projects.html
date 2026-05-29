@@ -11,7 +11,7 @@
     <app-search-box
       [placeholder]="t('projects.searchPlaceholder')"
       [value]="searchQuery()"
-      (valueChange)="searchQuery.set($event)"
+      (valueChange)="onSearchChange($event)"
     />
   </section>
 
@@ -40,13 +40,56 @@
     </div>
   }
 
+  <!-- Projects count -->
+  <div class="projects-count">
+    {{ tPage('projects.showing', { count: filteredProjects().length }) }}
+  </div>
+
   <!-- Projects List -->
-  @if (filteredProjects().length > 0) {
+  @if (pagedProjects().length > 0) {
     <section class="projects-list">
-      @for (project of filteredProjects(); track project.id) {
+      @for (project of pagedProjects(); track project.id) {
         <app-project-card [project]="project" [formatDate]="formatDate.bind(this)" />
       }
     </section>
+
+    <!-- Pagination -->
+    @if (totalPages() > 1) {
+      <nav class="projects-pagination" aria-label="Projects pagination">
+        <button
+          class="pagination-btn pagination-btn--prev"
+          [disabled]="currentPage() === 1"
+          (click)="goToPage(currentPage() - 1)"
+        >
+          {{ t('projects.prevPage') }}
+        </button>
+
+        <div class="pagination-pages">
+          @for (page of pageNumbers(); track page) {
+            <button
+              class="pagination-page"
+              [class.is-active]="page === currentPage()"
+              [attr.aria-current]="page === currentPage() ? 'page' : null"
+              (click)="goToPage(page)"
+            >
+              {{ page }}
+            </button>
+          }
+        </div>
+
+        <span class="pagination-info">
+          {{ tPage('projects.pageInfo', { current: currentPage(), total: totalPages() }) }}
+        </span>
+
+        <button
+          class="pagination-btn pagination-btn--next"
+          [disabled]="currentPage() === totalPages()"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          {{ t('projects.nextPage') }}
+        </button>
+      </nav>
+    }
   } @else {
     <div class="projects-empty">
       <span class="projects-empty__icon">📭</span>

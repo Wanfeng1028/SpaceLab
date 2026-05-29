@@ -67,9 +67,9 @@
       </button>
     </div>
   } @else {
-    <div class="inbox-shell">
+    <mat-drawer-container class="ai-frontline-inbox-shell">
       <!-- Left Sidebar -->
-      <aside class="inbox-sidebar">
+      <mat-drawer class="ai-frontline-sidebar spacelab-material-card" mode="side" opened>
         <div class="inbox-sidebar__section">
           <h4 class="inbox-sidebar__title">{{ t('resourceInbox.categories') }}</h4>
           <mat-nav-list class="inbox-sidebar__list">
@@ -117,9 +117,10 @@
             {{ t('resourceInbox.resetAll') }}
           </button>
         }
-      </aside>
+      </mat-drawer>
 
       <!-- Middle: News List -->
+      <mat-drawer-content>
       <div class="inbox-list">
         @if (filteredNews().length === 0) {
           <div class="inbox-empty">
@@ -212,7 +213,8 @@
           </div>
         }
       </aside>
-    </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
   }
 
   <!-- Footer -->

@@ -323,7 +323,11 @@
     "contactTitle": "想要合作吗？",
     "contactDesc": "我一直在寻找有趣的开源项目来贡献或领导。如果您有想法，我们聊聊吧。",
     "contactBtn": "取得联系",
-    "githubBtn": "关注 GitHub"
+    "githubBtn": "关注 GitHub",
+    "pageInfo": "第 {{current}} / {{total}} 页",
+    "showing": "共 {{count}} 个项目",
+    "prevPage": "上一页",
+    "nextPage": "下一页"
   },
   "resourceInbox": {
     "all": "全部",
@@ -700,8 +704,8 @@
   },
   "homeEarthSignal": {
     "telemetry": "SIGNAL PROTOCOL // v3.2.1",
-    "title": "地球信号",
-    "subtitle": "Earth Signal",
+    "title": "全球研究网络",
+    "subtitle": "实时知识流跨越城市、实验室和数字系统。",
     "desc": "实时追踪全球数据节点，14条信号弧线连接世界各个角落。"
   },
   "homeBlueMoonTree": {

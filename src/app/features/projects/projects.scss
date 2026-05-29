@@ -137,6 +137,103 @@
 }
 
 // ============================================
+// Projects Count
+// ============================================
+
+.projects-count {
+  width: min(100%, 980px);
+  margin: 0 auto 20px;
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+}
+
+// ============================================
+// Pagination
+// ============================================
+
+.projects-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: min(100%, 980px);
+  margin: 40px auto 0;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 180ms var(--ease-out);
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.pagination-page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 180ms var(--ease-out);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--color-text);
+  }
+
+  &.is-active {
+    background: rgba(105, 215, 255, 0.18);
+    border-color: rgba(105, 215, 255, 0.4);
+    color: var(--color-google-blue);
+    font-weight: 700;
+  }
+}
+
+.pagination-info {
+  font-size: 0.78rem;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+  padding: 0 8px;
+}
+
+// ============================================
 // Empty State
 // ============================================
 
@@ -305,6 +402,33 @@
   .projects-list {
     width: 100%;
     gap: 20px;
+  }
+
+  .projects-count {
+    width: 100%;
+    font-size: 0.78rem;
+  }
+
+  .projects-pagination {
+    width: 100%;
+    gap: 6px;
+    margin-top: 28px;
+  }
+
+  .pagination-btn {
+    height: 34px;
+    padding: 0 12px;
+    font-size: 0.78rem;
+  }
+
+  .pagination-page {
+    width: 34px;
+    height: 34px;
+    font-size: 0.8rem;
+  }
+
+  .pagination-info {
+    font-size: 0.72rem;
   }
 
   .projects-contact {

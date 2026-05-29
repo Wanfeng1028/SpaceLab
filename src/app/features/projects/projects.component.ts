@@ -10,6 +10,8 @@ import {
 } from '../../core/utils/search.utils';
 import { PROJECTS } from '../../../generated/content.generated';
 
+const PAGE_SIZE = 6;
+
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.html',
@@ -23,6 +25,7 @@ export class ProjectsComponent {
   readonly showContactModal = signal(false);
   readonly selectedFilter = signal('all');
   readonly searchQuery = signal('');
+  readonly currentPage = signal(1);
 
   readonly allProjects = computed(() => PROJECTS);
 
@@ -53,6 +56,25 @@ export class ProjectsComponent {
     });
   });
 
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredProjects().length / PAGE_SIZE)),
+  );
+
+  readonly pagedProjects = computed(() => {
+    const start = (this.currentPage() - 1) * PAGE_SIZE;
+    return this.filteredProjects().slice(start, start + PAGE_SIZE);
+  });
+
+  readonly pageNumbers = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const pages: number[] = [];
+    const start = Math.max(1, current - 2);
+    const end = Math.min(total, start + 4);
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+  });
+
   private getProjectSearchText(project: (typeof PROJECTS)[number]): string {
     return buildSearchText([
       project.name,
@@ -74,8 +96,22 @@ export class ProjectsComponent {
     return this.i18n.t(key);
   }
 
+  tPage(key: string, params: Record<string, string | number>): string {
+    let result = this.i18n.t(key);
+    for (const [k, v] of Object.entries(params)) {
+      result = result.replace(`{{${k}}}`, String(v));
+    }
+    return result;
+  }
+
   selectFilter(tag: string): void {
     this.selectedFilter.set(tag);
+    this.currentPage.set(1);
+  }
+
+  onSearchChange(query: string): void {
+    this.searchQuery.set(query);
+    this.currentPage.set(1);
   }
 
   formatDate(iso: string): string {
@@ -87,16 +123,25 @@ export class ProjectsComponent {
     }
   }
 
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+    }
+  }
+
   clearSearch(): void {
     this.searchQuery.set('');
+    this.currentPage.set(1);
   }
 
   clearFilters(): void {
     this.selectedFilter.set('all');
+    this.currentPage.set(1);
   }
 
   clearAll(): void {
     this.searchQuery.set('');
     this.selectedFilter.set('all');
+    this.currentPage.set(1);
   }
 }

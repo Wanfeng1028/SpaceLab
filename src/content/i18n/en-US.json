@@ -323,7 +323,11 @@
     "contactTitle": "Want to collaborate?",
     "contactDesc": "I'm always looking for interesting open-source projects to contribute to or lead. If you have an idea, let's talk.",
     "contactBtn": "Get in Touch",
-    "githubBtn": "Follow on GitHub"
+    "githubBtn": "Follow on GitHub",
+    "pageInfo": "Page {{current}} / {{total}}",
+    "showing": "{{count}} projects",
+    "prevPage": "Previous",
+    "nextPage": "Next"
   },
   "resourceInbox": {
     "all": "All",
@@ -706,8 +710,8 @@
   },
   "homeEarthSignal": {
     "telemetry": "SIGNAL PROTOCOL // v3.2.1",
-    "title": "Earth Signal",
-    "subtitle": "Global Data Network",
+    "title": "Global Research Network",
+    "subtitle": "Real-time knowledge flow across cities, labs and digital systems.",
     "desc": "Real-time global data node tracking with 14 signal arcs connecting every corner of the world."
   },
   "homeBlueMoonTree": {
