@@ -1,107 +1,51 @@
-.rd {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 6px 2px;
-}
-
-.rd__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.rd__badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 3px 12px;
-  border-radius: 999px;
-
-  &[data-category='model'] {
-    background: rgba(105, 215, 255, 0.15);
-    color: rgba(86, 180, 255, 0.9);
-  }
-  &[data-category='product'] {
-    background: rgba(143, 124, 255, 0.15);
-    color: rgba(130, 110, 230, 0.9);
-  }
-  &[data-category='funding'] {
-    background: rgba(243, 185, 200, 0.2);
-    color: rgba(220, 100, 130, 0.9);
-  }
-  &[data-category='opensource'] {
-    background: rgba(74, 222, 128, 0.15);
-    color: rgba(22, 163, 74, 0.9);
-  }
-  &[data-category='agent'] {
-    background: rgba(255, 210, 31, 0.15);
-    color: rgba(184, 134, 11, 0.9);
-  }
-  &[data-category='tool'] {
-    background: rgba(244, 114, 182, 0.15);
-    color: rgba(219, 39, 119, 0.9);
-  }
-  &[data-category='industry'] {
-    background: rgba(148, 163, 184, 0.15);
-    color: rgba(100, 116, 139, 0.9);
-  }
-}
-
-.rd__date {
-  font-size: 0.72rem;
-  color: rgba(18, 32, 48, 0.42);
-}
-
-.rd__title {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.35;
+.resource-detail-dialog {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: 28px;
   color: rgba(18, 32, 48, 0.92);
 }
 
-.rd__summary {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.75;
-  color: rgba(18, 32, 48, 0.62);
-}
-
-.rd__divider {
-  margin: 4px 0 !important;
-  border-color: rgba(86, 180, 255, 0.12) !important;
-}
-
-.rd__meta {
+.resource-detail-dialog__header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
-  color: rgba(18, 32, 48, 0.48);
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
 }
 
-.rd__meta-icon {
-  font-size: 16px !important;
-  width: 16px !important;
-  height: 16px !important;
-  color: rgba(86, 180, 255, 0.6);
+h2[mat-dialog-title] {
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.35;
+  letter-spacing: -0.04em;
+  color: rgba(18, 32, 48, 0.95);
 }
 
-.rd__source {
-  font-weight: 600;
+.resource-detail-dialog__content {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: min(58vh, 520px);
+  overflow: auto;
 }
 
-.rd__tags {
+.resource-detail-dialog__summary {
+  margin: 0 0 18px;
+  color: rgba(18, 32, 48, 0.68);
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.resource-detail-dialog__tags {
   display: flex !important;
   flex-wrap: wrap;
   gap: 5px !important;
   padding: 0 !important;
+  margin-bottom: 18px;
 }
 
-.rd__tag.mat-mdc-chip {
+.resource-detail-dialog__tag.mat-mdc-chip {
   --mdc-chip-elevated-container-color: rgba(0, 0, 0, 0.04);
   --mdc-chip-label-text-color: rgba(18, 32, 48, 0.55);
   --mdc-chip-label-text-size: 12px;
@@ -110,22 +54,78 @@
   min-height: 24px;
 }
 
-.rd__footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 8px;
+.resource-detail-dialog__meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
 }
 
-.rd__btn {
-  &.rd__btn--primary {
-    --mdc-outlined-button-outline-color: rgba(86, 180, 255, 0.35);
-    --mdc-outlined-button-label-text-color: rgba(18, 32, 48, 0.82);
-    font-weight: 600;
+.resource-detail-dialog__meta div {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: rgba(232, 247, 255, 0.66);
+  border: 1px solid rgba(120, 216, 255, 0.24);
+}
 
-    .mdc-button__icon {
-      margin-left: 4px;
-    }
+.resource-detail-dialog__meta span {
+  color: rgba(18, 32, 48, 0.54);
+}
+
+.resource-detail-dialog__meta strong {
+  color: rgba(18, 32, 48, 0.88);
+}
+
+.resource-detail-dialog__actions {
+  margin: 22px 0 0 !important;
+  padding: 0 !important;
+  gap: 10px;
+}
+
+.resource-detail-dialog__actions button,
+.resource-detail-dialog__actions a {
+  border-radius: 999px !important;
+}
+
+.resource-detail-dialog__primary {
+  background: linear-gradient(135deg, #76d8ff, #94b7ff) !important;
+  color: #082032 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 14px 34px rgba(86, 180, 255, 0.28);
+}
+
+// Category badge colors
+.mat-mdc-chip {
+  &[data-category='model'] {
+    --mdc-chip-elevated-container-color: rgba(105, 215, 255, 0.15);
+    --mdc-chip-label-text-color: rgba(86, 180, 255, 0.9);
+  }
+  &[data-category='product'] {
+    --mdc-chip-elevated-container-color: rgba(143, 124, 255, 0.15);
+    --mdc-chip-label-text-color: rgba(130, 110, 230, 0.9);
+  }
+  &[data-category='funding'] {
+    --mdc-chip-elevated-container-color: rgba(243, 185, 200, 0.2);
+    --mdc-chip-label-text-color: rgba(220, 100, 130, 0.9);
+  }
+  &[data-category='opensource'] {
+    --mdc-chip-elevated-container-color: rgba(74, 222, 128, 0.15);
+    --mdc-chip-label-text-color: rgba(22, 163, 74, 0.9);
+  }
+  &[data-category='agent'] {
+    --mdc-chip-elevated-container-color: rgba(255, 210, 31, 0.15);
+    --mdc-chip-label-text-color: rgba(184, 134, 11, 0.9);
+  }
+  &[data-category='tool'] {
+    --mdc-chip-elevated-container-color: rgba(244, 114, 182, 0.15);
+    --mdc-chip-label-text-color: rgba(219, 39, 119, 0.9);
+  }
+  &[data-category='industry'] {
+    --mdc-chip-elevated-container-color: rgba(148, 163, 184, 0.15);
+    --mdc-chip-label-text-color: rgba(100, 116, 139, 0.9);
   }
 }

@@ -1,35 +1,63 @@
-<div class="rd">
-  <header class="rd__header">
-    <span class="rd__badge" [attr.data-category]="data.category">{{ data.categoryLabel }}</span>
-    @if (data.date) {
-      <span class="rd__date">{{ data.date }}</span>
-    }
-  </header>
+<div class="resource-detail-dialog">
+  <div class="resource-detail-dialog__header">
+    <mat-chip>{{ data.categoryLabel || data.category || 'AI' }}</mat-chip>
 
-  <h2 class="rd__title">{{ data.title }}</h2>
-
-  <p class="rd__summary">{{ data.summary }}</p>
-
-  <mat-divider class="rd__divider" />
-
-  <div class="rd__meta">
-    <mat-icon class="rd__meta-icon">source</mat-icon>
-    <span class="rd__source">{{ data.source }}</span>
+    <button
+      mat-icon-button
+      type="button"
+      aria-label="关闭"
+      mat-dialog-close
+    >
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
-  @if (data.tags.length > 0) {
-    <mat-chip-set class="rd__tags">
-      @for (tag of data.tags; track tag) {
-        <mat-chip class="rd__tag">{{ tag }}</mat-chip>
-      }
-    </mat-chip-set>
-  }
+  <h2 mat-dialog-title>
+    {{ data.title }}
+  </h2>
 
-  <footer class="rd__footer">
-    <button mat-stroked-button class="rd__btn rd__btn--primary" (click)="openUrl()">
-      {{ t('resourceInbox.viewSource') }}
-      <mat-icon>open_in_new</mat-icon>
+  <mat-dialog-content class="resource-detail-dialog__content">
+    <p class="resource-detail-dialog__summary">
+      {{ data.summary || '' }}
+    </p>
+
+    @if (data.tags?.length) {
+      <mat-chip-set class="resource-detail-dialog__tags">
+        @for (tag of data.tags; track tag) {
+          <mat-chip class="resource-detail-dialog__tag">{{ tag }}</mat-chip>
+        }
+      </mat-chip-set>
+    }
+
+    <mat-divider></mat-divider>
+
+    <div class="resource-detail-dialog__meta">
+      <div>
+        <span>{{ t('resourceInbox.source') }}</span>
+        <strong>{{ data.source || 'ai-bot.cn' }}</strong>
+      </div>
+
+      <div>
+        <span>{{ t('resourceInbox.date') }}</span>
+        <strong>{{ data.date }}</strong>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="resource-detail-dialog__actions">
+    <button mat-stroked-button type="button" mat-dialog-close>
+      {{ t('resourceInbox.close') }}
     </button>
-    <button mat-button class="rd__btn" (click)="close()">{{ t('resourceInbox.close') }}</button>
-  </footer>
+
+    <a
+      mat-raised-button
+      class="resource-detail-dialog__primary"
+      [href]="data.url"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <mat-icon>open_in_new</mat-icon>
+      {{ t('resourceInbox.viewSource') }}
+    </a>
+  </mat-dialog-actions>
 </div>

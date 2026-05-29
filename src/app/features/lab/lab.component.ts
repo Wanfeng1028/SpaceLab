@@ -271,7 +271,6 @@ export class LabComponent implements OnInit {
 
   openDialog(item: LabResourceItem) {
     this.dialog.open(ResourceDetailDialogComponent, {
-      panelClass: 'spacelab-mac-dialog-panel',
       data: {
         category: item.category,
         categoryLabel: item.category,
@@ -284,6 +283,14 @@ export class LabComponent implements OnInit {
         url: item.url,
         i18nPrefix: 'lab',
       } satisfies ResourceDetailData,
+      width: 'min(92vw, 720px)',
+      maxWidth: '92vw',
+      panelClass: 'spacelab-resource-dialog-panel',
+      backdropClass: 'spacelab-resource-dialog-backdrop',
+      autoFocus: false,
+      restoreFocus: true,
+      hasBackdrop: true,
+      disableClose: false
     });
   }
 

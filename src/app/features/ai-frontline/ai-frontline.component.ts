@@ -222,7 +222,6 @@ export class AiFrontlineComponent implements OnInit {
 
   openDialog(item: AiNewsItem): void {
     this.dialog.open(ResourceDetailDialogComponent, {
-      panelClass: 'spacelab-mac-dialog-panel',
       data: {
         category: item.category,
         categoryLabel: this.getCategoryLabel(item.category),
@@ -235,6 +234,14 @@ export class AiFrontlineComponent implements OnInit {
         url: item.url,
         i18nPrefix: 'aiFrontline',
       } satisfies ResourceDetailData,
+      width: 'min(92vw, 720px)',
+      maxWidth: '92vw',
+      panelClass: 'spacelab-resource-dialog-panel',
+      backdropClass: 'spacelab-resource-dialog-backdrop',
+      autoFocus: false,
+      restoreFocus: true,
+      hasBackdrop: true,
+      disableClose: false
     });
   }
 
