@@ -22,7 +22,7 @@
     </div>
   </section>
 
-  <!-- Toolbar: Search + Filters -->
+  <!-- Toolbar: Search -->
   <section class="ai-frontline-toolbar">
     <div class="ai-frontline-search">
       <span class="search-icon">⌕</span>
@@ -33,22 +33,23 @@
         (input)="onSearchChange($event)"
       />
     </div>
+  </section>
 
-    <div class="ai-frontline-filters">
-      @for (cat of categories; track cat) {
-        <button
-          class="ai-frontline-filter"
-          [class.is-active]="selectedCategory() === cat"
-          (click)="onCategoryChange(cat)"
-        >
-          @if (cat === 'all') {
-            <span>{{ t('aiFrontline.allCategories') }}</span>
-          } @else {
-            <span>{{ getCategoryLabel(cat) }}</span>
-          }
-        </button>
-      }
-    </div>
+  <!-- Filters -->
+  <section class="ai-frontline-filters">
+    @for (cat of categories; track cat) {
+      <button
+        class="ai-frontline-filter"
+        [class.is-active]="selectedCategory() === cat"
+        (click)="onCategoryChange(cat)"
+      >
+        @if (cat === 'all') {
+          <span>{{ t('aiFrontline.allCategories') }}</span>
+        } @else {
+          <span>{{ getCategoryLabel(cat) }}</span>
+        }
+      </button>
+    }
   </section>
 
   <!-- Main Layout: Sidebar + Feed -->

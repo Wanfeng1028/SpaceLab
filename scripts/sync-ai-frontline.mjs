@@ -18,6 +18,18 @@ const USER_AGENT = 'SpaceLabBot/1.0 (+https://github.com/Wanfeng1028/SpaceLab)';
 const MAX_NEWS_ITEMS = 200;
 const MAX_DAYS_OLD = 30;
 
+// Only keep content fetched on or after this date
+const CONTENT_START_DATE = '2026-05-25';
+
+/**
+ * Check if an item is after the content start date
+ */
+function isAfterContentStart(item) {
+  const dateStr = item.date || item.publishedAt || item.fetchedAt || '';
+  if (!dateStr) return true;
+  return dateStr.slice(0, 10) >= CONTENT_START_DATE;
+}
+
 /**
  * Generate a stable ID from date and title
  */
@@ -205,12 +217,12 @@ function cleanNews(news) {
     return b.fetchedAt.localeCompare(a.fetchedAt);
   });
 
-  // Filter old items
+  // Filter old items (by MAX_DAYS_OLD)
   const cutoffDate = new Date();
   cutoffDate.setDate(cutoffDate.getDate() - MAX_DAYS_OLD);
   const cutoffStr = cutoffDate.toISOString().slice(0, 10);
 
-  const filtered = sorted.filter((item) => item.date >= cutoffStr);
+  const filtered = sorted.filter((item) => item.date >= cutoffStr && isAfterContentStart(item));
 
   // Limit count
   return filtered.slice(0, MAX_NEWS_ITEMS);
@@ -327,6 +339,7 @@ async function main() {
       url: 'https://ai-bot.cn/daily-ai-news/',
       description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
       lastFetchedAt: new Date().toISOString(),
+      contentStartDate: CONTENT_START_DATE,
       notice: '内容来源于公开网络信息聚合，保留原文链接与来源标注。',
     };
     saveSource(source);
@@ -351,6 +364,7 @@ async function main() {
       url: 'https://ai-bot.cn/daily-ai-news/',
       description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
       lastFetchedAt: new Date().toISOString(),
+      contentStartDate: CONTENT_START_DATE,
       notice: '内容来源于公开网络信息聚合，保留原文链接与来源标注。',
     };
     saveSource(source);
@@ -374,6 +388,7 @@ async function main() {
     url: 'https://ai-bot.cn/daily-ai-news/',
     description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
     lastFetchedAt: new Date().toISOString(),
+    contentStartDate: CONTENT_START_DATE,
     notice: '内容来源于公开网络信息聚合，保留原文链接与来源标注。',
   };
   saveSource(source);

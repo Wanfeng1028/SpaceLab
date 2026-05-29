@@ -18,6 +18,18 @@ const USER_AGENT = 'SpaceLabBot/1.0 (+https://github.com/Wanfeng1028/SpaceLab)';
 const MAX_ITEMS = 100;
 const REQUEST_DELAY_MS = 2000;
 
+// Only keep content fetched on or after this date
+const CONTENT_START_DATE = '2026-05-25';
+
+/**
+ * Check if an item is after the content start date
+ */
+function isAfterContentStart(item) {
+  const dateStr = item.publishedAt || item.fetchedAt || item.date || '';
+  if (!dateStr) return true;
+  return dateStr.slice(0, 10) >= CONTENT_START_DATE;
+}
+
 /**
  * Sources configuration
  */
@@ -322,8 +334,10 @@ async function main() {
       continue;
     }
 
-    // Merge: new items + existing items, deduplicate, limit
-    const merged = deduplicate([...newItems, ...existing]).slice(0, MAX_ITEMS);
+    // Merge: new items + existing items, deduplicate, filter by date, limit
+    const merged = deduplicate([...newItems, ...existing])
+      .filter(isAfterContentStart)
+      .slice(0, MAX_ITEMS);
 
     if (hasChanged(existing, merged)) {
       saveJson(source.targetFile, merged);
@@ -348,6 +362,7 @@ async function main() {
       targetFile: s.targetFile.replace(ROOT.replace(/\\/g, '/') + '/', ''),
     })),
     lastFetchedAt: fetchedAt,
+    contentStartDate: CONTENT_START_DATE,
     notice: '内容来源于公开网络信息聚合，仅作学习与资源导航使用，保留原文链接与来源标注。',
   };
   saveJson(SOURCE_FILE, sourceInfo);
