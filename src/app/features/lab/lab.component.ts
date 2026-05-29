@@ -290,7 +290,7 @@ export class LabComponent implements OnInit {
       autoFocus: false,
       restoreFocus: true,
       hasBackdrop: true,
-      disableClose: false
+      disableClose: false,
     });
   }
 

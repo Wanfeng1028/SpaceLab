@@ -241,7 +241,7 @@ export class AiFrontlineComponent implements OnInit {
       autoFocus: false,
       restoreFocus: true,
       hasBackdrop: true,
-      disableClose: false
+      disableClose: false,
     });
   }
 
