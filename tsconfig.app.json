@@ -4,8 +4,15 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/lib/*": ["src/app/shared/three/globe-stream/lib/*"],
+      "@/assets/*": ["src/assets/three/globe-stream/*"],
+      "@/shaders/*": ["src/shaders/*"]
+    }
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.backup/**"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.backup/**", "src/app/shared/three/globe-stream/**"]
 }
