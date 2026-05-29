@@ -1,0 +1,75 @@
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <!-- ── Brand ── -->
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">SpaceLab</div>
+      <p class="site-footer__description">{{ t('footer.description') }}</p>
+      <span class="site-footer__status">
+        <span class="site-footer__status-dot"></span>
+        {{ t('footer.statusTag') }}
+      </span>
+    </div>
+
+    <!-- ── Link Columns ── -->
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      @for (group of groups; track group.title) {
+        <div class="site-footer__group">
+          <h3 class="site-footer__title">{{ group.title }}</h3>
+          <ul class="site-footer__links">
+            @for (link of group.links; track link.label) {
+              <li>
+                @if (link.routerLink && !link.disabled) {
+                  <a
+                    class="site-footer__link"
+                    [routerLink]="link.routerLink"
+                    [class.is-disabled]="link.disabled"
+                    >{{ link.label }}</a
+                  >
+                } @else if (link.external && !link.disabled) {
+                  <a
+                    class="site-footer__link"
+                    [href]="link.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ link.label }}</a
+                  >
+                } @else if (link.href && link.href.startsWith('mailto:') && !link.disabled) {
+                  <a class="site-footer__link" [href]="link.href">{{ link.label }}</a>
+                } @else {
+                  <span class="site-footer__link is-disabled">{{ link.label }}</span>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </nav>
+  </div>
+
+  <!-- ── Bottom Bar ── -->
+  <div class="site-footer__divider"></div>
+  <div class="site-footer__bottom">
+    <div class="site-footer__copyright">&copy; 2026 SpaceLab. {{ t('footer.builtBy') }}</div>
+    <div class="site-footer__crafted">
+      {{ t('footer.craftedWith') }}
+    </div>
+    <div class="site-footer__actions">
+      <button
+        class="site-footer__top-btn"
+        (click)="scrollToTop()"
+        [attr.aria-label]="t('footer.backToTop')"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M8 13V3M8 3L3 8M8 3l5 5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span>{{ t('footer.backToTop') }}</span>
+      </button>
+    </div>
+  </div>
+</footer>

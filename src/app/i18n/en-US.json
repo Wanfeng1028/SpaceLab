@@ -196,7 +196,7 @@
   "blog": {
     "title": "Blog",
     "desc": "Technical thoughts and life reflections",
-    "heroDesc": "Notes on code, systems, design and the digital frontier.",
+    "heroDesc": "Notes on learning and technical practice.",
     "searchPlaceholder": "Search articles...",
     "noArticles": "No articles yet",
     "readMore": "Read More",
@@ -474,5 +474,28 @@
     "signalReady": "Signal ready · Last sync",
     "footerMsg": "SIGNAL READY · SYSTEM ONLINE",
     "systemOnline": "SYSTEM ONLINE"
+  },
+  "footer": {
+    "description": "A personal digital space for code, design, writing, and experiments.",
+    "statusTag": "IN ORBIT",
+    "navTitle": "Navigation",
+    "home": "Home",
+    "articles": "Articles",
+    "projects": "Projects",
+    "lab": "Lab",
+    "exploreTitle": "Explore",
+    "aiFrontline": "AI Frontline",
+    "about": "About",
+    "archive": "Archive",
+    "gallery": "Gallery",
+    "connectTitle": "Connect",
+    "systemTitle": "System",
+    "sitemap": "Sitemap",
+    "privacy": "Privacy",
+    "changelog": "Changelog",
+    "status": "Status",
+    "builtBy": "Built by Wanfeng.",
+    "craftedWith": "Crafted with Angular, Three.js and curiosity.",
+    "backToTop": "Back to Top"
   }
 }

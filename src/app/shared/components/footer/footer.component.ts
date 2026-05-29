@@ -4,7 +4,7 @@ import { I18nService } from '../../../core/services/i18n.service';
 
 interface FooterLink {
   label: string;
-  href: string;
+  href?: string;
   routerLink?: string;
   external?: boolean;
   disabled?: boolean;

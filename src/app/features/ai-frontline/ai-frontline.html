@@ -14,10 +14,6 @@
             >: {{ src.lastFetchedAt | date: 'MM-dd HH:mm' }}
           </span>
         }
-        <span class="data-source-badge">
-          <span class="source-icon">◈</span>
-          AI工具集
-        </span>
       </div>
     </div>
     <div class="hero-decoration">
@@ -60,20 +56,13 @@
     <!-- Sidebar -->
     <aside class="ai-frontline-sidebar">
       <div class="sidebar-section">
-        <h3 class="sidebar-title">数据来源</h3>
-        <p class="sidebar-text">AI工具集 每日AI快讯</p>
-        <a
-          href="https://ai-bot.cn/daily-ai-news/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="sidebar-link"
-        >
-          访问源站 →
-        </a>
+        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarUpdateFreq') }}</h3>
+        <p class="sidebar-text">{{ t('aiFrontline.sidebarUpdateDesc') }}</p>
+        <p class="sidebar-text sidebar-text--small">08:00 / 12:00 / 18:00 / 22:00</p>
       </div>
 
       <div class="sidebar-section">
-        <h3 class="sidebar-title">分类统计</h3>
+        <h3 class="sidebar-title">{{ t('aiFrontline.sidebarCategoryStats') }}</h3>
         <div class="category-stats">
           @for (cat of categories; track cat) {
             @if (cat !== 'all') {
@@ -130,7 +119,6 @@
                       <span class="ai-news-card__category">{{
                         getCategoryLabel(item.category)
                       }}</span>
-                      <span class="ai-news-card__source">{{ item.source }}</span>
                     </div>
 
                     <h3 class="ai-news-card__title">{{ item.title }}</h3>
@@ -159,13 +147,6 @@
 
   <!-- Footer Disclaimer -->
   <footer class="ai-frontline-disclaimer">
-    <p class="disclaimer-source">
-      <span>{{ t('aiFrontline.dataSource') }}</span
-      >：
-      <a href="https://ai-bot.cn/daily-ai-news/" target="_blank" rel="noopener noreferrer">
-        AI工具集 每日AI快讯
-      </a>
-    </p>
     <p class="disclaimer-text">{{ t('aiFrontline.disclaimer') }}</p>
   </footer>
 </main>

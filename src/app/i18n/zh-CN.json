@@ -196,7 +196,7 @@
   "blog": {
     "title": "文章",
     "desc": "记录技术思考与生活感悟",
-    "heroDesc": "在数字时代探索软件架构、极简设计与人类体验的交汇点。",
+    "heroDesc": "记录一些学习笔记和技术实践。",
     "searchPlaceholder": "搜索文章...",
     "noArticles": "暂无文章",
     "readMore": "阅读全文",
@@ -474,5 +474,28 @@
     "signalReady": "信号就绪 · 上次同步",
     "footerMsg": "信号就绪 · 系统在线",
     "systemOnline": "系统在线"
+  },
+  "footer": {
+    "description": "一个记录代码、设计、写作与实验的个人数字空间。",
+    "statusTag": "IN ORBIT",
+    "navTitle": "导航",
+    "home": "首页",
+    "articles": "文章",
+    "projects": "项目",
+    "lab": "实验室",
+    "exploreTitle": "探索",
+    "aiFrontline": "AI 前线",
+    "about": "关于",
+    "archive": "归档",
+    "gallery": "图集",
+    "connectTitle": "连接",
+    "systemTitle": "系统",
+    "sitemap": "站点地图",
+    "privacy": "隐私政策",
+    "changelog": "更新日志",
+    "status": "系统状态",
+    "builtBy": "Built by Wanfeng.",
+    "craftedWith": "Crafted with Angular, Three.js and curiosity.",
+    "backToTop": "返回顶部"
   }
 }

@@ -10,10 +10,6 @@
           <span class="meta-icon">⟲</span>
           {{ t('lab.lastSync') }}: {{ formatFetchTime(src.lastFetchedAt) }}
         </span>
-        <span class="lab-meta-badge">
-          <span class="meta-icon">◈</span>
-          {{ t('lab.dataSource') }}
-        </span>
       </div>
     }
   </section>
@@ -75,7 +71,6 @@
           <article class="lab-card" (click)="openUrl(item.url)">
             <div class="lab-card__header">
               <span class="lab-card__category">{{ item.category }}</span>
-              <span class="lab-card__source">{{ item.source }}</span>
             </div>
 
             <h3 class="lab-card__title">{{ item.title }}</h3>
@@ -105,11 +100,6 @@
 
   <!-- Footer -->
   <footer class="lab-footer">
-    <p class="footer-source">
-      {{ t('lab.footerSource') }}：
-      <a href="https://ai-bot.cn" target="_blank" rel="noopener noreferrer">AI工具集</a>
-      {{ t('lab.footerSourceNote') }}
-    </p>
     <p class="footer-disclaimer">{{ t('lab.disclaimer') }}</p>
   </footer>
 </main>
