@@ -1,0 +1,55 @@
+<div class="contact-dialog">
+  <!-- Mac-style title bar -->
+  <div class="contact-dialog__titlebar">
+    <div class="titlebar-dots">
+      <span class="dot dot--red" (click)="close()"><span class="dot-x">×</span></span>
+      <span class="dot dot--yellow"></span>
+      <span class="dot dot--green"></span>
+    </div>
+    <span class="titlebar-label">{{ t('about.contactDialogTitle') }}</span>
+    <span class="titlebar-bash">bash</span>
+  </div>
+
+  <!-- Terminal body -->
+  <div class="contact-dialog__body">
+    <div class="terminal-line">
+      <span class="terminal-prompt">$</span>
+      <span class="terminal-command">cat contact-info.txt</span>
+    </div>
+
+    <div class="terminal-line terminal-line--ok">
+      <span class="terminal-ok">[OK]</span>
+      <span>{{ t('about.contactDialogSubtitle') }}</span>
+    </div>
+
+    <div class="contact-info">
+      <div class="contact-row">
+        <span class="contact-icon">📧</span>
+        <span class="contact-label">{{ t('about.email') }}:</span>
+        <span class="contact-value">{{ email }}</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-icon">💻</span>
+        <span class="contact-label">{{ t('about.github') }}:</span>
+        <span class="contact-value">{{ githubUser }}</span>
+      </div>
+    </div>
+
+    <div class="contact-actions">
+      <button mat-flat-button class="action-btn action-btn--primary" (click)="openGithub()">
+        {{ t('about.openGithub') }}
+      </button>
+      <button mat-stroked-button class="action-btn" (click)="copyEmail()">
+        {{ t('about.copyEmail') }}
+      </button>
+      <button mat-stroked-button class="action-btn" (click)="sendEmail()">
+        {{ t('about.sendEmail') }}
+      </button>
+    </div>
+
+    <div class="terminal-line terminal-line--footer">
+      <span class="terminal-prompt">$</span>
+      <span class="terminal-cursor"></span>
+    </div>
+  </div>
+</div>

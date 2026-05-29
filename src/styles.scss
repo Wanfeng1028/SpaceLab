@@ -50,23 +50,140 @@ body {
 
 // ============================================
 // Angular Material 覆盖 — 统一到 SpaceLab 风格
+// Material 提供交互/无障碍基础，视觉完全走 SpaceLab 玻璃系统
 // ============================================
 
+// --- Button ---
 .mat-mdc-button,
 .mat-mdc-raised-button,
-.mat-mdc-flat-button {
+.mat-mdc-flat-button,
+.mat-mdc-icon-button,
+.mat-mdc-outlined-button {
   font-family: var(--font-body, 'Roboto', sans-serif) !important;
   border-radius: var(--radius-pill, 999px) !important;
+  --mdc-text-button-label-text-color: var(--color-text);
+  --mdc-outlined-button-label-text-color: var(--color-text);
+  --mdc-outlined-button-outline-color: rgba(0, 0, 0, 0.12);
+  --mdc-filled-button-container-color: var(--color-google-blue);
+  --mdc-filled-button-label-text-color: #fff;
+  letter-spacing: 0;
 }
 
+.mat-mdc-icon-button {
+  --mdc-icon-button-icon-color: var(--color-text-secondary);
+  border-radius: 50% !important;
+}
+
+// --- Dialog ---
 .mat-mdc-dialog-container {
-  --mdc-dialog-container-shape: 34px;
+  --mdc-dialog-container-shape: 28px;
+  --mdc-dialog-container-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 24px 80px rgba(34, 28, 18, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
+.mat-mdc-dialog-title {
+  font-weight: 700 !important;
+  color: var(--color-text) !important;
+}
+
+.mat-mdc-dialog-content {
+  color: var(--color-text-secondary) !important;
+}
+
+// --- Card ---
+.mat-mdc-card {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+// --- Form Field ---
 .mat-mdc-form-field {
   font-family: var(--font-body, 'Roboto', sans-serif) !important;
+  width: 100%;
+
+  .mdc-text-field--outlined .mdc-notched-outline__leading,
+  .mdc-text-field--outlined .mdc-notched-outline__notch,
+  .mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    border-radius: 999px !important;
+  }
+
+  .mdc-text-field--outlined .mdc-notched-outline__leading {
+    border-radius: 999px 0 0 999px !important;
+  }
+
+  .mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-radius: 0 999px 999px 0 !important;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
 }
 
+.mat-mdc-form-field-appearance-outline .mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.52);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+}
+
+// --- Chip ---
+.mat-mdc-chip {
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  --mdc-chip-elevated-container-color: rgba(0, 0, 0, 0.04);
+  --mdc-chip-elevated-label-text-color: var(--color-text-secondary);
+  --mdc-chip-elevated-outline-color: rgba(0, 0, 0, 0.08);
+  --mdc-chip-elevated-container-shape: 999px;
+}
+
+.mat-mdc-chip.mat-mdc-chip-selected {
+  background: linear-gradient(
+    135deg,
+    rgba(105, 215, 255, 0.18),
+    rgba(143, 124, 255, 0.22)
+  ) !important;
+  color: var(--color-text) !important;
+  border-color: rgba(105, 215, 255, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(105, 215, 255, 0.12);
+}
+
+// --- Button Toggle ---
+.mat-mdc-button-toggle-group {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+}
+
+.mat-mdc-button-toggle {
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.mat-mdc-button-toggle.mat-mdc-button-toggle-checked {
+  background: linear-gradient(
+    135deg,
+    rgba(105, 215, 255, 0.18),
+    rgba(143, 124, 255, 0.22)
+  ) !important;
+  color: var(--color-text) !important;
+}
+
+.mat-mdc-button-toggle + .mat-mdc-button-toggle {
+  border-left: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+// --- Menu ---
 .mat-mdc-menu-panel {
   border-radius: 20px !important;
   backdrop-filter: blur(20px) saturate(130%);
@@ -78,8 +195,66 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
+// --- Snackbar ---
 .mat-mdc-snack-bar-container {
   border-radius: 16px !important;
+  backdrop-filter: blur(16px) saturate(135%);
+  --mdc-snackbar-container-color: rgba(10, 10, 22, 0.88);
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+// --- Progress Spinner ---
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--color-cyan);
+}
+
+// --- Paginator ---
+.mat-mdc-paginator {
+  background: transparent !important;
+
+  .mat-mdc-paginator-container {
+    min-height: auto;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .mat-mdc-icon-button {
+    border-radius: 10px !important;
+  }
+}
+
+// --- Divider ---
+.mat-divider {
+  border-top-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+// --- Tooltip ---
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  background: rgba(10, 10, 22, 0.88) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(12px);
+}
+
+// --- Tab Nav Bar ---
+.mat-mdc-tab-links {
+  background: transparent !important;
+}
+
+.mat-mdc-tab {
+  border-radius: 999px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.mat-mdc-tab.mdc-tab--active {
+  color: var(--color-text) !important;
+}
+
+.mdc-tab-indicator__content--underline {
+  border-color: var(--color-cyan) !important;
 }
 
 // ============================================
