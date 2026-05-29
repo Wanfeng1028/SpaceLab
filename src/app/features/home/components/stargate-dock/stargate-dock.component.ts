@@ -17,14 +17,14 @@ export class PortalGallerySection implements OnInit {
   private readonly router = inject(Router);
   private readonly i18n = inject(I18nService);
 
-  readonly telemetryText = signal('AI FRONTLINE // DAILY SIGNALS AWAITING');
+  readonly telemetryText = signal('');
 
   readonly stargateFactory = (canvas: HTMLCanvasElement) => new StargateScene(canvas);
 
   readonly currentYear = new Date().getFullYear();
 
   ngOnInit(): void {
-    this.telemetryText.set('AI FRONTLINE // SIGNALS ONLINE');
+    this.telemetryText.set(this.i18n.t('stargateDock.telemetryOnline'));
   }
 
   t(key: string): string {

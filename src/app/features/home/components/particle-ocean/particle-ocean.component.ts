@@ -12,6 +12,7 @@ import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/
 import { VerticalSectionTitleComponent } from '../../../../shared/components/hud/vertical-section-title.component';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { ParticleOceanScene } from '../../../../three/scenes/particle-ocean.scene';
+import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
   selector: 'app-particle-ocean',
@@ -22,19 +23,24 @@ import { ParticleOceanScene } from '../../../../three/scenes/particle-ocean.scen
 })
 export class ParticleOceanSection implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly i18n = inject(I18nService);
 
   private scene: ParticleOceanScene | null = null;
   private resizeHandler: (() => void) | null = null;
 
-  readonly telemetryText = signal('PARTICLE OCEAN // RENDERING WAVEFIELD');
+  readonly telemetryText = signal('');
 
   readonly particleFactory = (canvas: HTMLCanvasElement) => {
     this.scene = new ParticleOceanScene(canvas);
     return this.scene;
   };
 
+  t(key: string): string {
+    return this.i18n.t(key);
+  }
+
   ngOnInit(): void {
-    this.telemetryText.set('PARTICLE OCEAN // 100K PARTICLES ACTIVE');
+    this.telemetryText.set(this.i18n.t('particleOcean.telemetryActive'));
   }
 
   ngOnDestroy(): void {

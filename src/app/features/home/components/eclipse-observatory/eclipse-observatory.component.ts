@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, signal, OnInit, OnDestroy, inject } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  OnInit,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { HudFrameComponent } from '../../../../shared/components/hud/hud-frame.component';
 import { HudMetricComponent } from '../../../../shared/components/hud/hud-metric.component';
@@ -47,12 +54,12 @@ export class EclipseObservatorySection implements OnInit, OnDestroy {
   }
 
   triggerPulse(): void {
-    this.telemetryText.set('ECLIPSE OBSERVATORY // CORONA PULSE DETECTED');
+    this.telemetryText.set(this.i18n.t('eclipseObservatory.telemetryDetected'));
     if (this.pulseTimeout !== null) {
       clearTimeout(this.pulseTimeout);
     }
     this.pulseTimeout = setTimeout(() => {
-      this.telemetryText.set('ECLIPSE OBSERVATORY // STANDBY');
+      this.telemetryText.set(this.i18n.t('eclipseObservatory.telemetryStandby'));
     }, 3000);
   }
 }

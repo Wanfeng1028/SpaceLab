@@ -81,7 +81,9 @@
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   position: relative;
   overflow: hidden;
-  transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
+  transition:
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
 
   &:hover {
     transform: translateY(-4px);
@@ -166,8 +168,13 @@
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .profile-card__github {
@@ -282,7 +289,9 @@
   border: 1px solid rgba(255, 255, 255, 0.46);
   backdrop-filter: blur(14px) saturate(135%);
   -webkit-backdrop-filter: blur(14px) saturate(135%);
-  box-shadow: 0 8px 24px rgba(34, 28, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 24px rgba(34, 28, 18, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
   &:hover {
     transform: translateY(-2px);
@@ -333,7 +342,9 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(16px) saturate(130%);
   -webkit-backdrop-filter: blur(16px) saturate(130%);
-  transition: transform 280ms var(--ease-out), box-shadow 280ms var(--ease-out);
+  transition:
+    transform 280ms var(--ease-out),
+    box-shadow 280ms var(--ease-out);
 
   &:hover {
     transform: translateY(-4px);
@@ -402,7 +413,9 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(14px) saturate(125%);
   -webkit-backdrop-filter: blur(14px) saturate(125%);
-  transition: transform 280ms var(--ease-out), box-shadow 280ms var(--ease-out);
+  transition:
+    transform 280ms var(--ease-out),
+    box-shadow 280ms var(--ease-out);
 
   &:hover {
     transform: translateY(-4px);

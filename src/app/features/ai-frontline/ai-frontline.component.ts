@@ -30,6 +30,7 @@ export interface AiFrontlineSource {
 }
 
 const CONTENT_START_DATE = '2026-05-25';
+const PAGE_SIZE = 10;
 
 function isAfterContentStartDate(itemDate: string | undefined): boolean {
   if (!itemDate) return true;
@@ -56,6 +57,9 @@ export class AiFrontlineComponent implements OnInit {
   searchQuery = signal('');
   selectedCategory = signal<string>('all');
 
+  // Pagination
+  currentPage = signal(1);
+
   // Categories
   categories = ['all', 'model', 'product', 'funding', 'opensource', 'agent', 'tool', 'industry'];
 
@@ -77,18 +81,34 @@ export class AiFrontlineComponent implements OnInit {
       });
   });
 
-  // Group news by date
-  groupedNews = computed(() => {
+  totalPages = computed(() => Math.max(1, Math.ceil(this.filteredNews().length / PAGE_SIZE)));
+
+  // Paginated + grouped by date
+  paginatedGroupedNews = computed(() => {
+    const page = this.currentPage();
+    const start = (page - 1) * PAGE_SIZE;
+    const pageItems = this.filteredNews().slice(start, start + PAGE_SIZE);
+
     const groups = new Map<string, AiNewsItem[]>();
-    for (const item of this.filteredNews()) {
+    for (const item of pageItems) {
       const date = item.date;
       if (!groups.has(date)) {
         groups.set(date, []);
       }
       groups.get(date)!.push(item);
     }
-    // Sort by date descending
     return Array.from(groups.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+  });
+
+  pageNumbers = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const pages: number[] = [];
+    const range = 2;
+    for (let i = Math.max(1, current - range); i <= Math.min(total, current + range); i++) {
+      pages.push(i);
+    }
+    return pages;
   });
 
   async ngOnInit() {
@@ -116,15 +136,32 @@ export class AiFrontlineComponent implements OnInit {
 
   clearSearch(): void {
     this.searchQuery.set('');
+    this.currentPage.set(1);
   }
 
   clearFilters(): void {
     this.selectedCategory.set('all');
+    this.currentPage.set(1);
   }
 
   clearAll(): void {
     this.clearSearch();
     this.clearFilters();
+  }
+
+  goToPage(page: number): void {
+    const total = this.totalPages();
+    if (page >= 1 && page <= total) {
+      this.currentPage.set(page);
+    }
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage() - 1);
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage() + 1);
   }
 
   async loadNews() {
@@ -156,10 +193,12 @@ export class AiFrontlineComponent implements OnInit {
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
+    this.currentPage.set(1);
   }
 
   onCategoryChange(category: string) {
     this.selectedCategory.set(category);
+    this.currentPage.set(1);
   }
 
   getCategoryClass(category: string): string {

@@ -138,7 +138,7 @@
         }
         <!-- Timeline -->
         <div class="ai-frontline-timeline">
-          @for (group of groupedNews(); track trackByDate($index, group)) {
+          @for (group of paginatedGroupedNews(); track trackByDate($index, group)) {
             <div class="date-group">
               <div class="date-marker">
                 <span class="date-dot"></span>

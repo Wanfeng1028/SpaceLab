@@ -9,23 +9,23 @@
     <!-- Header (top-left) -->
     <div class="eclipse-header">
       <span class="eclipse-header__number">02</span>
-      <h2 class="eclipse-header__title">Eclipse<br />Observatory</h2>
-      <p class="eclipse-header__subtitle">Corona imaging &amp; chromosphere telemetry</p>
+      <h2 class="eclipse-header__title" [innerHTML]="t('eclipseObservatory.title')"></h2>
+      <p class="eclipse-header__subtitle">{{ t('eclipseObservatory.subtitle') }}</p>
     </div>
 
     <!-- Left Metrics Panel -->
     <div class="eclipse-metrics">
       <app-hud-frame>
         <app-hud-metric
-          label="Corona Temp"
+          [label]="t('eclipseObservatory.coronaTemp')"
           value="1.5M K"
           color="var(--space-cyan)"
           [animated]="true"
         />
-        <app-hud-metric label="Umbra Radius" value="2,684 km" />
-        <app-hud-metric label="Shadow Speed" value="3,400 km/h" />
-        <app-hud-metric label="Duration" value="4m 33s" />
-        <app-hud-metric label="Saros Cycle" value="136" />
+        <app-hud-metric [label]="t('eclipseObservatory.umbraRadius')" value="2,684 km" />
+        <app-hud-metric [label]="t('eclipseObservatory.shadowSpeed')" value="3,400 km/h" />
+        <app-hud-metric [label]="t('eclipseObservatory.duration')" value="4m 33s" />
+        <app-hud-metric [label]="t('eclipseObservatory.sarosCycle')" value="136" />
       </app-hud-frame>
     </div>
 

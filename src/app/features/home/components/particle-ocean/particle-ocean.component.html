@@ -8,13 +8,13 @@
   <div class="hud-layer">
     <!-- Vertical Title (bottom-left) -->
     <div class="particle-title">
-      <app-vertical-section-title number="03" title="Particle Ocean" />
+      <app-vertical-section-title number="03" [title]="t('particleOcean.title')" />
     </div>
 
     <!-- Cursor Hint (bottom-right) -->
     <div class="particle-cursor-hint">
       <span class="particle-cursor-hint__icon">&#9757;</span>
-      <span class="particle-cursor-hint__text">Move to create waves</span>
+      <span class="particle-cursor-hint__text">{{ t('particleOcean.moveHint') }}</span>
     </div>
 
     <!-- Telemetry Bar -->
