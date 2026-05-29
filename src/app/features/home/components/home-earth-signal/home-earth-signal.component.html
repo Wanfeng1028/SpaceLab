@@ -1,0 +1,12 @@
+<div class="earth-signal-wrapper">
+  <!-- Three.js Globe Canvas -->
+  <app-three-canvas [sceneFactory]="sceneFactory" />
+
+  <!-- Overlay Content -->
+  <div class="earth-signal-overlay">
+    <p class="es-telemetry">{{ t('homeEarthSignal.telemetry') }}</p>
+    <h2 class="es-title">{{ t('homeEarthSignal.title') }}</h2>
+    <p class="es-subtitle">{{ t('homeEarthSignal.subtitle') }}</p>
+    <p class="es-desc">{{ t('homeEarthSignal.desc') }}</p>
+  </div>
+</div>

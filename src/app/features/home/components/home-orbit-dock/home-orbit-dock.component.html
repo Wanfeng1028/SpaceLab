@@ -1,0 +1,16 @@
+<div class="dock-section">
+  <div class="dock-header">
+    <p class="dock-telemetry">{{ t('homeOrbitDock.telemetry') }}</p>
+    <h2 class="dock-title">{{ t('homeOrbitDock.title') }}</h2>
+    <p class="dock-subtitle">{{ t('homeOrbitDock.subtitle') }}</p>
+  </div>
+
+  <nav class="dock-links">
+    @for (link of links; track link.key) {
+      <a [routerLink]="link.route" class="dock-link">
+        <span class="dock-link__icon">{{ link.icon }}</span>
+        <span class="dock-link__label">{{ t('homeOrbitDock.' + link.key) }}</span>
+      </a>
+    }
+  </nav>
+</div>

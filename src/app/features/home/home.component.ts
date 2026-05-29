@@ -13,15 +13,13 @@ import { I18nService } from '../../core/services/i18n.service';
 import { LenisScrollService } from '../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
-import { HoloIcoScene } from '../../three/scenes/holo-ico.scene';
-import { GlobeOrbitScene } from '../../three/scenes/globe-orbit.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
-import { EarthObservatorySection } from './components/earth-observatory/earth-observatory.component';
-import { NeuralCoreSection } from './components/neural-core/neural-core.component';
-import { VisualSystemsSection } from './components/visual-systems/visual-systems.component';
-import { OrbitalLearningSection } from './components/orbital-learning/orbital-learning.component';
-import { PortalGallerySection } from './components/stargate-dock/stargate-dock.component';
+import { HomeEarthSignalSection } from './components/home-earth-signal/home-earth-signal.component';
+import { HomeBlueMoonTreeSection } from './components/home-blue-moon-tree/home-blue-moon-tree.component';
+import { HomeContentDockSection } from './components/home-content-dock/home-content-dock.component';
+import { HomeResourceDockSection } from './components/home-resource-dock/home-resource-dock.component';
+import { HomeOrbitDockSection } from './components/home-orbit-dock/home-orbit-dock.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
 
@@ -34,11 +32,11 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
     ThreeCanvasComponent,
     LaunchTelemetryOverlayComponent,
     MacTerminalModalComponent,
-    EarthObservatorySection,
-    NeuralCoreSection,
-    VisualSystemsSection,
-    OrbitalLearningSection,
-    PortalGallerySection,
+    HomeEarthSignalSection,
+    HomeBlueMoonTreeSection,
+    HomeContentDockSection,
+    HomeResourceDockSection,
+    HomeOrbitDockSection,
     CockpitDashboardSection,
     LaunchTerminalTransitionComponent,
   ],
@@ -53,18 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   };
 
   // Three.js scene factories for 3D cards
-  holoIcoFactory = (canvas: HTMLCanvasElement) => new HoloIcoScene(canvas);
-  globeOrbitFactory = (canvas: HTMLCanvasElement) => new GlobeOrbitScene(canvas);
-
-  // Matrix rain data (pre-generated to avoid random in template)
-  matrixColumns = Array.from({ length: 20 }, (_, i) => ({
-    char: this.generateMatrixChars(),
-    delay: Math.random() * 3,
-    duration: 3 + Math.random() * 4,
-  }));
-
-  // Radar blips data
-  radarBlips = Array.from({ length: 6 }, (_, i) => i);
+  // (Old holoIcoFactory and globeOrbitFactory removed — replaced by lightweight dock sections)
 
   // WebGL Customization properties (inspired by uiverse.io high-tech controls)
   coronaIntensity = signal<number>(2.8);
@@ -409,10 +396,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 4500);
   }
 
-  private generateMatrixChars(): string {
-    const chars = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ABCDEF';
-    return Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join(
-      '',
-    );
-  }
+  // (generateMatrixChars removed — no longer needed)
 }

@@ -1,0 +1,100 @@
+@use '../../../../../styles/abstracts/tokens' as t;
+@use '../../../../../styles/abstracts/glass' as g;
+
+:host {
+  display: block;
+}
+
+.blue-moon-tree {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 600px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 60%, #0a0a12, #000 70%);
+}
+
+app-three-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.tree-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 12vh 6vw;
+  pointer-events: none;
+}
+
+.tree-header {
+  max-width: 520px;
+}
+
+.tree-telemetry {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(69, 183, 209, 0.6);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.tree-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0 0 12px;
+  text-shadow: 0 0 24px rgba(69, 183, 209, 0.35);
+}
+
+.tree-subtitle {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  color: rgba(69, 183, 209, 0.8);
+  margin: 0 0 12px;
+}
+
+.tree-desc {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .tree-overlay {
+    padding: 8vh 5vw;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .tree-header {
+    max-width: 100%;
+  }
+
+  .tree-title {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  .tree-desc {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-title {
+    text-shadow: none;
+  }
+}

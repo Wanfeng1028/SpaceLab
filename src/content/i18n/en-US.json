@@ -700,5 +700,47 @@
     "builtBy": "Built by Wanfeng.",
     "craftedWith": "Crafted with Angular, Three.js and curiosity.",
     "backToTop": "Back to Top"
+  },
+  "homeEarthSignal": {
+    "telemetry": "SIGNAL PROTOCOL // v3.2.1",
+    "title": "Earth Signal",
+    "subtitle": "Global Data Network",
+    "desc": "Real-time global data node tracking with 14 signal arcs connecting every corner of the world."
+  },
+  "homeBlueMoonTree": {
+    "telemetry": "BIOME SCAN // LIVE",
+    "title": "Blue Moon Tree",
+    "subtitle": "Particle Life Form",
+    "desc": "Particle life forms growing under moonlight — 26,000+ particles forming a breathing digital tree."
+  },
+  "homeContentDock": {
+    "telemetry": "CONTENT HUB // ACTIVE",
+    "title": "Content Dock",
+    "subtitle": "Articles & Projects",
+    "blog": "Blog",
+    "blogDesc": "Tech articles and reflections",
+    "projects": "Projects",
+    "projectsDesc": "Open-source projects and experiments",
+    "lab": "Lab",
+    "labDesc": "Cutting-edge tools and resources"
+  },
+  "homeResourceDock": {
+    "telemetry": "RESOURCE GRID // ONLINE",
+    "title": "Resource Dock",
+    "subtitle": "AI Tools & Datasets",
+    "aiFrontline": "AI Frontline",
+    "aiFrontlineDesc": "Daily AI industry updates",
+    "lab": "AI Resources",
+    "labDesc": "Curated AI tools and datasets"
+  },
+  "homeOrbitDock": {
+    "telemetry": "NAV SYSTEM // READY",
+    "title": "Orbit Dock",
+    "subtitle": "Quick Navigation",
+    "blog": "Blog",
+    "projects": "Projects",
+    "lab": "Lab",
+    "aiFrontline": "AI Frontline",
+    "about": "About"
   }
 }

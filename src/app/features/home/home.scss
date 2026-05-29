@@ -619,9 +619,10 @@
   }
 }
 
-// ── 第二部分：系统实验室与诊断中心 (Systems Diagnostics Section) ──
+// ── Old section styles removed (systems-diagnostics, matrix, radar, 3D cards) ──
+// Sections 2-6 now use standalone components with their own styles
 
-.systems-diagnostics-section {
+// ── 滚动提示指示器 ────────────────────────
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -1512,14 +1513,15 @@
 }
 
 // ── 各屏 section 基础样式 ────────────────────────
-.earth-observatory-section,
-.neural-core-section,
-.visual-systems-section,
-.orbital-learning-section,
-.portal-gallery-section {
+.earth-signal-section,
+.blue-moon-tree-section,
+.content-dock-section,
+.resource-dock-section,
+.orbit-dock-section {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 600px;
   overflow: hidden;
 }

@@ -1,0 +1,178 @@
+// Resource Dock — lightweight glass card grid (2 cards)
+@use '../../../../../styles/abstracts/glass' as g;
+
+:host {
+  display: block;
+}
+
+.dock-section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  background: radial-gradient(ellipse at 50% 60%, #0d0a1e 0%, #06050e 100%);
+  gap: 0;
+}
+
+.dock-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.dock-telemetry {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--color-violet, #8f7cff);
+  opacity: 0.7;
+  margin: 0 0 12px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-violet, #8f7cff);
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: dock-pulse 2s ease-in-out infinite;
+  }
+}
+
+.dock-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 8px;
+  text-shadow:
+    0 0 30px rgba(143, 124, 255, 0.2),
+    0 0 60px rgba(143, 124, 255, 0.06);
+}
+
+.dock-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.5vw, 15px);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+}
+
+.dock-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 720px;
+  width: 100%;
+}
+
+.dock-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 32px 28px;
+  border-radius: var(--radius-xl, 16px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    border-color 180ms var(--ease-out);
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(143, 124, 255, 0.2);
+    box-shadow:
+      0 12px 48px rgba(143, 124, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    .dock-card__arrow {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+  }
+
+  &__icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-violet, #8f7cff);
+    margin: 0 0 8px;
+    letter-spacing: 0.03em;
+  }
+
+  &__desc {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    flex: 1;
+  }
+
+  &__arrow {
+    font-size: 1.3rem;
+    color: var(--color-violet, #8f7cff);
+    margin-top: 20px;
+    opacity: 0.6;
+    transition:
+      transform 200ms var(--ease-out),
+      opacity 200ms var(--ease-out);
+  }
+}
+
+@keyframes dock-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .dock-section {
+    min-height: 100svh;
+    padding: 60px 16px;
+  }
+
+  .dock-cards {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .dock-title {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-telemetry::before {
+    animation: none;
+  }
+  .dock-title {
+    text-shadow: none;
+  }
+}

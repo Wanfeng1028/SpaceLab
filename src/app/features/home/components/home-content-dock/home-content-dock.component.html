@@ -1,0 +1,18 @@
+<div class="dock-section">
+  <div class="dock-header">
+    <p class="dock-telemetry">{{ t('homeContentDock.telemetry') }}</p>
+    <h2 class="dock-title">{{ t('homeContentDock.title') }}</h2>
+    <p class="dock-subtitle">{{ t('homeContentDock.subtitle') }}</p>
+  </div>
+
+  <div class="dock-cards">
+    @for (card of cards; track card.key) {
+      <a [routerLink]="card.route" class="dock-card">
+        <span class="dock-card__icon">{{ card.icon }}</span>
+        <h3 class="dock-card__title">{{ t('homeContentDock.' + card.key) }}</h3>
+        <p class="dock-card__desc">{{ t('homeContentDock.' + card.key + 'Desc') }}</p>
+        <span class="dock-card__arrow">→</span>
+      </a>
+    }
+  </div>
+</div>

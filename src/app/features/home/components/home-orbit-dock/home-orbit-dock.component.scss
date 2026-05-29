@@ -1,0 +1,161 @@
+// Orbit Dock — navigation link pills
+@use '../../../../../styles/abstracts/glass' as g;
+
+:host {
+  display: block;
+}
+
+.dock-section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  background: radial-gradient(ellipse at 50% 50%, #080c16 0%, #040610 100%);
+  gap: 0;
+}
+
+.dock-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.dock-telemetry {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--color-cyan, #69d7ff);
+  opacity: 0.7;
+  margin: 0 0 12px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-cyan, #69d7ff);
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: dock-pulse 2s ease-in-out infinite;
+  }
+}
+
+.dock-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 8px;
+  text-shadow:
+    0 0 30px rgba(0, 200, 255, 0.15),
+    0 0 60px rgba(0, 200, 255, 0.04);
+}
+
+.dock-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.5vw, 15px);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+}
+
+.dock-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  max-width: 800px;
+}
+
+.dock-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 14px 28px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    border-color 180ms var(--ease-out);
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 200, 255, 0.18);
+    box-shadow:
+      0 12px 48px rgba(0, 200, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    .dock-link__label {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  &__icon {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+
+  &__label {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 180ms var(--ease-out);
+  }
+}
+
+@keyframes dock-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .dock-section {
+    min-height: 100svh;
+    padding: 60px 16px;
+  }
+
+  .dock-links {
+    gap: 10px;
+  }
+
+  .dock-link {
+    padding: 12px 20px;
+  }
+
+  .dock-title {
+    font-size: clamp(24px, 7vw, 36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-telemetry::before {
+    animation: none;
+  }
+  .dock-title {
+    text-shadow: none;
+  }
+}
