@@ -1,6 +1,6 @@
 <main class="resource-page">
   <div class="resource-shell">
-    <!-- 1 ── Compact Hero -->
+    <!-- 1 ── Hero -->
     <section class="resource-hero">
       <mat-card class="resource-hero-card">
         <div class="resource-hero__row">
@@ -23,8 +23,8 @@
       </mat-card>
     </section>
 
-    <!-- 2 ── Search + Filter Toolbar -->
-    <section class="resource-toolbar">
+    <!-- 2 ── Toolbar Card -->
+    <section class="resource-toolbar-card">
       <div class="resource-toolbar__search">
         <div class="search-bar">
           <span class="search-bar__icon">⌕</span>
@@ -40,22 +40,30 @@
           >{{ filteredNews().length }} {{ t('resourceInbox.items') }}</span
         >
       </div>
-      <div class="resource-toolbar__chips">
-        <mat-chip-set class="resource-chip-set">
-          @for (cat of categories; track cat) {
-            <mat-chip
-              class="resource-filter-chip"
-              [class.resource-filter-chip--active]="selectedCategory() === cat"
-              (click)="onCategoryChange(cat)"
-            >
-              {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
-            </mat-chip>
-          }
-        </mat-chip-set>
-      </div>
     </section>
 
-    <!-- 3 ── Loading / Error -->
+    <!-- 3 ── Filter Strip -->
+    <section class="resource-filter-strip">
+      <div class="resource-filter-strip__chips">
+        @for (cat of categories; track cat) {
+          <button
+            class="resource-strip-chip"
+            [class.resource-strip-chip--active]="selectedCategory() === cat"
+            (click)="onCategoryChange(cat)"
+          >
+            {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
+            <span class="resource-strip-chip__count">{{ getCategoryCount(cat) }}</span>
+          </button>
+        }
+      </div>
+      @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
+        <button class="resource-strip-reset" (click)="clearAll()">
+          {{ t('resourceInbox.resetAll') }}
+        </button>
+      }
+    </section>
+
+    <!-- Loading -->
     @if (loading()) {
       <div class="resource-loading">
         <div class="glitch-loader">
@@ -71,198 +79,134 @@
         </button>
       </div>
     } @else {
-      <!-- 4 ── Main 3-Column Grid -->
-      <div class="resource-grid">
-        <!-- Left: Filter Sidebar -->
-        <aside class="resource-sidebar">
-          <mat-card class="resource-sidebar-card">
-            <div class="resource-sidebar__section">
-              <h4 class="resource-sidebar__title">{{ t('resourceInbox.categories') }}</h4>
-              <mat-nav-list class="resource-nav-list">
-                @for (cat of categories; track cat) {
-                  <a
-                    mat-list-item
-                    class="resource-nav-item"
-                    [class.is-active]="selectedCategory() === cat"
-                    [matTooltip]="cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat)"
-                    matTooltipPosition="right"
-                    (click)="onCategoryChange(cat)"
-                  >
-                    <span matListItemTitle>{{
-                      cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat)
-                    }}</span>
-                    <span class="resource-nav-count" matListItemMeta>{{
-                      getCategoryCount(cat)
-                    }}</span>
-                  </a>
-                }
-              </mat-nav-list>
-            </div>
-
-            <mat-divider class="resource-divider" />
-
-            <div class="resource-sidebar__section">
-              <h4 class="resource-sidebar__title">{{ t('resourceInbox.dateRange') }}</h4>
-              <mat-nav-list class="resource-nav-list">
-                @for (range of sidebarDateRangeOptions; track range) {
-                  <a
-                    mat-list-item
-                    class="resource-nav-item"
-                    [class.is-active]="selectedDateRange() === range"
-                    (click)="onDateRangeChange(range)"
-                  >
-                    <span matListItemTitle>{{ sidebarDateLabel(range) }}</span>
-                    <span class="resource-nav-count" matListItemMeta>{{
-                      dateRangeCount(range)
-                    }}</span>
-                  </a>
-                }
-              </mat-nav-list>
-            </div>
-
-            @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
-              <button
-                mat-stroked-button
-                class="resource-btn resource-btn--reset"
-                (click)="clearAll()"
+      <!-- 4 ── Highlight Grid -->
+      @if (highlightItems().length > 0) {
+        <section class="resource-section">
+          <h2 class="resource-section__title">
+            {{ t('resourceInbox.highlight') }}
+            <span class="resource-section__count">{{ highlightItems().length }}</span>
+          </h2>
+          <div class="resource-highlight-grid">
+            @for (item of highlightItems(); track trackByNews($index, item)) {
+              <mat-card
+                class="resource-highlight-card"
+                appearance="outlined"
+                (click)="openDialog(item)"
               >
-                {{ t('resourceInbox.resetAll') }}
+                <mat-card-content class="resource-highlight-card__body">
+                  <span class="resource-highlight-card__badge" [attr.data-category]="item.category">
+                    {{ getCategoryLabel(item.category) }}
+                  </span>
+                  <h3 class="resource-highlight-card__title">{{ item.title }}</h3>
+                  <p class="resource-highlight-card__summary">{{ item.summary }}</p>
+                  <div class="resource-highlight-card__footer">
+                    <mat-chip-set class="resource-highlight-card__tags">
+                      @for (tag of item.tags.slice(0, 3); track tag) {
+                        <mat-chip class="resource-highlight-card__tag" [highlighted]="false">{{
+                          tag
+                        }}</mat-chip>
+                      }
+                    </mat-chip-set>
+                    <span class="resource-highlight-card__date">{{ formatDate(item.date) }}</span>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- 5 ── Card Grid -->
+      @if (filteredNews().length === 0) {
+        <div class="resource-empty">
+          <span class="resource-empty__icon">📡</span>
+          <p>{{ t('resourceInbox.noResults') }}</p>
+          <div class="resource-empty__actions">
+            @if (searchQuery()) {
+              <button mat-stroked-button class="resource-btn" (click)="clearSearch()">
+                {{ t('resourceInbox.clearSearch') }}
               </button>
             }
-          </mat-card>
-        </aside>
-
-        <!-- Center: News List -->
-        <section class="resource-list">
-          @if (filteredNews().length === 0) {
-            <div class="resource-empty">
-              <span class="resource-empty__icon">📡</span>
-              <p>{{ t('resourceInbox.noResults') }}</p>
-              <div class="resource-empty__actions">
-                @if (searchQuery()) {
-                  <button mat-stroked-button class="resource-btn" (click)="clearSearch()">
-                    {{ t('resourceInbox.clearSearch') }}
-                  </button>
-                }
-                @if (selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
-                  <button mat-stroked-button class="resource-btn" (click)="clearFilters()">
-                    {{ t('resourceInbox.clearFilter') }}
-                  </button>
-                }
-                <button mat-stroked-button class="resource-btn" (click)="clearAll()">
-                  {{ t('resourceInbox.resetAll') }}
-                </button>
-              </div>
-            </div>
-          } @else {
-            <div class="resource-items">
-              @for (item of pagedData(); track trackByNews($index, item)) {
-                <mat-card
-                  class="resource-item"
-                  [class.is-selected]="selectedItem()?.id === item.id"
-                  appearance="outlined"
-                  (click)="selectItem(item)"
-                >
-                  <mat-card-content class="resource-item__body">
-                    <div class="resource-item__header">
-                      <span class="resource-item__badge" [attr.data-category]="item.category">
-                        {{ getCategoryLabel(item.category) }}
-                      </span>
-                      <span class="resource-item__date">{{ formatDate(item.date) }}</span>
-                    </div>
-                    <h3 class="resource-item__title">{{ item.title }}</h3>
-                    <p class="resource-item__summary">{{ item.summary }}</p>
-                    <div class="resource-item__footer">
-                      <mat-chip-set class="resource-item__tags">
-                        @for (tag of item.tags.slice(0, 3); track tag) {
-                          <mat-chip class="resource-item__tag" [highlighted]="false">{{
-                            tag
-                          }}</mat-chip>
-                        }
-                      </mat-chip-set>
-                      <span class="resource-item__source">{{ item.source }}</span>
-                    </div>
-                  </mat-card-content>
-                </mat-card>
-              }
-            </div>
-
-            @if (totalPages() > 1) {
-              <nav class="resource-pagination" aria-label="pagination">
-                <button
-                  class="resource-page-btn"
-                  [disabled]="currentPage() === 1"
-                  (click)="goToPage(currentPage() - 1)"
-                >
-                  ‹
-                </button>
-                <div class="resource-page-numbers">
-                  @for (page of pageNumbers(); track page) {
-                    <button
-                      class="resource-page-num"
-                      [class.is-active]="page === currentPage()"
-                      [attr.aria-current]="page === currentPage() ? 'page' : null"
-                      (click)="goToPage(page)"
-                    >
-                      {{ page }}
-                    </button>
-                  }
-                </div>
-                <span class="resource-page-info">{{ currentPage() }} / {{ totalPages() }}</span>
-                <button
-                  class="resource-page-btn"
-                  [disabled]="currentPage() === totalPages()"
-                  (click)="goToPage(currentPage() + 1)"
-                >
-                  ›
-                </button>
-              </nav>
+            @if (selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
+              <button mat-stroked-button class="resource-btn" (click)="clearFilters()">
+                {{ t('resourceInbox.clearFilter') }}
+              </button>
             }
+            <button mat-stroked-button class="resource-btn" (click)="clearAll()">
+              {{ t('resourceInbox.resetAll') }}
+            </button>
+          </div>
+        </div>
+      } @else {
+        <section class="resource-section">
+          <div class="resource-card-grid">
+            @for (item of pagedData(); track trackByNews($index, item)) {
+              <mat-card class="resource-card" appearance="outlined" (click)="openDialog(item)">
+                <mat-card-content class="resource-card__body">
+                  <div class="resource-card__header">
+                    <span class="resource-card__badge" [attr.data-category]="item.category">
+                      {{ getCategoryLabel(item.category) }}
+                    </span>
+                    <span class="resource-card__date">{{ formatDate(item.date) }}</span>
+                  </div>
+                  <h3 class="resource-card__title">{{ item.title }}</h3>
+                  <p class="resource-card__summary">{{ item.summary }}</p>
+                  <div class="resource-card__footer">
+                    <mat-chip-set class="resource-card__tags">
+                      @for (tag of item.tags.slice(0, 3); track tag) {
+                        <mat-chip class="resource-card__tag" [highlighted]="false">{{
+                          tag
+                        }}</mat-chip>
+                      }
+                    </mat-chip-set>
+                    <button
+                      class="resource-card__link"
+                      (click)="openDialog(item); $event.stopPropagation()"
+                    >
+                      {{ t('resourceInbox.viewDetail') }} →
+                    </button>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+
+          @if (totalPages() > 1) {
+            <nav class="resource-pagination" aria-label="pagination">
+              <button
+                class="resource-page-btn"
+                [disabled]="currentPage() === 1"
+                (click)="goToPage(currentPage() - 1)"
+              >
+                ‹
+              </button>
+              <div class="resource-page-numbers">
+                @for (page of pageNumbers(); track page) {
+                  <button
+                    class="resource-page-num"
+                    [class.is-active]="page === currentPage()"
+                    [attr.aria-current]="page === currentPage() ? 'page' : null"
+                    (click)="goToPage(page)"
+                  >
+                    {{ page }}
+                  </button>
+                }
+              </div>
+              <span class="resource-page-info">{{ currentPage() }} / {{ totalPages() }}</span>
+              <button
+                class="resource-page-btn"
+                [disabled]="currentPage() === totalPages()"
+                (click)="goToPage(currentPage() + 1)"
+              >
+                ›
+              </button>
+            </nav>
           }
         </section>
-
-        <!-- Right: Preview Panel -->
-        <aside class="resource-preview">
-          <mat-card class="resource-preview-card">
-            @if (selectedItem(); as selected) {
-              <div class="resource-preview__content">
-                <span class="resource-preview__badge" [attr.data-category]="selected.category">
-                  {{ getCategoryLabel(selected.category) }}
-                </span>
-                <h3 class="resource-preview__title">{{ selected.title }}</h3>
-                <p class="resource-preview__summary">{{ selected.summary }}</p>
-                <mat-divider class="resource-divider" />
-                <div class="resource-preview__meta">
-                  <span class="resource-preview__source">{{ selected.source }}</span>
-                  <span class="resource-preview__date">{{ formatDate(selected.date) }}</span>
-                </div>
-                <mat-chip-set class="resource-preview__tags">
-                  @for (tag of selected.tags; track tag) {
-                    <mat-chip class="resource-preview__tag" [highlighted]="false">{{
-                      tag
-                    }}</mat-chip>
-                  }
-                </mat-chip-set>
-                <button
-                  mat-stroked-button
-                  class="resource-btn resource-btn--link"
-                  (click)="openSource(selected.url)"
-                >
-                  {{ t('resourceInbox.viewSource') }} <mat-icon>open_in_new</mat-icon>
-                </button>
-              </div>
-            } @else {
-              <div class="resource-preview__empty">
-                <mat-icon class="resource-preview__empty-icon">touch_app</mat-icon>
-                <p>{{ t('resourceInbox.selectToPreview') }}</p>
-              </div>
-            }
-          </mat-card>
-        </aside>
-      </div>
+      }
     }
 
-    <!-- 5 ── Footer -->
+    <!-- 6 ── Footer -->
     <footer class="resource-footer">
       <p>{{ t('aiFrontline.disclaimer') }}</p>
     </footer>

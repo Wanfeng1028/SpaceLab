@@ -1,0 +1,131 @@
+.rd {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 2px;
+}
+
+.rd__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rd__badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 12px;
+  border-radius: 999px;
+
+  &[data-category='model'] {
+    background: rgba(105, 215, 255, 0.15);
+    color: rgba(86, 180, 255, 0.9);
+  }
+  &[data-category='product'] {
+    background: rgba(143, 124, 255, 0.15);
+    color: rgba(130, 110, 230, 0.9);
+  }
+  &[data-category='funding'] {
+    background: rgba(243, 185, 200, 0.2);
+    color: rgba(220, 100, 130, 0.9);
+  }
+  &[data-category='opensource'] {
+    background: rgba(74, 222, 128, 0.15);
+    color: rgba(22, 163, 74, 0.9);
+  }
+  &[data-category='agent'] {
+    background: rgba(255, 210, 31, 0.15);
+    color: rgba(184, 134, 11, 0.9);
+  }
+  &[data-category='tool'] {
+    background: rgba(244, 114, 182, 0.15);
+    color: rgba(219, 39, 119, 0.9);
+  }
+  &[data-category='industry'] {
+    background: rgba(148, 163, 184, 0.15);
+    color: rgba(100, 116, 139, 0.9);
+  }
+}
+
+.rd__date {
+  font-size: 0.72rem;
+  color: rgba(18, 32, 48, 0.42);
+}
+
+.rd__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: rgba(18, 32, 48, 0.92);
+}
+
+.rd__summary {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  color: rgba(18, 32, 48, 0.62);
+}
+
+.rd__divider {
+  margin: 4px 0 !important;
+  border-color: rgba(86, 180, 255, 0.12) !important;
+}
+
+.rd__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: rgba(18, 32, 48, 0.48);
+}
+
+.rd__meta-icon {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  color: rgba(86, 180, 255, 0.6);
+}
+
+.rd__source {
+  font-weight: 600;
+}
+
+.rd__tags {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 5px !important;
+  padding: 0 !important;
+}
+
+.rd__tag.mat-mdc-chip {
+  --mdc-chip-elevated-container-color: rgba(0, 0, 0, 0.04);
+  --mdc-chip-label-text-color: rgba(18, 32, 48, 0.55);
+  --mdc-chip-label-text-size: 12px;
+  --mdc-chip-container-shape: 999px;
+  --mdc-chip-container-height: 24px;
+  min-height: 24px;
+}
+
+.rd__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rd__btn {
+  &.rd__btn--primary {
+    --mdc-outlined-button-outline-color: rgba(86, 180, 255, 0.35);
+    --mdc-outlined-button-label-text-color: rgba(18, 32, 48, 0.82);
+    font-weight: 600;
+
+    .mdc-button__icon {
+      margin-left: 4px;
+    }
+  }
+}

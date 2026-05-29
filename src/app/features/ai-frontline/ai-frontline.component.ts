@@ -15,7 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { I18nService } from '../../core/services/i18n.service';
+import {
+  ResourceDetailDialogComponent,
+  ResourceDetailData,
+} from '../../shared/components/resource-detail-dialog/resource-detail-dialog.component';
 import {
   buildSearchText,
   matchesSearchQuery,
@@ -100,6 +105,7 @@ const PAGE_SIZE = 15;
     MatTooltipModule,
     MatButtonModule,
     MatDividerModule,
+    MatDialogModule,
   ],
   templateUrl: './ai-frontline.html',
   styleUrl: './ai-frontline.scss',
@@ -107,6 +113,7 @@ const PAGE_SIZE = 15;
 })
 export class AiFrontlineComponent implements OnInit {
   private readonly i18n = inject(I18nService);
+  private readonly dialog = inject(MatDialog);
 
   readonly news = signal<AiNewsItem[]>([]);
   readonly source = signal<AiFrontlineSource | null>(null);
@@ -116,7 +123,6 @@ export class AiFrontlineComponent implements OnInit {
   readonly searchQuery = signal('');
   readonly selectedCategory = signal<string>('all');
   readonly selectedDateRange = signal<DateRangeFilter>('all');
-  readonly selectedItem = signal<AiNewsItem | null>(null);
   readonly currentPage = signal(1);
 
   readonly categories = [
@@ -170,6 +176,21 @@ export class AiFrontlineComponent implements OnInit {
     return this.filteredNews().slice(start, start + PAGE_SIZE);
   });
 
+  readonly highlightItems = computed(() => {
+    const all = this.filteredNews();
+    if (all.length === 0) return [];
+    const today = new Date();
+    const todayStr = today.toISOString().slice(0, 10);
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+    const recent = all.filter((item) => {
+      const d = item.date || item.fetchedAt?.slice(0, 10) || '';
+      return d === todayStr || d === yesterdayStr;
+    });
+    return (recent.length > 0 ? recent : all).slice(0, 3);
+  });
+
   readonly pageNumbers = computed(() => {
     const total = this.totalPages();
     const current = this.currentPage();
@@ -199,8 +220,22 @@ export class AiFrontlineComponent implements OnInit {
     return this.t(map[range]);
   }
 
-  selectItem(item: AiNewsItem): void {
-    this.selectedItem.set(item);
+  openDialog(item: AiNewsItem): void {
+    this.dialog.open(ResourceDetailDialogComponent, {
+      panelClass: 'spacelab-mac-dialog-panel',
+      data: {
+        category: item.category,
+        categoryLabel: this.getCategoryLabel(item.category),
+        title: item.title,
+        summary: item.summary,
+        source: item.source,
+        date: item.date,
+        fetchedAt: item.fetchedAt,
+        tags: item.tags,
+        url: item.url,
+        i18nPrefix: 'aiFrontline',
+      } satisfies ResourceDetailData,
+    });
   }
 
   goToPage(page: number) {
@@ -210,14 +245,12 @@ export class AiFrontlineComponent implements OnInit {
 
   clearSearch(): void {
     this.searchQuery.set('');
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
   clearFilters(): void {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
@@ -225,13 +258,11 @@ export class AiFrontlineComponent implements OnInit {
     this.searchQuery.set('');
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
   onDateRangeChange(range: DateRangeFilter): void {
     this.selectedDateRange.set(range);
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
@@ -261,13 +292,11 @@ export class AiFrontlineComponent implements OnInit {
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
   onCategoryChange(category: string) {
     this.selectedCategory.set(category);
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 

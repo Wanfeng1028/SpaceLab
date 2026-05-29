@@ -346,7 +346,11 @@
     "lastSync": "上次同步",
     "contentSince": "内容自 {{date}} 起更新",
     "resetAll": "重置全部",
-    "items": "条"
+    "items": "条",
+    "highlight": "今日精选",
+    "viewDetail": "查看详情",
+    "dialogTitle": "详情",
+    "close": "关闭"
   },
   "lab": {
     "title": "Lab",

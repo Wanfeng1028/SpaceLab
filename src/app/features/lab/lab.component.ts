@@ -15,7 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { I18nService } from '../../core/services/i18n.service';
+import {
+  ResourceDetailDialogComponent,
+  ResourceDetailData,
+} from '../../shared/components/resource-detail-dialog/resource-detail-dialog.component';
 import {
   buildSearchText,
   matchesSearchQuery,
@@ -110,10 +115,12 @@ const PAGE_SIZE = 15;
     MatTooltipModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatDialogModule,
   ],
 })
 export class LabComponent implements OnInit {
   private readonly i18n = inject(I18nService);
+  private readonly dialog = inject(MatDialog);
 
   readonly tabs: { key: TabKey; labelKey: string }[] = [
     { key: 'tools', labelKey: 'lab.aiTools' },
@@ -143,7 +150,6 @@ export class LabComponent implements OnInit {
   selectedCategory = signal('all');
   selectedDateRange = signal<DateRangeFilter>('all');
   loading = signal(true);
-  selectedItem = signal<LabResourceItem | null>(null);
   currentPage = signal(1);
 
   toolsData = signal<LabResourceItem[]>([]);
@@ -191,6 +197,10 @@ export class LabComponent implements OnInit {
   readonly pagedData = computed(() => {
     const start = (this.currentPage() - 1) * PAGE_SIZE;
     return this.currentData().slice(start, start + PAGE_SIZE);
+  });
+
+  readonly highlightItems = computed(() => {
+    return this.currentData().slice(0, 3);
   });
 
   readonly pageNumbers = computed(() => {
@@ -259,8 +269,22 @@ export class LabComponent implements OnInit {
     }
   }
 
-  selectItem(item: LabResourceItem) {
-    this.selectedItem.set(item);
+  openDialog(item: LabResourceItem) {
+    this.dialog.open(ResourceDetailDialogComponent, {
+      panelClass: 'spacelab-mac-dialog-panel',
+      data: {
+        category: item.category,
+        categoryLabel: item.category,
+        title: item.title,
+        summary: item.summary,
+        source: item.source,
+        date: item.date ?? '',
+        fetchedAt: item.fetchedAt,
+        tags: item.tags,
+        url: item.url,
+        i18nPrefix: 'lab',
+      } satisfies ResourceDetailData,
+    });
   }
 
   goToPage(page: number) {
@@ -271,7 +295,6 @@ export class LabComponent implements OnInit {
   onTabChange(key: TabKey) {
     this.activeTab.set(key);
     this.selectedCategory.set('all');
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
@@ -283,13 +306,11 @@ export class LabComponent implements OnInit {
 
   onCategoryChange(cat: string) {
     this.selectedCategory.set(cat);
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
   onDateRangeChange(range: DateRangeFilter) {
     this.selectedDateRange.set(range);
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
@@ -301,7 +322,6 @@ export class LabComponent implements OnInit {
   clearFilters() {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 
@@ -309,7 +329,6 @@ export class LabComponent implements OnInit {
     this.searchQuery.set('');
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
-    this.selectedItem.set(null);
     this.currentPage.set(1);
   }
 

@@ -346,7 +346,11 @@
     "lastSync": "Last Sync",
     "contentSince": "Content updates since {{date}}",
     "resetAll": "Reset All",
-    "items": "items"
+    "items": "items",
+    "highlight": "Today's Highlights",
+    "viewDetail": "View Details",
+    "dialogTitle": "Details",
+    "close": "Close"
   },
   "lab": {
     "title": "Lab",
