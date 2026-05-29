@@ -24,7 +24,15 @@ const SHARE_TEXT =
   '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
 
 // 浅色页面路由
-const LIGHT_THEME_ROUTES = ['/blog', '/article', '/projects', '/lab', '/gallery', '/about', '/ai-frontline'];
+const LIGHT_THEME_ROUTES = [
+  '/blog',
+  '/article',
+  '/projects',
+  '/lab',
+  '/gallery',
+  '/about',
+  '/ai-frontline',
+];
 
 interface NavLink {
   route: string;

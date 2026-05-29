@@ -3,10 +3,8 @@
 
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer__shell">
-
     <!-- ═══ Main: brand + 4 link columns ═══ -->
     <div class="site-footer__main">
-
       <!-- Brand -->
       <div class="site-footer__brand">
         <div class="site-footer__logo">SpaceLab</div>
@@ -28,11 +26,19 @@
                   @if (link.routerLink && !link.disabled) {
                     <a class="site-footer__link" [routerLink]="link.routerLink">{{ link.label }}</a>
                   } @else if (link.external && link.href && !link.disabled) {
-                    <a class="site-footer__link" [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.label }}</a>
+                    <a
+                      class="site-footer__link"
+                      [href]="link.href"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >{{ link.label }}</a
+                    >
                   } @else if (link.href && !link.disabled) {
                     <a class="site-footer__link" [href]="link.href">{{ link.label }}</a>
                   } @else {
-                    <span class="site-footer__link site-footer__link--disabled">{{ link.label }}</span>
+                    <span class="site-footer__link site-footer__link--disabled">{{
+                      link.label
+                    }}</span>
                   }
                 </li>
               }
@@ -40,7 +46,6 @@
           </div>
         }
       </div>
-
     </div>
 
     <!-- ═══ Divider ═══ -->
@@ -50,13 +55,22 @@
     <div class="site-footer__bottom">
       <span class="site-footer__copy">&copy; 2026 SpaceLab. {{ t('footer.builtBy') }}</span>
       <span class="site-footer__crafted">{{ t('footer.craftedWith') }}</span>
-      <button class="site-footer__top" (click)="scrollToTop()" [attr.aria-label]="t('footer.backToTop')">
+      <button
+        class="site-footer__top"
+        (click)="scrollToTop()"
+        [attr.aria-label]="t('footer.backToTop')"
+      >
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M8 13V3M8 3L3 8M8 3l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            d="M8 13V3M8 3L3 8M8 3l5 5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
         {{ t('footer.backToTop') }}
       </button>
     </div>
-
   </div>
 </footer>

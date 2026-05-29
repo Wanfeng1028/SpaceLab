@@ -91,7 +91,12 @@
   line-height: 0.95;
   letter-spacing: -0.06em;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--color-text) 0%, var(--color-cyan) 50%, var(--color-violet) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-text) 0%,
+    var(--color-cyan) 50%,
+    var(--color-violet) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
