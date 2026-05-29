@@ -41,12 +41,7 @@ interface MobileMenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    SpaceCapsuleModalComponent,
-    MacTerminalModalComponent,
-  ],
+  imports: [RouterLink, RouterLinkActive, SpaceCapsuleModalComponent, MacTerminalModalComponent],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
