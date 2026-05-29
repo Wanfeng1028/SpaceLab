@@ -181,6 +181,7 @@ export interface GeneratedAbout {
   focusTitle: string;
   spacelabTitle: string;
   spacelabDesc: string;
+  skillsTitle: string;
   hero: {
     kicker: string;
     title: string;

@@ -8,6 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
 import { I18nService } from '../../core/services/i18n.service';
 import { PROFILE, ABOUT } from '../../../generated/content.generated';
 import { ContactDialogComponent } from '../../shared/components/contact-dialog/contact-dialog.component';
@@ -25,6 +26,7 @@ import { ContactDialogComponent } from '../../shared/components/contact-dialog/c
     MatDividerModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatListModule,
   ],
   templateUrl: './about.html',
   styleUrl: './about.scss',
@@ -37,30 +39,18 @@ export class AboutComponent {
 
   readonly avatar = PROFILE.avatar;
   readonly name = PROFILE.name;
+  readonly title = PROFILE.title;
   readonly github = PROFILE.github;
   readonly email = PROFILE.email;
+  readonly skills = PROFILE.skills;
 
-  readonly aboutData = ABOUT;
-  readonly identityLabels = this.aboutData.identityLabels;
-  readonly focusAreas = this.aboutData.focusAreas.map((area) => ({
-    key: area.id,
-    icon: area.icon,
-    title: area.title,
-    description: area.description,
-    chips: area.chips,
-  }));
-  readonly spacelabModules = this.aboutData.spacelabModules.map((mod) => ({
-    key: mod.id,
-    icon: mod.icon,
-    title: mod.title,
-    description: mod.description,
-  }));
-  readonly cta = this.aboutData.cta;
-  readonly whoAmI = this.aboutData.whoAmI;
-  readonly focusTitle = this.aboutData.focusTitle;
-  readonly spacelabTitle = this.aboutData.spacelabTitle;
-  readonly spacelabDesc = this.aboutData.spacelabDesc;
-  readonly buttons = this.aboutData.buttons;
+  readonly about = ABOUT;
+  readonly hero = ABOUT.hero;
+  readonly identityLabels = ABOUT.identityLabels;
+  readonly focusAreas = ABOUT.focusAreas;
+  readonly spacelabModules = ABOUT.spacelabModules;
+  readonly cta = ABOUT.cta;
+  readonly buttons = ABOUT.buttons;
 
   t(key: string): string {
     return this.i18n.t(key);

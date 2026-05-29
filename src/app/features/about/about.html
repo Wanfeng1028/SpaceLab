@@ -1,22 +1,35 @@
 <main class="about-page">
   <div class="about-shell">
-    <!-- 1 ─ Hero: Centered Identity -->
+
+    <!-- 1 ─ Hero: Two-Column Layout -->
     <section class="about-hero">
-      <mat-card class="about-hero-card about-glass-card">
-        <div class="about-avatar-spinner">
-          <div class="avatar-spinner">
-            <div class="avatar-spinner__ring"></div>
-            <img class="avatar-spinner__img" [src]="avatar" [alt]="name" />
-          </div>
+      <!-- Left: Identity Card -->
+      <mat-card class="about-identity-card about-glass-card">
+        <div class="about-avatar-ring">
+          <img class="about-avatar-img" [src]="avatar" [alt]="name" />
         </div>
+        <h3 class="about-identity-name">{{ name }}</h3>
+        <div class="about-status">
+          <span class="about-status-dot"></span>
+          {{ buttons.status }}
+        </div>
+        <mat-divider></mat-divider>
+        <div class="about-identity-row">
+          <mat-icon class="about-identity-icon">code</mat-icon>
+          <span class="about-identity-handle">Wanfeng1028</span>
+        </div>
+        <div class="about-identity-row">
+          <mat-icon class="about-identity-icon">language</mat-icon>
+          <span class="about-identity-handle">{{ title }}</span>
+        </div>
+      </mat-card>
 
-        <p class="about-kicker">{{ aboutData.hero.kicker }}</p>
-
-        <h1>{{ aboutData.hero.title }}</h1>
-
-        <p class="about-subtitle">{{ aboutData.hero.subtitle }}</p>
-
-        <p class="about-desc">{{ aboutData.hero.description }}</p>
+      <!-- Right: Main Intro Card -->
+      <mat-card class="about-intro-card about-glass-card">
+        <p class="about-kicker">{{ about.hero.kicker }}</p>
+        <h1>{{ hero.title }}</h1>
+        <p class="about-subtitle">{{ hero.subtitle }}</p>
+        <p class="about-description">{{ hero.description }}</p>
 
         <mat-chip-set class="about-chip-set">
           @for (label of identityLabels; track label) {
@@ -24,10 +37,10 @@
           }
         </mat-chip-set>
 
-        <div class="about-actions">
+        <div class="about-hero-actions">
           <a
             mat-raised-button
-            class="about-primary-button"
+            class="about-btn-primary"
             [href]="github"
             target="_blank"
             rel="noopener noreferrer"
@@ -35,10 +48,9 @@
             <mat-icon>open_in_new</mat-icon>
             {{ buttons.viewGithub }}
           </a>
-
           <button
             mat-stroked-button
-            class="about-secondary-button"
+            class="about-btn-secondary"
             type="button"
             (click)="openContactDialog()"
           >
@@ -52,44 +64,17 @@
     <!-- 2 ─ Soft Divider -->
     <div class="about-soft-divider" aria-hidden="true"></div>
 
-    <!-- 3 ─ Intro: Profile + Story -->
-    <section class="about-intro-grid">
-      <mat-card class="about-profile-card about-glass-card">
-        <div class="about-avatar-spinner about-avatar-spinner--sm">
-          <div class="avatar-spinner">
-            <div class="avatar-spinner__ring"></div>
-            <img class="avatar-spinner__img" [src]="avatar" [alt]="name" />
-          </div>
-        </div>
-        <h3 class="about-profile-name">{{ name }}</h3>
-        <div class="about-status">
-          <span class="about-status-dot"></span>
-          {{ buttons.status }}
-        </div>
-        <mat-divider />
-        <div class="about-profile-github">
-          <span class="about-profile-label">{{ buttons.viewGithub }}</span>
-          <span class="about-profile-value">Wanfeng1028</span>
-        </div>
-      </mat-card>
-
-      <mat-card class="about-story-card about-glass-card">
-        <p class="about-section-label">{{ whoAmI }}</p>
-        <h2>{{ aboutData.hero.description }}</h2>
-        <p class="about-story-text">{{ aboutData.hero.description }}</p>
-      </mat-card>
-    </section>
-
-    <!-- 4 ─ Focus Areas -->
-    <section class="about-focus-section">
-      <h2 class="about-section-title">{{ focusTitle }}</h2>
+    <!-- 3 ─ Focus Areas -->
+    <section class="about-section">
+      <p class="about-section-label">FOCUS AREAS</p>
+      <h2 class="about-section-title">{{ about.focusTitle }}</h2>
       <div class="about-focus-grid">
-        @for (area of focusAreas; track area.key) {
-          <mat-card class="about-focus-card about-glass-card">
-            <mat-icon class="about-focus-icon">{{ area.icon }}</mat-icon>
-            <h3>{{ area.title }}</h3>
-            <p>{{ area.description }}</p>
-            <mat-chip-set>
+        @for (area of focusAreas; track area.id) {
+          <mat-card class="about-focus-card about-glass-card" matTooltip="{{ area.description }}" matTooltipPosition="above">
+            <mat-icon class="about-card-icon">{{ area.icon }}</mat-icon>
+            <h3 class="about-card-title">{{ area.title }}</h3>
+            <p class="about-card-desc">{{ area.description }}</p>
+            <mat-chip-set class="about-card-chips">
               @for (chip of area.chips; track chip) {
                 <mat-chip>{{ chip }}</mat-chip>
               }
@@ -99,30 +84,54 @@
       </div>
     </section>
 
-    <!-- 5 ─ SpaceLab -->
-    <section class="about-spacelab-section">
-      <h2 class="about-section-title">{{ spacelabTitle }}</h2>
-      <p class="about-spacelab-desc">{{ spacelabDesc }}</p>
-      <div class="about-spacelab-grid">
-        @for (mod of spacelabModules; track mod.key) {
+    <!-- 4 ─ Soft Divider -->
+    <div class="about-soft-divider" aria-hidden="true"></div>
+
+    <!-- 5 ─ SpaceLab Modules -->
+    <section class="about-section">
+      <p class="about-section-label">SPACELAB</p>
+      <h2 class="about-section-title">{{ about.spacelabTitle }}</h2>
+      <p class="about-section-desc">{{ about.spacelabDesc }}</p>
+      <div class="about-module-grid">
+        @for (mod of spacelabModules; track mod.id) {
           <mat-card class="about-module-card about-glass-card">
-            <mat-icon class="about-module-icon">{{ mod.icon }}</mat-icon>
-            <h3>{{ mod.title }}</h3>
-            <p>{{ mod.description }}</p>
+            <mat-icon class="about-card-icon">{{ mod.icon }}</mat-icon>
+            <h3 class="about-card-title">{{ mod.title }}</h3>
+            <p class="about-card-desc">{{ mod.description }}</p>
           </mat-card>
         }
       </div>
     </section>
 
-    <!-- 6 ─ CTA -->
-    <section class="about-cta-section">
+    <!-- 6 ─ Soft Divider -->
+    <div class="about-soft-divider" aria-hidden="true"></div>
+
+    <!-- 7 ─ Skills / Tech Stack -->
+    <section class="about-section">
+      <p class="about-section-label">TECH STACK</p>
+      <h2 class="about-section-title">{{ about.skillsTitle }}</h2>
+      <mat-card class="about-skills-card about-glass-card">
+        <mat-chip-set class="about-skills-chips">
+          @for (skill of skills; track skill) {
+            <mat-chip highlighted>{{ skill }}</mat-chip>
+          }
+        </mat-chip-set>
+      </mat-card>
+    </section>
+
+    <!-- 8 ─ Soft Divider -->
+    <div class="about-soft-divider" aria-hidden="true"></div>
+
+    <!-- 9 ─ CTA -->
+    <section class="about-section about-cta-section">
       <mat-card class="about-cta-card about-glass-card">
-        <h2>{{ cta.title }}</h2>
+        <mat-icon class="about-cta-icon">rocket_launch</mat-icon>
+        <h2 class="about-cta-title">{{ cta.title }}</h2>
         <p class="about-cta-desc">{{ cta.description }}</p>
         <div class="about-cta-actions">
           <button
             mat-raised-button
-            class="about-primary-button"
+            class="about-btn-primary"
             type="button"
             (click)="openContactDialog()"
           >
@@ -131,7 +140,7 @@
           </button>
           <a
             mat-stroked-button
-            class="about-secondary-button"
+            class="about-btn-secondary"
             [href]="github"
             target="_blank"
             rel="noopener noreferrer"
@@ -139,12 +148,18 @@
             <mat-icon>open_in_new</mat-icon>
             {{ buttons.openGithub }}
           </a>
-          <a mat-stroked-button class="about-secondary-button" [href]="'mailto:' + email">
-            <mat-icon>send</mat-icon>
-            {{ buttons.sendEmail }}
-          </a>
+          <button
+            mat-stroked-button
+            class="about-btn-secondary"
+            type="button"
+            (click)="copyEmail()"
+          >
+            <mat-icon>content_copy</mat-icon>
+            {{ buttons.copyEmail }}
+          </button>
         </div>
       </mat-card>
     </section>
+
   </div>
 </main>

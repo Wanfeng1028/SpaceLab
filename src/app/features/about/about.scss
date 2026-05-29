@@ -55,7 +55,7 @@
 .about-shell {
   position: relative;
   z-index: 1;
-  width: min(100% - 32px, 1120px);
+  width: min(100% - 32px, 1080px);
   margin: 0 auto;
   padding: 88px 0 112px;
 }
@@ -63,11 +63,11 @@
 // ---- Glass Card Base ----
 
 .about-glass-card {
-  border-radius: 32px;
+  border-radius: 24px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.48));
   border: 1px solid rgba(255, 255, 255, 0.78);
   box-shadow:
-    0 28px 90px rgba(70, 120, 170, 0.14),
+    0 20px 60px rgba(70, 120, 170, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(22px) saturate(145%);
   -webkit-backdrop-filter: blur(22px) saturate(145%);
@@ -77,7 +77,7 @@
 .mat-mdc-card.about-glass-card {
   color: rgba(20, 34, 54, 0.88);
   box-shadow:
-    0 28px 90px rgba(70, 120, 170, 0.14),
+    0 20px 60px rgba(70, 120, 170, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 
@@ -108,27 +108,26 @@
   }
 
   mat-divider {
-    margin: 14px 0;
     border-color: rgba(86, 180, 255, 0.15);
   }
 }
 
 // ---- Buttons ----
 
-.about-primary-button {
+.about-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 46px;
-  padding: 0 28px;
+  min-height: 44px;
+  padding: 0 26px;
   border-radius: 999px !important;
   background: linear-gradient(135deg, #78d8ff, #9cb8ff) !important;
   color: #082032 !important;
   font-weight: 700 !important;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   letter-spacing: 0 !important;
-  box-shadow: 0 14px 34px rgba(86, 180, 255, 0.28);
+  box-shadow: 0 12px 28px rgba(86, 180, 255, 0.28);
   transition:
     transform 240ms ease,
     box-shadow 240ms ease;
@@ -143,7 +142,7 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 18px 42px rgba(86, 180, 255, 0.38);
+    box-shadow: 0 16px 36px rgba(86, 180, 255, 0.38);
   }
 
   &:active {
@@ -151,19 +150,19 @@
   }
 }
 
-.about-secondary-button {
+.about-btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 46px;
-  padding: 0 24px;
+  min-height: 44px;
+  padding: 0 22px;
   border-radius: 999px !important;
   color: rgba(20, 34, 54, 0.82) !important;
   border-color: rgba(86, 180, 255, 0.34) !important;
   background: rgba(255, 255, 255, 0.48) !important;
   font-weight: 600 !important;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   letter-spacing: 0 !important;
   transition:
     transform 240ms ease,
@@ -189,51 +188,21 @@
   }
 }
 
-// ---- Avatar Spinner ----
-
-.about-avatar-spinner {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 20px;
-
-  .avatar-spinner {
-    width: 100%;
-    height: 100%;
-  }
-
-  .avatar-spinner__ring::after {
-    background-color: #f4f9ff;
-  }
-
-  .avatar-spinner__img {
-    width: 100%;
-    height: 100%;
-    border-width: 3px;
-    border-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 12px rgba(86, 180, 255, 0.2);
-  }
-
-  &--sm {
-    width: 80px;
-    height: 80px;
-  }
-}
-
-// ---- Labels & Titles ----
+// ---- Labels & Section Headers ----
 
 .about-kicker,
 .about-section-label {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(86, 180, 255, 0.9);
   background: rgba(86, 180, 255, 0.08);
   border: 1px solid rgba(86, 180, 255, 0.2);
   border-radius: 999px;
-  padding: 4px 16px;
-  margin-bottom: 16px;
+  padding: 4px 14px;
+  margin-bottom: 14px;
 }
 
 .about-section-title {
@@ -241,274 +210,279 @@
   font-weight: 800;
   color: rgba(20, 34, 54, 0.92);
   letter-spacing: -0.02em;
-  margin-bottom: 32px;
-  text-align: center;
+  margin-bottom: 10px;
 }
 
-// ============================================
-// 1. Hero
-// ============================================
-
-.about-hero {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-.about-hero-card {
-  width: min(100%, 760px);
-  padding: 48px 42px;
-
-  h1 {
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 900;
-    color: rgba(20, 34, 54, 0.92);
-    letter-spacing: -0.03em;
-    margin-bottom: 8px;
-    line-height: 1.15;
-  }
-}
-
-.about-subtitle {
-  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-  font-weight: 600;
-  color: rgba(20, 34, 54, 0.68);
-  margin-bottom: 16px;
-}
-
-.about-desc {
-  font-size: 0.95rem;
-  color: rgba(20, 34, 54, 0.72);
-  line-height: 1.75;
-  max-width: 560px;
-  margin: 0 auto 24px;
-}
-
-.about-chip-set {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+.about-section-desc {
+  font-size: 0.9rem;
+  color: rgba(20, 34, 54, 0.65);
+  line-height: 1.7;
+  max-width: 640px;
   margin-bottom: 28px;
 }
 
-.about-actions {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
+.about-section {
+  margin-bottom: 52px;
 }
 
-// ============================================
-// 2. Soft Divider
-// ============================================
+// ---- Soft Divider ----
 
 .about-soft-divider {
   width: 1px;
-  height: 64px;
-  margin: 44px auto 72px;
-  background: linear-gradient(180deg, transparent, rgba(86, 180, 255, 0.48), transparent);
+  height: 48px;
+  margin: 0 auto 52px;
+  background: linear-gradient(180deg, transparent, rgba(86, 180, 255, 0.4), transparent);
 }
 
 // ============================================
-// 3. Intro Grid
+// 1. Hero — Two-Column
 // ============================================
 
-.about-intro-grid {
+.about-hero {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 28px;
-  margin-bottom: 72px;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  margin-bottom: 52px;
 }
 
-.about-profile-card {
+// -- Left: Identity Card --
+
+.about-identity-card {
   padding: 32px 24px !important;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
-.about-profile-name {
-  font-size: 1.15rem;
+.about-avatar-ring {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, rgba(120, 216, 255, 0.5), rgba(156, 184, 255, 0.5));
+  box-shadow:
+    0 0 24px rgba(120, 216, 255, 0.25),
+    0 0 48px rgba(156, 184, 255, 0.12);
+  margin-bottom: 8px;
+}
+
+.about-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.about-identity-name {
+  font-size: 1.1rem;
   font-weight: 800;
   color: rgba(20, 34, 54, 0.92);
-  margin-bottom: 10px;
+  margin: 0;
 }
 
 .about-status {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.75rem;
+  gap: 6px;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #22c55e;
   background: rgba(34, 197, 94, 0.08);
   border: 1px solid rgba(34, 197, 94, 0.2);
   border-radius: 999px;
-  padding: 4px 14px;
-  margin-bottom: 14px;
+  padding: 3px 12px;
 }
 
 .about-status-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #22c55e;
-  animation: pulse-dot 2s ease-in-out infinite;
+  animation: about-pulse-dot 2s ease-in-out infinite;
 }
 
-@keyframes pulse-dot {
+@keyframes about-pulse-dot {
   0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
+  100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
-.about-profile-github {
+.about-identity-row {
   display: flex;
-  justify-content: center;
+  align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
-  margin-top: 14px;
+  font-size: 0.78rem;
+  color: rgba(20, 34, 54, 0.6);
+  margin-top: 4px;
 }
 
-.about-profile-label {
-  color: rgba(20, 34, 54, 0.56);
-  font-weight: 500;
+.about-identity-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: rgba(86, 180, 255, 0.7);
 }
 
-.about-profile-value {
-  font-weight: 700;
-  color: rgba(20, 34, 54, 0.88);
+.about-identity-handle {
+  font-weight: 600;
+  color: rgba(20, 34, 54, 0.78);
 }
 
-.about-story-card {
+// -- Right: Intro Card --
+
+.about-intro-card {
   padding: 36px 32px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  h2 {
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-    font-weight: 800;
+  h1 {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 900;
     color: rgba(20, 34, 54, 0.92);
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-    line-height: 1.3;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+    line-height: 1.15;
   }
 }
 
-.about-story-text {
-  font-size: 0.95rem;
-  color: rgba(20, 34, 54, 0.72);
-  line-height: 1.8;
+.about-subtitle {
+  font-size: clamp(0.88rem, 1.5vw, 1rem);
+  font-weight: 600;
+  color: rgba(20, 34, 54, 0.56);
+  margin-bottom: 16px;
+  letter-spacing: 0.01em;
+}
+
+.about-description {
+  font-size: 0.92rem;
+  color: rgba(20, 34, 54, 0.7);
+  line-height: 1.75;
+  max-width: 560px;
+  margin-bottom: 22px;
+}
+
+.about-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.about-hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 // ============================================
-// 4. Focus Areas
+// 3. Focus Areas Grid
 // ============================================
-
-.about-focus-section {
-  margin-bottom: 72px;
-}
 
 .about-focus-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  gap: 20px;
 }
 
 .about-focus-card {
-  padding: 28px 24px !important;
+  padding: 24px 20px !important;
   transition:
-    transform 280ms ease,
-    box-shadow 280ms ease;
+    transform 260ms ease,
+    box-shadow 260ms ease;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow:
-      0 32px 80px rgba(70, 120, 170, 0.18),
+      0 24px 64px rgba(70, 120, 170, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  }
-
-  h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: rgba(20, 34, 54, 0.92);
-    margin-bottom: 8px;
-  }
-
-  p {
-    font-size: 0.82rem;
-    color: rgba(20, 34, 54, 0.68);
-    line-height: 1.6;
-    margin-bottom: 14px;
   }
 }
 
-.about-focus-icon {
-  font-size: 1.6rem;
+.about-card-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: rgba(86, 180, 255, 0.8);
+  margin-bottom: 10px;
   display: block;
+}
+
+.about-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: rgba(20, 34, 54, 0.92);
+  margin-bottom: 6px;
+}
+
+.about-card-desc {
+  font-size: 0.8rem;
+  color: rgba(20, 34, 54, 0.65);
+  line-height: 1.6;
   margin-bottom: 12px;
 }
 
-// ============================================
-// 5. SpaceLab
-// ============================================
-
-.about-spacelab-section {
-  margin-bottom: 72px;
+.about-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.about-spacelab-desc {
-  font-size: 0.95rem;
-  color: rgba(20, 34, 54, 0.72);
-  line-height: 1.75;
-  max-width: 720px;
-  margin: -16px auto 32px;
-  text-align: center;
-}
+// ============================================
+// 5. SpaceLab Module Grid
+// ============================================
 
-.about-spacelab-grid {
+.about-module-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
+  gap: 20px;
 }
 
 .about-module-card {
-  padding: 24px 20px !important;
+  padding: 22px 18px !important;
   text-align: center;
   transition:
-    transform 280ms ease,
-    box-shadow 280ms ease;
+    transform 260ms ease,
+    box-shadow 260ms ease;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow:
-      0 32px 80px rgba(70, 120, 170, 0.18),
+      0 24px 64px rgba(70, 120, 170, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.88);
   }
 
-  h3 {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: rgba(20, 34, 54, 0.92);
-    margin-bottom: 8px;
+  .about-card-icon {
+    margin: 0 auto 10px;
   }
 
-  p {
-    font-size: 0.78rem;
-    color: rgba(20, 34, 54, 0.68);
-    line-height: 1.55;
+  .about-card-desc {
+    margin-bottom: 0;
   }
-}
-
-.about-module-icon {
-  font-size: 1.8rem;
-  display: block;
-  margin-bottom: 12px;
 }
 
 // ============================================
-// 6. CTA
+// 7. Skills Cloud
+// ============================================
+
+.about-skills-card {
+  padding: 28px 24px !important;
+  text-align: center;
+}
+
+.about-skills-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+// ============================================
+// 9. CTA
 // ============================================
 
 .about-cta-section {
@@ -516,31 +490,39 @@
 }
 
 .about-cta-card {
-  width: min(100%, 720px);
+  width: min(100%, 680px);
   margin: 0 auto;
-  padding: 48px 42px !important;
+  padding: 44px 36px !important;
   text-align: center;
+}
 
-  h2 {
-    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
-    font-weight: 900;
-    color: rgba(20, 34, 54, 0.92);
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-  }
+.about-cta-icon {
+  font-size: 2.2rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  color: rgba(86, 180, 255, 0.7);
+  margin-bottom: 16px;
+}
+
+.about-cta-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 900;
+  color: rgba(20, 34, 54, 0.92);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
 }
 
 .about-cta-desc {
-  font-size: 0.95rem;
-  color: rgba(20, 34, 54, 0.72);
-  line-height: 1.75;
-  max-width: 520px;
-  margin: 0 auto 28px;
+  font-size: 0.9rem;
+  color: rgba(20, 34, 54, 0.65);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 24px;
 }
 
 .about-cta-actions {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -550,15 +532,38 @@
 // ============================================
 
 @media (max-width: 900px) {
-  .about-intro-grid {
+  .about-hero {
     grid-template-columns: 1fr;
+  }
+
+  .about-identity-card {
+    flex-direction: row;
+    gap: 16px;
+    padding: 20px 24px !important;
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .about-avatar-ring {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .about-identity-name {
+    font-size: 1rem;
+  }
+
+  .about-identity-row {
+    margin-top: 2px;
   }
 
   .about-focus-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .about-spacelab-grid {
+  .about-module-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -569,29 +574,43 @@
 
 @media (max-width: 767px) {
   .about-shell {
-    width: min(100% - 24px, 100%);
-    padding: 72px 0 96px;
+    width: min(100% - 20px, 100%);
+    padding: 72px 0 80px;
   }
 
-  .about-hero-card,
-  .about-cta-card {
-    padding: 32px 22px;
+  .about-hero {
+    gap: 16px;
+    margin-bottom: 40px;
   }
 
-  .about-intro-grid,
+  .about-identity-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px !important;
+  }
+
+  .about-avatar-ring {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 4px;
+  }
+
+  .about-intro-card {
+    padding: 28px 20px !important;
+  }
+
   .about-focus-grid,
-  .about-spacelab-grid {
+  .about-module-grid {
     grid-template-columns: 1fr;
   }
 
-  .about-actions,
+  .about-hero-actions,
   .about-cta-actions {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
 
     a,
     button {
-      width: 100%;
       min-height: 44px;
     }
   }
@@ -601,7 +620,15 @@
   }
 
   .about-soft-divider {
-    margin: 32px auto 56px;
-    height: 48px;
+    margin: 0 auto 40px;
+    height: 36px;
+  }
+
+  .about-section {
+    margin-bottom: 40px;
+  }
+
+  .about-cta-card {
+    padding: 32px 20px !important;
   }
 }
