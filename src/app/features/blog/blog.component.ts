@@ -50,10 +50,10 @@ export class BlogComponent {
     const labels: Record<string, string> = {
       all: this.t('common.all'),
       GIS: this.t('admin.catGis'),
-      '开发': this.t('admin.catDev'),
-      '算法': this.t('admin.catAlgorithm'),
-      '随笔': this.t('admin.catEssay'),
-      '薅羊毛攻略': this.t('admin.catDeals'),
+      开发: this.t('admin.catDev'),
+      算法: this.t('admin.catAlgorithm'),
+      随笔: this.t('admin.catEssay'),
+      薅羊毛攻略: this.t('admin.catDeals'),
     };
     return labels[cat] ?? cat;
   }

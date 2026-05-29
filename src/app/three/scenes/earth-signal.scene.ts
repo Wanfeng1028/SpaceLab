@@ -57,9 +57,18 @@ const ARC_DEFS: ArcDef[] = [
 ];
 
 const CITY_COORDS: [number, number][] = [
-  [39.9, 116.4], [35.7, 139.7], [1.3, 103.8], [37.8, -122.4],
-  [40.7, -74.0], [51.5, -0.1], [55.8, 37.6], [25.2, 55.3],
-  [19.1, 72.9], [-33.9, 151.2], [-23.5, -46.6], [30.0, 31.2],
+  [39.9, 116.4],
+  [35.7, 139.7],
+  [1.3, 103.8],
+  [37.8, -122.4],
+  [40.7, -74.0],
+  [51.5, -0.1],
+  [55.8, 37.6],
+  [25.2, 55.3],
+  [19.1, 72.9],
+  [-33.9, 151.2],
+  [-23.5, -46.6],
+  [30.0, 31.2],
 ];
 
 export class EarthSignalScene {
@@ -129,10 +138,7 @@ export class EarthSignalScene {
     // Main wireframe sphere
     const sphereGeom = new SphereGeometry(R, 36, 24);
     const wireMat = new LineBasicMaterial({ color: 0x69d7ff, transparent: true, opacity: 0.12 });
-    const wireframe = new LineSegments(
-      new WireframeGeometryHelper(sphereGeom),
-      wireMat,
-    );
+    const wireframe = new LineSegments(new WireframeGeometryHelper(sphereGeom), wireMat);
     this.globeGroup.add(wireframe);
     sphereGeom.dispose();
 
@@ -379,7 +385,7 @@ export class EarthSignalScene {
     // Flowing arc points
     this.arcCurves.forEach((curve, i) => {
       if (i < this.arcFlowPoints.length) {
-        const t = ((elapsed * 0.15 * speedFactor + i * 0.07) % 1 + 1) % 1;
+        const t = (((elapsed * 0.15 * speedFactor + i * 0.07) % 1) + 1) % 1;
         const pos = curve.getPoint(t);
         this.arcFlowPoints[i].position.copy(pos);
       }
@@ -464,7 +470,9 @@ class WireframeGeometryHelper extends BufferGeometry {
 
     if (idx) {
       for (let i = 0; i < idx.count; i += 3) {
-        const a = idx.getX(i), b = idx.getX(i + 1), c = idx.getX(i + 2);
+        const a = idx.getX(i),
+          b = idx.getX(i + 1),
+          c = idx.getX(i + 2);
         addEdge(a, b);
         addEdge(b, c);
         addEdge(c, a);
