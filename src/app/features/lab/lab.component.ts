@@ -122,11 +122,30 @@ export class LabComponent implements OnInit {
     { key: 'projects', labelKey: 'lab.aiProjects' },
   ];
 
+  readonly predefinedCategories: Record<TabKey, string[]> = {
+    tools: ['AI工具', 'Agent', '模型', '开源', '工作流', '图像', '视频', '编程', '平台', '框架'],
+    projects: [
+      'AI项目和框架',
+      'Agent',
+      '模型',
+      '开源',
+      '工作流',
+      '图像',
+      '视频',
+      '编程',
+      '平台',
+      '框架',
+    ],
+  };
+
+  readonly sidebarDateRangeOptions: DateRangeFilter[] = ['all', 'today', 'yesterday', '7d', '30d'];
+
   activeTab = signal<TabKey>('tools');
   searchQuery = signal('');
   selectedCategory = signal('all');
   selectedDateRange = signal<DateRangeFilter>('all');
   loading = signal(true);
+  selectedItem = signal<LabResourceItem | null>(null);
 
   toolsData = signal<LabResourceItem[]>([]);
   projectsData = signal<LabResourceItem[]>([]);
@@ -167,18 +186,26 @@ export class LabComponent implements OnInit {
   });
 
   categories = computed(() => {
-    const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
+    const tab = this.activeTab();
+    const data = tab === 'tools' ? this.toolsData() : this.projectsData();
     const filtered = data.filter((item) =>
       isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date),
     );
-    const cats = new Set<string>();
+
+    const predefined = this.predefinedCategories[tab];
+    const dynamic = new Set<string>();
     for (const item of filtered) {
-      cats.add(item.category);
+      dynamic.add(item.category);
       for (const tag of item.tags) {
-        cats.add(tag);
+        dynamic.add(tag);
       }
     }
-    return ['all', ...Array.from(cats).sort()];
+
+    const merged = new Set<string>(['all', ...predefined]);
+    for (const cat of dynamic) {
+      merged.add(cat);
+    }
+    return Array.from(merged);
   });
 
   async ngOnInit() {
@@ -214,9 +241,14 @@ export class LabComponent implements OnInit {
     }
   }
 
+  selectItem(item: LabResourceItem) {
+    this.selectedItem.set(item);
+  }
+
   onTabChange(key: TabKey) {
     this.activeTab.set(key);
     this.selectedCategory.set('all');
+    this.selectedItem.set(null);
   }
 
   onSearchChange(event: Event) {
@@ -226,10 +258,12 @@ export class LabComponent implements OnInit {
 
   onCategoryChange(cat: string) {
     this.selectedCategory.set(cat);
+    this.selectedItem.set(null);
   }
 
   onDateRangeChange(range: DateRangeFilter) {
     this.selectedDateRange.set(range);
+    this.selectedItem.set(null);
   }
 
   clearSearch() {
@@ -239,12 +273,14 @@ export class LabComponent implements OnInit {
   clearFilters() {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
+    this.selectedItem.set(null);
   }
 
   clearAll() {
     this.searchQuery.set('');
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
+    this.selectedItem.set(null);
   }
 
   getCategoryLabel(cat: string): string {
@@ -252,18 +288,34 @@ export class LabComponent implements OnInit {
     return cat;
   }
 
-  readonly dateRangeOptions: DateRangeFilter[] = ['all', 'today', 'yesterday', '7d', '30d'];
+  getCategoryCount(cat: string): number {
+    if (cat === 'all') {
+      return this.currentData().length;
+    }
+    const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
+    return data.filter(
+      (item) =>
+        isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date) &&
+        (normalizeSearchText(item.category) === normalizeSearchText(cat) ||
+          item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(cat))),
+    ).length;
+  }
 
-  getDateRangeLabel(range: DateRangeFilter): string {
-    const key = `common.dateRange.${range}`;
-    const label = this.t(key);
-    return label === key ? range : label;
+  sidebarDateLabel(range: DateRangeFilter): string {
+    const map: Record<DateRangeFilter, string> = {
+      all: 'resourceInbox.all',
+      today: 'resourceInbox.today',
+      yesterday: 'resourceInbox.yesterday',
+      '7d': 'resourceInbox.last7Days',
+      '30d': 'resourceInbox.last30Days',
+    };
+    return this.t(map[range]);
   }
 
   contentSinceText(): string {
     const src = this.sources();
     const date = src?.contentStartDate || CONTENT_START_DATE;
-    return this.t('common.contentSince').replace('{{date}}', date);
+    return this.t('resourceInbox.contentSince').replace('{{date}}', date);
   }
 
   formatDate(dateStr: string): string {

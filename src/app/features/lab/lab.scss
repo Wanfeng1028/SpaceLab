@@ -1,5 +1,5 @@
 // Lab — AI Resource Lab
-// SpaceLab Light Glass Style
+// SpaceLab Inbox Layout — Light Glass Style
 
 :host {
   display: block;
@@ -178,7 +178,7 @@
 }
 
 // ============================================
-// Toolbar
+// Toolbar — Search Box (preserved exactly)
 // ============================================
 .lab-toolbar {
   width: min(100%, 920px);
@@ -232,107 +232,408 @@
   }
 }
 
-.lab-filters {
-  width: min(100%, 920px);
-  margin: 0 auto 28px;
+// ============================================
+// Mobile Category Chips (hidden on desktop)
+// ============================================
+.lab-mobile-chips {
+  display: none;
+}
+
+// ============================================
+// Inbox Shell — 3-Column Layout
+// ============================================
+.inbox-shell {
+  width: min(100%, 1280px);
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+}
+
+// ============================================
+// Sidebar — Glass Panel
+// ============================================
+.inbox-sidebar {
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: 0 22px 70px rgba(34, 28, 18, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
+  padding: 20px;
+  position: sticky;
+  top: 96px;
+
+  &__section {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &__title {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-tertiary);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 180ms ease;
+    text-align: left;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+
+    &.is-active {
+      background: rgba(105, 215, 255, 0.12);
+      border-color: rgba(105, 215, 255, 0.3);
+      color: var(--color-text);
+      font-weight: 500;
+    }
+  }
+
+  &__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__count {
+    flex-shrink: 0;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(105, 215, 255, 0.12);
+    color: var(--color-cyan);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  &__reset {
+    width: 100%;
+    margin-top: 16px;
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 200ms;
+
+    &:hover {
+      background: rgba(105, 215, 255, 0.1);
+      border-color: rgba(105, 215, 255, 0.25);
+      color: var(--color-text);
+    }
+  }
+}
+
+// ============================================
+// Inbox List — Middle Column
+// ============================================
+.inbox-list {
+  min-height: 200px;
+}
+
+.inbox-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// ============================================
+// Inbox Item — Gmail-like Row
+// ============================================
+.inbox-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow: 0 12px 36px rgba(34, 28, 18, 0.08);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.62);
+    border-color: rgba(105, 215, 255, 0.38);
+  }
+
+  &.is-selected {
+    background: rgba(105, 215, 255, 0.14);
+    border-color: rgba(105, 215, 255, 0.42);
+    box-shadow: 0 12px 36px rgba(105, 215, 255, 0.1);
+  }
+
+  &__main {
+    min-width: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__category {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: rgba(105, 215, 255, 0.12);
+    color: var(--color-cyan);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  &__date {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+  }
+
+  &__title {
+    margin: 0 0 6px;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 600;
+    color: var(--color-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__summary {
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  &__tag {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--color-text-secondary);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  &__source {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+// ============================================
+// Inbox Preview — Right Panel
+// ============================================
+.inbox-preview {
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: 0 22px 70px rgba(34, 28, 18, 0.1);
+  backdrop-filter: blur(18px) saturate(140%);
+  padding: 24px;
+  position: sticky;
+  top: 96px;
+  min-height: 300px;
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 16px;
+    height: 100%;
+    min-height: 200px;
+
+    .preview-empty-icon {
+      font-size: 36px;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--color-text-tertiary);
+      line-height: 1.6;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  &__category {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 3px 12px;
+    border-radius: 999px;
+    background: rgba(105, 215, 255, 0.12);
+    color: var(--color-cyan);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__summary {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+  }
+
+  &__meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+  }
+
+  &__source {
+    font-weight: 500;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  &__tag {
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--color-text-secondary);
+    font-size: 12px;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    min-height: 40px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 200ms;
+
+    &:hover {
+      background: rgba(105, 215, 255, 0.1);
+      border-color: rgba(105, 215, 255, 0.25);
+      color: var(--color-text);
+    }
+
+    .arrow {
+      transition: transform 200ms;
+    }
+
+    &:hover .arrow {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// ============================================
+// Inbox Empty State
+// ============================================
+.inbox-empty {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-}
-
-.lab-date-range {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
   justify-content: center;
-}
-
-.lab-date-btn {
-  min-height: 32px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.5);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-secondary, #666);
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.04);
-  }
-
-  &.is-active {
-    background: var(--color-surface-dark, #1a1a2e);
-    color: #fff;
-    border-color: transparent;
-  }
-}
-
-.lab-category-row {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: center;
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.lab-filter {
-  min-height: 36px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  background: rgba(0, 0, 0, 0.03);
-  color: var(--color-text-secondary);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 200ms;
-  white-space: nowrap;
-  flex-shrink: 0;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-
-  &.is-active {
-    background: rgba(105, 215, 255, 0.15);
-    color: var(--color-cyan);
-    border-color: rgba(105, 215, 255, 0.3);
-  }
-}
-
-// ============================================
-// Status Indicator
-// ============================================
-.lab-status {
-  width: min(100%, 1080px);
-  margin: 0 auto 20px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  background: rgba(105, 215, 255, 0.08);
-  border: 1px solid rgba(105, 215, 255, 0.15);
-  color: var(--color-text-secondary);
-  font-size: 13px;
+  padding: 48px 20px;
   text-align: center;
 
-  strong {
-    color: var(--color-cyan);
-    font-weight: 600;
+  .empty-icon {
+    font-size: 48px;
+    color: var(--color-text-tertiary);
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: var(--color-text-secondary);
+    font-size: 15px;
   }
 }
 
-// ============================================
-// Empty State Clear Buttons
-// ============================================
-.lab-empty__actions {
+.inbox-empty__actions {
   display: flex;
   gap: 8px;
   justify-content: center;
@@ -340,7 +641,7 @@
   margin-top: 16px;
 }
 
-.lab-clear-btn {
+.inbox-clear-btn {
   min-height: 36px;
   padding: 0 16px;
   border-radius: 999px;
@@ -364,133 +665,7 @@
 }
 
 // ============================================
-// Resource Grid
-// ============================================
-.lab-resource-list {
-  width: min(100%, 1080px);
-  margin: 0 auto;
-}
-
-.lab-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-// ============================================
-// Card — Light Glass
-// ============================================
-.lab-card {
-  position: relative;
-  padding: 22px;
-  border-radius: 24px;
-  background: var(--glass-bg-strong);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(140%);
-  cursor: pointer;
-  transition:
-    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
-
-  &:hover {
-    transform: translateY(-4px);
-    border-color: rgba(105, 215, 255, 0.3);
-    box-shadow:
-      0 20px 60px rgba(34, 28, 18, 0.14),
-      var(--glass-inner);
-
-    .lab-card__link {
-      color: var(--color-cyan);
-
-      .arrow {
-        transform: translateX(4px);
-      }
-    }
-  }
-
-  &__header {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-    font-size: 12px;
-  }
-
-  &__category {
-    padding: 3px 10px;
-    border-radius: 999px;
-    background: rgba(105, 215, 255, 0.12);
-    color: var(--color-cyan);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.03em;
-  }
-
-  &__source {
-    color: var(--color-text-tertiary);
-  }
-
-  &__title {
-    margin: 0 0 10px;
-    font-size: clamp(16px, 2vw, 20px);
-    line-height: 1.35;
-    color: var(--color-text);
-    font-weight: 600;
-  }
-
-  &__summary {
-    margin: 0 0 14px;
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-    font-size: 13px;
-  }
-
-  &__tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
-  }
-
-  &__tag {
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--color-text-secondary);
-    font-size: 11px;
-  }
-
-  &__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__date {
-    font-size: 12px;
-    color: var(--color-text-tertiary);
-  }
-
-  &__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    font-weight: 500;
-    transition: color 200ms;
-
-    .arrow {
-      transition: transform 200ms;
-    }
-  }
-}
-
-// ============================================
-// States
+// Loading State — Glitch
 // ============================================
 .lab-loading {
   display: flex;
@@ -498,66 +673,6 @@
   padding: 48px 20px;
 }
 
-.lab-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 20px;
-  text-align: center;
-
-  .empty-icon {
-    font-size: 48px;
-    color: var(--color-text-tertiary);
-    margin-bottom: 16px;
-  }
-
-  p {
-    color: var(--color-text-secondary);
-    font-size: 15px;
-  }
-}
-
-// ============================================
-// Footer
-// ============================================
-.lab-footer {
-  width: min(100%, 1080px);
-  margin: 48px auto 0;
-  padding: 24px;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  text-align: center;
-
-  .footer-source {
-    margin: 0 0 8px;
-    font-size: 13px;
-    color: var(--color-text-secondary);
-
-    a {
-      color: var(--color-cyan);
-      text-decoration: none;
-      transition: opacity 200ms;
-
-      &:hover {
-        opacity: 0.8;
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .footer-disclaimer {
-    margin: 0;
-    font-size: 12px;
-    color: var(--color-text-tertiary);
-    line-height: 1.6;
-  }
-}
-
-// ============================================
-// Glitch Loader
-// ============================================
 .glitch {
   position: relative;
   font-size: 22px;
@@ -622,7 +737,40 @@
 }
 
 // ============================================
-// Mobile
+// Footer
+// ============================================
+.lab-footer {
+  width: min(100%, 1080px);
+  margin: 48px auto 0;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  text-align: center;
+
+  .footer-disclaimer {
+    margin: 0;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    line-height: 1.6;
+  }
+}
+
+// ============================================
+// Tablet — Hide Preview, 2-Column
+// ============================================
+@media (max-width: 1100px) {
+  .inbox-shell {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .inbox-preview {
+    display: none;
+  }
+}
+
+// ============================================
+// Mobile — Single Column
 // ============================================
 @media (max-width: 767px) {
   .lab-page {
@@ -659,45 +807,70 @@
     border-radius: 22px;
   }
 
-  .lab-search {
-    flex: 1 1 100%;
+  .lab-mobile-chips {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 0 4px 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    width: min(100%, 1280px);
+    margin: 0 auto 8px;
 
-    input {
-      width: 100%;
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 
-  .lab-filters {
-    width: 100%;
-    margin: 0 auto 14px;
-  }
-
-  .lab-date-range {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .lab-date-btn {
+  .lab-mobile-chip {
     flex: 0 0 auto;
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 200ms;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    &.is-active {
+      background: rgba(105, 215, 255, 0.15);
+      color: var(--color-cyan);
+      border-color: rgba(105, 215, 255, 0.3);
+    }
   }
 
-  .lab-category-row {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .lab-grid {
+  .inbox-shell {
     grid-template-columns: 1fr;
+    margin-top: 16px;
   }
 
-  .lab-card {
-    padding: 18px;
-    border-radius: 20px;
+  .inbox-sidebar {
+    display: none;
+  }
+
+  .inbox-preview {
+    display: none;
+  }
+
+  .inbox-item {
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .inbox-item__title {
+    font-size: 14px;
+  }
+
+  .inbox-item__summary {
+    font-size: 12px;
   }
 }

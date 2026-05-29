@@ -8,155 +8,188 @@
       <div class="lab-hero__meta">
         <span class="lab-meta-badge">
           <span class="meta-icon">⟲</span>
-          {{ t('lab.lastSync') }}: {{ formatFetchTime(src.lastFetchedAt) }}
+          {{ t('resourceInbox.lastSync') }}: {{ formatFetchTime(src.lastFetchedAt) }}
         </span>
       </div>
       <p class="lab-hero__since">{{ contentSinceText() }}</p>
     }
   </section>
 
-  <!-- Tabs (Material Button Toggle) -->
+  <!-- Tabs -->
   <section class="lab-tabs">
-    <mat-button-toggle-group
-      [value]="activeTab()"
-      (change)="onTabChange($event.value)"
-      class="lab-tab-group"
-    >
-      @for (tab of tabs; track tab.key) {
-        <mat-button-toggle [value]="tab.key">
-          {{ t(tab.labelKey) }}
-        </mat-button-toggle>
-      }
-    </mat-button-toggle-group>
+    @for (tab of tabs; track tab.key) {
+      <button
+        class="lab-tab"
+        [class.is-active]="activeTab() === tab.key"
+        (click)="onTabChange(tab.key)"
+      >
+        <span class="tab-label">{{ t(tab.labelKey) }}</span>
+      </button>
+    }
   </section>
 
-  <!-- Toolbar: Search (Material Form Field) -->
+  <!-- Search Box -->
   <section class="lab-toolbar">
-    <mat-form-field appearance="outline" class="lab-search-field">
-      <mat-icon matPrefix>search</mat-icon>
+    <div class="lab-search">
+      <span class="search-icon">⌕</span>
       <input
-        matInput
         type="text"
         [placeholder]="t('lab.searchPlaceholder')"
         [value]="searchQuery()"
         (input)="onSearchChange($event)"
       />
-    </mat-form-field>
+    </div>
   </section>
 
-  <!-- Filters (Material Chips) -->
-  <section class="lab-filters">
-    <div class="lab-date-range">
-      @for (range of dateRangeOptions; track range) {
-        <button
-          mat-stroked-button
-          class="lab-date-btn"
-          [class.is-active]="selectedDateRange() === range"
-          (click)="onDateRangeChange(range)"
-        >
-          {{ getDateRangeLabel(range) }}
-        </button>
-      }
-    </div>
-    <mat-chip-set class="lab-category-chips">
-      @for (cat of categories(); track cat) {
-        <mat-chip [highlighted]="selectedCategory() === cat" (click)="onCategoryChange(cat)">
-          {{ getCategoryLabel(cat) }}
-        </mat-chip>
-      }
-    </mat-chip-set>
-  </section>
+  <!-- Mobile Category Chips -->
+  <div class="lab-mobile-chips">
+    @for (cat of categories(); track cat) {
+      <button
+        class="lab-mobile-chip"
+        [class.is-active]="selectedCategory() === cat"
+        (click)="onCategoryChange(cat)"
+      >
+        {{ getCategoryLabel(cat) }}
+      </button>
+    }
+  </div>
 
-  <!-- Status indicator -->
-  @if (searchQuery() && selectedCategory() !== 'all') {
-    <div class="lab-status">
-      {{ t('common.searching') }} "<strong>{{ searchQuery() }}</strong
-      >" · {{ t('common.currentFilter') }} "<strong>{{
-        getCategoryLabel(selectedCategory())
-      }}</strong
-      >"
-    </div>
-  } @else if (searchQuery()) {
-    <div class="lab-status">
-      {{ t('common.searching') }} "<strong>{{ searchQuery() }}</strong
-      >"
-    </div>
-  } @else if (selectedCategory() !== 'all') {
-    <div class="lab-status">
-      {{ t('common.currentFilter') }} "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
-      >"
-    </div>
-  }
-
-  <!-- Resource List -->
-  <section class="lab-resource-list">
-    @if (loading()) {
-      <div class="lab-loading">
-        <mat-spinner diameter="48"></mat-spinner>
-        <p class="lab-loading__text">{{ t('common.loading') }}</p>
+  <!-- Inbox Shell -->
+  @if (loading()) {
+    <div class="lab-loading">
+      <div class="loader">
+        <div data-glitch="Loading..." class="glitch">Loading...</div>
       </div>
-    } @else if (currentData().length === 0) {
-      <div class="lab-empty">
-        <div class="empty-icon">◇</div>
-        <p>{{ t('lab.noResults') }}</p>
-        <div class="lab-empty__actions">
-          @if (searchQuery()) {
-            <button mat-stroked-button class="lab-clear-btn" (click)="clearSearch()">
-              {{ t('common.clearSearch') }}
-            </button>
-          }
-          @if (selectedCategory() !== 'all') {
-            <button mat-stroked-button class="lab-clear-btn" (click)="clearFilters()">
-              {{ t('common.clearFilter') }}
-            </button>
-          }
-          @if (searchQuery() || selectedCategory() !== 'all') {
-            <button
-              mat-stroked-button
-              class="lab-clear-btn lab-clear-btn--all"
-              (click)="clearAll()"
-            >
-              {{ t('common.clearAll') }}
-            </button>
-          }
+    </div>
+  } @else {
+    <div class="inbox-shell">
+      <!-- Left Sidebar -->
+      <aside class="inbox-sidebar">
+        <div class="inbox-sidebar__section">
+          <h4 class="inbox-sidebar__title">{{ t('resourceInbox.categories') }}</h4>
+          <div class="inbox-sidebar__list">
+            @for (cat of categories(); track cat) {
+              <button
+                class="inbox-sidebar__item"
+                [class.is-active]="selectedCategory() === cat"
+                (click)="onCategoryChange(cat)"
+              >
+                <span class="inbox-sidebar__label">{{ getCategoryLabel(cat) }}</span>
+                <span class="inbox-sidebar__count">{{ getCategoryCount(cat) }}</span>
+              </button>
+            }
+          </div>
         </div>
-      </div>
-    } @else {
-      <div class="lab-grid">
-        @for (item of currentData(); track item.id) {
-          <mat-card
-            class="lab-card"
-            (click)="openUrl(item.url)"
-            matTooltip="{{ t('lab.readSource') }}"
-          >
-            <div class="lab-card__header">
-              <span class="lab-card__category">{{ item.category }}</span>
-            </div>
+        <div class="inbox-sidebar__section">
+          <h4 class="inbox-sidebar__title">{{ t('resourceInbox.dateRange') }}</h4>
+          <div class="inbox-sidebar__list">
+            @for (range of sidebarDateRangeOptions; track range) {
+              <button
+                class="inbox-sidebar__item"
+                [class.is-active]="selectedDateRange() === range"
+                (click)="onDateRangeChange(range)"
+              >
+                <span class="inbox-sidebar__label">{{ sidebarDateLabel(range) }}</span>
+              </button>
+            }
+          </div>
+        </div>
+        @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
+          <button class="inbox-sidebar__reset" (click)="clearAll()">
+            {{ t('resourceInbox.resetAll') }}
+          </button>
+        }
+      </aside>
 
-            <h3 class="lab-card__title">{{ item.title }}</h3>
-
-            <p class="lab-card__summary">{{ item.summary }}</p>
-
-            <div class="lab-card__tags">
-              @for (tag of item.tags.slice(0, 4); track tag) {
-                <span class="lab-card__tag">{{ tag }}</span>
+      <!-- Middle: Item List -->
+      <div class="inbox-list">
+        @if (currentData().length === 0) {
+          <div class="inbox-empty">
+            <div class="empty-icon">◇</div>
+            <p>{{ t('resourceInbox.noResults') }}</p>
+            <div class="inbox-empty__actions">
+              @if (searchQuery()) {
+                <button class="inbox-clear-btn" (click)="clearSearch()">
+                  {{ t('resourceInbox.clearSearch') }}
+                </button>
               }
-            </div>
-
-            <div class="lab-card__footer">
-              @if (item.fetchedAt) {
-                <span class="lab-card__date">{{ formatDate(item.fetchedAt) }}</span>
+              @if (selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
+                <button class="inbox-clear-btn" (click)="clearFilters()">
+                  {{ t('resourceInbox.clearFilter') }}
+                </button>
               }
-              <span class="lab-card__link">
-                {{ t('lab.readSource') }}
-                <span class="arrow">→</span>
-              </span>
+              <button class="inbox-clear-btn inbox-clear-btn--all" (click)="clearAll()">
+                {{ t('resourceInbox.resetAll') }}
+              </button>
             </div>
-          </mat-card>
+          </div>
+        } @else {
+          <div class="inbox-items">
+            @for (item of currentData(); track item.id) {
+              <article
+                class="inbox-item"
+                [class.is-selected]="selectedItem()?.id === item.id"
+                (click)="selectItem(item)"
+              >
+                <div class="inbox-item__main">
+                  <div class="inbox-item__header">
+                    <span class="inbox-item__category">{{ item.category }}</span>
+                    @if (item.fetchedAt || item.date) {
+                      <span class="inbox-item__date">{{
+                        formatDate(item.fetchedAt || item.date || '')
+                      }}</span>
+                    }
+                  </div>
+                  <h3 class="inbox-item__title">{{ item.title }}</h3>
+                  <p class="inbox-item__summary">{{ item.summary }}</p>
+                  <div class="inbox-item__footer">
+                    <div class="inbox-item__tags">
+                      @for (tag of item.tags.slice(0, 3); track tag) {
+                        <span class="inbox-item__tag">{{ tag }}</span>
+                      }
+                    </div>
+                    <span class="inbox-item__source">{{ item.source }}</span>
+                  </div>
+                </div>
+              </article>
+            }
+          </div>
         }
       </div>
-    }
-  </section>
+
+      <!-- Right: Preview Panel -->
+      <aside class="inbox-preview">
+        @if (selectedItem(); as selected) {
+          <div class="inbox-preview__content">
+            <span class="inbox-preview__category">{{ selected.category }}</span>
+            <h3 class="inbox-preview__title">{{ selected.title }}</h3>
+            <p class="inbox-preview__summary">{{ selected.summary }}</p>
+            <div class="inbox-preview__meta">
+              <span class="inbox-preview__source">{{ selected.source }}</span>
+              @if (selected.fetchedAt || selected.date) {
+                <span class="inbox-preview__date">{{
+                  formatDate(selected.fetchedAt || selected.date || '')
+                }}</span>
+              }
+            </div>
+            <div class="inbox-preview__tags">
+              @for (tag of selected.tags; track tag) {
+                <span class="inbox-preview__tag">{{ tag }}</span>
+              }
+            </div>
+            <button class="inbox-preview__link" (click)="openUrl(selected.url)">
+              {{ t('resourceInbox.viewSource') }} <span class="arrow">→</span>
+            </button>
+          </div>
+        } @else {
+          <div class="inbox-preview__empty">
+            <span class="preview-empty-icon">◇</span>
+            <p>{{ t('resourceInbox.selectToPreview') }}</p>
+          </div>
+        }
+      </aside>
+    </div>
+  }
 
   <!-- Footer -->
   <footer class="lab-footer">

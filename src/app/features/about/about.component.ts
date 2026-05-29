@@ -35,12 +35,21 @@ export class AboutComponent {
   readonly github = PROFILE.github;
   readonly email = PROFILE.email;
 
+  readonly identityLabels = [
+    'frontend',
+    'fullstack',
+    'aiBuilder',
+    'llm',
+    'gis',
+    'resourceHub',
+  ] as const;
+
   readonly focusAreas = [
-    { key: 'ai', icon: '🧠' },
-    { key: 'gis', icon: '🌍' },
-    { key: 'algorithm', icon: '📊' },
-    { key: 'fullstack', icon: '💻' },
-    { key: 'resource', icon: '🗄️' },
+    { key: 'ai', icon: '🧠', chips: ['LLM', 'Agent', 'AI Tools'] },
+    { key: 'gis', icon: '🌍', chips: ['GIS', 'Map', 'Remote Sensing'] },
+    { key: 'algorithm', icon: '📊', chips: ['Algorithm', 'Data', 'Visualization'] },
+    { key: 'fullstack', icon: '💻', chips: ['Angular', 'Node.js', 'Deploy'] },
+    { key: 'resource', icon: '🗄️', chips: ['AI News', 'Open Source', 'Resource Hub'] },
   ] as const;
 
   readonly spacelabModules = [

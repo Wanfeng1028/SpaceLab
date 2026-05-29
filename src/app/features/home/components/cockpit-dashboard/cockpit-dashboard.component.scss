@@ -3,11 +3,11 @@
 
 // ── Variables ────────────────────────────────────────────────────────
 $panel-bg:
-  linear-gradient(135deg, rgba(4, 12, 28, 0.74), rgba(4, 12, 28, 0.42)), rgba(255, 255, 255, 0.035);
-$panel-border: rgba(105, 215, 255, 0.18);
+  linear-gradient(135deg, rgba(5, 18, 40, 0.42), rgba(5, 18, 40, 0.22)), rgba(255, 255, 255, 0.035);
+$panel-border: rgba(105, 215, 255, 0.22);
 $panel-shadow:
-  0 24px 80px rgba(0, 0, 0, 0.36),
-  inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  0 18px 56px rgba(0, 0, 0, 0.22),
+  inset 0 1px 0 rgba(255, 255, 255, 0.1);
 $cyan: #69d7ff;
 $green: #00ff88;
 $purple: #a855f7;
@@ -24,7 +24,18 @@ $sans: var(--font-sans);
   min-height: 100vh;
   min-height: 100dvh;
   overflow: hidden;
-  background: transparent;
+  background: url('/cockpit-dashboard-bg.png') center center / cover no-repeat;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 50% 30%, rgba(105, 215, 255, 0.08), transparent 36%),
+      radial-gradient(circle at 70% 72%, rgba(143, 124, 255, 0.06), transparent 34%);
+  }
 }
 
 .cockpit-inner {
@@ -43,7 +54,7 @@ $sans: var(--font-sans);
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.3;
+  opacity: 0.15;
   pointer-events: none;
 
   app-three-canvas {

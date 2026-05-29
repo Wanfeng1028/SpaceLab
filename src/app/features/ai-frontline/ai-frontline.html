@@ -23,24 +23,26 @@
     </div>
   </section>
 
-  <!-- Toolbar: Search -->
+  <!-- Toolbar: Search (Material Form Field) -->
   <section class="ai-frontline-toolbar">
-    <div class="ai-frontline-search">
-      <span class="search-icon">⌕</span>
+    <mat-form-field appearance="outline" class="ai-frontline-search-field">
+      <mat-icon matPrefix>search</mat-icon>
       <input
+        matInput
         type="text"
         [placeholder]="t('aiFrontline.searchPlaceholder')"
         [value]="searchQuery()"
         (input)="onSearchChange($event)"
       />
-    </div>
+    </mat-form-field>
   </section>
 
-  <!-- Filters -->
+  <!-- Filters (Material Chips + Buttons) -->
   <section class="ai-frontline-filters">
     <div class="ai-frontline-date-range">
       @for (range of dateRangeOptions; track range) {
         <button
+          mat-stroked-button
           class="ai-frontline-date-btn"
           [class.is-active]="selectedDateRange() === range"
           (click)="onDateRangeChange(range)"
@@ -49,21 +51,17 @@
         </button>
       }
     </div>
-    <div class="ai-frontline-category-row">
+    <mat-chip-set class="ai-frontline-category-chips">
       @for (cat of categories; track cat) {
-        <button
-          class="ai-frontline-filter"
-          [class.is-active]="selectedCategory() === cat"
-          (click)="onCategoryChange(cat)"
-        >
+        <mat-chip [highlighted]="selectedCategory() === cat" (click)="onCategoryChange(cat)">
           @if (cat === 'all') {
-            <span>{{ t('aiFrontline.allCategories') }}</span>
+            {{ t('aiFrontline.allCategories') }}
           } @else {
-            <span>{{ getCategoryLabel(cat) }}</span>
+            {{ getCategoryLabel(cat) }}
           }
-        </button>
+        </mat-chip>
       }
-    </div>
+    </mat-chip-set>
   </section>
 
   <!-- Main Layout: Sidebar + Feed -->
@@ -108,13 +106,13 @@
     <div class="ai-frontline-feed">
       @if (loading()) {
         <div class="loading-state">
-          <div class="loading-spinner"></div>
+          <mat-spinner diameter="48"></mat-spinner>
           <p>{{ t('common.loading') }}</p>
         </div>
       } @else if (error()) {
         <div class="error-state">
           <p>{{ error() }}</p>
-          <button class="retry-btn" (click)="loadNews()">
+          <button mat-flat-button class="retry-btn" (click)="loadNews()">
             <span>{{ t('common.retry') }}</span>
           </button>
         </div>
@@ -125,16 +123,16 @@
           @if (searchQuery() || selectedCategory() !== 'all') {
             <div class="empty-actions">
               @if (searchQuery()) {
-                <button class="clear-btn" (click)="clearSearch()">
+                <button mat-stroked-button class="clear-btn" (click)="clearSearch()">
                   {{ t('common.clearSearch') }}
                 </button>
               }
               @if (selectedCategory() !== 'all') {
-                <button class="clear-btn" (click)="clearFilters()">
+                <button mat-stroked-button class="clear-btn" (click)="clearFilters()">
                   {{ t('common.clearFilter') }}
                 </button>
               }
-              <button class="clear-btn clear-btn--all" (click)="clearAll()">
+              <button mat-stroked-button class="clear-btn clear-btn--all" (click)="clearAll()">
                 {{ t('common.clearAll') }}
               </button>
             </div>
@@ -163,7 +161,7 @@
 
               <div class="news-cards">
                 @for (item of group[1]; track trackByNews($index, item)) {
-                  <article class="ai-news-card">
+                  <mat-card class="ai-news-card" [class]="'card-' + item.category">
                     <div class="ai-news-card__meta">
                       <span class="ai-news-card__category">{{
                         getCategoryLabel(item.category)
@@ -180,11 +178,15 @@
                       }
                     </div>
 
-                    <button class="ai-news-card__source-btn" (click)="openSource(item.url)">
+                    <button
+                      mat-stroked-button
+                      class="ai-news-card__source-btn"
+                      (click)="openSource(item.url)"
+                    >
                       <span>{{ t('aiFrontline.readSource') }}</span>
                       <span class="btn-arrow">→</span>
                     </button>
-                  </article>
+                  </mat-card>
                 }
               </div>
             </div>
@@ -194,11 +196,17 @@
         <!-- Pagination -->
         @if (totalPages() > 1) {
           <nav class="pagination">
-            <button class="pagination__btn" [disabled]="currentPage() === 1" (click)="prevPage()">
+            <button
+              mat-stroked-button
+              class="pagination__btn"
+              [disabled]="currentPage() === 1"
+              (click)="prevPage()"
+            >
               ‹
             </button>
             @for (p of pageNumbers(); track p) {
               <button
+                mat-stroked-button
                 class="pagination__btn"
                 [class.is-active]="p === currentPage()"
                 (click)="goToPage(p)"
@@ -207,6 +215,7 @@
               </button>
             }
             <button
+              mat-stroked-button
               class="pagination__btn"
               [disabled]="currentPage() === totalPages()"
               (click)="nextPage()"
@@ -216,10 +225,6 @@
             <span class="pagination__info">
               {{ t('aiFrontline.pageInfo')
                 .replace('{{current
-
-
-
-
               }}', currentPage() + '') .replace('{{ total }}', totalPages() + '') }}
             </span>
           </nav>

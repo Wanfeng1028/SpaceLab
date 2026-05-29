@@ -466,7 +466,23 @@
     "contactTitle": "联系方式",
     "email": "Email",
     "openGithub": "打开 GitHub",
-    "sendEmail": "发送邮件"
+    "sendEmail": "发送邮件",
+    "copyEmail": "复制邮箱",
+    "identity": {
+      "frontend": "Frontend",
+      "fullstack": "Full-stack",
+      "aiBuilder": "AI Builder",
+      "llm": "LLM",
+      "gis": "GIS",
+      "resourceHub": "Resource Hub"
+    },
+    "focusChips": {
+      "ai": ["LLM", "Agent", "AI Tools"],
+      "gis": ["GIS", "Map", "Remote Sensing"],
+      "algorithm": ["Algorithm", "Data", "Visualization"],
+      "fullstack": ["Angular", "Node.js", "Deploy"],
+      "resource": ["AI News", "Open Source", "Resource Hub"]
+    }
   },
   "hologramChamber": {
     "title": "全息舱",

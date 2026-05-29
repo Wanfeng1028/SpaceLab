@@ -1,12 +1,16 @@
 <main class="about-page">
   <!-- Hero: Digital Identity Capsule -->
   <section class="about-hero">
-    <mat-card class="about-profile-card">
+    <mat-card class="about-profile-card spacelab-material-card">
       <div class="profile-card__avatar-wrap">
         <img class="profile-card__avatar" [src]="avatar" [alt]="name" />
       </div>
       <h2 class="profile-card__name">{{ name }}</h2>
-      <p class="profile-card__role">Frontend / Full-stack / AI</p>
+      <div class="profile-card__identity-chips">
+        @for (label of identityLabels; track label) {
+          <span class="about-chip">{{ t('about.identity.' + label) }}</span>
+        }
+      </div>
       <div class="profile-card__status">
         <span class="status-dot"></span>
         {{ t('about.status') }}
@@ -50,10 +54,15 @@
     <h2 class="about-section-title">{{ t('about.focusTitle') }}</h2>
     <div class="focus-grid">
       @for (area of focusAreas; track area.key) {
-        <mat-card class="focus-card">
+        <mat-card class="focus-card spacelab-material-card">
           <span class="focus-card__icon">{{ area.icon }}</span>
           <h3 class="focus-card__title">{{ t('about.focus.' + area.key + '.title') }}</h3>
           <p class="focus-card__desc">{{ t('about.focus.' + area.key + '.desc') }}</p>
+          <div class="focus-card__chips">
+            @for (chip of area.chips; track chip) {
+              <span class="about-chip">{{ chip }}</span>
+            }
+          </div>
         </mat-card>
       }
     </div>
@@ -65,7 +74,7 @@
     <p class="about-spacelab__desc">{{ t('about.spacelabDesc') }}</p>
     <div class="module-grid">
       @for (mod of spacelabModules; track mod.key) {
-        <mat-card class="module-card">
+        <mat-card class="module-card spacelab-material-card">
           <span class="module-card__icon">{{ mod.icon }}</span>
           <h3 class="module-card__title">{{ t('about.module.' + mod.key + '.title') }}</h3>
           <p class="module-card__desc">{{ t('about.module.' + mod.key + '.desc') }}</p>
@@ -78,14 +87,14 @@
   <section class="about-contact">
     <h2 class="about-section-title">{{ t('about.contactTitle') }}</h2>
     <div class="contact-grid">
-      <mat-card class="contact-item">
+      <mat-card class="contact-item spacelab-material-card">
         <span class="contact-item__icon">🐙</span>
         <div class="contact-item__info">
           <span class="contact-item__label">{{ t('about.github') }}</span>
           <span class="contact-item__value">Wanfeng1028</span>
         </div>
       </mat-card>
-      <mat-card class="contact-item">
+      <mat-card class="contact-item spacelab-material-card">
         <span class="contact-item__icon">✉️</span>
         <div class="contact-item__info">
           <span class="contact-item__label">{{ t('about.email') }}</span>
