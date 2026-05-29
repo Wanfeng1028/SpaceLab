@@ -3,7 +3,7 @@
   [class.active]="isActive()"
   role="dialog"
   aria-modal="true"
-  [attr.aria-label]="t('launch.ariaLabel')"
+  [attr.aria-label]="t('launchTerminal.ariaLabel')"
   aria-describedby="launch-terminal-description"
 >
   <!-- 背景模糊/变暗层 -->
@@ -18,7 +18,7 @@
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
       </div>
-      <div class="terminal-title">spacelab @orbit: ~/launch</div>
+      <div class="terminal-title">{{ t('launchTerminal.title') }}</div>
       <div class="terminal-shell">bash</div>
     </div>
 
@@ -51,7 +51,7 @@
     <!-- 完成消息 -->
     @if (showSystemReady()) {
       <div class="system-ready">
-        <span class="system-ready__text">{{ t('launch.systemReady') }}</span>
+        <span class="system-ready__text">{{ t('launchTerminal.systemReady') }}</span>
       </div>
     }
 
@@ -62,7 +62,7 @@
 
     <!-- 隐藏的描述 -->
     <div id="launch-terminal-description" class="sr-only">
-      {{ t('launch.ariaDesc') }}
+      {{ t('launchTerminal.ariaDesc') }}
     </div>
   </div>
 </section>

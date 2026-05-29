@@ -189,8 +189,8 @@ export class AiFrontlineComponent implements OnInit {
     const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
 
     if (diffDays === 0) return this.i18n.t('common.today');
-    if (diffDays === 1) return this.i18n.t('common.yesterday');
-    if (diffDays < 7) return `${diffDays}${this.i18n.t('common.daysAgo')}`;
+    if (diffDays === 1) return this.i18n.t('aiFrontline.yesterday');
+    if (diffDays < 7) return `${diffDays}${this.i18n.t('aiFrontline.daysAgo')}`;
 
     const locale = this.i18n.locale() === 'zh-CN' ? 'zh-CN' : 'en-US';
     return date.toLocaleDateString(locale, {

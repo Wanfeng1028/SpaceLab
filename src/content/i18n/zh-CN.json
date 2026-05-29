@@ -306,6 +306,7 @@
     "desc": "探索我的项目作品",
     "heroTitle": "项目",
     "heroDesc": "探索有趣的项目",
+    "searchPlaceholder": "搜索项目...",
     "featured": "精选",
     "preview": "Preview",
     "detail": "Detail",
@@ -330,9 +331,7 @@
     "noResults": "暂无匹配的资源",
     "disclaimer": "内容版权归原作者及来源网站所有，如有侵权请联系删除。",
     "viewDemo": "查看 Demo",
-    "viewSource": "查看源码",
-    "aiTools": "AI 工具",
-    "aiProjects": "AI 项目和框架"
+    "viewSource": "查看源码"
   },
   "gallery": {
     "title": "Gallery",
@@ -392,20 +391,68 @@
     }
   },
   "about": {
-    "title": "关于",
-    "bio": "热爱前端技术与 3D 可视化的开发者。致力于构建高性能、高质感的 Web 体验。",
-    "currentFocus": "当前方向",
-    "skills": "技能标签",
-    "contact": "联系方式",
-    "area0_title": "Web 全栈开发",
-    "area0_desc": "Angular / React + Node.js 全栈应用",
-    "area1_title": "3D 可视化",
-    "area1_desc": "Three.js / WebGL 交互式 3D 体验",
-    "area2_title": "动效设计",
-    "area2_desc": "GSAP / CSS 高性能动画与微交互",
-    "area3_title": "设计系统",
-    "area3_desc": "Glassmorphism / 组件库 / 设计规范",
-    "area3_tag1": "组件库"
+    "kicker": "数字身份舱",
+    "title": "关于我",
+    "subtitle": "Frontend Developer → Full-stack & AI Builder",
+    "description": "我是一名前端开发者，正在向全栈开发和 AI 应用开发拓展。相比单纯记录生活，我更希望把 SpaceLab 做成一个长期维护的数字空间：整理 AI 前线、AI 工具、项目框架、技术文章和可视化实验。",
+    "status": "系统在线",
+    "github": "GitHub",
+    "viewGithub": "查看 GitHub",
+    "contactMe": "联系我",
+    "focusTitle": "当前关注方向",
+    "focus": {
+      "ai": { "title": "AI / LLM 应用开发", "desc": "关注大语言模型、AI 工具链、智能体应用和 AI 产品形态，尝试把 AI 能力接入真实的 Web 场景。" },
+      "gis": { "title": "GIS 与空间数据", "desc": "关注地图、遥感、空间数据处理和地理可视化，希望把 GIS 能力和前端交互体验结合起来。" },
+      "algorithm": { "title": "算法与数据可视化", "desc": "关注算法逻辑、数据表达和可视化呈现，让复杂信息以更清晰、更直观的方式被理解。" },
+      "fullstack": { "title": "Web 全栈开发", "desc": "从前端工程出发，逐步拓展到 Node.js、数据库、内容系统、部署和自动化工作流。" },
+      "resource": { "title": "资源整理与前沿追踪", "desc": "持续整理 AI 新闻、AI 工具、开源项目和技术资源，把 SpaceLab 建设成可长期更新的资源合集站。" }
+    },
+    "spacelabTitle": "SpaceLab 是什么？",
+    "spacelabDesc": "SpaceLab 对我来说不是单纯的作品集，也不是普通博客。它更像一个个人资源合集站：一边展示我正在做的项目和实验，一边持续整理 AI 前线、AI 工具、项目框架、技术文章和可视化灵感。",
+    "module": {
+      "aiFrontline": { "title": "AI 前线", "desc": "每日追踪 AI 新闻、模型、产品、融资和开源动态。" },
+      "lab": { "title": "AI 资源实验室", "desc": "整理 AI 工具、AI 项目和框架，形成可检索的资源入口。" },
+      "projects": { "title": "项目展示", "desc": "同步 GitHub 仓库，展示我正在构建和维护的项目。" },
+      "articles": { "title": "技术文章", "desc": "记录前端、AI、GIS、算法、部署和工程实践。" }
+    },
+    "contactTitle": "联系方式",
+    "email": "Email",
+    "openGithub": "打开 GitHub",
+    "sendEmail": "发送邮件"
+  },
+  "hologramChamber": {
+    "title": "全息舱",
+    "subtitle": "体素显示与空间重建",
+    "resolution": "分辨率",
+    "resolutionVal": "8K 体素",
+    "refreshRate": "刷新率",
+    "colorDepth": "色深",
+    "fieldOfView": "视场",
+    "hoverHint": "悬停以交互",
+    "telemetryRendering": "全息舱 // 渲染波前",
+    "telemetryActive": "全息舱 // 体素显示活跃"
+  },
+  "eclipseObservatory": {
+    "title": "日食观测站",
+    "subtitle": "日冕成像与色球层遥测",
+    "coronaTemp": "日冕温度",
+    "umbraRadius": "本影半径",
+    "shadowSpeed": "阴影速度",
+    "duration": "持续时间",
+    "sarosCycle": "沙罗周期",
+    "telemetryStandby": "日食观测站 // 待命",
+    "telemetryCalibrating": "日食观测站 // 校准光学",
+    "telemetryDetected": "日食观测站 // 日冕脉冲检测"
+  },
+  "particleOcean": {
+    "title": "粒子海洋",
+    "moveHint": "移动以创建波浪",
+    "telemetryRendering": "粒子海洋 // 渲染波场",
+    "telemetryActive": "粒子海洋 // 10 万粒子活跃"
+  },
+  "stargateDock": {
+    "telemetryAwaiting": "AI 前线 // 每日信号等待中",
+    "telemetryOnline": "AI 前线 // 信号在线"
   },
   "archive": {
     "title": "归档",

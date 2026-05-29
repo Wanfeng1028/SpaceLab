@@ -18,7 +18,14 @@
     "share": "Share",
     "enableSound": "🔊 Click anywhere to enable mechanical sounds",
     "starOnGitHub": "Star on GitHub",
-    "contentSince": "Content updates since {{date}}"
+    "contentSince": "Content updates since {{date}}",
+    "searching": "Searching",
+    "currentFilter": "Current filter",
+    "noResults": "No matching results",
+    "clearSearch": "Clear search",
+    "clearFilter": "Clear filter",
+    "clearAll": "Clear all",
+    "rightsReserved": "All rights reserved."
   },
   "nav": {
     "home": "Home",
@@ -299,6 +306,7 @@
     "desc": "Explore my project works",
     "heroTitle": "Building in public through code and experiments.",
     "heroDesc": "A curated collection of repositories exploring frontend engineering, WebGL, AI, data visualization and experimental UI architecture.",
+    "searchPlaceholder": "Search projects...",
     "featured": "Featured",
     "preview": "Preview",
     "detail": "Detail",
@@ -323,9 +331,7 @@
     "noResults": "No matching resources",
     "disclaimer": "All content rights belong to the original authors and source websites. Please contact us for removal.",
     "viewDemo": "View Demo",
-    "viewSource": "View Source",
-    "aiTools": "AI Tools",
-    "aiProjects": "AI Projects & Frameworks"
+    "viewSource": "View Source"
   },
   "gallery": {
     "title": "Gallery",
@@ -385,20 +391,68 @@
     }
   },
   "about": {
-    "title": "About",
-    "bio": "A developer passionate about frontend technology and 3D visualization. Dedicated to building high-performance, premium-quality web experiences.",
-    "currentFocus": "Current Focus",
-    "skills": "Skills",
-    "contact": "Contact",
-    "area0_title": "Full-Stack Web Dev",
-    "area0_desc": "Angular / React + Node.js full-stack applications",
-    "area1_title": "3D Visualization",
-    "area1_desc": "Three.js / WebGL interactive 3D experiences",
-    "area2_title": "Motion Design",
-    "area2_desc": "GSAP / CSS high-performance animations & micro-interactions",
-    "area3_title": "Design Systems",
-    "area3_desc": "Glassmorphism / Component libraries / Design specs",
-    "area3_tag1": "Component Library"
+    "kicker": "Digital Identity Capsule",
+    "title": "About Me",
+    "subtitle": "Frontend Developer → Full-stack & AI Builder",
+    "description": "I am a frontend developer expanding into full-stack and AI application development. Instead of building a traditional personal blog, I use SpaceLab as a long-term digital space for AI signals, tools, frameworks, technical notes and visual experiments.",
+    "status": "System Online",
+    "github": "GitHub",
+    "viewGithub": "View GitHub",
+    "contactMe": "Contact Me",
+    "focusTitle": "Current Focus",
+    "focus": {
+      "ai": { "title": "AI / LLM Application Development", "desc": "Exploring large language models, AI toolchains, agents and product-level AI experiences for real Web scenarios." },
+      "gis": { "title": "GIS & Spatial Data", "desc": "Focusing on maps, remote sensing, spatial data processing and geographic visualization through interactive Web interfaces." },
+      "algorithm": { "title": "Algorithms & Data Visualization", "desc": "Turning algorithmic logic and complex data into clear, understandable and interactive visual experiences." },
+      "fullstack": { "title": "Web Full-stack Development", "desc": "Starting from frontend engineering and expanding into Node.js, databases, content systems, deployment and automation workflows." },
+      "resource": { "title": "Resource Curation & Frontier Tracking", "desc": "Curating AI news, tools, open-source projects and technical resources into a long-term resource hub." }
+    },
+    "spacelabTitle": "What is SpaceLab?",
+    "spacelabDesc": "SpaceLab is not just a portfolio or a traditional blog. It is a personal resource hub where I collect AI signals, tools, frameworks, technical notes, GitHub projects and visual experiments.",
+    "module": {
+      "aiFrontline": { "title": "AI Frontline", "desc": "Tracking AI news, models, products, funding and open-source signals." },
+      "lab": { "title": "AI Resource Lab", "desc": "Curating AI tools, projects and frameworks into a searchable resource entry." },
+      "projects": { "title": "Projects", "desc": "Syncing GitHub repositories and showcasing what I am building." },
+      "articles": { "title": "Articles", "desc": "Notes on frontend, AI, GIS, algorithms, deployment and engineering practice." }
+    },
+    "contactTitle": "Contact",
+    "email": "Email",
+    "openGithub": "Open GitHub",
+    "sendEmail": "Send Email"
+  },
+  "hologramChamber": {
+    "title": "Hologram\nChamber",
+    "subtitle": "Volumetric display & spatial reconstruction",
+    "resolution": "RESOLUTION",
+    "resolutionVal": "8K Volumetric",
+    "refreshRate": "REFRESH RATE",
+    "colorDepth": "COLOR DEPTH",
+    "fieldOfView": "FIELD OF VIEW",
+    "hoverHint": "Hover to interact",
+    "telemetryRendering": "HOLOGRAM CHAMBER // RENDERING WAVEFRONT",
+    "telemetryActive": "HOLOGRAM CHAMBER // VOLUMETRIC DISPLAY ACTIVE"
+  },
+  "eclipseObservatory": {
+    "title": "Eclipse\nObservatory",
+    "subtitle": "Corona imaging & chromosphere telemetry",
+    "coronaTemp": "Corona Temp",
+    "umbraRadius": "Umbra Radius",
+    "shadowSpeed": "Shadow Speed",
+    "duration": "Duration",
+    "sarosCycle": "Saros Cycle",
+    "telemetryStandby": "ECLIPSE OBSERVATORY // STANDBY",
+    "telemetryCalibrating": "ECLIPSE OBSERVATORY // CALIBRATING OPTICS",
+    "telemetryDetected": "ECLIPSE OBSERVATORY // CORONA PULSE DETECTED"
+  },
+  "particleOcean": {
+    "title": "Particle Ocean",
+    "moveHint": "Move to create waves",
+    "telemetryRendering": "PARTICLE OCEAN // RENDERING WAVEFIELD",
+    "telemetryActive": "PARTICLE OCEAN // 100K PARTICLES ACTIVE"
+  },
+  "stargateDock": {
+    "telemetryAwaiting": "AI FRONTLINE // DAILY SIGNALS AWAITING",
+    "telemetryOnline": "AI FRONTLINE // SIGNALS ONLINE"
   },
   "archive": {
     "title": "Archive",

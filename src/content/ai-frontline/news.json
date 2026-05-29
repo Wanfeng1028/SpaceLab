@@ -691,27 +691,5 @@
     "category": "agent",
     "tags": ["OpenAI", "Agent", "SDK"],
     "fetchedAt": "2026-05-25T12:00:00+08:00"
-  },
-  {
-    "id": "2026-05-24-github-copilot-v2",
-    "date": "2026-05-24",
-    "title": "GitHub Copilot V2 发布，支持全栈代码生成",
-    "summary": "GitHub 发布 Copilot V2 版本，支持前端、后端、数据库和 DevOps 全栈代码生成。新版本可理解整个代码库上下文，提供更精准的建议。",
-    "source": "GitHub",
-    "url": "https://github.blog/copilot-v2",
-    "category": "tool",
-    "tags": ["GitHub", "Copilot", "代码生成"],
-    "fetchedAt": "2026-05-24T10:00:00+08:00"
-  },
-  {
-    "id": "2026-05-24-nvidia-jetson-orin",
-    "date": "2026-05-24",
-    "title": "NVIDIA 发布 Jetson Orin Nano，支持本地大模型推理",
-    "summary": "NVIDIA 发布新一代 Jetson Orin Nano 开发板，支持在边缘设备上运行 70 亿参数大语言模型。售价 249 美元起，面向开发者和研究人员。",
-    "source": "NVIDIA",
-    "url": "https://www.nvidia.com/jetson/orin-nano",
-    "category": "product",
-    "tags": ["NVIDIA", "Jetson", "边缘推理"],
-    "fetchedAt": "2026-05-24T09:00:00+08:00"
   }
 ]
