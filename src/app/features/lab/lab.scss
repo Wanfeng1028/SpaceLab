@@ -24,12 +24,23 @@
   text-align: center;
   padding: 40px 32px;
   border-radius: 28px;
-  background: var(--glass-bg);
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.56) 48%,
+      rgba(255, 255, 255, 0.74) 100%
+    ),
+    image-set(
+        url('/ai_resource_lab_card_bg.webp') type('image/webp'),
+        url('/ai_resource_lab_card_bg.png') type('image/png')
+      )
+      center center / cover no-repeat;
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(14px);
   box-shadow: var(--glass-shadow);
   position: relative;
-  overflow: visible;
 
   &::before {
     content: '';

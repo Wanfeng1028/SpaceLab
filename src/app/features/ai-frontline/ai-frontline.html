@@ -189,7 +189,13 @@
       } @else if (filteredNews().length === 0) {
         <div class="inbox-empty">
           <div class="inbox-empty__icon">📡</div>
-          <p class="inbox-empty__text">{{ t('resourceInbox.noResults') }}</p>
+          <p class="inbox-empty__text">
+            {{
+              selectedDateRange() !== 'all'
+                ? t('common.noDateRangeResults')
+                : t('resourceInbox.noResults')
+            }}
+          </p>
           <button class="btn btn--outline btn--sm" (click)="clearAll()">
             {{ t('resourceInbox.resetAll') }}
           </button>

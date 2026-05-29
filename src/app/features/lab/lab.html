@@ -107,7 +107,13 @@
         @if (currentData().length === 0) {
           <div class="inbox-empty">
             <div class="empty-icon">◇</div>
-            <p>{{ t('resourceInbox.noResults') }}</p>
+            <p>
+              {{
+                selectedDateRange() !== 'all'
+                  ? t('common.noDateRangeResults')
+                  : t('resourceInbox.noResults')
+              }}
+            </p>
             <div class="inbox-empty__actions">
               @if (searchQuery()) {
                 <button class="inbox-clear-btn" (click)="clearSearch()">
