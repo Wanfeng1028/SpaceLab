@@ -30,7 +30,14 @@ $preview-w: 340px;
   margin: 0 auto 20px;
   padding: 36px 32px;
   border-radius: 22px;
-  background: var(--glass-bg);
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.2)),
+    image-set(
+      url('/ai_frontier_card_bg.webp') type('image/webp'),
+      url('/ai_frontier_card_bg.png') type('image/png')
+    );
+  background-size: cover;
+  background-position: center;
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(12px);
   box-shadow: var(--glass-shadow);

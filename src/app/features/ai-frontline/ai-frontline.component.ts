@@ -1,4 +1,11 @@
-import { Component, OnInit, signal, computed, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  computed,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
@@ -92,7 +99,16 @@ export class AiFrontlineComponent implements OnInit {
   readonly selectedDateRange = signal<DateRangeFilter>('all');
   readonly selectedItem = signal<AiNewsItem | null>(null);
 
-  readonly categories = ['all', 'model', 'product', 'funding', 'opensource', 'agent', 'tool', 'industry'];
+  readonly categories = [
+    'all',
+    'model',
+    'product',
+    'funding',
+    'opensource',
+    'agent',
+    'tool',
+    'industry',
+  ];
   readonly sidebarDateRangeOptions: DateRangeFilter[] = ['all', 'today', 'yesterday', '7d', '30d'];
 
   readonly filteredNews = computed(() => {
@@ -109,9 +125,16 @@ export class AiFrontlineComponent implements OnInit {
           normalizeSearchText(item.category) === normalizeSearchText(category);
 
         const searchText = buildSearchText([
-          item.title, item.summary, item.category,
+          item.title,
+          item.summary,
+          item.category,
           this.getCategoryLabel(item.category),
-          item.tags, item.source, item.date, item.fetchedAt, item.url, item.id,
+          item.tags,
+          item.source,
+          item.date,
+          item.fetchedAt,
+          item.url,
+          item.id,
         ]);
         const matchesQuery = matchesSearchQuery(searchText, query);
         return matchesCategory && matchesQuery;

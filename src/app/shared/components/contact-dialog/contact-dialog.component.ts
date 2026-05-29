@@ -9,12 +9,7 @@ import { PROFILE } from '../../../../generated/content.generated';
 @Component({
   selector: 'app-contact-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatSnackBarModule,
-  ],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatSnackBarModule],
   templateUrl: './contact-dialog.component.html',
   styleUrl: './contact-dialog.component.scss',
 })

@@ -6,7 +6,12 @@
       <span class="is-green"></span>
     </div>
     <div class="contact-terminal-dialog__title">contact &#64;spacelab: ~/profile</div>
-    <button type="button" class="contact-terminal-dialog__close" aria-label="Close" (click)="close()">
+    <button
+      type="button"
+      class="contact-terminal-dialog__close"
+      aria-label="Close"
+      (click)="close()"
+    >
       &times;
     </button>
   </header>
@@ -27,7 +32,13 @@
     </div>
 
     <div class="contact-terminal-dialog__actions">
-      <a mat-flat-button class="action-btn action-btn--primary" [href]="github" target="_blank" rel="noopener noreferrer">
+      <a
+        mat-flat-button
+        class="action-btn action-btn--primary"
+        [href]="github"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {{ t('about.openGithub') }}
       </a>
       <button mat-stroked-button class="action-btn" type="button" (click)="copyEmail()">
