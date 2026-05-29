@@ -67,7 +67,7 @@
       </button>
     </div>
   } @else {
-    <mat-drawer-container class="ai-frontline-inbox-shell">
+    <mat-drawer-container class="inbox-shell">
       <!-- Left Sidebar -->
       <mat-drawer class="ai-frontline-sidebar spacelab-material-card" mode="side" opened>
         <div class="inbox-sidebar__section">
@@ -121,98 +121,100 @@
 
       <!-- Middle: News List -->
       <mat-drawer-content>
-      <div class="inbox-list">
-        @if (filteredNews().length === 0) {
-          <div class="inbox-empty">
-            <div class="empty-icon">📡</div>
-            <p>{{ t('resourceInbox.noResults') }}</p>
-            <div class="inbox-empty__actions">
-              @if (searchQuery()) {
-                <button mat-stroked-button class="inbox-clear-btn" (click)="clearSearch()">
-                  {{ t('resourceInbox.clearSearch') }}
+        <div class="inbox-list">
+          @if (filteredNews().length === 0) {
+            <div class="inbox-empty">
+              <div class="empty-icon">📡</div>
+              <p>{{ t('resourceInbox.noResults') }}</p>
+              <div class="inbox-empty__actions">
+                @if (searchQuery()) {
+                  <button mat-stroked-button class="inbox-clear-btn" (click)="clearSearch()">
+                    {{ t('resourceInbox.clearSearch') }}
+                  </button>
+                }
+                @if (selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
+                  <button mat-stroked-button class="inbox-clear-btn" (click)="clearFilters()">
+                    {{ t('resourceInbox.clearFilter') }}
+                  </button>
+                }
+                <button
+                  mat-stroked-button
+                  class="inbox-clear-btn inbox-clear-btn--all"
+                  (click)="clearAll()"
+                >
+                  {{ t('resourceInbox.resetAll') }}
                 </button>
+              </div>
+            </div>
+          } @else {
+            <div class="inbox-items">
+              @for (item of filteredNews(); track trackByNews($index, item)) {
+                <mat-card
+                  class="inbox-item"
+                  [class.is-selected]="selectedItem()?.id === item.id"
+                  appearance="outlined"
+                  (click)="selectItem(item)"
+                >
+                  <mat-card-content class="inbox-item__main">
+                    <div class="inbox-item__header">
+                      <span class="inbox-item__category" [attr.data-category]="item.category">{{
+                        getCategoryLabel(item.category)
+                      }}</span>
+                      <span class="inbox-item__date">{{ formatDate(item.date) }}</span>
+                    </div>
+                    <h3 class="inbox-item__title">{{ item.title }}</h3>
+                    <p class="inbox-item__summary">{{ item.summary }}</p>
+                    <div class="inbox-item__footer">
+                      <mat-chip-set class="inbox-item__tags">
+                        @for (tag of item.tags.slice(0, 3); track tag) {
+                          <mat-chip class="inbox-item__tag" [highlighted]="false">{{
+                            tag
+                          }}</mat-chip>
+                        }
+                      </mat-chip-set>
+                      <span class="inbox-item__source">{{ item.source }}</span>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
               }
-              @if (selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
-                <button mat-stroked-button class="inbox-clear-btn" (click)="clearFilters()">
-                  {{ t('resourceInbox.clearFilter') }}
-                </button>
-              }
+            </div>
+          }
+        </div>
+
+        <!-- Right: Preview Panel -->
+        <aside class="inbox-preview spacelab-material-card">
+          @if (selectedItem(); as selected) {
+            <div class="inbox-preview__content">
+              <span class="inbox-preview__category" [attr.data-category]="selected.category">
+                {{ getCategoryLabel(selected.category) }}
+              </span>
+              <h3 class="inbox-preview__title">{{ selected.title }}</h3>
+              <p class="inbox-preview__summary">{{ selected.summary }}</p>
+              <mat-divider></mat-divider>
+              <div class="inbox-preview__meta">
+                <span class="inbox-preview__source">{{ selected.source }}</span>
+                <span class="inbox-preview__date">{{ formatDate(selected.date) }}</span>
+              </div>
+              <mat-chip-set class="inbox-preview__tags">
+                @for (tag of selected.tags; track tag) {
+                  <mat-chip class="inbox-preview__tag" [highlighted]="false">{{ tag }}</mat-chip>
+                }
+              </mat-chip-set>
               <button
                 mat-stroked-button
-                class="inbox-clear-btn inbox-clear-btn--all"
-                (click)="clearAll()"
+                class="inbox-preview__link"
+                (click)="openSource(selected.url)"
               >
-                {{ t('resourceInbox.resetAll') }}
+                {{ t('resourceInbox.viewSource') }} <mat-icon>open_in_new</mat-icon>
               </button>
             </div>
-          </div>
-        } @else {
-          <div class="inbox-items">
-            @for (item of filteredNews(); track trackByNews($index, item)) {
-              <mat-card
-                class="inbox-item"
-                [class.is-selected]="selectedItem()?.id === item.id"
-                appearance="outlined"
-                (click)="selectItem(item)"
-              >
-                <mat-card-content class="inbox-item__main">
-                  <div class="inbox-item__header">
-                    <span class="inbox-item__category" [attr.data-category]="item.category">{{
-                      getCategoryLabel(item.category)
-                    }}</span>
-                    <span class="inbox-item__date">{{ formatDate(item.date) }}</span>
-                  </div>
-                  <h3 class="inbox-item__title">{{ item.title }}</h3>
-                  <p class="inbox-item__summary">{{ item.summary }}</p>
-                  <div class="inbox-item__footer">
-                    <mat-chip-set class="inbox-item__tags">
-                      @for (tag of item.tags.slice(0, 3); track tag) {
-                        <mat-chip class="inbox-item__tag" [highlighted]="false">{{ tag }}</mat-chip>
-                      }
-                    </mat-chip-set>
-                    <span class="inbox-item__source">{{ item.source }}</span>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-            }
-          </div>
-        }
-      </div>
-
-      <!-- Right: Preview Panel -->
-      <aside class="inbox-preview spacelab-material-card">
-        @if (selectedItem(); as selected) {
-          <div class="inbox-preview__content">
-            <span class="inbox-preview__category" [attr.data-category]="selected.category">
-              {{ getCategoryLabel(selected.category) }}
-            </span>
-            <h3 class="inbox-preview__title">{{ selected.title }}</h3>
-            <p class="inbox-preview__summary">{{ selected.summary }}</p>
-            <mat-divider></mat-divider>
-            <div class="inbox-preview__meta">
-              <span class="inbox-preview__source">{{ selected.source }}</span>
-              <span class="inbox-preview__date">{{ formatDate(selected.date) }}</span>
+          } @else {
+            <div class="inbox-preview__empty">
+              <span class="preview-empty-icon">◇</span>
+              <p>{{ t('resourceInbox.selectToPreview') }}</p>
             </div>
-            <mat-chip-set class="inbox-preview__tags">
-              @for (tag of selected.tags; track tag) {
-                <mat-chip class="inbox-preview__tag" [highlighted]="false">{{ tag }}</mat-chip>
-              }
-            </mat-chip-set>
-            <button
-              mat-stroked-button
-              class="inbox-preview__link"
-              (click)="openSource(selected.url)"
-            >
-              {{ t('resourceInbox.viewSource') }} <mat-icon>open_in_new</mat-icon>
-            </button>
-          </div>
-        } @else {
-          <div class="inbox-preview__empty">
-            <span class="preview-empty-icon">◇</span>
-            <p>{{ t('resourceInbox.selectToPreview') }}</p>
-          </div>
-        }
-      </aside>
+          }
+        </aside>
       </mat-drawer-content>
     </mat-drawer-container>
   }

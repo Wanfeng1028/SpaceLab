@@ -12,6 +12,11 @@ import {
   Vector3,
   CatmullRomCurve3,
   ShaderMaterial,
+  SphereGeometry,
+  MeshBasicMaterial,
+  Mesh,
+  SpriteMaterial,
+  Sprite,
 } from 'three';
 
 interface BranchConfig {
@@ -137,6 +142,7 @@ export class BlueMoonTreeScene {
     this.createFireflies();
     this.createFlowCreatures();
     this.createStarBackground();
+    this.createMoon();
   }
 
   private makeParticleMaterial(color: Color, blending = AdditiveBlending): ShaderMaterial {
@@ -465,5 +471,26 @@ export class BlueMoonTreeScene {
     this.fireflies = null;
     this.crownPoints = null;
     this.creatureTrails = [];
+  }
+
+  private createMoon(): void {
+    // Moon sphere
+    const moonGeom = new SphereGeometry(0.5, 32, 32);
+    const moonMat = new MeshBasicMaterial({ color: 0x88aaff });
+    const moon = new Mesh(moonGeom, moonMat);
+    moon.position.set(3, 4, -5);
+    this.scene.add(moon);
+
+    // Moon glow (sprite)
+    const spriteMat = new SpriteMaterial({
+      color: 0x88aaff,
+      transparent: true,
+      opacity: 0.3,
+      blending: AdditiveBlending,
+    });
+    const sprite = new Sprite(spriteMat);
+    sprite.scale.set(2, 2, 1);
+    sprite.position.copy(moon.position);
+    this.scene.add(sprite);
   }
 }

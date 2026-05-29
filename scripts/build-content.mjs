@@ -81,6 +81,9 @@ const projects = projectsRaw.map((p) => ({
 // ── Profile ────────────────────────────────────────────
 const profile = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'profile.json'), 'utf-8'));
 
+// ── About ───────────────────────────────────────────────
+const about = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'about.json'), 'utf-8'));
+
 // ── Site ───────────────────────────────────────────────
 const site = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, 'site.json'), 'utf-8'));
 
@@ -172,6 +175,46 @@ export interface GeneratedSite {
   socialLinks: Record<string, string>;
 }
 
+export interface GeneratedAbout {
+  identityLabels: string[];
+  whoAmI: string;
+  focusTitle: string;
+  spacelabTitle: string;
+  spacelabDesc: string;
+  hero: {
+    kicker: string;
+    title: string;
+    subtitle: string;
+    description: string;
+  };
+  focusAreas: {
+    id: string;
+    icon: string;
+    title: string;
+    description: string;
+    chips: string[];
+  }[];
+  spacelabModules: {
+    id: string;
+    icon: string;
+    title: string;
+    description: string;
+  }[];
+  cta: {
+    title: string;
+    description: string;
+  };
+  buttons: {
+    viewGithub: string;
+    contactMe: string;
+    openGithub: string;
+    sendEmail: string;
+    copyEmail: string;
+    status: string;
+    emailCopied: string;
+  };
+}
+
 export interface GeneratedGalleryItem {
   title: string;
   type: string;
@@ -241,6 +284,8 @@ export const PROFILE: GeneratedProfile = ${JSON.stringify(profile, null, 2)};
 
 export const SITE: GeneratedSite = ${JSON.stringify(site, null, 2)};
 
+export const ABOUT: GeneratedAbout = ${JSON.stringify(about, null, 2)};
+
 export const GALLERY: GeneratedGalleryItem[] = ${JSON.stringify(gallery, null, 2)};
 
 export const AI_FRONTLINE_NEWS: AiNewsItem[] = ${JSON.stringify(aiFrontlineNews, null, 2)};
@@ -270,5 +315,5 @@ fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
 fs.writeFileSync(OUTPUT_FILE, ts, 'utf-8');
 
 console.log(
-  `✅ content.generated.ts — ${allPosts.length} posts, ${projects.length} projects, ${gallery.length} gallery items, ${aiFrontlineNews.length} AI news, ${labAiTools.length} lab tools, ${labAiProjects.length} lab projects, i18n: zh=${Object.keys(i18nZhCN).length} namespaces`,
+  `✅ content.generated.ts — ${allPosts.length} posts, ${projects.length} projects, ${gallery.length} gallery items, ${aiFrontlineNews.length} AI news, ${labAiTools.length} lab tools, ${labAiProjects.length} lab projects, about: 1 config, i18n: zh=${Object.keys(i18nZhCN).length} namespaces`,
 );

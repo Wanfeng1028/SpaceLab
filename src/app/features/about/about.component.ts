@@ -9,7 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { I18nService } from '../../core/services/i18n.service';
-import { PROFILE } from '../../../generated/content.generated';
+import { PROFILE, ABOUT } from '../../../generated/content.generated';
 import { ContactDialogComponent } from '../../shared/components/contact-dialog/contact-dialog.component';
 
 @Component({
@@ -40,29 +40,27 @@ export class AboutComponent {
   readonly github = PROFILE.github;
   readonly email = PROFILE.email;
 
-  readonly identityLabels = [
-    'frontend',
-    'fullstack',
-    'aiBuilder',
-    'llm',
-    'gis',
-    'resourceHub',
-  ] as const;
-
-  readonly focusAreas = [
-    { key: 'ai', icon: '🧠', chips: ['LLM', 'Agent', 'AI Tools'] },
-    { key: 'gis', icon: '🌍', chips: ['GIS', 'Map', 'Remote Sensing'] },
-    { key: 'algorithm', icon: '📊', chips: ['Algorithm', 'Data', 'Visualization'] },
-    { key: 'fullstack', icon: '💻', chips: ['Angular', 'Node.js', 'Deploy'] },
-    { key: 'resource', icon: '🗄️', chips: ['AI News', 'Open Source', 'Resource Hub'] },
-  ] as const;
-
-  readonly spacelabModules = [
-    { key: 'aiFrontline', icon: '📡' },
-    { key: 'lab', icon: '🧪' },
-    { key: 'projects', icon: '🚀' },
-    { key: 'articles', icon: '📝' },
-  ] as const;
+  readonly aboutData = ABOUT;
+  readonly identityLabels = this.aboutData.identityLabels;
+  readonly focusAreas = this.aboutData.focusAreas.map((area) => ({
+    key: area.id,
+    icon: area.icon,
+    title: area.title,
+    description: area.description,
+    chips: area.chips,
+  }));
+  readonly spacelabModules = this.aboutData.spacelabModules.map((mod) => ({
+    key: mod.id,
+    icon: mod.icon,
+    title: mod.title,
+    description: mod.description,
+  }));
+  readonly cta = this.aboutData.cta;
+  readonly whoAmI = this.aboutData.whoAmI;
+  readonly focusTitle = this.aboutData.focusTitle;
+  readonly spacelabTitle = this.aboutData.spacelabTitle;
+  readonly spacelabDesc = this.aboutData.spacelabDesc;
+  readonly buttons = this.aboutData.buttons;
 
   t(key: string): string {
     return this.i18n.t(key);
@@ -94,7 +92,7 @@ export class AboutComponent {
       document.execCommand('copy');
       document.body.removeChild(textarea);
     }
-    this.snackBar.open(this.t('about.emailCopied'), '', {
+    this.snackBar.open(this.buttons.emailCopied, '', {
       duration: 2000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
