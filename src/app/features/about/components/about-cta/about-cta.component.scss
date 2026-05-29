@@ -1,0 +1,124 @@
+// About CTA — bottom call-to-action card
+
+.cta {
+  padding: 0 20px 48px;
+}
+
+.cta__card {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 44px 36px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.48));
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 60px rgba(70, 120, 170, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+
+.cta__icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 14px;
+}
+
+.cta__title {
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  font-weight: 900;
+  color: rgba(20, 34, 54, 0.92);
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.cta__desc {
+  font-size: 0.9rem;
+  color: rgba(20, 34, 54, 0.62);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 26px;
+}
+
+.cta__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+// ── Buttons (same pattern as hero) ───────────────────────────────────
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
+  border: none;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+.btn__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, #78d8ff, #9cb8ff);
+  color: #082032;
+  box-shadow: 0 12px 28px rgba(86, 180, 255, 0.28);
+
+  &:hover {
+    box-shadow: 0 16px 36px rgba(86, 180, 255, 0.38);
+  }
+}
+
+.btn--secondary {
+  background: rgba(255, 255, 255, 0.48);
+  color: rgba(20, 34, 54, 0.82);
+  border: 1px solid rgba(86, 180, 255, 0.34);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(86, 180, 255, 0.5);
+  }
+}
+
+// ── Mobile ───────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .cta {
+    padding: 0 12px 40px;
+  }
+
+  .cta__card {
+    padding: 32px 20px;
+  }
+
+  .cta__actions {
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,152 @@
+// Focus Carousel — horizontal scroll-snap cards
+
+.focus {
+  padding: 0 20px 48px;
+  text-align: center;
+}
+
+.focus__label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(86, 180, 255, 0.9);
+  background: rgba(86, 180, 255, 0.08);
+  border: 1px solid rgba(86, 180, 255, 0.2);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 10px;
+}
+
+.focus__title {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 800;
+  color: rgba(20, 34, 54, 0.92);
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+}
+
+// ── Scroll Track ─────────────────────────────────────────────────────
+.focus__track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 0 16px;
+  max-width: 1120px;
+  margin: 0 auto;
+
+  // Fade edges for scroll hint
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+
+  // Hide scrollbar
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ── Card ─────────────────────────────────────────────────────────────
+.focus__card {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.48));
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 22px;
+  padding: 28px 24px;
+  text-align: left;
+  box-shadow:
+    0 20px 60px rgba(70, 120, 170, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 24px 64px rgba(70, 120, 170, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  }
+}
+
+.focus__num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(86, 180, 255, 0.6);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.focus__icon {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: rgba(86, 180, 255, 0.8);
+}
+
+.focus__card-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: rgba(20, 34, 54, 0.92);
+  margin: 0 0 8px;
+}
+
+.focus__card-desc {
+  font-size: 0.82rem;
+  color: rgba(20, 34, 54, 0.62);
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+
+.focus__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.focus__tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(20, 34, 54, 0.68);
+  background: rgba(235, 249, 255, 0.72);
+  border: 1px solid rgba(120, 216, 255, 0.32);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+// ── Mobile ───────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .focus {
+    padding: 0 12px 40px;
+  }
+
+  .focus__track {
+    gap: 14px;
+    padding: 4px 0 12px;
+  }
+
+  .focus__card {
+    flex: 0 0 82vw;
+    padding: 22px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .focus__card {
+    flex: 0 0 86vw;
+  }
+}

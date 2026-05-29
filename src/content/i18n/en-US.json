@@ -481,6 +481,16 @@
         "desc": "Notes on frontend, AI, GIS, algorithms, deployment and engineering practice."
       }
     },
+    "hero": {
+      "github": "View GitHub",
+      "contactMe": "Contact Me"
+    },
+    "cta": {
+      "title": "Ready to start the next project?",
+      "desc": "Whether it's a personal site, AI tools, a resource collection or a visual experiment — I want to turn ideas into truly accessible, maintainable products.",
+      "contactMe": "Contact Me",
+      "backHome": "Back to Home"
+    },
     "contactTitle": "Contact",
     "contactDialogTitle": "Contact",
     "contactDialogSubtitle": "Reach me via GitHub or email",

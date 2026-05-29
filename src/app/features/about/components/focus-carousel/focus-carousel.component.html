@@ -1,0 +1,20 @@
+<section class="focus">
+  <p class="focus__label">FOCUS AREAS</p>
+  <h2 class="focus__title">关注领域</h2>
+
+  <div class="focus__track">
+    @for (card of cards; track card.id) {
+      <article class="focus__card">
+        <span class="focus__num">{{ card.num }}</span>
+        <span class="focus__icon">{{ card.icon }}</span>
+        <h3 class="focus__card-title">{{ card.title }}</h3>
+        <p class="focus__card-desc">{{ card.desc }}</p>
+        <div class="focus__tags">
+          @for (tag of card.tags; track tag) {
+            <span class="focus__tag">{{ tag }}</span>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</section>

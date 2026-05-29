@@ -3,12 +3,7 @@
     "id": "SpaceLab",
     "name": "SpaceLab",
     "description": "一个个人数字空间与 WebGL 展示博客。",
-    "tags": [
-      "Angular",
-      "Three.js",
-      "WebGL",
-      "Space UI"
-    ],
+    "tags": ["Angular", "Three.js", "WebGL", "Space UI"],
     "language": "TypeScript",
     "stars": 1,
     "forks": 0,
@@ -25,11 +20,7 @@
     "id": "ParrotSoundReVue",
     "name": "ParrotSoundReVue",
     "description": "鹦音坊 — 基于 AI 语音大模型的智能声音处理软件。",
-    "tags": [
-      "Vue",
-      "AI",
-      "Audio"
-    ],
+    "tags": ["Vue", "AI", "Audio"],
     "language": "Vue",
     "stars": 4,
     "forks": 0,
@@ -46,11 +37,7 @@
     "id": "aichat_export_tools",
     "name": "aichat_export_tools",
     "description": "AI 聊天记录导出与格式转换工具。",
-    "tags": [
-      "TypeScript",
-      "CLI",
-      "AI"
-    ],
+    "tags": ["TypeScript", "CLI", "AI"],
     "language": "TypeScript",
     "stars": 4,
     "forks": 0,
@@ -67,11 +54,7 @@
     "id": "PlanningGo",
     "name": "PlanningGo",
     "description": "AI 驱动的本地路线规划器，个性化城市探索。",
-    "tags": [
-      "TypeScript",
-      "AI",
-      "Maps"
-    ],
+    "tags": ["TypeScript", "AI", "Maps"],
     "language": "TypeScript",
     "stars": 3,
     "forks": 0,
@@ -88,11 +71,7 @@
     "id": "blog",
     "name": "blog",
     "description": "基于 Next.js App Router、Prisma 和 Tailwind CSS 构建的个人全栈博客。",
-    "tags": [
-      "Next.js",
-      "Prisma",
-      "Tailwind"
-    ],
+    "tags": ["Next.js", "Prisma", "Tailwind"],
     "language": "TypeScript",
     "stars": 1,
     "forks": 0,
@@ -109,10 +88,7 @@
     "id": "resume_autofill_universal",
     "name": "resume_autofill_universal",
     "description": "简历自动填写工具。",
-    "tags": [
-      "JavaScript",
-      "Tool"
-    ],
+    "tags": ["JavaScript", "Tool"],
     "language": "JavaScript",
     "stars": 0,
     "forks": 0,
@@ -129,10 +105,7 @@
     "id": "School-Insight-System",
     "name": "School-Insight-System",
     "description": "校园信息系统。",
-    "tags": [
-      "JavaScript",
-      "Web"
-    ],
+    "tags": ["JavaScript", "Web"],
     "language": "JavaScript",
     "stars": 0,
     "forks": 0,
@@ -149,10 +122,7 @@
     "id": "MappingProgramDesign",
     "name": "MappingProgramDesign",
     "description": "测绘程序设计。",
-    "tags": [
-      "C#",
-      "GIS"
-    ],
+    "tags": ["C#", "GIS"],
     "language": "C#",
     "stars": 0,
     "forks": 0,

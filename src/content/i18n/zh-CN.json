@@ -475,6 +475,16 @@
       "projects": { "title": "项目展示", "desc": "同步 GitHub 仓库，展示我正在构建和维护的项目。" },
       "articles": { "title": "技术文章", "desc": "记录前端、AI、GIS、算法、部署和工程实践。" }
     },
+    "hero": {
+      "github": "查看 GitHub",
+      "contactMe": "联系我"
+    },
+    "cta": {
+      "title": "准备好开始下一个项目了吗？",
+      "desc": "无论是个人站点、AI 工具、资源合集还是可视化实验，我都希望把想法做成真正可访问、可维护的产品。",
+      "contactMe": "联系我",
+      "backHome": "返回首页"
+    },
     "contactTitle": "联系方式",
     "contactDialogTitle": "联系方式",
     "contactDialogSubtitle": "通过 GitHub 或 Email 与我联系",
