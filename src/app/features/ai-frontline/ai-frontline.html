@@ -22,40 +22,47 @@
   </mat-card>
 
   <!-- Search Box -->
-  <section class="ai-frontline-toolbar">
-    <div class="ai-frontline-search">
-      <span class="search-icon">⌕</span>
+  <section class="ai-frontline-search-section">
+    <div class="search-bar">
+      <span class="search-bar__icon">⌕</span>
       <input
+        class="search-bar__input"
         type="text"
         [placeholder]="t('aiFrontline.searchPlaceholder')"
         [value]="searchQuery()"
         (input)="onSearchChange($event)"
       />
     </div>
+    <p class="search-meta">
+      {{ filteredNews().length }} {{ t('resourceInbox.items') }}
+    </p>
   </section>
 
   <!-- Mobile Category Chips -->
-  <div class="aif-mobile-chips">
-    @for (cat of categories; track cat) {
-      <button
-        class="aif-mobile-chip"
-        [class.is-active]="selectedCategory() === cat"
-        (click)="onCategoryChange(cat)"
-      >
-        {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
-      </button>
-    }
+  <div class="ai-frontline-mobile-chips">
+    <div class="chip-scroll">
+      @for (cat of categories; track cat) {
+        <button
+          class="filter-chip"
+          [class.is-active]="selectedCategory() === cat"
+          (click)="onCategoryChange(cat)"
+        >
+          {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
+        </button>
+      }
+    </div>
   </div>
 
   <!-- Inbox Shell -->
   @if (loading()) {
-    <div class="aif-loading">
-      <div class="loader">
-        <div data-glitch="Loading..." class="glitch">Loading...</div>
+    <div class="loading-state">
+      <div class="glitch-loader">
+        <span></span><span></span><span></span><span></span><span></span>
       </div>
+      <p>{{ t('common.loading') }}</p>
     </div>
   } @else if (error()) {
-    <div class="aif-error">
+    <div class="loading-state">
       <p>{{ error() }}</p>
       <button mat-stroked-button class="retry-btn" (click)="loadNews()">
         {{ t('common.retry') }}
@@ -174,7 +181,7 @@
       </div>
 
       <!-- Right: Preview Panel -->
-      <aside class="inbox-preview">
+      <aside class="inbox-preview spacelab-material-card">
         @if (selectedItem(); as selected) {
           <div class="inbox-preview__content">
             <span class="inbox-preview__category" [attr.data-category]="selected.category">
@@ -182,6 +189,7 @@
             </span>
             <h3 class="inbox-preview__title">{{ selected.title }}</h3>
             <p class="inbox-preview__summary">{{ selected.summary }}</p>
+            <mat-divider></mat-divider>
             <div class="inbox-preview__meta">
               <span class="inbox-preview__source">{{ selected.source }}</span>
               <span class="inbox-preview__date">{{ formatDate(selected.date) }}</span>

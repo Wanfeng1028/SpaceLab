@@ -17,9 +17,6 @@ import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-o
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
 import { HomeEarthSignalSection } from './components/home-earth-signal/home-earth-signal.component';
 import { HomeBlueMoonTreeSection } from './components/home-blue-moon-tree/home-blue-moon-tree.component';
-import { HomeContentDockSection } from './components/home-content-dock/home-content-dock.component';
-import { HomeResourceDockSection } from './components/home-resource-dock/home-resource-dock.component';
-import { HomeOrbitDockSection } from './components/home-orbit-dock/home-orbit-dock.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
 
@@ -34,9 +31,6 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
     MacTerminalModalComponent,
     HomeEarthSignalSection,
     HomeBlueMoonTreeSection,
-    HomeContentDockSection,
-    HomeResourceDockSection,
-    HomeOrbitDockSection,
     CockpitDashboardSection,
     LaunchTerminalTransitionComponent,
   ],
