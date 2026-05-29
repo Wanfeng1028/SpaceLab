@@ -17,6 +17,7 @@ import {
   QuadraticBezierCurve3,
   Line,
   Mesh,
+  MeshPhongMaterial,
   ShaderMaterial,
   BackSide,
 } from 'three';
@@ -169,6 +170,15 @@ export class EarthSignalScene {
       const mat = new LineBasicMaterial({ color: 0x69d7ff, transparent: true, opacity: 0.06 });
       this.globeGroup.add(new Line(geom, mat));
     }
+    // Earth solid sphere
+    const earthGeom = new SphereGeometry(R, 48, 32);
+    const earthMat = new MeshPhongMaterial({
+      color: 0x0a1a2f,
+      transparent: true,
+      opacity: 0.7,
+      shininess: 5,
+    });
+    this.globeGroup.add(new Mesh(earthGeom, earthMat));
   }
 
   private createCityLights(): void {
