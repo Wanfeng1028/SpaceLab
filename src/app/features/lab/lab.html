@@ -55,15 +55,19 @@
   <!-- Status indicator -->
   @if (searchQuery() && selectedCategory() !== 'all') {
     <div class="lab-status">
-      正在搜索 "<strong>{{ searchQuery() }}</strong>" · 当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong>"
+      正在搜索 "<strong>{{ searchQuery() }}</strong
+      >" · 当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
+      >"
     </div>
   } @else if (searchQuery()) {
     <div class="lab-status">
-      正在搜索 "<strong>{{ searchQuery() }}</strong>"
+      正在搜索 "<strong>{{ searchQuery() }}</strong
+      >"
     </div>
   } @else if (selectedCategory() !== 'all') {
     <div class="lab-status">
-      当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong>"
+      当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
+      >"
     </div>
   }
 

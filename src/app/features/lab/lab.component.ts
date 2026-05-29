@@ -72,9 +72,7 @@ export class LabComponent implements OnInit {
     const category = this.selectedCategory();
     const query = this.searchQuery();
     const tabLabels =
-      tab === 'tools'
-        ? ['AI工具', 'AI Tools']
-        : ['AI项目和框架', 'AI Projects', 'Frameworks'];
+      tab === 'tools' ? ['AI工具', 'AI Tools'] : ['AI项目和框架', 'AI Projects', 'Frameworks'];
 
     return data.filter((item) => {
       const matchesCategory =
