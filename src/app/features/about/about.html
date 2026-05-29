@@ -55,8 +55,11 @@
     <!-- 3 ─ Intro: Profile + Story -->
     <section class="about-intro-grid">
       <mat-card class="about-profile-card about-glass-card">
-        <div class="about-avatar-ring about-avatar-ring--sm">
-          <img class="about-avatar" [src]="avatar" [alt]="name" />
+        <div class="about-avatar-spinner about-avatar-spinner--sm">
+          <div class="avatar-spinner">
+            <div class="avatar-spinner__ring"></div>
+            <img class="avatar-spinner__img" [src]="avatar" [alt]="name" />
+          </div>
         </div>
         <h3 class="about-profile-name">{{ name }}</h3>
         <div class="about-status">
