@@ -45,16 +45,40 @@
     <!-- 3 ── Filter Strip -->
     <section class="resource-filter-strip">
       <div class="resource-filter-strip__chips">
-        @for (cat of categories; track cat) {
-          <button
-            class="resource-strip-chip"
-            [class.resource-strip-chip--active]="selectedCategory() === cat"
-            (click)="onCategoryChange(cat)"
-          >
-            {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
-            <span class="resource-strip-chip__count">{{ getCategoryCount(cat) }}</span>
-          </button>
-        }
+        <mat-chip-listbox
+          [value]="selectedCategory()"
+          (change)="onCategoryChange($event.value)"
+          aria-label="Category selection"
+        >
+          @for (cat of categories; track cat) {
+            <mat-chip-option
+              [value]="cat"
+              [class.resource-strip-chip]="true"
+              [class.resource-strip-chip--active]="selectedCategory() === cat"
+            >
+              {{ cat === 'all' ? t('resourceInbox.all') : getCategoryLabel(cat) }}
+              <span class="resource-strip-chip__count">{{ getCategoryCount(cat) }}</span>
+            </mat-chip-option>
+          }
+        </mat-chip-listbox>
+      </div>
+      <div class="resource-filter-strip__chips">
+        <mat-chip-listbox
+          [value]="selectedDateRange()"
+          (change)="onDateRangeChange($event.value)"
+          aria-label="Date range selection"
+        >
+          @for (range of sidebarDateRangeOptions; track range) {
+            <mat-chip-option
+              [value]="range"
+              [class.resource-strip-chip]="true"
+              [class.resource-strip-chip--active]="selectedDateRange() === range"
+            >
+              {{ sidebarDateLabel(range) }}
+              <span class="resource-strip-chip__count">{{ dateRangeCount(range) }}</span>
+            </mat-chip-option>
+          }
+        </mat-chip-listbox>
       </div>
       @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
         <button class="resource-strip-reset" (click)="clearAll()">
@@ -174,15 +198,17 @@
           @if (totalPages() > 1) {
             <nav class="resource-pagination" aria-label="pagination">
               <button
+                mat-icon-button
                 class="resource-page-btn"
                 [disabled]="currentPage() === 1"
                 (click)="goToPage(currentPage() - 1)"
               >
-                ‹
+                <mat-icon>chevron_left</mat-icon>
               </button>
               <div class="resource-page-numbers">
                 @for (page of pageNumbers(); track page) {
                   <button
+                    mat-stroked-button
                     class="resource-page-num"
                     [class.is-active]="page === currentPage()"
                     [attr.aria-current]="page === currentPage() ? 'page' : null"
@@ -194,11 +220,12 @@
               </div>
               <span class="resource-page-info">{{ currentPage() }} / {{ totalPages() }}</span>
               <button
+                mat-icon-button
                 class="resource-page-btn"
                 [disabled]="currentPage() === totalPages()"
                 (click)="goToPage(currentPage() + 1)"
               >
-                ›
+                <mat-icon>chevron_right</mat-icon>
               </button>
             </nav>
           }
