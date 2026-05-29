@@ -65,6 +65,33 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
         font-size: 0.75rem;
         color: var(--color-text-tertiary);
       }
+
+      @media (max-width: 767px) {
+        .card-gallery__placeholder {
+          font-size: 1.5rem;
+        }
+
+        .card-gallery__info {
+          padding: var(--space-sm);
+        }
+
+        .card-gallery__title {
+          font-size: 0.8rem;
+        }
+
+        .card-gallery__type {
+          font-size: 0.7rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card-gallery {
+          transition: none;
+        }
+        .card-gallery:hover {
+          transform: none;
+        }
+      }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

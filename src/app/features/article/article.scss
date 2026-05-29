@@ -356,6 +356,54 @@
 // Reduced Motion
 // ============================================
 
+// ============================================
+// Mobile (≤ 767px)
+// ============================================
+@media (max-width: 767px) {
+  .article-page {
+    padding: 72px 0 48px;
+  }
+
+  .article-page::before,
+  .article-page::after {
+    display: none;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .article-back {
+    margin-bottom: 32px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .article-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+
+    &__title {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      max-width: 100%;
+    }
+  }
+
+  .article-header__meta {
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
+
+  .article-nav {
+    margin-top: 40px;
+    gap: 16px;
+  }
+
+  .article-nav__link {
+    padding: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .article-back,
   .article-nav__link,

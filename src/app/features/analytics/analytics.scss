@@ -176,3 +176,57 @@
     font-variant-numeric: tabular-nums;
   }
 }
+
+// ============================================
+// Mobile (≤ 767px)
+// ============================================
+@media (max-width: 767px) {
+  .analytics-page {
+    padding-top: 72px;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .metrics-grid {
+    gap: var(--space-md);
+  }
+
+  .bar-chart {
+    gap: var(--space-sm);
+    height: 160px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .bar {
+    min-width: 40px;
+  }
+
+  .bar__value {
+    font-size: 0.65rem;
+    top: -20px;
+  }
+
+  .bar__label {
+    font-size: 0.6rem;
+  }
+
+  .chart-card {
+    padding: var(--space-md);
+  }
+
+  .table-row {
+    padding: var(--space-md);
+
+    &__title {
+      font-size: 0.8rem;
+    }
+  }
+}

@@ -120,3 +120,49 @@
   color: var(--color-text-secondary);
   white-space: pre-wrap;
 }
+
+// ============================================
+// Mobile (≤ 767px)
+// ============================================
+@media (max-width: 767px) {
+  .admin-page {
+    padding-top: 72px;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__actions {
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  }
+
+  .form-textarea {
+    min-height: 280px;
+    font-size: 0.85rem;
+  }
+
+  .form-select {
+    max-width: 100%;
+  }
+
+  .preview-area {
+    padding: var(--space-md);
+  }
+
+  .preview-title {
+    font-size: 1.35rem;
+  }
+}

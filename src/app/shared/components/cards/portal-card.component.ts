@@ -47,6 +47,34 @@ import { RouterLink } from '@angular/router';
         font-size: 0.8rem;
         color: var(--color-text-tertiary);
       }
+
+      @media (max-width: 767px) {
+        .portal-card {
+          padding: var(--space-lg) var(--space-md);
+          min-width: 0;
+        }
+
+        .portal-card__icon {
+          font-size: 1.5rem;
+        }
+
+        .portal-card__title {
+          font-size: 0.9rem;
+        }
+
+        .portal-card__desc {
+          font-size: 0.75rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .portal-card {
+          transition: none;
+        }
+        .portal-card:hover {
+          transform: none;
+        }
+      }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
