@@ -670,9 +670,24 @@
   .lab-filters {
     width: 100%;
     margin: 0 auto 14px;
+  }
+
+  .lab-date-range {
     justify-content: flex-start;
-    flex-wrap: nowrap;
     overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lab-date-btn {
+    flex: 0 0 auto;
+  }
+
+  .lab-category-row {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
     padding-bottom: 4px;
     -webkit-overflow-scrolling: touch;
   }

@@ -1538,7 +1538,7 @@
       rgba(3, 7, 18, 0.58) 42%,
       rgba(3, 7, 18, 0.86) 100%
     ),
-    url('/cockpit-dashboard-bg.webp') center center / cover no-repeat;
+    url('/cockpit-dashboard-bg.png') center center / cover no-repeat;
 
   &::before {
     content: '';
@@ -1555,7 +1555,15 @@
 @media (max-width: 768px) {
   .cockpit-dashboard-section {
     background-position: center top;
+    padding: 88px 16px 40px;
   }
+}
+
+// Hide footer bridge on home page — cockpit and footer are both dark,
+// the 120px gradient bridge creates an unwanted black bar.
+.site-footer-bridge {
+  height: 0 !important;
+  display: none;
 }
 
 /* 打字机音效开关样式 - 来自用户提供的CSS */

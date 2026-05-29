@@ -798,6 +798,25 @@
   .ai-frontline-filters {
     width: 100%;
     margin: 0 auto 14px;
+  }
+
+  .ai-frontline-date-range {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .ai-frontline-date-btn {
+    flex: 0 0 auto;
+  }
+
+  .ai-frontline-category-row {
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
