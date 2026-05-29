@@ -716,11 +716,11 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url('/cockpit-dashboard-bg.png');
+  background-image: url('/cockpit-dashboard-bg.jpg');
   background-repeat: no-repeat;
-  background-position: right center;
-  background-size: cover;
-  opacity: 0.5;
+  background-position: 58% 46%;
+  background-size: min(135vw, 1700px) auto;
+  opacity: 0.9;
 
   &::after {
     content: '';
@@ -750,9 +750,9 @@
   }
 
   .cockpit-bg-frame {
-    background-size: cover;
+    background-size: auto 100%;
     background-position: center top;
-    opacity: 0.35;
+    opacity: 0.72;
   }
 }
 
