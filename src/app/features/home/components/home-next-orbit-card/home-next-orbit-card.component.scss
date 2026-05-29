@@ -108,7 +108,7 @@ $sans: var(--font-sans);
 // ── Mobile (< 768px) ─────────────────────────────────────────────────
 @media (max-width: 767px) {
   .next-orbit-card {
-    min-height: 360px;
+    min-height: auto;
     border-radius: 24px;
     background:
       linear-gradient(180deg, rgba(3, 7, 18, 0.86), rgba(3, 7, 18, 0.34)),

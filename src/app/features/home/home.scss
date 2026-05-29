@@ -747,12 +747,8 @@
 .next-orbit-card-section {
   position: relative;
   width: 100%;
-  min-height: 86vh;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(72px, 10vh, 120px) 24px;
+  padding: 48px 24px 64px;
   background:
     radial-gradient(circle at 50% 18%, rgba(105, 215, 255, 0.12), transparent 34%),
     radial-gradient(circle at 72% 64%, rgba(143, 124, 255, 0.1), transparent 34%),
@@ -772,8 +768,7 @@
   }
 
   .next-orbit-card-section {
-    min-height: 70vh;
-    padding: 48px 16px;
+    padding: 32px 16px 48px;
   }
 }
 
