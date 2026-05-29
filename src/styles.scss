@@ -295,19 +295,29 @@ body {
 // ============================================
 
 .spacelab-mac-dialog-panel .mat-mdc-dialog-container {
-  --mdc-dialog-container-color: transparent;
+  --mdc-dialog-container-color: transparent !important;
+  --mat-dialog-container-color: transparent !important;
   padding: 0 !important;
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow:
-    0 28px 90px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border-radius: 28px !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.spacelab-mac-dialog-panel .mat-mdc-dialog-container .mdc-dialog__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 28px !important;
+  overflow: visible !important;
 }
 
 .spacelab-dialog-backdrop {
-  background: rgba(8, 10, 16, 0.34) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(3, 7, 18, 0.58) !important;
+  backdrop-filter: blur(12px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
 }
 
 // SpaceLab Snackbar — 玻璃风格

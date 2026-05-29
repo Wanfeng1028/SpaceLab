@@ -74,7 +74,10 @@ export class AboutComponent {
       backdropClass: 'spacelab-dialog-backdrop',
       autoFocus: false,
       restoreFocus: true,
-      width: 'min(92vw, 520px)',
+      hasBackdrop: true,
+      disableClose: false,
+      width: 'min(92vw, 560px)',
+      maxWidth: '92vw',
     });
   }
 

@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  signal,
-  computed,
-  inject,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, signal, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
@@ -83,28 +76,26 @@ function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './ai-frontline.html',
-  styleUrls: ['./ai-frontline.scss'],
+  styleUrl: './ai-frontline.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AiFrontlineComponent implements OnInit {
   private readonly i18n = inject(I18nService);
 
-  news = signal<AiNewsItem[]>([]);
-  source = signal<AiFrontlineSource | null>(null);
-  loading = signal(true);
-  error = signal<string | null>(null);
-  searchFocused = false;
+  readonly news = signal<AiNewsItem[]>([]);
+  readonly source = signal<AiFrontlineSource | null>(null);
+  readonly loading = signal(true);
+  readonly error = signal<string | null>(null);
 
-  searchQuery = signal('');
-  selectedCategory = signal<string>('all');
-  selectedDateRange = signal<DateRangeFilter>('all');
-  selectedItem = signal<AiNewsItem | null>(null);
+  readonly searchQuery = signal('');
+  readonly selectedCategory = signal<string>('all');
+  readonly selectedDateRange = signal<DateRangeFilter>('all');
+  readonly selectedItem = signal<AiNewsItem | null>(null);
 
-  categories = ['all', 'model', 'product', 'funding', 'opensource', 'agent', 'tool', 'industry'];
-
+  readonly categories = ['all', 'model', 'product', 'funding', 'opensource', 'agent', 'tool', 'industry'];
   readonly sidebarDateRangeOptions: DateRangeFilter[] = ['all', 'today', 'yesterday', '7d', '30d'];
 
-  filteredNews = computed(() => {
+  readonly filteredNews = computed(() => {
     const category = this.selectedCategory();
     const query = this.searchQuery();
     const range = this.selectedDateRange();
@@ -117,8 +108,12 @@ export class AiFrontlineComponent implements OnInit {
           category === 'all' ||
           normalizeSearchText(item.category) === normalizeSearchText(category);
 
-        const matchesQuery = matchesSearchQuery(this.getAiNewsSearchText(item), query);
-
+        const searchText = buildSearchText([
+          item.title, item.summary, item.category,
+          this.getCategoryLabel(item.category),
+          item.tags, item.source, item.date, item.fetchedAt, item.url, item.id,
+        ]);
+        const matchesQuery = matchesSearchQuery(searchText, query);
         return matchesCategory && matchesQuery;
       });
   });
@@ -131,28 +126,30 @@ export class AiFrontlineComponent implements OnInit {
     return this.i18n.t(key);
   }
 
-  getAiNewsSearchText(item: AiNewsItem): string {
-    return buildSearchText([
-      item.title,
-      item.summary,
-      item.category,
-      this.getCategoryLabel(item.category),
-      item.tags,
-      item.source,
-      item.date,
-      item.fetchedAt,
-      item.url,
-      item.id,
-    ]);
+  sidebarDateLabel(range: DateRangeFilter): string {
+    const map: Record<DateRangeFilter, string> = {
+      all: 'resourceInbox.all',
+      today: 'resourceInbox.today',
+      yesterday: 'resourceInbox.yesterday',
+      '7d': 'resourceInbox.last7Days',
+      '30d': 'resourceInbox.last30Days',
+    };
+    return this.t(map[range]);
+  }
+
+  selectItem(item: AiNewsItem): void {
+    this.selectedItem.set(item);
   }
 
   clearSearch(): void {
     this.searchQuery.set('');
+    this.selectedItem.set(null);
   }
 
   clearFilters(): void {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
+    this.selectedItem.set(null);
   }
 
   clearAll(): void {
@@ -167,31 +164,9 @@ export class AiFrontlineComponent implements OnInit {
     this.selectedItem.set(null);
   }
 
-  sidebarDateLabel(range: DateRangeFilter): string {
-    const map: Record<DateRangeFilter, string> = {
-      all: 'resourceInbox.all',
-      today: 'resourceInbox.today',
-      yesterday: 'resourceInbox.yesterday',
-      '7d': 'resourceInbox.last7Days',
-      '30d': 'resourceInbox.last30Days',
-    };
-    return this.t(map[range]);
-  }
-
-  dateRangeCount(range: DateRangeFilter): number {
-    return this.news().filter(
-      (item) => isAfterContentStartDate(item.date) && matchesDateRange(item, range),
-    ).length;
-  }
-
-  selectItem(item: AiNewsItem) {
-    this.selectedItem.set(item);
-  }
-
   async loadNews() {
     this.loading.set(true);
     this.error.set(null);
-
     try {
       const { AI_FRONTLINE_NEWS, AI_FRONTLINE_SOURCE } =
         await import('../../../generated/content.generated');
@@ -215,6 +190,7 @@ export class AiFrontlineComponent implements OnInit {
   onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
+    this.selectedItem.set(null);
   }
 
   onCategoryChange(category: string) {
@@ -238,13 +214,9 @@ export class AiFrontlineComponent implements OnInit {
   }
 
   getCategoryCount(category: string): number {
-    const range = this.selectedDateRange();
-    return this.news().filter(
-      (item) =>
-        isAfterContentStartDate(item.date) &&
-        matchesDateRange(item, range) &&
-        (category === 'all' || item.category === category),
-    ).length;
+    const allItems = this.news().filter((item) => isAfterContentStartDate(item.date));
+    if (category === 'all') return allItems.length;
+    return allItems.filter((item) => item.category === category).length;
   }
 
   formatDate(dateStr: string): string {
@@ -253,18 +225,13 @@ export class AiFrontlineComponent implements OnInit {
       const date = new Date(dateStr);
       const now = new Date();
       const diffDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
-
       if (diffDays === 0) return this.t('resourceInbox.today');
       if (diffDays === 1) return this.t('resourceInbox.yesterday');
       if (diffDays < 7) return `${diffDays}${this.t('aiFrontline.daysAgo')}`;
-
       const locale = this.i18n.locale() === 'zh-CN' ? 'zh-CN' : 'en-US';
-      return date.toLocaleDateString(locale, {
-        month: 'long',
-        day: 'numeric',
-      });
+      return date.toLocaleDateString(locale, { month: 'long', day: 'numeric' });
     } catch {
-      return dateStr;
+      return '';
     }
   }
 

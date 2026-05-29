@@ -1,258 +1,204 @@
-// Contact Dialog — Mac Terminal Style (Light Glass)
-// Uses MatDialog as base, visual matches SpaceLab aesthetic
-
+// Contact Dialog — Dark Terminal Style
 :host {
   display: block;
 }
 
-.contact-dialog {
-  border-radius: 28px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 24px 80px rgba(34, 28, 18, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+.contact-terminal-dialog {
+  width: 100%;
   max-width: min(520px, calc(100vw - 32px));
-
-  // --- Title Bar ---
-  &__titlebar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    background: rgba(255, 255, 255, 0.4);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    backdrop-filter: blur(10px);
-    user-select: none;
-  }
-
-  &__body {
-    padding: 20px 22px 18px;
-  }
-
-  &__footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-  }
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(14, 19, 33, 0.98), rgba(5, 9, 18, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 34px 110px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
 }
 
-// Mac dots
-.titlebar-dots {
-  display: flex;
-  gap: 7px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: flex;
+// ── Title Bar ────────────────────────────────────────────────────────
+.contact-terminal-dialog__bar {
+  height: 52px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: center;
-  font-size: 0;
-  transition: all 150ms;
+  gap: 14px;
+  padding: 0 18px;
+  background: rgba(255, 255, 255, 0.045);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  user-select: none;
+}
 
-  &--red {
+.contact-terminal-dialog__traffic {
+  display: flex;
+  gap: 8px;
+
+  span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: default;
+  }
+
+  .is-red {
     background: #ff5f57;
     cursor: pointer;
 
     &:hover {
       background: #e33e32;
     }
-
-    &:hover .dot-x {
-      font-size: 11px;
-      color: rgba(0, 0, 0, 0.5);
-    }
   }
 
-  &--yellow {
-    background: #febc2e;
+  .is-yellow {
+    background: #ffbd2e;
   }
 
-  &--green {
+  .is-green {
     background: #28c840;
   }
-
-  .dot-x {
-    font-size: 0;
-    line-height: 1;
-    color: transparent;
-    transition: font-size 100ms;
-  }
 }
 
-.titlebar-label {
-  flex: 1;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-text-secondary, rgba(0, 0, 0, 0.5));
+.contact-terminal-dialog__title {
   text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.56);
 }
 
-.titlebar-bash {
-  font-size: 11px;
-  color: var(--color-text-tertiary, rgba(0, 0, 0, 0.35));
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+.contact-terminal-dialog__close {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    color: #fff;
+  }
 }
 
-// Terminal lines
+// ── Body ─────────────────────────────────────────────────────────────
+.contact-terminal-dialog__body {
+  padding: 26px;
+  font-family: var(--font-mono);
+}
+
 .terminal-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin: 0 0 10px;
   font-size: 13px;
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-  color: var(--color-text);
-  line-height: 1.8;
-
-  &--ok {
-    color: #22c55e;
-    font-family: inherit;
-    font-size: 12px;
-    margin-bottom: 12px;
-  }
-
-  &--footer {
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-  }
-}
-
-.terminal-prompt {
-  color: var(--color-cyan, #69d7ff);
-  font-weight: 700;
-}
-
-.terminal-command {
-  color: var(--color-text-secondary, rgba(0, 0, 0, 0.6));
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .terminal-ok {
-  color: #22c55e;
-  font-weight: 700;
+  margin: 0 0 18px;
+  font-size: 12px;
+  color: #2df5c6;
 }
 
-.terminal-cursor {
-  display: inline-block;
-  width: 8px;
-  height: 16px;
-  background: var(--color-cyan, #69d7ff);
-  opacity: 0.7;
-  animation: blink 1s step-end infinite;
-  margin-left: 4px;
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-// Contact info
-.contact-info {
-  display: flex;
-  flex-direction: column;
+// ── Contact Rows ─────────────────────────────────────────────────────
+.contact-terminal-dialog__rows {
+  display: grid;
   gap: 10px;
-  margin: 16px 0 20px;
 }
 
 .contact-row {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.contact-icon {
-  font-size: 16px;
-  flex-shrink: 0;
-}
-
-.contact-label {
-  font-weight: 600;
-  color: var(--color-text-secondary, rgba(0, 0, 0, 0.6));
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 13px;
-}
 
-.contact-value {
-  font-weight: 600;
-  color: var(--color-text);
-}
+  span {
+    color: rgba(255, 255, 255, 0.56);
+  }
 
-// Action buttons
-.contact-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-
-  .action-btn {
-    flex: 1;
-    min-width: 0;
-    min-height: 40px;
-    border-radius: 999px !important;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 200ms;
-
-    .mat-icon {
-      margin-right: 4px;
-      font-size: 16px;
-      width: 16px;
-      height: 16px;
-    }
-
-    &--primary {
-      background: var(--color-google-blue, #1a73e8) !important;
-      color: #fff !important;
-      border: none !important;
-      box-shadow: 0 8px 24px rgba(26, 115, 232, 0.18);
-
-      &:hover {
-        box-shadow: 0 12px 32px rgba(26, 115, 232, 0.28);
-      }
-    }
+  strong {
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 700;
   }
 }
 
-// Close button
-.close-btn {
-  min-height: 36px;
+// ── Actions ──────────────────────────────────────────────────────────
+.contact-terminal-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.action-btn {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  border-radius: 14px !important;
+  font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-text-secondary);
-  border-radius: 999px;
+  letter-spacing: 0.04em;
   transition: all 200ms;
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.04);
+  &--primary {
+    background: rgba(105, 215, 255, 0.15) !important;
+    color: #fff !important;
+    border: 1px solid rgba(105, 215, 255, 0.5) !important;
+    box-shadow: 0 8px 24px rgba(105, 215, 255, 0.12);
+
+    &:hover {
+      background: rgba(105, 215, 255, 0.25) !important;
+      border-color: #69d7ff !important;
+      box-shadow: 0 12px 32px rgba(105, 215, 255, 0.22);
+    }
+  }
+
+  &:not(.action-btn--primary) {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.32) !important;
+    }
   }
 }
 
-// Mobile
-@media (max-width: 480px) {
-  .contact-dialog {
-    border-radius: 24px;
+// ── Mobile ───────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .contact-terminal-dialog {
+    border-radius: 20px;
   }
 
-  .contact-actions {
-    flex-direction: column;
+  .contact-terminal-dialog__bar {
+    height: 48px;
+    padding: 0 14px;
+  }
 
-    .action-btn {
-      width: 100%;
-      min-height: 44px;
-    }
+  .contact-terminal-dialog__title {
+    font-size: 11px;
+  }
+
+  .contact-terminal-dialog__body {
+    padding: 20px;
+  }
+
+  .contact-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .contact-terminal-dialog__actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    min-height: 44px;
   }
 }

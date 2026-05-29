@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { I18nService } from '../../../core/services/i18n.service';
 import { PROFILE } from '../../../../generated/content.generated';
 
@@ -16,8 +14,6 @@ import { PROFILE } from '../../../../generated/content.generated';
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatIconModule,
-    MatTooltipModule,
   ],
   templateUrl: './contact-dialog.component.html',
   styleUrl: './contact-dialog.component.scss',
