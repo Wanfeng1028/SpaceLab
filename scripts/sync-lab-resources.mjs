@@ -24,13 +24,13 @@ const REQUEST_DELAY_MS = 2000;
 const SOURCES = [
   {
     key: 'ai-tools',
-    name: 'AI工具集 - AI工具',
+    name: 'AI 工具',
     url: 'https://ai-bot.cn/ai-tools/',
     targetFile: TOOLS_FILE,
   },
   {
     key: 'ai-projects',
-    name: 'AI工具集 - AI项目和框架',
+    name: 'AI 项目和框架',
     url: 'https://ai-bot.cn/ai-research/',
     targetFile: PROJECTS_FILE,
   },
@@ -222,7 +222,7 @@ function parseResourcesFromHtml(html, sourceKey) {
       title: title.slice(0, 100),
       summary: truncateSummary(summary),
       category,
-      source: 'AI工具集',
+      source: '',
       url: fullUrl,
       tags,
       publishedAt: '',
@@ -251,7 +251,7 @@ function parseResourcesFromHtml(html, sourceKey) {
         title: title.slice(0, 100),
         summary: truncateSummary(title),
         category,
-        source: 'AI工具集',
+        source: '',
         url,
         tags,
         publishedAt: '',
