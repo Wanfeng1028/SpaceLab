@@ -607,8 +607,10 @@
   }
 
   .lab-toolbar {
-    flex-direction: column;
-    align-items: stretch;
+    width: 100%;
+    margin: 16px auto 14px;
+    padding: 12px;
+    border-radius: 22px;
   }
 
   .lab-search {
@@ -620,7 +622,9 @@
   }
 
   .lab-filters {
-    max-width: 100%;
+    width: 100%;
+    margin: 0 auto 14px;
+    justify-content: flex-start;
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 4px;

@@ -25,7 +25,15 @@ export interface AiFrontlineSource {
   url: string;
   description: string;
   lastFetchedAt: string;
+  contentStartDate?: string;
   notice: string;
+}
+
+const CONTENT_START_DATE = '2026-05-25';
+
+function isAfterContentStartDate(itemDate: string | undefined): boolean {
+  if (!itemDate) return true;
+  return itemDate.slice(0, 10) >= CONTENT_START_DATE;
 }
 
 @Component({
@@ -56,14 +64,17 @@ export class AiFrontlineComponent implements OnInit {
     const category = this.selectedCategory();
     const query = this.searchQuery();
 
-    return this.news().filter((item) => {
-      const matchesCategory =
-        category === 'all' || normalizeSearchText(item.category) === normalizeSearchText(category);
+    return this.news()
+      .filter((item) => isAfterContentStartDate(item.date))
+      .filter((item) => {
+        const matchesCategory =
+          category === 'all' ||
+          normalizeSearchText(item.category) === normalizeSearchText(category);
 
-      const matchesQuery = matchesSearchQuery(this.getAiNewsSearchText(item), query);
+        const matchesQuery = matchesSearchQuery(this.getAiNewsSearchText(item), query);
 
-      return matchesCategory && matchesQuery;
-    });
+        return matchesCategory && matchesQuery;
+      });
   });
 
   // Group news by date
@@ -161,7 +172,9 @@ export class AiFrontlineComponent implements OnInit {
   }
 
   getCategoryCount(category: string): number {
-    return this.news().filter((item) => item.category === category).length;
+    return this.news().filter(
+      (item) => item.category === category && isAfterContentStartDate(item.date),
+    ).length;
   }
 
   formatDate(dateStr: string): string {

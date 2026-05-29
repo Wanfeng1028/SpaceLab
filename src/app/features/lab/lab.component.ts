@@ -25,6 +25,7 @@ export interface LabResourceItem {
   tags: string[];
   publishedAt: string;
   fetchedAt: string;
+  date?: string;
 }
 
 export interface LabSource {
@@ -37,7 +38,15 @@ export interface LabSource {
 export interface LabSources {
   sources: LabSource[];
   lastFetchedAt: string;
+  contentStartDate?: string;
   notice: string;
+}
+
+const CONTENT_START_DATE = '2026-05-25';
+
+function isAfterContentStartDate(itemDate: string | undefined): boolean {
+  if (!itemDate) return true;
+  return itemDate.slice(0, 10) >= CONTENT_START_DATE;
 }
 
 type TabKey = 'tools' | 'projects';
@@ -74,32 +83,37 @@ export class LabComponent implements OnInit {
     const tabLabels =
       tab === 'tools' ? ['AI工具', 'AI Tools'] : ['AI项目和框架', 'AI Projects', 'Frameworks'];
 
-    return data.filter((item) => {
-      const matchesCategory =
-        category === 'all' ||
-        normalizeSearchText(item.category) === normalizeSearchText(category) ||
-        item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(category));
+    return data
+      .filter((item) => isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date))
+      .filter((item) => {
+        const matchesCategory =
+          category === 'all' ||
+          normalizeSearchText(item.category) === normalizeSearchText(category) ||
+          item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(category));
 
-      const searchText = buildSearchText([
-        item.title,
-        item.summary,
-        item.category,
-        item.tags,
-        item.source,
-        item.url,
-        item.id,
-        tabLabels,
-      ]);
-      const matchesQuery = matchesSearchQuery(searchText, query);
+        const searchText = buildSearchText([
+          item.title,
+          item.summary,
+          item.category,
+          item.tags,
+          item.source,
+          item.url,
+          item.id,
+          tabLabels,
+        ]);
+        const matchesQuery = matchesSearchQuery(searchText, query);
 
-      return matchesCategory && matchesQuery;
-    });
+        return matchesCategory && matchesQuery;
+      });
   });
 
   categories = computed(() => {
     const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
+    const filtered = data.filter((item) =>
+      isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date),
+    );
     const cats = new Set<string>();
-    for (const item of data) {
+    for (const item of filtered) {
       cats.add(item.category);
       for (const tag of item.tags) {
         cats.add(tag);
@@ -171,6 +185,12 @@ export class LabComponent implements OnInit {
   getCategoryLabel(cat: string): string {
     if (cat === 'all') return this.t('lab.allCategories');
     return cat;
+  }
+
+  contentSinceText(): string {
+    const src = this.sources();
+    const date = src?.contentStartDate || CONTENT_START_DATE;
+    return this.t('common.contentSince').replace('{{date}}', date);
   }
 
   formatDate(dateStr: string): string {

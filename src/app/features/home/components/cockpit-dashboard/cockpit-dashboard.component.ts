@@ -6,7 +6,7 @@ import {
   OnDestroy,
   inject,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { I18nService } from '../../../../core/services/i18n.service';
 import { LenisScrollService } from '../../../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';

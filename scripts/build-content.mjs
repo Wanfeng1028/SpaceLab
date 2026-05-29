@@ -196,6 +196,7 @@ export interface AiFrontlineSource {
   url: string;
   description: string;
   lastFetchedAt: string;
+  contentStartDate: string;
   notice: string;
 }
 
@@ -209,6 +210,7 @@ export interface LabResourceItem {
   tags: string[];
   publishedAt: string;
   fetchedAt: string;
+  date?: string;
 }
 
 export interface LabSource {
@@ -221,6 +223,7 @@ export interface LabSource {
 export interface LabSources {
   sources: LabSource[];
   lastFetchedAt: string;
+  contentStartDate: string;
   notice: string;
 }
 

@@ -1516,13 +1516,41 @@
 .neural-core-section,
 .visual-systems-section,
 .orbital-learning-section,
-.portal-gallery-section,
-.cockpit-dashboard-section {
+.portal-gallery-section {
   position: relative;
   width: 100%;
   height: 100vh;
   min-height: 600px;
   overflow: hidden;
+}
+
+.cockpit-dashboard-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+
+  background:
+    linear-gradient(180deg, rgba(3, 7, 18, 0.78) 0%, rgba(3, 7, 18, 0.58) 42%, rgba(3, 7, 18, 0.86) 100%),
+    url('/cockpit-dashboard-bg.png') center center / cover no-repeat;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 28%, rgba(105, 215, 255, 0.16), transparent 34%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.42));
+    z-index: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .cockpit-dashboard-section {
+    background-position: center top;
+  }
 }
 
 /* 打字机音效开关样式 - 来自用户提供的CSS */
