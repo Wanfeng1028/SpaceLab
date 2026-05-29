@@ -45,7 +45,7 @@ interface NetworkInformation {
   templateUrl: './cockpit-dashboard.component.html',
   styleUrl: './cockpit-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, TelemetryBarComponent],
+  imports: [ThreeCanvasComponent, TelemetryBarComponent, RouterLink],
 })
 export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly router = inject(Router);

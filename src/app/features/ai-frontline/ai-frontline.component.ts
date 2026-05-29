@@ -171,6 +171,12 @@ export class AiFrontlineComponent implements OnInit {
     return this.i18n.t(key);
   }
 
+  contentSinceText(): string {
+    const src = this.source();
+    const date = src?.contentStartDate || CONTENT_START_DATE;
+    return this.i18n.t('common.contentSince').replace('{{date}}', date);
+  }
+
   getCategoryCount(category: string): number {
     return this.news().filter(
       (item) => item.category === category && isAfterContentStartDate(item.date),
