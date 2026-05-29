@@ -176,10 +176,9 @@
   width: min(100%, 1080px);
   margin: 0 auto 28px;
   display: flex;
-  gap: 16px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
 }
 
 .lab-search {
@@ -226,7 +225,7 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  max-width: 60%;
+  justify-content: center;
   overflow-x: auto;
   scrollbar-width: none;
 

@@ -145,10 +145,9 @@
   max-width: 1180px;
   margin: 0 auto 28px;
   display: flex;
-  gap: 16px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
 }
 
 .ai-frontline-search {
@@ -195,6 +194,7 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .ai-frontline-filter {
