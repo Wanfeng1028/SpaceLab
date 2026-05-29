@@ -85,6 +85,8 @@ function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
   return true;
 }
 
+const PAGE_SIZE = 15;
+
 @Component({
   selector: 'app-ai-frontline',
   standalone: true,
@@ -115,6 +117,7 @@ export class AiFrontlineComponent implements OnInit {
   readonly selectedCategory = signal<string>('all');
   readonly selectedDateRange = signal<DateRangeFilter>('all');
   readonly selectedItem = signal<AiNewsItem | null>(null);
+  readonly currentPage = signal(1);
 
   readonly categories = [
     'all',
@@ -158,6 +161,25 @@ export class AiFrontlineComponent implements OnInit {
       });
   });
 
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredNews().length / PAGE_SIZE)),
+  );
+
+  readonly pagedData = computed(() => {
+    const start = (this.currentPage() - 1) * PAGE_SIZE;
+    return this.filteredNews().slice(start, start + PAGE_SIZE);
+  });
+
+  readonly pageNumbers = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const start = Math.max(1, current - 2);
+    const end = Math.min(total, start + 4);
+    const pages: number[] = [];
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+  });
+
   async ngOnInit() {
     await this.loadNews();
   }
@@ -181,15 +203,22 @@ export class AiFrontlineComponent implements OnInit {
     this.selectedItem.set(item);
   }
 
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages()) return;
+    this.currentPage.set(page);
+  }
+
   clearSearch(): void {
     this.searchQuery.set('');
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   clearFilters(): void {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   clearAll(): void {
@@ -197,11 +226,13 @@ export class AiFrontlineComponent implements OnInit {
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   onDateRangeChange(range: DateRangeFilter): void {
     this.selectedDateRange.set(range);
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   async loadNews() {
@@ -231,11 +262,13 @@ export class AiFrontlineComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   onCategoryChange(category: string) {
     this.selectedCategory.set(category);
     this.selectedItem.set(null);
+    this.currentPage.set(1);
   }
 
   getCategoryClass(category: string): string {
