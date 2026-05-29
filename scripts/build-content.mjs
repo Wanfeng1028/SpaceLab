@@ -217,7 +217,7 @@ export interface LabSource {
   key: string;
   name: string;
   url: string;
-  targetFile: string;
+  targetFile?: string;
 }
 
 export interface LabSources {

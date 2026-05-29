@@ -35,16 +35,20 @@ function relativeTimeToDate(label) {
   if (minM) return new Date(now.getTime() - parseInt(minM[1]) * 60_000).toISOString().slice(0, 10);
 
   const hourM = label.match(/(\d+)\s*小时前/);
-  if (hourM) return new Date(now.getTime() - parseInt(hourM[1]) * 3_600_000).toISOString().slice(0, 10);
+  if (hourM)
+    return new Date(now.getTime() - parseInt(hourM[1]) * 3_600_000).toISOString().slice(0, 10);
 
   const dayM = label.match(/(\d+)\s*天前/);
-  if (dayM) return new Date(now.getTime() - parseInt(dayM[1]) * 86_400_000).toISOString().slice(0, 10);
+  if (dayM)
+    return new Date(now.getTime() - parseInt(dayM[1]) * 86_400_000).toISOString().slice(0, 10);
 
   const weekM = label.match(/(\d+)\s*周前/);
-  if (weekM) return new Date(now.getTime() - parseInt(weekM[1]) * 604_800_000).toISOString().slice(0, 10);
+  if (weekM)
+    return new Date(now.getTime() - parseInt(weekM[1]) * 604_800_000).toISOString().slice(0, 10);
 
   const monthM = label.match(/(\d+)\s*个月前/);
-  if (monthM) return new Date(now.getTime() - parseInt(monthM[1]) * 2_592_000_000).toISOString().slice(0, 10);
+  if (monthM)
+    return new Date(now.getTime() - parseInt(monthM[1]) * 2_592_000_000).toISOString().slice(0, 10);
 
   return null;
 }
@@ -99,16 +103,20 @@ function parseListPage(html, defaultCategory) {
 
   // Match: <h2><a href="URL" title="NAME – DESC" class="list-title...">...</a></h2>
   // followed by list-desc and list-footer with <time>
-  const titleRe = /<h2><a\s+href="([^"]+)"[^>]*?title="([^"]*)"[^>]*?class="list-title[^"]*"[^>]*?>([\s\S]*?)<\/a\s*><\/h2>/g;
+  const titleRe =
+    /<h2><a\s+href="([^"]+)"[^>]*?title="([^"]*)"[^>]*?class="list-title[^"]*"[^>]*?>([\s\S]*?)<\/a\s*><\/h2>/g;
   let m;
   while ((m = titleRe.exec(h)) !== null) {
     const url = m[1].trim();
     const titleAttr = m[2].replace(/&#8211;/g, '–').replace(/&amp;/g, '&');
-    const innerText = m[3].replace(/<[^>]+>/g, '').replace(/&#8211;/g, '–').trim();
+    const innerText = m[3]
+      .replace(/<[^>]+>/g, '')
+      .replace(/&#8211;/g, '–')
+      .trim();
 
-    // Parse "NAME – DESC" from title attribute
-    const parts = titleAttr.split(/\s*[–\-]\s*/);
-    const name = parts[0]?.trim() || innerText.split(/\s*[–\-]\s*/)[0]?.trim() || '';
+    // Parse "NAME – DESC" from title attribute (split on em-dash only, not hyphen)
+    const parts = titleAttr.split(/\s*–\s*/);
+    const name = parts[0]?.trim() || innerText.split(/\s*–\s*/)[0]?.trim() || '';
     const desc = parts.slice(1).join(' – ').trim() || '';
 
     if (!name || name.length < 2) continue;
@@ -118,7 +126,10 @@ function parseListPage(html, defaultCategory) {
     const afterBlock = h.slice(m.index, m.index + 1500);
     const descMatch = afterBlock.match(/<div class="list-desc[^"]*">[^<]*<div[^>]*>(.*?)<\/div>/);
     const fullDesc = descMatch
-      ? descMatch[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+      ? descMatch[1]
+          .replace(/<[^>]+>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim()
       : desc;
 
     // Find time label
@@ -130,7 +141,7 @@ function parseListPage(html, defaultCategory) {
     if (url.startsWith('/')) fullUrl = `https://ai-bot.cn${url}`;
 
     const tags = extractTags(name, fullDesc);
-    const cat = autoCategory(name, fullDesc) || defaultCategory;
+    const cat = defaultCategory;
 
     items.push({
       id: generateId(name, fullUrl),
@@ -270,7 +281,8 @@ async function main() {
   });
 
   const hasNew =
-    mergedTools.length !== existingTools.length || mergedProjects.length !== existingProjects.length;
+    mergedTools.length !== existingTools.length ||
+    mergedProjects.length !== existingProjects.length;
   console.log(`\n💾 Saved: ${mergedTools.length} tools, ${mergedProjects.length} projects`);
 
   if (process.env.GITHUB_OUTPUT) {
@@ -284,7 +296,9 @@ function loadJson(file) {
       const d = JSON.parse(fs.readFileSync(file, 'utf-8'));
       return Array.isArray(d) ? d : [];
     }
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return [];
 }
 
