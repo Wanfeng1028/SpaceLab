@@ -6,6 +6,15 @@
     <p class="projects-hero__desc">{{ t('projects.heroDesc') }}</p>
   </section>
 
+  <!-- Search -->
+  <section class="projects-search-section">
+    <app-search-box
+      [placeholder]="'搜索项目...'"
+      [value]="searchQuery()"
+      (valueChange)="searchQuery.set($event)"
+    />
+  </section>
+
   <!-- Filter -->
   <section class="projects-filter-section">
     <div class="filter-scroll">
@@ -22,6 +31,13 @@
     </div>
   </section>
 
+  <!-- Status indicator -->
+  @if (searchQuery() && selectedFilter() !== 'all') {
+    <div class="projects-status">
+      正在搜索 "{{ searchQuery() }}" · 当前筛选 "{{ selectedFilter() }}"
+    </div>
+  }
+
   <!-- Projects List -->
   @if (filteredProjects().length > 0) {
     <section class="projects-list">
@@ -32,7 +48,18 @@
   } @else {
     <div class="projects-empty">
       <span class="projects-empty__icon">📭</span>
-      <p>{{ t('common.none') }}</p>
+      <p>没有找到匹配内容</p>
+      <div class="projects-empty__actions">
+        @if (searchQuery()) {
+          <button class="filter-chip" (click)="clearSearch()">清除搜索</button>
+        }
+        @if (selectedFilter() !== 'all') {
+          <button class="filter-chip" (click)="clearFilters()">清除筛选</button>
+        }
+        @if (searchQuery() && selectedFilter() !== 'all') {
+          <button class="filter-chip" (click)="clearAll()">清除全部</button>
+        }
+      </div>
     </div>
   }
 

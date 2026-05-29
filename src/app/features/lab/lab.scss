@@ -9,7 +9,6 @@
 // Page Base
 // ============================================
 .lab-page {
-  min-height: 100vh;
   padding: 120px 24px 80px;
   background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
   color: var(--color-text);
@@ -260,6 +259,60 @@
 }
 
 // ============================================
+// Status Indicator
+// ============================================
+.lab-status {
+  width: min(100%, 1080px);
+  margin: 0 auto 20px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: rgba(105, 215, 255, 0.08);
+  border: 1px solid rgba(105, 215, 255, 0.15);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  text-align: center;
+
+  strong {
+    color: var(--color-cyan);
+    font-weight: 600;
+  }
+}
+
+// ============================================
+// Empty State Clear Buttons
+// ============================================
+.lab-empty__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.lab-clear-btn {
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--glass-bg);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 200ms;
+
+  &:hover {
+    background: var(--glass-bg-strong);
+    border-color: rgba(105, 215, 255, 0.3);
+    color: var(--color-text);
+  }
+
+  &--all {
+    border-color: rgba(105, 215, 255, 0.3);
+    color: var(--color-cyan);
+  }
+}
+
+// ============================================
 // Resource Grid
 // ============================================
 .lab-resource-list {
@@ -391,7 +444,7 @@
 .lab-loading {
   display: flex;
   justify-content: center;
-  padding: 100px 20px;
+  padding: 48px 20px;
 }
 
 .lab-empty {
@@ -399,7 +452,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px 20px;
+  padding: 48px 20px;
   text-align: center;
 
   .empty-icon {

@@ -4,6 +4,11 @@ import { PostService } from '../../core/services/post.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
 import type { GeneratedPost } from '../../../generated/content.generated';
+import {
+  buildSearchText,
+  matchesSearchQuery,
+  normalizeSearchText,
+} from '../../core/utils/search.utils';
 
 @Component({
   selector: 'app-blog',
@@ -31,19 +36,16 @@ export class BlogComponent {
   });
 
   readonly filteredPosts = computed(() => {
-    const query = this.searchQuery().toLowerCase();
+    const query = this.searchQuery();
     const category = this.selectedCategory();
 
     return this.allPosts().filter((post) => {
-      const matchesSearch =
-        !query ||
-        post.title.toLowerCase().includes(query) ||
-        post.summary.toLowerCase().includes(query) ||
-        post.tags.some((t) => t.toLowerCase().includes(query));
+      const matchesQuery = matchesSearchQuery(this.getPostSearchText(post), query);
 
-      const matchesCategory = category === 'all' || post.category === category;
+      const matchesCategory =
+        category === 'all' || normalizeSearchText(post.category) === normalizeSearchText(category);
 
-      return matchesSearch && matchesCategory;
+      return matchesQuery && matchesCategory;
     });
   });
 
@@ -62,5 +64,30 @@ export class BlogComponent {
 
   onSubscribe(): void {
     console.log('Subscribe clicked — static UI, no backend connected.');
+  }
+
+  clearSearch(): void {
+    this.searchQuery.set('');
+  }
+
+  clearFilters(): void {
+    this.selectedCategory.set('all');
+  }
+
+  clearAll(): void {
+    this.searchQuery.set('');
+    this.selectedCategory.set('all');
+  }
+
+  private getPostSearchText(post: GeneratedPost): string {
+    return buildSearchText([
+      post.title,
+      post.summary,
+      post.category,
+      post.tags,
+      post.slug,
+      post.contentHtml,
+      post.date,
+    ]);
   }
 }

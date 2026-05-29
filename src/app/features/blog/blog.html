@@ -30,6 +30,27 @@
     }
   </section>
 
+  <!-- Search Status -->
+  @if (searchQuery() || selectedCategory() !== 'all') {
+    <div class="blog-search-status">
+      @if (searchQuery()) {
+        <span
+          >正在搜索 "<strong>{{ searchQuery() }}</strong
+          >"</span
+        >
+      }
+      @if (searchQuery() && selectedCategory() !== 'all') {
+        <span> · </span>
+      }
+      @if (selectedCategory() !== 'all') {
+        <span
+          >当前分类 "<strong>{{ getCategoryLabel(selectedCategory()) }}</strong
+          >"</span
+        >
+      }
+    </div>
+  }
+
   <!-- Article List -->
   @if (filteredPosts().length > 0) {
     <section class="blog-list">
@@ -49,6 +70,17 @@
     <div class="blog-empty">
       <span class="blog-empty__icon">📭</span>
       <p>{{ t('blog.noArticles') }}</p>
+      <div class="blog-empty__actions">
+        @if (searchQuery()) {
+          <button class="space-button space-button--sm" (click)="clearSearch()">清除搜索</button>
+        }
+        @if (selectedCategory() !== 'all') {
+          <button class="space-button space-button--sm" (click)="clearFilters()">清除筛选</button>
+        }
+        @if (searchQuery() && selectedCategory() !== 'all') {
+          <button class="space-button space-button--sm" (click)="clearAll()">清除全部</button>
+        }
+      </div>
     </div>
   }
 

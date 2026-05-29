@@ -9,6 +9,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
+import {
+  buildSearchText,
+  matchesSearchQuery,
+  normalizeSearchText,
+} from '../../core/utils/search.utils';
 
 export interface LabResourceItem {
   id: string;
@@ -63,27 +68,19 @@ export class LabComponent implements OnInit {
 
   currentData = computed(() => {
     const data = this.activeTab() === 'tools' ? this.toolsData() : this.projectsData();
-    let result = data;
-
     const category = this.selectedCategory();
-    if (category !== 'all') {
-      result = result.filter(
-        (item) => item.category === category || item.tags.some((t) => t === category),
-      );
-    }
+    const query = this.searchQuery();
 
-    const query = this.searchQuery().toLowerCase().trim();
-    if (query) {
-      result = result.filter(
-        (item) =>
-          item.title.toLowerCase().includes(query) ||
-          item.summary.toLowerCase().includes(query) ||
-          item.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-          item.source.toLowerCase().includes(query),
-      );
-    }
+    return data.filter((item) => {
+      const matchesCategory =
+        category === 'all' ||
+        normalizeSearchText(item.category) === normalizeSearchText(category) ||
+        item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(category));
 
-    return result;
+      const matchesQuery = matchesSearchQuery(this.getLabItemSearchText(item), query);
+
+      return matchesCategory && matchesQuery;
+    });
   });
 
   categories = computed(() => {
@@ -134,7 +131,6 @@ export class LabComponent implements OnInit {
   onTabChange(key: TabKey) {
     this.activeTab.set(key);
     this.selectedCategory.set('all');
-    this.searchQuery.set('');
   }
 
   onSearchChange(event: Event) {
@@ -146,9 +142,39 @@ export class LabComponent implements OnInit {
     this.selectedCategory.set(cat);
   }
 
+  clearSearch() {
+    this.searchQuery.set('');
+  }
+
+  clearFilters() {
+    this.selectedCategory.set('all');
+  }
+
+  clearAll() {
+    this.searchQuery.set('');
+    this.selectedCategory.set('all');
+  }
+
   getCategoryLabel(cat: string): string {
     if (cat === 'all') return this.t('lab.allCategories');
     return cat;
+  }
+
+  private getLabItemSearchText(item: LabResourceItem): string {
+    const tabLabels =
+      this.activeTab() === 'tools'
+        ? ['AI工具', 'AI Tools']
+        : ['AI项目和框架', 'AI Projects', 'Frameworks'];
+    return buildSearchText([
+      item.title,
+      item.summary,
+      item.category,
+      item.tags,
+      item.source,
+      item.url,
+      item.id,
+      tabLabels,
+    ]);
   }
 
   formatDate(dateStr: string): string {

@@ -78,6 +78,37 @@
 }
 
 // ============================================
+// Search Section
+// ============================================
+
+.projects-search-section {
+  width: min(100%, 780px);
+  margin: 0 auto 28px;
+  display: flex;
+  justify-content: center;
+
+  app-search-box {
+    display: block;
+    width: 100%;
+  }
+}
+
+// ============================================
+// Status Indicator
+// ============================================
+
+.projects-status {
+  width: min(100%, 780px);
+  margin: 0 auto 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+// ============================================
 // Filter Section
 // ============================================
 
@@ -127,6 +158,14 @@
   p {
     color: var(--color-text-secondary);
     font-size: 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
   }
 }
 
@@ -234,6 +273,16 @@
 
   .projects-hero__desc {
     font-size: 0.95rem;
+  }
+
+  .projects-search-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .projects-status {
+    width: 100%;
+    font-size: 0.8rem;
   }
 
   .projects-filter-section {

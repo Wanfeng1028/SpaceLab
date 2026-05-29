@@ -2,6 +2,12 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@a
 import { I18nService } from '../../core/services/i18n.service';
 import { ProjectCardComponent } from '../../shared/components/cards/project-card.component';
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
+import { SearchBoxComponent } from '../../shared/components/search-box';
+import {
+  buildSearchText,
+  matchesSearchQuery,
+  normalizeSearchText,
+} from '../../core/utils/search.utils';
 import { PROJECTS } from '../../../generated/content.generated';
 
 @Component({
@@ -9,13 +15,14 @@ import { PROJECTS } from '../../../generated/content.generated';
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProjectCardComponent, MacTerminalModalComponent],
+  imports: [ProjectCardComponent, MacTerminalModalComponent, SearchBoxComponent],
 })
 export class ProjectsComponent {
   private i18n = inject(I18nService);
 
   readonly showContactModal = signal(false);
   readonly selectedFilter = signal('all');
+  readonly searchQuery = signal('');
 
   readonly allProjects = computed(() => PROJECTS);
 
@@ -30,15 +37,35 @@ export class ProjectsComponent {
   });
 
   readonly filteredProjects = computed(() => {
+    const query = this.searchQuery();
     const filter = this.selectedFilter();
-    if (filter === 'all') return this.allProjects();
-    if (filter === 'featured') return this.allProjects().filter((p) => p.featured);
-    return this.allProjects().filter(
-      (p) =>
-        p.tags.some((t) => t.toLowerCase() === filter.toLowerCase()) ||
-        p.language.toLowerCase() === filter.toLowerCase(),
-    );
+
+    return this.allProjects().filter((project) => {
+      const matchesQuery = matchesSearchQuery(this.getProjectSearchText(project), query);
+
+      const matchesFilter =
+        filter === 'all' ||
+        (filter === 'featured' && project.featured) ||
+        project.tags.some((t) => normalizeSearchText(t) === normalizeSearchText(filter)) ||
+        normalizeSearchText(project.language) === normalizeSearchText(filter);
+
+      return matchesQuery && matchesFilter;
+    });
   });
+
+  private getProjectSearchText(project: (typeof PROJECTS)[number]): string {
+    return buildSearchText([
+      project.name,
+      project.description,
+      project.tags,
+      project.language,
+      project.status,
+      project.id,
+      project.github,
+      project.demo,
+      project.updatedAt,
+    ]);
+  }
 
   readonly contactEmail = 'hello@spacelab.dev';
   readonly githubUrl = 'https://github.com/Wanfeng1028';
@@ -58,5 +85,18 @@ export class ProjectsComponent {
     } catch {
       return '';
     }
+  }
+
+  clearSearch(): void {
+    this.searchQuery.set('');
+  }
+
+  clearFilters(): void {
+    this.selectedFilter.set('all');
+  }
+
+  clearAll(): void {
+    this.searchQuery.set('');
+    this.selectedFilter.set('all');
   }
 }

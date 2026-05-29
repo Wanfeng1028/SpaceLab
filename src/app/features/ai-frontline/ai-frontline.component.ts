@@ -2,6 +2,11 @@ import { Component, OnInit, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../core/services/i18n.service';
+import {
+  buildSearchText,
+  matchesSearchQuery,
+  normalizeSearchText,
+} from '../../core/utils/search.utils';
 
 export interface AiNewsItem {
   id: string;
@@ -48,25 +53,17 @@ export class AiFrontlineComponent implements OnInit {
 
   // Filtered news
   filteredNews = computed(() => {
-    let result = this.news();
+    const category = this.selectedCategory();
+    const query = this.searchQuery();
 
-    // Filter by category
-    if (this.selectedCategory() !== 'all') {
-      result = result.filter((item) => item.category === this.selectedCategory());
-    }
+    return this.news().filter((item) => {
+      const matchesCategory =
+        category === 'all' || normalizeSearchText(item.category) === normalizeSearchText(category);
 
-    // Filter by search query
-    const query = this.searchQuery().toLowerCase().trim();
-    if (query) {
-      result = result.filter(
-        (item) =>
-          item.title.toLowerCase().includes(query) ||
-          item.source.toLowerCase().includes(query) ||
-          item.tags.some((tag) => tag.toLowerCase().includes(query)),
-      );
-    }
+      const matchesQuery = matchesSearchQuery(this.getAiNewsSearchText(item), query);
 
-    return result;
+      return matchesCategory && matchesQuery;
+    });
   });
 
   // Group news by date
@@ -89,6 +86,34 @@ export class AiFrontlineComponent implements OnInit {
 
   t(key: string): string {
     return this.i18n.t(key);
+  }
+
+  private getAiNewsSearchText(item: AiNewsItem): string {
+    return buildSearchText([
+      item.title,
+      item.summary,
+      item.category,
+      this.getCategoryLabel(item.category),
+      item.tags,
+      item.source,
+      item.date,
+      item.fetchedAt,
+      item.url,
+      item.id,
+    ]);
+  }
+
+  clearSearch(): void {
+    this.searchQuery.set('');
+  }
+
+  clearFilters(): void {
+    this.selectedCategory.set('all');
+  }
+
+  clearAll(): void {
+    this.clearSearch();
+    this.clearFilters();
   }
 
   async loadNews() {
