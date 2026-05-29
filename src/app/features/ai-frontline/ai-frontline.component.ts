@@ -8,12 +8,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { I18nService } from '../../core/services/i18n.service';
 import {
   buildSearchText,
@@ -87,16 +81,7 @@ function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
 @Component({
   selector: 'app-ai-frontline',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatTooltipModule,
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './ai-frontline.html',
   styleUrls: ['./ai-frontline.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -108,6 +93,7 @@ export class AiFrontlineComponent implements OnInit {
   source = signal<AiFrontlineSource | null>(null);
   loading = signal(true);
   error = signal<string | null>(null);
+  searchFocused = false;
 
   searchQuery = signal('');
   selectedCategory = signal<string>('all');
@@ -190,6 +176,14 @@ export class AiFrontlineComponent implements OnInit {
       '30d': 'resourceInbox.last30Days',
     };
     return this.t(map[range]);
+  }
+
+  dateRangeCount(range: DateRangeFilter): number {
+    return this.news().filter(
+      (item) =>
+        isAfterContentStartDate(item.date) &&
+        matchesDateRange(item, range),
+    ).length;
   }
 
   selectItem(item: AiNewsItem) {
