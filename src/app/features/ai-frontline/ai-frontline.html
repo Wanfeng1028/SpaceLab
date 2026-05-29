@@ -1,6 +1,6 @@
 <main class="ai-frontline-page">
   <!-- Hero -->
-  <section class="ai-frontline-hero">
+  <mat-card class="ai-frontline-hero spacelab-material-card">
     <div class="ai-frontline-hero__content">
       <p class="ai-frontline-kicker">{{ t('aiFrontline.kicker') }}</p>
       <h1>{{ t('aiFrontline.title') }}</h1>
@@ -19,7 +19,7 @@
       <div class="scan-line"></div>
       <div class="grid-overlay"></div>
     </div>
-  </section>
+  </mat-card>
 
   <!-- Search Box -->
   <section class="ai-frontline-toolbar">
@@ -99,6 +99,9 @@
               >
                 <span class="inbox-sidebar__label" matListItemTitle>{{
                   sidebarDateLabel(range)
+                }}</span>
+                <span class="inbox-sidebar__badge" matListItemMeta>{{
+                  dateRangeCount(range)
                 }}</span>
               </a>
             }

@@ -35,8 +35,8 @@ $sans: var(--font-sans);
   pointer-events: none;
   background-image: url('/cockpit-dashboard-bg.png');
   background-repeat: no-repeat;
-  background-position: 58% 46%;
-  background-size: min(135vw, 1700px) auto;
+  background-position: center center;
+  background-size: cover;
   opacity: 0.9;
 
   &::after {
@@ -615,9 +615,9 @@ app-telemetry-bar {
 // ── Mobile (< 768px) ─────────────────────────────────────────────────
 @media (max-width: 768px) {
   .cockpit-bg-frame {
-    background-size: auto 100%;
-    background-position: 58% top;
-    opacity: 0.72;
+    background-size: cover;
+    background-position: center top;
+    opacity: 0.78;
   }
 
   .cockpit-dashboard {

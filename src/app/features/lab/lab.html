@@ -1,6 +1,6 @@
 <main class="lab-page">
   <!-- Hero -->
-  <section class="lab-hero">
+  <mat-card class="lab-hero spacelab-material-card">
     <p class="lab-kicker">AI RESOURCE LAB</p>
     <h1>{{ t('lab.pageTitle') }}</h1>
     <p class="lab-hero__desc">{{ t('lab.pageDesc') }}</p>
@@ -13,19 +13,21 @@
       </div>
       <p class="lab-hero__since">{{ contentSinceText() }}</p>
     }
-  </section>
+  </mat-card>
 
   <!-- Tabs -->
   <section class="lab-tabs">
-    @for (tab of tabs; track tab.key) {
-      <button
-        class="lab-tab"
-        [class.is-active]="activeTab() === tab.key"
-        (click)="onTabChange(tab.key)"
-      >
-        <span class="tab-label">{{ t(tab.labelKey) }}</span>
-      </button>
-    }
+    <mat-button-toggle-group
+      class="lab-tab-group"
+      [value]="activeTab()"
+      (change)="onTabChange($event.value)"
+    >
+      @for (tab of tabs; track tab.key) {
+        <mat-button-toggle class="lab-tab" [value]="tab.key">
+          <span class="tab-label">{{ t(tab.labelKey) }}</span>
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
   </section>
 
   <!-- Search Box -->
