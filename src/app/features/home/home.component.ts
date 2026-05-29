@@ -18,6 +18,7 @@ import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-
 import { HomeEarthSignalSection } from './components/home-earth-signal/home-earth-signal.component';
 import { HomeBlueMoonTreeSection } from './components/home-blue-moon-tree/home-blue-moon-tree.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
+import { HomeNextOrbitCardComponent } from './components/home-next-orbit-card/home-next-orbit-card.component';
 import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
 
 @Component({
@@ -32,6 +33,7 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
     HomeEarthSignalSection,
     HomeBlueMoonTreeSection,
     CockpitDashboardSection,
+    HomeNextOrbitCardComponent,
     LaunchTerminalTransitionComponent,
   ],
 })

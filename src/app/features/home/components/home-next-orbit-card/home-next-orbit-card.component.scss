@@ -1,0 +1,130 @@
+// ── Variables (redefined from cockpit-dashboard for consistency) ──────
+$cyan: #69d7ff;
+$mono: var(--font-mono);
+$sans: var(--font-sans);
+
+// ── Next Orbit Card Component ────────────────────────────────────────
+.next-orbit-card {
+  width: min(100%, 1180px);
+  margin: 28px auto 0;
+  min-height: 260px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(90deg, rgba(3, 7, 18, 0.84), rgba(3, 7, 18, 0.28)),
+    url('/cockpit-card-bg.png') center center / cover no-repeat;
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 78% 28%, rgba(105, 215, 255, 0.14), transparent 36%),
+      linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.24));
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    padding: 34px;
+  }
+
+  &__kicker {
+    margin: 0 0 10px;
+    font-family: $mono;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: $cyan;
+  }
+
+  h3 {
+    margin: 0 0 12px;
+    font-family: $sans;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-family: $mono;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-height: 44px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.85);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 0 20px rgba(105, 215, 255, 0.12);
+    }
+
+    &--primary {
+      background: rgba($cyan, 0.15);
+      border-color: rgba($cyan, 0.5);
+      color: #fff;
+
+      &:hover {
+        background: rgba($cyan, 0.25);
+        border-color: $cyan;
+      }
+    }
+  }
+}
+
+// ── Mobile (< 768px) ─────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .next-orbit-card {
+    min-height: 360px;
+    border-radius: 24px;
+    background:
+      linear-gradient(180deg, rgba(3, 7, 18, 0.86), rgba(3, 7, 18, 0.34)),
+      url('/cockpit-card-bg.png') center center / cover no-repeat;
+
+    &__content {
+      padding: 24px;
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
