@@ -3,17 +3,15 @@
     {
       "key": "ai-tools",
       "name": "AI 工具",
-      "url": "https://ai-bot.cn/ai-tools/",
-      "targetFile": "src/content/lab/ai-tools.json"
+      "url": "https://ai-bot.cn/ai-tools/"
     },
     {
       "key": "ai-projects",
       "name": "AI 项目和框架",
-      "url": "https://ai-bot.cn/ai-research/",
-      "targetFile": "src/content/lab/ai-projects.json"
+      "url": "https://ai-bot.cn/ai-research/"
     }
   ],
-  "lastFetchedAt": "2026-05-29T00:00:00+08:00",
+  "lastFetchedAt": "2026-05-29T14:06:47.697Z",
   "contentStartDate": "2026-05-25",
-  "notice": "内容来源于公开网络信息聚合，仅作学习与资源导航使用。"
+  "notice": "内容来源于 ai-bot.cn 公开信息聚合，仅作学习与资源导航使用，保留原文链接。"
 }
