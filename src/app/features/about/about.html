@@ -1,144 +1,144 @@
 <main class="about-page">
-  <!-- Hero: Digital Identity Capsule -->
-  <section class="about-hero">
-    <mat-card class="about-profile-card spacelab-material-card">
-      <div class="profile-card__avatar-wrap avatar-spinner">
-        <div class="avatar-spinner__ring"></div>
-        <img class="avatar-spinner__img" [src]="avatar" [alt]="name" />
-      </div>
-      <h2 class="profile-card__name">{{ name }}</h2>
-      <mat-chip-set class="profile-card__identity-chips">
-        @for (label of identityLabels; track label) {
-          <mat-chip highlighted>{{ t('about.identity.' + label) }}</mat-chip>
-        }
-      </mat-chip-set>
-      <div class="profile-card__status">
-        <span class="status-dot"></span>
-        {{ t('about.status') }}
-      </div>
-      <mat-divider />
-      <div class="profile-card__github">
-        <span class="profile-card__github-label">{{ t('about.github') }}:</span>
-        <span class="profile-card__github-user">Wanfeng1028</span>
-      </div>
-    </mat-card>
+  <div class="about-shell">
+    <!-- 1 ─ Hero: Centered Identity -->
+    <section class="about-hero">
+      <mat-card class="about-hero-card about-glass-card">
+        <div class="about-avatar-ring">
+          <img class="about-avatar" [src]="avatar" [alt]="name" />
+        </div>
 
-    <mat-card class="about-intro-card spacelab-material-card">
-      <span class="about-intro__kicker">{{ t('about.kicker') }}</span>
-      <h1 class="about-intro__title">{{ t('about.title') }}</h1>
-      <p class="about-intro__subtitle">{{ t('about.subtitle') }}</p>
-      <p class="about-intro__desc">{{ t('about.description') }}</p>
-      <div class="about-intro__actions">
-        <a
-          mat-flat-button
-          class="spacelab-btn spacelab-btn--primary"
-          [href]="github"
-          target="_blank"
-          rel="noopener"
-          [matTooltip]="t('about.viewGithub')"
-        >
-          <mat-icon>open_in_new</mat-icon>
-          {{ t('about.viewGithub') }}
-        </a>
-        <button
-          mat-stroked-button
-          class="spacelab-btn spacelab-btn--glass"
-          type="button"
-          (click)="openContactDialog()"
-          [matTooltip]="t('about.contactMe')"
-        >
-          <mat-icon>mail_outline</mat-icon>
-          {{ t('about.contactMe') }}
-        </button>
-      </div>
-    </mat-card>
-  </section>
+        <p class="about-kicker">DIGITAL PROFILE</p>
 
-  <!-- Focus: Current Focus Areas -->
-  <section class="about-section about-focus">
-    <h2 class="about-section-title">{{ t('about.focusTitle') }}</h2>
-    <div class="focus-grid">
-      @for (area of focusAreas; track area.key) {
-        <mat-card class="focus-card spacelab-material-card">
-          <span class="focus-card__icon">{{ area.icon }}</span>
-          <h3 class="focus-card__title">{{ t('about.focus.' + area.key + '.title') }}</h3>
-          <p class="focus-card__desc">{{ t('about.focus.' + area.key + '.desc') }}</p>
-          <mat-chip-set class="focus-card__chips">
-            @for (chip of area.chips; track chip) {
-              <mat-chip>{{ chip }}</mat-chip>
-            }
-          </mat-chip-set>
-        </mat-card>
-      }
-    </div>
-  </section>
+        <h1>{{ t('about.title') }}</h1>
 
-  <!-- SpaceLab: What is SpaceLab -->
-  <section class="about-section about-spacelab">
-    <h2 class="about-section-title">{{ t('about.spacelabTitle') }}</h2>
-    <p class="about-spacelab__desc">{{ t('about.spacelabDesc') }}</p>
-    <div class="module-grid">
-      @for (mod of spacelabModules; track mod.key) {
-        <mat-card class="module-card spacelab-material-card">
-          <span class="module-card__icon">{{ mod.icon }}</span>
-          <h3 class="module-card__title">{{ t('about.module.' + mod.key + '.title') }}</h3>
-          <p class="module-card__desc">{{ t('about.module.' + mod.key + '.desc') }}</p>
-        </mat-card>
-      }
-    </div>
-  </section>
+        <p class="about-subtitle">{{ t('about.subtitle') }}</p>
 
-  <!-- Contact -->
-  <section class="about-section about-contact">
-    <h2 class="about-section-title">{{ t('about.contactTitle') }}</h2>
-    <mat-card class="about-contact-card spacelab-material-card">
-      <div class="contact-card__rows">
-        <div class="contact-row">
-          <mat-icon class="contact-row__icon">code</mat-icon>
-          <div class="contact-row__info">
-            <span class="contact-row__label">{{ t('about.github') }}</span>
-            <span class="contact-row__value">Wanfeng1028</span>
-          </div>
+        <p class="about-desc">{{ t('about.description') }}</p>
+
+        <mat-chip-set class="about-chip-set">
+          @for (label of identityLabels; track label) {
+            <mat-chip>{{ t('about.identity.' + label) }}</mat-chip>
+          }
+        </mat-chip-set>
+
+        <div class="about-actions">
+          <a
+            mat-raised-button
+            class="about-primary-button"
+            [href]="github"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <mat-icon>open_in_new</mat-icon>
+            {{ t('about.viewGithub') }}
+          </a>
+
+          <button
+            mat-stroked-button
+            class="about-secondary-button"
+            type="button"
+            (click)="openContactDialog()"
+          >
+            <mat-icon>mail_outline</mat-icon>
+            {{ t('about.contactMe') }}
+          </button>
+        </div>
+      </mat-card>
+    </section>
+
+    <!-- 2 ─ Soft Divider -->
+    <div class="about-soft-divider" aria-hidden="true"></div>
+
+    <!-- 3 ─ Intro: Profile + Story -->
+    <section class="about-intro-grid">
+      <mat-card class="about-profile-card about-glass-card">
+        <div class="about-avatar-ring about-avatar-ring--sm">
+          <img class="about-avatar" [src]="avatar" [alt]="name" />
+        </div>
+        <h3 class="about-profile-name">{{ name }}</h3>
+        <div class="about-status">
+          <span class="about-status-dot"></span>
+          {{ t('about.status') }}
         </div>
         <mat-divider />
-        <div class="contact-row">
-          <mat-icon class="contact-row__icon">mail_outline</mat-icon>
-          <div class="contact-row__info">
-            <span class="contact-row__label">{{ t('about.email') }}</span>
-            <span class="contact-row__value">{{ email }}</span>
-          </div>
+        <div class="about-profile-github">
+          <span class="about-profile-label">{{ t('about.github') }}</span>
+          <span class="about-profile-value">Wanfeng1028</span>
         </div>
+      </mat-card>
+
+      <mat-card class="about-story-card about-glass-card">
+        <p class="about-section-label">WHO I AM</p>
+        <h2>{{ t('about.whoAmI') }}</h2>
+        <p class="about-story-text">{{ t('about.description') }}</p>
+      </mat-card>
+    </section>
+
+    <!-- 4 ─ Focus Areas -->
+    <section class="about-focus-section">
+      <h2 class="about-section-title">{{ t('about.focusTitle') }}</h2>
+      <div class="about-focus-grid">
+        @for (area of focusAreas; track area.key) {
+          <mat-card class="about-focus-card about-glass-card">
+            <span class="about-focus-icon">{{ area.icon }}</span>
+            <h3>{{ t('about.focus.' + area.key + '.title') }}</h3>
+            <p>{{ t('about.focus.' + area.key + '.desc') }}</p>
+            <mat-chip-set>
+              @for (chip of area.chips; track chip) {
+                <mat-chip>{{ chip }}</mat-chip>
+              }
+            </mat-chip-set>
+          </mat-card>
+        }
       </div>
-      <div class="contact-card__actions">
-        <a
-          mat-flat-button
-          class="spacelab-btn spacelab-btn--primary"
-          [href]="github"
-          target="_blank"
-          rel="noopener"
-        >
-          <mat-icon>open_in_new</mat-icon>
-          {{ t('about.openGithub') }}
-        </a>
-        <button
-          mat-stroked-button
-          class="spacelab-btn spacelab-btn--glass"
-          type="button"
-          (click)="copyEmail()"
-        >
-          <mat-icon>content_copy</mat-icon>
-          {{ t('about.copyEmail') }}
-        </button>
-        <button
-          mat-stroked-button
-          class="spacelab-btn spacelab-btn--glass"
-          type="button"
-          (click)="openContactDialog()"
-        >
-          <mat-icon>mail_outline</mat-icon>
-          {{ t('about.sendEmail') }}
-        </button>
+    </section>
+
+    <!-- 5 ─ SpaceLab -->
+    <section class="about-spacelab-section">
+      <h2 class="about-section-title">{{ t('about.spacelabTitle') }}</h2>
+      <p class="about-spacelab-desc">{{ t('about.spacelabDesc') }}</p>
+      <div class="about-spacelab-grid">
+        @for (mod of spacelabModules; track mod.key) {
+          <mat-card class="about-module-card about-glass-card">
+            <span class="about-module-icon">{{ mod.icon }}</span>
+            <h3>{{ t('about.module.' + mod.key + '.title') }}</h3>
+            <p>{{ t('about.module.' + mod.key + '.desc') }}</p>
+          </mat-card>
+        }
       </div>
-    </mat-card>
-  </section>
+    </section>
+
+    <!-- 6 ─ CTA -->
+    <section class="about-cta-section">
+      <mat-card class="about-cta-card about-glass-card">
+        <h2>{{ t('about.ctaTitle') }}</h2>
+        <p class="about-cta-desc">{{ t('about.ctaDesc') }}</p>
+        <div class="about-cta-actions">
+          <button
+            mat-raised-button
+            class="about-primary-button"
+            type="button"
+            (click)="openContactDialog()"
+          >
+            <mat-icon>mail_outline</mat-icon>
+            {{ t('about.contactMe') }}
+          </button>
+          <a
+            mat-stroked-button
+            class="about-secondary-button"
+            [href]="github"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <mat-icon>open_in_new</mat-icon>
+            {{ t('about.openGithub') }}
+          </a>
+          <a mat-stroked-button class="about-secondary-button" [href]="'mailto:' + email">
+            <mat-icon>send</mat-icon>
+            {{ t('about.sendEmail') }}
+          </a>
+        </div>
+      </mat-card>
+    </section>
+  </div>
 </main>

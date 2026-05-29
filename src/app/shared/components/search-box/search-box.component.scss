@@ -411,3 +411,38 @@
     opacity: 0.2;
   }
 }
+
+// ============================================
+// Mobile (≤ 767px)
+// ============================================
+@media (max-width: 767px) {
+  .input {
+    height: 48px;
+    padding-inline: 48px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  #search-icon {
+    left: 14px;
+    top: 12px;
+  }
+
+  #filter-icon {
+    top: 6px;
+    right: 6px;
+    max-height: 36px;
+    max-width: 36px;
+  }
+
+  .filterBorder {
+    height: 38px;
+    width: 38px;
+    top: 5px;
+    right: 5px;
+  }
+
+  .glow {
+    max-width: 280px;
+  }
+}

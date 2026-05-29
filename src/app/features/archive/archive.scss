@@ -80,3 +80,46 @@
     color: var(--color-text-tertiary);
   }
 }
+
+// ============================================
+// Mobile (≤ 767px)
+// ============================================
+@media (max-width: 767px) {
+  .archive-page {
+    padding-top: 72px;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .archive-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .archive-year {
+    margin-bottom: var(--space-xl);
+
+    &__label {
+      font-size: 1.25rem;
+    }
+  }
+
+  .archive-item {
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-md) 0;
+
+    &__date {
+      font-size: 0.8rem;
+      min-width: auto;
+    }
+
+    &__link {
+      font-size: 0.9rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+}

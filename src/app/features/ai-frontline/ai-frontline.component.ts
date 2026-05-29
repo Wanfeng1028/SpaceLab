@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { I18nService } from '../../core/services/i18n.service';
 import {
   buildSearchText,
@@ -96,6 +97,7 @@ function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
+    MatDividerModule,
   ],
   templateUrl: './ai-frontline.html',
   styleUrl: './ai-frontline.scss',

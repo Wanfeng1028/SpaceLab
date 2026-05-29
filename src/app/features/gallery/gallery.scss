@@ -98,3 +98,42 @@
     font-size: 0.95rem;
   }
 }
+
+// ============================================
+// Mobile (≤ 767px)
+// ============================================
+@media (max-width: 767px) {
+  .gallery-page {
+    padding-top: 72px;
+  }
+
+  .gallery-page::before,
+  .gallery-page::after {
+    display: none;
+  }
+
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .gallery-header {
+    margin-bottom: var(--space-lg);
+
+    &__desc {
+      font-size: 0.9rem;
+    }
+  }
+
+  .type-filters {
+    margin-bottom: var(--space-lg);
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: var(--space-xs);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
