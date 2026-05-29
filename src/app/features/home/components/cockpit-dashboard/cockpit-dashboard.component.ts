@@ -6,7 +6,16 @@ import {
   OnDestroy,
   inject,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { I18nService } from '../../../../core/services/i18n.service';
 import { LenisScrollService } from '../../../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
@@ -45,7 +54,20 @@ interface NetworkInformation {
   templateUrl: './cockpit-dashboard.component.html',
   styleUrl: './cockpit-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent, TelemetryBarComponent, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ThreeCanvasComponent,
+    TelemetryBarComponent,
+    MatCardModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule,
+    MatTooltipModule,
+    MatProgressBarModule,
+  ],
 })
 export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly router = inject(Router);

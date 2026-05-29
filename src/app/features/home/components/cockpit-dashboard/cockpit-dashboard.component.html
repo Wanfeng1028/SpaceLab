@@ -8,129 +8,163 @@
   </div>
 
   <div class="cockpit-inner">
-    <!-- Header -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         1. Header
+         ═══════════════════════════════════════════════════════════════ -->
     <header class="cockpit-header">
       <span class="cockpit-header__tag">07</span>
       <h2 class="cockpit-header__title">{{ t('title') }}</h2>
       <p class="cockpit-header__subtitle">{{ t('subtitle') }}</p>
     </header>
 
-    <!-- KPI Grid -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         2. KPI Cards
+         ═══════════════════════════════════════════════════════════════ -->
     <div class="cockpit-kpi-grid">
-      <a class="kpi-card" routerLink="/blog">
-        <span class="kpi-card__value">{{ postsCount() }}</span>
-        <span class="kpi-card__label">{{ t('posts') }}</span>
-      </a>
-      <a class="kpi-card" routerLink="/projects">
-        <span class="kpi-card__value">{{ projectsCount() }}</span>
-        <span class="kpi-card__label">{{ t('projects') }}</span>
-      </a>
-      <a class="kpi-card" routerLink="/ai-frontline">
-        <span class="kpi-card__value">{{ aiNewsCount() }}</span>
-        <span class="kpi-card__label">{{ t('aiNews') }}</span>
-      </a>
-      <a class="kpi-card" routerLink="/lab">
-        <span class="kpi-card__value">{{ aiResourcesCount() }}</span>
-        <span class="kpi-card__label">{{ t('aiResources') }}</span>
-      </a>
+      <mat-card class="kpi-card" appearance="outlined">
+        <a routerLink="/blog" class="kpi-card__link">
+          <mat-icon class="kpi-card__icon">article</mat-icon>
+          <span class="kpi-card__value">{{ postsCount() }}</span>
+          <span class="kpi-card__label">{{ t('posts') }}</span>
+        </a>
+      </mat-card>
+      <mat-card class="kpi-card" appearance="outlined">
+        <a routerLink="/projects" class="kpi-card__link">
+          <mat-icon class="kpi-card__icon">folder_special</mat-icon>
+          <span class="kpi-card__value">{{ projectsCount() }}</span>
+          <span class="kpi-card__label">{{ t('projects') }}</span>
+        </a>
+      </mat-card>
+      <mat-card class="kpi-card" appearance="outlined">
+        <a routerLink="/ai-frontline" class="kpi-card__link">
+          <mat-icon class="kpi-card__icon">bolt</mat-icon>
+          <span class="kpi-card__value">{{ aiNewsCount() }}</span>
+          <span class="kpi-card__label">{{ t('aiNews') }}</span>
+        </a>
+      </mat-card>
+      <mat-card class="kpi-card" appearance="outlined">
+        <a routerLink="/lab" class="kpi-card__link">
+          <mat-icon class="kpi-card__icon">science</mat-icon>
+          <span class="kpi-card__value">{{ aiResourcesCount() }}</span>
+          <span class="kpi-card__label">{{ t('aiResources') }}</span>
+        </a>
+      </mat-card>
     </div>
 
-    <!-- Main 12-column Grid -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         3. Main Dashboard (Row 1)
+         ═══════════════════════════════════════════════════════════════ -->
     <div class="cockpit-main-grid">
-      <!-- Row 1: Visitor Signal / Site Pulse / System Status -->
-
       <!-- Visitor Signal -->
-      <div class="cockpit-panel">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--cyan"></span>
-          <span class="panel-head__title">{{ t('visitorSignal') }}</span>
-        </div>
-        <div class="panel-body">
-          <div class="metric-row">
-            <span class="metric-label">{{ t('localTime') }}</span>
-            <span class="metric-value">{{ localTime() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('timezone') }}</span>
-            <span class="metric-value">{{ timezone() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('language') }}</span>
-            <span class="metric-value">{{ browserLang() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('device') }}</span>
-            <span class="metric-value">{{ device() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('viewport') }}</span>
-            <span class="metric-value">{{ viewport() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('dpr') }}</span>
-            <span class="metric-value">{{ dpr() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('browser') }}</span>
-            <span class="metric-value">{{ browser() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('os') }}</span>
-            <span class="metric-value">{{ os() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('network') }}</span>
-            <span class="metric-value">{{ network() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('connection') }}</span>
-            <span class="metric-value">{{ connection() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('location') }}</span>
-            <span class="metric-value">{{ locationStatus() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('weather') }}</span>
-            <span class="metric-value">{{ weatherStatus() }}</span>
-          </div>
-        </div>
-      </div>
+      <mat-card class="cockpit-panel" appearance="outlined">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="panel-avatar panel-avatar--cyan">sensors</mat-icon>
+          <mat-card-title>{{ t('visitorSignal') }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>{{ t('localTime') }}</span>
+              <span matListItemLine class="metric-value">{{ localTime() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('timezone') }}</span>
+              <span matListItemLine class="metric-value">{{ timezone() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('language') }}</span>
+              <span matListItemLine class="metric-value">{{ browserLang() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('device') }}</span>
+              <span matListItemLine class="metric-value">{{ device() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('viewport') }}</span>
+              <span matListItemLine class="metric-value">{{ viewport() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('dpr') }}</span>
+              <span matListItemLine class="metric-value">{{ dpr() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('browser') }}</span>
+              <span matListItemLine class="metric-value">{{ browser() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('os') }}</span>
+              <span matListItemLine class="metric-value">{{ os() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('network') }}</span>
+              <span matListItemLine class="metric-value">{{ network() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('connection') }}</span>
+              <span matListItemLine class="metric-value">{{ connection() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('location') }}</span>
+              <span matListItemLine class="metric-value">{{ locationStatus() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('weather') }}</span>
+              <span matListItemLine class="metric-value">{{ weatherStatus() }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
 
-      <!-- Site Pulse -->
-      <div class="cockpit-panel">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--blue"></span>
-          <span class="panel-head__title">{{ t('sitePulse') }}</span>
-        </div>
-        <div class="panel-body">
+      <!-- Orbit Pulse -->
+      <mat-card class="cockpit-panel" appearance="outlined">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="panel-avatar panel-avatar--blue">track_changes</mat-icon>
+          <mat-card-title>{{ t('sitePulse') }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
           <div class="pulse-content">
-            <div class="pulse-data">
-              <div class="metric-row">
-                <span class="metric-label">{{ t('siteMode') }}</span>
-                <span class="metric-value">{{ siteMode() }}</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-label">{{ t('contentMode') }}</span>
-                <span class="metric-value">{{ contentModeVal() }}</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-label">{{ t('lastBuild') }}</span>
-                <span class="metric-value">{{ lastBuildTime() }}</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-label">{{ t('lastSync') }}</span>
-                <span class="metric-value">{{ lastSyncTime() }}</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-label">{{ t('totalPages') }}</span>
-                <span class="metric-value">{{ totalPages() }}</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-label">{{ t('currentLang') }}</span>
-                <span class="metric-value">{{ currentLang() }}</span>
-              </div>
-            </div>
+            <mat-list class="pulse-data">
+              <mat-list-item>
+                <span matListItemTitle>{{ t('siteMode') }}</span>
+                <span matListItemLine class="metric-value">{{ siteMode() }}</span>
+              </mat-list-item>
+              <mat-divider />
+              <mat-list-item>
+                <span matListItemTitle>{{ t('contentMode') }}</span>
+                <span matListItemLine class="metric-value">{{ contentModeVal() }}</span>
+              </mat-list-item>
+              <mat-divider />
+              <mat-list-item>
+                <span matListItemTitle>{{ t('lastBuild') }}</span>
+                <span matListItemLine class="metric-value">{{ lastBuildTime() }}</span>
+              </mat-list-item>
+              <mat-divider />
+              <mat-list-item>
+                <span matListItemTitle>{{ t('lastSync') }}</span>
+                <span matListItemLine class="metric-value">{{ lastSyncTime() }}</span>
+              </mat-list-item>
+              <mat-divider />
+              <mat-list-item>
+                <span matListItemTitle>{{ t('totalPages') }}</span>
+                <span matListItemLine class="metric-value">{{ totalPages() }}</span>
+              </mat-list-item>
+              <mat-divider />
+              <mat-list-item>
+                <span matListItemTitle>{{ t('currentLang') }}</span>
+                <span matListItemLine class="metric-value">{{ currentLang() }}</span>
+              </mat-list-item>
+            </mat-list>
             <div class="pulse-radar">
               <div class="radar">
                 <div class="radar-ring radar-ring--1"></div>
@@ -141,173 +175,224 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </mat-card-content>
+      </mat-card>
 
       <!-- System Status -->
-      <div class="cockpit-panel">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--green"></span>
-          <span class="panel-head__title">{{ t('systemStatus') }}</span>
-        </div>
-        <div class="panel-body">
-          <div class="metric-row">
-            <span class="metric-label">{{ t('renderer') }}</span>
-            <span class="metric-value">{{ rendererType() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('fps') }}</span>
-            <span class="metric-value">{{ fps() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('motion') }}</span>
-            <span class="metric-value">{{ motionPref() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('theme') }}</span>
-            <span class="metric-value">{{ currentTheme() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('buildMode') }}</span>
-            <span class="metric-value">{{ buildMode() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('contentMode') }}</span>
-            <span class="metric-value">{{ contentModeSys() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('router') }}</span>
-            <span class="metric-value">{{ routerInfo() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('online') }}</span>
-            <span class="metric-value">{{ onlineStatus() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('assets') }}</span>
-            <span class="metric-value">{{ assetsStatus() }}</span>
-          </div>
-        </div>
-      </div>
+      <mat-card class="cockpit-panel" appearance="outlined">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="panel-avatar panel-avatar--green">monitor_heart</mat-icon>
+          <mat-card-title>{{ t('systemStatus') }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>{{ t('renderer') }}</span>
+              <span matListItemLine class="metric-value">{{ rendererType() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('fps') }}</span>
+              <span matListItemLine class="metric-value">
+                {{ fps() }}
+                <mat-progress-bar
+                  mode="determinate"
+                  [value]="+fps()"
+                  class="fps-bar"
+                  matTooltip="FPS"
+                />
+              </span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('motion') }}</span>
+              <span matListItemLine class="metric-value">{{ motionPref() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('theme') }}</span>
+              <span matListItemLine class="metric-value">{{ currentTheme() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('buildMode') }}</span>
+              <span matListItemLine class="metric-value">{{ buildMode() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('contentMode') }}</span>
+              <span matListItemLine class="metric-value">{{ contentModeSys() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('router') }}</span>
+              <span matListItemLine class="metric-value">{{ routerInfo() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('online') }}</span>
+              <span matListItemLine class="metric-value">{{ onlineStatus() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('assets') }}</span>
+              <span matListItemLine class="metric-value">{{ assetsStatus() }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-      <!-- Row 2: Session Metrics / Content Sync / Analytics Status -->
-
+    <!-- ═══════════════════════════════════════════════════════════════
+         4. Secondary Info (Row 2)
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="cockpit-secondary-grid">
       <!-- Session Metrics -->
-      <div class="cockpit-panel">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--green"></span>
-          <span class="panel-head__title">{{ t('sessionMetrics') }}</span>
-        </div>
-        <div class="panel-body">
-          <div class="metric-row">
-            <span class="metric-label">{{ t('currentPage') }}</span>
-            <span class="metric-value">{{ currentPage() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('sessionTime') }}</span>
-            <span class="metric-value">{{ sessionTime() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('scrollDepth') }}</span>
-            <span class="metric-value">{{ scrollDepth() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('clickCount') }}</span>
-            <span class="metric-value">{{ clickCount() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('routeChanges') }}</span>
-            <span class="metric-value">{{ routeChanges() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('lastInteraction') }}</span>
-            <span class="metric-value">{{ lastInteraction() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('entryRoute') }}</span>
-            <span class="metric-value">{{ entryRoute() }}</span>
-          </div>
-        </div>
-      </div>
+      <mat-card class="cockpit-panel" appearance="outlined">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="panel-avatar panel-avatar--green">schedule</mat-icon>
+          <mat-card-title>{{ t('sessionMetrics') }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>{{ t('currentPage') }}</span>
+              <span matListItemLine class="metric-value">{{ currentPage() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('sessionTime') }}</span>
+              <span matListItemLine class="metric-value">{{ sessionTime() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('scrollDepth') }}</span>
+              <span matListItemLine class="metric-value">{{ scrollDepth() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('clickCount') }}</span>
+              <span matListItemLine class="metric-value">{{ clickCount() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('routeChanges') }}</span>
+              <span matListItemLine class="metric-value">{{ routeChanges() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('lastInteraction') }}</span>
+              <span matListItemLine class="metric-value">{{ lastInteraction() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('entryRoute') }}</span>
+              <span matListItemLine class="metric-value">{{ entryRoute() }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
 
       <!-- Content Sync -->
-      <div class="cockpit-panel">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--purple"></span>
-          <span class="panel-head__title">{{ t('contentSync') }}</span>
-        </div>
-        <div class="panel-body">
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncBlogPosts') }}</span>
-            <span class="metric-value">{{ syncBlogPosts() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncProjects') }}</span>
-            <span class="metric-value">{{ syncProjects() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncAiNews') }}</span>
-            <span class="metric-value">{{ syncAiNews() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncAiTools') }}</span>
-            <span class="metric-value">{{ syncAiTools() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncAiFrameworks') }}</span>
-            <span class="metric-value">{{ syncAiFrameworks() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncLastAi') }}</span>
-            <span class="metric-value">{{ syncLastAi() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncLastLab') }}</span>
-            <span class="metric-value">{{ syncLastLab() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('syncLastProject') }}</span>
-            <span class="metric-value">{{ syncLastProject() }}</span>
-          </div>
-        </div>
-      </div>
+      <mat-card class="cockpit-panel" appearance="outlined">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="panel-avatar panel-avatar--purple">sync</mat-icon>
+          <mat-card-title>{{ t('contentSync') }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncBlogPosts') }}</span>
+              <span matListItemLine class="metric-value">{{ syncBlogPosts() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncProjects') }}</span>
+              <span matListItemLine class="metric-value">{{ syncProjects() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncAiNews') }}</span>
+              <span matListItemLine class="metric-value">{{ syncAiNews() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncAiTools') }}</span>
+              <span matListItemLine class="metric-value">{{ syncAiTools() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncAiFrameworks') }}</span>
+              <span matListItemLine class="metric-value">{{ syncAiFrameworks() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncLastAi') }}</span>
+              <span matListItemLine class="metric-value">{{ syncLastAi() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncLastLab') }}</span>
+              <span matListItemLine class="metric-value">{{ syncLastLab() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('syncLastProject') }}</span>
+              <span matListItemLine class="metric-value">{{ syncLastProject() }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
 
       <!-- Analytics Status -->
-      <div class="cockpit-panel">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--amber"></span>
-          <span class="panel-head__title">{{ t('analyticsStatus') }}</span>
-        </div>
-        <div class="panel-body">
-          <div class="metric-row">
-            <span class="metric-label">{{ t('analyticsMode') }}</span>
-            <span class="metric-value">{{ analyticsMode() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('pv') }}</span>
-            <span class="metric-value">{{ pvValue() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('uv') }}</span>
-            <span class="metric-value">{{ uvValue() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('popularPage') }}</span>
-            <span class="metric-value">{{ popularPage() }}</span>
-          </div>
-          <div class="metric-row">
-            <span class="metric-label">{{ t('dataSource') }}</span>
-            <span class="metric-value">{{ analyticsSource() }}</span>
-          </div>
-        </div>
-      </div>
+      <mat-card class="cockpit-panel" appearance="outlined">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="panel-avatar panel-avatar--amber">analytics</mat-icon>
+          <mat-card-title>{{ t('analyticsStatus') }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>{{ t('analyticsMode') }}</span>
+              <span matListItemLine class="metric-value">{{ analyticsMode() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('pv') }}</span>
+              <span matListItemLine class="metric-value">{{ pvValue() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('uv') }}</span>
+              <span matListItemLine class="metric-value">{{ uvValue() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('popularPage') }}</span>
+              <span matListItemLine class="metric-value">{{ popularPage() }}</span>
+            </mat-list-item>
+            <mat-divider />
+            <mat-list-item>
+              <span matListItemTitle>{{ t('dataSource') }}</span>
+              <span matListItemLine class="metric-value">{{ analyticsSource() }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-      <!-- Command Log — full width -->
-      <div class="cockpit-panel cockpit-panel--log" style="grid-column: 1 / -1">
-        <div class="panel-head">
-          <span class="panel-dot panel-dot--cyan"></span>
-          <span class="panel-head__title">{{ t('commandLog') }}</span>
-        </div>
+    <!-- ═══════════════════════════════════════════════════════════════
+         5. System Log
+         ═══════════════════════════════════════════════════════════════ -->
+    <mat-card class="cockpit-panel cockpit-panel--log" appearance="outlined">
+      <mat-card-header>
+        <mat-icon matCardAvatar class="panel-avatar panel-avatar--cyan">terminal</mat-icon>
+        <mat-card-title>{{ t('commandLog') }}</mat-card-title>
+        <mat-chip-set class="log-chips">
+          <mat-chip highlighted>{{ commandLog().length }}</mat-chip>
+        </mat-chip-set>
+      </mat-card-header>
+      <mat-card-content>
         <div class="log-body">
           @for (entry of commandLog(); track entry.time + entry.tag) {
             <div class="log-line">
@@ -317,26 +402,41 @@
             </div>
           }
         </div>
-      </div>
-    </div>
+      </mat-card-content>
+    </mat-card>
 
-    <!-- Action buttons -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         6. Action Buttons
+         ═══════════════════════════════════════════════════════════════ -->
     <div class="cockpit-actions">
-      <button class="cockpit-btn" (click)="onReturnTop()">
-        <span class="cockpit-btn__icon">↑</span>
-        <span class="cockpit-btn__text">{{ t('returnTop') }}</span>
+      <button
+        mat-stroked-button
+        class="cockpit-action-btn"
+        (click)="onReturnTop()"
+        matTooltip="{{ t('returnTop') }}"
+      >
+        <mat-icon>arrow_upward</mat-icon>
+        <span>{{ t('returnTop') }}</span>
       </button>
-      <button class="cockpit-btn" (click)="onRestartOrbit()">
-        <span class="cockpit-btn__icon">⟳</span>
-        <span class="cockpit-btn__text">{{ t('restartOrbit') }}</span>
+      <button
+        mat-stroked-button
+        class="cockpit-action-btn"
+        (click)="onRestartOrbit()"
+        matTooltip="{{ t('restartOrbit') }}"
+      >
+        <mat-icon>refresh</mat-icon>
+        <span>{{ t('restartOrbit') }}</span>
       </button>
-      <button class="cockpit-btn cockpit-btn--primary" (click)="onEnterSite()">
-        <span class="cockpit-btn__icon">→</span>
-        <span class="cockpit-btn__text">{{ t('enterSite') }}</span>
+      <button
+        mat-flat-button
+        class="cockpit-action-btn cockpit-action-btn--primary"
+        (click)="onEnterSite()"
+        matTooltip="{{ t('enterSite') }}"
+      >
+        <mat-icon>open_in_new</mat-icon>
+        <span>{{ t('enterSite') }}</span>
       </button>
     </div>
-
-    <!-- Next Orbit — feature card extracted to HomeNextOrbitCardComponent -->
 
     <!-- Telemetry bar -->
     <app-telemetry-bar [text]="t('telemetryText')" status="online" />
