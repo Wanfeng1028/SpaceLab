@@ -39,18 +39,9 @@
 
       <!-- 头像和基本信息 -->
       <div style="display: flex; gap: 24px; margin-bottom: 24px">
-        <div style="flex-shrink: 0">
-          <img
-            [src]="profileAvatar"
-            alt="avatar"
-            style="
-              width: 80px;
-              height: 80px;
-              border-radius: 50%;
-              border: 2px solid rgba(186, 66, 255, 0.5);
-              box-shadow: 0 0 20px rgba(186, 66, 255, 0.3);
-            "
-          />
+        <div class="scm-avatar-spinner avatar-spinner">
+          <div class="avatar-spinner__ring"></div>
+          <img class="avatar-spinner__img" [src]="profileAvatar" alt="avatar" />
         </div>
         <div style="flex: 1">
           <div style="font-size: 18px; font-weight: 600; color: #38bdf8; margin-bottom: 4px">

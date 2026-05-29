@@ -2,8 +2,9 @@
   <!-- Hero: Digital Identity Capsule -->
   <section class="about-hero">
     <mat-card class="about-profile-card spacelab-material-card">
-      <div class="profile-card__avatar-wrap">
-        <img class="profile-card__avatar" [src]="avatar" [alt]="name" />
+      <div class="profile-card__avatar-wrap avatar-spinner">
+        <div class="avatar-spinner__ring"></div>
+        <img class="avatar-spinner__img" [src]="avatar" [alt]="name" />
       </div>
       <h2 class="profile-card__name">{{ name }}</h2>
       <div class="profile-card__identity-chips">

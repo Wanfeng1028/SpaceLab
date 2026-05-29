@@ -113,8 +113,8 @@ $sans: var(--font-sans);
   background: $panel-bg;
   border: 1px solid $panel-border;
   border-radius: 18px;
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
   box-shadow: $panel-shadow;
   text-decoration: none;
   color: inherit;
@@ -152,7 +152,7 @@ $sans: var(--font-sans);
 // ── Main 12-column grid ──────────────────────────────────────────────
 .cockpit-main-grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: minmax(240px, 4fr) minmax(340px, 5fr) minmax(220px, 3fr);
   gap: 16px;
 }
 
@@ -163,8 +163,8 @@ $sans: var(--font-sans);
   background: $panel-bg;
   border: 1px solid $panel-border;
   box-shadow: $panel-shadow;
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
 
   &--log {
     .log-body {
@@ -258,13 +258,14 @@ $sans: var(--font-sans);
 }
 
 .metric-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 16px;
   padding: 7px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 12px;
+  min-width: 0;
 
   &:last-child {
     border-bottom: none;
@@ -275,8 +276,10 @@ $sans: var(--font-sans);
   color: $muted;
   font-family: $mono;
   letter-spacing: 0.04em;
-  flex-shrink: 0;
+  min-width: 0;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .metric-value {
@@ -284,8 +287,10 @@ $sans: var(--font-sans);
   font-family: $mono;
   font-weight: 600;
   text-align: right;
-  word-break: break-all;
-  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
 }
 
 // ── Site Pulse with radar ────────────────────────────────────────────
@@ -650,13 +655,16 @@ app-telemetry-bar {
   }
 
   .metric-row {
-    flex-wrap: wrap;
-    gap: 4px;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    gap: 8px;
   }
 
   .metric-value {
-    text-align: left;
-    width: 100%;
+    text-align: right;
+    max-width: 52vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .log-body {
