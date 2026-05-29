@@ -15,8 +15,8 @@ import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
-import { HomeBlueMoonTreeSection } from './components/home-blue-moon-tree/home-blue-moon-tree.component';
-import { HomeEarthFlylineSection } from './components/home-earth-flyline/home-earth-flyline.component';
+import { MoonTreeSectionComponent } from './components/home-blue-moon-tree/home-blue-moon-tree.component';
+import { EarthFlylineSectionComponent } from './components/home-earth-flyline/home-earth-flyline.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 import { HomeNextOrbitCardComponent } from './components/home-next-orbit-card/home-next-orbit-card.component';
 import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
@@ -30,8 +30,8 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
     ThreeCanvasComponent,
     LaunchTelemetryOverlayComponent,
     MacTerminalModalComponent,
-    HomeBlueMoonTreeSection,
-    HomeEarthFlylineSection,
+    MoonTreeSectionComponent,
+    EarthFlylineSectionComponent,
     CockpitDashboardSection,
     HomeNextOrbitCardComponent,
     LaunchTerminalTransitionComponent,

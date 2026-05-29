@@ -10,7 +10,7 @@ import { I18nService } from '../../../../core/services/i18n.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ThreeCanvasComponent],
 })
-export class HomeBlueMoonTreeSection {
+export class MoonTreeSectionComponent {
   private i18n = inject(I18nService);
 
   sceneFactory = (canvas: HTMLCanvasElement) => new MoonTreeScene(canvas);

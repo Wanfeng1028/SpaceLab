@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
 import { MatCardModule } from '@angular/material/card';
-import { GlobeStreamScene } from '../../../../shared/three/globe-stream/globe-stream-scene';
+import { EarthFlylineScene } from '../../../../shared/three/earth-flyline/earth-flyline-scene';
 import { I18nService } from '../../../../core/services/i18n.service';
 
 @Component({
@@ -11,16 +11,12 @@ import { I18nService } from '../../../../core/services/i18n.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ThreeCanvasComponent, MatCardModule],
 })
-export class HomeEarthFlylineSection {
+export class EarthFlylineSectionComponent {
   private readonly i18n = inject(I18nService);
 
   readonly sceneFactory = (canvas: HTMLCanvasElement) =>
-    new GlobeStreamScene(canvas, {
+    new EarthFlylineScene(canvas, {
       autoRotate: true,
-      theme: 'blue',
-      showFlyLines: true,
-      showPoints: true,
-      showGlow: true,
     });
 
   t(key: string): string {
