@@ -1,10 +1,10 @@
-import pointImg from '@/assets/three/globe-stream/image/point.png';
-import scatterImg from '@/assets/three/globe-stream/image/scatter.png';
+import pointImg from '../../../../../../assets/three/globe-stream/image/point.png';
+import scatterImg from '../../../../../../assets/three/globe-stream/image/scatter.png';
 import { lon2xyz } from '../utils/math';
-import { Coordinates, ScatterStyle, StoreConfig } from '@/lib/interface';
-import { setTween } from '@/lib/utils/tween';
+import { Coordinates, ScatterStyle, StoreConfig } from '../interface';
+import { setTween } from '../utils/tween';
 import { Group, Mesh, MeshBasicMaterial, PlaneGeometry, TextureLoader, Vector3 } from 'three';
-import Store from '@/lib/store/store';
+import Store from '../store/store';
 import { cloneDeep } from 'lodash-es';
 
 const textureLoader = new TextureLoader();

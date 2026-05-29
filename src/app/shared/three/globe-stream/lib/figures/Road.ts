@@ -1,5 +1,5 @@
-import { RoadStyle, StoreConfig } from '@/lib/interface';
-import Store from '@/lib/store/store';
+import { RoadStyle, StoreConfig } from '../interface';
+import Store from '../store/store';
 import {
   ArcCurve,
   BufferAttribute,
@@ -16,8 +16,8 @@ import {
   Vector2,
   Vector3,
 } from 'three';
-import { _3Dto2D, radianAOB } from '@/lib/utils/math';
-import { setTween } from '@/lib/utils/tween';
+import { _3Dto2D, radianAOB } from '../utils/math';
+import { setTween } from '../utils/tween';
 import { merge } from 'lodash-es';
 import { cloneDeep } from 'lodash-es';
 

@@ -1,8 +1,8 @@
-import { BarData, BarStyle, StoreConfig } from '@/lib/interface';
-import Store from '@/lib/store/store';
+import { BarData, BarStyle, StoreConfig } from '../interface';
+import Store from '../store/store';
 import { cloneDeep } from 'lodash-es';
 import { BoxGeometry, BufferAttribute, Color, Mesh, MeshMatcapMaterial, Vector3 } from 'three';
-import { lon2xyz } from '@/lib/utils/math';
+import { lon2xyz } from '../utils/math';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
 export default class Bar {

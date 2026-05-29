@@ -1,4 +1,4 @@
-import ChartScene from '@/lib/chartScene';
+import ChartScene from '../chartScene';
 import { Group, Mesh, MeshBasicMaterial, Object3D, Raycaster, Vector2 } from 'three';
 
 class EventStore {

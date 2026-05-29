@@ -1,7 +1,7 @@
-import Store from '@/lib/store/store';
+import Store from '../store/store';
 import { CanvasTexture, Group, Mesh, MeshBasicMaterial, PlaneGeometry, Vector3 } from 'three';
-import { lon2xyz } from '@/lib/utils/math';
-import { LessCoordinate, TextMarkItem, TextStyle } from '@/lib/interface';
+import { lon2xyz } from '../utils/math';
+import { LessCoordinate, TextMarkItem, TextStyle } from '../interface';
 
 const DEFAULT_TEXT_STYLE: TextStyle = {
   fontSize: 20,

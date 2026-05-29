@@ -1,6 +1,6 @@
 import { Sprite, SpriteMaterial, TextureLoader } from 'three';
-import img from '@/assets/three/globe-stream/image/sprite.png';
-import { StoreConfig } from '@/lib/interface';
+import img from '../../../../../../assets/three/globe-stream/image/sprite.png';
+import { StoreConfig } from '../interface';
 
 export default (config: StoreConfig) => {
   // TextureLoader创建一个纹理加载器对象，可以加载图片作为纹理贴图

@@ -14,11 +14,11 @@ import {
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js';
 import { Line2 } from 'three/examples/jsm/lines/Line2.js';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
-import { _3Dto2D, radianAOB, threePointCenter } from '@/lib/utils/math';
-import { setTween } from '@/lib/utils/tween';
-import { FlyLineData, LineStyle, StoreConfig } from '@/lib/interface';
-import Store from '@/lib/store/store';
-import { addUserDataToMesh } from '@/lib/utils';
+import { _3Dto2D, radianAOB, threePointCenter } from '../utils/math';
+import { setTween } from '../utils/tween';
+import { FlyLineData, LineStyle, StoreConfig } from '../interface';
+import Store from '../store/store';
+import { addUserDataToMesh } from '../utils';
 import { merge } from 'lodash-es';
 import { cloneDeep } from 'lodash-es';
 
@@ -84,7 +84,7 @@ export default class FlyLine3d {
       setTween(
         { z: 0 },
         { z: endDeg - startDeg },
-        (params) => {
+        (params: any) => {
           tadpolePointsMesh.rotation.z = params.z;
         },
         {
@@ -100,7 +100,7 @@ export default class FlyLine3d {
       setTween(
         { z: 0 },
         { z: endDeg - startDeg },
-        (params) => {
+        (params: any) => {
           imgMesh.rotation.z = params.z;
         },
         {

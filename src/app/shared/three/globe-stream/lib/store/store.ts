@@ -1,4 +1,4 @@
-import { InitConfig, Options, StoreConfig } from '@/lib/interface';
+import { InitConfig, Options, StoreConfig } from '../interface';
 import { merge } from 'lodash-es';
 
 class Store {

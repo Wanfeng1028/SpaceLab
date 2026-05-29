@@ -1,13 +1,12 @@
+npm warn Unknown user config "always-auth". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
 
 > spacelab@0.0.0 prebuild
-> node scripts/build-content.mjs
+> node scripts/check-i18n.mjs && node scripts/build-content.mjs
 
-✅ content.generated.ts — 5 posts, 1 projects, 9 gallery items, 65 AI news, 10 lab tools, 10 lab projects
+✅ i18n OK — 649 keys in sync across zh-CN and en-US
+✅ content.generated.ts — 5 posts, 30 projects, 9 gallery items, 24 AI news, 19 lab tools, 6 lab projects, about: 1 config, i18n: zh=40 namespaces
 
 > spacelab@0.0.0 build
 > ng build
 
 [33m❯[39m Building...
-[32m✔[39m Building...
-Application bundle generation failed. [3.637 seconds] - 2026-05-29T09:23:31.183Z
-

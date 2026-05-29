@@ -9,8 +9,8 @@ import {
   SphereGeometry,
   TextureLoader,
 } from 'three';
-import { StoreConfig } from '@/lib/interface';
-import Store from '@/lib/store/store';
+import { StoreConfig } from '../interface';
+import Store from '../store/store';
 import { Texture } from 'three';
 
 class CreateEarth {

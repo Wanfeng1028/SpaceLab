@@ -1,4 +1,4 @@
-import type ChartScene from '@/lib/chartScene';
+import type ChartScene from '../chartScene';
 import {
   BackSide,
   Color,
@@ -13,7 +13,7 @@ import {
   Object3D,
   Sprite,
 } from 'three';
-import { BasicMaterial } from '@/lib/interface';
+import { BasicMaterial } from '../interface';
 
 type ControlConfig = {
   label: string;

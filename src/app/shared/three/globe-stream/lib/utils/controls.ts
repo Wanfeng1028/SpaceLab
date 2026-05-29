@@ -1,5 +1,5 @@
 import { Object3D, Raycaster, WebGLRenderer, Vector2, Vector3 } from 'three';
-import { DragConfig } from '@/lib/interface';
+import { DragConfig } from '../interface';
 
 export default class EarthController {
   earth: Object3D;

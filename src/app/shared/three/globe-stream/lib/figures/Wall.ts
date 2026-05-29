@@ -7,11 +7,11 @@ import {
   Shape,
   Vector3,
 } from 'three';
-import Store from '@/lib/store/store';
-import { StoreConfig, WallStyle } from '@/lib/interface';
+import Store from '../store/store';
+import { StoreConfig, WallStyle } from '../interface';
 import { Position } from 'geojson';
-import { lon2xyz } from '@/lib/utils/math';
-import { GeoLineSource, normalizeGeoLineData } from '@/lib/utils/geoLineData';
+import { lon2xyz } from '../utils/math';
+import { GeoLineSource, normalizeGeoLineData } from '../utils/geoLineData';
 
 export class Wall {
   private readonly _config: StoreConfig;

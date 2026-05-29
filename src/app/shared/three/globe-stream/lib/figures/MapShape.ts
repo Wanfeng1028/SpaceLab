@@ -1,4 +1,4 @@
-import { BasicMaterial, Options, RegionBaseStyle, StoreConfig } from '@/lib/interface';
+import { BasicMaterial, Options, RegionBaseStyle, StoreConfig } from '../interface';
 import {
   BackSide,
   BufferAttribute,
@@ -13,10 +13,10 @@ import {
 } from 'three';
 import { Feature, Position } from 'geojson';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { lon2xyz } from '@/lib/utils/math';
+import { lon2xyz } from '../utils/math';
 import Delaunator from 'delaunator';
-import MapStore from '@/lib/store/mapStore';
-import ChartScene from '@/lib/chartScene';
+import MapStore from '../store/mapStore';
+import ChartScene from '../chartScene';
 
 export default class MapShape {
   private readonly _config: StoreConfig;

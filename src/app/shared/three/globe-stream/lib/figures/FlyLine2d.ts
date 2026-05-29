@@ -13,11 +13,11 @@ import {
   TextureLoader,
   Vector3,
 } from 'three';
-import { getFunctionExpression } from '@/lib/utils/math';
-import { setTween } from '@/lib/utils/tween';
-import { FlyLineData, LineStyle, StoreConfig } from '@/lib/interface';
-import Store from '@/lib/store/store';
-import { addUserDataToMesh } from '@/lib/utils';
+import { getFunctionExpression } from '../utils/math';
+import { setTween } from '../utils/tween';
+import { FlyLineData, LineStyle, StoreConfig } from '../interface';
+import Store from '../store/store';
+import { addUserDataToMesh } from '../utils';
 import { cloneDeep } from 'lodash-es';
 
 const parseColorOpacity = (input: unknown) => {
@@ -69,7 +69,7 @@ export default class FlyLine2d {
     setTween(
       { index: 0 },
       { index: points.length - tadpoleSize },
-      (params) => {
+      (params: any) => {
         tadpolePointsMesh.geometry.setFromPoints(
           points.slice(params.index, params.index + tadpoleSize),
         );

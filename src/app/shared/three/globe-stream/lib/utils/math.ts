@@ -1,5 +1,5 @@
 import { Quaternion, Vector3 } from 'three';
-import { Coordinates3D } from '@/lib/interface';
+import { Coordinates3D } from '../interface';
 
 /**
  * 经纬度坐标转球面坐标

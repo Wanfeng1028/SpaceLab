@@ -8,14 +8,14 @@ import {
   ShaderMaterial,
   Vector3,
 } from 'three';
-import vertexShader from '@/shaders/map_line_vertexShader.glsl';
-import fragmentShader from '@/shaders/map_line_fragmentShader.glsl';
-import { MapStreamStyle, StoreConfig } from '@/lib/interface';
-import Store from '@/lib/store/store';
+import vertexShader from '../../shaders/map_line_vertexShader.glsl';
+import fragmentShader from '../../shaders/map_line_fragmentShader.glsl';
+import { MapStreamStyle, StoreConfig } from '../interface';
+import Store from '../store/store';
 import { Position } from 'geojson';
-import { lon2xyz } from '@/lib/utils/math';
-import { setTween } from '@/lib/utils/tween';
-import { GeoLineSource, normalizeGeoLineData } from '@/lib/utils/geoLineData';
+import { lon2xyz } from '../utils/math';
+import { setTween } from '../utils/tween';
+import { GeoLineSource, normalizeGeoLineData } from '../utils/geoLineData';
 
 export default class MapStreamLine {
   private readonly _config: StoreConfig;

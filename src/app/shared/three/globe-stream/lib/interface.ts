@@ -1,6 +1,6 @@
 import { Group } from 'three';
 import { Position } from 'geojson';
-import { GeoLineSource } from '@/lib/utils/geoLineData';
+import { GeoLineSource } from './utils/geoLineData';
 
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;

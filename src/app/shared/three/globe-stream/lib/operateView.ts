@@ -7,16 +7,16 @@ import {
   TextMarkItem,
 } from './interface';
 import { Group, Mesh, Object3D, Vector3 } from 'three';
-import FlyLine3d from '@/lib/figures/FlyLine3d';
-import { lon2xyz, uuid } from '@/lib/utils/math';
-import Scatter from '@/lib/figures/Scatter';
-import Store from '@/lib/store/store';
-import FlyLine2d from '@/lib/figures/FlyLine2d';
-import { Road } from '@/lib/figures/Road';
-import { Wall } from '@/lib/figures/Wall';
-import TextMark from '@/lib/figures/Text';
-import MapStreamLine from '@/lib/figures/MapStreamLine';
-import Bar from '@/lib/figures/Bar';
+import FlyLine3d from './figures/FlyLine3d';
+import { lon2xyz, uuid } from './utils/math';
+import Scatter from './figures/Scatter';
+import Store from './store/store';
+import FlyLine2d from './figures/FlyLine2d';
+import { Road } from './figures/Road';
+import { Wall } from './figures/Wall';
+import TextMark from './figures/Text';
+import MapStreamLine from './figures/MapStreamLine';
+import Bar from './figures/Bar';
 
 export default class OperateView {
   private readonly _store: Store;
