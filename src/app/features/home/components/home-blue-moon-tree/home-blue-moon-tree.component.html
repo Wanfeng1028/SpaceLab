@@ -1,14 +1,62 @@
-<div class="blue-moon-tree">
-  <!-- Three.js 粒子树画布 -->
+<div
+  class="blue-moon-tree"
+  aria-label="Blue moon tree particle scene"
+  [style.--scene-brightness]="brightness() + '%'"
+>
   <app-three-canvas [sceneFactory]="sceneFactory" />
 
-  <!-- 标题叠加层 -->
-  <div class="tree-overlay">
-    <div class="tree-header">
-      <p class="tree-telemetry">{{ t('homeBlueMoonTree.telemetry') }}</p>
-      <h2 class="tree-title">{{ t('homeBlueMoonTree.title') }}</h2>
-      <p class="tree-subtitle">{{ t('homeBlueMoonTree.subtitle') }}</p>
-      <p class="tree-desc">{{ t('homeBlueMoonTree.desc') }}</p>
+  <div class="scene-control">
+    <div class="scene-control__actions" aria-label="Blue moon tree controls">
+      <button mat-icon-button type="button" class="scene-control__icon" aria-label="Zoom tree in" (click)="zoomIn()">
+        <mat-icon>zoom_in</mat-icon>
+      </button>
+      <button mat-icon-button type="button" class="scene-control__icon" aria-label="Zoom tree out" (click)="zoomOut()">
+        <mat-icon>zoom_out</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="scene-control__icon"
+        aria-label="Rotate tree"
+        (click)="toggleRotation()"
+      >
+        <mat-icon>360</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="scene-control__icon"
+        aria-label="Blue moon tree brightness"
+        (click)="toggleBrightness()"
+      >
+        <mat-icon>brightness_6</mat-icon>
+      </button>
     </div>
+
+    @if (rotationOpen()) {
+      <div class="scene-control__panel" aria-label="Blue moon tree rotation">
+        <mat-slider min="0" max="360" step="1" discrete>
+          <input
+            matSliderThumb
+            [value]="rotation()"
+            (input)="setRotation($any($event.target).valueAsNumber)"
+            aria-label="Blue moon tree 360 degree rotation"
+          />
+        </mat-slider>
+      </div>
+    }
+
+    @if (brightnessOpen()) {
+      <div class="scene-control__panel" aria-label="Blue moon tree brightness">
+        <mat-slider min="24" max="82" step="1" discrete>
+          <input
+            matSliderThumb
+            [value]="brightness()"
+            (input)="setBrightness($any($event.target).valueAsNumber)"
+            aria-label="Blue moon tree brightness"
+          />
+        </mat-slider>
+      </div>
+    }
   </div>
 </div>

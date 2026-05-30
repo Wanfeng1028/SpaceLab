@@ -1,35 +1,62 @@
-<div class="earth-flyline-wrapper">
-  <!-- Three.js Globe Canvas -->
+<div
+  class="earth-flyline-wrapper"
+  aria-label="Blue holographic Earth flyline scene"
+  [style.--scene-brightness]="brightness() + '%'"
+>
   <app-three-canvas [sceneFactory]="sceneFactory" />
 
-  <!-- Overlay Content -->
-  <div class="earth-flyline-overlay">
-    <!-- Left panel -->
-    <div class="left-panel">
-      <mat-card class="info-card">
-        <mat-card-content>
-          <p class="info-label">Research Nodes</p>
-          <p class="info-value">12</p>
-        </mat-card-content>
-      </mat-card>
+  <div class="scene-control">
+    <div class="scene-control__actions" aria-label="Earth scene controls">
+      <button mat-icon-button type="button" class="scene-control__icon" aria-label="Zoom earth in" (click)="zoomIn()">
+        <mat-icon>zoom_in</mat-icon>
+      </button>
+      <button mat-icon-button type="button" class="scene-control__icon" aria-label="Zoom earth out" (click)="zoomOut()">
+        <mat-icon>zoom_out</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="scene-control__icon"
+        aria-label="Rotate earth"
+        (click)="toggleRotation()"
+      >
+        <mat-icon>360</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="scene-control__icon"
+        aria-label="Earth brightness"
+        (click)="toggleBrightness()"
+      >
+        <mat-icon>brightness_6</mat-icon>
+      </button>
     </div>
 
-    <!-- Center content -->
-    <div class="center-content">
-      <p class="ef-telemetry">{{ t('homeEarthSignal.telemetry') }}</p>
-      <h2 class="ef-title">{{ t('homeEarthSignal.title') }}</h2>
-      <p class="ef-subtitle">{{ t('homeEarthSignal.subtitle') }}</p>
-      <p class="ef-desc">{{ t('homeEarthSignal.desc') }}</p>
-    </div>
+    @if (rotationOpen()) {
+      <div class="scene-control__panel" aria-label="Earth scene rotation">
+        <mat-slider min="0" max="360" step="1" discrete>
+          <input
+            matSliderThumb
+            [value]="rotation()"
+            (input)="setRotation($any($event.target).valueAsNumber)"
+            aria-label="Earth 360 degree rotation"
+          />
+        </mat-slider>
+      </div>
+    }
 
-    <!-- Right panel -->
-    <div class="right-panel">
-      <mat-card class="info-card">
-        <mat-card-content>
-          <p class="info-label">Active Links</p>
-          <p class="info-value">14</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+    @if (brightnessOpen()) {
+      <div class="scene-control__panel" aria-label="Earth scene brightness">
+        <mat-slider min="25" max="82" step="1" discrete>
+          <input
+            matSliderThumb
+            [value]="brightness()"
+            (input)="setBrightness($any($event.target).valueAsNumber)"
+            aria-label="Earth brightness"
+          />
+        </mat-slider>
+      </div>
+    }
   </div>
 </div>

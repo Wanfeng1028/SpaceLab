@@ -1,73 +1,68 @@
 import {
-  Scene,
-  PerspectiveCamera,
-  WebGLRenderer,
-  SphereGeometry,
-  BufferGeometry,
-  Float32BufferAttribute,
-  ShaderMaterial,
-  Mesh,
-  MeshBasicMaterial,
-  MeshPhongMaterial,
-  Points,
-  Group,
-  Clock,
   AdditiveBlending,
+  BackSide,
+  BoxGeometry,
+  BufferGeometry,
+  CanvasTexture,
+  Clock,
   Color,
-  Vector3,
-  QuadraticBezierCurve3,
+  DoubleSide,
+  Float32BufferAttribute,
+  Group,
   Line,
   LineBasicMaterial,
+  LinearFilter,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Points,
+  QuadraticBezierCurve3,
   RingGeometry,
-  DoubleSide,
-  BackSide,
-  TextureLoader,
-  CanvasTexture,
-  SpriteMaterial,
+  Scene,
+  ShaderMaterial,
+  SphereGeometry,
   Sprite,
+  SpriteMaterial,
+  Texture,
+  TextureLoader,
   Vector2,
+  Vector3,
+  WebGLRenderer,
 } from 'three';
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 import worldJSON from '../globe-stream/map/world.json';
 
 const DEG = Math.PI / 180;
 
-function latLngToVec3(lat: number, lng: number, r: number): Vector3 {
-  const phi = (90 - lat) * DEG;
-  const theta = (lng + 180) * DEG;
-  return new Vector3(
-    -r * Math.sin(phi) * Math.cos(theta),
-    r * Math.cos(phi),
-    r * Math.sin(phi) * Math.sin(theta),
-  );
-}
-
-function createCirclePoints(radius: number, segments = 64): Vector3[] {
-  const points: Vector3[] = [];
-  for (let i = 0; i <= segments; i++) {
-    const theta = (i / segments) * Math.PI * 2;
-    points.push(new Vector3(Math.cos(theta) * radius, 0, Math.sin(theta) * radius));
-  }
-  return points;
-}
-
-interface PulsingRing {
-  mesh: Mesh;
-  scale: number;
-  maxScale: number;
-  speed: number;
-}
-
-interface TelemetryStream {
+interface FlyStream {
   curve: QuadraticBezierCurve3;
-  geom: BufferGeometry;
+  geometry: BufferGeometry;
   speed: number;
   offset: number;
+  length: number;
+}
+
+interface PulseRing {
+  mesh: Mesh;
+  phase: number;
+  speed: number;
+}
+
+interface Satellite {
+  group: Group;
+  trail: BufferGeometry;
+  radius: number;
+  phase: number;
+  speed: number;
+  tiltX: number;
+  tiltY: number;
+  tiltZ: number;
+  scale: number;
 }
 
 export interface EarthFlylineOptions {
@@ -75,346 +70,560 @@ export interface EarthFlylineOptions {
   colorMode?: 'blue' | 'cyan';
 }
 
+function latLngToVec3(lat: number, lng: number, radius: number): Vector3 {
+  const phi = (90 - lat) * DEG;
+  const theta = (lng + 180) * DEG;
+  return new Vector3(
+    -radius * Math.sin(phi) * Math.cos(theta),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta),
+  );
+}
+
+function circularPoints(radius: number, segments = 220): Vector3[] {
+  const points: Vector3[] = [];
+  for (let i = 0; i <= segments; i++) {
+    const a = (i / segments) * Math.PI * 2;
+    points.push(new Vector3(Math.cos(a) * radius, 0, Math.sin(a) * radius));
+  }
+  return points;
+}
+
 export class EarthFlylineScene {
   private scene!: Scene;
   private camera!: PerspectiveCamera;
   private renderer!: WebGLRenderer;
   private composer!: EffectComposer;
-  private globeGroup!: Group;
-  private scanGridMesh!: Mesh;
-  private clock!: Clock;
-
+  private bloomPass: UnrealBloomPass | null = null;
+  private clock = new Clock();
+  private globeGroup = new Group();
+  private orbitGroup = new Group();
+  private textures: Texture[] = [];
+  private streams: FlyStream[] = [];
+  private pulseRings: PulseRing[] = [];
+  private satellites: Satellite[] = [];
+  private cloudShell: Mesh | null = null;
+  private animatedMaterials: ShaderMaterial[] = [];
   private animationId: number | null = null;
   private resizeHandler!: () => void;
-  private mouseMoveHandler!: (e: MouseEvent) => void;
+  private pointerMoveHandler!: (event: PointerEvent) => void;
+  private pointerDownHandler!: (event: PointerEvent) => void;
+  private pointerUpHandler!: (event: PointerEvent) => void;
+  private contextLostHandler: ((event: Event) => void) | null = null;
   private disposed = false;
-  private contextLostHandler: ((e: Event) => void) | null = null;
-
-  // Starfield and drifting cosmic dust
-  private starfield: Points | null = null;
-  private cosmicDust: Points | null = null;
-
-  // Orbiting digital telemetry rings
-  private scanningRingEquator!: Line;
-  private scanningRingPolar!: Line;
-  private satelliteMesh!: Mesh;
-
-  // Pulsing city nodes radar rings
-  private pulsingRings: PulsingRing[] = [];
-
-  // Fading tadpole telemetry streams
-  private telemetryStreams: TelemetryStream[] = [];
-
-  // Parallax rotation properties
-  private mouseX = 0;
-  private mouseY = 0;
-  private targetRotX = 0;
-  private targetRotY = 0;
-
-  private readonly isMobile: boolean;
-  private readonly prefersReducedMotion: boolean;
-  private readonly speedFactor: number;
-  private readonly colorMode: 'blue' | 'cyan';
-
-  private textureLoader = new TextureLoader();
+  private pointer = new Vector2();
+  private isDragging = false;
+  private lastDragX = 0;
+  private lastDragY = 0;
+  private targetRotationX = -0.08;
+  private targetRotationY = Math.PI * 1.18;
+  private zoomOffset = 0;
+  private rotationControlActive = false;
+  private brightnessPercent = 48;
+  private readonly globeRadius: number;
+  private readonly isMobile = window.innerWidth < 768;
+  private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(
     private canvas: HTMLCanvasElement,
-    options: EarthFlylineOptions = {},
+    private options: EarthFlylineOptions = {},
   ) {
-    this.isMobile = window.innerWidth < 768;
-    this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this.speedFactor = this.prefersReducedMotion ? 0.05 : 1.0;
-    this.colorMode = options.colorMode || 'blue';
-    this.clock = new Clock();
+    this.globeRadius = this.isMobile ? 1.82 : 2.34;
   }
 
   init(): void {
-    this.initScene();
-    this.bindEvents();
-    this.animate();
-  }
-
-  private initScene(): void {
     this.scene = new Scene();
-
     this.camera = new PerspectiveCamera(42, 1, 0.1, 200);
-    this.camera.position.set(0, 0.1, this.isMobile ? 10.5 : 8.8);
+    this.camera.position.set(0, 0.18, this.isMobile ? 7.2 : 8.6);
 
     this.renderer = new WebGLRenderer({
       canvas: this.canvas,
-      antialias: !this.isMobile,
       alpha: false,
+      antialias: !this.isMobile,
       powerPreference: 'high-performance',
     });
-
-    this.contextLostHandler = (e: Event) => e.preventDefault();
+    this.contextLostHandler = (event: Event) => event.preventDefault();
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLostHandler);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-    this.renderer.setClearColor(0x020509, 1.0);
+    this.renderer.setClearColor(0x02040b, 1);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.isMobile ? 1.4 : 2));
 
-    // UnrealBloomPass Setup
     this.composer = new EffectComposer(this.renderer);
-    const renderPass = new RenderPass(this.scene, this.camera);
-    this.composer.addPass(renderPass);
-
-    const bloomPass = new UnrealBloomPass(
+    this.composer.addPass(new RenderPass(this.scene, this.camera));
+    this.bloomPass = new UnrealBloomPass(
       new Vector2(this.canvas.clientWidth, this.canvas.clientHeight),
-      1.2, // strength
-      0.5, // radius
-      0.15, // threshold
+      this.isMobile ? 0.035 : 0.055,
+      0.18,
+      0.76,
     );
-    this.composer.addPass(bloomPass);
+    this.composer.addPass(this.bloomPass);
+    this.composer.addPass(new OutputPass());
+    this.applyBrightness();
 
-    const outputPass = new OutputPass();
-    this.composer.addPass(outputPass);
-
-    this.globeGroup = new Group();
+    this.globeGroup.rotation.set(this.targetRotationX, this.targetRotationY, -0.05);
     this.scene.add(this.globeGroup);
+    this.scene.add(this.orbitGroup);
 
-    const R_value = this.isMobile ? 1.9 : 2.3;
-    this.buildGlowingGlobe(R_value);
-
-    this.createSpaceStarfield();
-    this.createCosmicDust(R_value);
-    this.createBottomReflection(R_value);
+    this.buildStarfield();
+    this.buildGlobe();
+    this.buildMapBorders();
+    this.buildCityLights();
+    this.buildFlylines();
+    this.buildOuterOrbitShells();
+    this.buildSatellites();
+    this.buildAtmosphericVignette();
+    this.bindEvents();
+    this.resizeRenderer();
+    this.animate();
   }
 
-  private buildGlowingGlobe(R: number): void {
-    // Occlusion Sphere
-    const earthGeom = new SphereGeometry(R * 0.998, 48, 32);
-    const earthMat = new MeshPhongMaterial({
-      color: 0x02040b,
-      transparent: false,
-      shininess: 12,
-      specular: 0x07112a,
-    });
-    const earthMesh = new Mesh(earthGeom, earthMat);
-    this.globeGroup.add(earthMesh);
+  private loadTexture(path: string): Texture {
+    const texture = new TextureLoader().load(path);
+    this.textures.push(texture);
+    return texture;
+  }
 
-    // SVG Map Texture
-    const mapTexture = this.textureLoader.load('three/globe-stream/image/map.svg');
-    const svgGeom = new SphereGeometry(R * 1.0005, 48, 32);
-    const svgMat = new MeshBasicMaterial({
-      map: mapTexture,
-      transparent: true,
-      opacity: 0.7,
-      side: DoubleSide,
-    });
-    const svgMesh = new Mesh(svgGeom, svgMat);
-    this.globeGroup.add(svgMesh);
+  private makeGlowTexture(inner = '#dff9ff', outer = 'rgba(0,0,0,0)'): CanvasTexture {
+    const c = document.createElement('canvas');
+    c.width = 128;
+    c.height = 128;
+    const ctx = c.getContext('2d')!;
+    const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0, '#ffffff');
+    g.addColorStop(0.2, inner);
+    g.addColorStop(0.55, 'rgba(64, 210, 255, 0.35)');
+    g.addColorStop(1, outer);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 128, 128);
+    const texture = new CanvasTexture(c);
+    texture.minFilter = LinearFilter;
+    this.textures.push(texture);
+    return texture;
+  }
 
-    // GeoJSON borders as fallback/enhancement
-    const borderGroup = new Group();
-    this.globeGroup.add(borderGroup);
+  private makeCloudTexture(): CanvasTexture {
+    const c = document.createElement('canvas');
+    c.width = 1024;
+    c.height = 512;
+    const ctx = c.getContext('2d')!;
+    ctx.clearRect(0, 0, c.width, c.height);
 
-    worldJSON.features.forEach((feature: any) => {
-      const geomType = feature.geometry.type;
-      const coords = feature.geometry.coordinates;
+    for (let band = 0; band < 16; band++) {
+      const y = 70 + Math.random() * 370;
+      const height = 18 + Math.random() * 54;
+      const alpha = 0.035 + Math.random() * 0.075;
+      const g = ctx.createLinearGradient(0, y - height, 0, y + height);
+      g.addColorStop(0, 'rgba(255,255,255,0)');
+      g.addColorStop(0.5, `rgba(230,246,255,${alpha})`);
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
 
-      const drawPolygon = (polygonCoords: any[]) => {
-        const points: Vector3[] = [];
-        polygonCoords.forEach((ring: any[]) => {
-          ring.forEach((coord: number[]) => {
-            const lng = coord[0];
-            const lat = coord[1];
-            points.push(latLngToVec3(lat, lng, R * 1.001));
-          });
-        });
-        if (points.length > 0) {
-          const geo = new BufferGeometry().setFromPoints(points);
-          const mat = new LineBasicMaterial({
-            color: 0x3b82f6,
-            transparent: true,
-            opacity: 0.25,
-            blending: AdditiveBlending,
-          });
-          const line = new Line(geo, mat);
-          borderGroup.add(line);
+      ctx.beginPath();
+      for (let x = -60; x <= c.width + 80; x += 32) {
+        const wave = Math.sin(x * 0.017 + band * 1.7) * height * 0.34 + Math.sin(x * 0.041 + band) * height * 0.16;
+        if (x === -60) {
+          ctx.moveTo(x, y + wave);
+        } else {
+          ctx.lineTo(x, y + wave);
         }
-      };
-
-      if (geomType === 'Polygon') {
-        drawPolygon(coords);
-      } else if (geomType === 'MultiPolygon') {
-        coords.forEach((polygonCoords: any[]) => {
-          drawPolygon(polygonCoords);
-        });
       }
-    });
+      for (let x = c.width + 80; x >= -60; x -= 32) {
+        const wave = Math.sin(x * 0.017 + band * 1.7) * height * 0.34 + Math.sin(x * 0.041 + band) * height * 0.16;
+        ctx.lineTo(x, y + wave + height * (0.55 + Math.random() * 0.22));
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
 
-    // Scan Grid Overlay
-    const scanTexture = this.textureLoader.load('three/globe-stream/image/scanGird.png');
-    const scanGeom = new SphereGeometry(R * 1.02, 48, 32);
-    const scanMat = new MeshBasicMaterial({
-      map: scanTexture,
-      transparent: true,
-      opacity: 0.3,
-      blending: AdditiveBlending,
-      side: DoubleSide,
-    });
-    this.scanGridMesh = new Mesh(scanGeom, scanMat);
-    this.globeGroup.add(this.scanGridMesh);
+    for (let i = 0; i < 340; i++) {
+      const x = Math.random() * c.width;
+      const y = Math.random() * c.height;
+      const rx = 10 + Math.random() * 42;
+      const ry = 2 + Math.random() * 9;
+      const alpha = 0.018 + Math.random() * 0.06;
+      ctx.fillStyle = `rgba(235,248,255,${alpha})`;
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx, ry, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
-    // Atmosphere Glow
-    const atmoColor = this.colorMode === 'blue' ? 0x0066ff : 0x0088ff;
-    const atmoGeom = new SphereGeometry(R * 1.15, 48, 32);
-    const atmoMat = new ShaderMaterial({
+    const texture = new CanvasTexture(c);
+    texture.minFilter = LinearFilter;
+    this.textures.push(texture);
+    return texture;
+  }
+
+  private buildStarfield(): void {
+    const count = this.isMobile ? 700 : 1500;
+    const positions = new Float32Array(count * 3);
+    const alphas = new Float32Array(count);
+    const sizes = new Float32Array(count);
+
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 72;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 42;
+      positions[i * 3 + 2] = -18 - Math.random() * 48;
+      alphas[i] = 0.24 + Math.random() * 0.72;
+      sizes[i] = 0.55 + Math.random() * 1.8;
+    }
+
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('aAlpha', new Float32BufferAttribute(alphas, 1));
+    geometry.setAttribute('aSize', new Float32BufferAttribute(sizes, 1));
+
+    const material = new ShaderMaterial({
+      uniforms: { uTime: { value: 0 } },
       vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vWorldPos;
+        attribute float aAlpha;
+        attribute float aSize;
+        varying float vAlpha;
         void main() {
+          vAlpha = aAlpha;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = aSize * (70.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        varying float vAlpha;
+        void main() {
+          float d = length(gl_PointCoord - 0.5) * 2.0;
+          float soft = smoothstep(1.0, 0.0, d);
+          float twinkle = 0.68 + sin(uTime * 1.25 + vAlpha * 32.0) * 0.32;
+          gl_FragColor = vec4(0.68, 0.9, 1.0, soft * vAlpha * twinkle);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+    });
+    this.animatedMaterials.push(material);
+    this.scene.add(new Points(geometry, material));
+  }
+
+  private buildGlobe(): void {
+    const radius = this.globeRadius;
+    const earthTexture = this.loadTexture('three/globe-stream/image/Earth_DiffuseMap_2.jpg');
+    const earthMaterial = new ShaderMaterial({
+      uniforms: {
+        uMap: { value: earthTexture },
+        uDark: { value: new Color(0x020810) },
+        uCyan: { value: new Color(0x0c6f8e) },
+        uWarm: { value: new Color(0xff9272) },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vWorldPosition;
+        void main() {
+          vUv = uv;
           vNormal = normalize(normalMatrix * normal);
-          vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+          vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
-        uniform vec3 uGlowColor;
-        uniform float uPower;
-        uniform float uIntensity;
+        uniform sampler2D uMap;
+        uniform vec3 uDark;
+        uniform vec3 uCyan;
+        uniform vec3 uWarm;
+        varying vec2 vUv;
         varying vec3 vNormal;
-        varying vec3 vWorldPos;
+        varying vec3 vWorldPosition;
         void main() {
-          vec3 viewDir = normalize(cameraPosition - vWorldPos);
-          float intensity = pow(1.0 + dot(viewDir, vNormal), uPower);
-          gl_FragColor = vec4(uGlowColor, intensity * uIntensity);
+          vec3 tex = texture2D(uMap, vUv).rgb;
+          float lum = dot(tex, vec3(0.299, 0.587, 0.114));
+          vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+          float facing = clamp(dot(normalize(vNormal), viewDirection), 0.0, 1.0);
+          float rim = pow(1.0 - facing, 2.3);
+          vec3 realistic = pow(tex, vec3(1.18)) * vec3(0.86, 0.92, 0.96);
+          vec3 blueGrade = mix(realistic, realistic * vec3(0.54, 0.86, 1.05) + uCyan * 0.12, 0.34);
+          vec3 shadow = mix(uDark, blueGrade, smoothstep(0.02, 0.72, lum));
+          vec3 color = shadow * (0.34 + facing * 0.76) + rim * vec3(0.02, 0.24, 0.5) * 0.08;
+          gl_FragColor = vec4(min(color, vec3(0.82)), 1.0);
         }
       `,
+      transparent: false,
+    });
+    const earth = new Mesh(new SphereGeometry(radius, 96, 64), earthMaterial);
+    this.globeGroup.add(earth);
+
+    const ocean = new Mesh(
+      new SphereGeometry(radius * 1.006, 96, 64),
+      new MeshBasicMaterial({
+        color: 0x063a52,
+        transparent: true,
+        opacity: 0.02,
+        blending: AdditiveBlending,
+      }),
+    );
+    this.globeGroup.add(ocean);
+
+    const scanTexture = this.loadTexture('three/globe-stream/image/scanGird.png');
+    const scan = new Mesh(
+      new SphereGeometry(radius * 1.018, 96, 64),
+      new MeshBasicMaterial({
+        map: scanTexture,
+        color: 0x69e7ff,
+        side: DoubleSide,
+        transparent: true,
+        opacity: 0.045,
+        blending: AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    this.globeGroup.add(scan);
+
+    this.cloudShell = new Mesh(
+      new SphereGeometry(radius * 1.033, 96, 64),
+      new MeshBasicMaterial({
+        map: this.makeCloudTexture(),
+        color: 0xbfe8ff,
+        transparent: true,
+        opacity: 0.16,
+        blending: AdditiveBlending,
+        depthWrite: false,
+      }),
+    );
+    this.cloudShell.rotation.set(0.02, -0.12, -0.03);
+    this.globeGroup.add(this.cloudShell);
+
+    const atmosphereMaterial = new ShaderMaterial({
       uniforms: {
-        uGlowColor: { value: new Color(atmoColor) },
-        uPower: { value: 3.2 },
-        uIntensity: { value: 0.85 },
+        uGlow: { value: new Color(0x60dfff) },
       },
+      vertexShader: `
+        varying vec3 vNormal;
+        varying vec3 vWorldPosition;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uGlow;
+        varying vec3 vNormal;
+        varying vec3 vWorldPosition;
+        void main() {
+          vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+          float rim = pow(1.0 + dot(viewDirection, vNormal), 2.7);
+          gl_FragColor = vec4(uGlow, rim * 0.11);
+        }
+      `,
       side: BackSide,
-      blending: AdditiveBlending,
       transparent: true,
       depthWrite: false,
+      blending: AdditiveBlending,
     });
-    const atmosphere = new Mesh(atmoGeom, atmoMat);
-    this.globeGroup.add(atmosphere);
+    this.globeGroup.add(new Mesh(new SphereGeometry(radius * 1.15, 96, 64), atmosphereMaterial));
 
-    this.setupFlylineData(R);
+    const innerGlow = new Sprite(
+      new SpriteMaterial({
+        map: this.makeGlowTexture('#33cfff'),
+        color: 0x0f78ff,
+        opacity: 0.012,
+        transparent: true,
+        depthWrite: false,
+        blending: AdditiveBlending,
+      }),
+    );
+    innerGlow.scale.set(radius * 3.7, radius * 3.7, 1);
+    innerGlow.position.set(0, -0.15, -0.32);
+    this.globeGroup.add(innerGlow);
   }
 
-  private setupFlylineData(R: number): void {
-    const nodes = {
-      beijing: { name: 'Neural Core (PEK)', lon: 116.4074, lat: 39.9042 },
-      newyork: { name: 'Node (NYC)', lon: -74.006, lat: 40.7128 },
-      london: { name: 'Node (LHR)', lon: -0.1278, lat: 51.5074 },
-      tokyo: { name: 'Node (NRT)', lon: 139.6917, lat: 35.6762 },
-      sydney: { name: 'Node (SYD)', lon: 151.2093, lat: -33.8688 },
-      frankfurt: { name: 'Node (FRA)', lon: 8.6821, lat: 50.1109 },
-      singapore: { name: 'Node (SIN)', lon: 103.8198, lat: 1.3521 },
-      geneva: { name: 'CERN Core (GVA)', lon: 6.1432, lat: 46.2044 },
-    };
+  private buildMapBorders(): void {
+    const radius = this.globeRadius;
+    const borderGroup = new Group();
+    this.globeGroup.add(borderGroup);
 
-    const flyLines = [
-      { from: nodes.beijing, to: nodes.newyork },
-      { from: nodes.beijing, to: nodes.london },
-      { from: nodes.beijing, to: nodes.tokyo },
-      { from: nodes.beijing, to: nodes.sydney },
-      { from: nodes.beijing, to: nodes.frankfurt },
-      { from: nodes.beijing, to: nodes.singapore },
-      { from: nodes.beijing, to: nodes.geneva },
-      { from: nodes.newyork, to: nodes.london },
-      { from: nodes.singapore, to: nodes.sydney },
+    worldJSON.features.forEach((feature: any) => {
+      const drawRing = (ring: number[][]) => {
+        const points = ring.map(([lng, lat]) => latLngToVec3(lat, lng, radius * 1.024));
+        if (points.length < 2) return;
+        borderGroup.add(
+          new Line(
+            new BufferGeometry().setFromPoints(points),
+            new LineBasicMaterial({
+              color: 0x20e6ff,
+              transparent: true,
+              opacity: 0.24,
+              blending: AdditiveBlending,
+            }),
+          ),
+        );
+      };
+
+      if (feature.geometry.type === 'Polygon') {
+        feature.geometry.coordinates.forEach(drawRing);
+      } else if (feature.geometry.type === 'MultiPolygon') {
+        feature.geometry.coordinates.forEach((polygon: number[][][]) => polygon.forEach(drawRing));
+      }
+    });
+  }
+
+  private buildCityLights(): void {
+    const radius = this.globeRadius;
+    const clusters = [
+      { lat: 35, lng: 105, spread: 26, count: 520 },
+      { lat: 23, lng: 79, spread: 18, count: 260 },
+      { lat: 48, lng: 12, spread: 18, count: 360 },
+      { lat: 32, lng: 43, spread: 18, count: 180 },
+      { lat: 36, lng: 139, spread: 10, count: 120 },
+      { lat: 1, lng: 103, spread: 12, count: 140 },
+      { lat: 30, lng: 31, spread: 12, count: 110 },
+    ];
+    const count = clusters.reduce((sum, c) => sum + c.count, 0);
+    const positions = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
+    const alphas = new Float32Array(count);
+    let i = 0;
+
+    clusters.forEach((cluster) => {
+      for (let c = 0; c < cluster.count; c++) {
+        const lat = cluster.lat + (Math.random() - 0.5) * cluster.spread;
+        const lng = cluster.lng + (Math.random() - 0.5) * cluster.spread * 1.5;
+        const p = latLngToVec3(lat, lng, radius * 1.028);
+        positions[i * 3] = p.x;
+        positions[i * 3 + 1] = p.y;
+        positions[i * 3 + 2] = p.z;
+        sizes[i] = 0.24 + Math.random() * 0.58;
+        alphas[i] = 0.08 + Math.random() * 0.22;
+        i++;
+      }
+    });
+
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('aSize', new Float32BufferAttribute(sizes, 1));
+    geometry.setAttribute('aAlpha', new Float32BufferAttribute(alphas, 1));
+
+    const material = new ShaderMaterial({
+      vertexShader: `
+        attribute float aSize;
+        attribute float aAlpha;
+        varying float vAlpha;
+        void main() {
+          vAlpha = aAlpha;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = aSize * (34.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        varying float vAlpha;
+        void main() {
+          float d = length(gl_PointCoord - 0.5) * 2.0;
+          float soft = smoothstep(1.0, 0.0, d);
+          vec3 warm = mix(vec3(0.14, 0.95, 1.0), vec3(1.0, 0.62, 0.38), vAlpha);
+          gl_FragColor = vec4(warm, soft * vAlpha * 0.28);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+    });
+    this.globeGroup.add(new Points(geometry, material));
+  }
+
+  private buildFlylines(): void {
+    const radius = this.globeRadius;
+    const hub = { lat: 31.2, lng: 104.1 };
+    const nodes = [
+      { lat: 39.9, lng: 116.4 },
+      { lat: 35.7, lng: 139.7 },
+      { lat: 22.3, lng: 114.1 },
+      { lat: 1.35, lng: 103.8 },
+      { lat: 28.6, lng: 77.2 },
+      { lat: 55.7, lng: 37.6 },
+      { lat: 51.5, lng: -0.1 },
+      { lat: 48.8, lng: 2.3 },
+      { lat: 40.7, lng: -74.0 },
+      { lat: -33.9, lng: 151.2 },
+      { lat: 25.2, lng: 55.3 },
     ];
 
-    const allCities = Array.from(new Set(flyLines.flatMap((line) => [line.from, line.to])));
-    const primaryColor = this.colorMode === 'blue' ? 0x4488ff : 0x10f9af;
-    const scatterTex = this.textureLoader.load('three/globe-stream/image/scatter.png');
-
-    allCities.forEach((city) => {
-      const v = latLngToVec3(city.lat, city.lon, R * 1.002);
-
-      const spriteMat = new SpriteMaterial({
-        map: scatterTex,
-        color: primaryColor,
+    const hubPosition = latLngToVec3(hub.lat, hub.lng, radius * 1.06);
+    const hubTexture = this.makeGlowTexture('#e8feff');
+    const hubSprite = new Sprite(
+      new SpriteMaterial({
+        map: hubTexture,
+        color: 0xa4fbff,
+        opacity: 0.38,
         transparent: true,
         blending: AdditiveBlending,
         depthWrite: false,
-      });
-      const sprite = new Sprite(spriteMat);
-      sprite.position.copy(v);
-      sprite.scale.set(0.15, 0.15, 1.0);
-      this.globeGroup.add(sprite);
+      }),
+    );
+    hubSprite.position.copy(hubPosition);
+    hubSprite.scale.set(0.22, 0.22, 1);
+    this.globeGroup.add(hubSprite);
 
-      for (let k = 0; k < 2; k++) {
-        const ringGeom = new RingGeometry(0.01, 0.16, 32);
-        const ringMat = new MeshBasicMaterial({
-          color: primaryColor,
-          side: DoubleSide,
+    for (let i = 0; i < 3; i++) {
+      const ring = new Mesh(
+        new RingGeometry(0.08, 0.1, 80),
+        new MeshBasicMaterial({
+          color: 0xcdfdff,
           transparent: true,
-          opacity: 0.8,
-          depthWrite: false,
+          opacity: 0.3,
           blending: AdditiveBlending,
-        });
-        const ringMesh = new Mesh(ringGeom, ringMat);
-        ringMesh.position.copy(v);
-        ringMesh.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), v.clone().normalize());
-        this.globeGroup.add(ringMesh);
-
-        this.pulsingRings.push({
-          mesh: ringMesh,
-          scale: 0.1 + k * 0.85,
-          maxScale: 1.7,
-          speed: 0.55 + Math.random() * 0.2,
-        });
-      }
-    });
-
-    flyLines.forEach((line, idx) => {
-      const start = latLngToVec3(line.from.lat, line.from.lon, R);
-      const end = latLngToVec3(line.to.lat, line.to.lon, R);
-
-      const mid = start.clone().add(end).multiplyScalar(0.5);
-      const dist = start.distanceTo(end);
-      const control = mid.normalize().multiplyScalar(R + dist * 0.38);
-
-      const curve = new QuadraticBezierCurve3(start, control, end);
-
-      const pathPoints = curve.getPoints(50);
-      const pathGeom = new BufferGeometry().setFromPoints(pathPoints);
-      const pathMat = new LineBasicMaterial({
-        color: 0x1e3a8a,
-        transparent: true,
-        opacity: 0.35,
-      });
-      const pathLine = new Line(pathGeom, pathMat);
-      this.globeGroup.add(pathLine);
-
-      const particleCount = 16;
-      const alphas = new Float32Array(particleCount);
-      const sizes = new Float32Array(particleCount);
-
-      for (let j = 0; j < particleCount; j++) {
-        alphas[j] = 1.0 - j / particleCount;
-        sizes[j] = 1.0 - (j / particleCount) * 0.55;
-      }
-
-      const streamGeom = new BufferGeometry();
-      streamGeom.setAttribute(
-        'position',
-        new Float32BufferAttribute(new Float32Array(particleCount * 3), 3),
+          side: DoubleSide,
+          depthWrite: false,
+        }),
       );
-      streamGeom.setAttribute('aAlpha', new Float32BufferAttribute(alphas, 1));
-      streamGeom.setAttribute('aSize', new Float32BufferAttribute(sizes, 1));
+      ring.position.copy(hubPosition);
+      ring.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), hubPosition.clone().normalize());
+      this.globeGroup.add(ring);
+      this.pulseRings.push({ mesh: ring, phase: i / 3, speed: 0.22 + i * 0.045 });
+    }
 
-      const streamMat = new ShaderMaterial({
-        uniforms: {
-          uColor: { value: new Color(primaryColor) },
-        },
+    nodes.forEach((node, index) => {
+      const start = hubPosition.clone();
+      const end = latLngToVec3(node.lat, node.lng, radius * 1.055);
+      const mid = start.clone().add(end).multiplyScalar(0.5);
+      const distance = start.distanceTo(end);
+      const control = mid.normalize().multiplyScalar(radius + distance * 0.68);
+      const curve = new QuadraticBezierCurve3(start, control, end);
+      const pathPoints = curve.getPoints(96);
+
+      this.globeGroup.add(
+        new Line(
+          new BufferGeometry().setFromPoints(pathPoints),
+          new LineBasicMaterial({
+            color: 0x67e8ff,
+            transparent: true,
+            opacity: index % 3 === 0 ? 0.24 : 0.13,
+            blending: AdditiveBlending,
+          }),
+        ),
+      );
+
+      const streamLength = 34;
+      const positions = new Float32Array(streamLength * 3);
+      const sizes = new Float32Array(streamLength);
+      const alphas = new Float32Array(streamLength);
+      for (let i = 0; i < streamLength; i++) {
+        sizes[i] = 1.0 - (i / streamLength) * 0.72;
+        alphas[i] = 1.0 - i / streamLength;
+      }
+      const geometry = new BufferGeometry();
+      geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+      geometry.setAttribute('aSize', new Float32BufferAttribute(sizes, 1));
+      geometry.setAttribute('aAlpha', new Float32BufferAttribute(alphas, 1));
+
+      const material = new ShaderMaterial({
+        uniforms: { uColor: { value: new Color(index % 2 ? 0x5fefff : 0xb7f7ff) } },
         vertexShader: `
-          attribute float aAlpha;
           attribute float aSize;
+          attribute float aAlpha;
           varying float vAlpha;
           void main() {
             vAlpha = aAlpha;
-            vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-            gl_PointSize = aSize * (50.0 / -mvPos.z);
-            gl_Position = projectionMatrix * mvPos;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = (3.0 + aSize * 7.0) * (32.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
           }
         `,
         fragmentShader: `
@@ -422,192 +631,180 @@ export class EarthFlylineScene {
           varying float vAlpha;
           void main() {
             float d = length(gl_PointCoord - 0.5) * 2.0;
-            float alpha = smoothstep(1.0, 0.0, d) * vAlpha;
-            gl_FragColor = vec4(uColor, alpha);
+            float soft = smoothstep(1.0, 0.0, d);
+            gl_FragColor = vec4(uColor, soft * vAlpha * 0.42);
           }
         `,
         transparent: true,
+        depthWrite: false,
+        blending: AdditiveBlending,
+      });
+      this.globeGroup.add(new Points(geometry, material));
+      this.streams.push({
+        curve,
+        geometry,
+        speed: 0.11 + (index % 5) * 0.018,
+        offset: index * 0.089,
+        length: streamLength,
+      });
+    });
+  }
+
+  private buildOuterOrbitShells(): void {
+    const radius = this.globeRadius;
+    const orbitMaterialA = new LineBasicMaterial({
+      color: 0x73efff,
+      transparent: true,
+      opacity: 0.18,
+      blending: AdditiveBlending,
+    });
+    const orbitMaterialB = new LineBasicMaterial({
+      color: 0x446dff,
+      transparent: true,
+      opacity: 0.12,
+      blending: AdditiveBlending,
+    });
+
+    for (let i = 0; i < 13; i++) {
+      const ring = new Line(
+        new BufferGeometry().setFromPoints(circularPoints(radius * (1.18 + i * 0.025))),
+        i % 2 === 0 ? orbitMaterialA.clone() : orbitMaterialB.clone(),
+      );
+      ring.rotation.set(
+        Math.PI / 2 + (Math.random() - 0.5) * 0.55,
+        (i / 13) * Math.PI + 0.25,
+        (Math.random() - 0.5) * 0.72,
+      );
+      this.orbitGroup.add(ring);
+    }
+  }
+
+  private buildSatellites(): void {
+    const radius = this.globeRadius;
+    const bodyGeometry = new BoxGeometry(0.08, 0.055, 0.055);
+    const panelGeometry = new BoxGeometry(0.17, 0.006, 0.045);
+    const bodyMaterial = new MeshBasicMaterial({
+      color: 0xb8efff,
+      transparent: true,
+      opacity: 0.82,
+    });
+    const panelMaterial = new MeshBasicMaterial({
+      color: 0x2d78ff,
+      transparent: true,
+      opacity: 0.46,
+      blending: AdditiveBlending,
+      depthWrite: false,
+    });
+    const trailMaterial = new LineBasicMaterial({
+      color: 0x63e9ff,
+      transparent: true,
+      opacity: 0.2,
+      blending: AdditiveBlending,
+    });
+
+    const specs = [
+      { radius: 1.52, speed: 0.26, phase: 0.2, tiltX: 0.72, tiltY: 0.18, tiltZ: 0.26, scale: 1.0 },
+      { radius: 1.62, speed: -0.18, phase: 2.4, tiltX: 1.18, tiltY: -0.28, tiltZ: -0.52, scale: 0.82 },
+      { radius: 1.43, speed: 0.22, phase: 4.3, tiltX: 0.36, tiltY: 0.72, tiltZ: 0.88, scale: 0.72 },
+      { radius: 1.7, speed: -0.13, phase: 5.5, tiltX: 1.42, tiltY: 0.34, tiltZ: 0.18, scale: 0.58 },
+    ];
+
+    specs.forEach((spec) => {
+      const group = new Group();
+      const body = new Mesh(bodyGeometry, bodyMaterial.clone());
+      const leftPanel = new Mesh(panelGeometry, panelMaterial.clone());
+      const rightPanel = new Mesh(panelGeometry, panelMaterial.clone());
+      leftPanel.position.x = -0.13;
+      rightPanel.position.x = 0.13;
+      group.add(body, leftPanel, rightPanel);
+      group.scale.setScalar(spec.scale);
+      this.orbitGroup.add(group);
+
+      const trail = new BufferGeometry();
+      const trailPositions = new Float32Array(24 * 3);
+      trail.setAttribute('position', new Float32BufferAttribute(trailPositions, 3));
+      this.orbitGroup.add(new Line(trail, trailMaterial.clone()));
+
+      this.satellites.push({
+        group,
+        trail,
+        radius: radius * spec.radius,
+        speed: spec.speed,
+        phase: spec.phase,
+        tiltX: spec.tiltX,
+        tiltY: spec.tiltY,
+        tiltZ: spec.tiltZ,
+        scale: spec.scale,
+      });
+    });
+  }
+
+  private satellitePoint(satellite: Satellite, angle: number): Vector3 {
+    const p = new Vector3(Math.cos(angle) * satellite.radius, 0, Math.sin(angle) * satellite.radius);
+    p.applyAxisAngle(new Vector3(1, 0, 0), satellite.tiltX);
+    p.applyAxisAngle(new Vector3(0, 1, 0), satellite.tiltY);
+    p.applyAxisAngle(new Vector3(0, 0, 1), satellite.tiltZ);
+    return p;
+  }
+
+  private buildAtmosphericVignette(): void {
+    const glow = new Sprite(
+      new SpriteMaterial({
+        map: this.makeGlowTexture('#1c91ff'),
+        color: 0x134dff,
+        opacity: 0.035,
+        transparent: true,
         blending: AdditiveBlending,
         depthWrite: false,
-      });
-
-      const streamPoints = new Points(streamGeom, streamMat);
-      this.globeGroup.add(streamPoints);
-
-      this.telemetryStreams.push({
-        curve,
-        geom: streamGeom,
-        speed: 0.16 + Math.random() * 0.1,
-        offset: idx * 0.15,
-      });
-    });
-
-    this.scanningRingEquator = new Line(
-      new BufferGeometry().setFromPoints(createCirclePoints(R * 1.25)),
-      new LineBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.22 }),
+      }),
     );
-    this.scanningRingEquator.rotation.x = Math.PI / 2;
-    this.globeGroup.add(this.scanningRingEquator);
-
-    this.scanningRingPolar = new Line(
-      new BufferGeometry().setFromPoints(createCirclePoints(R * 1.26)),
-      new LineBasicMaterial({ color: 0x1d4ed8, transparent: true, opacity: 0.15 }),
-    );
-    this.scanningRingPolar.rotation.y = Math.PI / 4;
-    this.globeGroup.add(this.scanningRingPolar);
-
-    const satGeom = new SphereGeometry(0.045, 8, 8);
-    const satMat = new MeshBasicMaterial({
-      color: primaryColor,
-      blending: AdditiveBlending,
-    });
-    this.satelliteMesh = new Mesh(satGeom, satMat);
-    this.globeGroup.add(this.satelliteMesh);
-  }
-
-  private createBottomReflection(R: number): void {
-    const canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext('2d')!;
-    const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-    grad.addColorStop(0, this.colorMode === 'blue' ? 'rgba(0,100,255,0.4)' : 'rgba(0,255,150,0.4)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 256, 256);
-
-    const texture = new CanvasTexture(canvas);
-    const spriteMat = new SpriteMaterial({
-      map: texture,
-      transparent: true,
-      blending: AdditiveBlending,
-      depthWrite: false,
-    });
-    const sprite = new Sprite(spriteMat);
-    sprite.position.set(0, -R * 1.3, 0);
-    sprite.scale.set(R * 4, R * 1.5, 1);
-    this.globeGroup.add(sprite);
-  }
-
-  private createSpaceStarfield(): void {
-    const count = this.isMobile ? 400 : 900;
-    const positions = new Float32Array(count * 3);
-    const alphas = new Float32Array(count);
-
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 90;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 90;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 80 - 15;
-      alphas[i] = 0.3 + Math.random() * 0.7;
-    }
-
-    const geom = new BufferGeometry();
-    geom.setAttribute('position', new Float32BufferAttribute(positions, 3));
-    geom.setAttribute('aAlpha', new Float32BufferAttribute(alphas, 1));
-
-    const mat = new ShaderMaterial({
-      uniforms: { uTime: { value: 0 } },
-      vertexShader: `
-        attribute float aAlpha;
-        varying float vAlpha;
-        void main() {
-          vAlpha = aAlpha;
-          vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = 1.3 * (80.0 / -mvPos.z);
-          gl_Position = projectionMatrix * mvPos;
-        }
-      `,
-      fragmentShader: `
-        uniform float uTime;
-        varying float vAlpha;
-        void main() {
-          float d = length(gl_PointCoord - 0.5) * 2.0;
-          float alpha = smoothstep(1.0, 0.0, d) * vAlpha;
-          float twinkle = sin(uTime * 1.6 + vAlpha * 100.0) * 0.38 + 0.62;
-          gl_FragColor = vec4(vec3(0.92, 0.95, 1.0), alpha * twinkle * 0.55);
-        }
-      `,
-      transparent: true,
-      blending: AdditiveBlending,
-      depthWrite: false,
-    });
-
-    this.starfield = new Points(geom, mat);
-    this.scene.add(this.starfield);
-  }
-
-  private createCosmicDust(R: number): void {
-    const count = this.isMobile ? 250 : 600;
-    const positions = new Float32Array(count * 3);
-    const alphas = new Float32Array(count);
-
-    for (let i = 0; i < count; i++) {
-      const r = R * (1.3 + Math.random() * 1.5);
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-
-      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = r * Math.cos(phi);
-      alphas[i] = 0.2 + Math.random() * 0.6;
-    }
-
-    const geom = new BufferGeometry();
-    geom.setAttribute('position', new Float32BufferAttribute(positions, 3));
-    geom.setAttribute('aAlpha', new Float32BufferAttribute(alphas, 1));
-
-    const mat = new ShaderMaterial({
-      uniforms: { uTime: { value: 0 } },
-      vertexShader: `
-        attribute float aAlpha;
-        varying float vAlpha;
-        void main() {
-          vAlpha = aAlpha;
-          vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = 1.0 * (60.0 / -mvPos.z);
-          gl_Position = projectionMatrix * mvPos;
-        }
-      `,
-      fragmentShader: `
-        uniform float uTime;
-        varying float vAlpha;
-        void main() {
-          float d = length(gl_PointCoord - 0.5) * 2.0;
-          float alpha = smoothstep(1.0, 0.0, d) * vAlpha;
-          gl_FragColor = vec4(vec3(0.2, 0.6, 1.0), alpha * 0.25);
-        }
-      `,
-      transparent: true,
-      blending: AdditiveBlending,
-      depthWrite: false,
-    });
-
-    this.cosmicDust = new Points(geom, mat);
-    this.globeGroup.add(this.cosmicDust);
+    glow.position.set(0, 0, -9);
+    glow.scale.set(10, 6, 1);
+    this.scene.add(glow);
   }
 
   private bindEvents(): void {
     this.resizeHandler = () => this.resizeRenderer();
     window.addEventListener('resize', this.resizeHandler);
 
-    this.mouseMoveHandler = (e: MouseEvent) => {
-      this.mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      this.mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-
-      this.targetRotY = this.mouseX * 0.22;
-      this.targetRotX = -this.mouseY * 0.15;
+    this.pointerMoveHandler = (event: PointerEvent) => {
+      this.pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+      this.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      if (!this.isDragging) return;
+      const dx = event.clientX - this.lastDragX;
+      const dy = event.clientY - this.lastDragY;
+      this.lastDragX = event.clientX;
+      this.lastDragY = event.clientY;
+      this.targetRotationY += dx * 0.006;
+      this.targetRotationX += dy * 0.004;
+      this.targetRotationX = Math.max(-1.1, Math.min(0.95, this.targetRotationX));
+      event.preventDefault();
     };
-    window.addEventListener('mousemove', this.mouseMoveHandler);
+    this.pointerDownHandler = (event: PointerEvent) => {
+      if (event.button !== 0) return;
+      this.rotationControlActive = false;
+      this.isDragging = true;
+      this.lastDragX = event.clientX;
+      this.lastDragY = event.clientY;
+      this.canvas.setPointerCapture?.(event.pointerId);
+    };
+    this.pointerUpHandler = (event: PointerEvent) => {
+      this.isDragging = false;
+      this.canvas.releasePointerCapture?.(event.pointerId);
+    };
+    window.addEventListener('pointermove', this.pointerMoveHandler, { passive: false });
+    this.canvas.addEventListener('pointerdown', this.pointerDownHandler);
+    window.addEventListener('pointerup', this.pointerUpHandler);
   }
 
   private resizeRenderer(): void {
     const parent = this.canvas.parentElement;
-    if (!parent) return;
-    const w = parent.clientWidth;
-    const h = parent.clientHeight;
-    this.renderer.setSize(w, h);
-    this.composer.setSize(w, h);
-    this.camera.aspect = w / h;
+    if (!parent || !this.renderer || !this.camera || !this.composer) return;
+    const width = parent.clientWidth || window.innerWidth;
+    const height = parent.clientHeight || window.innerHeight;
+    this.renderer.setSize(width, height, false);
+    this.composer.setSize(width, height);
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
   }
 
@@ -616,62 +813,95 @@ export class EarthFlylineScene {
     this.animationId = requestAnimationFrame(() => this.animate());
 
     const elapsed = this.clock.getElapsedTime();
-    const sf = this.speedFactor;
+    const speed = this.reduceMotion ? 0.08 : 1;
+    const cinematicZoom = Math.sin(elapsed * 0.19) * (this.isMobile ? 0.32 : 0.42);
+    this.camera.position.z = (this.isMobile ? 7.2 : 8.6) + cinematicZoom + this.zoomOffset;
+    this.camera.position.x += (this.pointer.x * 0.18 - this.camera.position.x) * 0.028 * speed;
+    this.camera.position.y += (0.22 + this.pointer.y * 0.08 - this.camera.position.y) * 0.028 * speed;
+    this.camera.lookAt(0, 0.05, 0);
 
-    this.globeGroup.rotation.y =
-      this.globeGroup.rotation.y + (this.targetRotY - this.globeGroup.rotation.y) * 0.05 * sf;
-    this.globeGroup.rotation.x =
-      this.globeGroup.rotation.x + (this.targetRotX - this.globeGroup.rotation.x) * 0.05 * sf;
-
-    this.globeGroup.rotation.y += 0.003 * sf;
-
-    if (this.scanGridMesh) {
-      this.scanGridMesh.rotation.y += 0.002 * sf;
+    if (!this.isDragging && !this.rotationControlActive) {
+      this.targetRotationY += 0.0019 * speed;
+      this.targetRotationX += (-0.08 + this.pointer.y * 0.035 - this.targetRotationX) * 0.008 * speed;
+    }
+    this.globeGroup.rotation.y += (this.targetRotationY - this.globeGroup.rotation.y) * 0.09;
+    this.globeGroup.rotation.x += (this.targetRotationX - this.globeGroup.rotation.x) * 0.09;
+    this.orbitGroup.rotation.y -= 0.0026 * speed;
+    this.orbitGroup.rotation.z = Math.sin(elapsed * 0.18) * 0.035;
+    if (this.cloudShell) {
+      this.cloudShell.rotation.y += 0.00045 * speed;
+      this.cloudShell.rotation.z = -0.03 + Math.sin(elapsed * 0.12) * 0.008;
+      (this.cloudShell.material as MeshBasicMaterial).opacity = 0.13 + Math.sin(elapsed * 0.22) * 0.025;
     }
 
-    this.telemetryStreams.forEach((stream) => {
-      const t = (((elapsed * stream.speed + stream.offset) % 1.0) + 1.0) % 1.0;
-      const posAttr = stream.geom.getAttribute('position') as Float32BufferAttribute;
-
-      for (let j = 0; j < 16; j++) {
-        const p = Math.max(0.0, Math.min(1.0, t - j * 0.015));
-        const vec = stream.curve.getPoint(p);
-        posAttr.setXYZ(j, vec.x, vec.y, vec.z);
-      }
-      posAttr.needsUpdate = true;
+    this.animatedMaterials.forEach((material) => {
+      material.uniforms.uTime.value = elapsed;
     });
 
-    this.pulsingRings.forEach((ring) => {
-      ring.scale += ring.speed * 0.016 * sf;
-      if (ring.scale > ring.maxScale) {
-        ring.scale = 0.1;
+    this.streams.forEach((stream) => {
+      const attr = stream.geometry.getAttribute('position') as Float32BufferAttribute;
+      for (let i = 0; i < stream.length; i++) {
+        const t = (((elapsed * stream.speed * speed + stream.offset - i * 0.0065) % 1) + 1) % 1;
+        const p = stream.curve.getPoint(t);
+        attr.setXYZ(i, p.x, p.y, p.z);
       }
-      ring.mesh.scale.setScalar(ring.scale);
-
-      const opacity = 1.0 - ring.scale / ring.maxScale;
-      (ring.mesh.material as MeshBasicMaterial).opacity = opacity * 0.85;
+      attr.needsUpdate = true;
     });
 
-    if (this.satelliteMesh) {
-      const angle = elapsed * 0.5 * sf;
-      const R_satellite = this.isMobile ? 1.9 * 1.25 : 2.3 * 1.25;
-      this.satelliteMesh.position.set(
-        Math.cos(angle) * R_satellite,
-        0,
-        Math.sin(angle) * R_satellite,
-      );
-      this.scanningRingEquator.rotation.z = elapsed * 0.05 * sf;
-    }
+    this.pulseRings.forEach((ring) => {
+      ring.phase = (ring.phase + ring.speed * 0.012 * speed) % 1;
+      const scale = 0.45 + ring.phase * 4.6;
+      ring.mesh.scale.setScalar(scale);
+      (ring.mesh.material as MeshBasicMaterial).opacity = (1 - ring.phase) * 0.72;
+    });
 
-    if (this.cosmicDust) {
-      this.cosmicDust.rotation.y = elapsed * 0.01 * sf;
-    }
+    this.satellites.forEach((satellite) => {
+      const angle = elapsed * satellite.speed * speed + satellite.phase;
+      const position = this.satellitePoint(satellite, angle);
+      satellite.group.position.copy(position);
+      const tangent = this.satellitePoint(satellite, angle + 0.018).sub(position).normalize();
+      satellite.group.quaternion.setFromUnitVectors(new Vector3(1, 0, 0), tangent);
 
-    if (this.starfield && this.starfield.material) {
-      (this.starfield.material as ShaderMaterial).uniforms.uTime.value = elapsed;
-    }
+      const attr = satellite.trail.getAttribute('position') as Float32BufferAttribute;
+      for (let i = 0; i < 24; i++) {
+        const p = this.satellitePoint(satellite, angle - i * 0.018 * Math.sign(satellite.speed || 1));
+        attr.setXYZ(i, p.x, p.y, p.z);
+      }
+      attr.needsUpdate = true;
+    });
 
     this.composer.render();
+  }
+
+  setManualRotationDegrees(degrees: number): void {
+    this.rotationControlActive = true;
+    this.targetRotationY = Math.PI * 1.18 + (degrees % 360) * DEG;
+  }
+
+  setBrightnessPercent(value: number): void {
+    this.brightnessPercent = Math.max(25, Math.min(82, value));
+    this.applyBrightness();
+  }
+
+  private applyBrightness(): void {
+    if (!this.bloomPass) return;
+    const normalized = this.brightnessPercent / 100;
+    const baseStrength = this.isMobile ? 0.035 : 0.055;
+    this.bloomPass.strength = baseStrength * (0.32 + normalized * 0.92);
+    this.bloomPass.threshold = 0.76 + (1 - normalized) * 0.11;
+    this.bloomPass.radius = 0.13 + normalized * 0.09;
+  }
+
+  zoomIn(): void {
+    this.setZoomOffset(this.zoomOffset - 0.42);
+  }
+
+  zoomOut(): void {
+    this.setZoomOffset(this.zoomOffset + 0.42);
+  }
+
+  private setZoomOffset(value: number): void {
+    this.zoomOffset = Math.max(-1.65, Math.min(2.2, value));
   }
 
   pause(): void {
@@ -689,32 +919,32 @@ export class EarthFlylineScene {
   }
 
   destroy(): void {
+    this.disposed = true;
+    this.pause();
+    window.removeEventListener('resize', this.resizeHandler);
+    window.removeEventListener('pointermove', this.pointerMoveHandler);
+    this.canvas.removeEventListener('pointerdown', this.pointerDownHandler);
+    window.removeEventListener('pointerup', this.pointerUpHandler);
     if (this.contextLostHandler) {
       this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLostHandler);
       this.contextLostHandler = null;
     }
-    this.disposed = true;
-    this.pause();
-    window.removeEventListener('resize', this.resizeHandler);
-    window.removeEventListener('mousemove', this.mouseMoveHandler);
 
-    this.scene.traverse((obj) => {
-      const mesh = obj as any;
-      if (mesh.geometry) mesh.geometry.dispose();
-      if (mesh.material) {
-        if (Array.isArray(mesh.material)) {
-          mesh.material.forEach((m: any) => m.dispose());
-        } else {
-          mesh.material.dispose();
-        }
+    this.scene.traverse((object: any) => {
+      object.geometry?.dispose?.();
+      if (Array.isArray(object.material)) {
+        object.material.forEach((material: any) => material.dispose?.());
+      } else {
+        object.material?.dispose?.();
       }
     });
-
-    this.renderer.dispose();
+    this.textures.forEach((texture) => texture.dispose());
     this.composer.dispose();
-    this.pulsingRings = [];
-    this.telemetryStreams = [];
-    this.starfield = null;
-    this.cosmicDust = null;
+    this.renderer.dispose();
+    this.streams = [];
+    this.pulseRings = [];
+    this.satellites = [];
+    this.cloudShell = null;
+    this.animatedMaterials = [];
   }
 }

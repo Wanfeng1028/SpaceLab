@@ -6,104 +6,81 @@
 
 .earth-flyline-wrapper {
   position: relative;
+  --scene-brightness: 72%;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   min-height: 600px;
   overflow: hidden;
-  background: #020509; // Solid color matching Three.js renderer clearColor for seamless bloom compositing
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background:
+    radial-gradient(circle at 52% 48%, rgba(35, 190, 255, 0.08), transparent 36%),
+    linear-gradient(180deg, #02040b 0%, #02040b 100%);
 
   &::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, rgba(0, 160, 255, 0.06) 0%, transparent 65%);
+    inset: 0;
+    background:
+      linear-gradient(rgba(86, 210, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(86, 210, 255, 0.028) 1px, transparent 1px);
+    background-size: 96px 96px;
+    opacity: 0.28;
     pointer-events: none;
-    transform: translate(-50%, -50%);
   }
 }
 
-.earth-flyline-overlay {
-  position: relative;
-  z-index: 2;
+app-three-canvas {
+  filter: brightness(var(--scene-brightness)) contrast(1.08) saturate(0.94);
+}
+
+.scene-control {
+  position: absolute;
+  right: clamp(16px, 3vw, 36px);
+  top: clamp(84px, 12vh, 104px);
+  z-index: 4;
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
-  align-items: center;
-  text-align: center;
-  gap: 24px;
-  pointer-events: none;
+  justify-items: end;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.scene-control__actions {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid rgba(116, 230, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(4, 12, 26, 0.44);
+  backdrop-filter: blur(10px);
+}
+
+.scene-control__icon {
+  width: 38px;
+  height: 38px;
+  border-color: rgba(116, 230, 255, 0.42) !important;
+  color: rgba(220, 250, 255, 0.9) !important;
+  background: rgba(5, 18, 36, 0.56) !important;
+
+  mat-icon {
+    font-size: 21px;
+    width: 21px;
+    height: 21px;
+    line-height: 21px;
+  }
+}
+
+.scene-control__panel {
+  width: 188px;
+  padding: 4px 12px;
+  border: 1px solid rgba(116, 230, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(4, 12, 26, 0.52);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+}
+
+mat-slider {
   width: 100%;
-  height: 100%;
-  padding: 0 40px;
-}
-
-.ef-telemetry {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  color: var(--color-cyan, #69d7ff);
-  opacity: 0.7;
-  margin: 0;
-
-  &::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-cyan, #69d7ff);
-    margin-right: 8px;
-    vertical-align: middle;
-    animation: ef-pulse 2s ease-in-out infinite;
-  }
-}
-
-.ef-title {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 6vw, 56px);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.95);
-  margin: 0;
-  line-height: 1.1;
-  text-shadow:
-    0 0 40px rgba(0, 200, 255, 0.25),
-    0 0 80px rgba(0, 200, 255, 0.08);
-}
-
-.ef-subtitle {
-  font-family: var(--font-sans);
-  font-size: clamp(13px, 1.6vw, 16px);
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-}
-
-.ef-desc {
-  font-family: var(--font-mono);
-  font-size: clamp(11px, 1.2vw, 13px);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.35);
-  margin: 0;
-  max-width: 380px;
-}
-
-@keyframes ef-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(0.8);
-  }
 }
 
 @media (max-width: 767px) {
@@ -111,61 +88,17 @@
     min-height: 100svh;
   }
 
-  .earth-flyline-overlay {
-    bottom: 10%;
-    position: absolute;
-  }
-}
-
-.left-panel,
-.right-panel {
-  pointer-events: auto;
-}
-
-.info-card {
-  background: rgba(10, 20, 40, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(105, 215, 255, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  color: #fff;
-  font-family: var(--font-mono);
-}
-
-.info-label {
-  font-size: 12px;
-  color: var(--color-cyan, #69d7ff);
-  margin: 0 0 8px;
-}
-
-.info-value {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
-}
-
-@media (max-width: 767px) {
-  .earth-flyline-overlay {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-    padding: 20px;
+  .earth-flyline-wrapper::before {
+    background-size: 72px 72px;
+    opacity: 0.18;
   }
 
-  .left-panel,
-  .right-panel {
-    grid-row: 3;
+  .scene-control {
+    right: 14px;
+    top: 16px;
   }
 
-  .center-content {
-    grid-row: 2;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ef-telemetry::before {
-    animation: none;
-  }
-  .ef-title {
-    text-shadow: none;
+  .scene-control__panel {
+    width: 160px;
   }
 }

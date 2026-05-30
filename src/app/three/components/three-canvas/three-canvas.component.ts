@@ -24,12 +24,13 @@ type SceneFactory = (canvas: HTMLCanvasElement) => {
         position: absolute;
         inset: 0;
         z-index: 0;
-        pointer-events: none;
+        pointer-events: auto;
       }
       .three-canvas {
         display: block;
         width: 100%;
         height: 100%;
+        touch-action: none;
       }
     `,
   ],
