@@ -1,10 +1,30 @@
 [
   {
+    "id": "214e5f5a2e40",
+    "title": "PilotDeck",
+    "summary": "PilotDeck 是清华大学THUNLP实验室、面壁智能、OpenBMB与AI9stars联合开源的智能体操作系统。PilotDeck以WorkSpace为核心设计范式，为每个项目建立独立的文件...",
+    "category": "AI研究",
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/pilotdeck/",
+    "source": "ai-bot.cn",
+    "date": "2026-05-29",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-30T11:46:33.406Z"
+  },
+  {
     "id": "aa731ed608ab",
     "title": "Guizang Social Card Skill",
     "summary": "Guizang Social Card Skill 是歸藏开源的适配 Claude Code / Codex 等 Agent 环境的图文卡片技能，能解决小红书（3:4 竖图）和公众号（21:9 + 1:1 封面）配图...",
     "category": "AI研究",
-    "tags": ["开源", "Agent", "编程", "Claude"],
+    "tags": [
+      "开源",
+      "Agent",
+      "编程",
+      "Claude"
+    ],
     "url": "https://ai-bot.cn/guizang-social-card-skill/",
     "source": "ai-bot.cn",
     "date": "2026-05-28",
@@ -16,43 +36,71 @@
     "title": "Aholo Viewer",
     "summary": "Aholo Viewer是群核科技开源的基于 3D 高斯溅射（3DGS）的高性能 Web 端渲染引擎。工具采用 chunk-level LOD 流式加载技术，让 3D 内容像视频一样在不同终端...",
     "category": "AI研究",
-    "tags": ["开源", "视频"],
+    "tags": [
+      "开源",
+      "视频"
+    ],
     "url": "https://ai-bot.cn/aholo-viewer/",
     "source": "ai-bot.cn",
     "date": "2026-05-27",
     "publishedAt": "",
-    "fetchedAt": "2026-05-29T18:35:20.479Z"
+    "fetchedAt": "2026-05-30T11:46:38.051Z"
   },
   {
     "id": "d07bc3e86b42",
     "title": "Rodin Gen-2.5",
     "summary": "Rodin Gen-2.5 是影眸科技（Hyper3D）推出的全球首款支持千万级多边形生成的 AI 3D 模型，基于 SIGGRAPH 2025 最佳论文技术，支持文生 3D、图生 3D 及多视角...",
     "category": "AI研究",
-    "tags": ["模型"],
+    "tags": [
+      "模型"
+    ],
     "url": "https://ai-bot.cn/rodin-gen-2-5/",
     "source": "ai-bot.cn",
     "date": "2026-05-27",
     "publishedAt": "",
-    "fetchedAt": "2026-05-29T18:35:20.479Z"
+    "fetchedAt": "2026-05-30T11:46:38.051Z"
   },
   {
     "id": "6436d633722e",
     "title": "opera-browser-cli",
     "summary": "opera-browser-cli 是 Opera Neon 推出的开源命令行工具，基于 opera-devtools 封装，支持本地 AI 代理（如 Claude Code）通过终端直接操控浏览器。o",
     "category": "AI研究",
-    "tags": ["开源", "编程", "Claude"],
+    "tags": [
+      "开源",
+      "编程",
+      "Claude"
+    ],
     "url": "https://ai-bot.cn/opera-browser-cli/",
     "source": "ai-bot.cn",
     "date": "2026-05-27",
     "publishedAt": "",
-    "fetchedAt": "2026-05-29T18:35:20.479Z"
+    "fetchedAt": "2026-05-30T11:46:38.051Z"
+  },
+  {
+    "id": "331d6d2be501",
+    "title": "Keye-VL-2.0-30B-A3B",
+    "summary": "Keye-VL-2.0-30B-A3B是快手开源的自研多模态大模型 ，为 30B 级主力基座。模型首次将 DSA 稀疏注意力引入多模态场景，支持 256K 超长上下文，实现小时级视频...",
+    "category": "AI研究",
+    "tags": [
+      "开源",
+      "模型",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/keye-vl-2-0-30b-a3b/",
+    "source": "ai-bot.cn",
+    "date": "2026-05-27",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-30T11:46:38.051Z"
   },
   {
     "id": "1bae86cad711",
     "title": "MiniCPM5-1B",
     "summary": "MiniCPM5-1B 是面壁智能联合清华大学、OpenBMB 开源社区推出的 1B 参数端侧文本基座大模型，在 AA-Index 榜单上以 17.9 分超越所有 2B 以下模型，成为全球同...",
     "category": "AI研究",
-    "tags": ["开源", "模型"],
+    "tags": [
+      "开源",
+      "模型"
+    ],
     "url": "https://ai-bot.cn/minicpm5-1b/",
     "source": "ai-bot.cn",
     "date": "2026-05-26",
@@ -64,7 +112,13 @@
     "title": "AgentScope 2.0",
     "summary": "AgentScope 2.0 是通义实验室推出的开源多智能体开发框架，聚焦真实场景下的稳定运行、安全控制与生产部署，新增模型容错、权限系统、上下文管理重构、Middle...",
     "category": "AI研究",
-    "tags": ["开源", "Agent", "模型", "框架", "通义千问"],
+    "tags": [
+      "开源",
+      "Agent",
+      "模型",
+      "框架",
+      "通义千问"
+    ],
     "url": "https://ai-bot.cn/agentscope-2-0/",
     "source": "ai-bot.cn",
     "date": "2026-05-26",
