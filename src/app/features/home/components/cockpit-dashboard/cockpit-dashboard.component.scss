@@ -14,10 +14,16 @@ $sans: var(--font-sans);
 // ── Container ────────────────────────────────────────────────────────
 .cockpit-dashboard {
   position: relative;
-  width: 100%;
-  min-height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100dvh;
   overflow: hidden;
-  background: #050b14;
+  padding: clamp(78px, 9vh, 96px) 24px clamp(28px, 4vh, 42px);
+  color: rgba(220, 246, 255, 0.92);
+  background:
+    linear-gradient(180deg, rgba(2, 6, 17, 0.30), rgba(2, 8, 22, 0.50)),
+    url('/cockpit-dashboard-bg.jpg') center / cover no-repeat,
+    #020611;
 }
 
 // ── Background image layer ───────────────────────────────────────────
@@ -54,16 +60,17 @@ $sans: var(--font-sans);
   }
 }
 
-// ── Inner content ────────────────────────────────────────────────────
-.cockpit-inner {
+// ── Shell container ──────────────────────────────────────────────────
+.cockpit-shell {
+  width: min(100% - 32px, 1120px);
+  height: 100%;
+  max-height: calc(100dvh - 120px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 14px;
   position: relative;
   z-index: 1;
-  width: min(100%, 1240px);
-  margin: 0 auto;
-  padding: 112px 32px 72px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 // ── Three.js background ──────────────────────────────────────────────
@@ -83,257 +90,239 @@ $sans: var(--font-sans);
 // ── Header ───────────────────────────────────────────────────────────
 .cockpit-header {
   text-align: center;
-  margin-bottom: 12px;
+  margin: 0;
+}
 
-  &__tag {
-    display: block;
-    font-family: $mono;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    color: rgba($cyan, 0.5);
-    margin-bottom: 6px;
-  }
+.cockpit-header h1 {
+  margin: 6px 0 4px;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: #60d8ff;
+  text-shadow: 0 0 24px rgba(96, 216, 255, 0.35);
+}
 
-  &__title {
-    font-family: $sans;
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    font-weight: 800;
-    letter-spacing: 0.2em;
-    color: rgba($cyan, 0.9);
-    margin: 0 0 6px;
-    text-shadow: 0 0 28px rgba($cyan, 0.3);
-  }
+.cockpit-header p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(200, 230, 244, 0.64);
+  letter-spacing: 0.14em;
+}
 
-  &__subtitle {
-    font-family: $mono;
-    font-size: 0.82rem;
-    color: $muted;
-    margin: 0;
-    letter-spacing: 0.1em;
-  }
+.cockpit-index-chip {
+  background: rgba($cyan, 0.12) !important;
+  border: 1px solid rgba($cyan, 0.25) !important;
+  color: $cyan !important;
+  font-family: $mono;
+  font-size: 0.68rem;
+  min-height: 24px;
+  border-radius: 999px !important;
 }
 
 // ── KPI Grid ─────────────────────────────────────────────────────────
 .cockpit-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.kpi-card.mat-mdc-card {
-  border-radius: 20px !important;
-  background:
-    linear-gradient(135deg, rgba(5, 18, 40, 0.52), rgba(5, 18, 40, 0.3)), rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(105, 215, 255, 0.22) !important;
-  box-shadow:
-    0 18px 56px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
-  padding: 0 !important;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
-
-  &::before {
-    display: none !important;
-  }
-
-  &:hover {
-    border-color: rgba($cyan, 0.4) !important;
-    box-shadow:
-      0 0 28px rgba($cyan, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-  }
+.cockpit-kpi-card {
+  min-height: 76px;
+  padding: 12px 14px !important;
+  display: grid !important;
+  place-items: center;
+  text-align: center;
+  border-radius: 18px !important;
 }
 
-.kpi-card__link {
+.cockpit-kpi-card mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: rgba(99, 220, 255, 0.78);
+}
+
+.cockpit-kpi-card strong {
+  font-size: 24px;
+  line-height: 1.1;
+  color: #63dcff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.cockpit-kpi-card span {
+  font-size: 11px;
+  color: rgba(210, 238, 250, 0.58);
+}
+
+.kpi-link {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 22px 12px;
   text-decoration: none;
   color: inherit;
   gap: 4px;
 }
 
-.kpi-card__icon {
-  color: rgba($cyan, 0.6) !important;
-  font-size: 22px !important;
-  width: 22px !important;
-  height: 22px !important;
-  margin-bottom: 4px;
-}
-
-.kpi-card__value {
-  font-family: $mono;
-  font-size: 2rem;
-  font-weight: 700;
-  color: $cyan;
-  text-shadow: 0 0 24px rgba($cyan, 0.3);
-  line-height: 1.2;
-}
-
-.kpi-card__label {
-  font-family: $mono;
-  font-size: 0.68rem;
-  color: $muted;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-// ── Main Dashboard Grid (Row 1: 3 columns) ───────────────────────────
-.cockpit-main-grid {
+// ── Main Dashboard Board ─────────────────────────────────────────────
+.cockpit-board {
+  min-height: 0;
   display: grid;
-  grid-template-columns: minmax(240px, 4fr) minmax(340px, 5fr) minmax(220px, 3fr);
-  gap: 16px;
+  grid-template-rows: minmax(0, 1.25fr) minmax(0, 0.95fr) 128px;
+  gap: 12px;
 }
 
-// ── Secondary Grid (Row 2: 3 columns) ────────────────────────────────
+.cockpit-main-grid,
 .cockpit-secondary-grid {
+  min-height: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  gap: 12px;
 }
 
-// ── Unified Panel (mat-card override for dark cockpit) ────────────────
-.cockpit-panel.mat-mdc-card {
-  border-radius: 22px !important;
-  background:
-    linear-gradient(135deg, rgba(5, 18, 40, 0.52), rgba(5, 18, 40, 0.3)), rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(105, 215, 255, 0.18) !important;
-  box-shadow:
-    0 18px 56px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
-
-  &::before {
-    display: none !important;
-  }
-
-  // mat-card-header
-  .mat-mdc-card-header {
-    padding: 16px 18px 8px;
-  }
-
-  .mat-mdc-card-header-title {
-    font-family: $mono;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    color: rgba($cyan, 0.85);
-    text-transform: uppercase;
-  }
-
-  .mat-mdc-card-header-subtitle {
-    font-family: $mono;
-    font-size: 0.65rem;
-    color: $muted;
-  }
-
-  // mat-card-content
-  .mat-mdc-card-content {
-    padding: 0 10px 12px;
-  }
-}
-
-// ── Panel Avatar (icon circle) ────────────────────────────────────────
-.panel-avatar {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 36px !important;
-  height: 36px !important;
-  border-radius: 10px;
-  font-size: 18px !important;
-  color: #fff;
-
-  &--cyan {
-    background: rgba($cyan, 0.15);
-    color: $cyan;
-    box-shadow: 0 0 12px rgba($cyan, 0.2);
-  }
-  &--green {
-    background: rgba($green, 0.12);
-    color: $green;
-    box-shadow: 0 0 12px rgba($green, 0.2);
-  }
-  &--blue {
-    background: rgba($blue, 0.15);
-    color: $blue;
-    box-shadow: 0 0 12px rgba($blue, 0.2);
-  }
-  &--purple {
-    background: rgba($purple, 0.15);
-    color: $purple;
-    box-shadow: 0 0 12px rgba($purple, 0.2);
-  }
-  &--amber {
-    background: rgba($amber, 0.15);
-    color: $amber;
-    box-shadow: 0 0 12px rgba($amber, 0.2);
-  }
-}
-
-// ── Material List inside panels ───────────────────────────────────────
-.cockpit-panel {
-  .mat-mdc-list {
-    padding: 0 !important;
-  }
-
-  .mat-mdc-list-item {
-    min-height: 34px !important;
-    height: auto !important;
-    padding: 5px 6px !important;
-
-    // One-line layout override
-    --mdc-list-list-item-one-line-container-height: 34px;
-  }
-
-  // Title = label (left side)
-  .mdc-list-item__primary-text {
-    font-family: $mono;
-    font-size: 0.68rem;
-    color: $muted;
-    letter-spacing: 0.04em;
-  }
-
-  // Subtitle line = value (right side)
-  .mat-mdc-list-item-secondary-text,
-  .mdc-list-item__secondary-text {
-    font-family: $mono;
-    font-size: 0.72rem;
-    color: $cyan;
-    font-weight: 600;
-  }
-
-  // matListItemLine spans
-  .mat-line {
-    font-family: $mono;
-    font-size: 0.72rem;
-  }
-
-  mat-divider {
-    border-color: rgba(255, 255, 255, 0.06) !important;
-    margin: 0 6px !important;
-  }
-}
-
-// ── Metric value (inside matListItemLine) ─────────────────────────────
-.metric-value {
-  font-family: $mono;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: $cyan;
-  text-align: right;
-  white-space: nowrap;
+.cockpit-panel,
+.cockpit-log-card {
+  min-height: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 180px;
+  border-radius: 20px !important;
+  padding: 14px !important;
+}
+
+// ── Material Glass Card ──────────────────────────────────────────────
+.cockpit-glass-card {
+  background:
+    linear-gradient(135deg, rgba(8, 20, 38, 0.76), rgba(9, 28, 48, 0.48)) !important;
+  border: 1px solid rgba(105, 215, 255, 0.22) !important;
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(180, 240, 255, 0.12) !important;
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  color: rgba(220, 246, 255, 0.9) !important;
+}
+
+// ── Panel Title ──────────────────────────────────────────────────────
+.cockpit-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.panel-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(99, 220, 255, 0.12);
+  color: #63dcff;
+}
+
+.panel-icon mat-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+}
+
+.cockpit-panel-title h2 {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(225, 248, 255, 0.92);
+}
+
+// ── Site Pulse with radar ────────────────────────────────────────────
+.pulse-compact-layout {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 96px;
+  gap: 12px;
+  align-items: center;
+}
+
+.orbit-radar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(99, 220, 255, 0.16), transparent 62%);
+}
+
+.orbit-radar span {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(99, 220, 255, 0.12);
+}
+
+.orbit-radar span:nth-child(1) {
+  inset: 0;
+}
+
+.orbit-radar span:nth-child(2) {
+  inset: 15px;
+}
+
+.orbit-radar span:nth-child(3) {
+  inset: 30px;
+}
+
+.orbit-radar i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(99, 220, 255, 0.6), transparent);
+  transform-origin: left center;
+  animation: radar-sweep 4s linear infinite;
+}
+
+.orbit-radar i::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #63dcff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(99, 220, 255, 0.6);
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ── Data List ────────────────────────────────────────────────────────
+.cockpit-data-list {
+  padding: 6px 0 0 !important;
+}
+
+.cockpit-data-list mat-list-item {
+  height: 30px !important;
+  min-height: 30px !important;
+  border-bottom: 1px solid rgba(130, 220, 255, 0.08);
+}
+
+.cockpit-data-list [matListItemTitle] {
+  font-size: 11px !important;
+  color: rgba(204, 232, 246, 0.58);
+}
+
+.cockpit-data-list [matListItemMeta] {
+  font-size: 11px !important;
+  color: #63dcff;
+  font-weight: 800;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 // ── FPS progress bar ─────────────────────────────────────────────────
@@ -358,87 +347,78 @@ $sans: var(--font-sans);
   }
 }
 
-// ── Site Pulse with radar ────────────────────────────────────────────
-.pulse-content {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.pulse-data {
-  flex: 1;
-  min-width: 0;
-}
-
-.pulse-radar {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 8px;
-}
-
-.radar {
-  position: relative;
-  width: 130px;
-  height: 130px;
-}
-
-.radar-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba($cyan, 0.12);
-
-  &--1 {
-    inset: 0;
-  }
-  &--2 {
-    inset: 22px;
-  }
-  &--3 {
-    inset: 42px;
-  }
-}
-
-.radar-sweep {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50%;
-  height: 2px;
-  background: linear-gradient(90deg, rgba($cyan, 0.6), transparent);
-  transform-origin: left center;
-  animation: radar-sweep 4s linear infinite;
-}
-
-.radar-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background: $cyan;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 12px rgba($cyan, 0.6);
-}
-
-@keyframes radar-sweep {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 // ── System Log ───────────────────────────────────────────────────────
-.cockpit-panel--log {
-  .mat-mdc-card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+.cockpit-log-card {
+  height: 128px;
+  overflow: hidden;
+}
+
+.cockpit-log-list {
+  margin-top: 8px;
+  display: grid;
+  gap: 4px;
+  max-height: 82px;
+  overflow: hidden;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.log-line {
+  display: grid;
+  grid-template-columns: 72px 70px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+  color: rgba(215, 242, 255, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 2px 0;
+}
+
+.log-line:last-child {
+  border-bottom: none;
+}
+
+.log-line__time {
+  color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.log-line__tag {
+  color: $cyan;
+  min-width: 64px;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.log-line__tag[data-tag='SYS'] {
+  color: $blue;
+}
+
+.log-line__tag[data-tag='VISITOR'] {
+  color: $green;
+}
+
+.log-line__tag[data-tag='CONTENT'] {
+  color: $purple;
+}
+
+.log-line__tag[data-tag='AI'] {
+  color: $amber;
+}
+
+.log-line__tag[data-tag='WEBGL'] {
+  color: $cyan;
+}
+
+.log-line__tag[data-tag='NET'] {
+  color: $green;
+}
+
+.log-line__tag[data-tag='NAV'] {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.log-line__msg {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .log-chips {
@@ -457,130 +437,17 @@ $sans: var(--font-sans);
   }
 }
 
-.log-body {
-  max-height: 180px;
-  overflow-y: auto;
-  font-family: $mono;
-  font-size: 11px;
-  line-height: 1.7;
-
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba($cyan, 0.2);
-    border-radius: 2px;
-  }
-}
-
-.log-line {
-  display: flex;
-  gap: 8px;
-  padding: 2px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &__time {
-    color: rgba(255, 255, 255, 0.3);
-    flex-shrink: 0;
-  }
-
-  &__tag {
-    color: $cyan;
-    min-width: 64px;
-    flex-shrink: 0;
-    font-weight: 600;
-
-    &[data-tag='SYS'] {
-      color: $blue;
-    }
-    &[data-tag='VISITOR'] {
-      color: $green;
-    }
-    &[data-tag='CONTENT'] {
-      color: $purple;
-    }
-    &[data-tag='AI'] {
-      color: $amber;
-    }
-    &[data-tag='WEBGL'] {
-      color: $cyan;
-    }
-    &[data-tag='NET'] {
-      color: $green;
-    }
-    &[data-tag='NAV'] {
-      color: rgba(255, 255, 255, 0.6);
-    }
-  }
-
-  &__msg {
-    color: rgba(255, 255, 255, 0.65);
-  }
-}
-
 // ── Action Buttons ───────────────────────────────────────────────────
 .cockpit-actions {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin-top: 8px;
+  flex-wrap: wrap;
 }
 
-.cockpit-action-btn {
-  min-height: 44px !important;
-  padding: 0 28px !important;
-  border-radius: 12px !important;
-  font-family: $mono !important;
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.08em !important;
-  gap: 8px;
-
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  // mat-stroked-button override
-  &.mat-mdc-outlined-button {
-    border-color: rgba($cyan, 0.28) !important;
-    color: rgba(255, 255, 255, 0.88) !important;
-    background: rgba($cyan, 0.06) !important;
-
-    &:hover {
-      background: rgba($cyan, 0.15) !important;
-      border-color: rgba($cyan, 0.6) !important;
-      box-shadow: 0 0 20px rgba($cyan, 0.12) !important;
-    }
-
-    mat-icon {
-      color: $cyan;
-    }
-  }
-
-  // mat-flat-button primary override
-  &--primary.mat-mdc-filled-button {
-    background: rgba($cyan, 0.18) !important;
-    border: 1px solid rgba($cyan, 0.45) !important;
-    color: #fff !important;
-    box-shadow: 0 0 16px rgba($cyan, 0.1) !important;
-
-    &:hover {
-      background: rgba($cyan, 0.28) !important;
-      border-color: $cyan !important;
-      box-shadow: 0 0 28px rgba($cyan, 0.18) !important;
-    }
-
-    mat-icon {
-      color: $cyan;
-    }
-  }
+.cockpit-actions button {
+  min-height: 38px;
+  border-radius: 999px !important;
 }
 
 // ── Telemetry bar ────────────────────────────────────────────────────
@@ -590,34 +457,25 @@ app-telemetry-bar {
   margin-top: 4px;
 }
 
-// ── Mobile (< 768px) ─────────────────────────────────────────────────
-@media (max-width: 767px) {
-  .cockpit-bg-frame {
-    background-size: auto 100%;
-    background-position: center top;
-    opacity: 0.65;
+// ── Mobile (< 1024px) ────────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .cockpit-dashboard {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
   }
 
-  .cockpit-inner {
-    padding: 88px 16px 48px;
+  .cockpit-shell {
+    height: auto;
+    max-height: none;
   }
 
-  .cockpit-header {
-    margin-bottom: 8px;
-
-    &__title {
-      font-size: 1.15rem;
-      letter-spacing: 0.12em;
-    }
+  .cockpit-board {
+    grid-template-rows: auto;
   }
 
   .cockpit-kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .kpi-card__value {
-    font-size: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .cockpit-main-grid,
@@ -625,70 +483,41 @@ app-telemetry-bar {
     grid-template-columns: 1fr;
   }
 
-  .pulse-content {
-    flex-direction: column;
+  .cockpit-log-card {
+    height: auto;
+  }
+}
+
+// ── Small mobile (< 640px) ──────────────────────────────────────────
+@media (max-width: 640px) {
+  .cockpit-dashboard {
+    padding: 88px 16px 64px;
   }
 
-  .pulse-radar {
-    align-self: center;
-  }
-
-  .radar {
-    width: 100px;
-    height: 100px;
-  }
-
-  .radar-ring {
-    &--2 {
-      inset: 16px;
-    }
-    &--3 {
-      inset: 32px;
-    }
+  .cockpit-kpi-grid {
+    grid-template-columns: 1fr;
   }
 
   .cockpit-actions {
     flex-direction: column;
-    gap: 10px;
   }
 
-  .cockpit-action-btn {
+  .cockpit-actions button {
     width: 100%;
   }
 
-  .metric-value {
-    max-width: 52vw;
+  .pulse-compact-layout {
+    grid-template-columns: 1fr;
   }
 
-  .log-body {
-    max-height: 120px;
-    font-size: 10px;
-  }
-}
-
-// ── Small mobile (< 480px) ───────────────────────────────────────────
-@media (max-width: 480px) {
-  .cockpit-inner {
-    padding: 80px 12px 40px;
-  }
-
-  .cockpit-header__title {
-    font-size: 1rem;
-  }
-
-  .kpi-card__value {
-    font-size: 1.3rem;
+  .orbit-radar {
+    justify-self: center;
   }
 }
 
 // ── Reduced motion ───────────────────────────────────────────────────
 @media (prefers-reduced-motion: reduce) {
-  .radar-sweep {
+  .orbit-radar i {
     animation: none;
-  }
-
-  .kpi-card,
-  .cockpit-action-btn {
-    transition: none;
   }
 }

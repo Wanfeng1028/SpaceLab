@@ -19,8 +19,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { I18nService } from '../../../../core/services/i18n.service';
 import { LenisScrollService } from '../../../../core/services/lenis-scroll.service';
 import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
-import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import { CockpitDashboardScene } from '../../../../three/scenes/cockpit-dashboard.scene';
+import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import {
   POSTS,
   PROJECTS,
@@ -57,8 +57,6 @@ interface NetworkInformation {
   imports: [
     CommonModule,
     RouterLink,
-    ThreeCanvasComponent,
-    TelemetryBarComponent,
     MatCardModule,
     MatChipsModule,
     MatButtonModule,
@@ -67,6 +65,8 @@ interface NetworkInformation {
     MatListModule,
     MatTooltipModule,
     MatProgressBarModule,
+    ThreeCanvasComponent,
+    TelemetryBarComponent,
   ],
 })
 export class CockpitDashboardSection implements OnInit, OnDestroy {
@@ -74,16 +74,11 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly i18n = inject(I18nService);
   private readonly lenis = inject(LenisScrollService);
 
-  /* ── Three.js scene ─────────────────────────────────────────────── */
-
-  private scene: CockpitDashboardScene | null = null;
-
   readonly cockpitFactory = (canvas: HTMLCanvasElement) => {
     try {
-      this.scene = new CockpitDashboardScene(canvas);
-      return this.scene;
+      return new CockpitDashboardScene(canvas);
     } catch (e) {
-      console.warn('[Cockpit] Scene init failed:', e);
+      console.warn('[CockpitDashboard] Scene init failed:', e);
       return { init() {}, destroy() {} };
     }
   };
@@ -105,39 +100,10 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   readonly localTime = signal(this.formatTime());
   readonly timezone = signal('');
-  readonly browserLang = signal('');
+  readonly language = signal('');
   readonly device = signal('');
   readonly viewport = signal('');
-  readonly dpr = signal('');
   readonly browser = signal('');
-  readonly os = signal('');
-  readonly network = signal('');
-  readonly connection = signal('');
-  readonly locationStatus = signal('');
-  readonly weatherStatus = signal('');
-
-  /* ── Session Metrics ────────────────────────────────────────────── */
-
-  readonly currentPage = signal('');
-  readonly sessionTime = signal('');
-  readonly scrollDepth = signal('0%');
-  readonly clickCount = signal(0);
-  readonly routeChanges = signal(0);
-  readonly lastInteraction = signal('');
-  readonly entryRoute = signal('');
-
-  private sessionStart = 0;
-  private clicks = 0;
-  private routeCount = 0;
-  private lastActivity = 0;
-  private scrollThrottleId: number | null = null;
-
-  /* ── KPI stats ──────────────────────────────────────────────────── */
-
-  readonly postsCount = signal(POSTS.length);
-  readonly projectsCount = signal(PROJECTS.length);
-  readonly aiNewsCount = signal(AI_FRONTLINE_NEWS.length);
-  readonly aiResourcesCount = signal(LAB_AI_TOOLS.length + LAB_AI_PROJECTS.length);
 
   /* ── Site Pulse ─────────────────────────────────────────────────── */
 
@@ -155,6 +121,34 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   );
   readonly currentLang = signal('');
 
+  /* ── System Status ──────────────────────────────────────────────── */
+
+  readonly rendererType = signal('');
+  readonly fps = signal('--');
+  readonly motionPref = signal('');
+  readonly currentTheme = signal('');
+  readonly buildMode = signal('GitHub Pages');
+  readonly routerInfo = signal('Angular Router');
+
+  private webglAvailable = false;
+  private rafCount = 0;
+  private fpsLastTime = 0;
+
+  /* ── Session Metrics ────────────────────────────────────────────── */
+
+  readonly sessionTime = signal('');
+  readonly scrollDepth = signal('0%');
+  readonly clickCount = signal(0);
+  readonly routeChanges = signal(0);
+  readonly lastInteraction = signal('');
+  readonly entryRoute = signal('');
+
+  private sessionStart = 0;
+  private clicks = 0;
+  private routeCount = 0;
+  private lastActivity = 0;
+  private scrollThrottleId: number | null = null;
+
   /* ── Content Sync ───────────────────────────────────────────────── */
 
   readonly syncBlogPosts = signal(POSTS.length);
@@ -163,24 +157,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   readonly syncAiTools = signal(LAB_AI_TOOLS.length);
   readonly syncAiFrameworks = signal(LAB_AI_PROJECTS.length);
   readonly syncLastAi = signal(this.formatSyncTime(AI_FRONTLINE_SOURCE.lastFetchedAt));
-  readonly syncLastLab = signal(this.formatSyncTime(LAB_SOURCES.lastFetchedAt));
-  readonly syncLastProject = signal(this.formatDate(new Date()));
-
-  /* ── System Status ──────────────────────────────────────────────── */
-
-  readonly rendererType = signal('');
-  readonly fps = signal('--');
-  readonly motionPref = signal('');
-  readonly currentTheme = signal('');
-  readonly buildMode = signal('GitHub Pages');
-  readonly contentModeSys = signal('Markdown + JSON');
-  readonly routerInfo = signal('Angular Router');
-  readonly onlineStatus = signal('');
-  readonly assetsStatus = signal('');
-
-  private webglAvailable = false;
-  private rafCount = 0;
-  private fpsLastTime = 0;
 
   /* ── Analytics ──────────────────────────────────────────────────── */
 
@@ -190,9 +166,25 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   readonly popularPage = signal('');
   readonly analyticsSource = signal('');
 
+  /* ── KPI stats ──────────────────────────────────────────────────── */
+
+  readonly postsCount = signal(POSTS.length);
+  readonly projectsCount = signal(PROJECTS.length);
+  readonly aiNewsCount = signal(AI_FRONTLINE_NEWS.length);
+  readonly aiResourcesCount = signal(LAB_AI_TOOLS.length + LAB_AI_PROJECTS.length);
+
   /* ── Command Log ────────────────────────────────────────────────── */
 
   readonly commandLog = signal<LogEntry[]>([]);
+
+  /* ── Compact data arrays ────────────────────────────────────────── */
+
+  readonly visitorSignals = signal<{ label: string; value: string }[]>([]);
+  readonly sitePulse = signal<{ label: string; value: string }[]>([]);
+  readonly systemStatus = signal<{ label: string; value: string }[]>([]);
+  readonly sessionMetrics = signal<{ label: string; value: string }[]>([]);
+  readonly contentSync = signal<{ label: string; value: string }[]>([]);
+  readonly analyticsData = signal<{ label: string; value: string }[]>([]);
 
   /* ── Lifecycle ──────────────────────────────────────────────────── */
 
@@ -200,7 +192,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.sessionStart = Date.now();
     this.lastActivity = Date.now();
     this.entryRoute.set(this.router.url);
-    this.currentPage.set(this.router.url);
     this.currentLang.set(this.i18n.isZh() ? '中文' : 'English');
 
     this.initVisitorInfo();
@@ -223,24 +214,25 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     if (this.scrollThrottleId) cancelAnimationFrame(this.scrollThrottleId);
     this.cleanupFns.forEach((fn) => fn());
     this.cleanupFns = [];
-    this.scene?.destroy();
-    this.scene = null;
   }
 
   /* ── Init helpers ───────────────────────────────────────────────── */
 
   private initVisitorInfo(): void {
     this.timezone.set(this.getTimezone());
-    this.browserLang.set(navigator.language || 'Unknown');
+    this.language.set(navigator.language || 'Unknown');
     this.device.set(this.detectDevice());
     this.viewport.set(`${window.innerWidth}×${window.innerHeight}`);
-    this.dpr.set(String(window.devicePixelRatio || 1));
     this.browser.set(this.detectBrowser());
-    this.os.set(this.detectOS());
-    this.network.set(navigator.onLine ? this.t('onlineStatus') : this.t('offlineStatus'));
-    this.connection.set(this.getConnectionType());
-    this.locationStatus.set(this.t('permissionRequired'));
-    this.weatherStatus.set(this.t('standby'));
+
+    this.visitorSignals.set([
+      { label: this.t('localTime'), value: this.localTime() },
+      { label: this.t('timezone'), value: this.timezone() },
+      { label: this.t('language'), value: this.language() },
+      { label: this.t('device'), value: this.device() },
+      { label: this.t('viewport'), value: this.viewport() },
+      { label: this.t('browser'), value: this.browser() },
+    ]);
   }
 
   private initSystemStatus(): void {
@@ -254,8 +246,24 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.currentTheme.set(
       document.documentElement.classList.contains('light-theme') ? this.t('light') : this.t('dark'),
     );
-    this.onlineStatus.set(navigator.onLine ? this.t('onlineStatus') : this.t('offlineStatus'));
-    this.assetsStatus.set(this.t('loaded'));
+
+    this.systemStatus.set([
+      { label: this.t('renderer'), value: this.rendererType() },
+      { label: this.t('fps'), value: this.fps() },
+      { label: this.t('motion'), value: this.motionPref() },
+      { label: this.t('theme'), value: this.currentTheme() },
+      { label: this.t('buildMode'), value: this.buildMode() },
+      { label: this.t('router'), value: this.routerInfo() },
+    ]);
+
+    this.sitePulse.set([
+      { label: this.t('siteMode'), value: this.siteMode() },
+      { label: this.t('contentMode'), value: this.contentModeVal() },
+      { label: this.t('lastBuild'), value: this.lastBuildTime() },
+      { label: this.t('lastSync'), value: this.lastSyncTime() },
+      { label: this.t('totalPages'), value: String(this.totalPages()) },
+      { label: this.t('currentLang'), value: this.currentLang() },
+    ]);
   }
 
   private initAnalytics(): void {
@@ -264,6 +272,14 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     this.uvValue.set(this.t('notConnected'));
     this.popularPage.set(this.t('awaitingData'));
     this.analyticsSource.set(this.t('notConnected'));
+
+    this.analyticsData.set([
+      { label: this.t('analyticsMode'), value: this.analyticsMode() },
+      { label: this.t('pv'), value: this.pvValue() },
+      { label: this.t('uv'), value: this.uvValue() },
+      { label: this.t('popularPage'), value: this.popularPage() },
+      { label: this.t('dataSource'), value: this.analyticsSource() },
+    ]);
   }
 
   /* ── Timers ─────────────────────────────────────────────────────── */
@@ -276,6 +292,22 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
       this.localTime.set(this.formatTime());
       this.sessionTime.set(this.formatDuration(Date.now() - this.sessionStart));
       this.lastInteraction.set(this.formatDuration(Date.now() - this.lastActivity));
+
+      // Update visitor signals
+      this.visitorSignals.update((signals) =>
+        signals.map((s) =>
+          s.label === this.t('localTime') ? { ...s, value: this.localTime() } : s,
+        ),
+      );
+
+      // Update session metrics
+      this.sessionMetrics.set([
+        { label: this.t('sessionTime'), value: this.sessionTime() },
+        { label: this.t('scrollDepth'), value: this.scrollDepth() },
+        { label: this.t('clickCount'), value: String(this.clickCount()) },
+        { label: this.t('routeChanges'), value: String(this.routeChanges()) },
+        { label: this.t('lastInteraction'), value: this.lastInteraction() },
+      ]);
     }, 1000);
 
     // FPS — 1s
@@ -293,7 +325,24 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
       this.fps.set(String(currentFps));
       this.rafCount = 0;
       this.fpsLastTime = now;
+
+      // Update system status
+      this.systemStatus.update((status) =>
+        status.map((s) =>
+          s.label === this.t('fps') ? { ...s, value: this.fps() } : s,
+        ),
+      );
     }, 1000);
+
+    // Content sync
+    this.contentSync.set([
+      { label: this.t('syncBlogPosts'), value: String(this.syncBlogPosts()) },
+      { label: this.t('syncProjects'), value: String(this.syncProjects()) },
+      { label: this.t('syncAiNews'), value: String(this.syncAiNews()) },
+      { label: this.t('syncAiTools'), value: String(this.syncAiTools()) },
+      { label: this.t('syncAiFrameworks'), value: String(this.syncAiFrameworks()) },
+      { label: this.t('syncLastAi'), value: this.syncLastAi() },
+    ]);
 
     // Force change detection for session time
     this.sessionInterval = setInterval(() => {}, 5000);
@@ -326,19 +375,14 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     const routerSub = this.router.events.subscribe(() => {
       this.routeCount++;
       this.routeChanges.set(this.routeCount);
-      this.currentPage.set(this.router.url);
       this.lastActivity = Date.now();
     });
     this.cleanupFns.push(() => routerSub.unsubscribe());
 
     const onlineHandler = () => {
-      this.network.set(this.t('onlineStatus'));
-      this.onlineStatus.set(this.t('onlineStatus'));
       this.pushLog('NET', this.t('logNetRestored'));
     };
     const offlineHandler = () => {
-      this.network.set(this.t('offlineStatus'));
-      this.onlineStatus.set(this.t('offlineStatus'));
       this.pushLog('NET', this.t('logNetDisconnected'));
     };
     window.addEventListener('online', onlineHandler);
@@ -350,6 +394,11 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
     const resizeHandler = () => {
       this.viewport.set(`${window.innerWidth}×${window.innerHeight}`);
+      this.visitorSignals.update((signals) =>
+        signals.map((s) =>
+          s.label === this.t('viewport') ? { ...s, value: this.viewport() } : s,
+        ),
+      );
     };
     window.addEventListener('resize', resizeHandler);
     this.cleanupFns.push(() => window.removeEventListener('resize', resizeHandler));
@@ -363,17 +412,17 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   /* ── Actions ────────────────────────────────────────────────────── */
 
-  onReturnTop(): void {
+  scrollToTop(): void {
     this.pushLog('NAV', this.t('logReturnTop'));
     this.lenis.scrollTo(0, { immediate: false });
   }
 
-  onRestartOrbit(): void {
+  restartOrbit(): void {
     this.pushLog('NAV', this.t('logRestartOrbit'));
     this.lenis.scrollTo(0, { immediate: false });
   }
 
-  onEnterSite(): void {
+  enterSite(): void {
     this.pushLog('NAV', this.t('logEnterSite'));
     this.router.navigate(['/blog']);
   }
@@ -408,28 +457,12 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
     return 'Unknown';
   }
 
-  private detectOS(): string {
-    const ua = navigator.userAgent;
-    if (ua.includes('Win')) return 'Windows';
-    if (ua.includes('Mac')) return 'macOS';
-    if (ua.includes('Linux')) return 'Linux';
-    if (ua.includes('Android')) return 'Android';
-    if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
-    return 'Unknown';
-  }
-
   private getTimezone(): string {
     try {
       return Intl.DateTimeFormat().resolvedOptions().timeZone;
     } catch {
       return 'Unknown';
     }
-  }
-
-  private getConnectionType(): string {
-    const conn = (navigator as any).connection as NetworkInformation | undefined;
-    if (!conn) return this.t('unsupportedLabel');
-    return conn.effectiveType?.toUpperCase() || this.t('unsupportedLabel');
   }
 
   private checkWebGL(): boolean {
