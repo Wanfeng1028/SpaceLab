@@ -15,6 +15,39 @@
     "fetchedAt": "2026-05-30T11:46:33.406Z"
   },
   {
+    "id": "8d0aed8e5e67",
+    "title": "Step 3.7 Flash",
+    "summary": "Step 3.7 Flash 是阶跃星辰面向 Agent 生产化阶段推出的新一代开源 Flash 模型，采用稀疏 MoE 架构，最高生成速度达 400 Tokens/s。",
+    "category": "AI研究",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/step-3-7-flash/",
+    "source": "ai-bot.cn",
+    "date": "2026-05-29",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T14:12:48.018Z"
+  },
+  {
+    "id": "1fbe555edecf",
+    "title": "Claude Opus 4.8",
+    "summary": "Claude Opus 4.8 是 Anthropic 推出的旗舰级大语言模型，在 Opus 4.7 基础上提升判断力、诚实性和长时独立工作能力，在编程、智能体推理、多学科推理等基准测...",
+    "category": "AI研究",
+    "tags": [
+      "Agent",
+      "模型",
+      "编程",
+      "Claude"
+    ],
+    "url": "https://ai-bot.cn/claude-opus-4-8/",
+    "source": "ai-bot.cn",
+    "date": "2026-05-29",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T14:12:48.018Z"
+  },
+  {
     "id": "aa731ed608ab",
     "title": "Guizang Social Card Skill",
     "summary": "Guizang Social Card Skill 是歸藏开源的适配 Claude Code / Codex 等 Agent 环境的图文卡片技能，能解决小红书（3:4 竖图）和公众号（21:9 + 1:1 封面）配图...",
@@ -32,6 +65,21 @@
     "fetchedAt": "2026-05-29T18:35:18.283Z"
   },
   {
+    "id": "f8e3204d22e5",
+    "title": "MAI-Image-2.5",
+    "summary": "MAI-Image-2.5 是微软研究院推出的旗舰级文生图模型，为 MAI-Image 系列最强版本。模型在 Arena 文生图排行榜以 1,254 分冲上第 3 名，较前代提升 72 分，打...",
+    "category": "AI研究",
+    "tags": [
+      "模型",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/mai-image-2-5/",
+    "source": "ai-bot.cn",
+    "date": "2026-05-28",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T14:12:51.279Z"
+  },
+  {
     "id": "b7105d8abce7",
     "title": "Aholo Viewer",
     "summary": "Aholo Viewer是群核科技开源的基于 3D 高斯溅射（3DGS）的高性能 Web 端渲染引擎。工具采用 chunk-level LOD 流式加载技术，让 3D 内容像视频一样在不同终端...",
@@ -44,7 +92,7 @@
     "source": "ai-bot.cn",
     "date": "2026-05-27",
     "publishedAt": "",
-    "fetchedAt": "2026-05-30T11:46:38.051Z"
+    "fetchedAt": "2026-05-31T14:12:51.279Z"
   },
   {
     "id": "d07bc3e86b42",
@@ -90,7 +138,24 @@
     "source": "ai-bot.cn",
     "date": "2026-05-27",
     "publishedAt": "",
-    "fetchedAt": "2026-05-30T11:46:38.051Z"
+    "fetchedAt": "2026-05-31T14:12:51.279Z"
+  },
+  {
+    "id": "44a80634c55e",
+    "title": "ForgeTrain",
+    "summary": "ForgeTrain 是面壁智能联合清华大学、OpenBMB 开源社区发布的全球首个完全由 AI 编写、零人类代码介入的生产级大模型预训练框架。",
+    "category": "AI研究",
+    "tags": [
+      "开源",
+      "模型",
+      "框架",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/forgetrain/",
+    "source": "ai-bot.cn",
+    "date": "2026-05-27",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T14:12:51.279Z"
   },
   {
     "id": "1bae86cad711",
