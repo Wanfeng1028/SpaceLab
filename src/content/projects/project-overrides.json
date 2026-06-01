@@ -49,5 +49,93 @@
     "description": "测绘程序设计。",
     "tags": ["C#", "GIS"],
     "include": true
+  },
+  "CodexPlusPlus": {
+    "order": 10,
+    "include": true
+  },
+  "ui-ux-pro-max-skill": {
+    "order": 11,
+    "include": true
+  },
+  "wx_key": {
+    "order": 12,
+    "include": true
+  },
+  "WeFlow": {
+    "order": 13,
+    "include": true
+  },
+  "echotrace": {
+    "order": 14,
+    "include": true
+  },
+  "AutoTeam": {
+    "order": 15,
+    "include": true
+  },
+  "CPA-Dashboard": {
+    "order": 16,
+    "include": true
+  },
+  "react-learning": {
+    "order": 17,
+    "include": true
+  },
+  "reactjs101": {
+    "order": 18,
+    "include": true
+  },
+  "books": {
+    "order": 19,
+    "include": true
+  },
+  "ChatGPTJailbreak": {
+    "order": 20,
+    "include": true
+  },
+  "skillhub-desktop": {
+    "order": 21,
+    "include": true
+  },
+  "chatgpt-exporter": {
+    "order": 22,
+    "include": true
+  },
+  "team-manage-refresh": {
+    "order": 23,
+    "include": true
+  },
+  "awesome-human-distillation": {
+    "order": 24,
+    "include": true
+  },
+  "fe-doc": {
+    "order": 25,
+    "include": true
+  },
+  "react-bits": {
+    "order": 26,
+    "include": true
+  },
+  "chrome-devtools-mcp": {
+    "order": 27,
+    "include": true
+  },
+  "claude-code": {
+    "order": 28,
+    "include": true
+  },
+  "ThriveX-Admin": {
+    "order": 29,
+    "include": true
+  },
+  "ai-guide": {
+    "order": 30,
+    "include": true
+  },
+  "DockerDesktop-CN": {
+    "order": 31,
+    "include": true
   }
 }

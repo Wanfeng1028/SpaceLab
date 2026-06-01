@@ -14,7 +14,7 @@ const OVERRIDES_FILE = path.join(ROOT, 'src', 'content', 'projects', 'project-ov
 const GITHUB_USER = 'Wanfeng1028';
 const API_URL = `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=updated`;
 const USER_AGENT = 'SpaceLabBot/1.0 (+https://github.com/Wanfeng1028/SpaceLab)';
-const MAX_PROJECTS = 25;
+const MAX_PROJECTS = 100;
 
 /**
  * Load overrides from project-overrides.json

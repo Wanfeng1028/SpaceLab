@@ -43,7 +43,21 @@ function parseDateLabel(label) {
   if (!m) return null;
   const month = MONTH_MAP[m[1] + '月'];
   if (!month) return null;
-  return `${CURRENT_YEAR}-${month}-${m[2].padStart(2, '0')}`;
+  
+  const day = m[2].padStart(2, '0');
+  const currentYear = CURRENT_YEAR;
+  
+  // Try current year first
+  let dateStr = `${currentYear}-${month}-${day}`;
+  const parsedDate = new Date(dateStr);
+  const today = new Date(TODAY);
+  
+  // If the parsed date is in the future, use previous year
+  if (parsedDate > today) {
+    dateStr = `${currentYear - 1}-${month}-${day}`;
+  }
+  
+  return dateStr;
 }
 
 // ── Stable ID from date + title ─────────────────────────────────────────
@@ -204,16 +218,10 @@ function mergeNews(existing, fresh) {
     if (!seen.has(key)) seen.set(key, item);
   }
 
-  return Array.from(seen.values())
-    .filter((n) => {
-      const d = (n.date || '').slice(0, 10);
-      return d >= CONTENT_START_DATE && d <= TODAY;
-    })
-    .sort(
-      (a, b) =>
-        b.date.localeCompare(a.date) || (b.fetchedAt || '').localeCompare(a.fetchedAt || ''),
-    )
-    .slice(0, MAX_NEWS_ITEMS);
+  return Array.from(seen.values()).sort(
+    (a, b) =>
+      b.date.localeCompare(a.date) || (b.fetchedAt || '').localeCompare(a.fetchedAt || ''),
+  );
 }
 
 // ── Main ───────────────────────────────────────────────────────────────

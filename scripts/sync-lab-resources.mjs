@@ -102,6 +102,7 @@ function parseListPage(html, defaultCategory) {
   const items = [];
 
   // Match: <h2><a href="URL" title="NAME – DESC" class="list-title...">...</a></h2>
+  // or: <h2><a href="URL" title="NAME – DESC" class="list-title text-lg...">...</a></h2>
   // followed by list-desc and list-footer with <time>
   const titleRe =
     /<h2><a\s+href="([^"]+)"[^>]*?title="([^"]*)"[^>]*?class="list-title[^"]*"[^>]*?>([\s\S]*?)<\/a\s*><\/h2>/g;
@@ -191,13 +192,7 @@ function mergeResources(existing, fresh) {
     if (!seen.has(key)) seen.set(key, item);
   }
 
-  return Array.from(seen.values())
-    .filter((n) => {
-      const d = (n.date || '').slice(0, 10);
-      return d >= CONTENT_START_DATE && d <= TODAY;
-    })
-    .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, MAX_ITEMS);
+  return Array.from(seen.values()).sort((a, b) => b.date.localeCompare(a.date));
 }
 
 // ── Fetch page ────────────────────────────────────────────────────────
@@ -221,26 +216,37 @@ async function main() {
   const existingProjects = loadJson(PROJECTS_FILE);
   console.log(`📂 Existing: ${existingTools.length} tools, ${existingProjects.length} projects`);
 
-  // Fetch page 1 from each (shared latest items)
-  // Then fetch page 2 from each for category-specific items
-  const pages = [
-    { url: 'https://ai-bot.cn/ai-tools/', cat: 'AI工具', label: 'tools-p1' },
-    { url: 'https://ai-bot.cn/ai-research/', cat: 'AI研究', label: 'research-p1' },
-    { url: 'https://ai-bot.cn/ai-tools/page/2/', cat: 'AI工具', label: 'tools-p2' },
-    { url: 'https://ai-bot.cn/ai-research/page/2/', cat: 'AI研究', label: 'research-p2' },
+  // Fetch all pages from each category
+  const categories = [
+    { baseUrl: 'https://ai-bot.cn/ai-tools/', cat: 'AI工具', label: 'tools' },
+    { baseUrl: 'https://ai-bot.cn/ai-research/', cat: 'AI研究', label: 'research' },
   ];
 
   const allFresh = [];
-  for (const page of pages) {
-    try {
-      console.log(`📡 Fetching ${page.label}...`);
-      const html = await fetchPage(page.url);
-      const items = parseListPage(html, page.cat);
-      console.log(`   ${items.length} items parsed`);
-      allFresh.push(...items);
-      await new Promise((r) => setTimeout(r, 1000)); // rate limit
-    } catch (err) {
-      console.error(`   ❌ ${page.label}: ${err.message}`);
+  for (const category of categories) {
+    let pageNum = 1;
+    let hasItems = true;
+    
+    while (hasItems) {
+      const url = pageNum === 1 ? category.baseUrl : `${category.baseUrl}page/${pageNum}/`;
+      try {
+        console.log(`📡 Fetching ${category.label}-p${pageNum}...`);
+        const html = await fetchPage(url);
+        const items = parseListPage(html, category.cat);
+        console.log(`   ${items.length} items parsed`);
+        
+        if (items.length === 0) {
+          hasItems = false;
+          console.log(`   No more items on page ${pageNum}`);
+        } else {
+          allFresh.push(...items);
+          pageNum++;
+          await new Promise((r) => setTimeout(r, 1000)); // rate limit
+        }
+      } catch (err) {
+        console.error(`   ❌ ${category.label}-p${pageNum}: ${err.message}`);
+        hasItems = false;
+      }
     }
   }
 
