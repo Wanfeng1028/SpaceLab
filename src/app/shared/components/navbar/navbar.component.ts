@@ -19,10 +19,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const SITE_URL = 'https://wanfeng1028.github.io/SpaceLab/';
 const GITHUB_REPO_URL = 'https://github.com/Wanfeng1028/SpaceLab';
-const GITHUB_API_URL = 'https://api.github.com/repos/Wanfeng1028/SpaceLab';
+const GITHUB_META_URL = new URL('github-meta.json', document.baseURI).toString();
 const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
 const GITHUB_STARS_CACHE_TIME_KEY = 'spacelab_github_stars_time';
-const CACHE_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
+const CACHE_EXPIRY_MS = 60 * 60 * 1000; // 1 hour — static file changes only on deploy
 const SHARE_TEXT =
   '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
 
@@ -245,10 +245,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.starsAbort = new AbortController();
 
     try {
-      const res = await fetch(GITHUB_API_URL, { signal: this.starsAbort.signal });
+      // Read static github-meta.json generated at build time by GitHub Actions
+      const res = await fetch(GITHUB_META_URL, { signal: this.starsAbort.signal });
       if (res.ok) {
         const data = await res.json();
-        const count = data.stargazers_count ?? null;
+        const count = data.stars ?? null;
         if (count !== null && Number.isFinite(count) && count >= 0) {
           this.githubStars.set(count);
           try {

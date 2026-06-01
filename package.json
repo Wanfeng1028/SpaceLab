@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node scripts/build-content.mjs && node scripts/build-lab-tools-pages.mjs && ng serve",
-    "prebuild": "node scripts/check-i18n.mjs && node scripts/build-content.mjs && node scripts/build-lab-tools-pages.mjs",
+    "prebuild": "node scripts/check-i18n.mjs && node scripts/build-content.mjs && node scripts/build-lab-tools-pages.mjs && node scripts/generate-github-meta.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "echo 'No tests configured'",
