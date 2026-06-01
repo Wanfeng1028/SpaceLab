@@ -1,0 +1,935 @@
+[
+  {
+    "id": "5f3d3705b5c0",
+    "title": "MindVLA-o1",
+    "summary": "MindVLA-o1是理想汽车推出的下一代自动驾驶基础模型，采用原生多模态MoE架构，统一融合视觉、语言、行为三种模态。",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/mindvla-o1/",
+    "source": "ai-bot.cn",
+    "date": "2026-04-01",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "792e6c6ed225",
+    "title": "Midjourney V8",
+    "summary": "Midjourney V8 是 Midjourney推出的最新图像生成模型，生成速度较之前提升 5 倍，提示词理解与文本渲染显著改善，支持 2K 高清直出。",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/midjourney-v8/",
+    "source": "ai-bot.cn",
+    "date": "2026-04-01",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "738c60af2e5c",
+    "title": "NineClaw",
+    "summary": "NineClaw（九章龙虾）是九章爱学推出的教师专属AI桌面智能体，昵称'九龙'。工具深度融合好未来教研能力与题库资源，采用本地运算+独立沙箱架构保障数据安全，...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/nineclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-04-01",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "91eea0e13495",
+    "title": "GPT-5.4 mini",
+    "summary": "GPT-5.4 mini是OpenAI推出的最强小型模型，专为高吞吐量、低延迟场景设计。模型比前代GPT-5 mini快2倍以上，在编程、推理、多模态理解和计算机使用等任务中性...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/gpt-5-4-mini/",
+    "source": "ai-bot.cn",
+    "date": "2026-04-01",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "ea6fd4ea7d12",
+    "title": "GPT-5.4 nano",
+    "summary": "GPT-5.4 nano 是 OpenAI 推出的最轻量、最快速的 GPT-5.4 版本，专为对速度和成本要求极高的简单高吞吐量任务设计。",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/gpt-5-4-nano/",
+    "source": "ai-bot.cn",
+    "date": "2026-04-01",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "edfb9358e84d",
+    "title": "SkyClaw",
+    "summary": "SkyClaw 是 Skywork 推出的 24/7 全天候云端 AI 原生助理，基于开源智能体架构 OpenClaw 深度重构打造。SkyClaw突破传统 AI'一问一答'的局限，无需本地部署，...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/skyclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-04-01",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "bf827eef9af6",
+    "title": "Leanstral",
+    "summary": "Leanstral 是Mistral AI推出的首个开源AI代码智能体，专为Lean 4定理证明器设计。模型采用120B总参数/6B激活参数的稀疏架构，能自动生成形式化证明并验证代码...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/leanstral/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:32.138Z",
+    "_page": 73
+  },
+  {
+    "id": "5cedb79daf09",
+    "title": "Covo-Audio",
+    "summary": "Covo-Audio 是腾讯开源的70亿参数端到端语音大模型，可直接处理连续音频输入并生成音频输出。模型核心创新包括分层三模态语音-文本交错架构、智能与说话人解...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/covo-audio/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "61036a2c1b14",
+    "title": "秒悟Meoo",
+    "summary": "秒悟 （Meoo ）是阿里巴巴推出的云端 AI 开发工具，定位为'会编程、懂设计、自部署的全能 AI 伙伴'。工具聚合 Kimi K2.5、Qwen3-Coder、GLM-5 等主流大模型，...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "编程",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/meoo/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "608528b4d16e",
+    "title": "Mistral Small 4",
+    "summary": "Mistral Small 4 是 Mistral AI 开源的多模态大模型，模型首次将推理（Magistral）、多模态（Pixtral）和智能体编码（Devstral）能力统一于单一架构，支持文...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/mistral-small-4/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "f279aadb4570",
+    "title": "KiKi",
+    "summary": "KiKi 是腾讯云推出的 AI Agent 自动化助手，源自企业级平台 Helix。用户只需用自然语言描述目标，KiKi 可自动拆解任务、规划步骤并执行，覆盖资源查询、服务...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/kiki/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "abb4127ec177",
+    "title": "NemoClaw",
+    "summary": "NemoClaw是英伟达开源的企业级AI Agent框架。NemoClaw作为OpenClaw插件运行，通过OpenShell运行时提供安全沙箱和策略引擎，解决企业使用AI Agent的安全顾虑。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/nemoclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "fffa70e80a4a",
+    "title": "AgentScope Java",
+    "summary": "AgentScope Java是阿里巴巴开源的面向企业级智能体开发的Java框架，让Java开发者能轻松构建生产级AI应用。框架采用领先的ReAct范式，使大模型具备自主推理与...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型",
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/agentscope-java/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "3f4c067bc168",
+    "title": "Fun-CineForge",
+    "summary": "Fun-CineForge是通义实验室开源的首个影视级多模态配音大模型，基于CosyVoice3构建，创新引入'时间模态'实现精准音画同步。模型支持独白、旁白、对话及多人场...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/fun-cineforge/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "75a135b34a39",
+    "title": "OpenMAIC",
+    "summary": "OpenMAIC是清华团队开源的多智能体AI课堂平台，能将任意主题或文档一键转化为沉浸式交互课程。平台支持AI教师语音授课、AI同学举手讨论、白板实时绘图，可生...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "办公"
+    ],
+    "url": "https://ai-bot.cn/openmaic/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "bbe60e63f443",
+    "title": "GLM-5-Turbo",
+    "summary": "GLM-5-Turbo（代号：Pony-Alpha-2）是智谱AI推出的面向OpenClaw（龙虾）Agent场景深度优化的基座模型。模型从训练阶段就针对工具调用、复杂指令遵循、定时与...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/glm-5-turbo/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "0f909a4deeb3",
+    "title": "OpenJarvis",
+    "summary": "OpenJarvis 是斯坦福大学 Scaling Intelligence Lab 推出的开源本地 AI 智能体框架，核心理念是让 AI 执行完全本地化，将云端调用作为可选项。框架提供统一的...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/openjarvis/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:33.194Z",
+    "_page": 73
+  },
+  {
+    "id": "10d2bdc98528",
+    "title": "Paperclip",
+    "summary": "Paperclip 是开源的AI Agent编排平台，支持用户把多个 AI Agent（如 OpenClaw、Claude、Cursor）组织成一家真正的'赛博公司'。平台提供完整的企业管理架构：...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "Claude"
+    ],
+    "url": "https://ai-bot.cn/paperclip/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "2299b838f38b",
+    "title": "Dangcingai",
+    "summary": "Dangcingai 是 AI 自动配音工具，只需粘贴视频链接或上传本地文件，可一键生成多语言配音视频。工具支持中英日韩等 10 种语言、9 种音色选择，提供自动配音、...",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/dangcingai/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "d53f14549074",
+    "title": "CvMax",
+    "summary": "CvMax（满分简历）是面向应届生与职场人士的AI求职助手，覆盖简历制作、投递到面试准备的全流程。用户只需填写基本信息或上传旧简历，AI能自动生成专业内容，...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/cvmax/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "ab35343640ef",
+    "title": "KeyVox",
+    "summary": "KeyVox 是构建在 PC 操作系统之上的AI语音助手，支持 Mac 和 Windows。工具将电脑操作入口从键盘鼠标换成语音，说出应用或网站名能直接打开，选中文字或文件...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/keyvox/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "a8fe16dc96b4",
+    "title": "Kairos 3.0-4B",
+    "summary": "Kairos 3.0-4B是大晓机器人开源的具身原生世界模型，首创'多模态理解—生成—预测'一体化架构。作为全球首个可端侧驱动机器人本体控制的4B轻量模型，在THOR平台...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/kairos-3-0-4b/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "2e0773ddcd27",
+    "title": "Clawith",
+    "summary": "Clawith是面向企业的开源混合多智能体协作框架，将AI Agent视为'数字员工'非简单聊天工具。每个Agent拥有持久身份（soul.md）、长期记忆（memory.md）和独立...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/clawith/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "ae2a243e15aa",
+    "title": "Solaris",
+    "summary": "Solaris是首个多人视频世界生成模型，能在Minecraft中同时生成两个玩家一致的第一人称视角。模型突破现有模型仅支持单玩家的局限，确保跨玩家视角的空间一致...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/solaris/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "74f579f574f5",
+    "title": "InternVL-U",
+    "summary": "InternVL-U是上海人工智能实验室联合多所顶尖高校开源的4B参数轻量化统一多模态模型，首次实现'理解—推理—生成—编辑'端到端闭环。模型采用'统一语境建模+模态...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/internvl-u/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "9dc55d30add7",
+    "title": "StepClaw",
+    "summary": "StepClaw是阶跃AI推出的云端智能助手，基于OpenClaw架构推出。用户可通过阶跃AI APP快速完成云端部署，省去本地硬件配置烦恼。",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/stepclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "c0193a4d4534",
+    "title": "Nemotron 3 Super",
+    "summary": "Nemotron 3 Super是英伟达推出的1200亿参数开源AI模型，采用Mamba-MoE混合架构，专为智能体应用优化。模型支持100万token超长上下文，推理速度提升3倍，吞吐...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/nemotron-3-super/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:34.245Z",
+    "_page": 73
+  },
+  {
+    "id": "d0fbd34b9ab5",
+    "title": "LTX-2.3",
+    "summary": "LTX-2.3 是以色列 AI 公司 Lightricks 开源的最新一代视频生成模型，采用 Diffusion Transformer 架构，拥有 220 亿参数。模型支持文本、图像、音频三种输入...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "图像",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/ltx-2-3/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "3211f46b9cd6",
+    "title": "AlphaClaw",
+    "summary": "AlphaClaw 是熵简科技推出的金融投研 AI 工具，搭载于 AlphaEngine 平台。工具内置海量专业投研数据库，采用本地优先架构保障数据安全。",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/alphaclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "62c13d5bc304",
+    "title": "DuClaw",
+    "summary": "DuClaw是百度智能云面向零基础用户推出的零部署OpenClaw服务，主打'零门槛养虾'。用户无需配置服务器、镜像或API Key，订阅后可直接使用完整OpenClaw功能。",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/duclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "548667d24246",
+    "title": "小艺Claw",
+    "summary": "小艺Claw 是华为基于开源 AI 智能体 OpenClaw推出的专属智能体功能。用户通过小艺 App 的「OpenClaw 模式」可创建 7×24 小时在线的个人助手。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/xiaoyiclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "53ffeacdfc88",
+    "title": "CLI-Anything",
+    "summary": "CLI-Anything 是香港大学数据科学实验室（HKUDS）开源的工具，能将任意开源软件的代码库一键转化为 AI Agent 可用的命令行接口（CLI）。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/cli-anything/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "ded9db0acbd5",
+    "title": "Gemini Embedding 2",
+    "summary": "Gemini Embedding 2 是谷歌首个原生多模态嵌入模型，基于 Gemini 架构构建。模型将文本、图像、视频、音频和文档统一映射到同一向量空间，支持跨 100 多种语...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "图像",
+      "视频",
+      "办公",
+      "Google"
+    ],
+    "url": "https://ai-bot.cn/gemini-embedding-2/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "655e42698e84",
+    "title": "Teambition AI",
+    "summary": "Teambition AI 是钉钉旗下的数字化项目协同工具。工具通过智能 AI 助理、自适应 AI 引擎和多模型自由切换能力，将 AI 贯穿于项目规划、执行、分析全周期。",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/teambition-ai/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "0aa1b15ca420",
+    "title": "SongGeneration 2",
+    "summary": "SongGeneration 2是腾讯与清华大学联合开源的4B参数音乐生成大模型，采用混合LLM-扩散架构与分层表征设计，实现商业级音乐生成质量。模型歌词准确率达8.55% P...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/songgeneration-2/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "8073ab25a39d",
+    "title": "幕间",
+    "summary": "幕间是AI互动娱乐平台，由原LiblibAI联创Roi创办，定位'世界模拟器'。用户可基于UGC创造虚拟世界，扮演不同角色体验剧情，如'金主妈妈打赏模拟器''股票模拟器...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/mujian/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "c95e0de9aa14",
+    "title": "ArkClaw",
+    "summary": "ArkClaw 是火山引擎推出的云端 AI Agent 服务，基于 OpenClaw 架构打造，主打'开箱即用、零门槛养虾'。用户无需复杂配置，通过网页即可使用 7×24 小时在线的...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/arkclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:35.304Z",
+    "_page": 73
+  },
+  {
+    "id": "624f15084736",
+    "title": "Xiaomi miclaw",
+    "summary": "Xiaomi miclaw是小米基于自研MiMo大模型推出的系统级AI Agent，正在小米17系列小范围封测。Xiaomi miclaw以系统应用身份运行，可深度调用50+手机底层能力（短...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/xiaomi-miclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "483363ae45a7",
+    "title": "JVS Claw",
+    "summary": "JVS Claw（原名：无影 JVS） 是阿里云推出的多 Agent 智能体协作平台，为'阿里版 OpenClaw'。JVS Claw彻底解决传统 OpenClaw 部署繁琐、Skill 集成门槛高、本...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/jvs-claw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "d204d86d283d",
+    "title": "MiroFish",
+    "summary": "MiroFish是基于多智能体技术的AI预测引擎，由中科大20岁学生BaiFu推出。MiroFish能从现实种子信息（新闻、小说、政策等）自动构建高保真平行数字世界，生成数...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/mirofish/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "3b89261dac50",
+    "title": "行运阁",
+    "summary": "行运阁是将中华传统《易经》六十四卦与前沿AI技术融合的沉浸式在线占卜应用。平台还原古法六爻起卦仪式感，用户诚心求问后，AI结合本卦、变卦及动爻进行深度...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/suanguan-fun/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "b333102d6164",
+    "title": "Mobile-Agent-v3.5",
+    "summary": "Mobile-Agent-v3.5 是阿里巴巴通义实验室开源的新一代多平台GUI Agent框架，标志着开源GUI智能体从'演示级'迈向'工程可用级'。框架原生支持桌面、手机、浏览...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "框架",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/mobile-agent-v3-5/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "c6ecafba03f3",
+    "title": "Tidy",
+    "summary": "Tidy 是云端个人 AI Agent，支持通过 iMessage 或网页与用户随时交互。用户无需编写代码，只需演示操作，工具能学会使用任意网站，转化为可复用的自动化工具。",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/tidy/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "ae7b25f2631e",
+    "title": "HY-WU",
+    "summary": "HY-WU（混元无相）是腾讯混元推出的功能性神经记忆框架，能让AI在推理时实时生成个性化参数。框架通过Transformer参数生成器，在推理时根据输入实时合成个性...",
+    "category": "AI工具",
+    "tags": [
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/hy-wu/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "92290520aa19",
+    "title": "gws",
+    "summary": "gws (Google Workspace CLI) 是 Google Workspace 团队开源的命令行工具，用 Rust 编写，通过 npm 分发。最大亮点是运行时动态构建命令，不依赖静态命令列表...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Google"
+    ],
+    "url": "https://ai-bot.cn/gws-google-workspace-cli/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "aed50ed23183",
+    "title": "JadeAI",
+    "summary": "JadeAI 是 twwch 开发的开源 AI 智能简历生成器，定位为'真正好用、完全免费、可自托管'的简历解决方案。基于 Next.js 构建，采用 Apache 2.0 协议开源，数据...",
+    "category": "AI工具",
+    "tags": [
+      "开源"
+    ],
+    "url": "https://ai-bot.cn/jadeai/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "c23ef4a2be9f",
+    "title": "Symphony",
+    "summary": "Symphony 是 OpenAI 开源的 Agent 编排系统，支持将项目工作转化为隔离的自主运行任务。Symphony能监控 Linear 等看板，自动调度 Agent 完成编码、测试到合并...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/symphony/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:36.362Z",
+    "_page": 73
+  },
+  {
+    "id": "85cc3818fd1f",
+    "title": "万兴剧厂",
+    "summary": "万兴剧厂是万兴科技旗下一站式AI漫剧创作平台，专注'影视级规模化生产，小成本成就大爆款'。平台提供剧本智能拆解、人设场物全维提取、导演级分镜规划等核心...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/reelmate/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "ad02fb84be5a",
+    "title": "漫剧助手",
+    "summary": "漫剧助手是阅文集团推出的AI漫剧创作平台，专为网文改编漫剧打造的一站式解决方案。平台整合10万+部阅文精品IP资源，支持从小说到分镜的全流程智能创作——包括...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/aicomic-yuewen/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "19012008d692",
+    "title": "肉包",
+    "summary": "肉包（Roubao）是开源的AI手机自动化助手，作为字节跳动'豆包手机助手'的免费替代方案。肉包基于视觉语言模型（VLM），采用Kotlin原生开发，无需电脑或Root权...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/roubao/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "38864e6ac449",
+    "title": "Helios",
+    "summary": "Helios 是北京大学与字节跳动等联合推出的14B参数实时长视频生成模型，可在单张H100 GPU上以19.5 FPS生成分钟级视频。",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/helios/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "ee5f22e100bf",
+    "title": "Yuan3.0 Ultra",
+    "summary": "Yuan3.0-Ultra 是浪潮信息YuanLab.ai团队开源的万亿参数多模态基础大模型，总参数 1.01T，激活参数 68.8B。采用 MoE 架构，集成视觉编码器与多模态对齐模块，...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/yuan3-0-ultra/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "6b7c476c10ce",
+    "title": "HiClaw",
+    "summary": "HiClaw 是阿里开源的Agent 团队协作系统，定位'Team 版 OpenClaw'。系统引入 Manager Agent 作为 AI 管家，自动协调多个 Worker Agent 完成复杂任务。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/hiclaw/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "4d34703b1610",
+    "title": "GPT‑5.4",
+    "summary": "GPT-5.4是OpenAI推出的旗舰AI模型，定位为'专为专业工作设计的最强前沿模型'。模型首次将推理、编程、原生计算机操作、深度网页搜索和百万Token上下文整合进...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/gpt%e2%80%915-4/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "06be86fd5b98",
+    "title": "泡漫",
+    "summary": "泡漫是掌阅科技推出的一站式AI漫剧生成平台，专注用AI重新定义漫剧创作。平台整合超1万部小说IP，提供动态漫、解说漫、AI真人剧等多种形态，将制作周期压缩至...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/popreels/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "435b17607c38",
+    "title": "Phi-4-reasoning-vision-15B",
+    "summary": "Phi-4-reasoning-vision-15B是微软开源的150亿参数多模态推理模型，基于Phi-4-Reasoning语言模型和SigLIP-2视觉编码器构建。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/phi-4-reasoning-vision-15b/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "89c2709b1b94",
+    "title": "播面",
+    "summary": "播面是播客形式的技术面试题学习平台，主打'戴上耳机听懂面试题'。平台将枯燥的八股文转化为音频讲解，覆盖Java、Spring、Redis、Kafka、LLM等30+主流技术栈...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/bomianfm/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:37.418Z",
+    "_page": 73
+  },
+  {
+    "id": "1dd37beabaf4",
+    "title": "MiniMax Music 2.5+",
+    "summary": "MiniMax Music 2.5+是MiniMax推出的AI音乐生成模型，主打纯音乐创作能力。模型支持古典管弦、电子、氛围音等多元风格，覆盖冥想、助眠、游戏、影视等全场景。",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/minimax-music-2-5-plus/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:38.475Z",
+    "_page": 73
+  },
+  {
+    "id": "8c33c6ecc453",
+    "title": "纳米漫剧流水线",
+    "summary": "纳米漫剧流水线是360推出的工业级AI漫剧生成平台，通过空间引擎建立三维坐标系，解决AI视频角色/场景不一致的痛点。",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/namistory/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:38.475Z",
+    "_page": 73
+  },
+  {
+    "id": "3a2ae76cba0a",
+    "title": "Gemini 3.1 Flash-Lite",
+    "summary": "Gemini 3.1 Flash-Lite是Google推出的轻量级旗舰模型，主打极致性价比。模型以每秒363 token的输出速度、0.25美元/百万token的输入价格，在速度上碾压GPT-5 m...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "Google"
+    ],
+    "url": "https://ai-bot.cn/gemini-3-1-flash-lite/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-05-31T19:51:38.475Z",
+    "_page": 73
+  }
+]

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node scripts/build-content.mjs && ng serve",
-    "prebuild": "node scripts/check-i18n.mjs && node scripts/build-content.mjs",
+    "start": "node scripts/build-content.mjs && node scripts/build-lab-tools-pages.mjs && ng serve",
+    "prebuild": "node scripts/check-i18n.mjs && node scripts/build-content.mjs && node scripts/build-lab-tools-pages.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "echo 'No tests configured'",

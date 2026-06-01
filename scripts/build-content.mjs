@@ -105,9 +105,9 @@ const aiFrontlineSource = JSON.parse(
 );
 
 // ── Lab AI Resources ─────────────────────────────────
-const labAiTools = JSON.parse(
-  fs.readFileSync(path.join(CONTENT_DIR, 'lab', 'ai-tools.json'), 'utf-8'),
-);
+// Note: LAB_AI_TOOLS is now loaded via runtime pagination to reduce bundle size
+// The full data is split into public/content/lab/ai-tools/page-*.json by build-lab-tools-pages.mjs
+const labAiTools = []; // Empty array - loaded at runtime
 
 const labAiProjects = JSON.parse(
   fs.readFileSync(path.join(CONTENT_DIR, 'lab', 'ai-projects.json'), 'utf-8'),

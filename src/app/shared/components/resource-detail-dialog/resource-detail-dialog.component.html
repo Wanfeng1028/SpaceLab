@@ -16,7 +16,7 @@
       {{ data.summary || '' }}
     </p>
 
-    @if (data.tags?.length) {
+    @if (data.tags.length) {
       <mat-chip-set class="resource-detail-dialog__tags">
         @for (tag of data.tags; track tag) {
           <mat-chip class="resource-detail-dialog__tag">{{ tag }}</mat-chip>

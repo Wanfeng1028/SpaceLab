@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { I18nService } from '../../core/services/i18n.service';
+import { LabToolsService, LabResourceItem } from '../../core/services/lab-tools.service';
 import {
   ResourceDetailDialogComponent,
   ResourceDetailData,
@@ -26,19 +27,6 @@ import {
   matchesSearchQuery,
   normalizeSearchText,
 } from '../../core/utils/search.utils';
-
-export interface LabResourceItem {
-  id: string;
-  title: string;
-  summary: string;
-  category: string;
-  source: string;
-  url: string;
-  tags: string[];
-  publishedAt: string;
-  fetchedAt: string;
-  date?: string;
-}
 
 export interface LabSource {
   key: string;
@@ -98,7 +86,7 @@ function matchesDateRange(item: LabResourceItem, range: DateRangeFilter): boolea
 
 type TabKey = 'tools' | 'projects';
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 60;
 
 @Component({
   selector: 'app-lab',
@@ -121,6 +109,7 @@ const PAGE_SIZE = 15;
 export class LabComponent implements OnInit {
   private readonly i18n = inject(I18nService);
   private readonly dialog = inject(MatDialog);
+  private readonly labToolsService = inject(LabToolsService);
 
   readonly tabs: { key: TabKey; labelKey: string }[] = [
     { key: 'tools', labelKey: 'lab.aiTools' },
@@ -155,44 +144,36 @@ export class LabComponent implements OnInit {
   toolsData = signal<LabResourceItem[]>([]);
   projectsData = signal<LabResourceItem[]>([]);
   sources = signal<LabSources | null>(null);
+  searchResults = signal<LabResourceItem[]>([]);
+  isSearching = signal(false);
+  totalTools = signal(0);
+  error = signal<string | null>(null);
 
   currentData = computed(() => {
     const tab = this.activeTab();
-    const data = tab === 'tools' ? this.toolsData() : this.projectsData();
-    const category = this.selectedCategory();
     const query = this.searchQuery();
-    const range = this.selectedDateRange();
-    const tabLabels =
-      tab === 'tools' ? ['AI工具', 'AI Tools'] : ['AI项目和框架', 'AI Projects', 'Frameworks'];
+    const isSearchMode = query.trim().length > 0;
 
-    return data
-      .filter((item) => isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date))
-      .filter((item) => matchesDateRange(item, range))
-      .filter((item) => {
-        const matchesCategory =
-          category === 'all' ||
-          normalizeSearchText(item.category) === normalizeSearchText(category) ||
-          item.tags.some((tag) => normalizeSearchText(tag) === normalizeSearchText(category));
+    // If searching, use search results
+    if (isSearchMode && this.isSearching()) {
+      return this.searchResults();
+    }
 
-        const searchText = buildSearchText([
-          item.title,
-          item.summary,
-          item.category,
-          item.tags,
-          item.source,
-          item.url,
-          item.id,
-          tabLabels,
-        ]);
-        const matchesQuery = matchesSearchQuery(searchText, query);
-
-        return matchesCategory && matchesQuery;
-      });
+    // Otherwise use paginated data for tools, or projects data
+    if (tab === 'tools') {
+      return this.toolsData();
+    }
+    return this.projectsData();
   });
 
-  readonly totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.currentData().length / PAGE_SIZE)),
-  );
+  readonly totalPages = computed(() => {
+    const tab = this.activeTab();
+    if (tab === 'projects') {
+      return Math.max(1, Math.ceil(this.projectsData().length / PAGE_SIZE));
+    }
+    // For tools, calculate from totalTools signal
+    return Math.max(1, Math.ceil(this.totalTools() / PAGE_SIZE));
+  });
 
   readonly pagedData = computed(() => {
     const start = (this.currentPage() - 1) * PAGE_SIZE;
@@ -246,24 +227,29 @@ export class LabComponent implements OnInit {
 
   async loadData() {
     this.loading.set(true);
+    this.error.set(null);
     try {
-      const { LAB_AI_TOOLS, LAB_AI_PROJECTS, LAB_SOURCES } =
+      // Load projects from generated content (still small)
+      const { LAB_AI_PROJECTS, LAB_SOURCES } =
         await import('../../../generated/content.generated');
-      this.toolsData.set(LAB_AI_TOOLS);
       this.projectsData.set(LAB_AI_PROJECTS);
       this.sources.set(LAB_SOURCES);
-    } catch {
-      try {
-        const toolsModule = await import('../../../content/lab/ai-tools.json');
-        const projectsModule = await import('../../../content/lab/ai-projects.json');
-        const sourceModule = await import('../../../content/lab/source.json');
-        this.toolsData.set(toolsModule.default as LabResourceItem[]);
-        this.projectsData.set(projectsModule.default as LabResourceItem[]);
-        this.sources.set(sourceModule.default as LabSources);
-      } catch {
-        this.toolsData.set([]);
-        this.projectsData.set([]);
+
+      // Load tools metadata and first page from runtime
+      const meta = await this.labToolsService.getMeta().toPromise();
+      if (meta) {
+        this.totalTools.set(meta.total);
+        const firstPage = await this.labToolsService.getPage(1).toPromise();
+        if (firstPage) {
+          this.toolsData.set(firstPage);
+        }
       }
+    } catch (err) {
+      console.error('Failed to load lab data:', err);
+      this.error.set('Failed to load data');
+      // Fallback to empty arrays
+      this.toolsData.set([]);
+      this.projectsData.set([]);
     } finally {
       this.loading.set(false);
     }
@@ -294,9 +280,27 @@ export class LabComponent implements OnInit {
     });
   }
 
-  goToPage(page: number) {
+  async goToPage(page: number) {
+    const tab = this.activeTab();
     if (page < 1 || page > this.totalPages()) return;
-    this.currentPage.set(page);
+
+    if (tab === 'tools') {
+      this.loading.set(true);
+      try {
+        const pageData = await this.labToolsService.getPage(page).toPromise();
+        if (pageData) {
+          this.toolsData.set(pageData);
+          this.currentPage.set(page);
+        }
+      } catch (err) {
+        console.error(`Failed to load page ${page}:`, err);
+      } finally {
+        this.loading.set(false);
+      }
+    } else {
+      // Projects use client-side pagination
+      this.currentPage.set(page);
+    }
   }
 
   onTabChange(key: TabKey) {
@@ -305,10 +309,52 @@ export class LabComponent implements OnInit {
     this.currentPage.set(1);
   }
 
-  onSearchChange(event: Event) {
+  async onSearchChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.searchQuery.set(input.value);
+    const query = input.value;
+    this.searchQuery.set(query);
     this.currentPage.set(1);
+
+    const tab = this.activeTab();
+    if (tab === 'tools' && query.trim()) {
+      this.isSearching.set(true);
+      this.loading.set(true);
+      try {
+        const searchIndex = await this.labToolsService.search(query).toPromise();
+        if (searchIndex) {
+          // Convert search index items to full items by fetching their pages
+          const fullItems: LabResourceItem[] = [];
+          const pagesToFetch = new Set<number>();
+
+          searchIndex.forEach((item) => {
+            pagesToFetch.add(item.page);
+          });
+
+          // Fetch all needed pages
+          for (const pageNum of pagesToFetch) {
+            const pageData = await this.labToolsService.getPage(pageNum).toPromise();
+            if (pageData) {
+              fullItems.push(...pageData);
+            }
+          }
+
+          // Filter to only include matching items
+          const matchingItems = fullItems.filter((item) =>
+            searchIndex.some((si) => si.id === item.id),
+          );
+
+          this.searchResults.set(matchingItems);
+        }
+      } catch (err) {
+        console.error('Search failed:', err);
+        this.searchResults.set([]);
+      } finally {
+        this.loading.set(false);
+      }
+    } else {
+      this.isSearching.set(false);
+      this.searchResults.set([]);
+    }
   }
 
   onCategoryChange(cat: string) {
@@ -323,6 +369,8 @@ export class LabComponent implements OnInit {
 
   clearSearch() {
     this.searchQuery.set('');
+    this.isSearching.set(false);
+    this.searchResults.set([]);
     this.currentPage.set(1);
   }
 
@@ -334,6 +382,8 @@ export class LabComponent implements OnInit {
 
   clearAll() {
     this.searchQuery.set('');
+    this.isSearching.set(false);
+    this.searchResults.set([]);
     this.selectedCategory.set('all');
     this.selectedDateRange.set('all');
     this.currentPage.set(1);
