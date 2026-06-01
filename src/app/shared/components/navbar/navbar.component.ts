@@ -20,6 +20,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 const GITHUB_REPO_URL = 'https://wanfeng1028.github.io/SpaceLab/';
 const GITHUB_API_URL = 'https://api.github.com/repos/Wanfeng1028/SpaceLab';
 const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
+const GITHUB_STARS_CACHE_TIME_KEY = 'spacelab_github_stars_time';
+const CACHE_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const SHARE_TEXT =
   '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
 
@@ -220,12 +222,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   private async loadGithubStars(): Promise<void> {
-    // Try session cache first
+    // Try session cache first with expiry check
     try {
       const cached = sessionStorage.getItem(GITHUB_STARS_CACHE_KEY);
-      if (cached) {
-        this.githubStars.set(Number(cached));
-        return;
+      const cachedTime = sessionStorage.getItem(GITHUB_STARS_CACHE_TIME_KEY);
+      if (cached && cachedTime) {
+        const cacheAge = Date.now() - Number(cachedTime);
+        if (cacheAge < CACHE_EXPIRY_MS) {
+          this.githubStars.set(Number(cached));
+          return;
+        }
       }
     } catch {
       // sessionStorage may be unavailable
@@ -242,6 +248,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.githubStars.set(count);
         try {
           sessionStorage.setItem(GITHUB_STARS_CACHE_KEY, String(count));
+          sessionStorage.setItem(GITHUB_STARS_CACHE_TIME_KEY, String(Date.now()));
         } catch {
           // Ignore storage errors
         }

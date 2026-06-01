@@ -48,13 +48,6 @@ export interface AiFrontlineSource {
   notice: string;
 }
 
-const CONTENT_START_DATE = '2026-05-25';
-
-function isAfterContentStartDate(itemDate: string | undefined): boolean {
-  if (!itemDate) return true;
-  return itemDate.slice(0, 10) >= CONTENT_START_DATE;
-}
-
 type DateRangeFilter = 'all' | 'today' | 'yesterday' | '7d' | '30d';
 
 function getItemDate(item: AiNewsItem): string {
@@ -64,7 +57,6 @@ function getItemDate(item: AiNewsItem): string {
 function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
   const date = getItemDate(item);
   if (!date) return range === 'all';
-  if (!isAfterContentStartDate(date)) return false;
   if (range === 'all') return true;
 
   const today = new Date();
@@ -143,7 +135,6 @@ export class AiFrontlineComponent implements OnInit {
     const range = this.selectedDateRange();
 
     return this.news()
-      .filter((item) => isAfterContentStartDate(item.date))
       .filter((item) => matchesDateRange(item, range))
       .filter((item) => {
         const matchesCategory =
@@ -317,21 +308,17 @@ export class AiFrontlineComponent implements OnInit {
   }
 
   contentSinceText(): string {
-    const src = this.source();
-    const date = src?.contentStartDate || CONTENT_START_DATE;
-    return this.i18n.t('resourceInbox.contentSince').replace('{{date}}', date);
+    return this.i18n.t('aiFrontline.allArchivedUpdates');
   }
 
   getCategoryCount(category: string): number {
-    const allItems = this.news().filter((item) => isAfterContentStartDate(item.date));
-    if (category === 'all') return allItems.length;
-    return allItems.filter((item) => item.category === category).length;
+    if (category === 'all') return this.filteredNews().length;
+    return this.filteredNews().filter((item) => item.category === category).length;
   }
 
   dateRangeCount(range: DateRangeFilter): number {
-    return this.news().filter(
-      (item) => isAfterContentStartDate(item.date) && matchesDateRange(item, range),
-    ).length;
+    if (range === 'all') return this.filteredNews().length;
+    return this.news().filter((item) => matchesDateRange(item, range)).length;
   }
 
   formatDate(dateStr: string): string {
