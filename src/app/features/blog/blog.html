@@ -102,11 +102,35 @@
           class="blog-subscribe__input"
           type="email"
           [placeholder]="t('blog.subscribePlaceholder')"
+          [ngModel]="newsletterEmail()"
+          (ngModelChange)="newsletterEmail.set($event)"
+          [disabled]="newsletterSubmitting()"
+          (keydown.enter)="submitNewsletter()"
         />
-        <button class="space-button space-button--blue space-button--sm" (click)="onSubscribe()">
-          {{ t('blog.subscribeBtn') }}
+        <button
+          class="space-button space-button--blue space-button--sm"
+          [disabled]="newsletterSubmitting()"
+          (click)="submitNewsletter()"
+        >
+          {{ newsletterSubmitting() ? t('blog.subscribeSubmitting') : t('blog.subscribeBtn') }}
         </button>
       </div>
+      @if (newsletterValidationError()) {
+        <p class="blog-subscribe__msg blog-subscribe__msg--error">
+          {{ newsletterValidationError() }}
+        </p>
+      }
+      @if (newsletterSuccess()) {
+        <p class="blog-subscribe__msg blog-subscribe__msg--success">
+          {{ t('blog.subscribeSuccess') }}
+        </p>
+      }
+      @if (newsletterError()) {
+        <p class="blog-subscribe__msg blog-subscribe__msg--error">
+          {{ t('blog.subscribeFail') }}
+        </p>
+      }
+      <p class="blog-subscribe__privacy">{{ t('blog.subscribePrivacy') }}</p>
     </div>
   </section>
 </div>

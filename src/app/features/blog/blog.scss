@@ -284,6 +284,35 @@
 
 .blog-subscribe__form .space-button {
   color: var(--color-text);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.blog-subscribe__msg {
+  position: relative;
+  z-index: 1;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  &--success {
+    color: #34a853;
+  }
+
+  &--error {
+    color: #ea4335;
+  }
+}
+
+.blog-subscribe__privacy {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--color-text-tertiary);
 }
 
 // ============================================
