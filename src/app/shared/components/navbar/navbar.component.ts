@@ -17,7 +17,8 @@ import { SITE } from '../../../../generated/content.generated';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-const GITHUB_REPO_URL = 'https://wanfeng1028.github.io/SpaceLab/';
+const SITE_URL = 'https://wanfeng1028.github.io/SpaceLab/';
+const GITHUB_REPO_URL = 'https://github.com/Wanfeng1028/SpaceLab';
 const GITHUB_API_URL = 'https://api.github.com/repos/Wanfeng1028/SpaceLab';
 const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
 const GITHUB_STARS_CACHE_TIME_KEY = 'spacelab_github_stars_time';
@@ -64,7 +65,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly mobileMenuOpen = signal(false);
   readonly showShareModal = signal(false);
   readonly showCapsuleModal = signal(false);
-  readonly githubStars = signal(0);
+  readonly githubStars = signal<number | null>(null);
   readonly soundEnabled = signal<boolean>(true);
   readonly isLightTheme = signal(false);
   readonly avatarTriggerEl = signal<HTMLElement | null>(null);
@@ -229,8 +230,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (cached && cachedTime) {
         const cacheAge = Date.now() - Number(cachedTime);
         if (cacheAge < CACHE_EXPIRY_MS) {
-          this.githubStars.set(Number(cached));
-          return;
+          const cachedValue = Number(cached);
+          if (Number.isFinite(cachedValue) && cachedValue >= 0) {
+            this.githubStars.set(cachedValue);
+            return;
+          }
         }
       }
     } catch {
@@ -244,17 +248,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
       const res = await fetch(GITHUB_API_URL, { signal: this.starsAbort.signal });
       if (res.ok) {
         const data = await res.json();
-        const count = data.stargazers_count ?? 0;
-        this.githubStars.set(count);
-        try {
-          sessionStorage.setItem(GITHUB_STARS_CACHE_KEY, String(count));
-          sessionStorage.setItem(GITHUB_STARS_CACHE_TIME_KEY, String(Date.now()));
-        } catch {
-          // Ignore storage errors
+        const count = data.stargazers_count ?? null;
+        if (count !== null && Number.isFinite(count) && count >= 0) {
+          this.githubStars.set(count);
+          try {
+            sessionStorage.setItem(GITHUB_STARS_CACHE_KEY, String(count));
+            sessionStorage.setItem(GITHUB_STARS_CACHE_TIME_KEY, String(Date.now()));
+          } catch {
+            // Ignore storage errors
+          }
         }
       }
     } catch {
-      // Silently fail — keep default 0
+      // Silently fail — keep null
     }
   }
 

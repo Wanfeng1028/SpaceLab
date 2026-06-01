@@ -80,12 +80,30 @@
           }
         </mat-chip-listbox>
       </div>
-      @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all') {
+      @if (searchQuery() || selectedCategory() !== 'all' || selectedDateRange() !== 'all' || selectedTags().length > 0) {
         <button class="resource-strip-reset" (click)="clearAll()">
           {{ t('resourceInbox.resetAll') }}
         </button>
       }
     </section>
+
+    <!-- 3.5 ── Tag Filter Strip -->
+    @if (tagOptions().length > 0) {
+      <section class="resource-filter-strip resource-filter-strip--tags">
+        <div class="resource-filter-strip__chips">
+          @for (tagOption of tagOptions().slice(0, 30); track tagOption.name) {
+            <mat-chip-option
+              [class.resource-strip-chip]="true"
+              [class.resource-strip-chip--active]="selectedTags().includes(tagOption.name)"
+              (click)="toggleTag(tagOption.name)"
+            >
+              {{ tagOption.name }}
+              <span class="resource-strip-chip__count">{{ tagOption.count }}</span>
+            </mat-chip-option>
+          }
+        </div>
+      </section>
+    }
 
     <!-- Loading -->
     @if (loading()) {
