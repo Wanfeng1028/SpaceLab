@@ -26,6 +26,51 @@ app.use(express.json());
 
 // Multipart form data handling
 const upload = multer({ dest: 'tmp/' });
+
+/**
+ * Helper: GET file from GitHub to get SHA (or null if not found).
+ */
+async function getGithubFileSha(repo, path, branch) {
+  const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
+    });
+    if (!res.ok) {
+      return { sha: null };
+    }
+    const data = await res.json();
+    return { sha: data.sha, content: data.content };
+  } catch {
+    return { sha: null };
+  }
+}
+
+/**
+ * Helper: PUT file to GitHub (create or update).
+ */
+async function putGithubFile(repo, path, content, message, branch, sha) {
+  const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message,
+      content,
+      branch,
+      ...(sha ? { sha } : {}),
+    }),
+  });
+  return res.ok;
+}
+
 app.post('/api/github/publish', upload.single('coverFile'), async (req, res) => {
   try {
     const { slug, title, summary, category, tags, content } = req.body;
@@ -50,72 +95,82 @@ published: true
 
 ${content}`;
 
-    // Upload to GitHub
+    // 1. Upload/update markdown file
     const mdPath = `public/content/posts/${slug}/index.md`;
     const mdContent = Buffer.from(frontmatter).toString('base64');
-
-    // Check if file exists (to get SHA)
-    const checkUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${mdPath}`;
-    let sha = null;
-    try {
-      const checkRes = await fetch(checkUrl, {
-        headers: {
-          Authorization: `Bearer ${GITHUB_TOKEN}`,
-          Accept: 'application/vnd.github.v3+json',
-        },
-      });
-      if (checkRes.ok) {
-        const data = await checkRes.json();
-        sha = data.sha;
-      }
-    } catch {
-      // File doesn't exist yet, sha will be null
-    }
-
-    const putUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${mdPath}`;
-    const putRes = await fetch(putUrl, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-        Accept: 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: `Publish: ${title}`,
-        content: mdContent,
-        branch: GITHUB_BRANCH,
-        ...(sha ? { sha } : {}),
-      }),
-    });
-
-    if (!putRes.ok) {
-      const errorData = await putRes.json().catch(() => ({}));
-      res.status(putRes.status).json({
-        success: false,
-        error: errorData.message || 'GitHub API error',
-      });
+    const mdSha = (await getGithubFileSha(GITHUB_REPO, mdPath, GITHUB_BRANCH)).sha;
+    const mdOk = await putGithubFile(GITHUB_REPO, mdPath, mdContent, `Publish: ${title}`, GITHUB_BRANCH, mdSha);
+    if (!mdOk) {
+      res.status(500).json({ success: false, error: 'Failed to publish markdown file' });
       return;
     }
 
-    // Upload cover image if provided
+    // 2. Upload cover image if provided (with SHA check)
     if (req.file) {
       const coverPath = `public/content/posts/${slug}/assets/${req.file.originalname}`;
       const coverContent = req.file.buffer.toString('base64');
+      const coverSha = (await getGithubFileSha(GITHUB_REPO, coverPath, GITHUB_BRANCH)).sha;
+      const coverOk = await putGithubFile(
+        GITHUB_REPO,
+        coverPath,
+        coverContent,
+        `Add cover asset: ${req.file.originalname}`,
+        GITHUB_BRANCH,
+        coverSha,
+      );
+      if (!coverOk) {
+        console.warn(`Cover upload failed for ${coverPath}`);
+      }
+    }
 
-      const coverPutUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${coverPath}`;
-      await fetch(coverPutUrl, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${GITHUB_TOKEN}`,
-          Accept: 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: `Add cover asset: ${req.file.originalname}`,
-          content: coverContent,
-          branch: GITHUB_BRANCH,
-        }),
-      });
+    // 3. Update index.json
+    const indexPath = 'public/content/posts/index.json';
+    const { sha: indexSha, content: indexContent } = await getGithubFileSha(GITHUB_REPO, indexPath, GITHUB_BRANCH);
+
+    let indexData = { posts: [] };
+    if (indexContent && indexSha) {
+      try {
+        const decoded = Buffer.from(indexContent, 'base64').toString('utf-8');
+        indexData = JSON.parse(decoded);
+      } catch {
+        console.warn('Failed to parse existing index.json, starting fresh');
+      }
+    }
+
+    // Find or create entry
+    const existingIdx = indexData.posts.findIndex((p) => p.slug === slug);
+    const entry = {
+      slug,
+      title,
+      date: new Date().toISOString().split('T')[0],
+      category,
+      tags: tagArray,
+      summary: summary || '',
+      cover: req.file ? `public/content/posts/${slug}/assets/${req.file.originalname}` : undefined,
+      published: true,
+    };
+
+    if (existingIdx >= 0) {
+      indexData.posts[existingIdx] = entry;
+    } else {
+      indexData.posts.push(entry);
+    }
+
+    // Sort by date descending
+    indexData.posts.sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0));
+
+    const newIndexContent = Buffer.from(JSON.stringify(indexData, null, 2)).toString('base64');
+    const indexOk = await putGithubFile(
+      GITHUB_REPO,
+      indexPath,
+      newIndexContent,
+      `Update index.json: ${title}`,
+      GITHUB_BRANCH,
+      indexSha,
+    );
+
+    if (!indexOk) {
+      console.warn('Failed to update index.json — article MD is published but may not appear in list');
     }
 
     res.json({
