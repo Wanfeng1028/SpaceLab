@@ -26,7 +26,7 @@ https://maas.xfyun.cn/modelSquare?ch=MaaS-jgkol-l7P2y
 
 在右侧找到 `Qwen3.6-35B-A3B`，卡片右上角会显示 **限时免费**，然后点击卡片里的 **API调用**。
 
-![在讯飞星辰 MaaS 模型集市找到 Qwen3.6-35B-A3B，并点击 API 调用](./assets/img/xfyun-maas-qwen-01-model-square.png)
+![在讯飞星辰 MaaS 模型集市找到 Qwen3.6-35B-A3B，并点击 API 调用](./assets/xfyun-maas-qwen-01-model-square.png)
 
 这里注意，不要只是点"体验"。如果你想拿到接口信息，需要点的是 **API调用**。
 
@@ -43,7 +43,7 @@ https://maas.xfyun.cn/modelSquare?ch=MaaS-jgkol-l7P2y
 - 支持输出模态：文本
 - 推理价格：输入 `0 元/百万tokens`，输出 `0 元/百万tokens`
 
-![Qwen3.6-35B-A3B 模型详情页，显示限时免费、128k 上下文和 0 元价格](./assets/img/xfyun-maas-qwen-02-model-detail.png)
+![Qwen3.6-35B-A3B 模型详情页，显示限时免费、128k 上下文和 0 元价格](./assets/xfyun-maas-qwen-02-model-detail.png)
 
 页面右侧有 **API调用** 按钮。确认是自己要用的模型后，继续点击 **API调用** 进入服务配置。
 
@@ -75,7 +75,7 @@ https://maas.xfyun.cn/modelSquare?ch=MaaS-jgkol-l7P2y
 2. OpenAI 接口地址
 3. API Key
 
-![在推理服务页面查看调用信息，复制 modelId、OpenAI 接口地址和 API Key](./assets/img/xfyun-maas-qwen-03-api-info.png)
+![在推理服务页面查看调用信息，复制 modelId、OpenAI 接口地址和 API Key](./assets/xfyun-maas-qwen-03-api-info.png)
 
 ### 1. modelId
 
