@@ -39,6 +39,12 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
+      - name: Pull latest changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.com"
+          git pull --rebase origin main
+
       - name: Install dependencies
         run: npm ci
 
@@ -62,7 +68,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.com"
-          git pull --rebase origin main
           git add src/content/ai-frontline/
           git commit -m "chore: sync ai frontline news"
           git push

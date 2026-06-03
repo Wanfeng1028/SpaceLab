@@ -20,6 +20,12 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Pull latest changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.com"
+          git pull --rebase origin main
+
       - run: npm ci
 
       # 先运行内容构建脚本，确保 content.generated.ts 是最新的
@@ -33,7 +39,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add docs/daily-log.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
