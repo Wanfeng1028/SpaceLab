@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService } from '../../core/services/post.service';
 import { ArticleRepositoryService } from '../../core/services/article-repository.service';
+import { ArticleMetricsService } from '../../core/services/article-metrics.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
 import type { Article, ArticleMeta } from '../../core/models/article.model';
@@ -28,6 +29,7 @@ export class BlogComponent implements OnInit {
   private i18n = inject(I18nService);
   private postService = inject(PostService);
   private articleRepository = inject(ArticleRepositoryService);
+  private metricsService = inject(ArticleMetricsService);
   private http = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
 
@@ -96,31 +98,41 @@ export class BlogComponent implements OnInit {
     this.destroyRef.onDestroy(() => {});
 
     // Use effect-like pattern: combine static posts + github posts
-    const staticArticles: Article[] = this.postService.getAllPosts().map((p) => ({
-      source: 'static' as const,
-      slug: p.slug,
-      title: p.title,
-      date: p.date,
-      category: p.category,
-      tags: p.tags,
-      summary: p.summary,
-      cover: p.cover,
-      readingTime: p.readingTime,
-      prevSlug: p.prevSlug ?? undefined,
-      prevTitle: p.prevTitle ?? undefined,
-      nextSlug: p.nextSlug ?? undefined,
-      nextTitle: p.nextTitle ?? undefined,
-      contentHtml: p.contentHtml,
-    }));
+    const staticArticles: Article[] = this.postService.getAllPosts().map((p) => {
+      const metrics = this.metricsService.getMetrics(p.slug);
+      return {
+        source: 'static' as const,
+        slug: p.slug,
+        title: p.title,
+        date: p.date,
+        category: p.category,
+        tags: p.tags,
+        summary: p.summary,
+        cover: p.cover,
+        readingTime: p.readingTime,
+        prevSlug: p.prevSlug ?? undefined,
+        prevTitle: p.prevTitle ?? undefined,
+        nextSlug: p.nextSlug ?? undefined,
+        nextTitle: p.nextTitle ?? undefined,
+        contentHtml: p.contentHtml,
+        viewCount: metrics?.viewCount,
+        likeCount: metrics?.likeCount,
+      };
+    });
 
     // Subscribe to github articles changes
     const checkGithub = () => {
       const githubArticles: ArticleMeta[] = this.articleRepository.githubPosts();
       if (githubArticles.length > 0) {
-        const githubAsArticles: Article[] = githubArticles.map((m) => ({
-          ...m,
-          contentHtml: '',
-        }));
+        const githubAsArticles: Article[] = githubArticles.map((m) => {
+          const metrics = this.metricsService.getMetrics(m.slug);
+          return {
+            ...m,
+            contentHtml: '',
+            viewCount: metrics?.viewCount,
+            likeCount: metrics?.likeCount,
+          };
+        });
         this.allArticles.set([...staticArticles, ...githubAsArticles]);
       } else {
         this.allArticles.set(staticArticles);

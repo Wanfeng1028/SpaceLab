@@ -92,6 +92,45 @@
   text-transform: uppercase;
 }
 
+// Metrics badges
+.article-meta__metric {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+  user-select: none;
+}
+
+.article-meta__like {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease, transform 0.15s ease;
+  user-select: none;
+
+  &:hover {
+    color: #e83e8c;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.metric-icon {
+  font-size: 0.9rem;
+}
+
 // Loading state
 .article-loading {
   min-height: 60vh;

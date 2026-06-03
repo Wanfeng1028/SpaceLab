@@ -13,9 +13,21 @@ import { DatePipe } from '@angular/common';
           }
           <time class="card-article__date">{{ date | date: 'yyyy年MM月dd日' }}</time>
         </div>
-        @if (readingTime) {
-          <span class="card-article__reading">{{ readingTime }} 分钟阅读</span>
-        }
+        <div class="card-article__meta-right">
+          @if (readingTime) {
+            <span class="card-article__reading">{{ readingTime }} 分钟阅读</span>
+          }
+          @if (viewCount !== undefined && viewCount > 0) {
+            <span class="card-article__metric" title="浏览量">
+              <span class="metric-icon">👁</span> {{ viewCount }}
+            </span>
+          }
+          @if (likeCount !== undefined && likeCount > 0) {
+            <span class="card-article__metric" title="点赞">
+              <span class="metric-icon">❤️</span> {{ likeCount }}
+            </span>
+          }
+        </div>
       </div>
 
       <h3 class="card-article__title">{{ title }}</h3>
@@ -111,6 +123,12 @@ import { DatePipe } from '@angular/common';
         gap: 12px;
       }
 
+      .card-article__meta-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
       .card-article__category {
         display: inline-flex;
         align-items: center;
@@ -137,6 +155,21 @@ import { DatePipe } from '@angular/common';
         color: var(--color-text-tertiary);
         font-weight: 500;
         white-space: nowrap;
+      }
+
+      .card-article__metric {
+        font-size: 12px;
+        color: var(--color-text-tertiary);
+        font-weight: 500;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        user-select: none;
+      }
+
+      .metric-icon {
+        font-size: 11px;
       }
 
       .card-article__title {
@@ -263,4 +296,6 @@ export class ArticleCardComponent {
   @Input() tags: string[] = [];
   @Input() category = '';
   @Input() readingTime = 0;
+  @Input() viewCount = 0;
+  @Input() likeCount = 0;
 }

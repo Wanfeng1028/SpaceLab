@@ -22,6 +22,15 @@
           @if (art.source === 'github') {
             <span class="article-source-badge">GitHub</span>
           }
+          <span class="article-meta__separator">·</span>
+          <span class="article-meta__metric" title="浏览量">
+            <span class="metric-icon">👁</span> {{ art.viewCount ?? articleMetrics.getMetrics(art.slug)?.viewCount ?? 0 }}
+          </span>
+          <span class="article-meta__separator">·</span>
+          <button class="article-meta__like" (click)="onLike()" title="点赞">
+            <span class="metric-icon">❤️</span>
+            <span>{{ art.likeCount ?? articleMetrics.getMetrics(art.slug)?.likeCount ?? 0 }}</span>
+          </button>
         </div>
         <div class="article-header__tags">
           @for (tag of art.tags; track tag) {

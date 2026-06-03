@@ -17,6 +17,10 @@ export interface ArticleMeta {
   summary: string;
   cover?: string;
   readingTime: number;
+  /** View count (from Supabase or fallback) */
+  viewCount?: number;
+  /** Like count (from Supabase or fallback) */
+  likeCount?: number;
   /** For prev/next navigation (static only) */
   prevSlug?: string;
   prevTitle?: string;
