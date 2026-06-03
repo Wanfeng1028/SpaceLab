@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "title": "讯飞星辰 MaaS 免费领取 Qwen3.6 模型 API 教程",
+      "slug": "xfyun-maas-qwen-free-api",
+      "date": "2026-06-04",
+      "category": "薅羊毛攻略",
+      "tags": ["薅羊毛攻略", "AI工具", "讯飞星辰MaaS", "Qwen", "OpenAI兼容接口"],
+      "summary": "记录如何在讯飞星辰 MaaS 模型集市领取免费的 Qwen3.6-35B-A3B，并拿到 modelId、OpenAI 兼容接口地址和 API Key。",
+      "published": true
+    },
+    {
       "title": "GitHub Markdown 渲染演示",
       "slug": "2026-06-04-github-md-demo",
       "date": "2026-06-04",
