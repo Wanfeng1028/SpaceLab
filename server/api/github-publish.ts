@@ -205,7 +205,11 @@ ${content}`;
   );
 
   if (!indexOk) {
-    console.warn('Failed to update index.json — article MD is published but may not appear in list');
+    res.status(500).json({
+      success: false,
+      error: 'Article MD published but index.json update failed — article may not appear in list',
+    });
+    return;
   }
 
   res.json({
