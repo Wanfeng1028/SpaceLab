@@ -5,8 +5,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   DestroyRef,
-  effect,
-  afterNextRender,
+  computed,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -38,6 +37,13 @@ export class ArticleComponent implements OnInit {
   readonly article = signal<Article | null>(null);
   readonly loading = signal(false);
 
+  // Sanitized HTML — computed from article content, only recalculates when content changes
+  readonly sanitizedContent = computed(() => {
+    const art = this.article();
+    if (!art?.contentHtml) return '';
+    return this.sanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(art.contentHtml));
+  });
+
   // Expose for template access (public alias)
   readonly articleMetrics = this.metricsService;
 
@@ -60,10 +66,6 @@ export class ArticleComponent implements OnInit {
 
   t(key: string): string {
     return this.i18n.t(key);
-  }
-
-  sanitizeContent(html: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(html));
   }
 
   onLike(): void {
