@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy,
   DestroyRef,
   effect,
+  afterNextRender,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -40,16 +41,6 @@ export class ArticleComponent implements OnInit {
   // Expose for template access (public alias)
   readonly articleMetrics = this.metricsService;
 
-  constructor() {
-    // Auto-track view when article loads
-    effect(() => {
-      const art = this.article();
-      if (art?.slug) {
-        this.metricsService.trackView(art.slug);
-      }
-    });
-  }
-
   ngOnInit(): void {
     this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(async (params) => {
       const slug = params['slug'];
@@ -59,6 +50,11 @@ export class ArticleComponent implements OnInit {
       const article = await this.articleRepository.fetchArticleBySlug(slug);
       this.article.set(article);
       this.loading.set(false);
+
+      // Track view after article loads (not in effect to avoid infinite loops)
+      if (article?.slug) {
+        this.metricsService.trackView(article.slug);
+      }
     });
   }
 

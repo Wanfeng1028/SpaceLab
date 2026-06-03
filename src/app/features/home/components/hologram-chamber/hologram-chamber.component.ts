@@ -42,6 +42,7 @@ export class HologramChamberSection implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.scene?.destroy();
     this.scene = null;
   }
 

@@ -6,6 +6,8 @@ import Lenis from 'lenis';
  *
  * Provides a single Lenis instance across the app and exposes
  * reactive signals for scroll progress (0-1) of the whole page.
+ *
+ * RAF loop pauses when user stops scrolling for 2s to save CPU/GPU.
  */
 @Injectable({ providedIn: 'root' })
 export class LenisScrollService implements OnDestroy {
@@ -22,6 +24,8 @@ export class LenisScrollService implements OnDestroy {
 
   private lenis!: Lenis;
   private rafId = 0;
+  private idleTimer: ReturnType<typeof setTimeout> | null = null;
+  private isIdle = false;
 
   constructor() {
     this.ngZone.runOutsideAngular(() => {
@@ -43,6 +47,7 @@ export class LenisScrollService implements OnDestroy {
           this.scrollY.set(scroll);
           this.scrollProgress.set(progress);
         });
+        this.resetIdleTimer();
       };
 
       this.lenis.on('scroll', onScroll);
@@ -52,7 +57,25 @@ export class LenisScrollService implements OnDestroy {
         this.rafId = requestAnimationFrame(raf);
       };
       this.rafId = requestAnimationFrame(raf);
+      this.resetIdleTimer();
     });
+  }
+
+  private resetIdleTimer(): void {
+    if (this.isIdle) {
+      // Resume RAF
+      this.isIdle = false;
+      const raf = (time: number) => {
+        this.lenis.raf(time);
+        this.rafId = requestAnimationFrame(raf);
+      };
+      this.rafId = requestAnimationFrame(raf);
+    }
+    if (this.idleTimer) clearTimeout(this.idleTimer);
+    this.idleTimer = setTimeout(() => {
+      this.isIdle = true;
+      cancelAnimationFrame(this.rafId);
+    }, 2000);
   }
 
   /** Programmatically scroll to [top] (CSS px) */
@@ -61,6 +84,7 @@ export class LenisScrollService implements OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.idleTimer) clearTimeout(this.idleTimer);
     cancelAnimationFrame(this.rafId);
     this.lenis?.destroy();
   }

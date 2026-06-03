@@ -78,6 +78,38 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   // Signals for holding telemetry states
   readonly currentTime = signal(new Date());
 
+  // Cached formatted strings — updated only when currentTime changes
+  private _cachedTime = '';
+  private _cachedDate = '';
+  private _cachedDateTime = '';
+  private _cachedTimeAt = 0;
+  private _cachedDateAt = 0;
+
+  // Formatting utility getters (cached per second to avoid repeated string ops)
+  get formattedTime(): string {
+    const now = Date.now();
+    if (now - this._cachedTimeAt < 1000) return this._cachedTime;
+    const d = this.currentTime();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    this._cachedTime = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    this._cachedTimeAt = now;
+    return this._cachedTime;
+  }
+
+  get formattedDate(): string {
+    const now = Date.now();
+    if (now - this._cachedDateAt < 1000) return this._cachedDate;
+    const d = this.currentTime();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    this._cachedDate = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    this._cachedDateAt = now;
+    return this._cachedDate;
+  }
+
+  get formattedDateTime(): string {
+    return `${this.formattedDate} ${this.formattedTime}`;
+  }
+
   readonly locationInfo = signal({
     status: 'loading',
     city: 'telemetry.locating',
@@ -158,22 +190,6 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   }
 
   // Formatting utility getters
-  get formattedTime(): string {
-    const d = this.currentTime();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-  }
-
-  get formattedDate(): string {
-    const d = this.currentTime();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  }
-
-  get formattedDateTime(): string {
-    return `${this.formattedDate} ${this.formattedTime}`;
-  }
-
   get userTimeZone(): string {
     try {
       return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';

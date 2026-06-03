@@ -43,10 +43,28 @@ export class BlogComponent implements OnInit {
   readonly newsletterError = signal(false);
   readonly newsletterValidationError = signal<string | null>(null);
 
-  // Combined articles from all sources
-  readonly allArticles = signal<Article[]>([]);
-
   readonly categories = signal<string[]>(['all', 'GIS', '开发', '算法', '随笔', '薅羊毛攻略']);
+
+  // Pre-compute static articles once (in ngOnInit, not constructor)
+  private _staticArticles: Article[] = [];
+
+  // Reactive combined articles: static + github (computed, no polling)
+  readonly allArticles = computed(() => {
+    const githubArticles: ArticleMeta[] = this.articleRepository.githubPosts();
+    if (githubArticles.length > 0) {
+      const githubAsArticles: Article[] = githubArticles.map((m) => {
+        const metrics = this.metricsService.getMetrics(m.slug);
+        return {
+          ...m,
+          contentHtml: '',
+          viewCount: metrics?.viewCount,
+          likeCount: metrics?.likeCount,
+        };
+      });
+      return [...this._staticArticles, ...githubAsArticles];
+    }
+    return this._staticArticles;
+  });
 
   readonly filteredArticles = computed(() => {
     const query = this.searchQuery();
@@ -83,22 +101,8 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Load github articles in background
-    this.destroyRef.onDestroy(() => {
-      // cleanup if needed
-    });
-    this.articleRepository.fetchGithubArticles().catch(() => {
-      // non-critical: github fetch failure doesn't block blog page
-    });
-  }
-
-  // Triggered when github articles finish loading
-  constructor() {
-    // Combine static + github articles reactively
-    this.destroyRef.onDestroy(() => {});
-
-    // Use effect-like pattern: combine static posts + github posts
-    const staticArticles: Article[] = this.postService.getAllPosts().map((p) => {
+    // Pre-compute static articles once (not in constructor)
+    this._staticArticles = this.postService.getAllPosts().map((p) => {
       const metrics = this.metricsService.getMetrics(p.slug);
       return {
         source: 'static' as const,
@@ -120,31 +124,10 @@ export class BlogComponent implements OnInit {
       };
     });
 
-    // Subscribe to github articles changes
-    const checkGithub = () => {
-      const githubArticles: ArticleMeta[] = this.articleRepository.githubPosts();
-      if (githubArticles.length > 0) {
-        const githubAsArticles: Article[] = githubArticles.map((m) => {
-          const metrics = this.metricsService.getMetrics(m.slug);
-          return {
-            ...m,
-            contentHtml: '',
-            viewCount: metrics?.viewCount,
-            likeCount: metrics?.likeCount,
-          };
-        });
-        this.allArticles.set([...staticArticles, ...githubAsArticles]);
-      } else {
-        this.allArticles.set(staticArticles);
-      }
-    };
-
-    // Initial set
-    checkGithub();
-
-    // Re-check when github articles load
-    const checkInterval = setInterval(checkGithub, 2000);
-    setTimeout(() => clearInterval(checkInterval), 30000); // stop after 30s
+    // Fetch github articles in background
+    this.articleRepository.fetchGithubArticles().catch(() => {
+      // non-critical: github fetch failure doesn't block blog page
+    });
   }
 
   submitNewsletter(): void {

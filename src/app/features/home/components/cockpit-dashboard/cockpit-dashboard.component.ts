@@ -87,7 +87,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
 
   private timeInterval: ReturnType<typeof setInterval> | null = null;
   private fpsInterval: ReturnType<typeof setInterval> | null = null;
-  private sessionInterval: ReturnType<typeof setInterval> | null = null;
   private cleanupFns: (() => void)[] = [];
 
   /* ── i18n ───────────────────────────────────────────────────────── */
@@ -210,7 +209,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.timeInterval) clearInterval(this.timeInterval);
     if (this.fpsInterval) clearInterval(this.fpsInterval);
-    if (this.sessionInterval) clearInterval(this.sessionInterval);
     if (this.scrollThrottleId) cancelAnimationFrame(this.scrollThrottleId);
     this.cleanupFns.forEach((fn) => fn());
     this.cleanupFns = [];
@@ -343,9 +341,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
       { label: this.t('syncAiFrameworks'), value: String(this.syncAiFrameworks()) },
       { label: this.t('syncLastAi'), value: this.syncLastAi() },
     ]);
-
-    // Force change detection for session time
-    this.sessionInterval = setInterval(() => {}, 5000);
   }
 
   /* ── Event listeners ────────────────────────────────────────────── */
