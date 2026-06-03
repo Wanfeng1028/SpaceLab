@@ -11,8 +11,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService } from '../../core/services/post.service';
+import { ArticleRepositoryService } from '../../core/services/article-repository.service';
 import DOMPurify from 'dompurify';
 import type { GeneratedPost } from '../../../generated/content.generated';
+import type { Article } from '../../core/models/article.model';
 
 @Component({
   selector: 'app-article',
@@ -27,16 +29,20 @@ export class ArticleComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
   private postService = inject(PostService);
+  private articleRepository = inject(ArticleRepositoryService);
 
-  readonly article = signal<GeneratedPost | null>(null);
+  readonly article = signal<Article | null>(null);
+  readonly loading = signal(false);
 
   ngOnInit(): void {
-    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(async (params) => {
       const slug = params['slug'];
-      const post = this.postService.getAllPosts().find((p) => p.slug === slug);
-      if (post) {
-        this.article.set(post);
-      }
+      this.loading.set(true);
+
+      // Try repository (static first, then github fallback)
+      const article = await this.articleRepository.fetchArticleBySlug(slug);
+      this.article.set(article);
+      this.loading.set(false);
     });
   }
 

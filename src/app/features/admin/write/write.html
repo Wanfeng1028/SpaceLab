@@ -1,0 +1,143 @@
+<div class="write-page">
+  <div class="container">
+    <h1 class="write-page__title">Write Article</h1>
+
+    <!-- Publish Target Selection -->
+    <section class="write-section write-section--target">
+      <h2 class="write-section__title">Publish Target</h2>
+      <div class="target-selector">
+        @for (target of publishTargets; track target.value) {
+          <label class="target-option" [class.is-active]="publishTarget() === target.value">
+            <input
+              type="radio"
+              [value]="target.value"
+              [checked]="publishTarget() === target.value"
+              (change)="publishTarget.set(target.value)"
+            />
+            <span class="target-option__label">{{ target.label }}</span>
+          </label>
+        }
+      </div>
+    </section>
+
+    <!-- Title -->
+    <section class="write-section">
+      <label class="write-label" for="title">
+        Title <span class="required">*</span>
+      </label>
+      <input
+        id="title"
+        class="write-input"
+        type="text"
+        placeholder="Article title"
+        [ngModel]="title()"
+        (ngModelChange)="title.set($event); onTitleChange()"
+      />
+    </section>
+
+    <!-- Slug -->
+    <section class="write-section">
+      <label class="write-label" for="slug">
+        Slug <span class="required">*</span>
+      </label>
+      <input
+        id="slug"
+        class="write-input"
+        type="text"
+        placeholder="article-slug"
+        [ngModel]="slug()"
+        (ngModelChange)="slug.set($event)"
+      />
+      <span class="write-hint">Auto-generated from title, or enter manually</span>
+    </section>
+
+    <!-- Summary -->
+    <section class="write-section">
+      <label class="write-label" for="summary">Summary</label>
+      <textarea
+        id="summary"
+        class="write-textarea"
+        rows="3"
+        placeholder="Brief summary of the article"
+        [ngModel]="summary()"
+        (ngModelChange)="summary.set($event)"
+      ></textarea>
+    </section>
+
+    <!-- Category & Tags -->
+    <div class="write-row">
+      <section class="write-section write-section--half">
+        <label class="write-label" for="category">Category</label>
+        <select
+          id="category"
+          class="write-select"
+          [ngModel]="category()"
+          (ngModelChange)="category.set($event)"
+        >
+          @for (cat of categories; track cat) {
+            <option [value]="cat">{{ cat }}</option>
+          }
+        </select>
+      </section>
+
+      <section class="write-section write-section--half">
+        <label class="write-label" for="tags">Tags (comma-separated)</label>
+        <input
+          id="tags"
+          class="write-input"
+          type="text"
+          placeholder="Angular, TypeScript"
+          [ngModel]="tagsInput()"
+          (ngModelChange)="tagsArray = $event"
+        />
+      </section>
+    </div>
+
+    <!-- Cover Image -->
+    <section class="write-section">
+      <label class="write-label" for="cover">Cover Image (optional)</label>
+      <input
+        id="cover"
+        class="write-input write-input--file"
+        type="file"
+        accept="image/*"
+        (change)="onCoverFileChange($event)"
+      />
+      @if (coverFile()) {
+        <span class="write-hint">Selected: {{ coverFile()!.name }}</span>
+      }
+    </section>
+
+    <!-- Markdown Content -->
+    <section class="write-section">
+      <label class="write-label" for="content">
+        Markdown Content <span class="required">*</span>
+      </label>
+      <textarea
+        id="content"
+        class="write-textarea write-textarea--content"
+        placeholder="Write your article in Markdown..."
+        [ngModel]="content()"
+        (ngModelChange)="content.set($event)"
+      ></textarea>
+    </section>
+
+    <!-- Publish Button & Status -->
+    <section class="write-section write-section--actions">
+      <button
+        class="space-button space-button--blue space-button--lg"
+        [disabled]="publishing()"
+        (click)="onPublish()"
+      >
+        {{ publishing() ? 'Publishing...' : 'Publish' }}
+      </button>
+
+      @if (publishSuccess()) {
+        <p class="write-status write-status--success">Published successfully!</p>
+      }
+      @if (publishError()) {
+        <p class="write-status write-status--error">{{ publishError() }}</p>
+      }
+    </section>
+  </div>
+</div>

@@ -54,17 +54,17 @@
   }
 
   <!-- Article List -->
-  @if (filteredPosts().length > 0) {
+  @if (filteredArticles().length > 0) {
     <section class="blog-list">
-      @for (post of filteredPosts(); track post.slug) {
+      @for (article of filteredArticles(); track article.slug) {
         <app-article-card
-          [title]="post.title"
-          [slug]="post.slug"
-          [excerpt]="post.summary"
-          [date]="post.date"
-          [tags]="post.tags"
-          [category]="post.category"
-          [readingTime]="post.readingTime"
+          [title]="article.title"
+          [slug]="article.slug"
+          [excerpt]="article.summary"
+          [date]="article.date"
+          [tags]="article.tags"
+          [category]="article.category"
+          [readingTime]="article.readingTime"
         />
       }
     </section>

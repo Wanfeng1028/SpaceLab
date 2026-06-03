@@ -1,4 +1,10 @@
-@if (article(); as art) {
+@if (loading()) {
+  <div class="article-loading">
+    <div class="container">
+      <div class="glitch-loader">加载中...</div>
+    </div>
+  </div>
+} @else if (article(); as art) {
   <div class="article-page">
     <div class="container">
       <!-- Back Link -->
@@ -13,6 +19,9 @@
           <span class="article-meta__reading-time"
             >{{ art.readingTime }} {{ t('blog.minutes') }}</span
           >
+          @if (art.source === 'github') {
+            <span class="article-source-badge">GitHub</span>
+          }
         </div>
         <div class="article-header__tags">
           @for (tag of art.tags; track tag) {

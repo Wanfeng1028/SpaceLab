@@ -1,11 +1,13 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService } from '../../core/services/post.service';
+import { ArticleRepositoryService } from '../../core/services/article-repository.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
-import type { GeneratedPost } from '../../../generated/content.generated';
+import type { Article, ArticleMeta } from '../../core/models/article.model';
 import {
   buildSearchText,
   matchesSearchQuery,
@@ -22,10 +24,12 @@ const WEB3FORMS_ACCESS_KEY = '874ed1fa-0a5f-481a-810f-83d2d2613b36';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule, ArticleCardComponent, SearchBoxComponent],
 })
-export class BlogComponent {
+export class BlogComponent implements OnInit {
   private i18n = inject(I18nService);
   private postService = inject(PostService);
+  private articleRepository = inject(ArticleRepositoryService);
   private http = inject(HttpClient);
+  private destroyRef = inject(DestroyRef);
 
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
@@ -37,19 +41,20 @@ export class BlogComponent {
   readonly newsletterError = signal(false);
   readonly newsletterValidationError = signal<string | null>(null);
 
-  readonly allPosts = computed(() => this.postService.posts());
+  // Combined articles from all sources
+  readonly allArticles = signal<Article[]>([]);
 
   readonly categories = signal<string[]>(['all', 'GIS', '开发', '算法', '随笔', '薅羊毛攻略']);
 
-  readonly filteredPosts = computed(() => {
+  readonly filteredArticles = computed(() => {
     const query = this.searchQuery();
     const category = this.selectedCategory();
 
-    return this.allPosts().filter((post) => {
-      const matchesQuery = matchesSearchQuery(this.getPostSearchText(post), query);
+    return this.allArticles().filter((article) => {
+      const matchesQuery = matchesSearchQuery(this.getArticleSearchText(article), query);
 
       const matchesCategory =
-        category === 'all' || normalizeSearchText(post.category) === normalizeSearchText(category);
+        category === 'all' || normalizeSearchText(article.category) === normalizeSearchText(category);
 
       return matchesQuery && matchesCategory;
     });
@@ -73,6 +78,61 @@ export class BlogComponent {
 
   selectCategory(category: string): void {
     this.selectedCategory.set(category);
+  }
+
+  ngOnInit(): void {
+    // Load github articles in background
+    this.destroyRef.onDestroy(() => {
+      // cleanup if needed
+    });
+    this.articleRepository.fetchGithubArticles().catch(() => {
+      // non-critical: github fetch failure doesn't block blog page
+    });
+  }
+
+  // Triggered when github articles finish loading
+  constructor() {
+    // Combine static + github articles reactively
+    this.destroyRef.onDestroy(() => {});
+
+    // Use effect-like pattern: combine static posts + github posts
+    const staticArticles: Article[] = this.postService.getAllPosts().map((p) => ({
+      source: 'static' as const,
+      slug: p.slug,
+      title: p.title,
+      date: p.date,
+      category: p.category,
+      tags: p.tags,
+      summary: p.summary,
+      cover: p.cover,
+      readingTime: p.readingTime,
+      prevSlug: p.prevSlug ?? undefined,
+      prevTitle: p.prevTitle ?? undefined,
+      nextSlug: p.nextSlug ?? undefined,
+      nextTitle: p.nextTitle ?? undefined,
+      contentHtml: p.contentHtml,
+    }));
+
+    // Subscribe to github articles changes
+    const checkGithub = () => {
+      const githubArticles: ArticleMeta[] = this.articleRepository.githubPosts();
+      if (githubArticles.length > 0) {
+        const githubAsArticles: Article[] = githubArticles.map((m) => ({
+          ...m,
+          contentHtml: '',
+        }));
+        this.allArticles.set([...staticArticles, ...githubAsArticles]);
+      } else {
+        this.allArticles.set(staticArticles);
+      }
+    };
+
+    // Initial set
+    checkGithub();
+
+    // Re-check when github articles load
+    const checkInterval = setInterval(checkGithub, 2000);
+    setTimeout(() => clearInterval(checkInterval), 30000); // stop after 30s
   }
 
   submitNewsletter(): void {
@@ -143,15 +203,15 @@ export class BlogComponent {
     this.selectedCategory.set('all');
   }
 
-  private getPostSearchText(post: GeneratedPost): string {
+  private getArticleSearchText(article: Article): string {
     return buildSearchText([
-      post.title,
-      post.summary,
-      post.category,
-      post.tags,
-      post.slug,
-      post.contentHtml,
-      post.date,
+      article.title,
+      article.summary,
+      article.category,
+      article.tags,
+      article.slug,
+      article.contentHtml,
+      article.date,
     ]);
   }
 }
