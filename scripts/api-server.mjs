@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.API_PORT || 3001;
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_REPO = 'Wanfong1028/SpaceLab';
+const GITHUB_REPO = 'Wanfeng1028/SpaceLab';
 const GITHUB_BRANCH = 'main';
 
 if (!GITHUB_TOKEN) {
@@ -51,7 +51,7 @@ published: true
 ${content}`;
 
     // Upload to GitHub
-    const mdPath = `content/posts/${slug}/index.md`;
+    const mdPath = `public/content/posts/${slug}/index.md`;
     const mdContent = Buffer.from(frontmatter).toString('base64');
 
     // Check if file exists (to get SHA)
@@ -99,7 +99,7 @@ ${content}`;
 
     // Upload cover image if provided
     if (req.file) {
-      const coverPath = `content/posts/${slug}/assets/${req.file.originalname}`;
+      const coverPath = `public/content/posts/${slug}/assets/${req.file.originalname}`;
       const coverContent = req.file.buffer.toString('base64');
 
       const coverPutUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${coverPath}`;

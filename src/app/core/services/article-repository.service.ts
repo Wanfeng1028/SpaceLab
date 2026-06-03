@@ -20,7 +20,7 @@ export class ArticleRepositoryService {
   private markdownRenderer = inject(MarkdownRendererService);
 
   // GitHub repo config
-  private readonly GITHUB_REPO = 'Wanfong1028/SpaceLab';
+  private readonly GITHUB_REPO = 'Wanfeng1028/SpaceLab';
   private readonly GITHUB_BRANCH = 'main';
   private readonly GITHUB_BASE_URL = `https://api.github.com/repos/${this.GITHUB_REPO}/git/trees`;
 
@@ -77,15 +77,15 @@ export class ArticleRepositoryService {
 
       const postDirs = new Set<string>();
       for (const entry of treeResponse.tree ?? []) {
-        // Match paths like content/posts/{slug}/index.md
-        const match = entry.path.match(/^content\/posts\/([^/]+)\/index\.md$/);
+        // Match paths like public/content/posts/{slug}/index.md
+        const match = entry.path.match(/^public\/content\/posts\/([^/]+)\/index\.md$/);
         if (match) {
           postDirs.add(match[1]);
         }
       }
 
       // Step 2: Fetch index.json for metadata
-      const indexUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/content/posts/index.json`;
+      const indexUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/public/content/posts/index.json`;
       let indexData: { posts: GithubPostFrontmatter[] } | null = null;
       try {
         indexData = await firstValueFrom(this.http.get<{ posts: GithubPostFrontmatter[] }>(indexUrl));
@@ -142,7 +142,7 @@ export class ArticleRepositoryService {
   private async fetchGithubArticleBySlug(slug: string): Promise<Article | null> {
     try {
       // Fetch index.json
-      const indexUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/content/posts/index.json`;
+      const indexUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/public/content/posts/index.json`;
       let indexData: { posts: GithubPostFrontmatter[] } | null = null;
       try {
         indexData = await firstValueFrom(this.http.get<{ posts: GithubPostFrontmatter[] }>(indexUrl));
@@ -156,7 +156,7 @@ export class ArticleRepositoryService {
       }
 
       // Fetch markdown content
-      const mdUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/content/posts/${slug}/index.md`;
+      const mdUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/public/content/posts/${slug}/index.md`;
       const markdown = await firstValueFrom(this.http.get(mdUrl, { responseType: 'text' }));
 
       // Strip frontmatter if present
@@ -277,7 +277,7 @@ export class ArticleRepositoryService {
 
   private resolveAssetPaths(content: string, slug: string): string {
     // Replace relative ./assets/xxx with absolute GitHub raw URL
-    const baseRawUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/content/posts/${slug}`;
+    const baseRawUrl = `https://raw.githubusercontent.com/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}/public/content/posts/${slug}`;
     return content.replace(
       /!\[([^\]]*)\]\(\.\/assets\/([^)]+)\)/g,
       `![$1](${baseRawUrl}/assets/$2)`,
