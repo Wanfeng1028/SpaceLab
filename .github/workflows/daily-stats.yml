@@ -44,5 +44,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "📊 daily stats: $(date +%Y-%m-%d)"
+            # Rebase again in case remote advanced while running
+            git pull --rebase origin main
             git push
           fi

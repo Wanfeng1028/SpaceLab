@@ -70,6 +70,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.com"
           git add src/content/ai-frontline/
           git commit -m "chore: sync ai frontline news"
+          # Rebase again in case remote advanced while syncing
+          git pull --rebase origin main
           git push
 
       - name: Summary
