@@ -1,5 +1,42 @@
 [
   {
+    "id": "2026-06-05-腾讯推出企业级ai智能工作台workbuddy企业版",
+    "date": "2026-06-05",
+    "title": "腾讯推出企业级AI智能工作台WorkBuddy企业版",
+    "summary": "腾讯推出企业级AI智能工作台WorkBuddy企业版，面向AI原生组织转型提供7×24小时数字员工、人机协同项目模式及企业管理后台，原生接入腾讯文档、网盘与乐享，支持公有云、VPC专享及私有化部署。通过沉淀团队记忆与AI资产，将个人提效升级为组织提效。",
+    "source": "腾讯WorkBuddy",
+    "url": "https://mp.weixin.qq.com/s/P5AtG2aD8HxXw2BSRnsaEQ",
+    "category": "industry",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
+  },
+  {
+    "id": "2026-06-05-阿里通义推出通用智能体评测基准-pawbench",
+    "date": "2026-06-05",
+    "title": "阿里通义推出通用智能体评测基准 PawBench",
+    "summary": "通义实验室推出通用智能体评测基准PawBench，首次将底座模型与运行框架（Harness）纳入联合评测。PawBench v1.0 包含 150 道真实任务、4050 个测试单元，覆盖 9 个模型与 3 个 Harness 的交叉矩阵。评测发现 Harness 性能差距最高达 6.4 分，同一模型换 Harness 分差可达 11.5 分。",
+    "source": "通义实验室",
+    "url": "https://mp.weixin.qq.com/s/Q1fa3KwT63HBOF2fmWKzlg",
+    "category": "agent",
+    "tags": [
+      "通义千问"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
+  },
+  {
+    "id": "2026-06-05-谷歌推出本地实时-ai-音乐模型-magenta-realtime-2",
+    "date": "2026-06-05",
+    "title": "谷歌推出本地实时 AI 音乐模型 Magenta RealTime 2",
+    "summary": "谷歌Magenta团队推出Magenta RealTime 2（MRT2）本地实时音乐AI模型，包含2.4B高质量版与230M高速版，均针对Apple Silicon优化。模型采用逐帧生成架构，将延迟从3秒降至约200毫秒，支持文本、MIDI及音频风格控制。同步推出免费乐器应用Jam与DAW插件，可在Mac端实现低延迟即兴合奏。",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/960/419.htm",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
+  },
+  {
     "id": "2026-06-05-chatgpt-推出全新的-dreaming-记忆系统",
     "date": "2026-06-05",
     "title": "ChatGPT 推出全新的 Dreaming 记忆系统",
@@ -10,7 +47,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.677Z"
   },
   {
     "id": "2026-06-04-月之暗面推出通用型本地-agent-kimi-work-beta版",
@@ -23,7 +60,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-04-京东开源长音视频生成框架-joyai-echo",
@@ -38,7 +75,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-04-nous-research-推出-hermes-官方桌面端-hermes-des",
@@ -51,7 +88,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-04-ai音乐公司-suno-获4亿美元融资",
@@ -64,7 +101,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-03-微软推出七款全新-mai-模型",
@@ -77,7 +114,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-03-千问app向第三方agent-skill全面开放",
@@ -90,7 +127,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-03-字节跳动开源统一视频生成与编辑框架-bernini",
@@ -104,7 +141,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-03-openai-发布-ai-编程智能体-codex-三项更新",
@@ -117,7 +154,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-03-windsurf-升级更名为-devin-desktop",
@@ -131,7 +168,7 @@
       "Claude",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.949Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-02-北大团队全新升级-chatexcel-max-2-0",
@@ -142,7 +179,7 @@
     "url": "https://mp.weixin.qq.com/s/CzIEA6UQe7NMSm9lnY73kA",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-02-阿里达摩院推出-ai-原生开发平台-语构",
@@ -153,7 +190,7 @@
     "url": "https://ai-bot.cn/creo4u/",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-02-谷歌母公司-alphabet-宣布-800-亿美元大额融资-用于-ai-支出",
@@ -166,7 +203,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-02-阿里通义推出多模态智能体基座模型-qwen3-7-plus",
@@ -179,7 +216,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-02-词元无限完成数千万元融资",
@@ -193,7 +230,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-01-扣子-3-0-正式上线",
@@ -207,7 +244,7 @@
       "Claude",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-01-minimax-开源新一代-ai-模型-minimax-m3",
@@ -220,7 +257,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-01-响指haisnap-app正式上线",
@@ -233,7 +270,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-01-vast-获近2亿美元-a-轮系列融资",
@@ -246,7 +283,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-01-小米开源可控视频音效生成模型-controlfoley",
@@ -260,7 +297,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-06-01-阿里通义推出通用具身智能统一动作框架-qwen-vla",
@@ -273,7 +310,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-anthropic-融资-650-亿美元-融资后估值达9650亿美元",
@@ -287,7 +324,7 @@
       "Anthropic",
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-anthropic-推出旗舰级大语言模型-claude-opus-4-8",
@@ -301,7 +338,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-通义千问推出文生图模型评测基准-qwen-image-bench",
@@ -316,7 +353,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-astronclaw-上线-agent-team-模式",
@@ -329,7 +366,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-阿里云开源-ai-agent-命令行工具-阿里云百炼-cli",
@@ -346,7 +383,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-清华联合面壁智能开源-agent-操作系统-pilotdeck",
@@ -360,7 +397,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-29-零一万物三周年宣布做首家盈利的-ai-2-0-公司",
@@ -371,7 +408,7 @@
     "url": "https://mp.weixin.qq.com/s/7SB2aWh5wCK257_uCR5knA?scene=1",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-28-openrouter-完成1-13亿美元-series-b-融资",
@@ -384,7 +421,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-28-自变量机器人开源具身智能模型-wall-oss-0-5",
@@ -397,7 +434,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-28-微软推出最强-ai-生图模型-mai-image-2-5",
@@ -411,7 +448,7 @@
       "OpenAI",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-28-runway-推出-runway-mcp-服务器",
@@ -427,7 +464,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-28-腾讯推出ai游戏创作平台-代号craft",
@@ -438,7 +475,7 @@
     "url": "https://mp.weixin.qq.com/s/csZYzDmJVO__9UsuU_v3nA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-27-支付宝推出全球首个token-pay服务",
@@ -451,7 +488,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-27-小米宣布-mimo-v2-5-系列-api-永久降价",
@@ -462,7 +499,7 @@
     "url": "https://mp.weixin.qq.com/s/PuJcTCUO0MjB2V1D-V0_oA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-27-快手开源自研多模态大模型-keye-vl-2-0-30b-a3b",
@@ -478,7 +515,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-26-天工ai推出高性能-agent-模型-skyclaw-v1-0",
@@ -493,7 +530,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-26-小米推出全新世界模型xiaomi-auto-world-model",
@@ -506,7 +543,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-26-阿里通义开源多智能体开发框架-agentscope-2-0",
@@ -521,7 +558,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-26-面壁智能联合清华等开源端侧文本基座大模型-minicpm5-1b",
@@ -534,7 +571,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-25-面壁智能联合清华开源端侧大模型-bitcpm-cann",
@@ -547,7 +584,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-25-商汤办公小浣熊推出桌面智能体",
@@ -558,7 +595,7 @@
     "url": "https://mp.weixin.qq.com/s/HuNyO7jUnJv3bQjNQWFQcQ?scene=1&amp;click_id=35",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-25-腾讯全面开放-ima-copilot",
@@ -569,7 +606,7 @@
     "url": "https://mp.weixin.qq.com/s/R22ySmNraCJ4W4o2nbJu1w?scene=1&amp;click_id=39",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-25-deepseek-v4-pro-api永久降价为原定价的-1-4",
@@ -582,7 +619,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-25-智谱清言上线-agentmore-skills-广场",
@@ -596,7 +633,18 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
+  },
+  {
+    "id": "2026-05-22-阿里生产级-ai-数字员工平台-qoderwake-开启全球公测",
+    "date": "2026-05-22",
+    "title": "阿里生产级 AI 数字员工平台 QoderWake 开启全球公测",
+    "summary": "QoderWake开启全球公测，首发Mac版，5分钟可配置数字员工上岗。开放后端、前端、测试、产品等6个内置岗位，支持自定义角色。工具具备长期记忆与进化能力，可通过IM、Webhook等方式接活，自动输出交付摘要。内置四维权限中心保障安全，支持MCP接入企业系统，7×24小时自主协作。",
+    "source": "Qoder",
+    "url": "https://mp.weixin.qq.com/s/-VbGKxnASPhzm_lpTulEow",
+    "category": "tool",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-22-美团开源数字人视频模型-longcat-video-avatar-1-5",
@@ -610,7 +658,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-22-网易有道开源多模态大模型-confucius4",
@@ -624,18 +672,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
-  },
-  {
-    "id": "2026-05-22-阿里生产级-ai-数字员工平台-qoderwake-开启全球公测",
-    "date": "2026-05-22",
-    "title": "阿里生产级 AI 数字员工平台 QoderWake 开启全球公测",
-    "summary": "QoderWake开启全球公测，首发Mac版，5分钟可配置数字员工上岗。开放后端、前端、测试、产品等6个内置岗位，支持自定义角色。工具具备长期记忆与进化能力，可通过IM、Webhook等方式接活，自动输出交付摘要。内置四维权限中心保障安全，支持MCP接入企业系统，7×24小时自主协作。",
-    "source": "Qoder",
-    "url": "https://mp.weixin.qq.com/s/-VbGKxnASPhzm_lpTulEow",
-    "category": "tool",
-    "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-22-智谱推出glm-5-1高速版api-glm-5-1-highspeed",
@@ -646,7 +683,7 @@
     "url": "https://mp.weixin.qq.com/s/TAVXB_Xuys7_R-SG4oFhOA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.678Z"
   },
   {
     "id": "2026-05-21-腾达marvis正式上线-无需邀请码",
@@ -659,7 +696,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-21-智谱推出下一代大模型推理网络架构-zcube",
@@ -670,7 +707,7 @@
     "url": "https://mp.weixin.qq.com/s/JYyLD4U2235obw9WH45v9g",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-21-阿里-d20-全球设计院长峰会正式开票-堆友携手参会",
@@ -683,7 +720,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-21-火山引擎agent-plan-coding-plan上新-新增deepseek-",
@@ -697,7 +734,7 @@
       "DeepSeek",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-21-腾讯混元开源-hy-mt2-翻译模型和hy-翻译小程序",
@@ -710,7 +747,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-20-微信读书官方推出-ai-助手扩展能力-微信读书skill",
@@ -721,7 +758,7 @@
     "url": "https://mp.weixin.qq.com/s/oiCpeZnOIfAtev1OO0NIGA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-20-智象未来推出旗舰级图像生成模型-hidream-o1-image-pro",
@@ -735,7 +772,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-20-阿里千问推出新一代旗舰模型-qwen3-7-max",
@@ -748,7 +785,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-20-阿里通义推出实时同声传译模型-qwen3-5-livetranslate",
@@ -761,7 +798,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-20-阿里云推出全新maas模型服务平台-千问云",
@@ -776,7 +813,7 @@
       "通义千问",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.950Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-19-cursor-上线自研-agentic-编程模型-composer-2-5",
@@ -789,7 +826,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-19-腾讯内测操作系统层个人-ai-助手腾讯marvis",
@@ -800,7 +837,7 @@
     "url": "https://mp.weixin.qq.com/s/UEKg2imwHA8hzV1kBR6e1g",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-18-xai推出首款终端原生-ai-编程智能体grok-build",
@@ -816,7 +853,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-18-libtv-推出专业级-ai-视频协作工作台-libtv团队版",
@@ -829,7 +866,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-18-腾讯推出ai应用生成平台-吐司",
@@ -840,7 +877,7 @@
     "url": "https://ai-bot.cn/app/77418.html",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-18-腾讯ai设计工具-ardot-正式全面公测",
@@ -851,7 +888,7 @@
     "url": "https://mp.weixin.qq.com/s/xdU7x-icqyXjUGQzi68m2g",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-15-月之暗面推出kimi-webbridge-让-ai-帮你操作浏览器",
@@ -865,7 +902,7 @@
       "Claude",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-15-阿里推出qoder-1-0-从ai-ide升级为智能体自主开发工作台",
@@ -878,7 +915,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-15-阿里云推出企业级ai建站平台万小智2-0",
@@ -889,7 +926,7 @@
     "url": "https://mp.weixin.qq.com/s/W5sRI5aifxkNQm1_F-Usgg",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-15-墨刀ai上线ai生成app功能",
@@ -900,7 +937,7 @@
     "url": "https://mp.weixin.qq.com/s/iLVHvJkQDUrmTlSR2Zou8Q",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-14-小米具身智能团队开源自动驾驶大模型-xiaomi-onevl",
@@ -913,7 +950,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-14-runway推出ai视频创作智能体runway-agent",
@@ -927,7 +964,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-14-豆包输入法推出macos版本",
@@ -938,7 +975,7 @@
     "url": "https://mp.weixin.qq.com/s/mWj7LKVLNf7iHptOa4Sxpg?scene=1",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-13-谷歌推出-gemini-电脑-googlebook-把-ai-塞进光标",
@@ -951,7 +988,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-13-minimax-推出-minimax-agent-升级版-mavis",
@@ -965,7 +1002,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-13-林俊旸创业-新公司估值约20亿美金",
@@ -979,7 +1016,7 @@
       "通义千问",
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-13-claude-code-推出-agent-view-一个界面管理所有-ai-会话",
@@ -994,7 +1031,7 @@
       "Anthropic",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-12-openbmb开源端侧多模态大模型minicpm-v-4-6",
@@ -1009,7 +1046,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-12-码上飞全新升级-不仅做app-还能帮你做生意",
@@ -1020,7 +1057,7 @@
     "url": "https://mp.weixin.qq.com/s/ge52GqAlLzPA2IxEn-9UWA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-12-阿里千问与淘宝全面打通",
@@ -1031,7 +1068,7 @@
     "url": "https://mp.weixin.qq.com/s/-2Il_yefQVnmdM0ZHC0nUg",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-12-openai推出ai网络防御工具daybreak-斥资40亿美元成立新公司",
@@ -1044,7 +1081,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-12-办公小浣熊桌面版-2-0-升级发布",
@@ -1055,7 +1092,7 @@
     "url": "https://mp.weixin.qq.com/s/c25rG1tbuF8BDk0xu751PQ",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-11-谷歌云智能体开源官方命令行工具agents-cli",
@@ -1071,7 +1108,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-11-qclaw上线文件空间功能-qclaw-腾讯文档-ima全面互通",
@@ -1082,7 +1119,7 @@
     "url": "https://mp.weixin.qq.com/s/AgmVAhSl7BNSGxE0FBqa1g",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-11-uncharted-dynamics-获数百万美元融资",
@@ -1095,7 +1132,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-11-中国移动推出moma大模型聚合平台与mobileclaw智能体框架",
@@ -1106,7 +1143,7 @@
     "url": "https://mp.weixin.qq.com/s/o20vx_EPnduXjqSVFriT0g",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-11-火山引擎推出agent套餐包-agent-plan",
@@ -1120,7 +1157,7 @@
       "Claude",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-09-百度推出旗舰大语言模型文心-5-1",
@@ -1135,7 +1172,7 @@
       "DeepSeek",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-09-蚂蚁百灵推出万亿级旗舰思考模型ring-2-6-1t",
@@ -1148,7 +1185,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-09-通义灵码推出repowiki功能-一键生成结构化知识文档",
@@ -1161,7 +1198,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-09-openai推出网络安全专用模型gpt-5-5-cyber",
@@ -1174,7 +1211,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-09-阶跃星辰推出实时语音大模型stepaudio-2-5-realtime",
@@ -1185,7 +1222,7 @@
     "url": "https://mp.weixin.qq.com/s/P0x9EC_L_RRfSU6BQfyckA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-08-openai-推出三款实时语音模型",
@@ -1198,7 +1235,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-08-商汤推出轻量化多模态智能体模型sensenova-6-7-flash-lit",
@@ -1209,7 +1246,7 @@
     "url": "https://mp.weixin.qq.com/s/n5CZvuoHfjDsIPDmN0g6tA",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-08-美团推出-ai-原生共生社区-觅游",
@@ -1222,7 +1259,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-08-360旗下ai办公平台推出ai-ppt工具jjt",
@@ -1233,7 +1270,7 @@
     "url": "https://ai-bot.cn/ultrappt/",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-08-共绩科技完成近亿元pre-a轮融资",
@@ -1246,7 +1283,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-08-openai推出codex-chrome扩展插件",
@@ -1259,7 +1296,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-openai开放超大规模ai训练网络协议mrc",
@@ -1273,7 +1310,7 @@
       "OpenAI",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-像素绽放pixelbloom-完成c轮融资",
@@ -1287,7 +1324,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-硅基流动跻身中国-maas-市场第一梯队",
@@ -1298,7 +1335,7 @@
     "url": "https://mp.weixin.qq.com/s/9_bolUvtLP4kGwY2Zvm2qQ",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-月之暗面-kimi-完成新一轮约20亿美元融资",
@@ -1312,7 +1349,7 @@
       "融资",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-大基金领投deepseek-估值接近450亿",
@@ -1325,7 +1362,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-字节跳动推出统一多模态模型mamoda2-5",
@@ -1340,7 +1377,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-无问芯穹再获超7亿融资",
@@ -1354,7 +1391,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-07-anthropic与spacex达成合作扩容算力",
@@ -1368,7 +1405,20 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
+  },
+  {
+    "id": "2026-05-06-讯飞智文推出vision-agent模式-重构-ai-ppt-生产流程",
+    "date": "2026-05-06",
+    "title": "讯飞智文推出Vision Agent模式，重构 AI PPT 生产流程",
+    "summary": "讯飞智文Vision Agent模式，重构AI在PPT生产链条中的角色。Vision Agent模式通过意图洞察、大纲构建、内容精炼与五步设计引擎，实现从被动生成到主动协同的转变，解决模板化、配图脱节等痛点。系统可联网搜索资料、自主推演页数结构、生成可编辑内容卡片，最终输出专业排版。",
+    "source": "讯飞开放平台",
+    "url": "https://mp.weixin.qq.com/s/WgejVCN0xyYVMnyJZKhrvw",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-05-06-openai推出chatgpt新一代默认模型gpt-5-5-instant",
@@ -1381,7 +1431,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-06-美国开发者开源deepseek版claude-code-deepseek-tui",
@@ -1397,7 +1447,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-06-豆包测试增值付费服务-保留免费基础版",
@@ -1408,7 +1458,7 @@
     "url": "https://mp.weixin.qq.com/s/izhyNSFKuObuk3nvHWP9mA",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-06-chatgpt上线广告主平台",
@@ -1421,20 +1471,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
-  },
-  {
-    "id": "2026-05-06-讯飞智文推出vision-agent模式-重构-ai-ppt-生产流程",
-    "date": "2026-05-06",
-    "title": "讯飞智文推出Vision Agent模式，重构 AI PPT 生产流程",
-    "summary": "讯飞智文Vision Agent模式，重构AI在PPT生产链条中的角色。Vision Agent模式通过意图洞察、大纲构建、内容精炼与五步设计引擎，实现从被动生成到主动协同的转变，解决模板化、配图脱节等痛点。系统可联网搜索资料、自主推演页数结构、生成可编辑内容卡片，最终输出专业排版。",
-    "source": "讯飞开放平台",
-    "url": "https://mp.weixin.qq.com/s/WgejVCN0xyYVMnyJZKhrvw",
-    "category": "agent",
-    "tags": [
-      "Agent"
-    ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.679Z"
   },
   {
     "id": "2026-05-03-xai-推出最新旗舰推理模型grok-4-3",
@@ -1447,7 +1484,7 @@
     "tags": [
       "Claude"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-05-03-openai-codex-推出宠物模式",
@@ -1460,7 +1497,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-05-03-百度智能云推出ai短剧与漫剧创作平台hogee",
@@ -1473,7 +1510,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-05-03-deepseek-公布多模态模型技术报告",
@@ -1487,7 +1524,7 @@
       "Claude",
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-05-03-阿里通义开源大模型可解释性工具套件qwen-scope",
@@ -1501,7 +1538,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-05-03-美国防部与7家ai公司签署机密系统部署协议",
@@ -1514,7 +1551,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-30-宇树发布双臂人形机器人-2-69万元起",
@@ -1525,7 +1562,7 @@
     "url": "https://mp.weixin.qq.com/s/u6q6BWhyqOMAzOudx9RxgA",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-30-阿里推出数字员工qoderwake和qoder移动端两款agent产品",
@@ -1538,7 +1575,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-30-蚂蚁百灵开源万亿级综合旗舰模型ling-2-6-1t",
@@ -1552,7 +1589,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-30-腾讯混元开源手机端离线翻译模型hy-mt1-5-1-8b-1-25bit",
@@ -1565,7 +1602,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.951Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-29-商汤开源日日新系列原生理解生成统一模型sensenova-u1",
@@ -1579,7 +1616,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-29-阶跃星辰推出新一代图像生成编辑模型-step-image-edit-2",
@@ -1593,7 +1630,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-29-科大讯飞推出moe架构大语言模型星火x2-flash",
@@ -1606,7 +1643,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-29-蚂蚁百灵开源高效instruct模型ling-2-6-flash",
@@ -1619,7 +1656,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-29-deepseek识图模式开启灰度测试",
@@ -1632,7 +1669,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-29-英国ai初创公司ineffable-完成11亿美元种子轮融资",
@@ -1645,7 +1682,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-28-微软-github-copilot-宣布转向按量计费",
@@ -1656,7 +1693,7 @@
     "url": "https://www.ithome.com/0/944/205.htm",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-28-小红书首次公布-ai治理主张",
@@ -1667,7 +1704,7 @@
     "url": "https://mp.weixin.qq.com/s/QdywEyR2-GCupUIgXKl_8w",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-28-openai-和微软联合宣布云合作独家限制正式解除",
@@ -1680,7 +1717,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-28-百度文库网盘联合推出通用智能体genflow4-0",
@@ -1693,7 +1730,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-28-阿里通义推出全新强化学习框架eapo",
@@ -1707,7 +1744,7 @@
       "Claude",
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-28-阿里qoderwork推出专家套件功能",
@@ -1718,7 +1755,7 @@
     "url": "https://mp.weixin.qq.com/s/VXTVWEFyxqUNEvL588oR4A",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-灵光app推出体验世界模型功能",
@@ -1729,7 +1766,7 @@
     "url": "https://mp.weixin.qq.com/s/wuAPTDtSX9fDAfLuIwy8WA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-星动纪元完成超2亿美元新一轮融资",
@@ -1742,7 +1779,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-阶跃星辰与腾讯云达成战略合作",
@@ -1755,7 +1792,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-芒果传媒与爱诗科技达成战略合作",
@@ -1768,7 +1805,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-libtv-全网首发上线happyhorse-1-0视频模型",
@@ -1781,7 +1818,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-堆友第一时间上线happyhorse-1-0视频模型",
@@ -1794,7 +1831,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-deepseek-api输入缓存降价90",
@@ -1807,7 +1844,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-27-小米开源-vla-大模型-xiaomi-robotics-0-后训练全流程",
@@ -1820,7 +1857,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-24-阶跃星辰推出新一代自动语音识别模型stepaudio-2-5-asr",
@@ -1831,7 +1868,7 @@
     "url": "https://mp.weixin.qq.com/s/jGeJxEsGHaLNT00BoqcTZw?scene=1",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-24-阿里云推出企业级智能体构建平台jvs-crew",
@@ -1844,7 +1881,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-24-deepseek推出deepseek-v4-预览版",
@@ -1859,7 +1896,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-24-openai-推出最新旗舰大模型gpt-5-5",
@@ -1873,7 +1910,7 @@
       "Claude",
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-24-讯飞loomy全面开放-开启-外挂-办公模式",
@@ -1884,7 +1921,7 @@
     "url": "https://mp.weixin.qq.com/s/u2-AamDMPOLvp25wjGxeTg",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-openai-推出团队协作智能体workspace-agents",
@@ -1898,7 +1935,7 @@
       "OpenAI",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-阿里通义开源稠密多模态模型qwen3-6-27b",
@@ -1912,7 +1949,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-字节跳动推出新一代-3d-生成大模型seed3d-2-0",
@@ -1923,7 +1960,7 @@
     "url": "https://mp.weixin.qq.com/s/_9vggNLz0ehs_g0k8q709g",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-腾讯混元开源快慢思考融合的混合专家模型hy3-preview",
@@ -1937,7 +1974,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-openai开源隐私过滤模型openai-privacy-filter",
@@ -1951,7 +1988,7 @@
       "OpenAI",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-阶跃星辰和千里科技达成全面战略合作",
@@ -1965,7 +2002,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-23-anthropic估值万亿美元",
@@ -1979,7 +2016,7 @@
       "OpenAI",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-22-openai正式推出图像生成模型chatgpt-images-2-0",
@@ -1994,7 +2031,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-22-马斯克600亿美元收购cursor",
@@ -2005,7 +2042,7 @@
     "url": "https://mp.weixin.qq.com/s/jSXgl9W1w66t9X5QmXF63w",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-22-ai互动内容社区loopit完成1亿美元融资",
@@ -2018,7 +2055,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-22-代号为-elephant-alpha-的匿名模型正式揭晓-ling-2-6-fl",
@@ -2031,7 +2068,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-22-商汤绝影推出端侧多模态智能体基座大模型sage",
@@ -2044,7 +2081,7 @@
     "tags": [
       "Claude"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-21-月之暗面开源kimi-k2-6-全面精进代码和-agent-集群能力",
@@ -2059,7 +2096,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-21-腾讯-qclaw-海外版正式开启内测",
@@ -2070,7 +2107,7 @@
     "url": "https://mp.weixin.qq.com/s/t36Wm_EuZ7qawUsWPBOb9w",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-21-阿里通义一站式自动优化引擎-agentscope-tune-正式升级",
@@ -2084,7 +2121,7 @@
       "通义千问",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-20-阿里通义推出端到端语音识别大模型fun-asr1-5",
@@ -2097,7 +2134,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-20-阿里通义推出下一代旗舰模型qwen3-6-max-preview",
@@ -2112,7 +2149,7 @@
       "Anthropic",
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-20-anthropic推出ai原生视觉设计协作平台claude-design",
@@ -2126,7 +2163,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-17-智谱autoclaw上线自进化机制与skill商店",
@@ -2139,7 +2176,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-17-anthropic-推出最新旗舰大模型-claude-opus-4-7",
@@ -2153,7 +2190,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-17-阿里通义开源qwen3-6-35b-a3b-智能体编程-小钢炮",
@@ -2167,7 +2204,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-16-阿里推出可实时构建和交互的开放式世界模型产品-happyoyster",
@@ -2180,7 +2217,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-16-阶跃星辰推出新一代语音生成模型-stepaudio-2-5-tts",
@@ -2191,7 +2228,7 @@
     "url": "https://mp.weixin.qq.com/s/8SKwa5105umsFeIiUz-eEg?scene=1&amp;click_id=139",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-16-智象未来宣布完成超5亿元新一轮融资",
@@ -2205,7 +2242,7 @@
       "融资",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-16-网易有道推出-ai-知识库工具-8221-有道宝库-8221",
@@ -2216,7 +2253,7 @@
     "url": "https://mp.weixin.qq.com/s/wiJC_MhW9_fdXiLGnkZMFA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-16-全球首个云端沙箱-hermes-maxhermes-正式上线",
@@ -2229,7 +2266,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-16-腾讯混元3d世界模型2-0发布-无缝对接游戏工作流",
@@ -2243,7 +2280,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-15-李飞飞旗下world-labs开源3d高斯溅射渲染引擎-spark-2-0",
@@ -2256,7 +2293,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-15-meta与芯片巨头博通宣布合作投入超1gw算力定制ai芯片",
@@ -2267,7 +2304,7 @@
     "url": "https://mp.weixin.qq.com/s/KYmKNXrtFOZwu4nSntmI1w",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-15-面壁智能推出专业级文档智能体工作台-lantay",
@@ -2278,7 +2315,7 @@
     "url": "https://mp.weixin.qq.com/s/bcsZJN3xRlTZMQmdEiazZA",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-15-百度文心开源文生图模型-ernie-image",
@@ -2292,7 +2329,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-15-阿里推出ai开发工具秒悟meoo",
@@ -2303,7 +2340,7 @@
     "url": "https://mp.weixin.qq.com/s/XsIeLXm6zT-BYTctgAgaNg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.680Z"
   },
   {
     "id": "2026-04-14-seedance-2-0全面开放api服务",
@@ -2316,7 +2353,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-14-minimax-agent-更新-重新设计-agent-操作电脑的方式",
@@ -2329,7 +2366,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-13-minimax开源新一代自我进化ai模型-minimax-m2-7",
@@ -2343,7 +2380,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-13-minimax推出全新ai音乐生成模型-minimax-music-2-6",
@@ -2357,7 +2394,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-13-米哈游蔡浩宇ai公司推出首个ai视频模型lpm-1-0",
@@ -2370,7 +2407,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-10-阿里通义开源全模态知识库-rag-框架-vimrag",
@@ -2386,7 +2423,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-10-即梦推出-ai-原生动态叙事创作工具-octo",
@@ -2397,7 +2434,7 @@
     "url": "https://ai-bot.cn/octo/",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.952Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-09-meta-推出原生多模态大模型-muse-spark",
@@ -2411,7 +2448,7 @@
       "Gemini",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-09-萌友智能-ropet-完成轮超千万美元融资",
@@ -2424,7 +2461,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-08-智谱开源新一代旗舰模型-glm-5-1",
@@ -2438,7 +2475,7 @@
       "Claude",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-08-爱诗科技推出全球首个影视行业大模型-pixverse-c1",
@@ -2451,7 +2488,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-08-anthropic推出最强模型-claude-mythos-性能碾压-opus-",
@@ -2465,7 +2502,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-07-karpathy推出自运行个人知识库-llm-wiki",
@@ -2480,7 +2517,7 @@
       "OpenAI",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-07-面壁智能完成新一轮数亿元融资",
@@ -2493,7 +2530,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-07-openbmb开源语音合成模型-voxcpm2",
@@ -2506,7 +2543,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-07-字节跳动推出扣子2-5-开启全新-agent-world",
@@ -2520,7 +2557,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-07-微软推出全球最精准转录-ai-模型-mai-transcribe-1",
@@ -2533,7 +2570,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-03-oiioii开放注册-史诗级更新-满血seedance2-0",
@@ -2546,7 +2583,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-03-阿里通义推出ai视频生成模型-wan2-7-video",
@@ -2560,7 +2597,7 @@
       "通义千问",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-03-谷歌推出-gemma-4-同等规模下性能最强的开放模型",
@@ -2573,7 +2610,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-03-xiaomi-mimo-token-plan-全球发布",
@@ -2586,7 +2623,7 @@
     "tags": [
       "Claude"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-02-智谱推出glm-5v-turbo-多模态coding基座模型",
@@ -2600,7 +2637,7 @@
       "Claude",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-02-阿里通义推出qwen3-6-plus-编码智能体能力全面跃升",
@@ -2613,7 +2650,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-02-openclaw推出中国官方镜像站clawhub镜像站",
@@ -2626,7 +2663,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-02-b-站推出-ai-视频创作工具updream",
@@ -2639,7 +2676,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-01-openai获1220亿美元史上最大单笔融资纪录",
@@ -2654,7 +2691,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-01-通义实验室推出ai图像生成与编辑模型wan2-7-image",
@@ -2668,7 +2705,7 @@
       "通义千问",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-01-美团-longcat-团队推出语音合成模型longcat-audiodit",
@@ -2679,7 +2716,7 @@
     "url": "https://mp.weixin.qq.com/s/YaU20XkTSSYXZ4YTJ22PWg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-01-pixverse推出三项更新-快应用-团队版与cli工具",
@@ -2693,7 +2730,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-04-01-昆仑万维推出ai短剧创作平台-天工短剧工作台",
@@ -2706,7 +2743,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-31-爱诗科技推出ai视频模型pixverse-v6",
@@ -2719,7 +2756,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-31-kimi-开放平台-官网域名更新了",
@@ -2730,7 +2767,7 @@
     "url": "https://mp.weixin.qq.com/s/iKQAA8iyAr35iwTS32HfWQ",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-31-腾讯workbuddy小程序上线-支持-8221-云端-本机-8221-双模式运",
@@ -2743,7 +2780,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-31-企业微信官方开源命令行工具wecom-cli",
@@ -2758,7 +2795,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-30-昆仑万维推出-8221-天工aigc全家桶-8221-三大核心模型",
@@ -2771,7 +2808,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-30-阿里通义推出全模态大模型qwen3-5-omni",
@@ -2787,7 +2824,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-30-中国移动推出移动云-mobileclaw-开启公测",
@@ -2798,7 +2835,7 @@
     "url": "https://ai-bot.cn/mobileclaw/",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-30-智谱glm-5-1已面向所有coding-plan用户开放",
@@ -2809,7 +2846,7 @@
     "url": "https://mp.weixin.qq.com/s/5g5-cJSuQumzZDVgiCaTuQ?scene=1&amp;click_id=17",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-27-字节跳动-seedance-2-0-正式出海-面向全球多地推出",
@@ -2822,7 +2859,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-27-谷歌推出gemini-3-1-flash-live实时语音模型",
@@ -2835,7 +2872,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-27-商汤科技推出商汤输入法audioclaw和senseaudio-ai语音开放平台",
@@ -2848,7 +2885,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-27-suno推出-ai-音乐生成模型suno-v5-5",
@@ -2859,7 +2896,7 @@
     "url": "https://ai-bot.cn/suno-v5-5/",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-26-谷歌推出ai音乐生成模型-lyria-3-pro",
@@ -2870,7 +2907,7 @@
     "url": "https://www.ithome.com/0/932/738.htm",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-26-美团龙猫团队开源多模态大模型longcat-next",
@@ -2884,7 +2921,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-25-openai宣布关停sora-战略转向企业级生产力工具",
@@ -2898,7 +2935,7 @@
       "OpenAI",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-25-阿里在海外推出-8221-企业级龙虾-8221-accio-work",
@@ -2911,7 +2948,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-25-jvs-claw全面开放-无需邀请码快乐养虾",
@@ -2922,7 +2959,7 @@
     "url": "https://mp.weixin.qq.com/s/1UGnrKk9PSIQ0XkWKmiBPw",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-25-minimax-office-skills-开源一套生产级办公文档引擎",
@@ -2935,7 +2972,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.681Z"
   },
   {
     "id": "2026-03-24-阿里通义推出prismaudio-声画同频-音效随行",
@@ -2949,7 +2986,7 @@
       "通义千问",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-24-智象未来推出首个多模态应用-龙虾-产品-hidreamclaw",
@@ -2963,7 +3000,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-24-meta收编-ai-智能体公司-dreamer",
@@ -2974,7 +3011,7 @@
     "url": "https://www.ithome.com/0/931/947.htm",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-24-阿里达摩院祭出开源架构cpu王炸-玄铁c950",
@@ -2989,7 +3026,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-23-微信推出官方龙虾插件微信clawbot",
@@ -3000,7 +3037,7 @@
     "url": "https://mp.weixin.qq.com/s/o_FPvJ0tY6aGqGn4Ea7Rpw",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-23-智谱推出成长型-ai-生命体glm-claw",
@@ -3011,7 +3048,7 @@
     "url": "https://mp.weixin.qq.com/s/uyroJXpjMr6a52Rs68weiw",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-23-minimax-token-plan-全球首个支持全模态模型的订阅计划",
@@ -3025,7 +3062,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-23-美团开源longcat-flash-prover数学证明模型",
@@ -3038,7 +3075,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-23-腾讯推出ai设计工具ardot-即将开启公测",
@@ -3049,7 +3086,7 @@
     "url": "https://mp.weixin.qq.com/s/LEPIP7wMI_Tr8pG1xeHFnA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-23-百度推出首个国产企业级满血版openclaw-dumate",
@@ -3060,7 +3097,7 @@
     "url": "https://mp.weixin.qq.com/s/SPAbERDHmNnQoMwtoJ1dlQ",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.953Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-20-腾讯qclaw全面开放-无需邀请码下载就能用",
@@ -3071,7 +3108,7 @@
     "url": "https://mp.weixin.qq.com/s/Tu8Eskf6Pmb5Kp9GIJp-Zw?scene=1&amp;click_id=5",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-20-vidu-ai推出viduclaw-v龙-智能体",
@@ -3085,7 +3122,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-20-cursor推出ai编程模型composer-2",
@@ -3096,7 +3133,7 @@
     "url": "https://cursor.com/cn/blog/composer-2",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-20-阿里推出qwen3-5-max-preview最新一代旗舰模型预览版",
@@ -3109,7 +3146,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-20-商汤大装置-大晓机器人-广西产业技术研究院达成三方战略合作",
@@ -3120,7 +3157,7 @@
     "url": "https://mp.weixin.qq.com/s/8vDiOf9T_RNjiTAawXXtrw?scene=1&amp;click_id=11",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-19-小米推出三款面向面向-agent-时代的大模型",
@@ -3133,7 +3170,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-19-阶跃星辰推出桌面端ai-agent-stepclaw",
@@ -3146,7 +3183,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-19-面壁智能推出开源智能体框架edgeclaw",
@@ -3159,7 +3196,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-18-百度推出-龙虾-全家桶-手机-电脑-家里都能用",
@@ -3170,7 +3207,7 @@
     "url": "https://mp.weixin.qq.com/s/F76BPbjELnsqEhdYa4NHWA",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-18-openai推出gpt-5-4-mini和gpt-5-4-nano-实力逼近满血",
@@ -3183,7 +3220,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-18-minimax推出minimax-m2-7-开启模型的自我进化",
@@ -3197,7 +3234,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-18-liblibai推出专业ai视频创作平台libtv",
@@ -3211,7 +3248,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-18-midjourney推出midjourney-v8模型",
@@ -3224,7 +3261,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-18-skywork正式推出云端ai原生助理skyclaw",
@@ -3237,7 +3274,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-17-科大讯飞正式发布桌面级ai智能助理loomy",
@@ -3250,7 +3287,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-17-商汤办公小浣熊-技能模板-功能开启内测",
@@ -3261,7 +3298,7 @@
     "url": "https://mp.weixin.qq.com/s/5Tm0pRQcc7tfI1ok2QlQtw",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-17-全球首个企业级agent平台-悟空-来了",
@@ -3274,7 +3311,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-17-英伟达推出nemoclaw-全新rubin算力狂飙35倍",
@@ -3287,7 +3324,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-17-manus桌面端推出my-computer功能-支持mac-和win系统",
@@ -3298,7 +3335,7 @@
     "url": "https://ai-bot.cn/sites/69322.html",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-17-全球首个自进化个人ai-mulerun正式推出",
@@ -3311,7 +3348,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-16-智谱推出glm-5-turbo-龙虾增强的基座模型",
@@ -3324,7 +3361,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-16-清华开源-openmaic-国内首个l4级ai课堂",
@@ -3337,7 +3374,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-16-通义推出fun-cineforge-首个影视级配音多模态大模型",
@@ -3351,7 +3388,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-16-阿里云旗下ai-agent产品jvs-claw正式推出移动端app",
@@ -3365,7 +3402,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-13-internvl-u重磅开源-4b参数实现理解-推理-生成-编辑一体化",
@@ -3378,7 +3415,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-13-大晓机器人开源实时生成世界模型-kairos-3-0-4b",
@@ -3391,7 +3428,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-安全养虾发布-讯飞astronclaw全面开放",
@@ -3402,7 +3439,7 @@
     "url": "https://mp.weixin.qq.com/s/NcciPigdHQOkaAGeJeDyGg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-爱诗科技完成c轮融资-鼎晖领投-全面开启-可玩现实-新纪元",
@@ -3416,7 +3453,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-阶跃ai推出stepclaw一键部署openclaw-5-万个免费体验名额",
@@ -3427,7 +3464,7 @@
     "url": "https://mp.weixin.qq.com/s/LvOo7f_PoYEwTKGI_FLatQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-安全免配置-威努特winclaw正式发布",
@@ -3438,7 +3475,7 @@
     "url": "https://mp.weixin.qq.com/s/JNC4DuPniSyw5Urym7ElXA",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-英伟达最强开源权重-ai-模型-nemotron-3-super-登场",
@@ -3451,7 +3488,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-百度智能云发布全球首款手机龙虾应用-红手指operator",
@@ -3464,7 +3501,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-12-光轮智能完成10亿元融资-全球首个具身数据独角兽诞生",
@@ -3478,7 +3515,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-11-人类社交网络巨头meta收购了ai社交网络moltbook",
@@ -3489,7 +3526,7 @@
     "url": "https://mp.weixin.qq.com/s/d0TCzh8o68_7CCgwoIk3ug",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-11-百度智能云发布duclaw零部署服务-零门槛开启自由-养虾-资",
@@ -3502,7 +3539,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-11-谷歌首个原生多模态嵌入模型-gemini-embedding-2-发布",
@@ -3517,7 +3554,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-11-ai语音教练平台boldvoice完成2100万美元a轮融资",
@@ -3530,7 +3567,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-11-新加坡metacomp获数千万美元pre-a-轮融资",
@@ -3543,7 +3580,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-11-dify-完成-3000-万美元融资-红杉领投",
@@ -3558,7 +3595,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-10-腾讯云推出skillhub-专为中国用户优化的ai技能社区",
@@ -3569,7 +3606,7 @@
     "url": "https://ai-bot.cn/sites/73259.html",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-10-火山引擎推出arkclaw-开箱即用的云上saas版openclaw",
@@ -3580,7 +3617,7 @@
     "url": "https://mp.weixin.qq.com/s/jG8qrOsMVmx0jN5SThOvrw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-10-腾讯推出qclaw-一键安装-直接打通微信",
@@ -3591,7 +3628,7 @@
     "url": "https://mp.weixin.qq.com/s/Y7P1Zdf7uQYu7W9P8hhM3A",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-10-阿里版openclaw更名-8221-jvs-claw-8221-并开启内测",
@@ -3604,7 +3641,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-10-智谱发布autoclaw-澳龙-国内首个一键安装本地版openclaw",
@@ -3617,7 +3654,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-09-腾讯workbuddy正式上线-免部署版-8221-小龙虾-8221-ai智能体",
@@ -3631,7 +3668,7 @@
       "DeepSeek",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-09-openclaw-3-8版本发布-12-安全漏洞修复-三大新功能",
@@ -3642,7 +3679,7 @@
     "url": "https://mp.weixin.qq.com/s/raShzy4kFbYaSFoPRcbNqQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-09-扣子coze推出ai-agent中文社区instreet-全面开放内测",
@@ -3655,7 +3692,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-09-小红书开源firered-image-edit-v1-1-ootd元素融合-人像",
@@ -3669,7 +3706,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-06-阿里开源hiclaw-team-版-openclaw-5分钟完成本地安装",
@@ -3683,7 +3720,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-06-vast完成5000万美元a轮融资-加速构建世界模型与ugc互动内容平台",
@@ -3696,7 +3733,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-06-微软开源-phi-4-reasoning-vision-15b-视觉推理模型",
@@ -3709,7 +3746,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-06-openai-最强模型-gpt-5-4-正式登场-原生支持计算机操控",
@@ -3722,7 +3759,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-05-minimax-music-2-5-解锁你的专属-天空之城",
@@ -3733,7 +3770,7 @@
     "url": "https://mp.weixin.qq.com/s/8RpTRVsEQwroo77pFh671g",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-05-perplexity与coreweave达成多年战略合作-聚焦ai推理基础设施",
@@ -3744,7 +3781,7 @@
     "url": "https://www.ithome.com/0/926/029.htm",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-04-flowith-完成千万美元种子轮和种子-轮融资",
@@ -3758,7 +3795,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-04-谷歌-gemini-3-1-flash-lite-登场-首字响应提速-2-5-倍",
@@ -3771,7 +3808,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-04-阶跃星辰-step-3-5-flash-预训练-中训练-训练框架全部开源",
@@ -3785,7 +3822,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-04-openai深夜发新模型gpt-5-3-instant-幻觉率暴降27",
@@ -3798,7 +3835,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-04-qoderwork-重磅更新-正式发布支持-windows-版",
@@ -3809,7 +3846,7 @@
     "url": "https://mp.weixin.qq.com/s/9qvRL56mH2wNCuqG7pWYkw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-03-阿里千问开源四款-qwen3-5-小尺寸模型",
@@ -3824,7 +3861,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-03-小红书发布并开源端到端文档识别模型-firered-ocr",
@@ -3839,7 +3876,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-03-阿里通义语音双模型-fun-cosyvoice3-5-与-fun-audioge",
@@ -3852,7 +3889,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-02-美团光年之外ai浏览器tabbit正式发布-开启智能浏览新体验",
@@ -3865,7 +3902,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-02-松延动力宣布完成b轮融资-累计近10亿元-宁德时代领投",
@@ -3878,7 +3915,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-03-02-再次刷新具身智能单轮融资金额-银河通用拿下-25-亿融资",
@@ -3891,7 +3928,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-28-阿里通义-copaw-开源-爆改你的专属智能搭档",
@@ -3906,7 +3943,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-28-面壁智能开年获数亿元融资-中国电信领投",
@@ -3919,7 +3956,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-28-lemon-ai获数千万pre-a轮融资-天际资本独家投资",
@@ -3933,7 +3970,7 @@
       "融资",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-28-openai获得1100亿美元融资",
@@ -3947,7 +3984,7 @@
       "OpenAI",
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-27-谷歌推出-nano-banana-2-图像-ai-模型-支持-4k-分辨率输出",
@@ -3961,7 +3998,7 @@
       "Gemini",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-27-skywork-ai-正式发布多模态视频基础模型-skyreels-v4",
@@ -3975,7 +4012,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-27-华为云码道-codearts-代码智能体公测版正式发布",
@@ -3986,7 +4023,7 @@
     "url": "https://mp.weixin.qq.com/s/wBgbVOc3x32qiVRQ3NEHlQ",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-26-minimax-agent升级-推出expert-2-0和maxclaw两大核心",
@@ -3999,7 +4036,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-26-perplexity-computer-上线-多模型协同自动完成工作流",
@@ -4010,7 +4047,7 @@
     "url": "https://www.ithome.com/0/923/704.htm",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-26-自变量机器人宣布已完成数亿元新融资",
@@ -4023,7 +4060,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-25-ai-音乐创作平台-producerai-正式加入google-labs",
@@ -4036,7 +4073,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.682Z"
   },
   {
     "id": "2026-02-24-全球首个面向ai智能体的进化协作平台-evomap",
@@ -4047,7 +4084,7 @@
     "url": "https://ai-bot.cn/sites/72249.html",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-24-千寻智能完成近20亿融资-引领具身基模进化与商业化落地",
@@ -4061,7 +4098,7 @@
       "融资",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-24-10-亿美元融资-李飞飞-世界模型-公司估值-50-亿美元",
@@ -4074,7 +4111,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-24-智平方又完成5轮b轮系列融资-融资规模超10亿-估值超百亿",
@@ -4087,7 +4124,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-24-anthropic-推出安全工具-claude-code-security",
@@ -4101,7 +4138,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-24-谷歌正式发布新一代旗舰模型gemini-3-1-pro",
@@ -4115,7 +4152,7 @@
       "Claude",
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-24-google-deepmind推出最新ai音乐生成模型-lyria-3",
@@ -4129,7 +4166,7 @@
       "Gemini",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-18-anthropic推出史上最强sonnet模型-claude-sonnet-4-",
@@ -4144,7 +4181,7 @@
       "Anthropic",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-16-通义千问团队正式发布新一代模型qwen3-5",
@@ -4160,7 +4197,7 @@
       "通义千问",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.954Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-14-思考-更深-生成更准-seedream-5-0-lite-发布",
@@ -4171,7 +4208,7 @@
     "url": "https://mp.weixin.qq.com/s/J18YVIqrd9gMqEVcIT-i5w",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-14-灵心巧手宣布完成近15亿元b轮融资",
@@ -4184,7 +4221,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-14-豆包大模型2-0正式发布",
@@ -4197,7 +4234,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-14-阿里云通义-copaw-发布-对标-openclaw",
@@ -4211,7 +4248,7 @@
       "通义千问",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-13-minimax-m2-5-发布-1美金-小时-真实世界工作王者",
@@ -4222,7 +4259,7 @@
     "url": "https://mp.weixin.qq.com/s/M4LBGM3Jcy0syWvQ_78ahw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-13-anthropic-宣布完成高达-300-亿美元的-g-轮融资",
@@ -4237,7 +4274,7 @@
       "Anthropic",
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-13-谷歌宣布-gemini-3-deep-think-深度思考大模型升级",
@@ -4250,7 +4287,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-13-openai-发布-gpt-5-3-codex-spark-专为实时编程而生",
@@ -4263,7 +4300,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-12-智谱最新旗舰模型-glm-5-开源-编程-智能体能力取得开源-sota",
@@ -4278,7 +4315,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-12-z-code推出ade智能体开发环境-实现-对话即编程-新范式",
@@ -4291,7 +4328,7 @@
     "tags": [
       "Claude"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-12-longcat-发布原生-深度研究-智能体",
@@ -4304,7 +4341,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-11-讯飞星火x2大模型正式发布-api同步上线",
@@ -4315,7 +4352,7 @@
     "url": "https://mp.weixin.qq.com/s/C8pezir4IRX46OSy29p_Sg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-11-国产ai互动应用loopit获马斯克公开点赞",
@@ -4326,7 +4363,7 @@
     "url": "https://ai-bot.cn/loopit/",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-11-阿里达摩院开源具身智能大脑基础模型-rynnbrain",
@@ -4339,7 +4376,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-10-字节又一新模型-seedream-5-0上线",
@@ -4352,7 +4389,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-10-千问最新图像基座模型qwen-image-2-0-正式发布",
@@ -4366,7 +4403,7 @@
       "通义千问",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-10-首个产业级2bit量化新突破-腾讯混元推出0-3b端侧模型hy-1-8b-2bi",
@@ -4377,7 +4414,7 @@
     "url": "https://mp.weixin.qq.com/s/m3Sr4fRLAvc7C6MV1RR-ew",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-10-大晓机器人完成天使轮融资",
@@ -4390,7 +4427,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-09-字节跳动推出新一代ai视频生成模型seedance-2-0",
@@ -4403,7 +4440,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-09-skywork推出skybot-最适合小白用户的openclaw工具",
@@ -4414,7 +4451,7 @@
     "url": "https://mp.weixin.qq.com/s/7ZqVrsKhKEF5tMxyxe7DeA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-09-智谱清言app正式上线-学习搭子-随时随地-马上学",
@@ -4425,7 +4462,7 @@
     "url": "https://mp.weixin.qq.com/s/YTFAU7VZp02RtQBaehgnSQ",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-09-腾讯推出全场景职场-ai-智能体桌面工作台workbuddy",
@@ -4436,7 +4473,7 @@
     "url": "https://mp.weixin.qq.com/s/jepj-IFv3UR9LpZlt-h82w",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-06-openai发布新一代编程模型-gpt-5-3-codex",
@@ -4450,7 +4487,7 @@
       "Claude",
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-06-anthropic发布新一代ai模型claude-opus-4-6",
@@ -4464,7 +4501,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-06-ai营销平台pallasai-完成数千万元融资",
@@ -4478,7 +4515,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-06-生数科技宣布完成超过6亿元人民币a-轮融资",
@@ -4492,7 +4529,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-05-可灵ai正式迈入3-0时代",
@@ -4505,7 +4542,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-05-面壁智能开源了新一代全模态旗舰模型-minicpm-o-4-5",
@@ -4518,7 +4555,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-05-上海ai实验室开源科学多模态大模型intern-s1-pro",
@@ -4531,7 +4568,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-05-mistral-ai-推出新一代语音转文本模型voxtral-transcrib",
@@ -4542,7 +4579,7 @@
     "url": "https://ai-bot.cn/voxtral-transcribe-2/",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-04-通义千问-qwen3-coder-next-开源-小而强",
@@ -4556,7 +4593,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-04-昆仑天工面向全球发布-skywork桌面版",
@@ -4571,7 +4608,7 @@
       "Gemini",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-03-智谱glm-ocr发布-性能sota-搞定复杂文档",
@@ -4585,7 +4622,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-03-元气ai-bot正式上线-国产ai助手实现电脑自动化操控",
@@ -4596,7 +4633,7 @@
     "url": "https://ai-bot.cn/sites/71314.html",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-03-马斯克宣布spacex完成对xai的收购-估值达1-25万亿美元",
@@ -4607,7 +4644,7 @@
     "url": "https://mp.weixin.qq.com/s/zBrQFEpR4_BCy9zKd2oMjA",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-03-马斯克旗下-xai-发布-grok-imagine-1-0",
@@ -4620,7 +4657,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-02-阶跃星辰-step-3-5-flash-上线-更快更强更稳的-agent-大脑-",
@@ -4634,7 +4671,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-02-qoder首个定制模型-qwen-coder-qoder",
@@ -4648,7 +4685,7 @@
       "通义千问",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-02-跨赴科技-再获数千万融资-产业方加持领跑ai开发新范式",
@@ -4661,7 +4698,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-02-02-vidu-q3-全球震撼来袭-为-剧-而生",
@@ -4674,7 +4711,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-30-商汤开源sensenova-mars-突破多模态搜索推理天花板",
@@ -4689,7 +4726,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-30-qwen3-asr开源-够稳定-能流式-多语言",
@@ -4703,7 +4740,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-30-openai宣布2月13日下线gpt-4o等旧模型",
@@ -4716,7 +4753,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-30-苹果20亿美元收购以色列ai公司q-ai",
@@ -4727,7 +4764,7 @@
     "url": "https://mp.weixin.qq.com/s/M4kctKiY1KUiIMIOxFe-Ow",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-30-宇树开源-unifolm-vla-0-大模型-助力通用人形机器人操作",
@@ -4741,7 +4778,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-29-昆仑万维开源视频生成模型skyreels-v3-重塑创作流程",
@@ -4756,7 +4793,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-29-minimax-music-2-5-格莱美级创作-不再需要录音棚",
@@ -4767,7 +4804,7 @@
     "url": "https://mp.weixin.qq.com/s/hy1RzvAytRSxX63qodEExw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-29-昆仑天工mureka-v8重磅发布-定义ai音乐新品类",
@@ -4778,7 +4815,7 @@
     "url": "https://mp.weixin.qq.com/s/p9d1WCjxae1EJhaIJ_qReg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-28-openai发布免费科研协作工具prism",
@@ -4791,7 +4828,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-28-minimax发布minimax-m2-her角色扮演模型",
@@ -4802,7 +4839,7 @@
     "url": "https://mp.weixin.qq.com/s/gJ9PClGTCGXicRzjRt7zOA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-28-阿里通义开源z-image基座模型",
@@ -4817,7 +4854,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-27-kimi-发布并开源-k2-5-模型-带来全新视觉理解-代码和-agent-集群",
@@ -4833,7 +4870,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-27-vidu-q2-参考生pro全球上线-万物可参考",
@@ -4846,7 +4883,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-27-deepseek又探索新架构了-开源deepseek-ocr-2",
@@ -4861,7 +4898,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-27-千问最强模型qwen3-max-thinking正式发布",
@@ -4874,7 +4911,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-27-英伟达20亿美元加码coreweave-冲刺5gw算力",
@@ -4885,7 +4922,7 @@
     "url": "https://mp.weixin.qq.com/s/xkCtjwoWWLf0x42e5NcWPQ",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-27-github开源项目clawdbot意外带火mac-mini",
@@ -4899,7 +4936,7 @@
       "Claude",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-26-腾讯混元发布混元图像3-0图生图模型-上线元宝-一句话就能p图",
@@ -4912,7 +4949,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-26-38岁清华姚班天才挂帅-上海大模型独角兽阶跃星辰融资超50亿",
@@ -4925,7 +4962,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-26-商汤科技ai-agent-咔皮记账-核心功能永久免费啦",
@@ -4938,7 +4975,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-23-清言学习搭子已上线-火速申请体验名额",
@@ -4949,7 +4986,7 @@
     "url": "https://mp.weixin.qq.com/s/5tbLi9M-YFDVY98zue-nlg",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-23-qwen3-tts全家桶开源上线",
@@ -4963,7 +5000,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-23-vllm团队官宣创业-融资1-5亿美元-清华特奖游凯超成为联创",
@@ -4977,7 +5014,7 @@
       "融资",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-22-百度发布文心大模型-5-0-正式版-2-4-万亿参数-具备全模态理解与生成能力",
@@ -4992,7 +5029,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-22-腾讯codebuddy-code-2-0-重磅升级",
@@ -5005,7 +5042,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-22-8b端侧写作智能体agentcpm-report开源",
@@ -5019,7 +5056,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-21-10b击败200b-阶跃星辰开源视觉语言sota-step3-vl-10b",
@@ -5032,7 +5069,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-21-minimax推出agent-2-0-升级为进阶型桌面智能协作伙伴",
@@ -5045,7 +5082,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-20-glm-4-7-flash开源-免费",
@@ -5058,7 +5095,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-20-欢迎报名-kimi-新模型-api-内测计划",
@@ -5069,7 +5106,7 @@
     "url": "https://mp.weixin.qq.com/s/mheGTIQJsxDtjbHFOv6FjA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-20-马斯克开源-x-平台推荐算法",
@@ -5082,7 +5119,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-20-自然选择-融资3000万美元-阿里-蚂蚁布局ai陪伴",
@@ -5095,7 +5132,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-20-kimi开启新一轮融资-估值直冲48亿美元",
@@ -5108,7 +5145,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-19-光轮智能联手world-labs破解评测规模化难题",
@@ -5119,7 +5156,7 @@
     "url": "https://mp.weixin.qq.com/s/_g4sP1prQySAvTz-LMfSxA",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-19-扣子-2-0-让-agent-更进一步",
@@ -5132,7 +5169,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-19-安克与飞书联合发布ai录音豆",
@@ -5143,7 +5180,7 @@
     "url": "https://mp.weixin.qq.com/s/kNwZHnVQIrJe-mKDsInsdQ",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-19-ai视频领军企业爱诗科技与中国儒意达成战略合作",
@@ -5156,7 +5193,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-16-国产芯片全程训练-glm-image登顶hugging-face-trendin",
@@ -5170,7 +5207,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-16-美团-longcat-flash-thinking-2601-发布-工具调用能力",
@@ -5184,7 +5221,7 @@
       "Claude",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-16-谷歌最强-ai-开放翻译模型-translategemma-登场",
@@ -5197,7 +5234,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-16-混元3d-studio-1-2全面开放公测-支持笔刷交互-八视图输入",
@@ -5208,18 +5245,7 @@
     "url": "https://mp.weixin.qq.com/s/B0LxZTO08noBLERUiMmt2w",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
-  },
-  {
-    "id": "2026-01-15-千问app上线ai购物-真正能帮你办事的ai来了",
-    "date": "2026-01-15",
-    "title": "千问App上线AI购物，真正能帮你办事的AI来了！",
-    "summary": "千问App正式上线400多项AI办事功能，标志着从&#8221;聊天对话&#8221;迈入&#8221;AI办事时代&#8221;。应用深度接入淘宝、支付宝、高德、飞猪等阿里生态业务，在全球首次实现AI点外卖、购物、订机票酒店等实用功能，用户可在对话界面内完成支付无需跳转。上线的&#8221;任务助理&#8221;支持多步骤复杂任务规划，新增学习辅助功能。",
-    "source": "阿里巴巴",
-    "url": "https://mp.weixin.qq.com/s/gqTkVJ4UsdFqJoZsYfGbyQ",
-    "category": "industry",
-    "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-15-阶跃星辰原生语音推理模型-step-audio-r1-1-登顶榜首",
@@ -5233,7 +5259,7 @@
       "Gemini",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-15-openai签下近700亿ai芯片巨单",
@@ -5246,7 +5272,18 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
+  },
+  {
+    "id": "2026-01-15-千问app上线ai购物-真正能帮你办事的ai来了",
+    "date": "2026-01-15",
+    "title": "千问App上线AI购物，真正能帮你办事的AI来了！",
+    "summary": "千问App正式上线400多项AI办事功能，标志着从&#8221;聊天对话&#8221;迈入&#8221;AI办事时代&#8221;。应用深度接入淘宝、支付宝、高德、飞猪等阿里生态业务，在全球首次实现AI点外卖、购物、订机票酒店等实用功能，用户可在对话界面内完成支付无需跳转。上线的&#8221;任务助理&#8221;支持多步骤复杂任务规划，新增学习辅助功能。",
+    "source": "阿里巴巴",
+    "url": "https://mp.weixin.qq.com/s/gqTkVJ4UsdFqJoZsYfGbyQ",
+    "category": "industry",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.683Z"
   },
   {
     "id": "2026-01-14-全球首个通用实时世界模型-pixverse-r1",
@@ -5259,7 +5296,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-14-genspark-官宣-arr-突破-1-亿美元",
@@ -5270,7 +5307,7 @@
     "url": "https://www.linkedin.com/posts/gensparkai_we-hit-100m-arr-annual-run-rate-in-just-activity-7416765533062221824-IFCS/",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-14-商汤-办公小浣熊-app上线",
@@ -5281,7 +5318,7 @@
     "url": "https://mp.weixin.qq.com/s/bt16ORabpiqQdmw3CQ-WqA",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-14-minimax-开源新评测集-定义coding-agent-的生产级标准",
@@ -5295,7 +5332,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-14-快手宣布可灵-12-月收入超-2000-万美元",
@@ -5308,7 +5345,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-14-一年融2-2亿-deepwisdom终于发布了第一款产品atoms",
@@ -5321,7 +5358,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-14-智谱联合华为开源首个国产芯片训练的多模态sota模型glm-image",
@@ -5335,7 +5372,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.955Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-13-anthropic-发布-cowork-面向所有人版本的-claude-code",
@@ -5349,7 +5386,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-13-百川开源全球最强医疗大模型baichuan-m3",
@@ -5362,7 +5399,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-12-自变量获字节-红杉等10亿元投资-构建物理世界的基础模型",
@@ -5375,7 +5412,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-12-千寻智能开源具身智能基础模型spirit-v1-5",
@@ -5388,7 +5425,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-12-humanify-获数千万元首轮融资打造-ai-os",
@@ -5401,7 +5438,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-12-谷歌联合零售巨头推出通用商务协议-ucp",
@@ -5412,7 +5449,7 @@
     "url": "https://www.ithome.com/0/912/491.htm",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-09-minimax-港股挂牌-历史上ipo规模最大的ai大模型公司诞生",
@@ -5423,7 +5460,7 @@
     "url": "https://mp.weixin.qq.com/s/ltJt47C1P4C9ebZqBkicgw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-09-chatdev-2-0-零代码构建多智能体-快速开发一切",
@@ -5436,7 +5473,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-09-多模态检索新标杆-qwen3-vl-embedding-amp-reranker",
@@ -5452,7 +5489,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-08-智谱上市了-全球大模型第一股-股票代码-02513",
@@ -5463,7 +5500,7 @@
     "url": "https://mp.weixin.qq.com/s/NFK61KcfIBzAF2EF5ElghQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-08-chatexcel一年完成3轮融资-构建全模态数据链路平台",
@@ -5476,7 +5513,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-08-openai-推出-chatgpt-health-模式-为健康设立专属空间",
@@ -5489,7 +5526,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-07-lmarena完成1-5亿美元series-a融资",
@@ -5502,7 +5539,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-07-智元发布首个大语言模型驱动的开源仿真平台-genie-sim-3-0",
@@ -5515,7 +5552,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-07-xai完成200亿美元e轮融资-英伟达再次出手",
@@ -5528,7 +5565,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-06-英伟达发布重磅ai计算平台vera-rubin",
@@ -5539,7 +5576,7 @@
     "url": "https://mp.weixin.qq.com/s/n21pnpd4HEjaFWLaPxv_YQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-06-亚马逊上线-alexa网页版-加速补齐网页端能力",
@@ -5552,7 +5589,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-06-开源异构算力调度平台-密瓜智能-获数千万元投资",
@@ -5566,7 +5603,7 @@
       "融资",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-06-智能眼镜企业雷鸟创新宣布完成超10亿元新一轮融资",
@@ -5579,7 +5616,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-05-智元机器人与minimax达成合作-全模态ai加速落地机器人应用",
@@ -5590,7 +5627,7 @@
     "url": "https://www.36kr.com/newsflashes/3626096462595073",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-05-腾讯-ai应用及线上工具小程序成长计划-发布-混元大模型token免费用",
@@ -5601,7 +5638,7 @@
     "url": "https://mp.weixin.qq.com/s/ZEhYVjN8B0cgAzDxXSqJLQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-05-looki完成超2000万美元a轮融资",
@@ -5614,7 +5651,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-05-ai助手ima支持ppt生成",
@@ -5625,7 +5662,7 @@
     "url": "https://mp.weixin.qq.com/s/jDQeBr4dg-71bpAq23sYvA",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-04-deepseek-发布新论文-提出全新-mhc-架构",
@@ -5638,7 +5675,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-04-listenhub完成200万美元融资-arr-300万美元进军北美",
@@ -5651,7 +5688,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2026-01-04-trae-中国版-solo-已全量免费开放",
@@ -5662,7 +5699,7 @@
     "url": "https://mp.weixin.qq.com/s/YC0z99VN0G4dv6s2X122Zg",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-31-kimi-完成-5-亿美元新融资",
@@ -5675,7 +5712,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-31-vidu-agent全球正式上线-商业广告一键成片",
@@ -5689,7 +5726,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-31-软银完成对openai承诺的225亿美元额外投资",
@@ -5702,7 +5739,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-31-minimax今起招股-1月9日敲钟代码00100",
@@ -5713,7 +5750,7 @@
     "url": "https://mp.weixin.qq.com/s/bdGiuM0iBQwD_DnKwOSjzg",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-30-meta-数十亿美元收购-manus-肖弘将出任-meta-副总裁",
@@ -5724,7 +5761,7 @@
     "url": "https://mp.weixin.qq.com/s/SBTaFv7Y5S2LBb2kB_g-8g",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-30-全球大模型第一股-来了-智谱今起招股-发行市值达511亿港元",
@@ -5735,7 +5772,7 @@
     "url": "https://ai-bot.cn/sites/15446.html",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-30-腾讯混元开源翻译模型tencent-hy-mt1-5版本-端侧可部署",
@@ -5748,7 +5785,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-29-z-ai新突破-glm-4-7登顶artificial-analysis全球开源",
@@ -5761,7 +5798,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-29-mai-ui-开源-通用-gui-智能体基座登顶-sota",
@@ -5775,7 +5812,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-29-京东ai购抢先实测-一句话搞定吃喝穿用",
@@ -5786,7 +5823,7 @@
     "url": "https://zhidx.com/p/524582.html",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-29-九章云极宣布完成新一轮战略融资",
@@ -5799,7 +5836,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-29-腾讯元宝-任务-功能上线-一句话安排时间-到点就提醒",
@@ -5810,7 +5847,7 @@
     "url": "https://www.ithome.com/0/908/744.htm",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-29-minimax正式开源了minimax-m2-1多语言编程模型",
@@ -5824,7 +5861,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-26-skywork-sheets-2-0重磅上线-一键解锁高效办公新体验",
@@ -5835,7 +5872,7 @@
     "url": "https://mp.weixin.qq.com/s/wN6GSjeksAqDLU7zgSmEZg",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-26-小红书开源-instanceassemble-让-ai-精准还原复杂图像排版",
@@ -5849,7 +5886,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-26-曦诺未来宣布完成超亿元天使轮融资-宁德时代和小米投了",
@@ -5862,7 +5899,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-26-智谱推出轻量级ai-ide编程工具-zcode",
@@ -5875,7 +5912,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-26-qwen-code-重磅更新-让-ai-编程跳出命令行",
@@ -5888,7 +5925,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-25-阿里最强-ps模型-开源-qwen-image-edit-2511",
@@ -5903,7 +5940,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-25-生数科技联合清华发布-turbodiffusion提速200倍",
@@ -5917,7 +5954,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-24-云深处科技已正式启动上市辅导",
@@ -5930,7 +5967,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-24-字节跳动发布新一代形式化数学推理专用模型-seed-prover-1-5",
@@ -5943,7 +5980,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-24-上海与商汤发布规划资源-ai-基础大模型",
@@ -5954,7 +5991,7 @@
     "url": "https://mp.weixin.qq.com/s/V9gtSqRv6bFACtCYXLyxsQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-23-阿里发布新一代端到端语音交互模型-fun-audio-chat",
@@ -5967,7 +6004,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-23-面壁智能完成数亿元融资-加码投入领跑端侧-ai",
@@ -5980,7 +6017,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-23-钉钉发布全球首个为-ai-打造的工作智能操作系统-agent-os",
@@ -5993,7 +6030,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-23-glm-4-7上线并开源-更强的编码",
@@ -6007,7 +6044,7 @@
       "Claude",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-23-minimax-m2-1-多语言编程sota-为真实世界复杂任务而生",
@@ -6020,7 +6057,7 @@
     "tags": [
       "Claude"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-22-minimax-通过港交所聆讯-有望成为-agi-全球第一股",
@@ -6031,7 +6068,7 @@
     "url": "https://www.yicai.com/news/102967758.html",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-22-智谱冲刺港股-大模型第一股-估值244亿",
@@ -6042,7 +6079,7 @@
     "url": "https://zhidx.com/p/522919.html",
     "category": "funding",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-22-英伟达新模型nitrogen能打遍几乎所有游戏",
@@ -6056,7 +6093,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-19-扣子编程-开启免费公开测试",
@@ -6067,7 +6104,7 @@
     "url": "https://mp.weixin.qq.com/s/iYOfM987QTN6UdZ2b9nW_w",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-19-openai最强代码模型gpt-5-2-codex上线",
@@ -6080,7 +6117,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-19-vtp-minimax海螺视频团队-首次开源",
@@ -6094,7 +6131,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-19-苹果开源-sharp-模型-1-秒内-ai-让照片变-3d-活-起来",
@@ -6107,7 +6144,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-18-meta-发布-sam-audio-多模态音频分离新突破",
@@ -6120,7 +6157,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-18-估值达465亿-明星ai编程独角兽lovable再拿新融资",
@@ -6133,7 +6170,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-18-爱诗科技携手阿里云达成全栈ai合作-ai视频全球化再启航",
@@ -6146,7 +6183,33 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
+  },
+  {
+    "id": "2025-12-18-通用agent模型seed1-8正式发布",
+    "date": "2025-12-18",
+    "title": "通用Agent模型Seed1.8正式发布",
+    "summary": "字节跳动正式发布通用Agent模型Seed1.8，模型集成了搜索、代码生成与图形界面交互等多元能力，支持图文输入并具备原生视觉理解功能。在多项基准测试中表现优异，其在GUI Agent任务上的OSWorld得分达61.9，搜索任务BrowseComp-en得分67.6，均处于行业领先水平。",
+    "source": "字节跳动Seed",
+    "url": "https://mp.weixin.qq.com/s/N2TkulYSo5SeT9tlu-62jw",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
+  },
+  {
+    "id": "2025-12-18-更大更强-限时免费-阶跃星辰-gui-agent-全面升级",
+    "date": "2025-12-18",
+    "title": "更大更强！限时免费！阶跃星辰 GUI Agent 全面升级",
+    "summary": "阶跃星辰宣布其GUI Agent模型Step-GUI全面升级，新版模型支持200多个任务场景，具备更长推理步骤、更强语义理解与泛化能力。模型可在手机、PC、汽车等多端使用，并实现最短10分钟快速部署。公司开放了API供免费使用，并公开发布了技术报告与GUI-MCP协议。",
+    "source": "阶跃星辰",
+    "url": "https://mp.weixin.qq.com/s/oBbW3L6bhXpsVL73GzKJXg",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-18-google-发布了高速-低成本模型-gemini-3-flash",
@@ -6159,7 +6222,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-18-美团-longcat-video-avatar-发布-实现开源sota级拟真表现",
@@ -6173,33 +6236,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
-  },
-  {
-    "id": "2025-12-18-通用agent模型seed1-8正式发布",
-    "date": "2025-12-18",
-    "title": "通用Agent模型Seed1.8正式发布",
-    "summary": "字节跳动正式发布通用Agent模型Seed1.8，模型集成了搜索、代码生成与图形界面交互等多元能力，支持图文输入并具备原生视觉理解功能。在多项基准测试中表现优异，其在GUI Agent任务上的OSWorld得分达61.9，搜索任务BrowseComp-en得分67.6，均处于行业领先水平。",
-    "source": "字节跳动Seed",
-    "url": "https://mp.weixin.qq.com/s/N2TkulYSo5SeT9tlu-62jw",
-    "category": "agent",
-    "tags": [
-      "Agent"
-    ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
-  },
-  {
-    "id": "2025-12-18-更大更强-限时免费-阶跃星辰-gui-agent-全面升级",
-    "date": "2025-12-18",
-    "title": "更大更强！限时免费！阶跃星辰 GUI Agent 全面升级",
-    "summary": "阶跃星辰宣布其GUI Agent模型Step-GUI全面升级，新版模型支持200多个任务场景，具备更长推理步骤、更强语义理解与泛化能力。模型可在手机、PC、汽车等多端使用，并实现最短10分钟快速部署。公司开放了API供免费使用，并公开发布了技术报告与GUI-MCP协议。",
-    "source": "阶跃星辰",
-    "url": "https://mp.weixin.qq.com/s/oBbW3L6bhXpsVL73GzKJXg",
-    "category": "agent",
-    "tags": [
-      "Agent"
-    ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.684Z"
   },
   {
     "id": "2025-12-17-小米正式发布并开源新模型-mimo-v2-flash",
@@ -6212,7 +6249,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-17-腾讯混元世界模型1-5发布-国内首个开放实时体验",
@@ -6223,7 +6260,7 @@
     "url": "https://mp.weixin.qq.com/s/HcB_FhZSpcp3XD8XDlcY4Q",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-17-seedance-1-5-pro-音视频创作模型正式发布",
@@ -6237,7 +6274,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-17-即梦网页版全面升级-打造一站式ai片场",
@@ -6250,7 +6287,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-17-openai-最强-ai-生图模型gpt-image-1-5登场",
@@ -6264,7 +6301,7 @@
       "OpenAI",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-16-商汤小浣熊3-0来了-ai办公智能体一键生成高质量ppt",
@@ -6275,7 +6312,7 @@
     "url": "https://mp.weixin.qq.com/s/hSl1ElDlQ_GCp5k0ZtNJkw",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-16-wan2-6正式发布-上线国内首个角色扮演功能",
@@ -6290,7 +6327,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-16-英伟达发布-nemotron-3-开源-ai-模型系列-吞吐量达上一代-4-倍",
@@ -6303,7 +6340,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-16-通义百聆语音双子星-同步开源",
@@ -6317,7 +6354,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-16-liblibai-上线-wan-2-6-视频模型-中国版-sora2-来了",
@@ -6331,7 +6368,7 @@
       "通义千问",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.956Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-15-商汤seko2-0重磅发布-合作短剧登顶抖音ai短剧榜no-1",
@@ -6345,7 +6382,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-15-蚂蚁旗下-ai-健康助手-aq-启用中文名-蚂蚁阿福",
@@ -6356,7 +6393,7 @@
     "url": "https://www.ithome.com/0/904/879.htm",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-15-google-gemini-tts升级-支持24种语言-语音更拟真",
@@ -6369,7 +6406,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-12-gpt-5-2-正式发布-让打工人每周少干-10-小时",
@@ -6382,7 +6419,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-12-智谱多模态开源周收官-四项视频生成核心技术开源",
@@ -6396,7 +6433,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-12-谷歌重磅开源-深度研究agent拿下sota",
@@ -6411,7 +6448,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-12-迪士尼官宣-10-亿美元投资-openai-允许-sora-生成米老鼠等角色视频",
@@ -6425,7 +6462,7 @@
       "OpenAI",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-11-智谱开源-glm-tts-基于多奖励强化学习的可控发音语音合成",
@@ -6438,7 +6475,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-11-面壁智能-voxcpm-1-5-开源-语音生成能力再升级",
@@ -6451,7 +6488,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-11-阿里发布-qwen3-omni-flash-全模态大模型",
@@ -6466,7 +6503,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-11-adobe-与-chatgpt-联手推出全新图像与-pdf-编辑功能",
@@ -6480,7 +6517,7 @@
       "OpenAI",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-10-glm-asr开源-智谱ai输入法发布",
@@ -6493,7 +6530,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-10-mistral-ai开源新一代编程模型-devstral-2",
@@ -6506,7 +6543,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-10-生成式ai媒体平台fal再获1-4亿美元注资",
@@ -6521,7 +6558,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-09-autoglm开源-每台手机-都可以成为ai手机",
@@ -6534,7 +6571,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-09-蚂蚁集团通用-ai-助手灵光上线网页版",
@@ -6545,7 +6582,7 @@
     "url": "https://www.ithome.com/0/903/490.htm",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-08-智谱正式上线并开源-glm-4-6v-系列多模态大模型",
@@ -6559,7 +6596,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-08-美团发布-longcat-image-图像生成模型-编辑能力登顶开源sota",
@@ -6573,7 +6610,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-08-混元2-0上线-推理能力与效率业界领先",
@@ -6584,7 +6621,7 @@
     "url": "https://mp.weixin.qq.com/s/wCJf5BOypPcKGxfp8jE9hg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-08-ai法律科技公司harvey又获新融资-f轮-估值560亿",
@@ -6598,7 +6635,7 @@
       "OpenAI",
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-05-听得清-看得懂-豆包语音识别模型2-0来了",
@@ -6611,7 +6648,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-05-可灵数字人-2-0-功能正式上线-不止会说-更会演",
@@ -6624,7 +6661,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-05-谷歌公测-奥数金牌级-推理-ai-模型-gemini-3-deep-think",
@@ -6637,7 +6674,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-05-ai视频生成产品-pollo-ai-获-1400-万美元融资",
@@ -6651,7 +6688,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-05-google推出workspace-studio-赋能企业全员构建ai智能体",
@@ -6664,7 +6701,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-04-liblibai-上线-seedream-4-5-一致性保持-多图参考能力全面升",
@@ -6677,7 +6714,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-04-小红书收购-点点",
@@ -6688,7 +6725,7 @@
     "url": "https://36kr.com/p/3580622060158088",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-04-可灵-2-6-全量上线-听见画面-看见声音",
@@ -6699,7 +6736,7 @@
     "url": "https://mp.weixin.qq.com/s/PyTkfD9m74coWRxMc6xhsw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-04-豆包图像创作模型seedream-4-5发布-聚焦商业生产力场景",
@@ -6712,7 +6749,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-03-mistral-ai发布mistral-3系列模型-全线回归apache-2-0",
@@ -6726,7 +6763,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-03-anthropic收购热门javascript工具链公司bun",
@@ -6741,7 +6778,7 @@
       "Anthropic",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-03-亚马逊云科技发布-nova-2-系列-ai-模型等十大ai更新",
@@ -6755,7 +6792,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-03-商汤发布-neo-架构-重新定义多模态模型效能边界",
@@ -6766,7 +6803,7 @@
     "url": "https://mp.weixin.qq.com/s/134LPbeJMpokbsuYag-K7Q",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-02-liblibai-上线-可灵o1-全能视频模型-速来体验",
@@ -6780,7 +6817,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-02-runway发布的最新视频生成ai模型gen-4-5-代号-8221-david",
@@ -6793,7 +6830,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-02-英伟达拿出推理版vla-alpamayo-r1让自动驾驶ai更会动脑子",
@@ -6804,7 +6841,7 @@
     "url": "https://mp.weixin.qq.com/s/McHq2iVPg6zfyGEjhIfN_g",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-02-pixverse-v5-5-来了-导演级-音画同步一键生成",
@@ -6817,7 +6854,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-01-阶跃开源4b-agent模型gelab-zero-跑通所有安卓设备",
@@ -6831,7 +6868,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-01-deepseek-v3-2-正式版-强化-agent-能力-融入思考推理",
@@ -6847,7 +6884,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-12-01-字节视频模型vidi2超越gemini-3-pro-理解能力爆表",
@@ -6861,7 +6898,7 @@
       "Gemini",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-28-deepseek强势回归-开源imo金牌级数学模型deepseek-math-v",
@@ -6875,7 +6912,7 @@
       "DeepSeek",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-28-昆仑万维ai音乐平台mureka正式发布v7-6与o2双模型",
@@ -6886,7 +6923,7 @@
     "url": "https://mp.weixin.qq.com/s/vIKjsFA_oR4-DYBEKDjNSA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-28-混元3d-studio升级-可直出艺术家级3d资产",
@@ -6897,7 +6934,7 @@
     "url": "https://mp.weixin.qq.com/s/QRxLAZZ0JcSJQpOMbAkpqw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-27-阿里开源高效图像生成模型z-image-参数规模6b",
@@ -6911,7 +6948,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-27-字节跳动发布视觉空间重建模型-depth-anything-3",
@@ -6924,7 +6961,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-27-清华ai黑马斩获新融资-无问芯穹已完成近5亿元a-轮融资",
@@ -6937,7 +6974,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-26-黑森林重磅开源flux-2-图像生成模型的新里程碑",
@@ -6951,7 +6988,7 @@
       "开源",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-26-liblibai-上线-基础算法f-2-支持多图参考和图像编辑",
@@ -6964,7 +7001,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-26-腾讯混元3d创作引擎国际站-上线",
@@ -6975,7 +7012,7 @@
     "url": "https://mp.weixin.qq.com/s/9h5nNiOFcNBhYq6JWU06tA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-26-trae-solo-登陆中国版-免费使用",
@@ -6986,7 +7023,7 @@
     "url": "https://mp.weixin.qq.com/s/AkW3Bq_IlraZ30kVEnU_gQ",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-25-openai-为chatgpt推出免费ai购物研究工具",
@@ -6999,7 +7036,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-25-微软推出全新的开源小型语言模型-fara-7b",
@@ -7013,7 +7050,18 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
+  },
+  {
+    "id": "2025-11-25-挑战英伟达-首个纯-amd-硬件训练的-ai-大模型-zaya1-登场",
+    "date": "2025-11-25",
+    "title": "挑战英伟达：首个纯 AMD 硬件训练的 AI 大模型 ZAYA1 登场",
+    "summary": "AMD携手IBM和AI初创公司Zyphra，历时1年多，成功使用AMD硬件训练出首个大型混合专家（MoE）基础模型ZAYA1。模型完全基于AMD硬件生态系统构建，训练过程在IBM云上进行，使用AMD Instinct MI300X GPU等技术。训练集群由128个节点组成，总计1024块GPU，性能超750 PFLOPs。",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/900/073.htm",
+    "category": "model",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-25-混元ocr模型宣布开源-参数仅1b-多项核心能力sota",
@@ -7027,18 +7075,7 @@
       "Gemini",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
-  },
-  {
-    "id": "2025-11-25-挑战英伟达-首个纯-amd-硬件训练的-ai-大模型-zaya1-登场",
-    "date": "2025-11-25",
-    "title": "挑战英伟达：首个纯 AMD 硬件训练的 AI 大模型 ZAYA1 登场",
-    "summary": "AMD携手IBM和AI初创公司Zyphra，历时1年多，成功使用AMD硬件训练出首个大型混合专家（MoE）基础模型ZAYA1。模型完全基于AMD硬件生态系统构建，训练过程在IBM云上进行，使用AMD Instinct MI300X GPU等技术。训练集群由128个节点组成，总计1024块GPU，性能超750 PFLOPs。",
-    "source": "IT之家",
-    "url": "https://www.ithome.com/0/900/073.htm",
-    "category": "model",
-    "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-25-anthropic发布新一代大模型claude-opus-4-5",
@@ -7052,7 +7089,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.685Z"
   },
   {
     "id": "2025-11-24-meta-推出-worldgen-一句话即可生成可交互-3d-世界",
@@ -7063,7 +7100,7 @@
     "url": "https://www.ithome.com/0/899/610.htm",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-24-阿里千问启用全新域名-提供更多-qwen3-系列模型",
@@ -7076,7 +7113,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-24-ai2推出的开源大型语言模型系列-olmo-3",
@@ -7089,7 +7126,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-21-蚂蚁集团领投-rockflow完成数千万美元新一轮融资",
@@ -7103,7 +7140,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-21-谷歌nano-banana-pro上线-深度结合gemini-3",
@@ -7117,7 +7154,7 @@
       "Gemini",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-21-腾讯混元发布全新视频生成模型-hunyuanvideo-1-5",
@@ -7131,7 +7168,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-21-小米具身大模型-mimo-embodied-发布并全面开源",
@@ -7144,7 +7181,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.957Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-20-meta推出基于sam系列的3d重建模型sam-3d",
@@ -7157,7 +7194,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-20-ai音乐创作平台suno完成2-5亿美元c轮融资",
@@ -7170,7 +7207,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-20-64亿-ai视频黑马luma-ai获新融资-要建2gw智算集群",
@@ -7184,7 +7221,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-20-openai-发布最强编程模型-gpt-5-1-codex-max",
@@ -7198,7 +7235,7 @@
       "Gemini",
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-20-星动纪元获近10亿元a-轮融资-吉利资本领投-总订单额破5亿",
@@ -7211,7 +7248,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-19-gemini-3正式发布-谷歌推出最强ai模型",
@@ -7225,7 +7262,7 @@
       "Gemini",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-19-aippt-agent版上线-ai-深度研究-功能开启内测",
@@ -7238,7 +7275,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-19-anthropic获微软英伟达千亿投资-估值飙到2-5万亿",
@@ -7252,7 +7289,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-18-马斯克grok-4-1低调发布-通用能力碾压其他一切模型",
@@ -7263,7 +7300,7 @@
     "url": "https://mp.weixin.qq.com/s/6V3M1BFho0Y2L26SrgOT4g",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-18-蚂蚁集团推出全模态通用ai助手-灵光-app",
@@ -7276,7 +7313,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-18-谷歌推出-ai-天气预报模型-weathernext-2",
@@ -7287,7 +7324,7 @@
     "url": "https://www.ithome.com/0/898/151.htm",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-17-千问app正式上线-全球首款开源ai助手挑战chatgpt",
@@ -7301,7 +7338,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-17-陈天桥盛大团队-推出最强开源记忆系统evermemos",
@@ -7314,7 +7351,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-17-dpai-arena-首个开源ai编程基准测试平台发布",
@@ -7327,7 +7364,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-17-字节发布首个实时完成复杂任务的3d开放世界通用ai智能体lumine",
@@ -7340,7 +7377,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-14-登顶-glm-4-6获lmarena代码榜全球并列第一",
@@ -7355,7 +7392,7 @@
       "OpenAI",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-14-dexmal原力灵机融资近10亿元-阿里巴巴-蔚来资本分别领投",
@@ -7368,7 +7405,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-14-ai编程神器cursor-母公司anysphere-完成23亿美元d轮融资",
@@ -7381,7 +7418,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-14-chatgpt-群聊功能上线部分地区-人机共同决策讨论",
@@ -7394,7 +7431,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-14-ai-ppt神器-gamma-完成6800万美元b轮融资",
@@ -7408,7 +7445,7 @@
       "融资",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-13-李飞飞宣布正式开放首款商用世界模型产品-marble",
@@ -7422,7 +7459,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-13-openai-正式发布-gpt-5-1系列双版本-chatgpt-情商大涨",
@@ -7435,7 +7472,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-13-百度发布文心大模型-5-0-参数规模超-2-4-万亿-原生全模态",
@@ -7449,7 +7486,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-13-全新升级-全面开放的-trae-solo-正式版-限时免费",
@@ -7460,7 +7497,7 @@
     "url": "https://mp.weixin.qq.com/s/tC_W-JCKWR_FXAZ6SDH7aQ",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-12-腾讯开源百亿参数模型kalm-embedding-登顶mteb多语言榜单全球第一",
@@ -7473,7 +7510,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-12-oiioii-全球首个动画创作agent系统上线",
@@ -7487,7 +7524,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-12-华为投资物理ai-极佳视界-完成新一轮亿元级-a1-轮融资",
@@ -7500,7 +7537,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-12-主打-database-first-的全栈ai应用构建平台-zoer-ai",
@@ -7511,7 +7548,7 @@
     "url": "https://ai-bot.cn/zoer-ai/",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-12-lovart推出-元素拆分-功能-革新ai设计编辑体验",
@@ -7522,7 +7559,7 @@
     "url": "https://ai-bot.cn/lovart/",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-11-字节发布doubao-seed-code编程模型",
@@ -7536,7 +7573,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-11-月之暗面开源kosong框架-降低ai-aagent开发门槛",
@@ -7550,7 +7587,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-11-商汤日日新开源模型实现空间智能性能突破-多项评测领先-gpt-5",
@@ -7564,7 +7601,7 @@
       "Gemini",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-11-meta发布omnilingual-asr-覆盖1600-语言的语音识别系统",
@@ -7575,7 +7612,7 @@
     "url": "https://ai-bot.cn/omnilingual-asr/",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-11-百度ai眼镜开售-2199元-今天定明天到手",
@@ -7586,18 +7623,7 @@
     "url": "https://mp.weixin.qq.com/s/7QJvmLV1ppEP17aLuCQygA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
-  },
-  {
-    "id": "2025-11-10-堆友-全能画布-来了-是天花板级的ai设计智能体",
-    "date": "2025-11-10",
-    "title": "堆友「全能画布」来了！是天花板级的AI设计智能体",
-    "summary": "堆友AI反应堆正式上线AI创作全能画布，堆友用户可免费体验。堆友AI集成文生图、图生图、智能滤镜、矢量编辑、字体设计、高清放大、智能抠图、局部重绘等功能，提供一站式AI设计解决方案，实现从灵感到交付的全流程自动化。",
-    "source": "堆友",
-    "url": "https://mp.weixin.qq.com/s/ee_aFz6sLfpyVHpwtM7WdQ",
-    "category": "agent",
-    "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-10-全球第二-国内第一-最强百度的文心5-0-preview",
@@ -7612,7 +7638,7 @@
       "OpenAI",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-10-openai-推出-gpt-5-codex-mini-经济高效型-ai-编程模型",
@@ -7625,7 +7651,18 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
+  },
+  {
+    "id": "2025-11-10-堆友-全能画布-来了-是天花板级的ai设计智能体",
+    "date": "2025-11-10",
+    "title": "堆友「全能画布」来了！是天花板级的AI设计智能体",
+    "summary": "堆友AI反应堆正式上线AI创作全能画布，堆友用户可免费体验。堆友AI集成文生图、图生图、智能滤镜、矢量编辑、字体设计、高清放大、智能抠图、局部重绘等功能，提供一站式AI设计解决方案，实现从灵感到交付的全流程自动化。",
+    "source": "堆友",
+    "url": "https://mp.weixin.qq.com/s/ee_aFz6sLfpyVHpwtM7WdQ",
+    "category": "agent",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.686Z"
   },
   {
     "id": "2025-11-07-美团推出出ai-ide编程工具-catpaw",
@@ -7636,7 +7673,7 @@
     "url": "https://ai-bot.cn/sites/65836.html",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-07-ai大牛刘威视频创业公司video-rebirth-完成5000万美元融资",
@@ -7650,7 +7687,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-07-阶跃星辰开源首个-llm-级音频编辑大模型step-audio-editx",
@@ -7663,7 +7700,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-06-即梦无限画布上线-创作更自由",
@@ -7677,7 +7714,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-06-月之暗面kimi发布思考模型-kimi-k2-thinking",
@@ -7690,7 +7727,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-06-美团-longcat-团队发布全模态一站式评测基准uno-bench",
@@ -7704,7 +7741,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-06-科大讯飞星火-x1-5-深度推理大模型发布",
@@ -7715,7 +7752,7 @@
     "url": "https://www.ithome.com/0/895/261.htm",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-05-360发布-fg-clip2登顶全球最强图文跨模态模型",
@@ -7728,7 +7765,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-05-银河通用发布环视导航基座大模型-navfom",
@@ -7739,7 +7776,7 @@
     "url": "https://mp.weixin.qq.com/s/xQpshMNFoSQaRFm0hEVIwA",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-05-ai医疗独角兽hippocratic-ai完成8亿融资-估值250亿",
@@ -7752,7 +7789,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-05-软银与-openai-宣布成立合资公司-明年推出企业级-ai-解决方案",
@@ -7765,7 +7802,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-04-ai视频创作平台skyreels正式焕新上线",
@@ -7779,7 +7816,7 @@
       "Agent",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-04-openai与亚马逊达成380亿美元算力合作",
@@ -7792,7 +7829,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-04-零一万物联合开源中国推出oak平台-open-agentkit",
@@ -7806,7 +7843,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-03-longcat-flash-omni-正式发布并开源-开启全模态实时交互时代",
@@ -7820,7 +7857,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-11-03-阿里通义千问qwen3-max上线深度思考模式",
@@ -7833,7 +7870,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-31-美团longcat团队发布wowservice-打造卓越智能交互体验",
@@ -7844,7 +7881,7 @@
     "url": "https://mp.weixin.qq.com/s/-l5yuu31kjZV5JV_p1ELRw",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-31-月之暗面全新的注意力架构kimi-linear横空出世",
@@ -7857,7 +7894,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-31-openai发布找bug智能体aardvark-全自动读代码找漏洞写修复",
@@ -7871,7 +7908,7 @@
       "OpenAI",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-31-智源悟界-emu3-5-开启多模态世界大模型新纪元",
@@ -7885,7 +7922,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-31-minimax-music-2-0-让音乐创作属于每一个人",
@@ -7896,7 +7933,7 @@
     "url": "https://mp.weixin.qq.com/s/Li0iZ_N1lw9_iKbW1s4xyg",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-30-cursor-2-0来了-多agent并行-自研模型30秒跑完多数任务",
@@ -7910,7 +7947,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-30-adobe推出最强图像生成模型firefly-image-5-原生400万像素",
@@ -7924,7 +7961,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-30-智谱清言全新推出-研究模式",
@@ -7935,7 +7972,7 @@
     "url": "https://mp.weixin.qq.com/s/FFikcqfkznHFfX6aUEydhQ",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-30-英国ai视频生成独角兽synthesia完成2亿美元融资",
@@ -7949,7 +7986,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-30-minimax-speech-2-6-最强-voice-agent-来袭",
@@ -7962,7 +7999,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.958Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-29-flowith发布-agent-操作系统-flowithos-超越-openai",
@@ -7976,7 +8013,7 @@
       "OpenAI",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-29-混元推出国内首个交互式ai播客-听播客可以-举手-提问了",
@@ -7987,7 +8024,7 @@
     "url": "https://mp.weixin.qq.com/s/RKjyNAN-qJoiC5W2rSVnFw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-29-github-推出-agent-hq-目标统一管理所有智能体",
@@ -8000,7 +8037,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-29-openai股改完成-非营利主体更名",
@@ -8013,7 +8050,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-29-google-labs推出一款ai营销工具-pomelli",
@@ -8024,7 +8061,7 @@
     "url": "https://ai-bot.cn/pomelli/",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-28-chatdb直接对话数据库-chatexcel全新升级",
@@ -8035,7 +8072,7 @@
     "url": "https://mp.weixin.qq.com/s/JrSbjKCefsSP296KhNnI3A",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-28-mistral-ai-推出企业级-ai-应用开发平台ai-studio",
@@ -8048,7 +8085,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-28-minimax-hailuo-2-3-视频复杂表现新高度",
@@ -8061,7 +8098,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-28-xai推出开源知识库grokipedia-收录超88-5万篇文章",
@@ -8074,7 +8111,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.687Z"
   },
   {
     "id": "2025-10-27-skywork-ai-的网页复刻-web-clone-功能正式上线",
@@ -8085,7 +8122,7 @@
     "url": "https://mp.weixin.qq.com/s/VYG1U43RlXlltDCZ3dbO5Q",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-27-谷歌-gemini-获得新技能-一个提示词-一份文件就能生成-ppt",
@@ -8098,7 +8135,7 @@
     "tags": [
       "Gemini"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-27-longcat-video-视频生成模型正式发布-探索世界模型的第一步",
@@ -8112,7 +8149,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-27-月之暗面开源-agentic-coding-工具-kimi-cli",
@@ -8126,7 +8163,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-27-minimax发布最新大语言模型minimax-m2",
@@ -8140,7 +8177,7 @@
       "Claude",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-27-豆包视频生成模型1-0-pro-fast正式发布-提速3倍-价格直降72",
@@ -8153,7 +8190,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-24-支付宝推出多模态ai应用-灵光",
@@ -8164,7 +8201,7 @@
     "url": "https://ai-bot.cn/app/65239.html?menu-id=66&amp;mininav-id=10334",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-24-蚂蚁集团投的灵巧手公司-又融了数亿元",
@@ -8177,7 +8214,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-24-谷歌官方学习平台-google-skills-来了-免费还实用",
@@ -8188,7 +8225,7 @@
     "url": "https://ai-bot.cn/google-skills/",
     "category": "tool",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-24-豆包编程升级-新增创作模式-让创意轻松实现",
@@ -8201,7 +8238,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-24-openai收购sky-面向mac的自然语言交互界面",
@@ -8214,7 +8251,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-23-liblibai融资1-3亿美金-红杉cmc领投",
@@ -8227,7 +8264,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-23-seed3d-1-0-发布-一张图生成高精度-3d-模型-纹理生成能力-sota",
@@ -8240,7 +8277,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-23-百川发布最强循证增强大模型-m2-plus-打造-医生版-chatgpt",
@@ -8253,7 +8290,7 @@
     "tags": [
       "DeepSeek"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-22-openai首款chatgpt-atlas浏览器发布-免费下载使用",
@@ -8268,7 +8305,7 @@
       "开源",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-22-混元世界模型1-1开源-支持多视图及视频输入-单卡部署-秒级生成",
@@ -8282,7 +8319,7 @@
       "开源",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-22-aipexbase-中国首个ai原生后端基础设施正式开源",
@@ -8295,7 +8332,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-22-2b-32b-更适合开发者体质的qwen3-vl来啦",
@@ -8308,7 +8345,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-22-anthropic-公司推出claude-桌面版",
@@ -8322,7 +8359,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-22-灵巧手公司星际光年完成pre-a轮融资",
@@ -8335,7 +8372,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-21-vidu-q2-参考生视频全球上线-高一致性-速度更快-价格更优惠",
@@ -8348,7 +8385,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-21-anthropic正式上线网页版claude-code",
@@ -8362,7 +8399,7 @@
       "Claude",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-21-codebuddy-ide-1-0-正式版焕新发布-支持web-fetch-自定",
@@ -8373,7 +8410,7 @@
     "url": "https://mp.weixin.qq.com/s/gDq2cPs5enmXCNIJvRUuFQ",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-21-5000元不限席位-cherry-studio-企业版击穿底价-让每家公司都用上",
@@ -8386,7 +8423,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-21-智谱推出glm-coding-plan企业版-以最强agentic-coding",
@@ -8399,7 +8436,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-21-美团发布面向复杂问题的大模型智能体评测基准-vitabench",
@@ -8410,7 +8447,7 @@
     "url": "https://mp.weixin.qq.com/s/uOJ5ei40RhncCx7c_v0JlA",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-20-deepseek-再开源-发布-3b-moe-ocr-模型deepseek-oc",
@@ -8424,7 +8461,7 @@
       "DeepSeek",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-20-宇树发布180cm仿生人形机器人-会跳芭蕾能打功夫",
@@ -8435,7 +8472,7 @@
     "url": "https://mp.weixin.qq.com/s/8zKSgAExF9iDyDIMM0Y0ow",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-20-全球榜首-百度最新开源模型paddleocr-vl",
@@ -8448,7 +8485,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-17-美团开源-longcat-audio-codec-高效语音编解码器助力实时交互落",
@@ -8461,7 +8498,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-17-一键开发完整-web-应用-manus-1-5-正式发布-速度提升近四倍",
@@ -8472,7 +8509,7 @@
     "url": "https://www.ithome.com/0/890/078.htm",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-17-爱诗科技完成b-轮1亿元融资-arr突破4000万美金",
@@ -8486,7 +8523,7 @@
       "融资",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-17-李飞飞世界模型新成果rtfm-real-time-frame-model-震撼问",
@@ -8500,7 +8537,18 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
+  },
+  {
+    "id": "2025-10-16-智元精灵-g2-新一代工业级交互式具身作业机器人发布",
+    "date": "2025-10-16",
+    "title": "智元精灵 G2 新一代工业级交互式具身作业机器人发布",
+    "summary": "智元机器人发布新一代工业级交互式具身作业机器人——智元精灵G2。机器人以工业标准打造，搭载NVIDIA Jetson Thor芯片，配备高精度力控双臂和19自由度的灵巧手，具备3D触觉感知和5自由度腰腿搭配全向底盘。支持多人连续语音对话与知识库问答，采用双电池热插拔换电技术，配备360环视鱼眼和前后双激光雷达，可主动避障。",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/889/866.htm",
+    "category": "product",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-16-讯飞星火升级的-深度研究-全新上线",
@@ -8511,7 +8559,7 @@
     "url": "https://mp.weixin.qq.com/s/-aC6krWbNzHVsm6cQIjnnA",
     "category": "industry",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-16-通义千问正式推出-qwen-chat-memory-功能",
@@ -8524,7 +8572,7 @@
     "tags": [
       "通义千问"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-16-豆包发布四款大模型-能理解情感-调节音调风格-准确读出公式",
@@ -8535,7 +8583,7 @@
     "url": "https://mp.weixin.qq.com/s/bCDC1DFI0xHl95qPoyFWgw",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-16-anthropic-发布了-claude-haiku-4-5-速度翻倍价格大砍",
@@ -8550,7 +8598,7 @@
       "OpenAI",
       "Anthropic"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-16-阿里qoder产品家族再增一员-qoder-cli-将智能拓展到终端",
@@ -8563,18 +8611,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
-  },
-  {
-    "id": "2025-10-16-智元精灵-g2-新一代工业级交互式具身作业机器人发布",
-    "date": "2025-10-16",
-    "title": "智元精灵 G2 新一代工业级交互式具身作业机器人发布",
-    "summary": "智元机器人发布新一代工业级交互式具身作业机器人——智元精灵G2。机器人以工业标准打造，搭载NVIDIA Jetson Thor芯片，配备高精度力控双臂和19自由度的灵巧手，具备3D触觉感知和5自由度腰腿搭配全向底盘。支持多人连续语音对话与知识库问答，采用双电池热插拔换电技术，配备360环视鱼眼和前后双激光雷达，可主动避障。",
-    "source": "IT之家",
-    "url": "https://www.ithome.com/0/889/866.htm",
-    "category": "product",
-    "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-16-谷歌推出新款视频生成模型-veo-3-1",
@@ -8588,7 +8625,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.688Z"
   },
   {
     "id": "2025-10-15-谷歌-notebooklm-视频概览支持-nano-banana",
@@ -8601,7 +8638,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-15-仅4b-阿里千问最强视觉模型新开源",
@@ -8617,7 +8654,7 @@
       "通义千问",
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-14-karpathy最新开源项目-nanochat-爆火-一夜近5k-star",
@@ -8630,7 +8667,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-14-蚂蚁正式发布万亿思考模型ring-1t-发布即开源",
@@ -8643,7 +8680,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-14-微软推出的首款自研图像生成模型mai-image-1",
@@ -8656,7 +8693,7 @@
     "tags": [
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-14-openai再出手-与博通双方达成ai芯片合作",
@@ -8669,7 +8706,7 @@
     "tags": [
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-14-腾讯优图推出高性能通用文本嵌入模型youtu-embedding",
@@ -8682,7 +8719,7 @@
     "tags": [
       "开源"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-13-多模态模型社区全新升级-liblibai-2-0正式上线",
@@ -8697,7 +8734,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-13-工业ai智能体公司-设序科技-获数千万元pre-b轮融资",
@@ -8710,7 +8747,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-13-未来智能完成亿元级a轮融资-蚂蚁集团领投",
@@ -8724,7 +8761,7 @@
       "融资",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-10-镜识科技获数千万元融资-做出全球首款双形态家庭机器人",
@@ -8737,7 +8774,7 @@
     "tags": [
       "融资"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-10-谷歌加入cua战场-发布gemini-2-5-computer-use模型",
@@ -8751,7 +8788,7 @@
       "Gemini",
       "OpenAI"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-10-吴恩达官宣新课-agentic-ai-手把手教你构建ai智能体",
@@ -8764,7 +8801,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-10-sand-ai-团队推出的-ai-视频生成平台gaga-国产的-sora2",
@@ -8777,7 +8814,7 @@
     "tags": [
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-10-figure-ai-发布最新人形机器人-figure-03",
@@ -8788,7 +8825,7 @@
     "url": "https://mp.weixin.qq.com/s/NA-49PlmoadYXW1VVAQD4A",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.959Z"
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-09-opera-neon-正式发布-首款-ai-agent-浏览器",
@@ -8801,7 +8838,7 @@
     "tags": [
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-09-豆包大模型1-6-vision正式发布",
@@ -8815,44 +8852,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
-  },
-  {
-    "id": "2025-10-09-快手推出ai原生ide工具-codeflicker-对标cursor",
-    "date": "2025-10-09",
-    "title": "快手推出AI原生IDE工具：CodeFlicker，对标Cursor",
-    "summary": "快手正在开发一款名为“CodeFlicker”的集成开发环境工具，支持AI问答、代码自动补全、基于Agent的AI编程等功能，可帮助程序员自动化完成开发任务，实现端到端开发。工具提供Jam模式和Duet模式等交互模式，能将复杂任务拆解为清晰可追踪的待办步骤，还通过MCP灵活集成不同数据源、工具和服务，拓宽应用场景边界。",
-    "source": "AI工具集",
-    "url": "https://ai-bot.cn/codeflicker/",
-    "category": "agent",
-    "tags": [
-      "Agent"
-    ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
-  },
-  {
-    "id": "2025-10-09-蚂蚁百灵正式发布ling-2-0系列的首款旗舰非思考模型-ling-1t",
-    "date": "2025-10-09",
-    "title": "蚂蚁百灵正式发布Ling 2.0系列的首款旗舰非思考模型——Ling-1T",
-    "summary": "百灵团队正式发布Ling 2.0系列的首款旗舰非思考模型——Ling-1T。模型拥有万亿参数，基于Ling 2.0架构，每个token激活约500亿参数。Ling-1T在20T+ token的高质量、高推理浓度语料上完成预训练，支持最高128K上下文窗口，通过“中训练+后训练”的演进式思维链（Evo-CoT）极大提升模型高效推理能力，在多项复杂推理基准中取得SOTA表现。",
-    "source": "百灵大模型",
-    "url": "https://mp.weixin.qq.com/s/jr_x615PlpidVxg49-nDDw",
-    "category": "model",
-    "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
-  },
-  {
-    "id": "2025-10-09-openai-与流媒体音乐平台-spotify-达成合作",
-    "date": "2025-10-09",
-    "title": "OpenAI 与流媒体音乐平台 Spotify 达成合作",
-    "summary": "OpenAI与流媒体音乐平台Spotify达成合作，用户可在ChatGPT网页版或移动端中提到Spotify后登录账号，获取个性化音乐和播客推荐。ChatGPT会根据对话内容调用Spotify控件，推荐歌曲、艺人、专辑等，点击后自动打开Spotify应用。",
-    "source": "IT之家",
-    "url": "https://www.ithome.com/0/888/052.htm",
-    "category": "model",
-    "tags": [
-      "OpenAI"
-    ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-09-首个全自动ai科学家诞生-西湖大学最新成果-deepscientist系统",
@@ -8863,7 +8863,7 @@
     "url": "https://mp.weixin.qq.com/s/lS2azrog42B7GTYklctoYQ",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-09-滴滴悄悄上线了一个-ai-图寻产品-在哪儿问问",
@@ -8874,7 +8874,7 @@
     "url": "https://ai-bot.cn/zainawenwen/",
     "category": "product",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-09-anthropic-发布-ai-agent-上下文工程指南",
@@ -8888,7 +8888,7 @@
       "Anthropic",
       "Agent"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-09-thinking-machines-lab推出首款产品-tinker",
@@ -8899,7 +8899,7 @@
     "url": "https://ai-bot.cn/tinker-api/",
     "category": "model",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-09-谷歌新世界模型dreamer-4纯靠-想象-训练",
@@ -8910,7 +8910,44 @@
     "url": "https://mp.weixin.qq.com/s/gAepE8xmRwyARVTY1JijSg",
     "category": "agent",
     "tags": [],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
+  },
+  {
+    "id": "2025-10-09-快手推出ai原生ide工具-codeflicker-对标cursor",
+    "date": "2025-10-09",
+    "title": "快手推出AI原生IDE工具：CodeFlicker，对标Cursor",
+    "summary": "快手正在开发一款名为“CodeFlicker”的集成开发环境工具，支持AI问答、代码自动补全、基于Agent的AI编程等功能，可帮助程序员自动化完成开发任务，实现端到端开发。工具提供Jam模式和Duet模式等交互模式，能将复杂任务拆解为清晰可追踪的待办步骤，还通过MCP灵活集成不同数据源、工具和服务，拓宽应用场景边界。",
+    "source": "AI工具集",
+    "url": "https://ai-bot.cn/codeflicker/",
+    "category": "agent",
+    "tags": [
+      "Agent"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
+  },
+  {
+    "id": "2025-10-09-蚂蚁百灵正式发布ling-2-0系列的首款旗舰非思考模型-ling-1t",
+    "date": "2025-10-09",
+    "title": "蚂蚁百灵正式发布Ling 2.0系列的首款旗舰非思考模型——Ling-1T",
+    "summary": "百灵团队正式发布Ling 2.0系列的首款旗舰非思考模型——Ling-1T。模型拥有万亿参数，基于Ling 2.0架构，每个token激活约500亿参数。Ling-1T在20T+ token的高质量、高推理浓度语料上完成预训练，支持最高128K上下文窗口，通过“中训练+后训练”的演进式思维链（Evo-CoT）极大提升模型高效推理能力，在多项复杂推理基准中取得SOTA表现。",
+    "source": "百灵大模型",
+    "url": "https://mp.weixin.qq.com/s/jr_x615PlpidVxg49-nDDw",
+    "category": "model",
+    "tags": [],
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
+  },
+  {
+    "id": "2025-10-09-openai-与流媒体音乐平台-spotify-达成合作",
+    "date": "2025-10-09",
+    "title": "OpenAI 与流媒体音乐平台 Spotify 达成合作",
+    "summary": "OpenAI与流媒体音乐平台Spotify达成合作，用户可在ChatGPT网页版或移动端中提到Spotify后登录账号，获取个性化音乐和播客推荐。ChatGPT会根据对话内容调用Spotify控件，推荐歌曲、艺人、专辑等，点击后自动打开Spotify应用。",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/888/052.htm",
+    "category": "model",
+    "tags": [
+      "OpenAI"
+    ],
+    "fetchedAt": "2026-06-05T15:29:24.689Z"
   },
   {
     "id": "2025-10-07-openai开发者大会重磅发布-agentkit-codex正式版-sora-2",
@@ -8927,7 +8964,7 @@
       "视频",
       "图像"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   },
   {
     "id": "2025-10-01-openai-正式发布-sora-2-称-视频生成进入chatgpt时刻",
@@ -8941,6 +8978,6 @@
       "OpenAI",
       "视频"
     ],
-    "fetchedAt": "2026-06-05T04:48:58.960Z"
+    "fetchedAt": "2026-06-05T15:29:24.690Z"
   }
 ]
