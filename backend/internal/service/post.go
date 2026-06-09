@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -14,13 +13,13 @@ type PostService struct {
 }
 
 type CreatePostInput struct {
-	Slug       string
-	Title      string
-	Summary    string
-	Content    string
-	CoverURL   string
-	Language   string
-	AuthorID   string
+	Slug     string
+	Title    string
+	Summary  string
+	Content  string
+	CoverURL string
+	Language string
+	AuthorID string
 }
 
 type UpdatePostInput struct {
@@ -63,35 +62,28 @@ func (s *PostService) ListPosts(status string, language string, page int, pageSi
 func (s *PostService) GetPostBySlug(slug string) (*model.Post, error) {
 	var post model.Post
 	result := s.db.Preload("Author").Where("slug = ?", slug).First(&post)
-	
+
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	
+
 	return &post, nil
 }
 
 // CreatePost 创建文章
 func (s *PostService) CreatePost(input CreatePostInput) (*model.Post, error) {
-	// 检查 slug 是否已存在
-	var existing model.Post
-	s.db.Where("slug = ?", input.Slug).First(&existing)
-	if existing.ID != uuid.Nil {
-		return nil, errors.New("slug already exists")
-	}
-
 	post := model.Post{
-		ID:         uuid.New(),
-		Slug:       input.Slug,
-		Title:      input.Title,
-		Summary:    input.Summary,
-		Content:    input.Content,
-		CoverURL:   input.CoverURL,
-		Language:   input.Language,
-		AuthorID:   uuid.MustParse(input.AuthorID),
-		Status:     "draft",
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
+		ID:        uuid.New(),
+		Slug:      input.Slug,
+		Title:     input.Title,
+		Summary:   input.Summary,
+		Content:   input.Content,
+		CoverURL:  input.CoverURL,
+		Language:  input.Language,
+		AuthorID:  uuid.MustParse(input.AuthorID),
+		Status:    "draft",
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	result := s.db.Create(&post)
@@ -106,7 +98,7 @@ func (s *PostService) CreatePost(input CreatePostInput) (*model.Post, error) {
 func (s *PostService) UpdatePost(id string, input UpdatePostInput) (*model.Post, error) {
 	var post model.Post
 	result := s.db.Where("id = ?", id).First(&post)
-	
+
 	if result.Error != nil {
 		return nil, result.Error
 	}

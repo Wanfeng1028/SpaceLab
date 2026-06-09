@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/model"
+	"github.com/spacelab/backend/internal/utils"
 	"gorm.io/gorm"
 )
 
@@ -60,34 +61,56 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 		return
 	}
 
-	// 生成文件名
+	// S10: 白名单验证扩展名
+	validExts := map[string]bool{
+		".jpg": true, ".jpeg": true, ".png": true, ".gif": true, ".webp": true,
+		".mp4": true, ".webm": true,
+	}
 	ext := filepath.Ext(file.Filename)
-	filename := fmt.Sprintf("%d%s", time.Now().UnixNano(), ext)
-	filePath := filepath.Join(uploadDir, filename)
+	if !validExts[ext] {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid file extension"})
+		return
+	}
 
-	// 保存文件
+	// L6: 使用临时文件写入，成功后重命名
+	tempFile, err := os.CreateTemp(uploadDir, "upload-*. "+ext)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create temp file"})
+		return
+	}
+	tempPath := tempFile.Name()
+
+	// 保存文件到临时文件
 	src, err := file.Open()
 	if err != nil {
+		tempFile.Close()
+		os.Remove(tempPath)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	defer src.Close()
 
-	dst, err := os.Create(filePath)
-	if err != nil {
+	if _, err = tempFile.ReadFrom(src); err != nil {
+		tempFile.Close()
+		os.Remove(tempPath)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	defer dst.Close()
+	tempFile.Close()
 
-	if _, err = dst.ReadFrom(src); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 生成最终文件名（UUID + 白名单扩展名）
+	filename := fmt.Sprintf("%s%s", uuid.New().String(), ext)
+	finalPath := filepath.Join(uploadDir, filename)
+	if err := os.Rename(tempPath, finalPath); err != nil {
+		os.Remove(tempPath)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
 		return
 	}
 
 	// 获取文件信息
-	info, err := os.Stat(filePath)
+	info, err := os.Stat(finalPath)
 	if err != nil {
+		os.Remove(finalPath)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -97,7 +120,7 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 		ID:           uuid.New(),
 		Filename:     filename,
 		OriginalName: file.Filename,
-		StoragePath:  filePath,
+		StoragePath:  finalPath,
 		MimeType:     file.Header.Get("Content-Type"),
 		Size:         info.Size(),
 		Type:         getMediaType(file.Header.Get("Content-Type")),
@@ -105,13 +128,13 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 	}
 
 	if err := h.db.Create(&mediaAsset).Error; err != nil {
-		os.Remove(filePath) // 回滚：删除文件
+		os.Remove(finalPath) // 回滚：删除文件
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	// 返回文件 URL（使用环境变量配置基础 URL）
-	baseURL := getEnv("API_BASE_URL", fmt.Sprintf("http://localhost:%d", h.cfg.ServerPort))
+	baseURL := utils.GetEnv("API_BASE_URL", fmt.Sprintf("http://localhost:%d", h.cfg.ServerPort))
 	fileURL := fmt.Sprintf("%s/uploads/%s", baseURL, filepath.ToSlash(filepath.Join(filepath.Dir(filename), filename)))
 
 	c.JSON(http.StatusCreated, gin.H{
@@ -224,11 +247,4 @@ func getMediaType(mimeType string) string {
 	}
 
 	return "unknown"
-}
-
-func getEnv(key, defaultValue string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
-	}
-	return defaultValue
 }

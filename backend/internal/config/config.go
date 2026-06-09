@@ -80,7 +80,7 @@ func LoadConfig() *Config {
 		ServerPort:        port,
 		Environment:       getEnv("ENVIRONMENT", "development"),
 		MaxUploadSize:     maxSize,
-		UploadPath:        uploadPath,
+		UploadPath:        getEnv("UPLOAD_PATH", "./uploads"),
 		AllowedOrigins:    origins,
 		LiveCommentSiteID: getEnv("LIVECOMMENT_SITE_ID", ""),
 		// Resend
@@ -91,13 +91,6 @@ func LoadConfig() *Config {
 		MailerLiteGroupID: getEnv("MAILERLITE_GROUP_ID", ""),
 		MailerLiteBaseURL: getEnv("MAILERLITE_BASE_URL", "https://api.mailerlite.com/api/v2"),
 	}
-}
-
-func getEnv(key, defaultValue string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
-	}
-	return defaultValue
 }
 
 func parseOrigins(s string) []string {
@@ -137,4 +130,12 @@ func trimSpace(s string) string {
 		end--
 	}
 	return s[start:end]
+}
+
+// getEnv 从环境变量读取值，如果不存在则返回默认值
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
 }

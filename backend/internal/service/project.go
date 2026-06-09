@@ -14,18 +14,18 @@ type ProjectService struct {
 }
 
 type CreateProjectInput struct {
-	Slug           string
-	Title          string
-	Description    string
-	Content        string
-	CoverURL       string
-	WebsiteURL     string
-	GitHubURL      string
-	Language       string
-	Tags           []string
-	Features       []string
-	Technologies   []string
-	AuthorID       string
+	Slug         string
+	Title        string
+	Description  string
+	Content      string
+	CoverURL     string
+	WebsiteURL   string
+	GitHubURL    string
+	Language     string
+	Tags         []string
+	Features     []string
+	Technologies []string
+	AuthorID     string
 }
 
 type UpdateProjectInput struct {
@@ -82,12 +82,6 @@ func (s *ProjectService) GetProjectBySlug(slug string) (*model.Project, error) {
 
 // CreateProject 创建项目
 func (s *ProjectService) CreateProject(input CreateProjectInput) (*model.Project, error) {
-	var existing model.Project
-	s.db.Where("slug = ?", input.Slug).First(&existing)
-	if existing.ID != uuid.Nil {
-		return nil, errors.New("slug already exists")
-	}
-
 	authorID, err := uuid.Parse(input.AuthorID)
 	if err != nil {
 		return nil, errors.New("invalid author ID")

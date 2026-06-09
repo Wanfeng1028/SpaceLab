@@ -17,7 +17,9 @@ type ResendService struct {
 // InitResend 初始化 Resend 服务
 func InitResend(apiKey, from, siteURL string) *ResendService {
 	if apiKey == "" {
-		fmt.Println("Resend skipped: RESEND_API_KEY not configured")
+		if Logger != nil {
+			Logger.Info("Resend skipped: RESEND_API_KEY not configured")
+		}
 		return nil
 	}
 

@@ -7,14 +7,16 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 // MailerLiteService MailerLite 邮件列表管理服务
 type MailerLiteService struct {
-	apiKey      string
-	groupID     string
-	baseURL     string
-	client      *http.Client
+	apiKey  string
+	groupID string
+	baseURL string
+	client  *http.Client
 }
 
 // MailerLiteSubscriber 订阅者请求结构
@@ -36,7 +38,9 @@ type MailerLiteResponse struct {
 // InitMailerLite 初始化 MailerLite 服务
 func InitMailerLite(apiKey, groupID, baseURL string) *MailerLiteService {
 	if apiKey == "" || groupID == "" {
-		fmt.Println("MailerLite skipped: API key or group ID not configured")
+		if Logger != nil {
+			Logger.Info("MailerLite skipped: API key or group ID not configured")
+		}
 		return nil
 	}
 
@@ -57,13 +61,15 @@ func InitMailerLite(apiKey, groupID, baseURL string) *MailerLiteService {
 // AddSubscriber 添加订阅者到 newsletter 列表
 func (s *MailerLiteService) AddSubscriber(email, name string) error {
 	if !s.IsConfigured() {
-		fmt.Printf("MailerLite skipped: not configured (email: %s)\n", email)
+		if Logger != nil {
+			Logger.Info("MailerLite skipped: not configured", zap.String("email", email))
+		}
 		return nil
 	}
 
 	subscriber := MailerLiteSubscriber{
-		Email:  email,
-		Name:   name,
+		Email:     email,
+		Name:      name,
 		Consented: true,
 		Fields: map[string]string{
 			"source": "spacelab_registration",
@@ -82,7 +88,9 @@ func (s *MailerLiteService) RemoveSubscriber(email string) error {
 	subscriberID, err := s.getSubscriberIDByEmail(email)
 	if err != nil {
 		// 如果找不到，可能是新邮箱，忽略
-		fmt.Printf("MailerLite: subscriber not found for %s, skipping unsubscribe\n", email)
+		if Logger != nil {
+			Logger.Info("MailerLite: subscriber not found, skipping unsubscribe", zap.String("email", email))
+		}
 		return nil
 	}
 
@@ -103,7 +111,9 @@ func (s *MailerLiteService) RemoveSubscriber(email string) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		fmt.Printf("MailerLite: unsubscribed %s (id: %s)\n", email, subscriberID)
+		if Logger != nil {
+			Logger.Info("MailerLite: unsubscribed", zap.String("email", email), zap.String("id", subscriberID))
+		}
 		return nil
 	}
 
@@ -184,7 +194,7 @@ func (s *MailerLiteService) createSubscriber(subscriber MailerLiteSubscriber) er
 		"name":      subscriber.Name,
 		"fields":    subscriber.Fields,
 		"consented": subscriber.Consented,
-		"groups":    map[string][]string{
+		"groups": map[string][]string{
 			s.groupID: {s.groupID},
 		},
 	})
@@ -208,7 +218,9 @@ func (s *MailerLiteService) createSubscriber(subscriber MailerLiteSubscriber) er
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		fmt.Printf("MailerLite: created subscriber %s\n", subscriber.Email)
+		if Logger != nil {
+			Logger.Info("MailerLite: created subscriber", zap.String("email", subscriber.Email))
+		}
 		return nil
 	}
 
@@ -224,7 +236,7 @@ func (s *MailerLiteService) updateSubscriber(subscriberID string, subscriber Mai
 		"email":     subscriber.Email,
 		"name":      subscriber.Name,
 		"consented": subscriber.Consented,
-		"groups":    map[string][]string{
+		"groups": map[string][]string{
 			s.groupID: {s.groupID},
 		},
 	})
@@ -248,7 +260,9 @@ func (s *MailerLiteService) updateSubscriber(subscriberID string, subscriber Mai
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		fmt.Printf("MailerLite: updated subscriber %s\n", subscriber.Email)
+		if Logger != nil {
+			Logger.Info("MailerLite: updated subscriber", zap.String("email", subscriber.Email))
+		}
 		return nil
 	}
 

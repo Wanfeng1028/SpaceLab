@@ -10,6 +10,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/redis/go-redis/v9"
 	"github.com/spacelab/backend/internal/config"
+	"github.com/spacelab/backend/internal/utils"
 )
 
 // JWTClaims JWT 声明
@@ -81,7 +82,7 @@ func AuthWithRedis(cfg *config.Config, rdb *redis.Client) gin.HandlerFunc {
 
 		// 检查 Token 是否被撤销
 		if rdb != nil {
-			revoked, err := ParseAndCheckToken(rdb, tokenString)
+			revoked, err := utils.ParseAndCheckToken(rdb, tokenString)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Authentication service error"})
 				c.Abort()
@@ -105,7 +106,7 @@ func AuthWithRedis(cfg *config.Config, rdb *redis.Client) gin.HandlerFunc {
 		c.Set("user_id", claims.UserID)
 		c.Set("email", claims.Email)
 		c.Set("role", claims.Role)
-		
+
 		c.Next()
 	}
 }

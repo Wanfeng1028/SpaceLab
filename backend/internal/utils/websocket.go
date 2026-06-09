@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/redis/go-redis/v9"
 )
 
 // getAllowedOrigins 从环境变量读取允许的 WebSocket 来源
@@ -70,6 +71,16 @@ type Message struct {
 }
 
 var Hub *WebSocketHub
+
+// TokenRevocationMgr Token 撤销管理器（全局单例）
+var TokenRevocationMgr *TokenRevocationManager
+
+// InitTokenRevocationManager 初始化 Token 撤销管理器
+func InitTokenRevocationManager(rdb *redis.Client) {
+	if rdb != nil {
+		TokenRevocationMgr = NewTokenRevocationManager(rdb)
+	}
+}
 
 // InitWebSocket 初始化 WebSocket
 func InitWebSocket() {

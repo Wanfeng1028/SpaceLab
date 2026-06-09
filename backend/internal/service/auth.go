@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"crypto/rand"
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"strings"
@@ -174,7 +176,18 @@ func (s *AuthService) UpdatePassword(userID, oldPassword, newPassword string) er
 	}
 
 	user.PasswordHash = string(passwordHash)
-	return s.db.Save(&user).Error
+	if err := s.db.Save(&user).Error; err != nil {
+		return err
+	}
+
+	// 撤销该用户所有已有 token（安全：修改密码后使旧 session 失效）
+	if utils.TokenRevocationMgr != nil {
+		if err := utils.TokenRevocationMgr.RevokeUserTokens(user.ID.String()); err != nil {
+			utils.Logger.Warn("Failed to revoke user tokens on password change", zap.Error(err))
+		}
+	}
+
+	return nil
 }
 
 // UpdateProfile 更新个人资料
@@ -221,7 +234,7 @@ func (s *AuthService) VerifyEmail(token string) error {
 	return s.db.Save(&user).Error
 }
 
-// RequestPasswordReset 请求密码重置
+// RequestPasswordReset 请求密码重置（使用随机 Token + 数据库存储）
 func (s *AuthService) RequestPasswordReset(email string) error {
 	var user model.User
 	result := s.db.Where("email = ?", email).First(&user)
@@ -230,16 +243,90 @@ func (s *AuthService) RequestPasswordReset(email string) error {
 		return nil
 	}
 
-	// 生成重置 token (email:timestamp)
-	resetToken := fmt.Sprintf("%s:%d", email, time.Now().Add(1*time.Hour).Unix())
+	// 生成随机 Token
+	rawToken, err := generateRandomToken(32)
+	if err != nil {
+		return errors.New("failed to generate token")
+	}
 
-	// 发送邮件
+	// 存储 Token 的 SHA-256 哈希到数据库
+	tokenHash := sha256.Sum256([]byte(rawToken))
+	expiresAt := time.Now().Add(1 * time.Hour)
+
+	// 撤销之前的未使用 token
+	s.db.Model(&model.PasswordResetToken{}).Where("user_id = ? AND used = false", user.ID).Update("used", true)
+
+	newToken := model.PasswordResetToken{
+		ID:        uuid.New(),
+		UserID:    user.ID,
+		TokenHash: fmt.Sprintf("%x", tokenHash[:]),
+		ExpiresAt: expiresAt,
+		Used:      false,
+	}
+	if err := s.db.Create(&newToken).Error; err != nil {
+		return errors.New("failed to store token")
+	}
+
+	// 发送邮件（resend_service 使用 rawToken 拼接链接）
 	if s.resendSvc != nil && s.resendSvc.IsConfigured() {
-		// 注意: resend 实际发送时需要完整链接，这里传递 token 由 resend_service 拼接
-		if err := s.resendSvc.SendPasswordResetEmail(context.Background(), email, resetToken); err != nil {
+		if err := s.resendSvc.SendPasswordResetEmail(context.Background(), email, rawToken); err != nil {
 			utils.Logger.Error("Failed to send password reset email", zap.Error(err))
 		}
 	}
 
 	return nil
+}
+
+// ResetPassword 使用 token 重置密码
+func (s *AuthService) ResetPassword(token, newPassword string) error {
+	tokenHash := sha256.Sum256([]byte(token))
+	hashStr := fmt.Sprintf("%x", tokenHash[:])
+
+	var resetToken model.PasswordResetToken
+	result := s.db.Where("token_hash = ? AND used = false", hashStr).First(&resetToken)
+	if result.Error != nil {
+		return errors.New("invalid or expired token")
+	}
+
+	if time.Now().After(resetToken.ExpiresAt) {
+		return errors.New("token expired")
+	}
+
+	// 查找用户
+	var user model.User
+	if err := s.db.First(&user, resetToken.UserID).Error; err != nil {
+		return errors.New("user not found")
+	}
+
+	// 更新密码
+	passwordHash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return errors.New("failed to hash password")
+	}
+	user.PasswordHash = string(passwordHash)
+	if err := s.db.Save(&user).Error; err != nil {
+		return err
+	}
+
+	// 标记 token 为已使用
+	resetToken.Used = true
+	s.db.Save(&resetToken)
+
+	// 撤销该用户所有已有 token（安全：重置密码后使旧 session 失效）
+	if utils.TokenRevocationMgr != nil {
+		if err := utils.TokenRevocationMgr.RevokeUserTokens(user.ID.String()); err != nil {
+			utils.Logger.Warn("Failed to revoke user tokens on password reset", zap.Error(err))
+		}
+	}
+
+	return nil
+}
+
+// generateRandomToken 使用 crypto/rand 生成随机 token
+func generateRandomToken(length int) (string, error) {
+	bytes := make([]byte, length)
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%x", bytes), nil
 }

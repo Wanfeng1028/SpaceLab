@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"os"
-	"strconv"
 
 	"gopkg.in/gomail.v2"
 )
@@ -23,11 +22,11 @@ type EmailService struct {
 // InitEmail 初始化邮件服务
 func InitEmail() {
 	Mailer = &EmailService{
-		Host:     getEnv("SMTP_HOST", "smtp.gmail.com"),
-		Port:     getEnvInt("SMTP_PORT", 587),
-		Username: getEnv("SMTP_USERNAME", ""),
-		Password: getEnv("SMTP_PASSWORD", ""),
-		From:     getEnv("SMTP_FROM", "noreply@spacelab.com"),
+		Host:     GetEnv("SMTP_HOST", "smtp.gmail.com"),
+		Port:     GetEnvInt("SMTP_PORT", 587),
+		Username: GetEnv("SMTP_USERNAME", ""),
+		Password: GetEnv("SMTP_PASSWORD", ""),
+		From:     GetEnv("SMTP_FROM", "noreply@spacelab.com"),
 	}
 }
 
@@ -35,7 +34,7 @@ func InitEmail() {
 func (e *EmailService) SendEmail(to, subject, body string) error {
 	if e.Username == "" || e.Password == "" {
 		// SMTP 未配置，跳过发送
-		fmt.Printf("Email skipped (SMTP not configured): %s -> %s\n", subject, to)
+		fmt.Fprintf(os.Stderr, "Email skipped (SMTP not configured): %s -> %s\n", subject, to)
 		return nil
 	}
 
@@ -63,7 +62,7 @@ func (e *EmailService) SendCommentNotification(to, postTitle, commentContent, co
 			<p><a href="%s/blog">View Comments</a></p>
 		</body>
 		</html>
-	`, commenterName, postTitle, commentContent, getEnv("SITE_URL", "http://localhost:4200"))
+	`, commenterName, postTitle, commentContent, GetEnv("SITE_URL", "http://localhost:4200"))
 
 	return e.SendEmail(to, subject, body)
 }
@@ -85,7 +84,7 @@ func (e *EmailService) SendWelcomeEmail(to, username string) error {
 			<p><a href="%s">Get Started</a></p>
 		</body>
 		</html>
-	`, username, getEnv("SITE_URL", "http://localhost:4200"))
+	`, username, GetEnv("SITE_URL", "http://localhost:4200"))
 
 	return e.SendEmail(to, subject, body)
 }
@@ -93,7 +92,7 @@ func (e *EmailService) SendWelcomeEmail(to, username string) error {
 // SendPasswordReset 发送密码重置邮件
 func (e *EmailService) SendPasswordReset(to, resetToken string) error {
 	subject := "Password Reset - SpaceLab"
-	resetLink := fmt.Sprintf("%s/reset-password?token=%s", getEnv("SITE_URL", "http://localhost:4200"), resetToken)
+	resetLink := fmt.Sprintf("%s/reset-password?token=%s", GetEnv("SITE_URL", "http://localhost:4200"), resetToken)
 	body := fmt.Sprintf(`
 		<html>
 		<body>
@@ -123,21 +122,4 @@ func (e *EmailService) SendNewsletter(to, subject, content string) error {
 	`, subject, content)
 
 	return e.SendEmail(to, subject, body)
-}
-
-// 辅助函数
-func getEnv(key, defaultValue string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
-	}
-	return defaultValue
-}
-
-func getEnvInt(key string, defaultValue int) int {
-	if value := os.Getenv(key); value != "" {
-		if parsed, err := strconv.Atoi(value); err == nil {
-			return parsed
-		}
-	}
-	return defaultValue
 }

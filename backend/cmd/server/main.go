@@ -39,8 +39,8 @@ func main() {
 	}
 
 	// 初始化 Redis（可选）
-	if redisAddr := getEnv("REDIS_ADDR", ""); redisAddr != "" {
-		if err := utils.InitRedis(redisAddr, getEnv("REDIS_PASSWORD", ""), 0); err != nil {
+	if redisAddr := utils.GetEnv("REDIS_ADDR", ""); redisAddr != "" {
+		if err := utils.InitRedis(redisAddr, utils.GetEnv("REDIS_PASSWORD", ""), 0); err != nil {
 			utils.Logger.Warn("Redis connection failed, caching disabled", zap.Error(err))
 		} else {
 			utils.Logger.Info("Redis connected successfully")
@@ -258,12 +258,4 @@ func main() {
 	}
 
 	utils.Logger.Info("Server exited properly")
-}
-
-// 辅助函数
-func getEnv(key, defaultValue string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
-	}
-	return defaultValue
 }

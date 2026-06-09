@@ -29,14 +29,14 @@ cp .env.example .env
 需要修改的配置：
 
 ```env
-# 数据库
-DATABASE_URL=postgres://spacelab:spacelab_password@localhost:5432/spacelab?sslmode=disable
+# 数据库（必须设置，使用强密码）
+DATABASE_URL=postgres://spacelab:<strong_password>@localhost:5432/spacelab?sslmode=require
 
 # JWT（生产环境必须修改）
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_SECRET=<生成强随机密钥>
 
 # LiveComment（在 https://livecomment.cn 注册获取）
-LIVECOMMENT_SITE_ID=your-livecomment-site-id
+LIVECOMMENT_SITE_ID=<your-livecomment-site-id>
 
 # 服务器端口（可选，默认 8080）
 SERVER_PORT=8080
@@ -115,16 +115,13 @@ docker exec -it spacelab-postgres psql -U spacelab -d spacelab
 ### 创建管理员账户
 
 ```sql
--- 密码：admin123（必须修改）
-INSERT INTO users (id, email, password_hash, username, role)
-VALUES (
-    '00000000-0000-0000-0000-000000000001',
-    'admin@spacelab.com',
-    'e99a18c428cb38d5f260853678922e03abc18d0c6b5f8c5b1d7e3f4a5b6c7d8e',
-    'Administrator',
-    'admin'
-)
-ON CONFLICT (email) DO NOTHING;
+-- 密码通过 API 注册创建（不要直接在数据库中硬编码密码）
+-- 使用以下 curl 命令创建管理员账户：
+-- curl -X POST http://localhost:8080/api/v1/auth/register \
+--   -H "Content-Type: application/json" \
+--   -d '{"email":"admin@spacelab.com","password":"<strong_password>","username":"Administrator"}'
+-- 然后通过 SQL 修改角色：
+UPDATE users SET role = 'admin' WHERE email = 'admin@spacelab.com';
 ```
 
 ### API 测试示例
@@ -178,7 +175,8 @@ curl http://localhost:8080/api/v1/posts?page=1&page_size=10
 # 生产环境必须修改
 JWT_SECRET=<生成强随机密钥>
 LIVECOMMENT_SITE_ID=<生产环境站点 ID>
-DATABASE_URL=<生产数据库连接>
+DATABASE_URL=<生产数据库连接，必须启用 sslmode=require>
+RESEND_API_KEY=<Resend API Key>
 ENVIRONMENT=production
 ```
 

@@ -12,6 +12,8 @@ import (
 	"gorm.io/gorm"
 )
 
+const testPassword = "password123"
+
 // TestDB 测试数据库
 var TestDB *gorm.DB
 
@@ -39,7 +41,7 @@ func TestAuthService_Register(t *testing.T) {
 	service := NewAuthService(TestDB, cfg, nil)
 
 	// 测试注册
-	response, err := service.Register("test@example.com", "password123", "testuser")
+	response, err := service.Register("test@example.com", testPassword, "testuser")
 	if err != nil {
 		t.Fatalf("Register failed: %v", err)
 	}
@@ -69,13 +71,13 @@ func TestAuthService_Login(t *testing.T) {
 	service := NewAuthService(TestDB, cfg, nil)
 
 	// 先注册
-	_, err := service.Register("test@example.com", "password123", "testuser")
+	_, err := service.Register("test@example.com", testPassword, "testuser")
 	if err != nil {
 		t.Fatalf("Register failed: %v", err)
 	}
 
 	// 测试登录
-	response, err := service.Login("test@example.com", "password123")
+	response, err := service.Login("test@example.com", testPassword)
 	if err != nil {
 		t.Fatalf("Login failed: %v", err)
 	}
@@ -103,7 +105,7 @@ func TestAuthService_GetUserByID(t *testing.T) {
 	service := NewAuthService(TestDB, cfg, nil)
 
 	// 注册用户
-	response, err := service.Register("test@example.com", "password123", "testuser")
+	response, err := service.Register("test@example.com", testPassword, "testuser")
 	if err != nil {
 		t.Fatalf("Register failed: %v", err)
 	}
