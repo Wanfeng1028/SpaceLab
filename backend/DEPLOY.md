@@ -254,9 +254,9 @@ docker exec spacelab-postgres psql -U spacelab -d spacelab \
 ## 资源
 
 - [API 文档](./docs/api.md)
-- [LiveComment 集成](./docs/live-comment-integration.md)
-- [开发规范](../DEVELOPMENT.md)
-- [设计文档](../DESIGN.md)
+- [LiveComment 集成](../docs/live-comment-integration.md)
+- [开发规范](../docs/DEVELOPMENT.md)
+- [设计文档](../docs/DESIGN.md)
 
 ## 技术支持
 
