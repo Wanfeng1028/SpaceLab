@@ -1,901 +1,903 @@
 [
   {
-    "id": "d3d202d816dc",
-    "title": "SpatialLM 1.5",
-    "summary": "SpatialLM 1.5 是群核科技推出的强大的空间语言模型。模型基于大语言模型训练，能理解自然语言指令，输出包含空间结构、物体关系和物理参数的空间语言。用户...",
+    "id": "76c45a4947f9",
+    "title": "MiniMax Music 1.5",
+    "summary": "MiniMax Music 1.5 是先进的 AI 音乐生成模型，支持最长 4 分钟的音乐创作，能根据用户输入的风格、情绪和场景等自然语言描述生成高质量的音乐作品。",
     "category": "AI工具",
     "tags": [
       "模型"
     ],
-    "url": "https://ai-bot.cn/spatiallm-1-5/",
+    "url": "https://ai-bot.cn/minimax-music-1-5/",
     "source": "ai-bot.cn",
-    "date": "2025-09-03",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
     "_page": 90
   },
   {
-    "id": "f0af03f004d8",
-    "title": "SpatialGen",
-    "summary": "SpatialGen 是群核科技开源的 3D 场景生成模型。模型基于扩散模型架构，支持根据文字描述、参考图像和 3D 空间布局，生成时空一致的多视角图像，且能进一步得...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "图像"
-    ],
-    "url": "https://ai-bot.cn/spatialgen/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
-    "_page": 90
-  },
-  {
-    "id": "c118d44be7bb",
-    "title": "EchoMimicV3",
-    "summary": "EchoMimicV3是蚂蚁集团推出的高效多模态、多任务数字人视频生成框架。框架拥有13亿参数，基于任务混合和模态混合范式，结合新颖的训练与推理策略，实现快速、...",
+    "id": "612ba18adda5",
+    "title": "AnyI2V",
+    "summary": "AnyI2V 是复旦大学、阿里巴巴达摩院和湖畔实验室联合推出的创新图像动画生成框架。框架无需大量训练数据，能将静态条件图像（如网格、点云等）转化为动态视频...",
     "category": "AI工具",
     "tags": [
       "框架",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/echomimicv3/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
-    "_page": 90
-  },
-  {
-    "id": "ef12e7e4c3d8",
-    "title": "如何用AI生成短视频创意，FD Studio一站式服务内容创作者",
-    "summary": "FD Studio 是深圳市浮点数信息技术有限公司推出的 AI 辅助影视和短视频创意管理平台。面向短片、广告、自媒体等多领域创作者，解决创意前期流程碎片化、协作...",
-    "category": "AI工具",
-    "tags": [
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/fd-studio/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
-    "_page": 90
-  },
-  {
-    "id": "e9850b3abaad",
-    "title": "VibeVoice",
-    "summary": "VibeVoice 是微软推出的新型文本到语音（TTS）模型，能生成富有表现力、长篇幅、多说话者的对话式音频，如播客。最新开源的VibeVoice-Realtime-0.5B模型，仅5...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/vibevoice/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
-    "_page": 90
-  },
-  {
-    "id": "9a6970415446",
-    "title": "DeepCode",
-    "summary": "DeepCode 是香港大学数据智能实验室推出的基于多智能体系统的代码生成平台。DeepCode 能将研究论文、自然语言描述等转化为高质量的生产就绪代码，支持多种编...",
-    "category": "AI工具",
-    "tags": [
-      "Agent",
-      "编程"
-    ],
-    "url": "https://ai-bot.cn/deepcode/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
-    "_page": 90
-  },
-  {
-    "id": "f7d54de530d5",
-    "title": "XBai o4",
-    "summary": "XBai o4是开源的大语言模型，基于“反射生成形式”训练，结合长CoT强化学习和过程奖励学习，在复杂推理能力上表现出色，中等模式下已超越OpenAI-o3-mini。",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/xbai-o4/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:20.560Z",
-    "_page": 90
-  },
-  {
-    "id": "f7b833b7d982",
-    "title": "内容特工队ReelsAgent",
-    "summary": "内容特工队ReelsAgent是全球首个移动端AI营销视频智能体Agent。实现了从市场调研、创意生成到视频发布全流程自动化，用户只需输入需求，可生成适配多平台的专...",
-    "category": "AI工具",
-    "tags": [
-      "Agent",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/reelsagent/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "7ab59d8715e4",
-    "title": "问小白o4",
-    "summary": "问小白o4是国内首个并行思考模型，能同时启动8条思考路径，自动筛选最优解，提供精准答案。模型融合Long‑CoT强化学习与过程奖励学习，具备深度推理和高质量思...",
-    "category": "AI工具",
-    "tags": [
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/wenxiaobaio4/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "84ba0e7367c1",
-    "title": "FutureX",
-    "summary": "FutureX是字节跳动、复旦大学、斯坦福大学和普林斯顿大学的研究团队联合发布的，专为LLM智能体未来预测任务设计的动态实时评估基准。通过半自动化管道从195个...",
-    "category": "AI工具",
-    "tags": [
-      "Agent"
-    ],
-    "url": "https://ai-bot.cn/futurex/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "0947f1b1f911",
-    "title": "SlowFast-LLaVA-1.5",
-    "summary": "SlowFast-LLaVA-1.5（简称SF-LLaVA-1.5）是专为长视频理解设计的高效视频大语言模型。基于双流（SlowFast）机制，平衡处理更多输入帧与减少每帧令牌数量之间...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/slowfast-llava-1-5/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "72425af3d40a",
-    "title": "ComoRAG",
-    "summary": "ComoRAG 是华南理工大学未来技术学院、微信 AI 团队等机构联合推出的认知启发式检索增强生成（RAG）框架，专门用在长篇叙事文本的理解和推理。",
-    "category": "AI工具",
-    "tags": [
-      "框架"
-    ],
-    "url": "https://ai-bot.cn/comorag/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "8301a1dceb31",
-    "title": "Snowglobe",
-    "summary": "Snowglobe 是 Guardrails AI 推出的 AI 代理和聊天机器人模拟测试工具。通过模拟真实用户行为，快速生成大量对话数据，帮助开发者在部署前发现潜在问题。Snow...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/snowglobe/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "2fd9915d1c5e",
-    "title": "CourseCorrect",
-    "summary": "CourseCorrect 是帮助用户提升技能的智能学习平台。用户只需输入想学习的主题，平台能快速从互联网上筛选出排名前20的优质课程。与传统课程评价不同，CourseC...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/coursecorrect/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "bff4271a6f4b",
-    "title": "如何用AI生成模板文章，酷宣AI自动整合高颜值图文",
-    "summary": "酷宣AI是AI文章生成工具，帮助用户快速生成带模板的高颜值文章。核心功能包括AI模板文章生成，用户只需输入主题或要求，可生成带模板的精美文章，也可以直接...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/kuxuanai/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "daadea119a8a",
-    "title": "Prompt Optimizer",
-    "summary": "Prompt Optimizer 是开源的 AI 提示词优化工具，帮助用户快速编写高质量的提示词，提升 AI 输出的质量。一键优化提示词，支持多轮迭代改进，提升 AI 回复的准...",
-    "category": "AI工具",
-    "tags": [
-      "开源"
-    ],
-    "url": "https://ai-bot.cn/prompt-optimizer/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "d959c5b52c87",
-    "title": "Grok 2.5",
-    "summary": "Grok 2.5 是埃隆·马斯克旗下 xAI 公司开源的人工智能模型。模型文件可在 Hugging Face 下载，包含 42 个文件，总大小约 500GB，需 8 张显存超 40GB 的 GPU 才...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/grok-2-5/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:21.610Z",
-    "_page": 90
-  },
-  {
-    "id": "c96f8bc1e134",
-    "title": "Airbook",
-    "summary": "Airbook 是 AI 驱动的 GTM（Go-to-Market）数据平台，专为企业数据分析和运营设计。将数据集中化、智能分析、可视化和工作流自动化整合在一个平台上，支持连...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/airbook/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "3f4d970e5f16",
-    "title": "Anything",
-    "summary": "Anything 是创新的 AI 应用构建平台，通过与 AI 的对话式交互，帮助用户快速创建强大的应用程序和网站。用户只需通过聊天的方式表达自己的想法和需求，AI 能...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/anything/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "845c458cb524",
-    "title": "Draw A Fish",
-    "summary": "Draw A Fish 是独特的线上AI画鱼网站，用户可以用鼠标随意画一条鱼，点击“放生”后，这条鱼会进入一个全球共享的虚拟鱼缸，与来自世界各地的鱼一起游动。网站...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/draw-a-fish/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "25caf5143e12",
-    "title": "Fun-ASR",
-    "summary": "Fun-ASR 是钉钉与通义实验室语音团队联合推出的新一代语音识别大模型。经过海量音频数据训练，能精准识别互联网、科技、家装、畜牧等十多个行业的专业术语，...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "通义千问"
-    ],
-    "url": "https://ai-bot.cn/fun-asr/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "2c93ce7c794c",
-    "title": "AutoClip",
-    "summary": "AutoClip是开源免费的AI视频剪辑工具，基于AI技术实现全流程自动化视频处理。AutoClip能自动识别视频中的高光片段并进行精准切片，支持基于内容主题进行智能...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/autoclip/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "306f0dcb1b54",
-    "title": "Elser AI",
-    "summary": "Elser AI 是专注于动漫创作的生成式人工智能平台。核心功能是通过 AI 技术帮助用户快速生成高质量的漫画内容，包括角色、场景、分镜和剧本等。平台的 Comic A...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/elser-ai/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "a39844c2b106",
-    "title": "AIRI",
-    "summary": "AIRI 是开源的 AI 虚拟角色灵魂项目，能让用户拥有可互动的数字伴侣。AIRI 支持 Web、macOS 和 Windows 平台，具备多模态交互能力，包括聊天、玩游戏（如《我...",
-    "category": "AI工具",
-    "tags": [
-      "开源"
-    ],
-    "url": "https://ai-bot.cn/airi/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "9684020c3eb2",
-    "title": "Sim",
-    "summary": "Sim 是开源的 AI Agent 工作流构建工具。Sim通过轻量级、拖拽式的 Figma 风格界面，让开发者无需复杂编码能快速构建和部署 AI 工作流。",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent"
-    ],
-    "url": "https://ai-bot.cn/sim/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "087ceb8345da",
-    "title": "洞察",
-    "summary": "洞察是AI驱动的实时数据分析平台，专注于为用户提供快速、深度的行业洞察和战略决策支持。能在1分钟内生成详细的分析报告，覆盖多个行业领域，如宠物医疗、汽...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/dongcha/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "66156635794b",
-    "title": "Intern-S1-mini",
-    "summary": "Intern-S1-mini是上海人工智能实验室推出的轻量级开源多模态推理模型。基于与 Intern-S1 相同的技术构建。模型融合 8B 密集语言模型（Qwen3）和 0.3B 视觉编...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "通义千问"
-    ],
-    "url": "https://ai-bot.cn/intern-s1-mini/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:22.694Z",
-    "_page": 90
-  },
-  {
-    "id": "65774ca0cdf9",
-    "title": "作文说",
-    "summary": "作文说是专为K12语文和英语教师设计的AI作文协同批改工具。通过专属定制批改模板，满足个性化教学需求，让普通老师能快速提升批改专业性。工具支持班级批量精...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/zaiatech/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "e298ee58875c",
-    "title": "Aivilization",
-    "summary": "Aivilization 是香港科技大学推出的全球首个大型人工智能多智能体社会模拟沙盒平台。结合了公民科学游戏、公共教育和大规模多智能体社会模拟，通过可视化的数...",
-    "category": "AI工具",
-    "tags": [
-      "Agent"
-    ],
-    "url": "https://ai-bot.cn/aivilization/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "381b35b0ad4f",
-    "title": "DeepSeekMine",
-    "summary": "DeepSeekMine是本地运行的智能知识管理软件。软件支持27种文件格式导入，构建个性化知识库，基于自研混合RAG算法实现秒级高精度检索。",
-    "category": "AI工具",
-    "tags": [
-      "DeepSeek"
-    ],
-    "url": "https://ai-bot.cn/deepseekmine/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "7d8998f361a5",
-    "title": "Jiri",
-    "summary": "Jiri 是金数据推出的 AI 表单助手，能将想法快速变成专业表单。Jiri 根据描述秒懂需求，自动生成合适的字段组合、撰写专业文案，并智能匹配高清头图，提升表...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/jiri/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "5af1846d996c",
-    "title": "ToonComposer",
-    "summary": "ToonComposer 是香港中文大学、腾讯 PCG ARC 实验室和北京大学研究人员共同推出的生成式 AI 工具，几秒能将草图转化成专业级动画。ToonComposer基于生成式后...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/tooncomposer/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "24f4a129eb49",
-    "title": "Seed-OSS",
-    "summary": "Seed-OSS 是字节跳动 Seed 团队开源的系列大型语言模型，专注于长文本处理、推理和智能代理能力。模型包含多个版本，如 Seed-OSS-36B-Base 和 Seed-OSS-36B-I...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/seed-oss/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "b96f2b289b83",
-    "title": "AutoCodeBench",
-    "summary": "AutoCodeBench 是腾讯混元推出的专门测评大模型代码能力基准测试集，包含 3920 个问题，均匀分布在 20 种编程语言中。数据集具有高难度、实用性和多样性，能...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "编程"
-    ],
-    "url": "https://ai-bot.cn/autocodebench/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "a6dd516856d0",
-    "title": "谱乐AI",
-    "summary": "谱乐AI是青岛艾夫斯科技有限公司推出的AI音乐生成平台，专注于为用户提供高效、个性化的音乐创作服务。支持文本、图片、视频等多种输入方式，能快速生成匹配...",
-    "category": "AI工具",
-    "tags": [
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/yourmusic/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "e7adb97b475d",
-    "title": "DeepSeek V3.1",
-    "summary": "DeepSeek V3.1是DeepSeek最新推出的AI模型版本，具备混合推理架构，能自由切换思考模式与非思考模式，思考效率显著提升。模型在V3的基础上进行多项升级，上下...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "DeepSeek"
-    ],
-    "url": "https://ai-bot.cn/deepseek-v3-1/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "39dcbc785d19",
-    "title": "NVIDIA Nemotron Nano 2",
-    "summary": "NVIDIA Nemotron Nano 2 是英伟达推出的高效推理模型，参数量为9B。模型基于混合Mamba-Transformer架构，在20万亿个token上预训练，支持128k上下文长度。",
-    "category": "AI工具",
-    "tags": [
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/nvidia-nemotron-nano-2/",
-    "source": "ai-bot.cn",
-    "date": "2025-09-03",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:23.746Z",
-    "_page": 90
-  },
-  {
-    "id": "42291cc17d21",
-    "title": "晚点再听LaterCast",
-    "summary": "晚点再听LaterCast是AI播客生成应用，将微信公众号长文一键转换成播客的小程序。解决用户因忙碌而无法完整阅读公众号文章的问题，让用户可以在碎片化时间通过...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/latercast/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "01b7b135fcbc",
-    "title": "CombatVLA",
-    "summary": "CombatVLA 是淘天集团未来生活实验室团队推出的专为3D动作角色扮演游戏（ARPG）中的战斗任务设计的高效视觉-语言-动作（VLA）模型。模型基于3B参数规模，通过...",
-    "category": "AI工具",
-    "tags": [
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/combatvla/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "e016c40d205b",
-    "title": "Roo Code",
-    "summary": "Roo Code 是为 VS Code 提供强大 AI 助手的工具。能理解代码库，帮助开发者快速编写、重构和调试代码。支持多种现代开发需求，包括代码优化、实时建议、多模...",
-    "category": "AI工具",
-    "tags": [
-      "编程"
-    ],
-    "url": "https://ai-bot.cn/roo-code/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "d0e0217f071a",
-    "title": "MindGPT 3.1",
-    "summary": "MindGPT 3.1是理想汽车旗下AI理想同学推出的新一代人工智能模型，将智能体能力融入大模型中，实现端到端的智能体模型。支持边想边搜功能，在推理过程中同步调...",
-    "category": "AI工具",
-    "tags": [
-      "Agent",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/mindgpt-3-1/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "5e804076a25e",
-    "title": "TextureNoise",
-    "summary": "TextureNoise 是强大的在线3D纹理生成与编辑工具，帮助用户快速高效地创建高质量纹理。通过快速生成功能，能在几秒钟内生成令人惊叹的纹理，显著提升工作流程...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/texturenoise/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "52f683ff75ab",
-    "title": "Aluo AI",
-    "summary": "Aluo AI 是专为电商卖家和内容创作者设计的 AI 图像处理平台。通过先进的 AI 技术，帮助用户在短短 30 秒内将普通产品图片转变为专业级的营销视觉内容。平台...",
-    "category": "AI工具",
-    "tags": [
-      "图像"
-    ],
-    "url": "https://ai-bot.cn/aluo-ai/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "a71ef860890c",
-    "title": "Nano Banana",
-    "summary": "Nano Banana 是谷歌推出的AI图像生成与编辑模型，Gemini 2.5 Flash Image（代号Nano Banana）模型具有极高的人物一致性，能精准还原人物的面部特征和表情，在...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
       "图像",
-      "Google"
+      "视频"
     ],
-    "url": "https://ai-bot.cn/nano-banana/",
+    "url": "https://ai-bot.cn/anyi2v/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
     "_page": 90
   },
   {
-    "id": "2a5cfa50a1e3",
-    "title": "Klear-Reasoner",
-    "summary": "Klear-Reasoner 是快手推出的基于 Qwen3-8B-Base 的推理模型，专注于提升数学和代码推理能力。模型通过长思维链监督微调（long CoT SFT）和强化学习（RL）训...",
+    "id": "59f0d33d323f",
+    "title": "AutoDocs",
+    "summary": "AutoDocs 是 TrySita 开发的开源代码文档自动化工具，帮助开发者高效生成和维护代码库文档。通过深度解析代码库的抽象语法树（AST）和构建依赖图，生成准确且...",
     "category": "AI工具",
     "tags": [
-      "模型",
+      "开源",
       "编程",
-      "通义千问"
+      "办公"
     ],
-    "url": "https://ai-bot.cn/klear-reasoner/",
+    "url": "https://ai-bot.cn/autodocs/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
     "_page": 90
   },
   {
-    "id": "f54fa9d20598",
-    "title": "Open-Lovable",
-    "summary": "Open-Lovable 是由 Firecrawl 团队推出的开源项目，通过 AI 技术快速将任意网站克隆为现代 React 应用。用户输入目标网站 URL 后，通过 Firecrawl 抓取内容，...",
+    "id": "51976c182b9b",
+    "title": "DeepTracker",
+    "summary": "DeepTracker是AI情报助手，能将零散信息整理成清晰答案。能抓住关键信息，生成“事件→影响→可能结果”的逻辑链，辅助快速精准决策。使用时，只需输入公司、事件...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/deeptracker/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
+    "_page": 90
+  },
+  {
+    "id": "4ebac6819a4b",
+    "title": "Lanta AI",
+    "summary": "Lanta AI 是强大的在线视频和图像处理平台，提供多种功能，包括视频转视频、AI 视频生成（图生视频和文生视频）、视频编辑及图像编辑等。",
+    "category": "AI工具",
+    "tags": [
+      "图像",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/lanta-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
+    "_page": 90
+  },
+  {
+    "id": "9d1225f4340b",
+    "title": "Qwen3-Next",
+    "summary": "Qwen3-Next是阿里通义开源的新一代混合架构大模型，包含指令版(Qwen3-Next-80B-A3B-Instruct )和思维版(Qwen3-Next-80B-A3B-Thinking)两个版本。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/qwen3-next/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
+    "_page": 90
+  },
+  {
+    "id": "123d8f2fc625",
+    "title": "SRPO",
+    "summary": "SRPO（Semantic Relative Preference Optimization）是腾讯混元推出的文本到图像生成模型，通过将奖励信号设计为文本条件信号，实现对奖励的在线调整，减少对...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/srpo/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
+    "_page": 90
+  },
+  {
+    "id": "631d2cb63e12",
+    "title": "希财舆情宝",
+    "summary": "希财舆情宝是希财网资深财经顾问与专业开发团队专为散户打造的AI智能股票工具。依托AI大模型技术，整合舆情分析、财报解读、研报提炼等功能，帮助投资者快速...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/csai-yuqing/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:48.330Z",
+    "_page": 90
+  },
+  {
+    "id": "2629c5d491ee",
+    "title": "Class Companion",
+    "summary": "Class Companion 是面向 K12 教育的 AI 辅助教学平台。平台为教师提供作业生成、资源库等工具，助力教师高效教学，为学生提供即时反馈、个性化辅导，激发学习...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/class-companion/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "b441b00595bb",
+    "title": "Kwali",
+    "summary": "Kwali是快手磁力开创推出的AIGC超级员工，能快速生成完整短视频。用户只需输入需求，几分钟内能完成从文案到视频发布的全过程。",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/kwali/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "7727d2d77aa6",
+    "title": "K2-Think",
+    "summary": "K2-Think是阿联酋穆罕默德·本·扎耶德人工智能大学MBZUAI与G42联合推出的开源推理模型，拥有320亿参数，在数学推理、代码生成和科学知识等多领域表现出色，尤...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/k2-think/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "063f729a6dfd",
+    "title": "FunBlocks",
+    "summary": "FunBlocks 是全功能的 AI 工作空间，通过可视化思维和 AI 技术提升用户的工作和学习效率。提供了无限画布的思维导图功能，用户可以在上面进行头脑风暴、组织...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/funblocks/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "3e5e4ae2246b",
+    "title": "PhotoFox AI",
+    "summary": "PhotoFox AI 是 AI 图像和视频生成工具，帮助品牌和创作者快速生成高质量的营销素材。用户只需上传一张产品照片，可在几分钟内生成 100 多种品牌一致的图片、...",
+    "category": "AI工具",
+    "tags": [
+      "图像",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/photofox-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "184cf99c9f56",
+    "title": "Koncile",
+    "summary": "Koncile 是基于 AI 技术的智能 OCR 解决方案，将各种文档中的文本内容快速、准确地转换为结构化数据。能识别和提取文档中的文字，通过先进的大型语言模型（LL...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "办公"
+    ],
+    "url": "https://ai-bot.cn/koncile/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "0686cbda1cfc",
+    "title": "FacelessReels",
+    "summary": "FacelessReels 是AI视频生成平台，专为创作者设计，在不露脸或不使用原声的情况下能快速生成适合 TikTok、Instagram 和 YouTube 等平台的短视频。基于 AI 技...",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/facelessreels/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "fd680c3dfb54",
+    "title": "绘梦PPT",
+    "summary": "绘梦PPT是简单高效的AI在线PPT设计平台，用户只需输入标题或上传文件，AI可自动生成完整的PPT，节省了制作时间。平台提供多种创建方式，包括标题生成、文档生...",
+    "category": "AI工具",
+    "tags": [
+      "办公"
+    ],
+    "url": "https://ai-bot.cn/aippt-365/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "da2c8356d2a4",
+    "title": "混元图像2.1",
+    "summary": "混元图像2.1（HunyuanImage 2.1）是腾讯推出的开源文生图模型，支持原生2K分辨率，具备强大的复杂语义理解能力，能精准生成场景细节、人物表情和动作。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/hunyuanimage-2-1/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "129da4945441",
+    "title": "SpikingBrain-1.0",
+    "summary": "SpikingBrain-1.0（瞬悉 1.0）是中国科学院自动化研究所推出的类脑脉冲大模型。模型基于内生复杂性，用新型非Transformer架构，突破Transformer架构在处理超...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/spikingbrain-1-0/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:49.942Z",
+    "_page": 90
+  },
+  {
+    "id": "b29e05742141",
+    "title": "文心大模型X1.1",
+    "summary": "文心大模型X1.1是百度推出的深度思考模型，基于迭代式混合强化学习框架，在事实性、指令遵循能力和智能体能力上显著提升，分别提高34.8%、12.5%和9.6%。在权...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "模型",
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/wenxinx1-1/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "7a4d8a11a308",
+    "title": "LMDeploy",
+    "summary": "LMDeploy 是上海人工智能实验室推出的大模型推理部署工具，能显著提升大模型的推理性能，支持多种硬件架构，包括 NVIDIA 的 Hopper 和 Ampere 系列 GPU，实现...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/lmdeploy/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "c3cbcd949366",
+    "title": "UnifiedTTS",
+    "summary": "UnifiedTTS 是提供一站式文本转语音（TTS）服务的平台。通过统一的 API 接口，整合了多种主流的 TTS 服务，包括 Microsoft Azure、MiniMax、阿里云和 ElevenL...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/unifiedtts/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "c5ee16d8f928",
+    "title": "REFRAG",
+    "summary": "REFRAG是Meta超级智能实验室推出的针对检索增强生成（RAG）任务的高效解码框架，通过“压缩（Compress）、感知（Sense）、扩展（Expand）”的流程优化大型语言...",
+    "category": "AI工具",
+    "tags": [
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/refrag/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "8697f26c1297",
+    "title": "CodeBuddy Code",
+    "summary": "CodeBuddy Code是腾讯推出的全新自研AI编程工具（AI CLI），全面开放用户使用。CodeBuddy Code基于 AI 技术，通过自然语言交互实现代码编写、调试、测试和部...",
+    "category": "AI工具",
+    "tags": [
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/codebuddy-code/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "fd86e4a105b7",
+    "title": "Bika.ai",
+    "summary": "Bika.ai 是定位为“AI Organizer”的新型人工智能工具，解决当前AI工具分散、学习成本高和效率有限等问题。通过多智能体调度和流程自动化，将不同的AI工具组织...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/bika-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "99d4c71bdc71",
+    "title": "XTuner V1",
+    "summary": "XTuner V1 是上海人工智能实验室开源的新一代大模型训练引擎，基于 PyTorch FSDP 开发，针对超大模型训练中的显存、通信和负载问题进行系统性优化，支持 1T ...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/xtuner-v1/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "90b47ef9deae",
+    "title": "Riverside",
+    "summary": "Riverside是集录制、编辑和直播功能于一体的内容创作平台。提供工作室级别的音频和视频录制，支持高达4K分辨率的视频录制和48kHz WAV格式的音频录制。AI驱动...",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/riverside/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "0f28ec4b2210",
+    "title": "FlowBench云端工作流",
+    "summary": "FlowBench云端工作流是魔搭ModelScope社区推出的在线创作功能，为AIGC创作者、设计师和开发者提供无需下载软件的云端创作环境，用户能通过网页工作流实现随时...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/flowbench-workflows/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "1ef78ee23721",
+    "title": "Receiptor AI",
+    "summary": "Receiptor AI 是强大的AI自动化记账工具，通过连接用户的电子邮件和其他数据源，利用 AI 技术自动提取、分类和同步收据及发票信息到会计软件如 Xero 或 Quick...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/receiptor-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:51.957Z",
+    "_page": 90
+  },
+  {
+    "id": "f998f8e6b0d7",
+    "title": "AntSK FileChunk",
+    "summary": "AntSK FileChunk是基于语义理解的智能文本切片工具，专门用在处理PDF和Word文档。工具基于先进的语义分析技术，将长文档分割成语义完整且连贯的片段，避免传...",
+    "category": "AI工具",
+    "tags": [
+      "办公"
+    ],
+    "url": "https://ai-bot.cn/antsk-filechunk/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "3973d649eaba",
+    "title": "Qwen3-ASR-Flash",
+    "summary": "Qwen3-ASR-Flash 是通义千问系列最新语音识别模型，基于 Qwen3 基座模型，经海量多模态及 ASR 数据训练而成。模型支持 11 种语言和多种口音，具备高精度、高...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/qwen3-asr-flash/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "07dea4a46417",
+    "title": "Visual Story-Writing",
+    "summary": "Visual Story-Writing是创新的AI写作工具，通过可视化界面帮助用户构建和编辑故事。工具用GPT-4o技术自动解析文本，能转换成事件、角色和动作的可视化结构，...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/visual-story-writing/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "b775dbdedbf6",
+    "title": "DeepDoc",
+    "summary": "DeepDoc 是开源的深度研究工具，专注于对本地知识库进行深度研究。工具通过研究式工作流，提取本地资源（如 PDF、DOCX、JPG、TXT 等）中的文本，分割存储在向...",
     "category": "AI工具",
     "tags": [
       "开源"
     ],
-    "url": "https://ai-bot.cn/open-lovable/",
+    "url": "https://ai-bot.cn/deepdoc/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
     "_page": 90
   },
   {
-    "id": "61e8aa06eded",
-    "title": "Qwen-Image-Edit",
-    "summary": "Qwen-Image-Edit 是基于 200 亿参数的 Qwen-Image 架构构建的全能图像编辑模型。模型兼具语义与外观的双重编辑能力，能进行低层次的视觉外观编辑（如添加、删...",
+    "id": "2e8163c9f422",
+    "title": "AI Video Transcriber",
+    "summary": "AI Video Transcriber 是开源的视频转录与总结工具，支持YouTube、TikTok等30多个平台。工具用Faster-Whisper进行高精度语音转文字，通过AI优化文本，纠正拼...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/ai-video-transcriber/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "fd8e597d0c05",
+    "title": "xpander.ai",
+    "summary": "xpander.ai 是全栈 AI Agent 开发平台，提供从基础设施到开发工具的一站式解决方案。工具支持快速构建、测试和部署 AI Agent，具备可视化工作台、丰富的工具...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/xpander-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "8fd1b9658369",
+    "title": "MiniCPM 4.1",
+    "summary": "MiniCPM 4.1 是面壁智能推出的混合思考模型。采用 InfLLM v2 稀疏注意力架构，每个词元仅需计算与少于 5% 词元的相关性，显著降低长文本处理开销。在 128K 长...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/minicpm-4-1/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "2a24515915d3",
+    "title": "MoodGallery",
+    "summary": "MoodGallery 是AI情绪追综应用。基于 AI 技术，让用户能随时记录自己的情绪，转化为独一无二的艺术画作，构建个人情绪画廊。用户能用视觉化的方式了解自己的...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/moodgallery/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "e50d12252622",
+    "title": "Snipd",
+    "summary": "Snipd是智能播客生成器，通过AI技术为用户提供高效的内容体验。应用能自动捕捉播客中的关键见解并生成笔记，用户能随时查看和回顾。",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/snipd/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "c8ea49a5802d",
+    "title": "ChatBump AI",
+    "summary": "ChatBump AI 是全球聊天分析平台，通过分析用户的聊天记录，揭示隐藏的情感模式、关系动态等信息。用户能上传来自 WhatsApp、Facebook、Instagram 等平台的聊...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/chatbump-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:53.964Z",
+    "_page": 90
+  },
+  {
+    "id": "283d8fef8580",
+    "title": "rStar2-Agent",
+    "summary": "rStar2-Agent是微软开源的仅140亿参数的数学推理模型。模型用智能体强化学习方法训练，在AIME24数学推理测试中准确率高达80.6%，超越6710亿参数的DeepSeek-R1。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型",
+      "DeepSeek"
+    ],
+    "url": "https://ai-bot.cn/rstar2-agent/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "ce237d8ee9a5",
+    "title": "U深研",
+    "summary": "U深研是UniFuncs公司推出的沉浸式深度研究平台，帮助用户高效地进行复杂问题研究和知识探索。通过深度搜索技术，快速筛选海量信息，结合人工智能分析推理，挖...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/unifuncs/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "7ce03e7d6e03",
+    "title": "Parlant",
+    "summary": "Parlant是开源的LLM（大型语言模型）代理行为建模引擎，帮助开发者快速创建符合业务要求的对话式代理。通过自然语言规则定义来确保AI代理的行为符合业务逻辑...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/parlant/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "d23384908621",
+    "title": "SnapEat AI",
+    "summary": "SnapEat AI 是百度推出的海外AI运动健身APP。通过AI视觉识别技术，能快速识别食物并精准计算卡路里及营养成分，为用户提供个性化膳食建议。用户可设定健康目...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/snapeat-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "2e3ff6d5b52c",
+    "title": "Seedream 4.0",
+    "summary": "Seedream 4.0 是字节跳动最新推出的AI图像创作模型，定位为“生成与编辑一体化”的专业工具。基于同一架构实现文生图与通用编辑能力，融合常识和推理能力，在多...",
     "category": "AI工具",
     "tags": [
       "模型",
-      "图像",
-      "通义千问"
-    ],
-    "url": "https://ai-bot.cn/qwen-image-edit/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:24.815Z",
-    "_page": 90
-  },
-  {
-    "id": "ef904e40c38f",
-    "title": "AudioGenie",
-    "summary": "AudioGenie是腾讯AI Lab团队推出的多模态音频生成工具，能从视频、文本、图像等多种模态输入生成音效、语音、音乐等多种音频输出。工具采用无训练的多智能体...",
-    "category": "AI工具",
-    "tags": [
-      "Agent",
-      "图像",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/audiogenie/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
-    "_page": 90
-  },
-  {
-    "id": "e978df104d24",
-    "title": "Pykaso AI",
-    "summary": "Pykaso AI 是强大的AI创作平台，能帮助用户生成和编辑高质量的图像与视频内容。平台提供多种功能，包括图像到图像生成、皮肤纹理增强、AI 图像编辑及 4K 视频...",
-    "category": "AI工具",
-    "tags": [
-      "图像",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/pykaso-ai/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
-    "_page": 90
-  },
-  {
-    "id": "08685fe98968",
-    "title": "Ludo.ai",
-    "summary": "Ludo.ai 是强大的 AI 游戏开发平台，能帮助开发者从创意构思到实际开发的全过程。平台提供丰富的功能，包括游戏概念生成、AI 驱动的 3D 资产和图像生成、自定...",
-    "category": "AI工具",
-    "tags": [
       "图像"
     ],
-    "url": "https://ai-bot.cn/ludo-ai/",
+    "url": "https://ai-bot.cn/seedream-4-0/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
     "_page": 90
   },
   {
-    "id": "c5c44e8c8a95",
-    "title": "Filo",
-    "summary": "Filo 是AI智能邮箱管理应用。基于内置的 AI 助手，理解执行用户的简单指令，如自动清理垃圾邮件、分类整理邮件、安排任务等，极大地简化邮件管理流程。Filo目...",
+    "id": "edf930aa56ae",
+    "title": "FineVision",
+    "summary": "FineVision 是 Hugging Face 推出的开源视觉语言数据集，训练先进的视觉语言模型。包含 1730 万张图像、2430 万个样本、8890 万轮对话和 95 亿个答案标记。数...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/finevision/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "fb45868d6f30",
+    "title": "堆友相机",
+    "summary": "堆友相机是阿里旗下堆友AI中的AI写真照片生成工具，基于AI技术为用户提供个人写真照制作服务。堆友相机支持一键生成数字人分身，用户可以创建属于自己的数字...",
     "category": "AI工具",
     "tags": [],
-    "url": "https://ai-bot.cn/filo-mail/",
+    "url": "https://ai-bot.cn/design-camera/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
     "_page": 90
   },
   {
-    "id": "04afeb00c0eb",
-    "title": "Chaterm",
-    "summary": "Chaterm是开源的智能、安全的AI终端工具，专为云从业者和开发运维人员设计。工具基于AI Agent让用户能用自然语言代替复杂命令行操作，Chaterm提供基于个人知...",
+    "id": "737453834b05",
+    "title": "Claudable",
+    "summary": "Claudable是基于Next.js的开源Web应用构建器，结合了Claude Code和Cursor CLI的先进AI代理能力，以及Lovable简单直观的应用构建体验。用户只需用自然语言描述...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "编程",
+      "Claude"
+    ],
+    "url": "https://ai-bot.cn/claudable/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "df7554d2a072",
+    "title": "Qwen3-Max-Preview",
+    "summary": "Qwen3-Max-Preview 是阿里巴巴旗下通义千问团队发布的最新旗舰大语言模型。是 Qwen3 系列中参数量最大的模型，参数规模超过 1 万亿。模型在推理、指令跟随、...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/qwen3-max-preview/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "68ad9ded89fe",
+    "title": "Novix",
+    "summary": "Novix 是专注于科学研究的 AI 平台，通过人工智能技术加速科学研究过程。能从新想法的生成到实验验证的整个过程为研究人员提供支持。具体功能包括生成突破性...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/novix/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:55.600Z",
+    "_page": 90
+  },
+  {
+    "id": "ecad4d735cab",
+    "title": "极客侧边栏",
+    "summary": "极客侧边栏是集成了 AI 助手和书签管理功能的浏览器扩展工具。支持多种浏览器，包括 Chrome、Edge 和 Firefox，能显著提升用户的上网效率。通过集成先进的 AI...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/geek-sidebar/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "6af98cda46b1",
+    "title": "OneCAT",
+    "summary": "OneCAT是美团推出的新型统一多模态模型，采用纯解码器架构，能无缝集成多模态理解、文本到图像生成和图像编辑功能。模型摒弃了传统多模态模型中依赖外部视觉...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/onecat/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "db1270e059ad",
+    "title": "EmbeddingGemma",
+    "summary": "EmbeddingGemma是谷歌开源的多语言文本嵌入模型，专为端侧AI设计，支持在笔记本、手机等设备上部署。模型拥有3.08亿参数，基于Gemma 3架构打造，支持100多种...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/embeddinggemma/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "e8227f7ff0d4",
+    "title": "Fellou CE",
+    "summary": "Fellou CE是创新的AI浏览器，为全球首款空间Agentic浏览器，通过独特的Z轴空间界面，为每个任务创建独立空间，减少任务干扰，提升多任务处理效率。",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/fellou-ce/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "86292fff0d05",
+    "title": "小朋友知识卡片",
+    "summary": "小朋友知识卡片是AI 知识卡片生成工具，能将任何知识点变成生动有趣的知识卡片，适合孩子学习。输入知识点后，工具自动生成包含详细介绍、对比、案例和总结的...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/v0-card-generation/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "971c4c1aef79",
+    "title": "mobile-use",
+    "summary": "mobile-use是移动端AI Agents工具，支持自然语言控制Android和iOS设备，帮助用户操作手机。用户用日常语言下达指令，工具自动完成任务，如打开应用、填写表单...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/mobile-use/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "ab9d2ca1ca2c",
+    "title": "ChatCut",
+    "summary": "ChatCut是基于浏览器的 AI 辅助视频剪辑工具，能自动精准转录视频或音频素材，支持多语言，具备说话人分离和帧级时间码功能。用户能像编辑文本一样修改转录内...",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/chatcut-io/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "426f23bd64c4",
+    "title": "InfinityHuman",
+    "summary": "InfinityHuman 是字节跳动与浙江大学联合团队推出的商用级长时序音频驱动人物视频生成模型，开启 AI 数字人实用化新篇章。",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/infinityhuman/",
+    "source": "ai-bot.cn",
+    "date": "2025-09-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
+    "_page": 90
+  },
+  {
+    "id": "71e4c4095541",
+    "title": "Super Agent Party",
+    "summary": "Super Agent Party 是开源的3D AI桌面伴侣软件，将桌宠、智能助手、知识库、机器人控制等多种功能集于一体。用户能通过Docker或源码快速部署到Windows、macOS...",
     "category": "AI工具",
     "tags": [
       "开源",
       "Agent"
     ],
-    "url": "https://ai-bot.cn/chaterm/",
+    "url": "https://ai-bot.cn/super-agent-party/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
     "_page": 90
   },
   {
-    "id": "bf942c4f91d2",
-    "title": "MemU",
-    "summary": "MemU 是面向AI情感陪伴开源的AI记忆框架。MemU 能记住用户与 AI 的每一次对话，提取重点并建立知识图谱，让 AI 真正理解用户。",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "框架"
-    ],
-    "url": "https://ai-bot.cn/memu/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
-    "_page": 90
-  },
-  {
-    "id": "b98cc4d2c397",
-    "title": "星空外语",
-    "summary": "星空外语是基于先进AI技术的智能语言学习平台，让每个人能高效、便捷地提升口语和综合语言能力。通过深度人工智能技术，提供随时随地的语言学习支持，专注于...",
+    "id": "3d11f1ad55d4",
+    "title": "叠叠社",
+    "summary": "叠叠社是脸谱心智公司推出的AI虚拟陪伴应用，以AI弹幕形式出现在用户桌面，能感知用户行为并互动，如提醒朋友生日、聊天等。",
     "category": "AI工具",
     "tags": [],
-    "url": "https://ai-bot.cn/skyai-whyu/",
+    "url": "https://ai-bot.cn/nijigen/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
+    "fetchedAt": "2026-06-08T16:24:57.241Z",
     "_page": 90
   },
   {
-    "id": "43d2c1de4dc6",
-    "title": "CGDream",
-    "summary": "CGDream是AI图像生成平台，能帮助用户通过强大的AI技术快速将创意转化为视觉作品。平台提供多种功能，包括文本生成图像、AI照片编辑、3D模型生成与渲染等，配...",
+    "id": "96f5621a3b4f",
+    "title": "Orca",
+    "summary": "Orca是加州大学圣地亚哥分校的研究者推出的智能体浏览器，将网页视为可塑材料，浏览器作为可塑空间，通过AI辅助实现用户驱动的大规模浏览。",
     "category": "AI工具",
     "tags": [
-      "模型",
-      "图像"
+      "Agent"
     ],
-    "url": "https://ai-bot.cn/cgdream/",
+    "url": "https://ai-bot.cn/orca/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
+    "fetchedAt": "2026-06-08T16:24:58.870Z",
     "_page": 90
   },
   {
-    "id": "a5e03c3c1921",
-    "title": "Vireel",
-    "summary": "Vireel 是基于人工智能的短视频制作平台，专为需要在 TikTok 和 Instagram 等社交媒体上高效创建内容的品牌、营销人员和内容创作者设计。助力社交媒体内容传...",
+    "id": "b7a0b51bbfbe",
+    "title": "Apertus",
+    "summary": "Apertus是瑞士EPFL、ETH Zurich和瑞士国家超级计算中心（CSCS）联合推出的瑞士首个大规模开放、多语言的大型语言模型，有70B和8B两个参数版本。",
     "category": "AI工具",
     "tags": [
-      "视频"
+      "模型"
     ],
-    "url": "https://ai-bot.cn/vireel/",
+    "url": "https://ai-bot.cn/apertus/",
     "source": "ai-bot.cn",
-    "date": "2025-08-04",
+    "date": "2025-09-11",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
-    "_page": 90
-  },
-  {
-    "id": "12e5dc27535c",
-    "title": "FastbuildAI",
-    "summary": "FastbuildAI 是面向 AI 开发者和创业者的开源 AI 应用框架，帮助用户快速构建私有 AI 应用。FastbuildAI 能在数分钟内完成部署，通过可视化配置界面（Do It Y...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "框架"
-    ],
-    "url": "https://ai-bot.cn/fastbuildai/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:25.876Z",
-    "_page": 90
-  },
-  {
-    "id": "976d239cadb2",
-    "title": "Cluely",
-    "summary": "Cluely 是 AI 桌面助手，工具用透明窗口形式出现在用户屏幕上，支持在会议、面试、销售、客服等场景中提供实时辅助，如自动生成笔记、智能提问、自动回答问题...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/cluely/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:26.918Z",
-    "_page": 90
-  },
-  {
-    "id": "51e7c9bc5c30",
-    "title": "OpenDeRisk",
-    "summary": "OpenDeRisk是AI原生的风险智能管理系统，支持为应用系统提供7×24小时的全面保护。系统基于深度根本原因分析（DeepResearch RCA），快速定位问题根源，结合可...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/openderisk/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:26.918Z",
-    "_page": 90
-  },
-  {
-    "id": "24475e5e6a11",
-    "title": "VeOmni",
-    "summary": "VeOmni 是字节跳动 Seed 团队开源的全模态分布式训练框架，基于 PyTorch 设计。VeOmni 以模型为中心，将分布式并行逻辑与模型计算解耦，支持灵活组合多种并行...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "框架"
-    ],
-    "url": "https://ai-bot.cn/veomni/",
-    "source": "ai-bot.cn",
-    "date": "2025-08-04",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:53:26.918Z",
+    "fetchedAt": "2026-06-08T16:24:58.870Z",
     "_page": 90
   }
 ]

@@ -1,0 +1,109 @@
+.live-comment-item {
+  background: var(--bg-secondary, #1a1a2e);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border-color, #333);
+}
+
+.live-comment-item__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.live-comment-item__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+  border: 2px solid var(--primary-color, #6366f1);
+}
+
+.live-comment-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.live-comment-item__name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary, #ffffff);
+  margin-bottom: 4px;
+}
+
+.live-comment-item__time {
+  font-size: 12px;
+  color: var(--text-muted, #888);
+}
+
+.live-comment-item__content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary, #e0e0e0);
+  margin-bottom: 12px;
+  word-wrap: break-word;
+}
+
+.live-comment-item__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.live-comment-item__action-btn {
+  padding: 4px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted, #888);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary-color, #6366f1);
+  }
+}
+
+.live-comment-item__action-btn--reply:hover {
+  color: #6366f1;
+}
+
+.live-comment-item__action-btn--like:hover {
+  color: #ef4444;
+}
+
+.live-comment-item__action-btn--delete:hover {
+  color: #ef4444;
+}
+
+.live-comment-item__replies {
+  margin-top: 12px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border-color, #333);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .live-comment-item {
+    padding: 12px;
+  }
+
+  .live-comment-item__avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .live-comment-item__name {
+    font-size: 13px;
+  }
+
+  .live-comment-item__content {
+    font-size: 13px;
+  }
+
+  .live-comment-item__replies {
+    padding-left: 12px;
+  }
+}

@@ -1,8 +1,8 @@
-import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ArticleRepositoryService } from '../../../core/services/article-repository.service';
 import { I18nService } from '../../../core/services/i18n.service';
-import type { PublishTarget } from '../../../core/models/article.model';
+import { PostService, Post } from '../../../core/services/post.service';
 
 @Component({
   selector: 'app-write',
@@ -11,127 +11,130 @@ import type { PublishTarget } from '../../../core/models/article.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
 })
-export class WriteComponent {
-  private repository = inject(ArticleRepositoryService);
+export class WriteComponent implements OnInit {
   private i18n = inject(I18nService);
+  private postService = inject(PostService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  // Form fields
   readonly title = signal('');
   readonly slug = signal('');
   readonly summary = signal('');
-  readonly category = signal('开发');
-  readonly tagsInput = signal('');
   readonly content = signal('');
-  readonly coverFile = signal<File | null>(null);
-  readonly publishTarget = signal<PublishTarget>('github');
+  readonly coverUrl = signal('');
+  readonly language = signal('zh-CN');
+  readonly isPreview = signal(false);
+  readonly isSaving = signal(false);
+  readonly isPublishing = signal(false);
+  readonly error = signal('');
+  readonly success = signal('');
+  readonly isEditing = signal(false);
+  readonly editId = signal<string | null>(null);
 
-  // UI state
-  readonly publishing = signal(false);
-  readonly publishSuccess = signal(false);
-  readonly publishError = signal<string | null>(null);
+  ngOnInit(): void {
+    // 检查是否是编辑模式
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditing.set(true);
+      this.editId.set(id);
+      this.loadPost(id);
+    }
+  }
 
-  readonly categories = ['开发', '随笔', '薅羊毛攻略', 'GIS', '算法'];
-
-  readonly publishTargets = [
-    { value: 'static' as PublishTarget, label: 'Static Draft (本地草稿)' },
-    { value: 'github' as PublishTarget, label: 'GitHub (线上发布)' },
-    { value: 'supabase' as PublishTarget, label: 'Supabase (预留)' },
-  ];
+  loadPost(id: string): void {
+    this.postService.getPostBySlug(id).subscribe({
+      next: (post) => {
+        this.title.set(post.title);
+        this.slug.set(post.slug);
+        this.summary.set(post.summary || '');
+        this.content.set(post.content);
+        this.coverUrl.set(post.cover_url || '');
+        this.language.set(post.language);
+      },
+      error: (err) => {
+        this.error.set('加载文章失败');
+        console.error('Failed to load post:', err);
+      }
+    });
+  }
 
   t(key: string): string {
     return this.i18n.t(key);
   }
 
-  // Auto-generate slug from title
-  onTitleChange(): void {
-    const currentSlug = this.slug();
-    if (!currentSlug || this.isSlugDerivedFromTitle()) {
-      const generated = this.generateSlug(this.title());
-      this.slug.set(generated);
+  togglePreview(): void {
+    this.isPreview.update((v) => !v);
+  }
+
+  onTitleChange(value: string): void {
+    this.title.set(value);
+    // 自动生成 slug
+    if (!this.isEditing()) {
+      this.slug.set(this.generateSlug(value));
     }
   }
 
-  private isSlugDerivedFromTitle(): boolean {
-    const expected = this.generateSlug(this.title());
-    return this.slug() === expected || !this.slug();
-  }
-
-  private generateSlug(title: string): string {
+  generateSlug(title: string): string {
     return title
-      .trim()
       .toLowerCase()
-      .replace(/[^\w\u4e00-\u9fff]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .replace(/\s+/g, '-') || 'untitled';
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
   }
 
-  // Parse tags from comma-separated input
-  get tagsArray(): string[] {
-    return this.tagsInput()
-      .split(',')
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0);
+  onSaveDraft(): void {
+    this.savePost('draft');
   }
 
-  set tagsArray(value: string[]) {
-    this.tagsInput.set(value.join(', '));
+  onPublish(): void {
+    this.savePost('published');
   }
 
-  // Handle cover file upload
-  onCoverFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files?.[0]) {
-      this.coverFile.set(input.files[0]);
-    }
-  }
-
-  // Publish article
-  async onPublish(): Promise<void> {
-    this.publishError.set(null);
-    this.publishSuccess.set(false);
-
-    // Validation
-    if (!this.title().trim()) {
-      this.publishError.set('标题不能为空');
-      return;
-    }
-    if (!this.slug().trim()) {
-      this.publishError.set('Slug 不能为空');
-      return;
-    }
-    if (!this.content().trim()) {
-      this.publishError.set('正文内容不能为空');
+  savePost(status: string): void {
+    if (!this.title() || !this.content()) {
+      this.error.set('标题和内容不能为空');
       return;
     }
 
-    this.publishing.set(true);
+    this.isSaving.set(true);
+    this.error.set('');
+    this.success.set('');
 
-    const result = await this.repository.publishArticle(
-      {
-        slug: this.slug().trim(),
-        title: this.title().trim(),
-        summary: this.summary().trim(),
-        category: this.category(),
-        tags: this.tagsArray,
-        content: this.content().trim(),
-        coverFile: this.coverFile() ?? null,
+    const postData: Partial<Post> = {
+      title: this.title(),
+      slug: this.slug(),
+      summary: this.summary(),
+      content: this.content(),
+      cover_url: this.coverUrl(),
+      language: this.language(),
+      status: status
+    };
+
+    const request = this.isEditing()
+      ? this.postService.updatePost(this.editId()!, postData)
+      : this.postService.createPost(postData);
+
+    request.subscribe({
+      next: (post) => {
+        this.isSaving.set(false);
+        this.success.set(status === 'published' ? '文章已发布' : '草稿已保存');
+        
+        if (status === 'published') {
+          setTimeout(() => {
+            this.router.navigate(['/admin']);
+          }, 1500);
+        }
       },
-      this.publishTarget(),
-    );
+      error: (err) => {
+        this.isSaving.set(false);
+        this.error.set(err.error?.error || '保存失败，请稍后重试');
+        console.error('Failed to save post:', err);
+      }
+    });
+  }
 
-    this.publishing.set(false);
-
-    if (result.success) {
-      this.publishSuccess.set(true);
-      // Reset form
-      this.title.set('');
-      this.slug.set('');
-      this.summary.set('');
-      this.content.set('');
-      this.tagsInput.set('');
-      this.coverFile.set(null);
-    } else {
-      this.publishError.set(result.error ?? '发布失败');
-    }
+  onBack(): void {
+    this.router.navigate(['/admin']);
   }
 }

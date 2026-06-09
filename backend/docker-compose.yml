@@ -1,0 +1,66 @@
+# PostgreSQL
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: spacelab-postgres
+    environment:
+      POSTGRES_USER: spacelab
+      POSTGRES_PASSWORD: spacelab_password
+      POSTGRES_DB: spacelab
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    networks:
+      - spacelab-network
+    restart: unless-stopped
+
+  # Redis（用于缓存和会话）
+  redis:
+    image: redis:7-alpine
+    container_name: spacelab-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - spacelab-network
+    restart: unless-stopped
+
+  # 后端服务
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spacelab-backend
+    environment:
+      DATABASE_URL: postgres://spacelab:spacelab_password@postgres:5432/spacelab?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-key-change-in-production}
+      JWT_EXPIRATION: 24h
+      SERVER_PORT: 8080
+      ENVIRONMENT: production
+      MAX_UPLOAD_SIZE: 10485760
+      UPLOAD_PATH: /app/uploads
+      ALLOWED_ORIGINS: http://localhost:4200,http://localhost:8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - spacelab-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads:
+
+networks:
+  spacelab-network:
+    driver: bridge

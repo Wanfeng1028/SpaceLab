@@ -45,6 +45,17 @@
         [innerHTML]="sanitizedContent()"
       ></article>
 
+      <!-- LiveComment 评论组件 -->
+      <div class="article-comments-section">
+        <app-live-comment
+          [postId]="art.slug"
+          [postTitle]="art.title"
+          [pageSize]="10"
+          [enableReply]="true"
+          [enableLike]="true"
+        ></app-live-comment>
+      </div>
+
       <!-- Prev / Next Navigation -->
       <nav class="article-nav">
         @if (art.prevSlug) {

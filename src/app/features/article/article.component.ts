@@ -14,6 +14,7 @@ import { I18nService } from '../../core/services/i18n.service';
 import { PostService } from '../../core/services/post.service';
 import { ArticleRepositoryService } from '../../core/services/article-repository.service';
 import { ArticleMetricsService } from '../../core/services/article-metrics.service';
+import { LiveCommentComponent } from '../../shared/components/live-comment/live-comment.component';
 import DOMPurify from 'dompurify';
 import type { GeneratedPost } from '../../../generated/content.generated';
 import type { Article } from '../../core/models/article.model';
@@ -23,7 +24,7 @@ import type { Article } from '../../core/models/article.model';
   templateUrl: './article.html',
   styleUrl: './article.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, LiveCommentComponent],
 })
 export class ArticleComponent implements OnInit {
   private route = inject(ActivatedRoute);

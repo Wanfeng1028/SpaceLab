@@ -1,77 +1,105 @@
 <div class="admin-page">
-  <div class="container">
-    <div class="admin-header">
-      <h1 class="admin-header__title">{{ t('admin.newArticle') }}</h1>
-      <div class="space-button-group admin-header__actions">
-        <button class="space-button space-button--sm space-button--white" (click)="togglePreview()">
-          {{ isPreview() ? t('admin.editor') : t('admin.preview') }}
+  <div class="admin-container">
+    <!-- Admin Header -->
+    <header class="admin-header">
+      <div class="admin-header__left">
+        <h1 class="admin-header__title">管理后台</h1>
+        <span class="admin-header__user" *ngIf="currentUser()">
+          {{ currentUser()?.username || currentUser()?.email }}
+        </span>
+      </div>
+      <div class="admin-header__right">
+        <button class="admin-btn admin-btn--primary" (click)="onNewArticle()">
+          新建文章
         </button>
-        <button class="space-button space-button--sm space-button--white" (click)="onSaveDraft()">
-          {{ t('admin.saveDraft') }}
+        <button class="admin-btn admin-btn--secondary" routerLink="/admin/analytics">
+          数据分析
         </button>
-        <button class="space-button space-button--sm space-button--blue" (click)="onPublish()">
-          {{ t('admin.publish') }}
+        <button class="admin-btn admin-btn--ghost" (click)="onLogout()">
+          退出登录
         </button>
+      </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-card__value">{{ stats().totalPosts }}</div>
+        <div class="stat-card__label">文章总数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">{{ stats().publishedPosts }}</div>
+        <div class="stat-card__label">已发布</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">{{ stats().draftPosts }}</div>
+        <div class="stat-card__label">草稿</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">{{ stats().totalViews }}</div>
+        <div class="stat-card__label">总阅读量</div>
       </div>
     </div>
 
-    @if (!isPreview()) {
-      <!-- Editor Mode -->
-      <div class="editor-form">
-        <div class="form-field">
-          <label class="form-label">{{ t('admin.title') }}</label>
-          <input
-            class="form-input"
-            type="text"
-            [value]="title()"
-            (input)="title.set($any($event.target).value)"
-            placeholder="{{ t('admin.titlePlaceholder') }}"
-          />
-        </div>
-
-        <div class="form-field">
-          <label class="form-label">{{ t('admin.tags') }}</label>
-          <input
-            class="form-input"
-            type="text"
-            [value]="tags()"
-            (input)="tags.set($any($event.target).value)"
-            placeholder="{{ t('admin.tagsPlaceholder') }}"
-          />
-        </div>
-
-        <div class="form-field">
-          <label class="form-label">{{ t('admin.category') }}</label>
-          <select
-            class="form-select"
-            [value]="category()"
-            (change)="category.set($any($event.target).value)"
-          >
-            <option value="GIS">{{ t('admin.catGis') }}</option>
-            <option value="开发">{{ t('admin.catDev') }}</option>
-            <option value="算法">{{ t('admin.catAlgorithm') }}</option>
-            <option value="随笔">{{ t('admin.catEssay') }}</option>
-            <option value="薅羊毛攻略">{{ t('admin.catDeals') }}</option>
-          </select>
-        </div>
-
-        <div class="form-field">
-          <label class="form-label">{{ t('admin.content') }}</label>
-          <textarea
-            class="form-textarea"
-            [value]="content()"
-            (input)="content.set($any($event.target).value)"
-            placeholder="{{ t('admin.contentPlaceholder') }}"
-            rows="20"
-          ></textarea>
-        </div>
+    <!-- Posts Table -->
+    <div class="admin-content">
+      <div class="admin-content__header">
+        <h2>文章管理</h2>
       </div>
-    } @else {
-      <!-- Preview Mode -->
-      <div class="preview-area">
-        <h2 class="preview-title">{{ title() || t('admin.untitled') }}</h2>
-        <div class="preview-content markdown-body">{{ content() }}</div>
-      </div>
-    }
+
+      @if (loading()) {
+        <div class="admin-loading">加载中...</div>
+      } @else if (posts().length === 0) {
+        <div class="admin-empty">
+          <p>暂无文章</p>
+          <button class="admin-btn admin-btn--primary" (click)="onNewArticle()">
+            创建第一篇文章
+          </button>
+        </div>
+      } @else {
+        <div class="admin-table">
+          <table>
+            <thead>
+              <tr>
+                <th>标题</th>
+                <th>状态</th>
+                <th>分类</th>
+                <th>阅读量</th>
+                <th>创建时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (post of posts(); track post.id) {
+                <tr>
+                  <td class="post-title">{{ post.title }}</td>
+                  <td>
+                    <span class="status-badge" [class]="'status--' + post.status">
+                      {{ post.status === 'published' ? '已发布' : post.status === 'draft' ? '草稿' : post.status }}
+                    </span>
+                  </td>
+                  <td>{{ post.category || '-' }}</td>
+                  <td>{{ post.view_count || 0 }}</td>
+                  <td>{{ post.created_at | date:'yyyy-MM-dd' }}</td>
+                  <td class="actions">
+                    <button class="admin-btn admin-btn--sm" (click)="onEditArticle(post.id)">
+                      编辑
+                    </button>
+                    @if (post.status === 'draft') {
+                      <button class="admin-btn admin-btn--sm admin-btn--primary" (click)="onPublishArticle(post.id)">
+                        发布
+                      </button>
+                    }
+                    <button class="admin-btn admin-btn--sm admin-btn--danger" (click)="onDeleteArticle(post.id)">
+                      删除
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
   </div>
 </div>

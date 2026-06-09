@@ -1,0 +1,77 @@
+<div class="live-comment">
+  <div class="live-comment__header">
+    <h3 class="live-comment__title">
+      <span>{{ postTitle ? postTitle + ' - ' : '' }}</span>
+      评论 ({{ totalComments }})
+    </h3>
+  </div>
+
+  <!-- 错误提示 -->
+  <div *ngIf="error" class="live-comment__error">
+    {{ error }}
+  </div>
+
+  <!-- 评论输入框 -->
+  <div class="live-comment__input-section">
+    <div class="live-comment__input-wrapper">
+      <textarea
+        id="new-comment-input"
+        [(ngModel)]="newComment"
+        placeholder="说点什么吧..."
+        [disabled]="submitting"
+        rows="3"
+        class="live-comment__textarea"
+      ></textarea>
+    </div>
+
+    <!-- 回复提示 -->
+    <div *ngIf="replyTo" class="live-comment__reply-header">
+      <span>回复 @{{ replyTo.username || '用户' }}</span>
+      <button type="button" (click)="cancelReply()" class="live-comment__cancel-btn">
+        取消
+      </button>
+    </div>
+
+    <div class="live-comment__input-actions">
+      <button
+        type="button"
+        (click)="submitComment()"
+        [disabled]="!newComment.trim() || submitting"
+        class="live-comment__submit-btn"
+      >
+        {{ submitting ? '提交中...' : '发表评论' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- 加载状态 -->
+  <div *ngIf="loading && comments.length === 0" class="live-comment__loading">
+    加载中...
+  </div>
+
+  <!-- 评论列表 -->
+  <div *ngIf="!loading && comments.length > 0" class="live-comment__list">
+    <app-live-comment-item
+      *ngFor="let comment of comments"
+      [comment]="comment"
+      [enableReply]="enableReply"
+      [enableLike]="enableLike"
+      (replyEvent)="startReply($event)"
+      (deleteEvent)="deleteComment($event)"
+    ></app-live-comment-item>
+  </div>
+
+  <!-- 无评论状态 -->
+  <div *ngIf="!loading && comments.length === 0" class="live-comment__empty">
+    <p>暂无评论，快来抢沙发吧！</p>
+  </div>
+
+  <!-- 加载更多 -->
+  <button
+    *ngIf="!loading && hasMore()"
+    (click)="loadMore()"
+    class="live-comment__load-more"
+  >
+    加载更多
+  </button>
+</div>

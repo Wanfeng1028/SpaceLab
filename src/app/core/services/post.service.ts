@@ -1,34 +1,73 @@
-import { Injectable, signal } from '@angular/core';
-import type { Post } from '../models';
-import { POSTS, type GeneratedPost } from '../../../generated/content.generated';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
+export interface Post {
+  id: string;
+  slug: string;
+  title: string;
+  summary?: string;
+  content: string;
+  cover_url?: string;
+  status: string;
+  language: string;
+  author_id: string;
+  created_at: string;
+  updated_at: string;
+  published_at?: string;
+  view_count: number;
+}
+
+export interface PostListResponse {
+  posts: Post[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-  private readonly _posts = signal<GeneratedPost[]>(POSTS);
-  private readonly _loading = signal(false);
-  private readonly _error = signal<string | null>(null);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
-  readonly posts = this._posts.asReadonly();
-  readonly loading = this._loading.asReadonly();
-  readonly error = this._error.asReadonly();
+  getPosts(page: number = 1, pageSize: number = 10, status?: string, language?: string): Observable<PostListResponse> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('page_size', pageSize.toString());
 
-  async fetchPublishedPosts(): Promise<void> {
-    this._loading.set(true);
-    this._error.set(null);
-    try {
-      this._posts.set(POSTS);
-    } catch (err: any) {
-      this._error.set(err?.message ?? 'Failed to fetch posts');
-    } finally {
-      this._loading.set(false);
+    if (status) {
+      params = params.set('status', status);
     }
+    if (language) {
+      params = params.set('language', language);
+    }
+
+    return this.http.get<PostListResponse>(`${this.apiUrl}/posts`, { params });
   }
 
-  async fetchPostBySlug(slug: string): Promise<GeneratedPost | null> {
-    return POSTS.find((p) => p.slug === slug) ?? null;
+  getPostBySlug(slug: string): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/posts/${slug}`);
   }
 
-  getAllPosts(): GeneratedPost[] {
-    return POSTS;
+  createPost(post: Partial<Post>): Observable<Post> {
+    return this.http.post<Post>(`${this.apiUrl}/posts`, post);
+  }
+
+  updatePost(id: string, post: Partial<Post>): Observable<Post> {
+    return this.http.put<Post>(`${this.apiUrl}/posts/${id}`, post);
+  }
+
+  deletePost(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/posts/${id}`);
+  }
+
+  publishPost(id: string): Observable<Post> {
+    return this.http.post<Post>(`${this.apiUrl}/posts/${id}/publish`, {});
+  }
+
+  incrementViewCount(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/posts/${id}/view`, {});
   }
 }

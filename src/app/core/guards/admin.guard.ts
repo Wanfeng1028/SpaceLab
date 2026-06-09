@@ -1,17 +1,20 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
-// TODO: Implement proper authentication (Supabase JWT + RLS) before production.
-// This guard currently blocks all access until auth is implemented.
 export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
+  const authService = inject(AuthService);
 
-  // Remove localStorage check — not a security boundary.
-  // Temporary: always redirect to home until authentication is integrated.
-  // To enable admin access temporarily during development, uncomment the line below.
-  // if (typeof localStorage !== 'undefined' && localStorage.getItem('isAdmin') === 'true') {
-  //   return true;
-  // }
+  // 检查是否已登录
+  if (!authService.isLoggedIn()) {
+    return router.createUrlTree(['/login']);
+  }
 
-  return router.createUrlTree(['/']);
+  // 检查是否是管理员
+  if (!authService.isAdmin()) {
+    return router.createUrlTree(['/']);
+  }
+
+  return true;
 };

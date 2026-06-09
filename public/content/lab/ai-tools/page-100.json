@@ -1,0 +1,264 @@
+[
+  {
+    "id": "d79e15737c66",
+    "title": "Kimi-Dev",
+    "summary": "Kimi-Dev是Moonshot AI推出的开源代码模型，专为软件工程任务设计。模型拥有 72B 参数量，编程水平比最新的DeepSeek-R1还强，和闭源模型比较也表现优异。在 S...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "编程",
+      "DeepSeek"
+    ],
+    "url": "https://ai-bot.cn/kimi-dev/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "164a2c6776e1",
+    "title": "DreamActor-H1",
+    "summary": "DreamActor-H1是字节跳动推出的基于扩散变换器（Diffusion Transformer, DiT）的框架，支持从配对的人类和产品图像生成高质量的人类产品演示视频。框架注入人...",
+    "category": "AI工具",
+    "tags": [
+      "框架",
+      "图像",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/dreamactor-h1/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "60b44ffd9f1b",
+    "title": "FlowDirector",
+    "summary": "FlowDirector是西湖大学AGI Lab团队联合中南大学推出的新型无训练（training-free）视频编辑框架，专门用在根据自然语言指令对视频内容进行精确编辑。框架直...",
+    "category": "AI工具",
+    "tags": [
+      "框架",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/flowdirector/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "81e3287d6d04",
+    "title": "MiniMax-M1",
+    "summary": "MiniMax-M1是MiniMax团队最新推出的开源推理模型，基于混合专家架构（MoE）与闪电注意力机制（lightning attention）相结合，总参数量达 4560 亿，每个token...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/minimax-m1/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "a8b3a3184533",
+    "title": "Observer AI",
+    "summary": "Observer AI 是开源的微智能体框架，专注于屏幕监控与自动化响应。通过实时捕捉屏幕变化，高精度记录用户界面动态，基于内置的 AI 算法智能分析屏幕内容，识...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "框架"
+    ],
+    "url": "https://ai-bot.cn/observer-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "9399a5827098",
+    "title": "Seaweed APT2",
+    "summary": "Seaweed APT2是字节跳动推出的创新的AI视频生成模型，通过自回归对抗后训练（AAPT）技术，将双向扩散模型转化为单向自回归生成器，实现高效、高质量的视频生成。",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/seaweed-apt2/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "61567840ed16",
+    "title": "Code Researcher",
+    "summary": "Code Researcher是微软研究院推出的深度研究Agent工具，专门用于处理大型系统代码库及其提交历史，自动化修复系统代码崩溃问题。通过三个阶段工作：分析（Ana...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/code-researcher/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "e4f5d0de9aca",
+    "title": "iMeanAI Coyage",
+    "summary": "iMeanAI Coyage 是浙江大学95后团队推出的AI旅行WebAgent，为用户提供一站式旅行解决方案。通过自然语言交互，用户只需简单描述旅行需求，如目的地、时间、预...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/imeanai-coyage/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:30.057Z",
+    "_page": 100
+  },
+  {
+    "id": "3592ef764a81",
+    "title": "Jenius",
+    "summary": "Jenius 是天聚地合（苏州）科技股份有限公司推出的通用型AI Agent产品。通过多智能体协作架构，将复杂任务分解为多个子任务，由不同的智能体分工完成，例如规...",
+    "category": "AI工具",
+    "tags": [
+      "Agent"
+    ],
+    "url": "https://ai-bot.cn/jenius/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "80f2e2ac1204",
+    "title": "Flowstep",
+    "summary": "Flowstep是AI设计工具，帮助设计师和创意工作者提升工作效率。工具基于智能算法和AI技术，为用户提供设计灵感、生成草图、优化布局等功能，能快速将想法转化...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/flowstep/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "a088e9f4a036",
+    "title": "MAGREF",
+    "summary": "MAGREF（Masked Guidance for Any‑Reference Video Generation）是字节跳动推出的多主体视频生成框架。MAGREF仅需一张参考图像和文本提示，能生成高质量、主...",
+    "category": "AI工具",
+    "tags": [
+      "框架",
+      "图像",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/magref/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "0a9ff4d867f1",
+    "title": "Clacky AI",
+    "summary": "Clacky AI是面向开发者的云端开发环境（CDE），致力于打造L3级别的Agentic AI编程助手。Clacky AI支持全栈开发（包括Python、Node.js、Golang、Ruby、Java等...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/clacky-ai/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "1d311b2e9df0",
+    "title": "OiaWrite",
+    "summary": "OiaWrite 是墨星写作网推出的在线智能辅助写作工具，专注于提升网络文学创作的效率和体验。支持多种小说类型创作，包括长篇、中篇、短篇和微型小说，提供卷和...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/oiawrite/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "6aeff6b166c7",
+    "title": "Hunyuan3D-2.1",
+    "summary": "Hunyuan3D-2.1 是腾讯混元团队推出的开源项目，专注于从图像生成高保真 3D 资产。具备基于物理的渲染（PBR）材质合成能力，能生成逼真的纹理和材质，如金属反...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "图像"
+    ],
+    "url": "https://ai-bot.cn/hunyuan3d-2-1/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "97f69d70f5ed",
+    "title": "Perplexity Labs",
+    "summary": "Perplexity Labs 是由Perplexity AI 推出的强大的 AI 工具，帮助用户高效完成复杂任务。专为处理需要较长时间和多步骤的工作而设计，例如生成报告、创建数据...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/perplexity-labs/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "d5281edc2b3a",
+    "title": "Ainee",
+    "summary": "Ainee是AI笔记和学习辅助工具，帮助用户高效地捕捉、整理和分享知识。工具支持从多种来源导入学习材料，包括实时音频、文本、视频、PDF等，自动将内容转换为...",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/ainee/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  },
+  {
+    "id": "c877ade54674",
+    "title": "Ideamap",
+    "summary": "Ideamap是AI驱动的头脑风暴工具，基于AI技术提升团队的创意生成和协作效率。工具提供一系列功能，如AI生成想法、可视化思维导图、实时协作、重复检测和想法投...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/ideamap/",
+    "source": "ai-bot.cn",
+    "date": "2025-06-13",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:26:31.724Z",
+    "_page": 100
+  }
+]

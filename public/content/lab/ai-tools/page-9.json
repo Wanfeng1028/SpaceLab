@@ -1,51 +1,5 @@
 [
   {
-    "id": "42e1ab357243",
-    "title": "SimpleAR",
-    "summary": "SimpleAR 是复旦大学视觉与学习实验室和字节 Seed 团队联合推出的纯自回归图像生成模型。采用简洁的自回归架构，通过优化训练和推理过程，实现了高质量的图像...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "图像"
-    ],
-    "url": "https://ai-bot.cn/simplear/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-31",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:11.337Z",
-    "_page": 9
-  },
-  {
-    "id": "c15839c70790",
-    "title": "ImagePulse",
-    "summary": "ImagePulse （图律脉动）是魔搭社区推出的开源项目，为下一代图像理解和生成模型提供数据集支持，通过原子化模型的能力并构建原子能力数据集。项目包含多个原...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "图像"
-    ],
-    "url": "https://ai-bot.cn/imagepulse/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-31",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:11.337Z",
-    "_page": 9
-  },
-  {
-    "id": "019d952e67df",
-    "title": "7牛AI",
-    "summary": "7牛AI 是高效便捷的AI PPT生成工具。用户只需输入主题或要点，能快速生成完整的PPT初稿，大大节省制作时间。拥有丰富多样的模板库，涵盖商务、教育、科技等多...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/7niuai/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-31",
-    "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
-    "_page": 9
-  },
-  {
     "id": "747d5fe47e42",
     "title": "Gemma 3 QAT",
     "summary": "Gemma 3 QAT（Quantization-Aware Training）是谷歌推出的最新一代开源模型，是Gemma 3 的量化优化版本。通过量化感知训练技术，Gemma 3 QAT 在显著降低内存...",
@@ -56,9 +10,9 @@
     ],
     "url": "https://ai-bot.cn/gemma-3-qat/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:06.440Z",
     "_page": 9
   },
   {
@@ -71,9 +25,9 @@
     ],
     "url": "https://ai-bot.cn/knowt/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:06.440Z",
     "_page": 9
   },
   {
@@ -86,9 +40,9 @@
     ],
     "url": "https://ai-bot.cn/desearch/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -101,9 +55,9 @@
     ],
     "url": "https://ai-bot.cn/feizhu-ai-ask/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -114,9 +68,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/reduce-the-traces-of-aigc-tools/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -129,9 +83,9 @@
     ],
     "url": "https://ai-bot.cn/openutau/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -145,9 +99,9 @@
     ],
     "url": "https://ai-bot.cn/skyreels-v2/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -161,9 +115,9 @@
     ],
     "url": "https://ai-bot.cn/coze-space/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -176,9 +130,9 @@
     ],
     "url": "https://ai-bot.cn/gigatok/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:12.399Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -189,9 +143,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/flutterflow/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -202,9 +156,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/jobright/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -215,9 +169,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/capwords/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:08.088Z",
     "_page": 9
   },
   {
@@ -228,9 +182,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/humanrig/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -243,9 +197,9 @@
     ],
     "url": "https://ai-bot.cn/bihuoai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -258,9 +212,9 @@
     ],
     "url": "https://ai-bot.cn/image-to-music/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -274,9 +228,9 @@
     ],
     "url": "https://ai-bot.cn/mineworld/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -290,9 +244,9 @@
     ],
     "url": "https://ai-bot.cn/fastapi-mcp/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -303,9 +257,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/planner-5d/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -318,9 +272,9 @@
     ],
     "url": "https://ai-bot.cn/veogo-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:13.502Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -335,9 +289,9 @@
     ],
     "url": "https://ai-bot.cn/framepack/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -350,9 +304,9 @@
     ],
     "url": "https://ai-bot.cn/fellou/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -365,9 +319,9 @@
     ],
     "url": "https://ai-bot.cn/aicailiaoxing/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:09.907Z",
     "_page": 9
   },
   {
@@ -381,9 +335,9 @@
     ],
     "url": "https://ai-bot.cn/mai-ds-r1/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -399,9 +353,9 @@
     ],
     "url": "https://ai-bot.cn/instantcharacter/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -417,9 +371,9 @@
     ],
     "url": "https://ai-bot.cn/wan2-1-flf2v-14b/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -432,9 +386,9 @@
     ],
     "url": "https://ai-bot.cn/chatdba/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -447,9 +401,9 @@
     ],
     "url": "https://ai-bot.cn/goodwebot/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -462,9 +416,9 @@
     ],
     "url": "https://ai-bot.cn/aqua-voice/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -475,9 +429,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/eap-talk/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:14.566Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -488,9 +442,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/mylens/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -501,9 +455,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/ifable/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -516,9 +470,9 @@
     ],
     "url": "https://ai-bot.cn/conbrie/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:11.325Z",
     "_page": 9
   },
   {
@@ -532,9 +486,9 @@
     ],
     "url": "https://ai-bot.cn/doubao-1-5-ui-tars/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -548,9 +502,9 @@
     ],
     "url": "https://ai-bot.cn/internvl3/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -563,9 +517,9 @@
     ],
     "url": "https://ai-bot.cn/trae-plugin/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -580,9 +534,9 @@
     ],
     "url": "https://ai-bot.cn/hyperchat/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -593,9 +547,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/chartai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -609,9 +563,9 @@
     ],
     "url": "https://ai-bot.cn/neural4d-2o/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -622,9 +576,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/copyowl-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:15.631Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -638,9 +592,9 @@
     ],
     "url": "https://ai-bot.cn/codex-cli/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -651,9 +605,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/aixiezuoyuan/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -667,9 +621,9 @@
     ],
     "url": "https://ai-bot.cn/openai-o4-mini/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:13.128Z",
     "_page": 9
   },
   {
@@ -683,9 +637,9 @@
     ],
     "url": "https://ai-bot.cn/blendermcp/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -698,9 +652,9 @@
     ],
     "url": "https://ai-bot.cn/kimina-prover/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -713,9 +667,9 @@
     ],
     "url": "https://ai-bot.cn/ghiblio-art/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -730,9 +684,9 @@
     ],
     "url": "https://ai-bot.cn/grimo/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -745,9 +699,9 @@
     ],
     "url": "https://ai-bot.cn/superflex/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -760,9 +714,9 @@
     ],
     "url": "https://ai-bot.cn/amadeus-code/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -776,9 +730,9 @@
     ],
     "url": "https://ai-bot.cn/pollinations-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:16.687Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -793,9 +747,9 @@
     ],
     "url": "https://ai-bot.cn/magnitude/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -808,9 +762,9 @@
     ],
     "url": "https://ai-bot.cn/ezsite-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -823,9 +777,9 @@
     ],
     "url": "https://ai-bot.cn/grok-studio/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:14.742Z",
     "_page": 9
   },
   {
@@ -838,9 +792,9 @@
     ],
     "url": "https://ai-bot.cn/pippit-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
     "_page": 9
   },
   {
@@ -855,9 +809,9 @@
     ],
     "url": "https://ai-bot.cn/glm-4-32b/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
     "_page": 9
   },
   {
@@ -868,9 +822,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/poclas/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
     "_page": 9
   },
   {
@@ -881,9 +835,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/fay/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
     "_page": 9
   },
   {
@@ -898,9 +852,53 @@
     ],
     "url": "https://ai-bot.cn/wavespeedai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-31",
+    "date": "2026-06-08",
     "publishedAt": "",
-    "fetchedAt": "2026-05-31T19:55:17.736Z",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
+    "_page": 9
+  },
+  {
+    "id": "fafaae078754",
+    "title": "GLM-Z1-32B",
+    "summary": "GLM-Z1-32B是智谱公司开源的新一代推理模型，具体参数版本为GLM-Z1-32B-0414 。GLM-Z1-32B基于 GLM-4-32B-0414 基座模型开发，基于深度优化训练，在数学、代...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/glm-z1-32b/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-08",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
+    "_page": 9
+  },
+  {
+    "id": "86b9341d3b0c",
+    "title": "EviMed",
+    "summary": "EviMed 是基于 AI 智能算法的医学信息平台，主要为医学工作者和科研人员设计。整合了全球七大知名中英文医学数据库，提供多维度搜索、AI 智能分析、科研选题...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/evimed/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-08",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
+    "_page": 9
+  },
+  {
+    "id": "afc7390cf866",
+    "title": "Imagine Explainers",
+    "summary": "Imagine Explainers 是 StudyFetch 推出的 AI 视频生成工具，帮助用户快速创建高质量的讲解视频。用户只需输入主题和视频长度，选择模板和角色，可生成 10 到...",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/imagine-explainers/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-08",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-08T16:28:16.353Z",
     "_page": 9
   }
 ]

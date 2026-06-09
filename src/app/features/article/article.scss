@@ -311,6 +311,16 @@
 }
 
 // ============================================
+// Article Comments Section
+// ============================================
+
+.article-comments-section {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+// ============================================
 // Article Navigation
 // ============================================
 
@@ -463,6 +473,11 @@
 
   .article-nav__link {
     padding: 16px;
+  }
+
+  .article-comments-section {
+    margin-top: 40px;
+    padding-top: 24px;
   }
 }
 

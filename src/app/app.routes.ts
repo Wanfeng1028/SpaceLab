@@ -58,6 +58,18 @@ export const routes: Routes = [
       import('./features/archive/archive.component').then((m) => m.ArchiveComponent),
   },
   {
+    path: 'login',
+    title: 'Login — SpaceLab',
+    loadComponent: () =>
+      import('./features/auth/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'register',
+    title: 'Register — SpaceLab',
+    loadComponent: () =>
+      import('./features/auth/register.component').then((m) => m.RegisterComponent),
+  },
+  {
     path: 'admin',
     title: 'Admin — SpaceLab',
     canActivate: [adminGuard],

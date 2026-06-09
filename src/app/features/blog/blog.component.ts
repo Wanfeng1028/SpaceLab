@@ -102,26 +102,29 @@ export class BlogComponent implements OnInit {
 
   ngOnInit(): void {
     // Pre-compute static articles once (not in constructor)
-    this._staticArticles = this.postService.getAllPosts().map((p) => {
-      const metrics = this.metricsService.getMetrics(p.slug);
-      return {
-        source: 'static' as const,
-        slug: p.slug,
-        title: p.title,
-        date: p.date,
-        category: p.category,
-        tags: p.tags,
-        summary: p.summary,
-        cover: p.cover,
-        readingTime: p.readingTime,
-        prevSlug: p.prevSlug ?? undefined,
-        prevTitle: p.prevTitle ?? undefined,
-        nextSlug: p.nextSlug ?? undefined,
-        nextTitle: p.nextTitle ?? undefined,
-        contentHtml: p.contentHtml,
-        viewCount: metrics?.viewCount,
-        likeCount: metrics?.likeCount,
-      };
+    this.postService.getPosts(1, 100).subscribe((response: any) => {
+      const posts: any[] = response.posts || [];
+      this._staticArticles = posts.map((p: any) => {
+        const metrics = this.metricsService.getMetrics(p.slug);
+        return {
+          source: 'static' as const,
+          slug: p.slug,
+          title: p.title,
+          date: p.date,
+          category: p.category,
+          tags: p.tags,
+          summary: p.summary,
+          cover: p.cover,
+          readingTime: p.readingTime,
+          prevSlug: p.prevSlug ?? undefined,
+          prevTitle: p.prevTitle ?? undefined,
+          nextSlug: p.nextSlug ?? undefined,
+          nextTitle: p.nextTitle ?? undefined,
+          contentHtml: p.contentHtml,
+          viewCount: metrics?.viewCount,
+          likeCount: metrics?.likeCount,
+        };
+      });
     });
 
     // Fetch github articles in background

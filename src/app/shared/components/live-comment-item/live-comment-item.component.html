@@ -1,0 +1,57 @@
+<div class="live-comment-item">
+  <div class="live-comment-item__header">
+    <img
+      [src]="getAvatarUrl(comment.username || '用户')"
+      [alt]="comment.username || '用户'"
+      class="live-comment-item__avatar"
+    />
+    <div class="live-comment-item__info">
+      <div class="live-comment-item__name">
+        {{ comment.username || '匿名用户' }}
+      </div>
+      <div class="live-comment-item__time">
+        {{ getRelativeTime(comment.create_time) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="live-comment-item__content">
+    {{ comment.content }}
+  </div>
+
+  <div class="live-comment-item__actions">
+    <button
+      *ngIf="enableReply"
+      (click)="startReply()"
+      class="live-comment-item__action-btn live-comment-item__action-btn--reply"
+    >
+      回复
+    </button>
+    
+    <button
+      *ngIf="enableLike"
+      class="live-comment-item__action-btn live-comment-item__action-btn--like"
+    >
+      点赞
+    </button>
+
+    <button
+      (click)="handleDelete()"
+      class="live-comment-item__action-btn live-comment-item__action-btn--delete"
+    >
+      删除
+    </button>
+  </div>
+
+  <!-- 回复列表 -->
+  <div *ngIf="comment.replies && comment.replies.length > 0" class="live-comment-item__replies">
+    <app-live-comment-item
+      *ngFor="let reply of comment.replies"
+      [comment]="reply"
+      [enableReply]="enableReply"
+      [enableLike]="enableLike"
+      (replyEvent)="replyEvent.emit($event)"
+      (deleteEvent)="deleteEvent.emit($event)"
+    ></app-live-comment-item>
+  </div>
+</div>
