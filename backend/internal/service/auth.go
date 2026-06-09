@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/middleware"
+	"github.com/spacelab/backend/internal/model"
 	"gorm.io/gorm"
 )
 
@@ -42,7 +43,7 @@ func NewAuthService(db *gorm.DB, cfg *config.Config) *AuthService {
 func (s *AuthService) Register(email, password, username string) (*AuthResponse, error) {
 	// 检查邮箱是否已存在
 	var existingUser interface{}
-	s.db.Model(&User{}).Where("email = ?", email).First(&existingUser)
+	s.db.Model(&model.User{}).Where("email = ?", email).First(&existingUser)
 	if existingUser != nil {
 		return nil, errors.New("email already registered")
 	}
@@ -51,7 +52,7 @@ func (s *AuthService) Register(email, password, username string) (*AuthResponse,
 	passwordHash := hashPassword(password)
 
 	// 创建用户
-	user := User{
+	user := model.User{
 		ID:           uuid.New(),
 		Email:        email,
 		PasswordHash: passwordHash,
@@ -85,7 +86,7 @@ func (s *AuthService) Register(email, password, username string) (*AuthResponse,
 
 // Login 用户登录
 func (s *AuthService) Login(email, password string) (*AuthResponse, error) {
-	var user User
+	var user model.User
 	result := s.db.Preload("Posts").Where("email = ?", email).First(&user)
 	
 	if result.Error != nil {
@@ -113,8 +114,8 @@ func (s *AuthService) Login(email, password string) (*AuthResponse, error) {
 }
 
 // GetUserByID 获取用户信息
-func (s *AuthService) GetUserByID(userID string) (*User, error) {
-	var user User
+func (s *AuthService) GetUserByID(userID string) (*model.User, error) {
+	var user model.User
 	result := s.db.Where("id = ?", userID).First(&user)
 	
 	if result.Error != nil {
@@ -126,7 +127,7 @@ func (s *AuthService) GetUserByID(userID string) (*User, error) {
 
 // UpdatePassword 修改密码
 func (s *AuthService) UpdatePassword(userID, oldPassword, newPassword string) error {
-	var user User
+	var user model.User
 	result := s.db.Where("id = ?", userID).First(&user)
 	
 	if result.Error != nil {
@@ -143,7 +144,7 @@ func (s *AuthService) UpdatePassword(userID, oldPassword, newPassword string) er
 
 // UpdateProfile 更新个人资料
 func (s *AuthService) UpdateProfile(userID, username, avatarURL string) error {
-	var user User
+	var user model.User
 	result := s.db.Where("id = ?", userID).First(&user)
 	
 	if result.Error != nil {

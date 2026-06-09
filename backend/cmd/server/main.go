@@ -4,17 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/config"
-	"github.com/spacelab/backend/internal/handler/analytics"
-	"github.com/spacelab/backend/internal/handler/auth"
-	"github.com/spacelab/backend/internal/handler/comment"
-	"github.com/spacelab/backend/internal/handler/media"
-	"github.com/spacelab/backend/internal/handler/post"
+	analytics "github.com/spacelab/backend/internal/handler/analytics"
+	auth "github.com/spacelab/backend/internal/handler/auth"
+	comment "github.com/spacelab/backend/internal/handler/comment"
+	media "github.com/spacelab/backend/internal/handler/media"
+	post "github.com/spacelab/backend/internal/handler/post"
 	"github.com/spacelab/backend/internal/middleware"
 	"github.com/spacelab/backend/internal/service"
 	"github.com/spacelab/backend/internal/utils"
+	"go.uber.org/zap"
 )
 
 func main() {

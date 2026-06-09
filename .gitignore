@@ -64,3 +64,12 @@ temp-daily-news.html
 # 参考资源（已移至 delete/ 目录）
 /reference
 /.codex-video-analysis
+
+.workbuddy/
+.claude/
+.angular/
+.vscode/
+.qwen/
+.github/
+docs/
+

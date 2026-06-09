@@ -87,3 +87,62 @@
 - admin: 管理员，所有权限
 - writer: 作者，可创建编辑文章
 - viewer: 普通用户，只读
+
+---
+
+## 2026-06-09 一键管理脚本
+
+### 已完成
+
+1. **manage.ps1** - PowerShell 一键管理脚本，替代原有的 .cmd 文件
+   - 启动：`.\manage.ps1 start` — 启动前端 + Docker 后端
+   - 停止：`.\manage.ps1 stop` — 停止所有服务
+   - 状态：`.\manage.ps1 status` — 查看端口和进程状态
+   - 特性：UTF-8 编码，无乱码，智能端口检测，Docker 自动等待
+
+2. **MANAGE_README.md** - 使用说明文档
+
+### 解决的主要问题
+
+- 原有 .cmd 文件在 PowerShell 中运行出现乱码
+- 需要 cmd.exe 环境才能正常解析批处理语法
+- 新脚本原生支持 PowerShell 7+，完美解决编码问题
+
+### 端口列表
+
+- 4200 - 前端 Angular dev server
+- 8080 - 后端 Gin API
+- 5432 - PostgreSQL
+- 6379 - Redis
+
+---
+
+## 2026-06-09 一键启动/停止脚本
+
+### 已完成
+
+创建了**两个独立脚本**（不再使用 manage.ps1）：
+
+1. **start-all.ps1** — 一键启动所有服务
+   - 运行：`.\start-all.ps1`
+   - 启动顺序：依赖检查 → Docker 后端 → 前端 ng serve
+
+2. **stop-all.ps1** — 一键停止所有服务
+   - 运行：`.\stop-all.ps1`
+   - 停止内容：前端进程 + Docker 容器 + Go 后端
+
+### 覆盖的端口
+
+| 端口 | 服务 |
+|------|------|
+| 4200 | 前端 (ng serve) |
+| 8080 | 后端 API |
+| 5432 | PostgreSQL |
+| 6379 | Redis |
+
+### 脚本特性
+
+- 原生 PowerShell 脚本，UTF-8 编码，无乱码
+- 启动时自动检查端口占用、环境依赖
+- Docker 容器启动后自动等待服务就绪
+- 停止时智能查找并关闭前端/Docker/Go 进程

@@ -1,4 +1,4 @@
-package utils
+package middleware
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/spacelab/backend/internal/utils"
 )
 
 // MetricsMiddleware Prometheus 指标中间件
@@ -20,7 +21,7 @@ func MetricsMiddleware() gin.HandlerFunc {
 		duration := time.Since(start).Seconds()
 		statusCode := fmt.Sprintf("%d", c.Writer.Status())
 
-		RecordHttpRequest(c.Request.Method, c.FullPath(), statusCode, duration)
+		utils.RecordHttpRequest(c.Request.Method, c.FullPath(), statusCode, duration)
 	}
 }
 
@@ -36,7 +37,7 @@ func LoggingMiddleware() gin.HandlerFunc {
 		duration := time.Since(start)
 		statusCode := c.Writer.Status()
 
-		LogRequest(
+		utils.LogRequest(
 			c.Request.Method,
 			c.Request.URL.Path,
 			statusCode,
@@ -51,7 +52,7 @@ func RecoveryMiddleware() gin.HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				// 记录错误
-				LogError("Panic recovered", fmt.Errorf("%v", err))
+				utils.LogError("Panic recovered", fmt.Errorf("%v", err))
 
 				// 返回 500 错误
 				c.JSON(500, gin.H{

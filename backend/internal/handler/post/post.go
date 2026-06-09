@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spacelab/backend/internal/model"
 	"github.com/spacelab/backend/internal/service"
 )
 
@@ -37,11 +38,11 @@ func (h *PostHandler) ListPosts(c *gin.Context) {
 	}
 
 	response := struct {
-		Posts     []Post `json:"posts"`
-		Total     int64  `json:"total"`
-		Page      int    `json:"page"`
-		PageSize  int    `json:"page_size"`
-		TotalPages int   `json:"total_pages"`
+		Posts      []model.Post `json:"posts"`
+		Total      int64        `json:"total"`
+		Page       int          `json:"page"`
+		PageSize   int          `json:"page_size"`
+		TotalPages int          `json:"total_pages"`
 	}{
 		Posts:     posts,
 		Total:     total,

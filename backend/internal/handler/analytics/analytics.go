@@ -2,11 +2,13 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/model"
-	"github.com/spacelab/backend/internal/service"
+	"gorm.io/gorm"
 )
 
 type AnalyticsHandler struct {

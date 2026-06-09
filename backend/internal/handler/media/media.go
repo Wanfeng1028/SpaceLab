@@ -2,7 +2,6 @@ package handler
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -10,9 +9,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/model"
-	"github.com/spacelab/backend/internal/service"
+	"gorm.io/gorm"
 )
 
 type MediaHandler struct {
@@ -63,16 +63,30 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 	// 生成文件名
 	ext := filepath.Ext(file.Filename)
 	filename := fmt.Sprintf("%d%s", time.Now().UnixNano(), ext)
-	dst := filepath.Join(uploadDir, filename)
+	filePath := filepath.Join(uploadDir, filename)
 
 	// 保存文件
-	if err := c.SaveFile(file, dst); err != nil {
+	src, err := file.Open()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer src.Close()
+
+	dst, err := os.Create(filePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer dst.Close()
+
+	if _, err = dst.ReadFrom(src); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	// 获取文件信息
-	info, err := os.Stat(dst)
+	info, err := os.Stat(filePath)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -83,7 +97,7 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 		ID:           uuid.New(),
 		Filename:     filename,
 		OriginalName: file.Filename,
-		StoragePath:  dst,
+		StoragePath:  filePath,
 		MimeType:     file.Header.Get("Content-Type"),
 		Size:         info.Size(),
 		Type:         getMediaType(file.Header.Get("Content-Type")),
@@ -91,7 +105,7 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 	}
 
 	if err := h.db.Create(&mediaAsset).Error; err != nil {
-		os.Remove(dst) // 回滚：删除文件
+		os.Remove(filePath) // 回滚：删除文件
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

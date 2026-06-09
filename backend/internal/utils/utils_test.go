@@ -1,8 +1,13 @@
 package utils
 
 import (
+	"context"
+	"fmt"
 	"testing"
 	"time"
+
+	"github.com/redis/go-redis/v9"
+	"go.uber.org/zap"
 )
 
 // TestLogger 测试日志系统

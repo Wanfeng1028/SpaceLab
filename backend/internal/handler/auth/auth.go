@@ -2,11 +2,9 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/config"
-	"github.com/spacelab/backend/internal/middleware"
 	"github.com/spacelab/backend/internal/service"
 )
 
