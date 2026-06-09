@@ -16,8 +16,8 @@ import (
 )
 
 type MediaHandler struct {
-	cfg    *config.Config
-	db     *gorm.DB
+	cfg *config.Config
+	db  *gorm.DB
 }
 
 func NewMediaHandler(cfg *config.Config, db *gorm.DB) *MediaHandler {
@@ -40,12 +40,12 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 
 	// 验证文件类型
 	validTypes := map[string]bool{
-		"image/jpeg":   true,
-		"image/png":    true,
-		"image/gif":    true,
-		"image/webp":   true,
-		"video/mp4":    true,
-		"video/webm":   true,
+		"image/jpeg": true,
+		"image/png":  true,
+		"image/gif":  true,
+		"image/webp": true,
+		"video/mp4":  true,
+		"video/webm": true,
 	}
 
 	if !validTypes[file.Header.Get("Content-Type")] {
@@ -110,16 +110,17 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 		return
 	}
 
-	// 返回文件 URL（实际项目中应该使用 CDN 或云存储 URL）
-	fileURL := fmt.Sprintf("http://localhost:%d/uploads/%s", h.cfg.ServerPort, filepath.ToSlash(filepath.Join(filepath.Dir(filename), filename)))
+	// 返回文件 URL（使用环境变量配置基础 URL）
+	baseURL := getEnv("API_BASE_URL", fmt.Sprintf("http://localhost:%d", h.cfg.ServerPort))
+	fileURL := fmt.Sprintf("%s/uploads/%s", baseURL, filepath.ToSlash(filepath.Join(filepath.Dir(filename), filename)))
 
 	c.JSON(http.StatusCreated, gin.H{
-		"id":          mediaAsset.ID.String(),
-		"url":         fileURL,
-		"name":        mediaAsset.OriginalName,
-		"type":        mediaAsset.Type,
-		"size":        mediaAsset.Size,
-		"mime_type":   mediaAsset.MimeType,
+		"id":        mediaAsset.ID.String(),
+		"url":       fileURL,
+		"name":      mediaAsset.OriginalName,
+		"type":      mediaAsset.Type,
+		"size":      mediaAsset.Size,
+		"mime_type": mediaAsset.MimeType,
 	})
 }
 
@@ -223,4 +224,11 @@ func getMediaType(mimeType string) string {
 	}
 
 	return "unknown"
+}
+
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
 }

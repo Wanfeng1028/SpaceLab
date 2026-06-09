@@ -19,6 +19,13 @@ type Config struct {
 	UploadPath        string
 	AllowedOrigins    []string
 	LiveCommentSiteID string // LiveComment 站点 ID
+	// Resend 交易邮件配置
+	ResendAPIKey string
+	ResendFrom   string
+	// MailerLite Newsletter 配置
+	MailerLiteAPIKey  string
+	MailerLiteGroupID string
+	MailerLiteBaseURL string
 }
 
 func LoadConfig() *Config {
@@ -61,9 +68,14 @@ func LoadConfig() *Config {
 		origins = parseOrigins(originsStr)
 	}
 
+	jwtSecret := getEnv("JWT_SECRET", "")
+	if jwtSecret == "" {
+		log.Fatal("FATAL: JWT_SECRET environment variable is required and must be set to a secure random string in production")
+	}
+
 	return &Config{
-		DatabaseURL:       getEnv("DATABASE_URL", "postgres://spacelab:spacelab_password@localhost:5432/spacelab?sslmode=disable"),
-		JWTSecret:         getEnv("JWT_SECRET", "change-this-secret-in-production"),
+		DatabaseURL:       getEnv("DATABASE_URL", ""),
+		JWTSecret:         jwtSecret,
 		JWTExpiration:     duration,
 		ServerPort:        port,
 		Environment:       getEnv("ENVIRONMENT", "development"),
@@ -71,6 +83,13 @@ func LoadConfig() *Config {
 		UploadPath:        uploadPath,
 		AllowedOrigins:    origins,
 		LiveCommentSiteID: getEnv("LIVECOMMENT_SITE_ID", ""),
+		// Resend
+		ResendAPIKey: getEnv("RESEND_API_KEY", ""),
+		ResendFrom:   getEnv("RESEND_FROM", "noreply@tx.yourdomain.com"),
+		// MailerLite
+		MailerLiteAPIKey:  getEnv("MAILERLITE_API_KEY", ""),
+		MailerLiteGroupID: getEnv("MAILERLITE_GROUP_ID", ""),
+		MailerLiteBaseURL: getEnv("MAILERLITE_BASE_URL", "https://api.mailerlite.com/api/v2"),
 	}
 }
 

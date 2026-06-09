@@ -4,17 +4,40 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 	"sync"
 	"time"
 
 	"github.com/gorilla/websocket"
 )
 
+// getAllowedOrigins 从环境变量读取允许的 WebSocket 来源
+func getAllowedOrigins() []string {
+	origins := []string{"http://localhost:4200", "http://localhost:8080"}
+	if originsStr := os.Getenv("ALLOWED_ORIGINS"); originsStr != "" {
+		for _, origin := range strings.Split(originsStr, ",") {
+			origins = append(origins, strings.TrimSpace(origin))
+		}
+	}
+	return origins
+}
+
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
-		return true // 开发环境允许所有来源
+		origin := r.Header.Get("Origin")
+		if origin == "" {
+			return true // 非浏览器客户端（如 WebSocket 库直连）允许
+		}
+		allowedOrigins := getAllowedOrigins()
+		for _, allowed := range allowedOrigins {
+			if origin == allowed {
+				return true
+			}
+		}
+		return false
 	},
 }
 
@@ -25,15 +48,16 @@ type WebSocketHub struct {
 	register   chan *Client
 	unregister chan *Client
 	mu         sync.RWMutex
+	done       chan struct{} // 退出信号
 }
 
 // Client WebSocket 客户端
 type Client struct {
-	hub      *WebSocketHub
-	conn     *websocket.Conn
-	send     chan []byte
-	userID   string
-	roomID   string
+	hub    *WebSocketHub
+	conn   *websocket.Conn
+	send   chan []byte
+	userID string
+	roomID string
 }
 
 // Message WebSocket 消息
@@ -54,14 +78,29 @@ func InitWebSocket() {
 		broadcast:  make(chan []byte),
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
+		done:       make(chan struct{}),
 	}
 	go Hub.Run()
+}
+
+// Stop 停止 WebSocket Hub（优雅关闭）
+func (h *WebSocketHub) Stop() {
+	close(h.done)
+	h.mu.Lock()
+	for client := range h.clients {
+		delete(h.clients, client)
+		close(client.send)
+		client.conn.Close()
+	}
+	h.mu.Unlock()
 }
 
 // Run 运行 WebSocket 中心
 func (h *WebSocketHub) Run() {
 	for {
 		select {
+		case <-h.done:
+			return
 		case client := <-h.register:
 			h.mu.Lock()
 			h.clients[client] = true

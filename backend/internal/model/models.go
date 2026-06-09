@@ -8,16 +8,21 @@ import (
 
 // User 用户模型
 type User struct {
-	ID           uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
-	Email        string     `gorm:"uniqueIndex;size:255;not null" json:"email"`
-	PasswordHash string     `gorm:"size:255;not null" json:"-"`
-	Username     string     `gorm:"size:100" json:"username"`
-	Role         string     `gorm:"size:20;default:'viewer'" json:"role"` // admin, writer, viewer
-	AvatarURL    string     `gorm:"size:500" json:"avatar_url"`
-	CreatedAt    time.Time  `json:"created_at"`
-	UpdatedAt    time.Time  `json:"updated_at"`
-	Posts        []Post     `gorm:"foreignkey:AuthorID" json:"posts,omitempty"`
-	Comments     []Comment  `gorm:"foreignkey:UserID" json:"comments,omitempty"`
+	ID                  uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+	Email               string         `gorm:"uniqueIndex;size:255;not null" json:"email"`
+	PasswordHash        string         `gorm:"size:255;not null" json:"-"`
+	Username            string         `gorm:"size:100" json:"username"`
+	Role                string         `gorm:"size:20;default:'viewer'" json:"role"` // admin, writer, viewer
+	AvatarURL           string         `gorm:"size:500" json:"avatar_url"`
+	EmailVerifiedAt     *time.Time     `json:"email_verified_at,omitempty"`
+	NewsletterOptIn     bool           `gorm:"default:false" json:"newsletter_opt_in"`
+	NewsletterOptInAt   *time.Time     `json:"newsletter_opt_in_at,omitempty"`
+	MailerLiteID        string         `gorm:"size:255" json:"mailerlite_id,omitempty"`
+	NewsletterUnsubAt   *time.Time     `json:"newsletter_unsubscribed_at,omitempty"`
+	CreatedAt           time.Time      `json:"created_at"`
+	UpdatedAt           time.Time      `json:"updated_at"`
+	Posts               []Post         `gorm:"foreignkey:AuthorID" json:"posts,omitempty"`
+	Comments            []Comment      `gorm:"foreignkey:UserID" json:"comments,omitempty"`
 }
 
 // Post 文章模型

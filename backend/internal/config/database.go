@@ -12,6 +12,10 @@ import (
 var DB *gorm.DB
 
 func InitDB(cfg *Config) error {
+	if cfg.DatabaseURL == "" {
+		return fmt.Errorf("DATABASE_URL environment variable is required")
+	}
+
 	var err error
 
 	DB, err = gorm.Open(postgres.Open(cfg.DatabaseURL), &gorm.Config{

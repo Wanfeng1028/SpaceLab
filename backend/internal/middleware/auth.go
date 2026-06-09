@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/redis/go-redis/v9"
 	"github.com/spacelab/backend/internal/config"
 )
 
@@ -58,10 +59,15 @@ func ParseJWT(cfg *config.Config, tokenString string) (*JWTClaims, error) {
 
 // Auth 认证中间件
 func Auth(cfg *config.Config) gin.HandlerFunc {
+	return AuthWithRedis(cfg, nil)
+}
+
+// AuthWithRedis 认证中间件（带 Redis Token 撤销支持）
+func AuthWithRedis(cfg *config.Config, rdb *redis.Client) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Missing authorization header"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization required"})
 			c.Abort()
 			return
 		}
@@ -73,9 +79,24 @@ func Auth(cfg *config.Config) gin.HandlerFunc {
 			return
 		}
 
+		// 检查 Token 是否被撤销
+		if rdb != nil {
+			revoked, err := ParseAndCheckToken(rdb, tokenString)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Authentication service error"})
+				c.Abort()
+				return
+			}
+			if revoked {
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "Token has been revoked"})
+				c.Abort()
+				return
+			}
+		}
+
 		claims, err := ParseJWT(cfg, tokenString)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
 			c.Abort()
 			return
 		}

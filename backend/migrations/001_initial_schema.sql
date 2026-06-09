@@ -96,12 +96,12 @@ CREATE TABLE IF NOT EXISTS projects (
 CREATE INDEX idx_projects_slug ON projects(slug);
 CREATE INDEX idx_projects_author ON projects(author_id);
 
--- 初始化默认管理员用户（密码：admin123，需修改）
+-- 初始化默认管理员用户（密码：Admin@123456，首次登录后请修改）
 INSERT INTO users (id, email, password_hash, username, role)
 VALUES (
     '00000000-0000-0000-0000-000000000001',
     'admin@spacelab.com',
-    'e99a18c428cb38d5f260853678922e03abc18d0c6b5f8c5b1d7e3f4a5b6c7d8e',
+    '$2a$10$jV8Z66YJjuUnST24fg5vLuXUEz18dKsgEB2eWnH074SOUFO896TB2',
     'Administrator',
     'admin'
 )

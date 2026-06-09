@@ -2,7 +2,7 @@
 
 module github.com/spacelab/backend
 
-go 1.23
+go 1.25.0
 
 require (
 	github.com/gin-gonic/gin v1.10.0
@@ -12,7 +12,9 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/prometheus/client_golang v1.19.0
 	github.com/redis/go-redis/v9 v9.5.1
+	github.com/resend/resend-go/v2 v2.28.0
 	go.uber.org/zap v1.27.0
+	golang.org/x/crypto v0.53.0
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/driver/sqlite v1.6.0
@@ -53,10 +55,9 @@ require (
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.8.0 // indirect
-	golang.org/x/crypto v0.28.0 // indirect
-	golang.org/x/net v0.25.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.20.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/text v0.38.0 // indirect
 	google.golang.org/protobuf v1.34.1 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

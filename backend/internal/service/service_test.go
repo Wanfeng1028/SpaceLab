@@ -36,7 +36,7 @@ func TestAuthService_Register(t *testing.T) {
 		JWTExpiration: 24 * time.Hour,
 	}
 
-	service := NewAuthService(TestDB, cfg)
+	service := NewAuthService(TestDB, cfg, nil)
 
 	// 测试注册
 	response, err := service.Register("test@example.com", "password123", "testuser")
@@ -66,7 +66,7 @@ func TestAuthService_Login(t *testing.T) {
 		JWTExpiration: 24 * time.Hour,
 	}
 
-	service := NewAuthService(TestDB, cfg)
+	service := NewAuthService(TestDB, cfg, nil)
 
 	// 先注册
 	_, err := service.Register("test@example.com", "password123", "testuser")
@@ -100,7 +100,7 @@ func TestAuthService_GetUserByID(t *testing.T) {
 		JWTExpiration: 24 * time.Hour,
 	}
 
-	service := NewAuthService(TestDB, cfg)
+	service := NewAuthService(TestDB, cfg, nil)
 
 	// 注册用户
 	response, err := service.Register("test@example.com", "password123", "testuser")

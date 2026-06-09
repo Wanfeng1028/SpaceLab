@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"os"
+	"strconv"
 
 	"gopkg.in/gomail.v2"
 )
@@ -45,7 +46,7 @@ func (e *EmailService) SendEmail(to, subject, body string) error {
 	m.SetBody("text/html", body)
 
 	d := gomail.NewDialer(e.Host, e.Port, e.Username, e.Password)
-	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	d.TLSConfig = &tls.Config{MinVersion: tls.VersionTLS12}
 
 	return d.DialAndSend(m)
 }
@@ -133,6 +134,10 @@ func getEnv(key, defaultValue string) string {
 }
 
 func getEnvInt(key string, defaultValue int) int {
-	// 简化实现
+	if value := os.Getenv(key); value != "" {
+		if parsed, err := strconv.Atoi(value); err == nil {
+			return parsed
+		}
+	}
 	return defaultValue
 }

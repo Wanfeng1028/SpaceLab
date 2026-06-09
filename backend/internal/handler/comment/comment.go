@@ -6,10 +6,16 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/config"
 )
+
+// httpClient 带超时的 HTTP 客户端
+var httpClient = &http.Client{
+	Timeout: 10 * time.Second,
+}
 
 // LiveCommentHandler LiveComment 集成处理器
 // LiveComment API: https://docs.livecomment.cn/
@@ -26,9 +32,9 @@ type CommentListResponse struct {
 
 // CommentList 评论列表结构
 type CommentList struct {
-	Total int        `json:"total"`
-	List  []Comment  `json:"list"`
-	Pager Pager      `json:"pager"`
+	Total int       `json:"total"`
+	List  []Comment `json:"list"`
+	Pager Pager     `json:"pager"`
 }
 
 // Comment LiveComment 评论结构
@@ -80,7 +86,7 @@ func (h *LiveCommentHandler) GetComments(c *gin.Context) {
 	params.Set("page", strconv.Itoa(page))
 	params.Set("page_size", strconv.Itoa(pageSize))
 
-	resp, err := http.Get(apiURL + "?" + params.Encode())
+	resp, err := httpClient.Get(apiURL + "?" + params.Encode())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch comments"})
 		return
@@ -112,7 +118,7 @@ func (h *LiveCommentHandler) GetCommentCount(c *gin.Context) {
 	params.Set("site_id", h.cfg.LiveCommentSiteID)
 	params.Set("post_id", postID)
 
-	resp, err := http.Get(apiURL + "?" + params.Encode())
+	resp, err := httpClient.Get(apiURL + "?" + params.Encode())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch comment count"})
 		return
