@@ -51,13 +51,16 @@ Thumbs.db
 .env.local
 .env.production
 
-# Qwen
-.qwen/
+# 清理的无用文件
+/delete/
+
+# 临时文件（已移至 delete/ 目录）
 temp-ai-research.html 
 temp-ai-tools.html 
 temp-parse-news.mjs 
 temp-parsed-news.json 
 temp-daily-news.html 
 
+# 参考资源（已移至 delete/ 目录）
 /reference
 /.codex-video-analysis
