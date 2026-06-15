@@ -16,7 +16,7 @@
         <div class="profile-info">
           <div class="profile-info__avatar">
             <div class="profile-avatar-placeholder">
-              {{ user.username?.charAt(0)?.toUpperCase() || user.email.charAt(0).toUpperCase() }}
+              {{ (user.username || user.email).charAt(0).toUpperCase() }}
             </div>
           </div>
           <div class="profile-info__detail">
