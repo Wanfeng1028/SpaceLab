@@ -154,7 +154,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     this.closeMobileMenu();
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isLoggedInSig()) {
       this.router.navigate(['/profile']);
     } else {
       this.router.navigate(['/login']);
@@ -163,7 +163,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   /** 用户首字母（用于头像占位） */
   userInitial(): string {
-    const user = this.authService.getCurrentUser();
+    const user = this.authService.currentUserSig();
     if (user?.username) return user.username.charAt(0).toUpperCase();
     if (user?.email) return user.email.charAt(0).toUpperCase();
     return 'U';

@@ -7,7 +7,7 @@ export const adminGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
 
   // 检查是否已登录
-  if (!authService.isLoggedIn()) {
+  if (!authService.isLoggedInSig()) {
     return router.createUrlTree(['/login']);
   }
 

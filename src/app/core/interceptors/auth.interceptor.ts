@@ -21,6 +21,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         error: (err) => {
           // Token 无效或过期时，清理并跳转登录页
           if (err.status === 401) {
+            authService.isLoggedInSig.set(false);
+            authService.currentUserSig.set(null);
             localStorage.removeItem('token');
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('user');

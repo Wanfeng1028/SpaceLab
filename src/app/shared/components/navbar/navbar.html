@@ -167,7 +167,7 @@
     }
 
     <!-- 登录 / 个人中心 -->
-    @if (authService.isLoggedIn()) {
+    @if (authService.isLoggedInSig()) {
       <a
         class="sparkle-btn navbar__user-btn"
         (click)="onLoginClick($event)"
@@ -342,7 +342,7 @@
       <!-- 移动端登录/个人中心 -->
       <a class="mobile-menu-link" (click)="onLoginClick($event)">
         <span>
-          @if (authService.isLoggedIn()) {
+          @if (authService.isLoggedInSig()) {
             {{ userInitial() }} · {{ t('admin.logout') }}
           } @else {
             {{ t('admin.login') }}

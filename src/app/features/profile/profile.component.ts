@@ -66,9 +66,8 @@ export class ProfileComponent implements OnInit {
       error: () => {
         this.loading.set(false);
         // Token 无效或过期，清理 token 并跳转到登录页
-        localStorage.removeItem('token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('user');
+        this.authService.isLoggedInSig.set(false);
+        this.authService.currentUserSig.set(null);
         this.router.navigate(['/login']);
       },
     });

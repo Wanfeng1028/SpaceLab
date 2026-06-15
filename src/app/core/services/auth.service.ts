@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
@@ -30,6 +30,12 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
+  /** 响应式登录状态 signal，供模板绑定 */
+  readonly isLoggedInSig = signal(false);
+
+  /** 当前用户 signal */
+  readonly currentUserSig = signal<User | null>(null);
+
   constructor() {
     this.loadUserFromStorage();
   }
@@ -42,6 +48,8 @@ export class AuthService {
         try {
           const user = JSON.parse(userStr);
           this.currentUserSubject.next(user);
+          this.currentUserSig.set(user);
+          this.isLoggedInSig.set(true);
         } catch (e) {
           this.clearStorage();
         }
@@ -56,6 +64,8 @@ export class AuthService {
       localStorage.removeItem('user');
     }
     this.currentUserSubject.next(null);
+    this.currentUserSig.set(null);
+    this.isLoggedInSig.set(false);
   }
 
   register(email: string, password: string, username: string): Observable<AuthResponse> {
@@ -89,6 +99,8 @@ export class AuthService {
       localStorage.setItem('user', JSON.stringify(response.user));
     }
     this.currentUserSubject.next(response.user);
+    this.currentUserSig.set(response.user);
+    this.isLoggedInSig.set(true);
   }
 
   isLoggedIn(): boolean {
@@ -133,6 +145,8 @@ export class AuthService {
     return this.http.get<User>(`${this.apiUrl}/auth/me`).pipe(
       tap(user => {
         this.currentUserSubject.next(user);
+        this.currentUserSig.set(user);
+        this.isLoggedInSig.set(true);
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('user', JSON.stringify(user));
         }
