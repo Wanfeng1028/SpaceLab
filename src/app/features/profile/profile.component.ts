@@ -9,7 +9,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { AuthService, type User } from '../../core/services/auth.service';
 
 @Component({
@@ -25,6 +25,7 @@ import { AuthService, type User } from '../../core/services/auth.service';
     NzInputModule,
     NzFormModule,
     NzDividerModule,
+    NzModalModule,
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
