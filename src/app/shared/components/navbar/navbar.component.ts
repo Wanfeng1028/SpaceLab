@@ -149,13 +149,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.i18n.toggleLocale();
   }
 
-  /** 登录按钮点击：已登录跳个人中心，未登录跳到登录页 */
+  /** 按钮点击：已登录则退出，未登录跳登录页 */
   onLoginClick(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
     this.closeMobileMenu();
     if (this.authService.isLoggedInSig()) {
-      this.router.navigate(['/profile']);
+      this.authService.logout();
     } else {
       this.router.navigate(['/login']);
     }
