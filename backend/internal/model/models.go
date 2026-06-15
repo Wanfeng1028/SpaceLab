@@ -13,6 +13,7 @@ type User struct {
 	PasswordHash      string     `gorm:"size:255;not null" json:"-"`
 	Username          string     `gorm:"size:100" json:"username"`
 	Role              string     `gorm:"size:20;default:'viewer'" json:"role"` // admin, writer, viewer
+	Status            string     `gorm:"size:20;default:'active'" json:"status"` // active, banned
 	AvatarURL         string     `gorm:"size:500" json:"avatar_url"`
 	EmailVerifiedAt   *time.Time `json:"email_verified_at,omitempty"`
 	NewsletterOptIn   bool       `gorm:"default:false" json:"newsletter_opt_in"`

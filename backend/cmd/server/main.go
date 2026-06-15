@@ -140,8 +140,10 @@ func main() {
 				adminRoutes.GET("/admin/users/stats", adminHandler.GetStats)
 
 				// 评论审核
+				adminRoutes.GET("/admin/comments", nativeCommentHandler.AdminListComments)
 				adminRoutes.POST("/admin/comments/:id/approve", nativeCommentHandler.ApproveComment)
 				adminRoutes.POST("/admin/comments/:id/reject", nativeCommentHandler.RejectComment)
+				adminRoutes.DELETE("/admin/comments/:id", nativeCommentHandler.AdminDeleteComment)
 			}
 		}
 
@@ -150,12 +152,12 @@ func main() {
 		{
 			// 文章
 			public.GET("/posts", postHandler.ListPosts)
-			public.GET("/posts/:slug", postHandler.GetPostBySlug)
+			public.GET("/posts/:id", postHandler.GetPostBySlug)
 			public.POST("/posts/:id/view", postHandler.IncrementViewCount)
 
 			// 评论（通过 LiveComment API）
-			public.GET("/posts/:post_id/comments", liveCommentHandler.GetComments)
-			public.GET("/posts/:post_id/comment-count", liveCommentHandler.GetCommentCount)
+			public.GET("/posts/:id/comments", liveCommentHandler.GetComments)
+			public.GET("/posts/:id/comment-count", liveCommentHandler.GetCommentCount)
 
 			// 媒体库（需登录查看完整列表）
 			public.GET("/media", mediaHandler.List)

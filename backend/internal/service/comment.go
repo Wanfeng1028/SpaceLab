@@ -59,6 +59,41 @@ func (s *CommentService) GetCommentCount(postID string) (int64, error) {
 	return count, result.Error
 }
 
+// ListComments 分页查询评论（供后台审核使用）。
+// status 为空时返回所有状态，否则按 status 过滤；按创建时间倒序。
+func (s *CommentService) ListComments(page, pageSize int, status string) ([]model.Comment, int64, error) {
+	if page < 1 {
+		page = 1
+	}
+	if pageSize < 1 || pageSize > 100 {
+		pageSize = 20
+	}
+	offset := (page - 1) * pageSize
+
+	query := s.db.Model(&model.Comment{}).Preload("User")
+	if status != "" {
+		query = query.Where("status = ?", status)
+	}
+
+	var total int64
+	if err := query.Count(&total).Error; err != nil {
+		return nil, 0, err
+	}
+
+	var comments []model.Comment
+	result := query.Order("created_at DESC").Offset(offset).Limit(pageSize).Find(&comments)
+	if result.Error != nil {
+		return nil, 0, result.Error
+	}
+
+	return comments, total, nil
+}
+
+// AdminDeleteComment 管理员强制删除评论（不受"只能删自己"限制）。
+func (s *CommentService) AdminDeleteComment(id string) error {
+	return s.db.Where("id = ?", id).Delete(&model.Comment{}).Error
+}
+
 // CreateComment 创建评论
 func (s *CommentService) CreateComment(input CreateCommentInput, userID string) (*model.Comment, error) {
 	postUUID, err := uuid.Parse(input.PostID)

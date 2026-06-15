@@ -33,10 +33,12 @@ type AuthResponse struct {
 }
 
 type UserInfo struct {
-	ID       string `json:"id"`
-	Email    string `json:"email"`
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	ID        string    `json:"id"`
+	Email     string    `json:"email"`
+	Username  string    `json:"username"`
+	Role      string    `json:"role"`
+	Status    string    `json:"status"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 func NewAuthService(db *gorm.DB, cfg *config.Config, resendSvc *utils.ResendService) *AuthService {
@@ -50,6 +52,22 @@ func NewAuthService(db *gorm.DB, cfg *config.Config, resendSvc *utils.ResendServ
 // DB 返回数据库实例（供 handler 使用）
 func (s *AuthService) DB() *gorm.DB {
 	return s.db
+}
+
+// ToUserInfo 从 model.User 构造对外暴露的用户信息（不含敏感字段）
+func ToUserInfo(u model.User) UserInfo {
+	status := u.Status
+	if status == "" {
+		status = "active"
+	}
+	return UserInfo{
+		ID:        u.ID.String(),
+		Email:     u.Email,
+		Username:  u.Username,
+		Role:      u.Role,
+		Status:    status,
+		CreatedAt: u.CreatedAt,
+	}
 }
 
 // Register 用户注册
@@ -95,13 +113,8 @@ func (s *AuthService) Register(email, password, username string) (*AuthResponse,
 	return &AuthResponse{
 		Token:        token,
 		RefreshToken: refreshToken,
-		User: UserInfo{
-			ID:       user.ID.String(),
-			Email:    user.Email,
-			Username: user.Username,
-			Role:     user.Role,
-		},
-		ExpiresAt: time.Now().Add(s.cfg.JWTExpiration),
+		User:         ToUserInfo(user),
+		ExpiresAt:    time.Now().Add(s.cfg.JWTExpiration),
 	}, nil
 }
 
@@ -112,6 +125,11 @@ func (s *AuthService) Login(email, password string) (*AuthResponse, error) {
 
 	if result.Error != nil {
 		return nil, errors.New("invalid credentials")
+	}
+
+	// 封禁用户禁止登录
+	if user.Status == "banned" {
+		return nil, errors.New("account has been banned")
 	}
 
 	// 验证密码
@@ -135,13 +153,8 @@ func (s *AuthService) Login(email, password string) (*AuthResponse, error) {
 	return &AuthResponse{
 		Token:        token,
 		RefreshToken: refreshToken,
-		User: UserInfo{
-			ID:       user.ID.String(),
-			Email:    user.Email,
-			Username: user.Username,
-			Role:     user.Role,
-		},
-		ExpiresAt: time.Now().Add(s.cfg.JWTExpiration),
+		User:         ToUserInfo(user),
+		ExpiresAt:    time.Now().Add(s.cfg.JWTExpiration),
 	}, nil
 }
 

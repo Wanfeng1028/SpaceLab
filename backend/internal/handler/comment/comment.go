@@ -67,7 +67,7 @@ func NewLiveCommentHandler(cfg *config.Config) *LiveCommentHandler {
 
 // GetComments 获取文章评论列表（通过 LiveComment API）
 func (h *LiveCommentHandler) GetComments(c *gin.Context) {
-	postID := c.Param("post_id")
+	postID := c.Param("id")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
 
@@ -111,7 +111,7 @@ func (h *LiveCommentHandler) GetComments(c *gin.Context) {
 
 // GetCommentCount 获取评论数量（通过 LiveComment API）
 func (h *LiveCommentHandler) GetCommentCount(c *gin.Context) {
-	postID := c.Param("post_id")
+	postID := c.Param("id")
 
 	apiURL := "https://api.livecomment.cn/v1/comment/count"
 	params := url.Values{}

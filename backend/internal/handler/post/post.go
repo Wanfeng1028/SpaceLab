@@ -56,7 +56,7 @@ func (h *PostHandler) ListPosts(c *gin.Context) {
 
 // GetPostBySlug 获取文章详情
 func (h *PostHandler) GetPostBySlug(c *gin.Context) {
-	slug := c.Param("slug")
+	slug := c.Param("id")
 
 	post, err := h.postService.GetPostBySlug(slug)
 	if err != nil {

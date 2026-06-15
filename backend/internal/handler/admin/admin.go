@@ -41,12 +41,7 @@ func (h *AdminHandler) ListUsers(c *gin.Context) {
 
 	userInfos := make([]service.UserInfo, len(users))
 	for i, u := range users {
-		userInfos[i] = service.UserInfo{
-			ID:       u.ID.String(),
-			Email:    u.Email,
-			Username: u.Username,
-			Role:     u.Role,
-		}
+		userInfos[i] = service.ToUserInfo(u)
 	}
 
 	c.JSON(http.StatusOK, gin.H{

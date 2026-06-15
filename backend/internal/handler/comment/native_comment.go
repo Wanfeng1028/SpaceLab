@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +21,7 @@ func NewNativeCommentHandler(commentService *service.CommentService) *NativeComm
 
 // GetComments 获取文章评论
 func (h *NativeCommentHandler) GetComments(c *gin.Context) {
-	postID := c.Param("post_id")
+	postID := c.Param("id")
 
 	comments, err := h.commentService.GetComments(postID)
 	if err != nil {
@@ -44,7 +45,7 @@ func (h *NativeCommentHandler) GetComments(c *gin.Context) {
 
 // GetCommentCount 获取评论数
 func (h *NativeCommentHandler) GetCommentCount(c *gin.Context) {
-	postID := c.Param("post_id")
+	postID := c.Param("id")
 
 	count, err := h.commentService.GetCommentCount(postID)
 	if err != nil {
@@ -163,4 +164,50 @@ func (h *NativeCommentHandler) RejectComment(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Comment rejected"})
+}
+
+// AdminListComments 后台评论列表（分页，可按状态过滤）
+func (h *NativeCommentHandler) AdminListComments(c *gin.Context) {
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "20"))
+	status := strings.TrimSpace(c.Query("status"))
+
+	// 仅允许合法的状态过滤值，避免任意字符串注入
+	if status != "" && status != "pending" && status != "approved" && status != "rejected" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status"})
+		return
+	}
+
+	comments, total, err := h.commentService.ListComments(page, pageSize, status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 规范化分页参数，确保返回值与请求一致
+	if page < 1 {
+		page = 1
+	}
+	if pageSize < 1 || pageSize > 100 {
+		pageSize = 20
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"comments":    comments,
+		"total":       total,
+		"page":        page,
+		"page_size":   pageSize,
+		"total_pages": int((total + int64(pageSize-1)) / int64(pageSize)),
+	})
+}
+
+// AdminDeleteComment 管理员强制删除评论
+func (h *NativeCommentHandler) AdminDeleteComment(c *gin.Context) {
+	err := h.commentService.AdminDeleteComment(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Comment deleted successfully"})
 }

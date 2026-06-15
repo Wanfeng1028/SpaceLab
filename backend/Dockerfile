@@ -1,33 +1,33 @@
-FROM golang:1.23-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /build
 
-# 安装构建依赖
+# Build dependencies
 RUN apk add --no-cache git
 
-# 复制 go.mod 和 go.sum
+# Copy go.mod and go.sum
 COPY go.mod go.sum ./
 RUN go mod download
 
-# 复制源代码
+# Copy source code
 COPY . .
 
-# 构建
+# Build binary
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
 
-# 运行阶段
+# Runtime stage
 FROM alpine:latest
 
 WORKDIR /app
 
-# 安装必要的运行时依赖
+# Runtime dependencies (CA certs + timezone data)
 RUN apk --no-cache add ca-certificates tzdata
 
-# 从 builder 复制二进制文件
+# Copy binary from builder
 COPY --from=builder /build/main .
 COPY --from=builder /build/.env.example .
 
-# 创建上传目录
+# Create uploads directory
 RUN mkdir -p /app/uploads
 
 EXPOSE 8080
