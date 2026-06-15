@@ -1,0 +1,159 @@
+:host {
+  display: block;
+  min-height: calc(100vh - 64px - 120px);
+  background: #f0f2f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+}
+
+.profile-page {
+  padding: 40px 24px;
+}
+
+.profile-container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.profile-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+  margin: 0 0 4px 0;
+}
+
+.profile-subtitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0 0 24px 0;
+}
+
+/* 卡片间距 */
+.profile-card {
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.profile-card--danger {
+  border: 1px solid #ffccc7;
+}
+
+/* 用户信息区域 */
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-info__avatar {
+  flex: none;
+}
+
+.profile-avatar-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1677ff, #722ed1);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-info__detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-info__name {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+  margin: 0 0 4px 0;
+}
+
+.profile-info__email {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 0 0 8px 0;
+}
+
+.profile-info__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-info__date {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* 表单 */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-form__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.profile-form__hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.profile-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+/* 危险操作区 */
+.profile-danger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.profile-danger__text strong {
+  display: block;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  margin-bottom: 4px;
+}
+
+.profile-danger__text p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* 后台入口 */
+.profile-admin-link {
+  text-align: center;
+  margin-top: 24px;
+
+  a {
+    color: #1677ff;
+    font-size: 14px;
+    text-decoration: none;
+
+    &:hover {
+      color: #4096ff;
+    }
+  }
+}

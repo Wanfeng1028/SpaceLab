@@ -45,9 +45,9 @@ export class RegisterComponent {
     this.authService.register(this.email(), this.password(), this.username()).subscribe({
       next: (response) => {
         this.loading.set(false);
-        // 注册成功，管理员跳管理后台，普通用户跳首页
+        // 注册成功，管理员跳管理后台，普通用户跳个人中心
         const isAdmin = response.user?.role === 'admin';
-        this.router.navigate(isAdmin ? ['/admin'] : ['/']);
+        this.router.navigate(isAdmin ? ['/admin'] : ['/profile']);
       },
       error: (err) => {
         this.loading.set(false);

@@ -1,0 +1,140 @@
+<div class="profile-page">
+  <div class="profile-container">
+    <h1 class="profile-title">个人中心</h1>
+    <p class="profile-subtitle">管理你的 SpaceLab 账号</p>
+
+    <!-- 加载中 -->
+    @if (loading()) {
+      <nz-card class="profile-card" nzLoading>
+        <div style="height: 120px"></div>
+      </nz-card>
+    }
+
+    @if (currentUser(); as user) {
+      <!-- 用户信息卡片 -->
+      <nz-card class="profile-card">
+        <div class="profile-info">
+          <div class="profile-info__avatar">
+            <div class="profile-avatar-placeholder">
+              {{ user.username?.charAt(0)?.toUpperCase() || user.email.charAt(0).toUpperCase() }}
+            </div>
+          </div>
+          <div class="profile-info__detail">
+            <h2 class="profile-info__name">{{ user.username || '未设置用户名' }}</h2>
+            <p class="profile-info__email">{{ user.email }}</p>
+            <div class="profile-info__meta">
+              <nz-tag [nzColor]="roleColor(user.role)">{{ roleText(user.role) }}</nz-tag>
+              <span class="profile-info__date">注册于 {{ formatDate(user.created_at) }}</span>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+
+      <!-- 编辑资料 -->
+      <nz-card class="profile-card" nzTitle="编辑资料">
+        <div class="profile-form">
+          <div class="profile-form__field">
+            <label class="profile-form__label">用户名</label>
+            <input
+              nz-input
+              type="text"
+              [ngModel]="editUsername()"
+              (ngModelChange)="editUsername.set($event)"
+              placeholder="输入用户名"
+              maxlength="50"
+            />
+          </div>
+
+          <div class="profile-form__field">
+            <label class="profile-form__label">邮箱</label>
+            <input
+              nz-input
+              type="email"
+              [value]="user.email"
+              disabled
+            />
+            <span class="profile-form__hint">邮箱不可修改</span>
+          </div>
+
+          <div class="profile-form__actions">
+            <button
+              nz-button
+              nzType="primary"
+              [nzLoading]="savingProfile()"
+              (click)="onSaveProfile()"
+            >
+              保存修改
+            </button>
+          </div>
+        </div>
+      </nz-card>
+
+      <!-- 修改密码 -->
+      <nz-card class="profile-card" nzTitle="修改密码">
+        <div class="profile-form">
+          <div class="profile-form__field">
+            <label class="profile-form__label">当前密码</label>
+            <input
+              nz-input
+              type="password"
+              [ngModel]="oldPassword()"
+              (ngModelChange)="oldPassword.set($event)"
+              placeholder="输入当前密码"
+            />
+          </div>
+
+          <div class="profile-form__field">
+            <label class="profile-form__label">新密码</label>
+            <input
+              nz-input
+              type="password"
+              [ngModel]="newPassword()"
+              (ngModelChange)="newPassword.set($event)"
+              placeholder="至少 6 位密码"
+            />
+          </div>
+
+          <div class="profile-form__field">
+            <label class="profile-form__label">确认新密码</label>
+            <input
+              nz-input
+              type="password"
+              [ngModel]="confirmPassword()"
+              (ngModelChange)="confirmPassword.set($event)"
+              placeholder="再次输入新密码"
+            />
+          </div>
+
+          <div class="profile-form__actions">
+            <button
+              nz-button
+              nzType="primary"
+              [nzLoading]="changingPassword()"
+              (click)="onChangePassword()"
+            >
+              修改密码
+            </button>
+          </div>
+        </div>
+      </nz-card>
+
+      <!-- 账号操作 -->
+      <nz-card class="profile-card profile-card--danger">
+        <div class="profile-danger">
+          <div class="profile-danger__text">
+            <strong>退出登录</strong>
+            <p>退出后将需要重新登录才能管理你的账号</p>
+          </div>
+          <button nz-button nzDanger (click)="onLogout()">退出登录</button>
+        </div>
+      </nz-card>
+
+      <!-- 后台入口（管理员） -->
+      @if (user.role === 'admin' || user.role === 'writer') {
+        <div class="profile-admin-link">
+          <a routerLink="/admin">→ 进入管理后台</a>
+        </div>
+      }
+    }
+  </div>
+</div>
