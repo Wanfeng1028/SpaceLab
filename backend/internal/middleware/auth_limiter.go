@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
@@ -59,16 +60,39 @@ type authRateLimiter struct {
 
 // newAuthRateLimiter 创建认证限流器
 func newAuthRateLimiter() *authRateLimiter {
+	env := getEnv("ENVIRONMENT", "development")
+
+	ipMax := 10
+	ipLock := 10 * time.Minute
+	acctMax := 5
+	acctLock := 30 * time.Minute
+
+	// 开发环境放宽限流
+	if env == "development" {
+		ipMax = 100
+		ipLock = 1 * time.Minute
+		acctMax = 50
+		acctLock = 1 * time.Minute
+	}
+
 	return &authRateLimiter{
 		ipAttempts:          make(map[string]*authAttempt),
 		accountAttempts:     make(map[string]*authAttempt),
-		ipMaxAttempts:       10,               // IP 最多 10 次尝试
-		ipWindow:            5 * time.Minute,  // IP 统计窗口 5 分钟
-		ipLockDuration:      10 * time.Minute, // IP 锁定 10 分钟
-		accountMaxAttempts:  5,                // 账号最多 5 次尝试
-		accountWindow:       15 * time.Minute, // 账号统计窗口 15 分钟
-		accountLockDuration: 30 * time.Minute, // 账号锁定 30 分钟
+		ipMaxAttempts:       ipMax,
+		ipWindow:            5 * time.Minute,
+		ipLockDuration:      ipLock,
+		accountMaxAttempts:  acctMax,
+		accountWindow:       15 * time.Minute,
+		accountLockDuration: acctLock,
 	}
+}
+
+// getEnv 读取环境变量
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
 }
 
 // cleanupExpired 清理过期记录
