@@ -1,0 +1,126 @@
+<div class="categories">
+  <div class="categories__header">
+    <h2 class="categories__title">分类管理</h2>
+    <div>
+      <button nz-button nzType="default" (click)="loadCategories()" [nzLoading]="loading()">
+        <span nz-icon nzType="reload"></span>
+        刷新
+      </button>
+      <button nz-button nzType="primary" (click)="openCreateModal()">
+        <span nz-icon nzType="plus"></span>
+        新建分类
+      </button>
+    </div>
+  </div>
+
+  <nz-table #basicTable [nzData]="categories()" [nzLoading]="loading()" [nzPageSize]="20" nzSize="middle">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th nzWidth="140px">Slug</th>
+        <th nzWidth="80px">排序</th>
+        <th nzWidth="120px">父级</th>
+        <th nzWidth="200px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cat of basicTable.data; track cat.id) {
+        <tr>
+          <td>
+            @if (cat.icon) {
+              <span nz-icon [nzType]="cat.icon" style="margin-right: 6px;"></span>
+            }
+            <strong>{{ cat.name }}</strong>
+            @if (cat.description) {
+              <div style="color: rgba(0,0,0,0.45); font-size: 12px; margin-top: 2px;">
+                {{ cat.description }}
+              </div>
+            }
+          </td>
+          <td><nz-tag>{{ cat.slug }}</nz-tag></td>
+          <td>{{ cat.sort_order }}</td>
+          <td>
+            @if (cat.parent_id) {
+              <nz-tag nzColor="blue">子分类</nz-tag>
+            } @else {
+              <nz-tag>顶级</nz-tag>
+            }
+          </td>
+          <td>
+            <button nz-button nzType="text" nzSize="small" nz-tooltip="编辑" (click)="openEditModal(cat)">
+              <span nz-icon nzType="edit"></span>
+            </button>
+            <button nz-button nzType="text" nzSize="small" nzDanger nz-tooltip="删除" (click)="onDelete(cat)">
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" style="text-align: center; color: rgba(0,0,0,0.45); padding: 32px 0;">暂无分类</td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+
+  <!-- 创建/编辑弹窗 -->
+  @if (modalVisible()) {
+    <nz-modal
+      [nzVisible]="modalVisible()"
+      [nzTitle]="editingId() ? '编辑分类' : '新建分类'"
+      (nzOnOk)="onSubmit()"
+      (nzOnCancel)="closeModal()"
+      [nzOkLoading]="false"
+    >
+      <ng-container *nzModalContent>
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label>Slug</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formSlug()" (input)="formSlug.set($any($event.target).value)" placeholder="category-slug" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formName()" (input)="formName.set($any($event.target).value)" placeholder="分类名称" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>描述</nz-form-label>
+            <nz-form-control>
+              <textarea nz-input [value]="formDescription()" (input)="formDescription.set($any($event.target).value)" placeholder="分类描述（可选）" rows="3"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>图标</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formIcon()" (input)="formIcon.set($any($event.target).value)" placeholder="图标名称（如 folder）" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>排序</nz-form-label>
+            <nz-form-control>
+              <nz-input-number [ngModel]="formSortOrder()" (ngModelChange)="formSortOrder.set($event)" [nzMin]="0"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>父级分类</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                [ngModel]="formParentId()"
+                (ngModelChange)="formParentId.set($event)"
+                nzAllowClear
+                nzPlaceHolder="无（顶级分类）"
+              >
+                @for (p of parentOptions(); track p.id) {
+                  <nz-option [nzValue]="p.id" [nzLabel]="p.name"></nz-option>
+                }
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </ng-container>
+    </nz-modal>
+  }
+</div>

@@ -2,9 +2,11 @@ package handler
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/config"
+	"github.com/spacelab/backend/internal/middleware"
 	"github.com/spacelab/backend/internal/service"
 )
 
@@ -86,11 +88,14 @@ func (h *AuthHandler) GetMe(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"id":         user.ID.String(),
-		"email":      user.Email,
-		"username":   user.Username,
-		"role":       user.Role,
-		"created_at": user.CreatedAt,
+		"id":                user.ID.String(),
+		"email":             user.Email,
+		"username":          user.Username,
+		"role":              user.Role,
+		"status":            user.Status,
+		"avatar_url":        user.AvatarURL,
+		"email_verified_at": user.EmailVerifiedAt,
+		"created_at":        user.CreatedAt,
 	})
 }
 
@@ -138,6 +143,54 @@ func (h *AuthHandler) UpdateProfile(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Profile updated successfully"})
+}
+
+// RefreshToken 用 refresh_token 换新 access_token
+func (h *AuthHandler) RefreshToken(c *gin.Context) {
+	var input struct {
+		RefreshToken string `json:"refresh_token" binding:"required"`
+	}
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "refresh_token is required"})
+		return
+	}
+
+	// 从 refresh_token 中提取用户信息（refresh_token 格式: 原始userID+"refresh"）
+	claims, err := middleware.ParseJWT(h.cfg, input.RefreshToken)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid or expired refresh token"})
+		return
+	}
+
+	// refresh_token 的 userID 后缀为 "refresh"，去掉后缀得到真实 userID
+	realUserID := strings.TrimSuffix(claims.UserID, "refresh")
+
+	user, err := h.authService.GetUserByID(realUserID)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found"})
+		return
+	}
+
+	// 生成新的 token 对
+	token, err := middleware.GenerateJWT(h.cfg, user.ID.String(), user.Email, user.Role)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate token"})
+		return
+	}
+
+	newRefreshToken, err := middleware.GenerateJWT(h.cfg, user.ID.String()+"refresh", user.Email, user.Role)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate refresh token"})
+		return
+	}
+
+	c.JSON(http.StatusOK, service.AuthResponse{
+		Token:        token,
+		RefreshToken: newRefreshToken,
+		User:         service.ToUserInfo(*user),
+		ExpiresAt:    claims.ExpiresAt.Time,
+	})
 }
 
 // isStrongPassword 验证密码强度

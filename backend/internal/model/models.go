@@ -124,3 +124,41 @@ type PasswordResetToken struct {
 	Used      bool      `gorm:"default:false" json:"used"`
 	CreatedAt time.Time `json:"created_at"`
 }
+
+// Category 分类模型（用于文章分类管理）
+type Category struct {
+	ID          uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
+	Slug        string     `gorm:"uniqueIndex;size:100;not null" json:"slug"`
+	Name        string     `gorm:"size:100;not null" json:"name"`
+	Description string     `gorm:"type:text" json:"description"`
+	Icon        string     `gorm:"size:100" json:"icon"`
+	SortOrder   int        `gorm:"default:0" json:"sort_order"`
+	ParentID    *uuid.UUID `gorm:"type:uuid;index" json:"parent_id,omitempty"`
+	Parent      *Category  `gorm:"foreignKey:ParentID" json:"parent,omitempty"`
+	Children    []Category `gorm:"foreignKey:ParentID" json:"children,omitempty"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+}
+
+// Tag 标签模型（用于文章标签管理）
+type Tag struct {
+	ID        uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	Slug      string    `gorm:"uniqueIndex;size:100;not null" json:"slug"`
+	Name      string    `gorm:"size:100;not null" json:"name"`
+	Color     string    `gorm:"size:20" json:"color"` // 颜色标识，如 #1890ff
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// FriendLink 友情链接模型
+type FriendLink struct {
+	ID          uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	Name        string    `gorm:"size:100;not null" json:"name"`
+	URL         string    `gorm:"size:500;not null" json:"url"`
+	LogoURL     string    `gorm:"size:500" json:"logo_url"`
+	Description string    `gorm:"type:text" json:"description"`
+	SortOrder   int       `gorm:"default:0" json:"sort_order"`
+	Status      string    `gorm:"size:20;default:'active'" json:"status"` // active, inactive
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}

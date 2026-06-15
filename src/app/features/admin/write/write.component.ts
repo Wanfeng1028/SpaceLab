@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../../core/services/i18n.service';
 import { PostService, Post } from '../../../core/services/post.service';
+import { ContentService, Category } from '../../../core/services/content.service';
 
 @Component({
   selector: 'app-write',
@@ -14,6 +15,7 @@ import { PostService, Post } from '../../../core/services/post.service';
 export class WriteComponent implements OnInit {
   private i18n = inject(I18nService);
   private postService = inject(PostService);
+  private contentService = inject(ContentService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -33,6 +35,9 @@ export class WriteComponent implements OnInit {
   readonly isEditing = signal(false);
   readonly editId = signal<string | null>(null);
 
+  /** 动态分类列表（从后端获取） */
+  readonly categories = signal<Category[]>([]);
+
   /** Parse comma-separated tags into array */
   readonly tagsArray = computed(() =>
     this.tagsInput()
@@ -42,6 +47,7 @@ export class WriteComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.loadCategories();
     // 检查是否是编辑模式
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -49,6 +55,22 @@ export class WriteComponent implements OnInit {
       this.editId.set(id);
       this.loadPost(id);
     }
+  }
+
+  private loadCategories(): void {
+    this.contentService.listCategories().subscribe({
+      next: (list) => this.categories.set(list || []),
+      error: () => {
+        // 后端不可用时，保留一个硬编码的降级列表
+        this.categories.set([
+          { id: '', slug: 'GIS', name: 'GIS', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'dev', name: '开发', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'algorithm', name: '算法', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'essay', name: '随笔', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'deals', name: '薅羊毛攻略', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+        ]);
+      },
+    });
   }
 
   loadPost(id: string): void {

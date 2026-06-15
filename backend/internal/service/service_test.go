@@ -184,7 +184,7 @@ func TestPostService_ListPosts(t *testing.T) {
 	}
 
 	// 获取列表
-	posts, total, err := service.ListPosts("", "", 1, 10)
+	posts, total, err := service.ListPosts("", "", "", 1, 10)
 	if err != nil {
 		t.Fatalf("ListPosts failed: %v", err)
 	}

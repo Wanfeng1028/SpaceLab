@@ -65,13 +65,22 @@ func (h *NativeCommentHandler) CreateComment(c *gin.Context) {
 	}
 
 	var input struct {
-		PostID   string `json:"post_id" binding:"required"`
+		PostID   string `json:"post_id"`
 		Content  string `json:"content" binding:"required,min=1,max=5000"`
 		ParentID string `json:"parent_id"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
+
+	// 支持从 URL param 或 body 获取 post_id
+	if input.PostID == "" {
+		input.PostID = c.Param("id")
+	}
+	if input.PostID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "post_id is required"})
 		return
 	}
 

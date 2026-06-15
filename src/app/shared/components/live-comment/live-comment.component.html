@@ -13,35 +13,44 @@
 
   <!-- 评论输入框 -->
   <div class="live-comment__input-section">
-    <div class="live-comment__input-wrapper">
-      <textarea
-        id="new-comment-input"
-        [(ngModel)]="newComment"
-        placeholder="说点什么吧..."
-        [disabled]="submitting"
-        rows="3"
-        class="live-comment__textarea"
-      ></textarea>
-    </div>
+    @if (isLoggedIn()) {
+      <div class="live-comment__user-info">
+        <span class="live-comment__username">{{ currentUser()?.username || '用户' }}</span>
+      </div>
+      <div class="live-comment__input-wrapper">
+        <textarea
+          id="new-comment-input"
+          [(ngModel)]="newComment"
+          placeholder="说点什么吧..."
+          [disabled]="submitting"
+          rows="3"
+          class="live-comment__textarea"
+        ></textarea>
+      </div>
 
-    <!-- 回复提示 -->
-    <div *ngIf="replyTo" class="live-comment__reply-header">
-      <span>回复 @{{ replyTo.username || '用户' }}</span>
-      <button type="button" (click)="cancelReply()" class="live-comment__cancel-btn">
-        取消
-      </button>
-    </div>
+      <!-- 回复提示 -->
+      <div *ngIf="replyTo" class="live-comment__reply-header">
+        <span>回复 @{{ replyTo.username || '用户' }}</span>
+        <button type="button" (click)="cancelReply()" class="live-comment__cancel-btn">
+          取消
+        </button>
+      </div>
 
-    <div class="live-comment__input-actions">
-      <button
-        type="button"
-        (click)="submitComment()"
-        [disabled]="!newComment.trim() || submitting"
-        class="live-comment__submit-btn"
-      >
-        {{ submitting ? '提交中...' : '发表评论' }}
-      </button>
-    </div>
+      <div class="live-comment__input-actions">
+        <button
+          type="button"
+          (click)="submitComment()"
+          [disabled]="!newComment.trim() || submitting"
+          class="live-comment__submit-btn"
+        >
+          {{ submitting ? '提交中...' : '发表评论' }}
+        </button>
+      </div>
+    } @else {
+      <div class="live-comment__login-prompt">
+        <p>请先 <a routerLink="/login">登录</a> 后参与评论</p>
+      </div>
+    }
   </div>
 
   <!-- 加载状态 -->

@@ -33,12 +33,14 @@ type AuthResponse struct {
 }
 
 type UserInfo struct {
-	ID        string    `json:"id"`
-	Email     string    `json:"email"`
-	Username  string    `json:"username"`
-	Role      string    `json:"role"`
-	Status    string    `json:"status"`
-	CreatedAt time.Time `json:"created_at"`
+ ID              string     `json:"id"`
+ Email           string     `json:"email"`
+ Username        string     `json:"username"`
+ Role            string     `json:"role"`
+ Status          string     `json:"status"`
+ AvatarURL       string     `json:"avatar_url"`
+ EmailVerifiedAt *time.Time `json:"email_verified_at"`
+ CreatedAt       time.Time  `json:"created_at"`
 }
 
 func NewAuthService(db *gorm.DB, cfg *config.Config, resendSvc *utils.ResendService) *AuthService {
@@ -61,12 +63,14 @@ func ToUserInfo(u model.User) UserInfo {
 		status = "active"
 	}
 	return UserInfo{
-		ID:        u.ID.String(),
-		Email:     u.Email,
-		Username:  u.Username,
-		Role:      u.Role,
-		Status:    status,
-		CreatedAt: u.CreatedAt,
+		ID:              u.ID.String(),
+		Email:           u.Email,
+		Username:        u.Username,
+		Role:            u.Role,
+		Status:          status,
+		AvatarURL:       u.AvatarURL,
+		EmailVerifiedAt: u.EmailVerifiedAt,
+		CreatedAt:       u.CreatedAt,
 	}
 }
 

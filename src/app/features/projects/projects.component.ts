@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { ProjectCardComponent } from '../../shared/components/cards/project-card.component';
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
@@ -8,9 +8,53 @@ import {
   matchesSearchQuery,
   normalizeSearchText,
 } from '../../core/utils/search.utils';
-import { PROJECTS } from '../../../generated/content.generated';
+import { ProjectService, Project } from '../../core/services/project.service';
+import { PROJECTS as STATIC_PROJECTS } from '../../../generated/content.generated';
 
 const PAGE_SIZE = 6;
+
+/** 将后端 Project 转为卡片组件需要的格式 */
+interface ProjectCard {
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  language: string;
+  stars: number;
+  forks: number;
+  status: string;
+  cover: string;
+  github: string;
+  demo: string;
+  featured: boolean;
+  archived: boolean;
+  fork: boolean;
+  updatedAt: string;
+}
+
+function toCard(p: Project): ProjectCard {
+  return {
+    id: p.slug,
+    name: p.title,
+    description: p.description,
+    tags: p.tags ?? [],
+    language: p.language ?? '',
+    stars: 0,         // 后端暂未同步 stars，后续可从 GitHub API 同步
+    forks: 0,
+    status: p.status === 'published' ? 'Building' : p.status,
+    cover: p.cover_url ?? '',
+    github: p.github_url ?? '',
+    demo: p.website_url ?? '',
+    featured: false,  // 后端暂未支持 featured，后续加
+    archived: p.status === 'archived',
+    fork: false,
+    updatedAt: p.updated_at,
+  };
+}
+
+function staticToCard(p: typeof STATIC_PROJECTS[number]): ProjectCard {
+  return { ...p };
+}
 
 @Component({
   selector: 'app-projects',
@@ -19,15 +63,20 @@ const PAGE_SIZE = 6;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ProjectCardComponent, MacTerminalModalComponent, SearchBoxComponent],
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit {
   private i18n = inject(I18nService);
+  private projectService = inject(ProjectService);
 
+  readonly loading = signal(false);
   readonly showContactModal = signal(false);
   readonly selectedFilter = signal('all');
   readonly searchQuery = signal('');
   readonly currentPage = signal(1);
 
-  readonly allProjects = computed(() => PROJECTS);
+  /** 最终展示的项目列表（优先后端数据，降级到静态数据） */
+  private readonly _projects = signal<ProjectCard[]>([]);
+
+  readonly allProjects = computed(() => this._projects());
 
   readonly filterTags = computed(() => {
     const tags = new Set<string>();
@@ -75,7 +124,26 @@ export class ProjectsComponent {
     return pages;
   });
 
-  private getProjectSearchText(project: (typeof PROJECTS)[number]): string {
+  ngOnInit(): void {
+    this.loadProjects();
+  }
+
+  private loadProjects(): void {
+    this.loading.set(true);
+    this.projectService.listProjects(1, 100, 'published').subscribe({
+      next: (res) => {
+        this._projects.set((res.projects ?? []).map(toCard));
+        this.loading.set(false);
+      },
+      error: () => {
+        // 降级：使用静态数据
+        this._projects.set(STATIC_PROJECTS.map(staticToCard));
+        this.loading.set(false);
+      },
+    });
+  }
+
+  private getProjectSearchText(project: ProjectCard): string {
     return buildSearchText([
       project.name,
       project.description,

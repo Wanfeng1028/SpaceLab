@@ -1,0 +1,117 @@
+<div class="friend-links">
+  <div class="friend-links__header">
+    <h2 class="friend-links__title">友情链接管理</h2>
+    <div>
+      <button nz-button nzType="default" (click)="loadFriendLinks()" [nzLoading]="loading()">
+        <span nz-icon nzType="reload"></span>
+        刷新
+      </button>
+      <button nz-button nzType="primary" (click)="openCreateModal()">
+        <span nz-icon nzType="plus"></span>
+        新建友链
+      </button>
+    </div>
+  </div>
+
+  <nz-table #basicTable [nzData]="friendLinks()" [nzLoading]="loading()" [nzPageSize]="20" nzSize="middle">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th>URL</th>
+        <th nzWidth="80px">排序</th>
+        <th nzWidth="80px">状态</th>
+        <th nzWidth="160px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (link of basicTable.data; track link.id) {
+        <tr>
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              @if (link.logo_url) {
+                <img [src]="link.logo_url" [alt]="link.name" style="width: 24px; height: 24px; border-radius: 4px; object-fit: cover;" />
+              }
+              <strong>{{ link.name }}</strong>
+            </div>
+            @if (link.description) {
+              <div style="color: rgba(0,0,0,0.45); font-size: 12px; margin-top: 2px;">{{ link.description }}</div>
+            }
+          </td>
+          <td>
+            <a [href]="link.url" target="_blank" rel="noopener">{{ link.url }}</a>
+          </td>
+          <td>{{ link.sort_order }}</td>
+          <td>
+            <nz-tag [nzColor]="link.status === 'active' ? 'green' : 'default'">{{ statusText(link.status) }}</nz-tag>
+          </td>
+          <td>
+            <button nz-button nzType="text" nzSize="small" nz-tooltip="编辑" (click)="openEditModal(link)">
+              <span nz-icon nzType="edit"></span>
+            </button>
+            <button nz-button nzType="text" nzSize="small" nzDanger nz-tooltip="删除" (click)="onDelete(link)">
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" style="text-align: center; color: rgba(0,0,0,0.45); padding: 32px 0;">暂无友链</td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+
+  <!-- 创建/编辑弹窗 -->
+  @if (modalVisible()) {
+    <nz-modal
+      [nzVisible]="modalVisible()"
+      [nzTitle]="editingId() ? '编辑友链' : '新建友链'"
+      (nzOnOk)="onSubmit()"
+      (nzOnCancel)="closeModal()"
+    >
+      <ng-container *nzModalContent>
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label>名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formName()" (input)="formName.set($any($event.target).value)" placeholder="友链名称" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>URL</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formUrl()" (input)="formUrl.set($any($event.target).value)" placeholder="https://example.com" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Logo URL</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formLogoUrl()" (input)="formLogoUrl.set($any($event.target).value)" placeholder="https://example.com/logo.png（可选）" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>描述</nz-form-label>
+            <nz-form-control>
+              <textarea nz-input [value]="formDescription()" (input)="formDescription.set($any($event.target).value)" placeholder="友链描述（可选）" rows="3"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>排序</nz-form-label>
+            <nz-form-control>
+              <nz-input-number [ngModel]="formSortOrder()" (ngModelChange)="formSortOrder.set($event)" [nzMin]="0"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>状态</nz-form-label>
+            <nz-form-control>
+              <nz-select [ngModel]="formStatus()" (ngModelChange)="formStatus.set($event)">
+                <nz-option nzValue="active" nzLabel="活跃"></nz-option>
+                <nz-option nzValue="inactive" nzLabel="已停用"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </ng-container>
+    </nz-modal>
+  }
+</div>

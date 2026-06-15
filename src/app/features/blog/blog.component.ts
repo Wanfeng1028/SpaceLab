@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService, Post } from '../../core/services/post.service';
+import { ContentService, Category } from '../../core/services/content.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
 import {
@@ -24,6 +25,7 @@ const WEB3FORMS_ACCESS_KEY = '874ed1fa-0a5f-481a-810f-83d2d2613b36';
 export class BlogComponent implements OnInit {
   private i18n = inject(I18nService);
   private postService = inject(PostService);
+  private contentService = inject(ContentService);
   private http = inject(HttpClient);
 
   readonly searchQuery = signal('');
@@ -37,7 +39,12 @@ export class BlogComponent implements OnInit {
   readonly newsletterError = signal(false);
   readonly newsletterValidationError = signal<string | null>(null);
 
-  readonly categories = signal<string[]>(['all', 'GIS', '开发', '算法', '随笔', '薅羊毛攻略']);
+  /** 动态分类列表，从后端加载 */
+  readonly categoryList = signal<Category[]>([]);
+  readonly categories = computed<string[]>(() => {
+    const cats = this.categoryList().map((c) => c.name);
+    return ['all', ...cats];
+  });
 
   // All posts from the backend API
   private readonly _allPosts = signal<Post[]>([]);
@@ -70,15 +77,10 @@ export class BlogComponent implements OnInit {
   }
 
   getCategoryLabel(cat: string): string {
-    const labels: Record<string, string> = {
-      all: this.t('common.all'),
-      GIS: this.t('admin.catGis'),
-      开发: this.t('admin.catDev'),
-      算法: this.t('admin.catAlgorithm'),
-      随笔: this.t('admin.catEssay'),
-      薅羊毛攻略: this.t('admin.catDeals'),
-    };
-    return labels[cat] ?? cat;
+    if (cat === 'all') return this.t('common.all');
+    // 从动态分类列表中查找
+    const found = this.categoryList().find((c) => c.name === cat);
+    return found?.name ?? cat;
   }
 
   selectCategory(category: string): void {
@@ -86,7 +88,24 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadCategories();
     this.loadPosts();
+  }
+
+  private loadCategories(): void {
+    this.contentService.listCategories().subscribe({
+      next: (list) => this.categoryList.set(list || []),
+      error: () => {
+        // 降级：使用硬编码分类
+        this.categoryList.set([
+          { id: '', slug: 'GIS', name: 'GIS', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'dev', name: '开发', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'algorithm', name: '算法', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'essay', name: '随笔', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+          { id: '', slug: 'deals', name: '薅羊毛攻略', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
+        ]);
+      },
+    });
   }
 
   loadPosts(): void {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -15,9 +15,22 @@ export interface LiveComment {
   status: string;
   create_time: number;
   update_time: number;
+  parent_id?: string;
   replies: LiveComment[];
 }
 
+/** 原生后端评论列表响应格式 */
+export interface NativeCommentListResponse {
+  comments: LiveComment[];
+  total: number;
+}
+
+/** 原生后端评论计数响应格式 */
+export interface NativeCommentCountResponse {
+  count: number;
+}
+
+/** 兼容旧 LiveComment API 的列表响应格式 */
 export interface CommentListResponse {
   total: number;
   list: LiveComment[];
@@ -38,11 +51,10 @@ export interface CommentCountResponse {
 })
 export class LiveCommentService {
   private readonly apiUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   /**
-   * 获取文章评论列表
+   * 获取文章评论列表（自研原生后端）
    * @param postId 文章 ID 或 slug
    * @param page 页码（默认 1）
    * @param pageSize 每页数量（默认 10）

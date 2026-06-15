@@ -1,208 +1,532 @@
-// Google 风格登录页
-$google-blue: #1a73e8;
-$google-blue-hover: #1765cc;
-$google-blue-active: #1558b0;
-$google-bg: #f8f9fa;
-$google-card-bg: #ffffff;
-$google-text: #202124;
-$google-text-secondary: #5f6368;
-$google-border: #dadce0;
-$google-border-focus: #1a73e8;
-$google-error: #d93025;
-$google-error-bg: #fce8e6;
+// ParrotSoundReVue 风格登录/注册页 — 蓝白渐变、背景图、毛玻璃卡片
+@use 'sass:color';
 
+// ── 颜色体系 ──
+$primary: #2563eb;
+$primary-hover: #1d4ed8;
+$primary-active: #1e40af;
+$primary-light: rgba(37, 99, 235, 0.08);
+$primary-glow: rgba(37, 99, 235, 0.25);
+
+$text-primary: #1e293b;
+$text-secondary: #64748b;
+$text-muted: #94a3b8;
+
+$card-bg: rgba(255, 255, 255, 0.82);
+$card-border: rgba(255, 255, 255, 0.6);
+$card-shadow: 0 20px 60px rgba(37, 99, 235, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
+
+$input-bg: rgba(255, 255, 255, 0.6);
+$input-border: #e2e8f0;
+$input-border-focus: $primary;
+$input-placeholder: #94a3b8;
+
+$error-color: #dc2626;
+$error-bg: #fef2f2;
+$error-border: #fecaca;
+
+$overlay-bg: linear-gradient(
+  135deg,
+  rgba(37, 99, 235, 0.45) 0%,
+  rgba(59, 130, 246, 0.35) 25%,
+  rgba(96, 165, 250, 0.25) 50%,
+  rgba(147, 197, 253, 0.2) 75%,
+  rgba(191, 219, 254, 0.15) 100%
+);
+
+// ── 页面容器 ──
 .auth-page {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $google-bg;
   padding: 24px;
-  font-family: 'Google Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+
+  // 渐变背景（兜底）
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(37, 99, 235, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
+    linear-gradient(135deg, #e0e7ff 0%, #dbeafe 25%, #eff6ff 50%, #f0f9ff 75%, #e0f2fe 100%);
 }
 
-.auth-container {
-  width: 100%;
-  max-width: 450px;
-}
+// ── 背景图片层 ──
+.auth-page__bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 
-.auth-card {
-  background: $google-card-bg;
-  border-radius: 16px;
-  padding: 48px 40px 36px;
-  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15), 0 4px 8px rgba(60, 64, 67, 0.1);
-  border: 1px solid $google-border;
-  transition: box-shadow 0.2s;
-
-  &:hover {
-    box-shadow: 0 2px 6px rgba(60, 64, 67, 0.15), 0 8px 16px rgba(60, 64, 67, 0.1);
+  img,
+  source {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
-// Logo
+// ── 半透明覆盖层 ──
+.auth-page__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: $overlay-bg;
+  backdrop-filter: blur(2px) saturate(120%);
+  -webkit-backdrop-filter: blur(2px) saturate(120%);
+}
+
+// ── 卡片容器 ──
+.auth-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-card {
+  position: relative;
+  background: $card-bg;
+  border-radius: 28px;
+  padding: 40px 36px 32px;
+  box-shadow: $card-shadow;
+  border: 1px solid $card-border;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 24px 70px rgba(37, 99, 235, 0.18), 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+// ── 卡片头部 ──
+.auth-card__header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    background: linear-gradient(135deg, #1e40af, #2563eb, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+}
+
+.auth-card__register-tip {
+  font-size: 14px;
+  color: $text-secondary;
+  margin: 0;
+
+  a {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary-hover;
+      text-decoration: underline;
+    }
+  }
+}
+
+// ── Logo ──
 .auth-logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .auth-logo__icon {
-  font-size: 42px;
+  font-size: 44px;
   line-height: 1;
-  background: linear-gradient(135deg, #4285f4, #8ab4f8, #a8c7fa);
+  background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.3));
 }
 
 .auth-title {
-  font-size: 24px;
-  font-weight: 400;
-  color: $google-text;
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1e40af, #2563eb, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-align: center;
-  margin: 0 0 8px 0;
-  line-height: 1.4;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
 }
 
 .auth-subtitle {
-  font-size: 16px;
-  color: $google-text-secondary;
+  font-size: 15px;
+  color: $text-secondary;
   text-align: center;
-  margin: 0 0 32px 0;
+  margin: 0 0 28px 0;
   font-weight: 400;
 }
 
-// 错误提示
+// ── 错误提示 ──
 .auth-error {
-  background: $google-error-bg;
-  border-radius: 8px;
+  background: $error-bg;
+  border-radius: 12px;
   padding: 12px 16px;
   margin-bottom: 20px;
-  color: $google-error;
+  color: $error-color;
   font-size: 14px;
   line-height: 1.5;
-  border: 1px solid #f5c6cb;
+  border: 1px solid $error-border;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '⚠';
+    font-size: 16px;
+    flex-shrink: 0;
+  }
 }
 
-// 表单
+// ── 表单 ──
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
 }
 
-// 浮动标签输入框 (Google Material 风格)
+// ── 输入框 ──
 .form-field {
   position: relative;
 }
 
 .form-input {
   width: 100%;
-  padding: 14px 16px;
-  background: transparent;
-  border: 1px solid $google-border;
-  border-radius: 8px;
-  color: $google-text;
-  font-size: 16px;
+  padding: 13px 16px 13px 44px;
+  background: $input-bg;
+  border: 1.5px solid $input-border;
+  border-radius: 14px;
+  color: $text-primary;
+  font-size: 15px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   line-height: 1.5;
   outline: none;
+  backdrop-filter: blur(8px);
 
   &::placeholder {
-    color: transparent;
+    color: $input-placeholder;
   }
 
   &:hover {
-    border-color: darken($google-border, 10%);
+    border-color: color.adjust($input-border, $lightness: -8%);
   }
 
   &:focus {
-    border-color: $google-border-focus;
-    border-width: 2px;
-    padding: 13px 15px;
-    box-shadow: none;
-  }
-
-  // 输入框有内容或聚焦时，标签浮上去
-  &:focus + .form-label,
-  &:not(:placeholder-shown) + .form-label {
-    top: -8px;
-    left: 12px;
-    font-size: 12px;
-    padding: 0 4px;
-    background: $google-card-bg;
-    color: $google-border-focus;
-    font-weight: 500;
-  }
-
-  &:not(:focus):not(:placeholder-shown) + .form-label {
-    color: $google-text-secondary;
+    border-color: $input-border-focus;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 0 3px $primary-glow;
   }
 }
 
+// 输入框前缀图标
+.form-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: $text-muted;
+  pointer-events: none;
+  transition: color 0.2s;
+
+  .form-input:focus ~ & {
+    color: $primary;
+  }
+}
+
+// 浮动标签（兼容旧版）
 .form-label {
   position: absolute;
   top: 50%;
-  left: 16px;
+  left: 44px;
   transform: translateY(-50%);
-  font-size: 16px;
-  color: $google-text-secondary;
+  font-size: 15px;
+  color: $input-placeholder;
   pointer-events: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
   padding: 0;
   line-height: 1;
+
+  .form-input:focus + &,
+  .form-input:not(:placeholder-shown) + & {
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    padding: 0 6px;
+    background: rgba(255, 255, 255, 0.9);
+    color: $primary;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+  .form-input:not(:focus):not(:placeholder-shown) + & {
+    color: $text-secondary;
+  }
 }
 
-// 提交按钮 (Google 胶囊按钮)
+// ── 提交按钮 ──
 .auth-submit {
   width: 100%;
-  padding: 12px 24px;
-  background: $google-blue;
+  padding: 13px 24px;
+  background: linear-gradient(135deg, #1e40af, #2563eb);
   color: #ffffff;
   border: none;
-  border-radius: 24px;
+  border-radius: 14px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1.5;
-  margin-top: 8px;
-  letter-spacing: 0.25px;
+  margin-top: 6px;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
 
   &:hover:not(:disabled) {
-    background: $google-blue-hover;
-    box-shadow: 0 1px 3px rgba(26, 115, 232, 0.4);
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+
+    &::before {
+      opacity: 1;
+    }
   }
 
   &:active:not(:disabled) {
-    background: $google-blue-active;
-    box-shadow: 0 1px 2px rgba(26, 115, 232, 0.3);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
   }
 
   &:disabled {
-    background: lighten($google-blue, 30%);
+    background: linear-gradient(135deg, #93c5fd, #bfdbfe);
     cursor: not-allowed;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
-// 底部链接
+// ── 分隔线 ──
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0 20px;
+}
+
+.auth-divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+}
+
+.auth-divider__text {
+  font-size: 13px;
+  color: $text-muted;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+// ── 第三方登录按钮 ──
+.auth-third-party {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.third-party-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 13px;
+  font-weight: 500;
+  color: $text-primary;
+  backdrop-filter: blur(8px);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ── 底部链接 ──
 .auth-footer {
-  margin-top: 28px;
-  text-align: left;
+  margin-top: 24px;
+  text-align: center;
 }
 
 .auth-link {
-  color: $google-blue;
+  color: $primary;
   text-decoration: none;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.2s;
 
   &:hover {
-    color: $google-blue-hover;
+    color: $primary-hover;
     text-decoration: underline;
+  }
+}
+
+// ── 第三方登录弹窗 ──
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: auth-overlay-in 0.25s ease-out;
+}
+
+@keyframes auth-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.auth-dialog {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 28px;
+  padding: 32px 30px 28px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 26px 60px rgba(37, 99, 235, 0.2), 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: auth-dialog-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes auth-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.auth-dialog__icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+}
+
+.auth-dialog__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(90, 174, 255, 0.18), rgba(37, 99, 235, 0.12));
+  color: $primary;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.auth-dialog__title {
+  margin: 18px 0 10px;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 700;
+  background: linear-gradient(135deg, #69b3ff, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-dialog__desc {
+  margin: 0;
+  color: $text-secondary;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.auth-dialog__btn {
+  margin-top: 24px;
+  padding: 10px 32px;
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+  }
+}
+
+// ── 响应式 ──
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 32px 24px 24px;
+    border-radius: 20px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+  }
+
+  .auth-third-party {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .third-party-btn {
+    padding: 8px 12px;
+    font-size: 12px;
   }
 }

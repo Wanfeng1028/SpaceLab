@@ -75,11 +75,9 @@
               (change)="category.set($any($event.target).value)"
             >
               <option value="">选择分类</option>
-              <option value="GIS">GIS</option>
-              <option value="开发">开发</option>
-              <option value="算法">算法</option>
-              <option value="随笔">随笔</option>
-              <option value="薅羊毛攻略">薅羊毛攻略</option>
+              @for (cat of categories(); track cat.slug) {
+                <option [value]="cat.name">{{ cat.name }}</option>
+              }
             </select>
           </div>
           <div class="write-field write-field--half">

@@ -15,11 +15,13 @@ import (
 	adminhandler "github.com/spacelab/backend/internal/handler/admin"
 	analytics "github.com/spacelab/backend/internal/handler/analytics"
 	auth "github.com/spacelab/backend/internal/handler/auth"
+	contenthandler "github.com/spacelab/backend/internal/handler/content"
 	comment "github.com/spacelab/backend/internal/handler/comment"
 	media "github.com/spacelab/backend/internal/handler/media"
 	post "github.com/spacelab/backend/internal/handler/post"
 	projecthandler "github.com/spacelab/backend/internal/handler/project"
 	"github.com/spacelab/backend/internal/middleware"
+	"github.com/spacelab/backend/internal/model"
 	"github.com/spacelab/backend/internal/service"
 	"github.com/spacelab/backend/internal/utils"
 	"go.uber.org/zap"
@@ -36,6 +38,22 @@ func main() {
 	// 初始化数据库
 	if err := config.InitDB(cfg); err != nil {
 		utils.Logger.Fatal("Failed to initialize database", zap.Error(err))
+	}
+
+	// 自动迁移数据库表结构
+	if err := config.GetDB().AutoMigrate(
+		&model.User{},
+		&model.Post{},
+		&model.Comment{},
+		&model.MediaAsset{},
+		&model.AnalyticsEvent{},
+		&model.Project{},
+		&model.PasswordResetToken{},
+		&model.Category{},
+		&model.Tag{},
+		&model.FriendLink{},
+	); err != nil {
+		utils.Logger.Warn("Auto-migration warning", zap.Error(err))
 	}
 
 	// 初始化 Redis（可选）
@@ -61,6 +79,9 @@ func main() {
 	postService := service.NewPostService(config.GetDB())
 	projectService := service.NewProjectService(config.GetDB())
 	commentService := service.NewCommentService(config.GetDB())
+	categoryService := service.NewCategoryService(config.GetDB())
+	tagService := service.NewTagService(config.GetDB())
+	friendLinkService := service.NewFriendLinkService(config.GetDB())
 
 	// 创建处理器
 	authHandler := auth.NewAuthHandler(authService, cfg)
@@ -68,9 +89,13 @@ func main() {
 	postHandler := post.NewPostHandler(postService)
 	projectHandler := projecthandler.NewProjectHandler(projectService)
 	nativeCommentHandler := comment.NewNativeCommentHandler(commentService)
-	liveCommentHandler := comment.NewLiveCommentHandler(cfg)
+	// liveCommentHandler 保留供未来切换使用
+	_ = comment.NewLiveCommentHandler(cfg)
 	mediaHandler := media.NewMediaHandler(cfg, config.GetDB())
 	analyticsHandler := analytics.NewAnalyticsHandler(config.GetDB())
+	categoryHandler := contenthandler.NewCategoryHandler(categoryService)
+	tagHandler := contenthandler.NewTagHandler(tagService)
+	friendLinkHandler := contenthandler.NewFriendLinkHandler(friendLinkService)
 
 	r := gin.Default()
 
@@ -94,7 +119,8 @@ func main() {
 		authRoutes := api.Group("/auth")
 		{
 			authRoutes.POST("/register", middleware.AuthLimiter(), authHandler.Register)
-			authRoutes.POST("/login", middleware.AuthFailureLimiter(), authHandler.Login)
+			 authRoutes.POST("/login", middleware.AuthFailureLimiter(), authHandler.Login)
+			 authRoutes.POST("/refresh", authHandler.RefreshToken)
 		}
 
 		// 需要认证的路由
@@ -110,6 +136,8 @@ func main() {
 			protected.POST("/comments", nativeCommentHandler.CreateComment)
 			protected.PUT("/comments/:id", nativeCommentHandler.UpdateComment)
 			protected.DELETE("/comments/:id", nativeCommentHandler.DeleteComment)
+			// 兼容前端 /posts/:id/comments 路径创建评论
+			protected.POST("/posts/:id/comments", nativeCommentHandler.CreateComment)
 
 			// 文章管理（仅 Admin 可访问）
 			adminOnly := protected.Group("")
@@ -124,6 +152,21 @@ func main() {
 				adminOnly.POST("/projects", projectHandler.CreateProject)
 				adminOnly.PUT("/projects/:id", projectHandler.UpdateProject)
 				adminOnly.DELETE("/projects/:id", projectHandler.DeleteProject)
+
+				// 分类管理
+				adminOnly.POST("/categories", categoryHandler.CreateCategory)
+				adminOnly.PUT("/categories/:id", categoryHandler.UpdateCategory)
+				adminOnly.DELETE("/categories/:id", categoryHandler.DeleteCategory)
+
+				// 标签管理
+				adminOnly.POST("/tags", tagHandler.CreateTag)
+				adminOnly.PUT("/tags/:id", tagHandler.UpdateTag)
+				adminOnly.DELETE("/tags/:id", tagHandler.DeleteTag)
+
+				// 友链管理
+				adminOnly.POST("/friend-links", friendLinkHandler.CreateFriendLink)
+				adminOnly.PUT("/friend-links/:id", friendLinkHandler.UpdateFriendLink)
+				adminOnly.DELETE("/friend-links/:id", friendLinkHandler.DeleteFriendLink)
 			}
 
 			// 管理员路由（仅 Admin 可访问）
@@ -155,10 +198,9 @@ func main() {
 			public.GET("/posts/:id", postHandler.GetPostBySlug)
 			public.POST("/posts/:id/view", postHandler.IncrementViewCount)
 
-			// 评论（通过 LiveComment API）
-			public.GET("/posts/:id/comments", liveCommentHandler.GetComments)
-			public.GET("/posts/:id/comment-count", liveCommentHandler.GetCommentCount)
-
+			// 评论（公开读取：优先使用自研原生评论，LiveComment 作为备用）
+			public.GET("/posts/:id/comments", nativeCommentHandler.GetComments)
+			public.GET("/posts/:id/comment-count", nativeCommentHandler.GetCommentCount)
 			// 媒体库（需登录查看完整列表）
 			public.GET("/media", mediaHandler.List)
 			public.GET("/media/:id", mediaHandler.Get)
@@ -189,6 +231,19 @@ func main() {
 			public.GET("/projects", projectHandler.ListProjects)
 			public.GET("/projects/:slug", projectHandler.GetProjectBySlug)
 			public.POST("/projects/:id/view", projectHandler.IncrementViewCount)
+
+			// 分类（公开）
+			public.GET("/categories", categoryHandler.ListCategories)
+			public.GET("/categories/tree", categoryHandler.GetCategoryTree)
+			public.GET("/categories/:slug", categoryHandler.GetCategoryBySlug)
+
+			// 标签（公开）
+			public.GET("/tags", tagHandler.ListTags)
+			public.GET("/tags/:slug", tagHandler.GetTagBySlug)
+
+			// 友链（公开）
+			public.GET("/friend-links", friendLinkHandler.ListFriendLinks)
+			public.GET("/friend-links/:id", friendLinkHandler.GetFriendLink)
 		}
 	}
 

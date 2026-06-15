@@ -1,0 +1,22 @@
+.tags__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tags__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.tags__color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 4px;
+}

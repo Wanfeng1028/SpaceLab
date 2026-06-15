@@ -129,6 +129,30 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'categories',
+        title: 'Categories — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-categories/admin-categories.component').then(
+            (m) => m.AdminCategoriesComponent,
+          ),
+      },
+      {
+        path: 'tags',
+        title: 'Tags — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-tags/admin-tags.component').then(
+            (m) => m.AdminTagsComponent,
+          ),
+      },
+      {
+        path: 'friend-links',
+        title: 'Friend Links — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-friend-links/admin-friend-links.component').then(
+            (m) => m.AdminFriendLinksComponent,
+          ),
+      },
+      {
         path: 'analytics',
         title: 'Analytics — SpaceLab Admin',
         loadComponent: () =>

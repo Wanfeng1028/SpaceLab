@@ -70,7 +70,7 @@
           [excerpt]="article.summary ?? ''"
           [date]="formatDate(article.published_at ?? article.created_at)"
           [tags]="article.tags ?? []"
-          [category]="article.category"
+          [category]="article.category ?? ''"
           [readingTime]="article.reading_time"
           [viewCount]="article.view_count ?? 0"
         />

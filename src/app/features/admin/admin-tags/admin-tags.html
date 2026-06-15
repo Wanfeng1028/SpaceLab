@@ -1,0 +1,86 @@
+<div class="tags">
+  <div class="tags__header">
+    <h2 class="tags__title">标签管理</h2>
+    <div>
+      <button nz-button nzType="default" (click)="loadTags()" [nzLoading]="loading()">
+        <span nz-icon nzType="reload"></span>
+        刷新
+      </button>
+      <button nz-button nzType="primary" (click)="openCreateModal()">
+        <span nz-icon nzType="plus"></span>
+        新建标签
+      </button>
+    </div>
+  </div>
+
+  <nz-table #basicTable [nzData]="tags()" [nzLoading]="loading()" [nzPageSize]="20" nzSize="middle">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th nzWidth="140px">Slug</th>
+        <th nzWidth="80px">颜色</th>
+        <th nzWidth="160px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (tag of basicTable.data; track tag.id) {
+        <tr>
+          <td>
+            <nz-tag [nzColor]="tag.color || 'blue'">{{ tag.name }}</nz-tag>
+          </td>
+          <td>{{ tag.slug }}</td>
+          <td>
+            <span class="tags__color-dot" [style.background]="tag.color || '#1890ff'"></span>
+            {{ tag.color || '默认' }}
+          </td>
+          <td>
+            <button nz-button nzType="text" nzSize="small" nz-tooltip="编辑" (click)="openEditModal(tag)">
+              <span nz-icon nzType="edit"></span>
+            </button>
+            <button nz-button nzType="text" nzSize="small" nzDanger nz-tooltip="删除" (click)="onDelete(tag)">
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="4" style="text-align: center; color: rgba(0,0,0,0.45); padding: 32px 0;">暂无标签</td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+
+  <!-- 创建/编辑弹窗 -->
+  @if (modalVisible()) {
+    <nz-modal
+      [nzVisible]="modalVisible()"
+      [nzTitle]="editingId() ? '编辑标签' : '新建标签'"
+      (nzOnOk)="onSubmit()"
+      (nzOnCancel)="closeModal()"
+    >
+      <ng-container *nzModalContent>
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label>Slug</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formSlug()" (input)="formSlug.set($any($event.target).value)" placeholder="tag-slug" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input [value]="formName()" (input)="formName.set($any($event.target).value)" placeholder="标签名称" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>颜色</nz-form-label>
+            <nz-form-control>
+              <input nz-input type="color" [value]="formColor()" (input)="formColor.set($any($event.target).value)" style="width: 60px; height: 32px; padding: 2px;" />
+              <span style="margin-left: 8px; color: rgba(0,0,0,0.45);">{{ formColor() }}</span>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </ng-container>
+    </nz-modal>
+  }
+</div>

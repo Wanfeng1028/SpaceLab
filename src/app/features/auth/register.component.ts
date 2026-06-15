@@ -22,8 +22,11 @@ export class RegisterComponent {
   error = signal('');
   loading = signal(false);
 
+  /** 第三方登录弹窗提示 */
+  thirdPartyDialogVisible = signal(false);
+  thirdPartyName = signal('');
+
   onSubmit(): void {
-    // 验证
     if (!this.email() || !this.username() || !this.password()) {
       this.error.set('请填写所有必填字段');
       return;
@@ -34,18 +37,12 @@ export class RegisterComponent {
       return;
     }
 
-    if (this.password().length < 6) {
-      this.error.set('密码长度至少为 6 位');
-      return;
-    }
-
     this.loading.set(true);
     this.error.set('');
 
     this.authService.register(this.email(), this.password(), this.username()).subscribe({
       next: (response) => {
         this.loading.set(false);
-        // 注册成功，管理员跳管理后台，普通用户跳个人中心
         const isAdmin = response.user?.role === 'admin';
         this.router.navigate(isAdmin ? ['/admin'] : ['/profile']);
       },
@@ -54,5 +51,14 @@ export class RegisterComponent {
         this.error.set(err.error?.error || '注册失败，请稍后重试');
       }
     });
+  }
+
+  showThirdPartyHint(name: string): void {
+    this.thirdPartyName.set(name);
+    this.thirdPartyDialogVisible.set(true);
+  }
+
+  closeThirdPartyDialog(): void {
+    this.thirdPartyDialogVisible.set(false);
   }
 }

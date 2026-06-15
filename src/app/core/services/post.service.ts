@@ -16,8 +16,8 @@ export interface Post {
   summary?: string;
   content: string;
   cover_url?: string;
-  category: string;
-  tags: string[];
+  category?: string;
+  tags?: string[];
   reading_time: number;
   status: string;
   language: string;
@@ -26,7 +26,7 @@ export interface Post {
   created_at: string;
   updated_at: string;
   published_at?: string;
-  view_count: number;
+  view_count?: number;
 }
 
 export interface PostListResponse {

@@ -71,7 +71,9 @@ export class AdminUsersComponent implements OnInit {
   }
 
   /** 修改用户角色 */
-  onRoleChange(user: AdminUser, role: UserRole): void {
+  onRoleChange(user: AdminUser, event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const role = select.value as UserRole;
     this.userService.updateRole(user.id, role).subscribe({
       next: () => {
         this.message.success('角色已更新');

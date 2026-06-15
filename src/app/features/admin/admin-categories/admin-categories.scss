@@ -1,0 +1,13 @@
+.categories__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.categories__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+}

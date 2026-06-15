@@ -1,27 +1,30 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 
 import { LiveCommentService, LiveComment } from '../../../core/services/live-comment.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { LiveCommentItemComponent } from '../live-comment-item/live-comment-item.component';
 
 @Component({
   selector: 'app-live-comment',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, LiveCommentItemComponent],
+  imports: [CommonModule, FormsModule, RouterLink, LiveCommentItemComponent],
   templateUrl: './live-comment.component.html',
   styleUrl: './live-comment.component.scss'
 })
 export class LiveCommentComponent implements OnInit, OnChanges {
   @Input() postId!: string;
   @Input() postTitle: string = '';
-  @Input() siteId: string = '';
   @Input() pageSize: number = 10;
   @Input() enableReply: boolean = true;
   @Input() enableLike: boolean = false;
 
   @Output() commentCountChange = new EventEmitter<number>();
+
+  private commentService = inject(LiveCommentService);
+  private authService = inject(AuthService);
 
   comments: LiveComment[] = [];
   loading: boolean = false;
@@ -33,16 +36,11 @@ export class LiveCommentComponent implements OnInit, OnChanges {
   submitting: boolean = false;
   replyTo: LiveComment | null = null;
 
-  constructor(
-    private commentService: LiveCommentService,
-    private http: HttpClient
-  ) {}
+  /** 当前登录用户 */
+  readonly isLoggedIn = this.authService.isLoggedInSig;
+  readonly currentUser = this.authService.currentUserSig;
 
   ngOnInit(): void {
-    if (!this.siteId) {
-      this.error = 'LiveComment site ID is required';
-      return;
-    }
     this.loadComments();
     this.loadCommentCount();
   }
@@ -62,12 +60,22 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     this.commentService.getComments(this.postId, this.currentPage, this.pageSize)
       .subscribe({
         next: (response) => {
-          this.comments = response.list;
-          this.totalComments = response.total;
+          // 兼容原生后端格式 { comments: [], total: N } 和旧 LiveComment 格式 { list: [], total: N }
+          const nativeResp = response as any;
+          if (nativeResp.comments && Array.isArray(nativeResp.comments)) {
+            this.comments = nativeResp.comments;
+            this.totalComments = nativeResp.total ?? nativeResp.comments.length;
+          } else if (nativeResp.list && Array.isArray(nativeResp.list)) {
+            this.comments = nativeResp.list;
+            this.totalComments = nativeResp.total ?? nativeResp.list.length;
+          } else {
+            this.comments = [];
+            this.totalComments = 0;
+          }
           this.loading = false;
         },
         error: (err) => {
-          this.error = 'Failed to load comments';
+          this.error = '评论加载失败，请稍后再试';
           this.loading = false;
           console.error('Error loading comments:', err);
         }
@@ -92,6 +100,11 @@ export class LiveCommentComponent implements OnInit, OnChanges {
       return;
     }
 
+    if (!this.isLoggedIn()) {
+      this.error = '请先登录后再发表评论';
+      return;
+    }
+
     this.submitting = true;
 
     this.commentService.createComment(
@@ -108,7 +121,11 @@ export class LiveCommentComponent implements OnInit, OnChanges {
       },
       error: (err) => {
         this.submitting = false;
-        this.error = 'Failed to submit comment';
+        if (err.status === 401) {
+          this.error = '请先登录后再发表评论';
+        } else {
+          this.error = '评论发布失败，请稍后再试';
+        }
         console.error('Error submitting comment:', err);
       }
     });
@@ -122,8 +139,11 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     if (!this.enableReply) {
       return;
     }
+    if (!this.isLoggedIn()) {
+      this.error = '请先登录后再回复评论';
+      return;
+    }
     this.replyTo = comment;
-    // 滚动到评论输入框
     setTimeout(() => {
       const input = document.querySelector('#new-comment-input') as HTMLTextAreaElement;
       if (input) {
@@ -139,7 +159,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
         this.loadCommentCount();
       },
       error: (err) => {
-        this.error = 'Failed to delete comment';
+        this.error = '删除评论失败';
         console.error('Error deleting comment:', err);
       }
     });
