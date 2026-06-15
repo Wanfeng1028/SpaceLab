@@ -1,40 +1,42 @@
 <div class="auth-page">
   <div class="auth-container">
     <div class="auth-card">
+      <!-- Google 风格 Logo -->
+      <div class="auth-logo">
+        <span class="auth-logo__icon">✦</span>
+      </div>
       <h1 class="auth-title">登录</h1>
-      <p class="auth-subtitle">登录到 SpaceLab</p>
+      <p class="auth-subtitle">使用您的 SpaceLab 账号</p>
 
       @if (error()) {
-        <div class="auth-error">
-          {{ error() }}
-        </div>
+        <div class="auth-error">{{ error() }}</div>
       }
 
       <form (ngSubmit)="onSubmit()" class="auth-form">
         <div class="form-field">
-          <label class="form-label" for="email">邮箱</label>
           <input
             id="email"
             class="form-input"
             type="email"
             [value]="email()"
             (input)="email.set($any($event.target).value)"
-            placeholder="your@email.com"
+            placeholder=" "
             required
           />
+          <label class="form-label" for="email">邮箱</label>
         </div>
 
         <div class="form-field">
-          <label class="form-label" for="password">密码</label>
           <input
             id="password"
             class="form-input"
             type="password"
             [value]="password()"
             (input)="password.set($any($event.target).value)"
-            placeholder="输入密码"
+            placeholder=" "
             required
           />
+          <label class="form-label" for="password">密码</label>
         </div>
 
         <button
@@ -47,7 +49,7 @@
       </form>
 
       <div class="auth-footer">
-        <p>还没有账号？<a routerLink="/register">注册</a></p>
+        <a routerLink="/register" class="auth-link">创建账号</a>
       </div>
     </div>
   </div>

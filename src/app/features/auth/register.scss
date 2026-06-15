@@ -1,164 +1,201 @@
-// Ant Design 风格样式
-:root {
-  --ant-primary-color: #1677ff;
-  --ant-primary-hover-color: #4096ff;
-  --ant-primary-active-color: #0958d9;
-  --ant-border-color: #d9d9d9;
-  --ant-border-hover-color: #4096ff;
-  --ant-text-color: #000000e0;
-  --ant-text-secondary-color: #00000073;
-  --ant-bg-color: #f0f2f5;
-  --ant-card-bg: #ffffff;
-  --ant-error-color: #ff4d4f;
-  --ant-success-color: #52c41a;
-  --ant-warning-color: #faad14;
-}
+// Google 风格注册页 (与登录页共享样式)
+$google-blue: #1a73e8;
+$google-blue-hover: #1765cc;
+$google-blue-active: #1558b0;
+$google-bg: #f8f9fa;
+$google-card-bg: #ffffff;
+$google-text: #202124;
+$google-text-secondary: #5f6368;
+$google-border: #dadce0;
+$google-border-focus: #1a73e8;
+$google-error: #d93025;
+$google-error-bg: #fce8e6;
 
 .auth-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ant-bg-color);
+  background: $google-bg;
   padding: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif;
+  font-family: 'Google Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .auth-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
 }
 
 .auth-card {
-  background: var(--ant-card-bg);
-  border-radius: 8px;
-  padding: 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #f0f0f0;
+  background: $google-card-bg;
+  border-radius: 16px;
+  padding: 48px 40px 36px;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15), 0 4px 8px rgba(60, 64, 67, 0.1);
+  border: 1px solid $google-border;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 6px rgba(60, 64, 67, 0.15), 0 8px 16px rgba(60, 64, 67, 0.1);
+  }
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.auth-logo__icon {
+  font-size: 42px;
+  line-height: 1;
+  background: linear-gradient(135deg, #4285f4, #8ab4f8, #a8c7fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .auth-title {
   font-size: 24px;
-  font-weight: 600;
-  color: var(--ant-text-color);
+  font-weight: 400;
+  color: $google-text;
   text-align: center;
   margin: 0 0 8px 0;
   line-height: 1.4;
 }
 
 .auth-subtitle {
-  font-size: 14px;
-  color: var(--ant-text-secondary-color);
+  font-size: 16px;
+  color: $google-text-secondary;
   text-align: center;
   margin: 0 0 32px 0;
+  font-weight: 400;
 }
 
 .auth-error {
-  background: #fff2f0;
-  border: 1px solid #ffccc7;
-  border-radius: 6px;
+  background: $google-error-bg;
+  border-radius: 8px;
   padding: 12px 16px;
-  margin-bottom: 24px;
-  color: var(--ant-error-color);
+  margin-bottom: 20px;
+  color: $google-error;
   font-size: 14px;
   line-height: 1.5;
+  border: 1px solid #f5c6cb;
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ant-text-color);
-  line-height: 1.5;
+  position: relative;
 }
 
 .form-input {
   width: 100%;
-  padding: 8px 12px;
-  background: #ffffff;
-  border: 1px solid var(--ant-border-color);
-  border-radius: 6px;
-  color: var(--ant-text-color);
-  font-size: 14px;
-  transition: all 0.3s;
+  padding: 14px 16px;
+  background: transparent;
+  border: 1px solid $google-border;
+  border-radius: 8px;
+  color: $google-text;
+  font-size: 16px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   line-height: 1.5;
+  outline: none;
 
   &::placeholder {
-    color: #bfbfbf;
+    color: transparent;
   }
 
   &:hover {
-    border-color: var(--ant-border-hover-color);
+    border-color: darken($google-border, 10%);
   }
 
   &:focus {
-    outline: none;
-    border-color: var(--ant-primary-color);
-    box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.1);
+    border-color: $google-border-focus;
+    border-width: 2px;
+    padding: 13px 15px;
+    box-shadow: none;
   }
 
-  &:disabled {
-    background: #f5f5f5;
-    cursor: not-allowed;
-    opacity: 0.65;
+  &:focus + .form-label,
+  &:not(:placeholder-shown) + .form-label {
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    padding: 0 4px;
+    background: $google-card-bg;
+    color: $google-border-focus;
+    font-weight: 500;
   }
+
+  &:not(:focus):not(:placeholder-shown) + .form-label {
+    color: $google-text-secondary;
+  }
+}
+
+.form-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: $google-text-secondary;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  padding: 0;
+  line-height: 1;
 }
 
 .auth-submit {
   width: 100%;
-  padding: 10px 16px;
-  background: var(--ant-primary-color);
+  padding: 12px 24px;
+  background: $google-blue;
   color: #ffffff;
   border: none;
-  border-radius: 6px;
+  border-radius: 24px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s;
   line-height: 1.5;
   margin-top: 8px;
+  letter-spacing: 0.25px;
 
   &:hover:not(:disabled) {
-    background: var(--ant-primary-hover-color);
+    background: $google-blue-hover;
+    box-shadow: 0 1px 3px rgba(26, 115, 232, 0.4);
   }
 
   &:active:not(:disabled) {
-    background: var(--ant-primary-active-color);
+    background: $google-blue-active;
+    box-shadow: 0 1px 2px rgba(26, 115, 232, 0.3);
   }
 
   &:disabled {
-    background: #d9d9d9;
+    background: lighten($google-blue, 30%);
     cursor: not-allowed;
-    opacity: 0.65;
+    color: rgba(255, 255, 255, 0.7);
   }
 }
 
 .auth-footer {
-  margin-top: 24px;
-  text-align: center;
+  margin-top: 28px;
+  text-align: left;
+}
+
+.auth-link {
+  color: $google-blue;
+  text-decoration: none;
   font-size: 14px;
-  color: var(--ant-text-secondary-color);
+  font-weight: 500;
+  transition: color 0.2s;
 
-  a {
-    color: var(--ant-primary-color);
-    text-decoration: none;
-    font-weight: 500;
-
-    &:hover {
-      color: var(--ant-primary-hover-color);
-    }
+  &:hover {
+    color: $google-blue-hover;
+    text-decoration: underline;
   }
 }

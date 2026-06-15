@@ -1,66 +1,67 @@
 <div class="auth-page">
   <div class="auth-container">
     <div class="auth-card">
+      <div class="auth-logo">
+        <span class="auth-logo__icon">✦</span>
+      </div>
       <h1 class="auth-title">注册</h1>
-      <p class="auth-subtitle">创建 SpaceLab 账号</p>
+      <p class="auth-subtitle">创建您的 SpaceLab 账号</p>
 
       @if (error()) {
-        <div class="auth-error">
-          {{ error() }}
-        </div>
+        <div class="auth-error">{{ error() }}</div>
       }
 
       <form (ngSubmit)="onSubmit()" class="auth-form">
         <div class="form-field">
-          <label class="form-label" for="email">邮箱</label>
           <input
             id="email"
             class="form-input"
             type="email"
             [value]="email()"
             (input)="email.set($any($event.target).value)"
-            placeholder="your@email.com"
+            placeholder=" "
             required
           />
+          <label class="form-label" for="email">邮箱</label>
         </div>
 
         <div class="form-field">
-          <label class="form-label" for="username">用户名</label>
           <input
             id="username"
             class="form-input"
             type="text"
             [value]="username()"
             (input)="username.set($any($event.target).value)"
-            placeholder="输入用户名"
+            placeholder=" "
             required
           />
+          <label class="form-label" for="username">用户名</label>
         </div>
 
         <div class="form-field">
-          <label class="form-label" for="password">密码</label>
           <input
             id="password"
             class="form-input"
             type="password"
             [value]="password()"
             (input)="password.set($any($event.target).value)"
-            placeholder="至少 6 位密码"
+            placeholder=" "
             required
           />
+          <label class="form-label" for="password">密码</label>
         </div>
 
         <div class="form-field">
-          <label class="form-label" for="confirmPassword">确认密码</label>
           <input
             id="confirmPassword"
             class="form-input"
             type="password"
             [value]="confirmPassword()"
             (input)="confirmPassword.set($any($event.target).value)"
-            placeholder="再次输入密码"
+            placeholder=" "
             required
           />
+          <label class="form-label" for="confirmPassword">确认密码</label>
         </div>
 
         <button
@@ -73,7 +74,7 @@
       </form>
 
       <div class="auth-footer">
-        <p>已有账号？<a routerLink="/login">登录</a></p>
+        <a routerLink="/login" class="auth-link">已有账号？登录</a>
       </div>
     </div>
   </div>
