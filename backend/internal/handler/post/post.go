@@ -23,6 +23,7 @@ func (h *PostHandler) ListPosts(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
 	status := c.Query("status")
 	language := c.Query("language")
+	category := c.Query("category")
 
 	if page < 1 {
 		page = 1
@@ -31,7 +32,7 @@ func (h *PostHandler) ListPosts(c *gin.Context) {
 		pageSize = 10
 	}
 
-	posts, total, err := h.postService.ListPosts(status, language, page, pageSize)
+	posts, total, err := h.postService.ListPosts(status, language, category, page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

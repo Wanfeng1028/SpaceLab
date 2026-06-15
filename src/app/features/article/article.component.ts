@@ -11,13 +11,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
-import { PostService } from '../../core/services/post.service';
-import { ArticleRepositoryService } from '../../core/services/article-repository.service';
-import { ArticleMetricsService } from '../../core/services/article-metrics.service';
+import { PostService, Post } from '../../core/services/post.service';
 import { LiveCommentComponent } from '../../shared/components/live-comment/live-comment.component';
 import DOMPurify from 'dompurify';
-import type { GeneratedPost } from '../../../generated/content.generated';
-import type { Article } from '../../core/models/article.model';
+import { MarkdownRendererService } from '../../core/services/markdown-renderer.service';
 
 @Component({
   selector: 'app-article',
@@ -32,36 +29,37 @@ export class ArticleComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
   private postService = inject(PostService);
-  private articleRepository = inject(ArticleRepositoryService);
-  private metricsService = inject(ArticleMetricsService);
+  private markdownRenderer = inject(MarkdownRendererService);
 
-  readonly article = signal<Article | null>(null);
+  readonly post = signal<Post | null>(null);
   readonly loading = signal(false);
-
-  // Sanitized HTML — computed from article content, only recalculates when content changes
-  readonly sanitizedContent = computed(() => {
-    const art = this.article();
-    if (!art?.contentHtml) return '';
-    return this.sanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(art.contentHtml));
-  });
-
-  // Expose for template access (public alias)
-  readonly articleMetrics = this.metricsService;
+  readonly sanitizedContent = signal<SafeHtml>('');
 
   ngOnInit(): void {
     this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(async (params) => {
       const slug = params['slug'];
       this.loading.set(true);
 
-      // Try repository (static first, then github fallback)
-      const article = await this.articleRepository.fetchArticleBySlug(slug);
-      this.article.set(article);
-      this.loading.set(false);
+      this.postService.getPostBySlug(slug).subscribe({
+        next: async (post) => {
+          this.post.set(post);
+          // Render markdown content to HTML if content is plain markdown
+          if (post.content) {
+            const html = await this.markdownRenderer.render(post.content);
+            this.sanitizedContent.set(this.sanitizer.bypassSecurityTrustHtml(html));
+          }
+          this.loading.set(false);
 
-      // Track view after article loads (not in effect to avoid infinite loops)
-      if (article?.slug) {
-        this.metricsService.trackView(article.slug);
-      }
+          // Increment view count on the backend
+          if (post.id) {
+            this.postService.incrementViewCount(post.id).subscribe();
+          }
+        },
+        error: () => {
+          this.post.set(null);
+          this.loading.set(false);
+        },
+      });
     });
   }
 
@@ -70,9 +68,13 @@ export class ArticleComponent implements OnInit {
   }
 
   onLike(): void {
-    const art = this.article();
-    if (art?.slug) {
-      this.metricsService.toggleLike(art.slug);
-    }
+    // TODO: Implement like via backend API when available
+  }
+
+  /** Format date for display */
+  formatDate(dateStr: string | undefined): string {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 }

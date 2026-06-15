@@ -3,6 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+export interface PostAuthor {
+  id: string;
+  username: string;
+  avatar_url?: string;
+}
+
 export interface Post {
   id: string;
   slug: string;
@@ -10,9 +16,13 @@ export interface Post {
   summary?: string;
   content: string;
   cover_url?: string;
+  category: string;
+  tags: string[];
+  reading_time: number;
   status: string;
   language: string;
   author_id: string;
+  author?: PostAuthor;
   created_at: string;
   updated_at: string;
   published_at?: string;
@@ -32,7 +42,7 @@ export class PostService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
-  getPosts(page: number = 1, pageSize: number = 10, status?: string, language?: string): Observable<PostListResponse> {
+  getPosts(page: number = 1, pageSize: number = 10, status?: string, language?: string, category?: string): Observable<PostListResponse> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('page_size', pageSize.toString());
@@ -42,6 +52,9 @@ export class PostService {
     }
     if (language) {
       params = params.set('language', language);
+    }
+    if (category) {
+      params = params.set('category', category);
     }
 
     return this.http.get<PostListResponse>(`${this.apiUrl}/posts`, { params });

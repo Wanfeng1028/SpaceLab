@@ -1,7 +1,9 @@
 package service
 
 import (
+	"math"
 	"time"
+	"unicode/utf8"
 
 	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/model"
@@ -13,13 +15,16 @@ type PostService struct {
 }
 
 type CreatePostInput struct {
-	Slug     string
-	Title    string
-	Summary  string
-	Content  string
-	CoverURL string
-	Language string
-	AuthorID string
+	Slug        string
+	Title       string
+	Summary     string
+	Content     string
+	CoverURL    string
+	Category    string
+	Tags        []string
+	ReadingTime int
+	Language    string
+	AuthorID    string
 }
 
 type UpdatePostInput struct {
@@ -27,6 +32,9 @@ type UpdatePostInput struct {
 	Summary     *string
 	Content     *string
 	CoverURL    *string
+	Category    *string
+	Tags        *[]string
+	ReadingTime *int
 	Language    *string
 	Status      *string
 	PublishedAt *time.Time
@@ -37,7 +45,7 @@ func NewPostService(db *gorm.DB) *PostService {
 }
 
 // ListPosts 获取文章列表
-func (s *PostService) ListPosts(status string, language string, page int, pageSize int) ([]model.Post, int64, error) {
+func (s *PostService) ListPosts(status string, language string, category string, page int, pageSize int) ([]model.Post, int64, error) {
 	var posts []model.Post
 	var total int64
 
@@ -48,6 +56,9 @@ func (s *PostService) ListPosts(status string, language string, page int, pageSi
 	}
 	if language != "" {
 		query = query.Where("language = ?", language)
+	}
+	if category != "" {
+		query = query.Where("category = ?", category)
 	}
 
 	query.Count(&total)
@@ -72,18 +83,31 @@ func (s *PostService) GetPostBySlug(slug string) (*model.Post, error) {
 
 // CreatePost 创建文章
 func (s *PostService) CreatePost(input CreatePostInput) (*model.Post, error) {
+	readingTime := input.ReadingTime
+	if readingTime <= 0 && input.Content != "" {
+		// Auto-calculate reading time: ~200 Chinese chars / minute
+		runeCount := utf8.RuneCountInString(input.Content)
+		readingTime = int(math.Ceil(float64(runeCount) / 200.0))
+		if readingTime < 1 {
+			readingTime = 1
+		}
+	}
+
 	post := model.Post{
-		ID:        uuid.New(),
-		Slug:      input.Slug,
-		Title:     input.Title,
-		Summary:   input.Summary,
-		Content:   input.Content,
-		CoverURL:  input.CoverURL,
-		Language:  input.Language,
-		AuthorID:  uuid.MustParse(input.AuthorID),
-		Status:    "draft",
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		ID:          uuid.New(),
+		Slug:        input.Slug,
+		Title:       input.Title,
+		Summary:     input.Summary,
+		Content:     input.Content,
+		CoverURL:    input.CoverURL,
+		Category:    input.Category,
+		Tags:        input.Tags,
+		ReadingTime: readingTime,
+		Language:    input.Language,
+		AuthorID:    uuid.MustParse(input.AuthorID),
+		Status:      "draft",
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}
 
 	result := s.db.Create(&post)
@@ -114,6 +138,15 @@ func (s *PostService) UpdatePost(id string, input UpdatePostInput) (*model.Post,
 	}
 	if input.CoverURL != nil {
 		post.CoverURL = *input.CoverURL
+	}
+	if input.Category != nil {
+		post.Category = *input.Category
+	}
+	if input.Tags != nil {
+		post.Tags = *input.Tags
+	}
+	if input.ReadingTime != nil {
+		post.ReadingTime = *input.ReadingTime
 	}
 	if input.Language != nil {
 		post.Language = *input.Language

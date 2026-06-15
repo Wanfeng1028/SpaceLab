@@ -66,18 +66,22 @@
           ></textarea>
         </div>
 
-        <div class="write-field">
-          <label class="write-label">封面图片 URL</label>
-          <input
-            class="write-input"
-            type="text"
-            [value]="coverUrl()"
-            (input)="coverUrl.set($any($event.target).value)"
-            placeholder="https://example.com/cover.jpg"
-          />
-        </div>
-
         <div class="write-row">
+          <div class="write-field write-field--half">
+            <label class="write-label">分类</label>
+            <select
+              class="write-select"
+              [value]="category()"
+              (change)="category.set($any($event.target).value)"
+            >
+              <option value="">选择分类</option>
+              <option value="GIS">GIS</option>
+              <option value="开发">开发</option>
+              <option value="算法">算法</option>
+              <option value="随笔">随笔</option>
+              <option value="薅羊毛攻略">薅羊毛攻略</option>
+            </select>
+          </div>
           <div class="write-field write-field--half">
             <label class="write-label">语言</label>
             <select
@@ -89,6 +93,28 @@
               <option value="en-US">English</option>
             </select>
           </div>
+        </div>
+
+        <div class="write-field">
+          <label class="write-label">标签（用逗号分隔）</label>
+          <input
+            class="write-input"
+            type="text"
+            [value]="tagsInput()"
+            (input)="tagsInput.set($any($event.target).value)"
+            placeholder="例如：Angular, TypeScript, 前端"
+          />
+        </div>
+
+        <div class="write-field">
+          <label class="write-label">封面图片 URL</label>
+          <input
+            class="write-input"
+            type="text"
+            [value]="coverUrl()"
+            (input)="coverUrl.set($any($event.target).value)"
+            placeholder="https://example.com/cover.jpg"
+          />
         </div>
 
         <div class="write-field">
@@ -108,7 +134,13 @@
         <div class="write-preview__header">
           <h1>{{ title() || '无标题' }}</h1>
           <div class="write-preview__meta">
+            @if (category()) {
+              <span class="write-preview__category">{{ category() }}</span>
+            }
             <span>{{ language() === 'zh-CN' ? '中文' : 'English' }}</span>
+            @if (tagsArray().length > 0) {
+              <span>{{ tagsArray().join(', ') }}</span>
+            }
             <span>{{ summary() }}</span>
           </div>
         </div>

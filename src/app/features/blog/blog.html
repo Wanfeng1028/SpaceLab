@@ -53,20 +53,26 @@
     </div>
   }
 
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="blog-loading">
+      <div class="glitch-loader">加载中...</div>
+    </div>
+  }
+
   <!-- Article List -->
-  @if (filteredArticles().length > 0) {
+  @else if (filteredArticles().length > 0) {
     <section class="blog-list">
       @for (article of filteredArticles(); track article.slug) {
         <app-article-card
           [title]="article.title"
           [slug]="article.slug"
-          [excerpt]="article.summary"
-          [date]="article.date"
-          [tags]="article.tags"
+          [excerpt]="article.summary ?? ''"
+          [date]="formatDate(article.published_at ?? article.created_at)"
+          [tags]="article.tags ?? []"
           [category]="article.category"
-          [readingTime]="article.readingTime"
-          [viewCount]="article.viewCount ?? 0"
-          [likeCount]="article.likeCount ?? 0"
+          [readingTime]="article.reading_time"
+          [viewCount]="article.view_count ?? 0"
         />
       }
     </section>

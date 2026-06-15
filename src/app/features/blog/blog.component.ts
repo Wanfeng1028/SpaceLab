@@ -2,11 +2,9 @@ import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } 
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { I18nService } from '../../core/services/i18n.service';
-import { ArticleRepositoryService } from '../../core/services/article-repository.service';
-import { ArticleMetricsService } from '../../core/services/article-metrics.service';
+import { PostService, Post } from '../../core/services/post.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
-import type { Article } from '../../core/models/article.model';
 import {
   buildSearchText,
   matchesSearchQuery,
@@ -25,12 +23,12 @@ const WEB3FORMS_ACCESS_KEY = '874ed1fa-0a5f-481a-810f-83d2d2613b36';
 })
 export class BlogComponent implements OnInit {
   private i18n = inject(I18nService);
-  private articleRepository = inject(ArticleRepositoryService);
-  private metricsService = inject(ArticleMetricsService);
+  private postService = inject(PostService);
   private http = inject(HttpClient);
 
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
+  readonly loading = signal(false);
 
   // Newsletter form
   readonly newsletterEmail = signal('');
@@ -41,19 +39,27 @@ export class BlogComponent implements OnInit {
 
   readonly categories = signal<string[]>(['all', 'GIS', '开发', '算法', '随笔', '薅羊毛攻略']);
 
-  // All articles from the repository (static + github)
-  private readonly _allArticles = signal<Article[]>([]);
+  // All posts from the backend API
+  private readonly _allPosts = signal<Post[]>([]);
 
   readonly filteredArticles = computed(() => {
     const query = this.searchQuery();
     const category = this.selectedCategory();
-    const articles = this._allArticles();
+    const posts = this._allPosts();
 
-    return articles.filter((article) => {
-      const matchesQuery = matchesSearchQuery(this.getArticleSearchText(article), query);
+    return posts.filter((post) => {
+      const searchText = buildSearchText([
+        post.title,
+        post.summary ?? '',
+        post.category,
+        post.tags?.join(' ') ?? '',
+        post.slug,
+      ]);
+
+      const matchesQuery = matchesSearchQuery(searchText, query);
 
       const matchesCategory =
-        category === 'all' || normalizeSearchText(article.category) === normalizeSearchText(category);
+        category === 'all' || normalizeSearchText(post.category) === normalizeSearchText(category);
 
       return matchesQuery && matchesCategory;
     });
@@ -78,13 +84,23 @@ export class BlogComponent implements OnInit {
   selectCategory(category: string): void {
     this.selectedCategory.set(category);
   }
-  ngOnInit(): void {
-    // Load articles from the unified repository (static build-time + github runtime)
-    this._allArticles.set(this.articleRepository.getAllArticles());
 
-    // Also fetch github articles in background to supplement
-    this.articleRepository.fetchGithubArticles().then(() => {
-      this._allArticles.set(this.articleRepository.getAllArticles());
+  ngOnInit(): void {
+    this.loadPosts();
+  }
+
+  loadPosts(): void {
+    this.loading.set(true);
+    // Fetch all published posts from backend
+    this.postService.getPosts(1, 100, 'published').subscribe({
+      next: (response) => {
+        this._allPosts.set(response.posts ?? []);
+        this.loading.set(false);
+      },
+      error: () => {
+        this._allPosts.set([]);
+        this.loading.set(false);
+      },
     });
   }
 
@@ -145,15 +161,18 @@ export class BlogComponent implements OnInit {
     this.selectedCategory.set('all');
   }
 
-  private getArticleSearchText(article: Article): string {
-    return buildSearchText([
-      article.title,
-      article.summary,
-      article.category,
-      article.tags,
-      article.slug,
-      article.contentHtml,
-      article.date,
-    ]);
+  clearSearch(): void {
+    this.searchQuery.set('');
+  }
+
+  clearFilters(): void {
+    this.selectedCategory.set('all');
+  }
+
+  /** Format date for display */
+  formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 }

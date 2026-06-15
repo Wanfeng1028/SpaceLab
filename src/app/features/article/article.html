@@ -4,7 +4,7 @@
       <div class="glitch-loader">加载中...</div>
     </div>
   </div>
-} @else if (article(); as art) {
+} @else if (post(); as p) {
   <div class="article-page">
     <div class="container">
       <!-- Back Link -->
@@ -12,28 +12,28 @@
 
       <!-- Article Header -->
       <header class="article-header">
-        <h1 class="article-header__title">{{ art.title }}</h1>
+        <h1 class="article-header__title">{{ p.title }}</h1>
         <div class="article-header__meta">
-          <span class="article-meta__date">{{ art.date }}</span>
+          <span class="article-meta__date">{{ formatDate(p.published_at ?? p.created_at) }}</span>
           <span class="article-meta__separator">·</span>
           <span class="article-meta__reading-time"
-            >{{ art.readingTime }} {{ t('blog.minutes') }}</span
+            >{{ p.reading_time || 1 }} {{ t('blog.minutes') }}</span
           >
-          @if (art.source === 'github') {
-            <span class="article-source-badge">GitHub</span>
-          }
           <span class="article-meta__separator">·</span>
           <span class="article-meta__metric" title="浏览量">
-            <span class="metric-icon">👁</span> {{ art.viewCount ?? articleMetrics.getMetrics(art.slug)?.viewCount ?? 0 }}
+            <span class="metric-icon">👁</span> {{ p.view_count ?? 0 }}
           </span>
-          <span class="article-meta__separator">·</span>
-          <button class="article-meta__like" (click)="onLike()" title="点赞">
-            <span class="metric-icon">❤️</span>
-            <span>{{ art.likeCount ?? articleMetrics.getMetrics(art.slug)?.likeCount ?? 0 }}</span>
-          </button>
+          @if (p.category) {
+            <span class="article-meta__separator">·</span>
+            <span class="article-meta__category">{{ p.category }}</span>
+          }
+          @if (p.author) {
+            <span class="article-meta__separator">·</span>
+            <span class="article-meta__author">{{ p.author.username }}</span>
+          }
         </div>
         <div class="article-header__tags">
-          @for (tag of art.tags; track tag) {
+          @for (tag of (p.tags ?? []); track tag) {
             <span class="tag">{{ tag }}</span>
           }
         </div>
@@ -48,40 +48,13 @@
       <!-- LiveComment 评论组件 -->
       <div class="article-comments-section">
         <app-live-comment
-          [postId]="art.slug"
-          [postTitle]="art.title"
+          [postId]="p.slug"
+          [postTitle]="p.title"
           [pageSize]="10"
           [enableReply]="true"
           [enableLike]="true"
         ></app-live-comment>
       </div>
-
-      <!-- Prev / Next Navigation -->
-      <nav class="article-nav">
-        @if (art.prevSlug) {
-          <a
-            class="article-nav__link article-nav__link--prev"
-            [routerLink]="['/blog', art.prevSlug]"
-          >
-            <span class="article-nav__label">{{ t('article.prev') }}</span>
-            <span class="article-nav__title">{{ art.prevTitle }}</span>
-          </a>
-        } @else {
-          <div></div>
-        }
-
-        @if (art.nextSlug) {
-          <a
-            class="article-nav__link article-nav__link--next"
-            [routerLink]="['/blog', art.nextSlug]"
-          >
-            <span class="article-nav__label">{{ t('article.next') }}</span>
-            <span class="article-nav__title">{{ art.nextTitle }}</span>
-          </a>
-        } @else {
-          <div></div>
-        }
-      </nav>
     </div>
   </div>
 } @else {

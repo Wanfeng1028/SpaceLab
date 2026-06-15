@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../../core/services/i18n.service';
@@ -22,6 +22,8 @@ export class WriteComponent implements OnInit {
   readonly summary = signal('');
   readonly content = signal('');
   readonly coverUrl = signal('');
+  readonly category = signal('');
+  readonly tagsInput = signal('');
   readonly language = signal('zh-CN');
   readonly isPreview = signal(false);
   readonly isSaving = signal(false);
@@ -30,6 +32,14 @@ export class WriteComponent implements OnInit {
   readonly success = signal('');
   readonly isEditing = signal(false);
   readonly editId = signal<string | null>(null);
+
+  /** Parse comma-separated tags into array */
+  readonly tagsArray = computed(() =>
+    this.tagsInput()
+      .split(',')
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0)
+  );
 
   ngOnInit(): void {
     // 检查是否是编辑模式
@@ -49,6 +59,8 @@ export class WriteComponent implements OnInit {
         this.summary.set(post.summary || '');
         this.content.set(post.content);
         this.coverUrl.set(post.cover_url || '');
+        this.category.set(post.category || '');
+        this.tagsInput.set((post.tags ?? []).join(', '));
         this.language.set(post.language);
       },
       error: (err) => {
@@ -107,6 +119,8 @@ export class WriteComponent implements OnInit {
       summary: this.summary(),
       content: this.content(),
       cover_url: this.coverUrl(),
+      category: this.category(),
+      tags: this.tagsArray(),
       language: this.language(),
       status: status
     };
@@ -116,13 +130,13 @@ export class WriteComponent implements OnInit {
       : this.postService.createPost(postData);
 
     request.subscribe({
-      next: (post) => {
+      next: () => {
         this.isSaving.set(false);
         this.success.set(status === 'published' ? '文章已发布' : '草稿已保存');
         
         if (status === 'published') {
           setTimeout(() => {
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/admin/posts']);
           }, 1500);
         }
       },
@@ -135,6 +149,6 @@ export class WriteComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin/posts']);
   }
 }

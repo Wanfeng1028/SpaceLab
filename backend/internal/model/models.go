@@ -34,6 +34,9 @@ type Post struct {
 	Summary     string     `gorm:"type:text" json:"summary"`
 	Content     string     `gorm:"type:text" json:"content"`
 	CoverURL    string     `gorm:"size:500" json:"cover_url"`
+	Category    string     `gorm:"size:100" json:"category"`
+	Tags        []string   `gorm:"type:text[]" json:"tags"`
+	ReadingTime int        `gorm:"default:0" json:"reading_time"`
 	Status      string     `gorm:"size:20;default:'draft'" json:"status"` // draft, published, archived
 	Language    string     `gorm:"size:10;default:'zh-CN'" json:"language"`
 	AuthorID    uuid.UUID  `gorm:"type:uuid" json:"author_id"`

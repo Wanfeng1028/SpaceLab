@@ -1,10 +1,10 @@
 /**
- * Article metrics service — tracks views and likes per article.
- *
- * Currently uses localStorage as a local fallback.
- * When Supabase is configured, this service will be extended to sync with Supabase.
+ * Article metrics service — tracks views and likes via backend API.
+ * Falls back to localStorage when the API is unavailable.
  */
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface ArticleMetrics {
   slug: string;
@@ -33,6 +33,8 @@ function saveToStorage(data: Record<string, ArticleMetrics>): void {
 
 @Injectable({ providedIn: 'root' })
 export class ArticleMetricsService {
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
   private _metrics = signal<Record<string, ArticleMetrics>>(loadFromStorage());
 
   /** All metrics as a signal */
@@ -45,19 +47,27 @@ export class ArticleMetricsService {
 
   /**
    * Record a view for the given slug.
-   * In production (Supabase), this would POST to /api/metrics/view.
+   * Calls backend API to increment view count, updates local cache.
    */
   trackView(slug: string): void {
+    // Update local cache optimistically
     const current = this._metrics()[slug] ?? { slug, viewCount: 0, likeCount: 0 };
     const updated = { ...current, viewCount: current.viewCount + 1 };
     const next = { ...this._metrics(), [slug]: updated };
     this._metrics.set(next);
     saveToStorage(next);
+
+    // Sync with backend
+    this.http.post(`${this.apiUrl}/posts/${slug}/view`, {}).subscribe({
+      error: () => {
+        // Backend sync failed — local cache still valid
+      },
+    });
   }
 
   /**
    * Toggle a like for the given slug.
-   * In production (Supabase), this would POST to /api/metrics/like.
+   * Currently uses local storage; backend like API can be added later.
    */
   toggleLike(slug: string): void {
     const current = this._metrics()[slug] ?? { slug, viewCount: 0, likeCount: 0 };
@@ -68,8 +78,8 @@ export class ArticleMetricsService {
   }
 
   /**
-   * Initialize metrics from Supabase (or any remote source).
-   * Called on app init or when Supabase is configured.
+   * Initialize metrics from remote source.
+   * Called on app init or when backend is configured.
    */
   async syncFromRemote(metrics: ArticleMetrics[]): Promise<void> {
     const next: Record<string, ArticleMetrics> = {};
