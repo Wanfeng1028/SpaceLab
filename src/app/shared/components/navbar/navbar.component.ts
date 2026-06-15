@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { I18nService } from '../../../core/services/i18n.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { SpaceCapsuleModalComponent } from '../space-capsule-modal/space-capsule-modal.component';
 import { MacTerminalModalComponent } from '../mac-terminal-modal/mac-terminal-modal.component';
 import { SITE } from '../../../../generated/content.generated';
@@ -57,6 +58,7 @@ interface MobileMenuItem {
 export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   readonly i18n = inject(I18nService);
+  readonly authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   private starsAbort: AbortController | null = null;
 
@@ -145,6 +147,26 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleLang(): void {
     this.i18n.toggleLocale();
+  }
+
+  /** 登录按钮点击：已登录跳个人中心，未登录跳到登录页 */
+  onLoginClick(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeMobileMenu();
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/profile']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  /** 用户首字母（用于头像占位） */
+  userInitial(): string {
+    const user = this.authService.getCurrentUser();
+    if (user?.username) return user.username.charAt(0).toUpperCase();
+    if (user?.email) return user.email.charAt(0).toUpperCase();
+    return 'U';
   }
 
   toggleSound(): void {
