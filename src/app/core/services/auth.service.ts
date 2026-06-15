@@ -51,13 +51,14 @@ export class AuthService {
           this.currentUserSig.set(user);
           this.isLoggedInSig.set(true);
         } catch (e) {
-          this.clearStorage();
+          this.clearAuth();
         }
       }
     }
   }
 
-  private clearStorage(): void {
+  /** 清理登录状态（公开，供 interceptor/guard 调用） */
+  clearAuth(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
@@ -88,7 +89,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.clearStorage();
+    this.clearAuth();
     this.router.navigate(['/']);
   }
 

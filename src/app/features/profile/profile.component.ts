@@ -65,9 +65,8 @@ export class ProfileComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        // Token 无效或过期，清理 token 并跳转到登录页
-        this.authService.isLoggedInSig.set(false);
-        this.authService.currentUserSig.set(null);
+        // Token 无效或过期，清理并跳转登录页
+        this.authService.clearAuth();
         this.router.navigate(['/login']);
       },
     });
