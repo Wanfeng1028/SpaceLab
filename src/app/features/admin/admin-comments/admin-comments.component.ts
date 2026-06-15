@@ -8,7 +8,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import {
   CommentService,
   AdminComment,
@@ -28,6 +28,7 @@ type StatusFilter = CommentStatus | '';
     NzTagModule,
     NzTooltipModule,
     NzRadioModule,
+    NzModalModule,
   ],
   templateUrl: './admin-comments.html',
   styleUrl: './admin-comments.scss',

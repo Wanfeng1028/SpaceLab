@@ -7,12 +7,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { PostService, Post } from '../../../core/services/post.service';
 
 @Component({
   selector: 'app-admin-posts',
-  imports: [CommonModule, NzTableModule, NzButtonModule, NzIconModule, NzTagModule, NzTooltipModule],
+  imports: [CommonModule, NzTableModule, NzButtonModule, NzIconModule, NzTagModule, NzTooltipModule, NzModalModule],
   templateUrl: './admin-posts.html',
   styleUrl: './admin-posts.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

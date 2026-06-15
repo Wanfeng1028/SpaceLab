@@ -7,7 +7,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { FormsModule } from '@angular/forms';
 import {
   UserService,
@@ -25,6 +25,7 @@ import {
     NzIconModule,
     NzTagModule,
     NzTooltipModule,
+    NzModalModule,
     NzSelectModule,
   ],
   templateUrl: './admin-users.html',
