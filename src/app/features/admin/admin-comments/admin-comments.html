@@ -1,0 +1,96 @@
+<div class="comments">
+  <div class="comments__header">
+    <h2 class="comments__title">评论审核</h2>
+    <div class="comments__toolbar">
+      <nz-radio-group
+        [ngModel]="statusFilter()"
+        (ngModelChange)="onStatusFilterChange($event)"
+        nzButtonStyle="solid"
+        nzSize="small"
+      >
+        @for (opt of statusOptions; track opt.value) {
+          <label nz-radio-button [nzValue]="opt.value">{{ opt.label }}</label>
+        }
+      </nz-radio-group>
+      <button nz-button nzType="default" nzSize="small" (click)="loadComments()" [nzLoading]="loading()">
+        <span nz-icon nzType="reload"></span>
+        刷新
+      </button>
+    </div>
+  </div>
+
+  <nz-table
+    #basicTable
+    [nzData]="comments()"
+    [nzLoading]="loading()"
+    [nzPageSize]="20"
+    nzSize="middle"
+  >
+    <thead>
+      <tr>
+        <th>评论内容</th>
+        <th nzWidth="140px">作者</th>
+        <th nzWidth="100px">状态</th>
+        <th nzWidth="150px">时间</th>
+        <th nzWidth="200px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (comment of basicTable.data; track comment.id) {
+        <tr>
+          <td class="comments__content-cell">
+            <div class="comments__content">{{ comment.content }}</div>
+            <div class="comments__meta">文章 #{{ comment.post_id }}</div>
+          </td>
+          <td>{{ authorName(comment) }}</td>
+          <td>
+            <nz-tag [nzColor]="statusColor(comment.status)">{{ statusText(comment.status) }}</nz-tag>
+          </td>
+          <td class="comments__time-cell">
+            {{ comment.created_at | date: 'yyyy-MM-dd HH:mm' }}
+          </td>
+          <td>
+            @if (comment.status !== 'approved') {
+              <button
+                nz-button
+                nzType="text"
+                nzSize="small"
+                nz-tooltip="通过"
+                (click)="onApprove(comment)"
+              >
+                <span nz-icon nzType="check"></span>
+                通过
+              </button>
+            }
+            @if (comment.status !== 'rejected') {
+              <button
+                nz-button
+                nzType="text"
+                nzSize="small"
+                nz-tooltip="拒绝"
+                (click)="onReject(comment)"
+              >
+                <span nz-icon nzType="close"></span>
+                拒绝
+              </button>
+            }
+            <button
+              nz-button
+              nzType="text"
+              nzSize="small"
+              nzDanger
+              nz-tooltip="删除"
+              (click)="onDelete(comment)"
+            >
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="comments__empty">暂无评论</td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>

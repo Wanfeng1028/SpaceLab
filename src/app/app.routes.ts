@@ -73,28 +73,60 @@ export const routes: Routes = [
     path: 'admin',
     title: 'Admin — SpaceLab',
     canActivate: [adminGuard],
-    loadComponent: () => import('./features/admin/admin.component').then((m) => m.AdminComponent),
-  },
-  {
-    path: 'admin/write',
-    title: 'Write — SpaceLab Admin',
-    canActivate: [adminGuard],
     loadComponent: () =>
-      import('./features/admin/write/write.component').then((m) => m.WriteComponent),
-  },
-  {
-    path: 'admin/write/:id',
-    title: 'Edit — SpaceLab Admin',
-    canActivate: [adminGuard],
-    loadComponent: () =>
-      import('./features/admin/write/write.component').then((m) => m.WriteComponent),
-  },
-  {
-    path: 'admin/analytics',
-    title: 'Analytics — SpaceLab Admin',
-    canActivate: [adminGuard],
-    loadComponent: () =>
-      import('./features/analytics/analytics.component').then((m) => m.AnalyticsComponent),
+      import('./features/admin/admin-shell/admin-shell.component').then((m) => m.AdminShellComponent),
+    children: [
+      {
+        path: '',
+        title: 'Dashboard — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-dashboard/admin-dashboard.component').then(
+            (m) => m.AdminDashboardComponent,
+          ),
+      },
+      {
+        path: 'posts',
+        title: 'Posts — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-posts/admin-posts.component').then(
+            (m) => m.AdminPostsComponent,
+          ),
+      },
+      {
+        path: 'write',
+        title: 'Write — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/write/write.component').then((m) => m.WriteComponent),
+      },
+      {
+        path: 'write/:id',
+        title: 'Edit — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/write/write.component').then((m) => m.WriteComponent),
+      },
+      {
+        path: 'users',
+        title: 'Users — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-users/admin-users.component').then(
+            (m) => m.AdminUsersComponent,
+          ),
+      },
+      {
+        path: 'comments',
+        title: 'Comments — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-comments/admin-comments.component').then(
+            (m) => m.AdminCommentsComponent,
+          ),
+      },
+      {
+        path: 'analytics',
+        title: 'Analytics — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/analytics/analytics.component').then((m) => m.AnalyticsComponent),
+      },
+    ],
   },
   {
     path: '**',

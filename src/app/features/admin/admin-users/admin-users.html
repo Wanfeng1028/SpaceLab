@@ -1,0 +1,81 @@
+<div class="users">
+  <div class="users__header">
+    <h2 class="users__title">用户管理</h2>
+    <button nz-button nzType="default" (click)="loadUsers()" [nzLoading]="loading()">
+      <span nz-icon nzType="reload"></span>
+      刷新
+    </button>
+  </div>
+
+  <nz-table #basicTable [nzData]="users()" [nzLoading]="loading()" [nzPageSize]="20" nzSize="middle">
+    <thead>
+      <tr>
+        <th>用户</th>
+        <th>邮箱</th>
+        <th nzWidth="140px">角色</th>
+        <th nzWidth="120px">状态</th>
+        <th nzWidth="220px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of basicTable.data; track user.id) {
+        <tr>
+          <td class="users__name-cell">
+            <span class="users__name">{{ user.username || '未设置' }}</span>
+          </td>
+          <td class="users__email-cell">{{ user.email }}</td>
+          <td>
+            <nz-select
+              [ngModel]="user.role"
+              (ngModelChange)="onRoleChange(user, $event)"
+              nzSize="small"
+              style="width: 100px;"
+            >
+              @for (opt of roleOptions; track opt.value) {
+                <nz-option [nzValue]="opt.value" [nzLabel]="opt.label"></nz-option>
+              }
+            </nz-select>
+          </td>
+          <td>
+            @if (bannedIds().has(user.id)) {
+              <nz-tag nzColor="red">已封禁</nz-tag>
+            } @else {
+              <nz-tag nzColor="green">正常</nz-tag>
+            }
+          </td>
+          <td>
+            <button
+              nz-button
+              nzType="text"
+              nzSize="small"
+              [nz-tooltip]="bannedIds().has(user.id) ? '解封' : '封禁'"
+              (click)="onToggleStatus(user)"
+            >
+              <span nz-icon [nzType]="bannedIds().has(user.id) ? 'check' : 'close'"></span>
+              {{ bannedIds().has(user.id) ? '解封' : '封禁' }}
+            </button>
+            <button
+              nz-button
+              nzType="text"
+              nzSize="small"
+              nz-tooltip="重置密码"
+              (click)="onResetPassword(user)"
+            >
+              <span nz-icon nzType="lock"></span>
+            </button>
+            <button
+              nz-button
+              nzType="text"
+              nzSize="small"
+              nzDanger
+              nz-tooltip="删除"
+              (click)="onDelete(user)"
+            >
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>

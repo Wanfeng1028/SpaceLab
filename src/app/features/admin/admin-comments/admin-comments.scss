@@ -1,0 +1,54 @@
+.comments__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.comments__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.comments__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.comments__content-cell {
+  max-width: 420px;
+}
+
+.comments__content {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.88);
+  word-break: break-word;
+}
+
+.comments__meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.comments__time-cell {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.comments__empty {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 32px 0;
+}

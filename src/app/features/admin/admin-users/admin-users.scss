@@ -1,0 +1,28 @@
+.users__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.users__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.users__name-cell {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.users__name {
+  display: inline-block;
+}
+
+.users__email-cell {
+  color: rgba(0, 0, 0, 0.65);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 13px;
+}

@@ -1,0 +1,59 @@
+<nz-layout class="admin-shell">
+  <nz-sider
+    [nzCollapsed]="isCollapsed()"
+    [nzTrigger]="null"
+    [nzCollapsible]="true"
+    [nzWidth]="220"
+    [nzCollapsedWidth]="64"
+    class="admin-shell__sider"
+  >
+    <div class="admin-shell__logo">
+      <span class="admin-shell__logo-mark">SL</span>
+      @if (!isCollapsed()) {
+        <span class="admin-shell__logo-text">SpaceLab 管理台</span>
+      }
+    </div>
+
+    <ul nz-menu [nzTheme]="'dark'" [nzInlineCollapsed]="isCollapsed()" [nzMode]="'inline'">
+      @for (link of menuLinks; track link.path) {
+        <li
+          nz-menu-item
+          [nzMatchRouter]="true"
+          [nzMatchRouterExact]="link.path === '/admin'"
+          [routerLink]="link.path"
+        >
+          <span nz-icon [nzType]="link.icon"></span>
+          <span>{{ link.label }}</span>
+        </li>
+      }
+    </ul>
+  </nz-sider>
+
+  <nz-layout class="admin-shell__main">
+    <nz-header class="admin-shell__header">
+      <span class="admin-shell__trigger" (click)="toggleCollapsed()">
+        <span nz-icon [nzType]="isCollapsed() ? 'menu-unfold' : 'menu-fold'"></span>
+      </span>
+
+      <div class="admin-shell__header-right" nz-dropdown [nzDropdownMenu]="userMenu">
+        <nz-avatar [nzSize]="32" nzText="{{ initials() }}"></nz-avatar>
+        <span class="admin-shell__username">
+          {{ currentUser()?.username || currentUser()?.email || '管理员' }}
+        </span>
+      </div>
+
+      <nz-dropdown-menu #userMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="onLogout()">
+            <span nz-icon nzType="logout"></span>
+            <span>退出登录</span>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-header>
+
+    <nz-content class="admin-shell__content">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

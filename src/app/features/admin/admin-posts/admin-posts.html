@@ -1,0 +1,54 @@
+<div class="posts">
+  <div class="posts__header">
+    <h2 class="posts__title">文章管理</h2>
+    <button nz-button nzType="primary" (click)="onNew()">
+      <span nz-icon nzType="plus"></span>
+      新建文章
+    </button>
+  </div>
+
+  <nz-table #basicTable [nzData]="posts()" [nzLoading]="loading()" [nzPageSize]="20" nzSize="middle">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th nzWidth="100px">状态</th>
+        <th nzWidth="100px">阅读量</th>
+        <th nzWidth="140px">创建时间</th>
+        <th nzWidth="220px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (post of basicTable.data; track post.id) {
+        <tr>
+          <td class="posts__title-cell">{{ post.title }}</td>
+          <td>
+            <nz-tag [nzColor]="statusColor(post.status)">{{ statusText(post.status) }}</nz-tag>
+          </td>
+          <td>{{ post.view_count || 0 }}</td>
+          <td>{{ post.created_at | date: 'yyyy-MM-dd' }}</td>
+          <td>
+            <button nz-button nzType="text" nzSize="small" (click)="onEdit(post.id)">
+              <span nz-icon nzType="edit"></span>
+              编辑
+            </button>
+            @if (post.status === 'draft') {
+              <button nz-button nzType="link" nzSize="small" (click)="onPublish(post)">
+                发布
+              </button>
+            }
+            <button
+              nz-button
+              nzType="text"
+              nzSize="small"
+              nzDanger
+              nz-tooltip="删除"
+              (click)="onDelete(post)"
+            >
+              <span nz-icon nzType="delete"></span>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>
