@@ -46,7 +46,7 @@ const ADMIN_ICONS: IconDefinition[] = [
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
-import { NZ_MODAL_CONFIG, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 export const appConfig: ApplicationConfig = {
   providers: [
