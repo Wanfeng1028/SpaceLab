@@ -46,6 +46,7 @@ const ADMIN_ICONS: IconDefinition[] = [
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -55,5 +56,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideNzI18n(zh_CN),
     provideNzIcons(ADMIN_ICONS),
+    ...NzModalModule.forRoot().providers!,
   ],
 };
