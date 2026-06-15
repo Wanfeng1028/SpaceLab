@@ -1,14 +1,12 @@
-import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
-import { PostService } from '../../core/services/post.service';
 import { ArticleRepositoryService } from '../../core/services/article-repository.service';
 import { ArticleMetricsService } from '../../core/services/article-metrics.service';
 import { ArticleCardComponent } from '../../shared/components/cards/article-card.component';
 import { SearchBoxComponent } from '../../shared/components/search-box';
-import type { Article, ArticleMeta } from '../../core/models/article.model';
+import type { Article } from '../../core/models/article.model';
 import {
   buildSearchText,
   matchesSearchQuery,
@@ -27,11 +25,9 @@ const WEB3FORMS_ACCESS_KEY = '874ed1fa-0a5f-481a-810f-83d2d2613b36';
 })
 export class BlogComponent implements OnInit {
   private i18n = inject(I18nService);
-  private postService = inject(PostService);
   private articleRepository = inject(ArticleRepositoryService);
   private metricsService = inject(ArticleMetricsService);
   private http = inject(HttpClient);
-  private destroyRef = inject(DestroyRef);
 
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
@@ -45,32 +41,15 @@ export class BlogComponent implements OnInit {
 
   readonly categories = signal<string[]>(['all', 'GIS', '开发', '算法', '随笔', '薅羊毛攻略']);
 
-  // Pre-compute static articles once (in ngOnInit, not constructor)
-  private _staticArticles: Article[] = [];
-
-  // Reactive combined articles: static + github (computed, no polling)
-  readonly allArticles = computed(() => {
-    const githubArticles: ArticleMeta[] = this.articleRepository.githubPosts();
-    if (githubArticles.length > 0) {
-      const githubAsArticles: Article[] = githubArticles.map((m) => {
-        const metrics = this.metricsService.getMetrics(m.slug);
-        return {
-          ...m,
-          contentHtml: '',
-          viewCount: metrics?.viewCount,
-          likeCount: metrics?.likeCount,
-        };
-      });
-      return [...this._staticArticles, ...githubAsArticles];
-    }
-    return this._staticArticles;
-  });
+  // All articles from the repository (static + github)
+  private readonly _allArticles = signal<Article[]>([]);
 
   readonly filteredArticles = computed(() => {
     const query = this.searchQuery();
     const category = this.selectedCategory();
+    const articles = this._allArticles();
 
-    return this.allArticles().filter((article) => {
+    return articles.filter((article) => {
       const matchesQuery = matchesSearchQuery(this.getArticleSearchText(article), query);
 
       const matchesCategory =
@@ -99,49 +78,23 @@ export class BlogComponent implements OnInit {
   selectCategory(category: string): void {
     this.selectedCategory.set(category);
   }
-
   ngOnInit(): void {
-    // Pre-compute static articles once (not in constructor)
-    this.postService.getPosts(1, 100).subscribe((response: any) => {
-      const posts: any[] = response.posts || [];
-      this._staticArticles = posts.map((p: any) => {
-        const metrics = this.metricsService.getMetrics(p.slug);
-        return {
-          source: 'static' as const,
-          slug: p.slug,
-          title: p.title,
-          date: p.date,
-          category: p.category,
-          tags: p.tags,
-          summary: p.summary,
-          cover: p.cover,
-          readingTime: p.readingTime,
-          prevSlug: p.prevSlug ?? undefined,
-          prevTitle: p.prevTitle ?? undefined,
-          nextSlug: p.nextSlug ?? undefined,
-          nextTitle: p.nextTitle ?? undefined,
-          contentHtml: p.contentHtml,
-          viewCount: metrics?.viewCount,
-          likeCount: metrics?.likeCount,
-        };
-      });
-    });
+    // Load articles from the unified repository (static build-time + github runtime)
+    this._allArticles.set(this.articleRepository.getAllArticles());
 
-    // Fetch github articles in background
-    this.articleRepository.fetchGithubArticles().catch(() => {
-      // non-critical: github fetch failure doesn't block blog page
+    // Also fetch github articles in background to supplement
+    this.articleRepository.fetchGithubArticles().then(() => {
+      this._allArticles.set(this.articleRepository.getAllArticles());
     });
   }
 
   submitNewsletter(): void {
-    // Reset states
     this.newsletterValidationError.set(null);
     this.newsletterSuccess.set(false);
     this.newsletterError.set(false);
 
     const email = this.newsletterEmail().trim();
 
-    // Validation
     if (!email) {
       this.newsletterValidationError.set(this.t('blog.subscribeErrEmpty'));
       return;
@@ -153,7 +106,6 @@ export class BlogComponent implements OnInit {
       return;
     }
 
-    // Submit
     this.newsletterSubmitting.set(true);
 
     this.http
@@ -186,14 +138,6 @@ export class BlogComponent implements OnInit {
           this.newsletterError.set(true);
         },
       });
-  }
-
-  clearSearch(): void {
-    this.searchQuery.set('');
-  }
-
-  clearFilters(): void {
-    this.selectedCategory.set('all');
   }
 
   clearAll(): void {
