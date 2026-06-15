@@ -65,7 +65,11 @@ export class ProfileComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.message.error('加载用户信息失败');
+        // Token 无效或过期，清理 token 并跳转到登录页
+        localStorage.removeItem('token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('user');
+        this.router.navigate(['/login']);
       },
     });
   }

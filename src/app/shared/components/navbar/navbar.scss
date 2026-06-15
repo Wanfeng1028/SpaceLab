@@ -323,6 +323,23 @@
   letter-spacing: -0.02em;
 }
 
+// 用户头像按钮（已登录时显示首字母）
+.navbar__user-btn {
+  .navbar__user-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8f7cff, #69d7ff);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+}
+
 // ============================================
 // Nav Links (Desktop) — Sparkle Buttons
 // ============================================
