@@ -1,5 +1,140 @@
 [
   {
+    "id": "4d34703b1610",
+    "title": "GPT‑5.4",
+    "summary": "GPT-5.4是OpenAI推出的旗舰AI模型，定位为'专为专业工作设计的最强前沿模型'。模型首次将推理、编程、原生计算机操作、深度网页搜索和百万Token上下文整合进...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/gpt%e2%80%915-4/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:56.652Z",
+    "_page": 76
+  },
+  {
+    "id": "06be86fd5b98",
+    "title": "泡漫",
+    "summary": "泡漫是掌阅科技推出的一站式AI漫剧生成平台，专注用AI重新定义漫剧创作。平台整合超1万部小说IP，提供动态漫、解说漫、AI真人剧等多种形态，将制作周期压缩至...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/popreels/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:56.652Z",
+    "_page": 76
+  },
+  {
+    "id": "435b17607c38",
+    "title": "Phi-4-reasoning-vision-15B",
+    "summary": "Phi-4-reasoning-vision-15B是微软开源的150亿参数多模态推理模型，基于Phi-4-Reasoning语言模型和SigLIP-2视觉编码器构建。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/phi-4-reasoning-vision-15b/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
+    "id": "89c2709b1b94",
+    "title": "播面",
+    "summary": "播面是播客形式的技术面试题学习平台，主打'戴上耳机听懂面试题'。平台将枯燥的八股文转化为音频讲解，覆盖Java、Spring、Redis、Kafka、LLM等30+主流技术栈...",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/bomianfm/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
+    "id": "1dd37beabaf4",
+    "title": "MiniMax Music 2.5+",
+    "summary": "MiniMax Music 2.5+是MiniMax推出的AI音乐生成模型，主打纯音乐创作能力。模型支持古典管弦、电子、氛围音等多元风格，覆盖冥想、助眠、游戏、影视等全场景。",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/minimax-music-2-5-plus/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
+    "id": "8c33c6ecc453",
+    "title": "纳米漫剧流水线",
+    "summary": "纳米漫剧流水线是360推出的工业级AI漫剧生成平台，通过空间引擎建立三维坐标系，解决AI视频角色/场景不一致的痛点。",
+    "category": "AI工具",
+    "tags": [
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/namistory/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
+    "id": "3a2ae76cba0a",
+    "title": "Gemini 3.1 Flash-Lite",
+    "summary": "Gemini 3.1 Flash-Lite是Google推出的轻量级旗舰模型，主打极致性价比。模型以每秒363 token的输出速度、0.25美元/百万token的输入价格，在速度上碾压GPT-5 m...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "Google"
+    ],
+    "url": "https://ai-bot.cn/gemini-3-1-flash-lite/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
+    "id": "7442f257c955",
+    "title": "GPT‑5.3 Instant",
+    "summary": "GPT‑5.3 Instant 是 OpenAI 推出的轻量级对话模型，专为优化日常聊天体验设计。模型显著改善'爱说教、太啰嗦'的机械语气，回答更直接自然，联网搜索时整合质...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/gpt%e2%80%915-3-instant/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
+    "id": "6456b99a0621",
+    "title": "MagicAgent",
+    "summary": "MagicAgent是荣耀联合复旦大学推出的智能体基础模型，以32B密集架构和30B-A3B MoE架构实现百亿参数内最强性能。",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/magicagent/",
+    "source": "ai-bot.cn",
+    "date": "2026-03-11",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
+    "_page": 76
+  },
+  {
     "id": "d3c857fe1aa5",
     "title": "Fun-AudioGen-VD",
     "summary": "Fun-AudioGen-VD 是阿里通义实验室语音团队推出的创新语音大模型，定位为面向'声音设计与场景化音频生成'的专业工具。模型支持'FreeStyle'自由指令生成，能根...",
@@ -10,9 +145,9 @@
     ],
     "url": "https://ai-bot.cn/fun-audiogen-vd/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
     "_page": 76
   },
   {
@@ -27,9 +162,9 @@
     ],
     "url": "https://ai-bot.cn/firered-ocr/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
     "_page": 76
   },
   {
@@ -43,9 +178,9 @@
     ],
     "url": "https://ai-bot.cn/fun-cosyvoice3-5/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:04:58.262Z",
     "_page": 76
   },
   {
@@ -61,9 +196,9 @@
     ],
     "url": "https://ai-bot.cn/goose/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -76,9 +211,9 @@
     ],
     "url": "https://ai-bot.cn/theorql/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -93,9 +228,9 @@
     ],
     "url": "https://ai-bot.cn/epismo/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -109,9 +244,9 @@
     ],
     "url": "https://ai-bot.cn/opensandbox/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -127,9 +262,9 @@
     ],
     "url": "https://ai-bot.cn/dataclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:25.148Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -145,9 +280,9 @@
     ],
     "url": "https://ai-bot.cn/tinyclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -160,9 +295,9 @@
     ],
     "url": "https://ai-bot.cn/meowtxt/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -176,9 +311,9 @@
     ],
     "url": "https://ai-bot.cn/openfang/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -191,9 +326,9 @@
     ],
     "url": "https://ai-bot.cn/openclawmp/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -207,9 +342,9 @@
     ],
     "url": "https://ai-bot.cn/angelslim/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:00.127Z",
     "_page": 76
   },
   {
@@ -222,9 +357,9 @@
     ],
     "url": "https://ai-bot.cn/transcript-lol/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -237,9 +372,9 @@
     ],
     "url": "https://ai-bot.cn/yikeai/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -250,9 +385,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/openmusic-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -266,9 +401,9 @@
     ],
     "url": "https://ai-bot.cn/skyreels-v4/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -281,9 +416,9 @@
     ],
     "url": "https://ai-bot.cn/pplx-embed/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:26.835Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -298,9 +433,9 @@
     ],
     "url": "https://ai-bot.cn/arrow-1-0/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -315,9 +450,9 @@
     ],
     "url": "https://ai-bot.cn/codearts/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -334,9 +469,9 @@
     ],
     "url": "https://ai-bot.cn/locooperator-4b/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:01.737Z",
     "_page": 76
   },
   {
@@ -351,9 +486,9 @@
     ],
     "url": "https://ai-bot.cn/nano-banana-2/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:01.738Z",
     "_page": 76
   },
   {
@@ -367,9 +502,9 @@
     ],
     "url": "https://ai-bot.cn/ctrl-world/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:01.738Z",
     "_page": 76
   },
   {
@@ -380,9 +515,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/moodmax/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -393,9 +528,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/imagine/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -410,9 +545,9 @@
     ],
     "url": "https://ai-bot.cn/perplexity-computer/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -425,9 +560,9 @@
     ],
     "url": "https://ai-bot.cn/kiloclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -441,9 +576,9 @@
     ],
     "url": "https://ai-bot.cn/talksign-1/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:28.473Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -456,9 +591,9 @@
     ],
     "url": "https://ai-bot.cn/ironclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -472,9 +607,9 @@
     ],
     "url": "https://ai-bot.cn/niuma-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -487,9 +622,9 @@
     ],
     "url": "https://ai-bot.cn/maxclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -500,9 +635,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/mimiclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -515,9 +650,9 @@
     ],
     "url": "https://ai-bot.cn/stonksup/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:03.342Z",
     "_page": 76
   },
   {
@@ -528,9 +663,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/deskclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -544,9 +679,9 @@
     ],
     "url": "https://ai-bot.cn/nanoclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -561,9 +696,9 @@
     ],
     "url": "https://ai-bot.cn/mochat/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -576,9 +711,9 @@
     ],
     "url": "https://ai-bot.cn/zvec/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-03-11",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.078Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -592,9 +727,9 @@
     ],
     "url": "https://ai-bot.cn/openakita/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:30.079Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -607,9 +742,9 @@
     ],
     "url": "https://ai-bot.cn/clawfeed/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -622,9 +757,9 @@
     ],
     "url": "https://ai-bot.cn/grok-4-20/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -635,9 +770,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/sayso/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -650,9 +785,9 @@
     ],
     "url": "https://ai-bot.cn/zeroclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -666,9 +801,9 @@
     ],
     "url": "https://ai-bot.cn/fireredasr2s/",
     "source": "ai-bot.cn",
-    "date": "2026-03-10",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:04.980Z",
     "_page": 76
   },
   {
@@ -683,9 +818,9 @@
     ],
     "url": "https://ai-bot.cn/claude-code-security/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -699,9 +834,9 @@
     ],
     "url": "https://ai-bot.cn/protenix-v1/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -716,9 +851,9 @@
     ],
     "url": "https://ai-bot.cn/picoclaw/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -732,9 +867,9 @@
     ],
     "url": "https://ai-bot.cn/gemini-3-1-pro/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -747,9 +882,9 @@
     ],
     "url": "https://ai-bot.cn/evomap-invitation-code/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:31.715Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -762,9 +897,9 @@
     ],
     "url": "https://ai-bot.cn/evomap/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -778,9 +913,9 @@
     ],
     "url": "https://ai-bot.cn/lyria-3/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
+    "fetchedAt": "2026-06-09T10:05:06.782Z",
     "_page": 76
   },
   {
@@ -796,153 +931,9 @@
     ],
     "url": "https://ai-bot.cn/clawwork/",
     "source": "ai-bot.cn",
-    "date": "2026-02-08",
+    "date": "2026-02-09",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "43d8f35ba47f",
-    "title": "Ming-omni-tts",
-    "summary": "Ming-omni-tts 是蚂蚁集团开源的统一音频生成模型，采用自回归架构实现语音、音乐和音效的联合生成。模型支持通过自然语言指令对语速、音调、音量、情感和方...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/ming-omni-tts/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "727f412d21a1",
-    "title": "次元神笔AI",
-    "summary": "次元神笔AI是中文在线推出的全栈AI内容创作平台，定位为'AI漫剧一键生成'的工业化生产工具。平台整合了从IP筛选、剧本创作、分镜生成、角色建模、视频生成到...",
-    "category": "AI工具",
-    "tags": [
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/ciyuanshenbi/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "b2ee825d88dd",
-    "title": "Claude Sonnet 4.6",
-    "summary": "Claude Sonnet 4.6是Anthropic推出的最新一代AI模型，定位'高性能与高性价比'的平衡点。在编程、计算机操作、长文本推理和智能体规划等核心能力上实现全面升...",
-    "category": "AI工具",
-    "tags": [
-      "Agent",
-      "模型",
-      "编程",
-      "Claude"
-    ],
-    "url": "https://ai-bot.cn/claude-sonnet-4-6/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "0d1dbf5c43b0",
-    "title": "有戏AI",
-    "summary": "有戏AI是风平智能推出的AI短剧一站式创作平台，定位为'新一代AI剧情生产与互动引擎'。平台整合剧本解析、角色设计、智能分镜、配音合成、成片导出等全流程功...",
-    "category": "AI工具",
-    "tags": [],
-    "url": "https://ai-bot.cn/youxiai/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "ec39212768b3",
-    "title": "JoyAI-LLM-Flash",
-    "summary": "JoyAI-LLM-Flash 是京东开源的中型指令大模型，采用混合专家（MoE）架构，总参数量 48B，激活参数量仅 3B，支持 128K 超长上下文。模型创新性地引入 FiberPO ...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/joyai-llm-flash/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "fe13aea765ac",
-    "title": "LobsterAI 有道龙虾",
-    "summary": "LobsterAI（中文名：有道龙虾）是网易有道推出的桌面级AI Agent，定位为'7×24小时全场景个人助理'。LobsterAI支持用户通过自然语言指令，可远程操控电脑完成...",
-    "category": "AI工具",
-    "tags": [
-      "Agent"
-    ],
-    "url": "https://ai-bot.cn/lobsterai/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "8053c8ebfe0b",
-    "title": "FireRed-Image-Edit",
-    "summary": "FireRed-Image-Edit是小红书Super Intelligence团队开源的通用图像编辑模型，基于扩散架构，支持文本引导的图像编辑、老照片修复、虚拟试穿等多功能。",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "图像"
-    ],
-    "url": "https://ai-bot.cn/firered-image-edit/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:33.338Z",
-    "_page": 76
-  },
-  {
-    "id": "acad6bcd1675",
-    "title": "Qwen3.5",
-    "summary": "Qwen3.5是阿里巴巴通义千问团队正式发布并开源的新一代原生多模态大模型。首发开源版本Qwen3.5-397B-A17B采用创新的混合架构，将线性注意力（Gated Delta Net...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "通义千问"
-    ],
-    "url": "https://ai-bot.cn/qwen3-5/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:34.983Z",
-    "_page": 76
-  },
-  {
-    "id": "4c78281dcf67",
-    "title": "Kimi Claw",
-    "summary": "Kimi Claw是月之暗面（Moonshot AI）推出的云端AI智能体服务，是 Kimi K2.5 大模型与开源 AI Agent 平台 OpenClaw 的深度集成方案，代表着当前最具性价比的'...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/kimi-claw/",
-    "source": "ai-bot.cn",
-    "date": "2026-02-08",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:22:34.983Z",
+    "fetchedAt": "2026-06-09T10:05:06.783Z",
     "_page": 76
   }
 ]

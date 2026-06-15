@@ -1,5 +1,151 @@
 [
   {
+    "id": "fefd13f68f3e",
+    "title": "ECC",
+    "summary": "ECC（Everything Claude Code）是跨平台 AI Agent 性能优化系统。系统为 Claude Code、Codex、Cursor 等 7+ 个 AI 编程工具提供 63 个专业 Agent、249 个按需...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "编程",
+      "Claude"
+    ],
+    "url": "https://ai-bot.cn/ecc/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:48.031Z",
+    "_page": 69
+  },
+  {
+    "id": "1d90da0152b9",
+    "title": "Mellum2",
+    "summary": "Mellum2 是 JetBrains 开源的面向软件工程系统的新机器学习模型。模型每 token 仅激活 2.5B 参数，专为软件工程 AI 工作流优化，支持代码生成、智能路由、子 ...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/mellum2/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:48.031Z",
+    "_page": 69
+  },
+  {
+    "id": "aac2c072b1c7",
+    "title": "OpenClacky",
+    "summary": "OpenClacky 是李亚飞团队开源的 AI Agent，支持一键安装与跨平台运行。工具通过精简工具集、智能上下文压缩和模型路由大幅降低使用成本，让专业人士能全天开...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/openclacky/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
+    "id": "fbf36f4e229b",
+    "title": "语构",
+    "summary": "语构是阿里达摩院推出的AI原生开发平台，以Vibe Coding为核心范式，让用户通过自然语言描述需求可生成完整可用的数字产品。",
+    "category": "AI工具",
+    "tags": [],
+    "url": "https://ai-bot.cn/creo4u/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
+    "id": "baf6fef7b0cd",
+    "title": "Qwen3.7-Plus",
+    "summary": "Qwen3.7-Plus 是通义千问推出的新一代多模态大模型，将视觉与语言统一为一体化智能体基座。模型能感知真实世界场景、读取屏幕并操作 GUI、基于视觉参考生成代...",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "模型",
+      "通义千问"
+    ],
+    "url": "https://ai-bot.cn/qwen3-7-plus/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
+    "id": "2d69008b6128",
+    "title": "Polar",
+    "summary": "Polar 是英伟达推出的开源智能体强化学习（Agentic RL）训练框架，核心创新在于无需修改现有智能体框架内部代码，可将其接入 GRPO 等 RL 算法进行训练。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "框架",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/polar/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
+    "id": "461fff388278",
+    "title": "Cosmos 3",
+    "summary": "Cosmos 3是英伟达推出的全球首款全开源全模态物理 AI 基础大模型，采用混合 Transformer 架构融合视觉推理、世界生成与动作预测能力。",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/cosmos-3/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
+    "id": "5134e065539a",
+    "title": "Dubbing v2",
+    "summary": "Dubbing v2 是 ElevenLabs 推出的 AI 配音模型，支持 29 种语言自动翻译配音，保留原始说话人音色与情感。模型提供双工作流模式，Auto Dub 快速生成预览，Dub...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/dubbing-v2/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
+    "id": "bfd0231806a0",
+    "title": "Gamma-World",
+    "summary": "Gamma-World 是 NVIDIA 推出的多智能体世界模型，能解决多个智能体在同一个模拟世界中平等交互、全局一致的问题。",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/gamma-world/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
+    "_page": 69
+  },
+  {
     "id": "63ca74b0a673",
     "title": "Music v2",
     "summary": "Music v2 是 ElevenLabs 全新推出的音乐生成大模型，在人声表现、乐器演奏和编曲水平上实现全面提升，支持多语言及单曲目内跨流派无缝转换。",
@@ -9,9 +155,9 @@
     ],
     "url": "https://ai-bot.cn/music-v2/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-06-02",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
     "_page": 69
   },
   {
@@ -24,9 +170,9 @@
     ],
     "url": "https://ai-bot.cn/funloom/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-06-02",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
     "_page": 69
   },
   {
@@ -39,9 +185,9 @@
     ],
     "url": "https://ai-bot.cn/hermes-desktop/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-06-02",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
+    "fetchedAt": "2026-06-09T10:03:49.634Z",
     "_page": 69
   },
   {
@@ -56,9 +202,9 @@
     ],
     "url": "https://ai-bot.cn/qwen-vla/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-06-02",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
     "_page": 69
   },
   {
@@ -73,9 +219,9 @@
     ],
     "url": "https://ai-bot.cn/minimax-m3/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-06-02",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
     "_page": 69
   },
   {
@@ -86,9 +232,109 @@
     "tags": [],
     "url": "https://ai-bot.cn/mojian/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-06-02",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
+    "_page": 69
+  },
+  {
+    "id": "9493ac1aeeea",
+    "title": "OmniVoice Studio",
+    "summary": "OmniVoice Studio 是全本地运行的开源 ElevenLabs 替代方案，提供跨平台桌面客户端，支持零样本语音克隆、声音设计、视频自动配音、语音听写等功能，覆盖 646...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/omnivoice-studio/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
+    "_page": 69
+  },
+  {
+    "id": "c72e812f4bc5",
+    "title": "ControlFoley",
+    "summary": "ControlFoley是小米开源的可控视频音效生成模型，能解决V2A领域可控性难题。模型统一支持文本引导、文本控制与参考音频控制三类视频配音任务，通过自研时空音...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型",
+      "视频"
+    ],
+    "url": "https://ai-bot.cn/controlfoley/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
+    "_page": 69
+  },
+  {
+    "id": "bca626910f24",
+    "title": "Webwright",
+    "summary": "Webwright 是微软研究院开源的终端原生网页智能体框架，仅需约 1000 行代码可让 AI 模型在终端中编写 Playwright 代码、执行 bash 命令、查看日志并反复修正...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "Agent",
+      "模型",
+      "框架",
+      "编程"
+    ],
+    "url": "https://ai-bot.cn/webwright/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
+    "_page": 69
+  },
+  {
+    "id": "45572cd72070",
+    "title": "SenseNova-U1-8B-MoT-Infographic",
+    "summary": "SenseNova-U1-8B-MoT-Infographic 是商汤科技开源的 8B 参数信息图增强模型，基于 SenseNova-U1-8B-MoT 统一架构，通过专项数据训练与 RL 强化学习，显著提升...",
+    "category": "AI工具",
+    "tags": [
+      "开源",
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/sensenova-u1-8b-mot-infographic/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
+    "_page": 69
+  },
+  {
+    "id": "9607904b7b95",
+    "title": "getdesign.md",
+    "summary": "getdesign.md 是 VoltAgent 团队推出的 AI 原生设计系统库与工具平台，核心提供 60+ 顶级品牌的 DESIGN.md 设计规范文件。基于 Google Stitch 提出的 DESIGN....",
+    "category": "AI工具",
+    "tags": [
+      "Agent",
+      "Google"
+    ],
+    "url": "https://ai-bot.cn/getdesign-md/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
+    "_page": 69
+  },
+  {
+    "id": "625628d50c07",
+    "title": "美团GEO营销门户",
+    "summary": "美团 GEO 营销门户是美团推出的生成式引擎优化（GEO）平台，专为 AI 搜索时代设计，帮助品牌在豆包、DeepSeek、文心一言等主流大模型中提升曝光与推荐频次。...",
+    "category": "AI工具",
+    "tags": [
+      "模型",
+      "DeepSeek"
+    ],
+    "url": "https://ai-bot.cn/geo-meituan/",
+    "source": "ai-bot.cn",
+    "date": "2026-06-02",
+    "publishedAt": "",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
     "_page": 69
   },
   {
@@ -108,106 +354,6 @@
     "_page": 69
   },
   {
-    "id": "9493ac1aeeea",
-    "title": "OmniVoice Studio",
-    "summary": "OmniVoice Studio 是全本地运行的开源 ElevenLabs 替代方案，提供跨平台桌面客户端，支持零样本语音克隆、声音设计、视频自动配音、语音听写等功能，覆盖 646...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/omnivoice-studio/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-01",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
-    "_page": 69
-  },
-  {
-    "id": "c72e812f4bc5",
-    "title": "ControlFoley",
-    "summary": "ControlFoley是小米开源的可控视频音效生成模型，能解决V2A领域可控性难题。模型统一支持文本引导、文本控制与参考音频控制三类视频配音任务，通过自研时空音...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/controlfoley/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-01",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:11.956Z",
-    "_page": 69
-  },
-  {
-    "id": "bca626910f24",
-    "title": "Webwright",
-    "summary": "Webwright 是微软研究院开源的终端原生网页智能体框架，仅需约 1000 行代码可让 AI 模型在终端中编写 Playwright 代码、执行 bash 命令、查看日志并反复修正...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "模型",
-      "框架",
-      "编程"
-    ],
-    "url": "https://ai-bot.cn/webwright/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-01",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
-    "_page": 69
-  },
-  {
-    "id": "45572cd72070",
-    "title": "SenseNova-U1-8B-MoT-Infographic",
-    "summary": "SenseNova-U1-8B-MoT-Infographic 是商汤科技开源的 8B 参数信息图增强模型，基于 SenseNova-U1-8B-MoT 统一架构，通过专项数据训练与 RL 强化学习，显著提升...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/sensenova-u1-8b-mot-infographic/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-01",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
-    "_page": 69
-  },
-  {
-    "id": "9607904b7b95",
-    "title": "getdesign.md",
-    "summary": "getdesign.md 是 VoltAgent 团队推出的 AI 原生设计系统库与工具平台，核心提供 60+ 顶级品牌的 DESIGN.md 设计规范文件。基于 Google Stitch 提出的 DESIGN....",
-    "category": "AI工具",
-    "tags": [
-      "Agent",
-      "Google"
-    ],
-    "url": "https://ai-bot.cn/getdesign-md/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-01",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
-    "_page": 69
-  },
-  {
-    "id": "625628d50c07",
-    "title": "美团GEO营销门户",
-    "summary": "美团 GEO 营销门户是美团推出的生成式引擎优化（GEO）平台，专为 AI 搜索时代设计，帮助品牌在豆包、DeepSeek、文心一言等主流大模型中提升曝光与推荐频次。...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "DeepSeek"
-    ],
-    "url": "https://ai-bot.cn/geo-meituan/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-01",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
-    "_page": 69
-  },
-  {
     "id": "99d2418754df",
     "title": "阿里云百炼 CLI",
     "summary": "阿里云百炼CLI是阿里云开源的AI Agent命令行工具，专为智能体场景设计。开发者一行命令，可让Agent自动调用阿里云百炼平台150+多模态模型、10+应用及知识库、...",
@@ -219,9 +365,9 @@
     ],
     "url": "https://ai-bot.cn/bailian-console-aliyun-cli/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
+    "fetchedAt": "2026-06-09T10:03:51.238Z",
     "_page": 69
   },
   {
@@ -236,9 +382,9 @@
     ],
     "url": "https://ai-bot.cn/dynamic-workflows/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -252,9 +398,9 @@
     ],
     "url": "https://ai-bot.cn/hy-memory/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -269,9 +415,9 @@
     ],
     "url": "https://ai-bot.cn/step-3-7-flash/",
     "source": "ai-bot.cn",
-    "date": "2026-06-01",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -287,9 +433,9 @@
     ],
     "url": "https://ai-bot.cn/claude-opus-4-8/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -304,9 +450,9 @@
     ],
     "url": "https://ai-bot.cn/qwen-image-bench/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:15.046Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -320,9 +466,9 @@
     ],
     "url": "https://ai-bot.cn/pilotdeck/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -336,9 +482,9 @@
     ],
     "url": "https://ai-bot.cn/wall-oss-0-5/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -352,9 +498,9 @@
     ],
     "url": "https://ai-bot.cn/cloud-agents/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -369,9 +515,9 @@
     ],
     "url": "https://ai-bot.cn/fara1-5/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -382,9 +528,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/project-craft/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:54.451Z",
     "_page": 69
   },
   {
@@ -400,9 +546,9 @@
     ],
     "url": "https://ai-bot.cn/omp/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -418,9 +564,9 @@
     ],
     "url": "https://ai-bot.cn/runway-mcp/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -434,9 +580,9 @@
     ],
     "url": "https://ai-bot.cn/mai-image-2-5/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -452,9 +598,9 @@
     ],
     "url": "https://ai-bot.cn/guizang-social-card-skill/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:52.849Z",
     "_page": 69
   },
   {
@@ -470,9 +616,9 @@
     ],
     "url": "https://ai-bot.cn/forgetrain/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:16.689Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -483,9 +629,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/ufate/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -500,9 +646,9 @@
     ],
     "url": "https://ai-bot.cn/keye-vl-2-0-30b-a3b/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -515,9 +661,9 @@
     ],
     "url": "https://ai-bot.cn/noteai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -531,9 +677,9 @@
     ],
     "url": "https://ai-bot.cn/aholo-viewer/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -546,9 +692,9 @@
     ],
     "url": "https://ai-bot.cn/rodin-gen-2-5/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:54.452Z",
     "_page": 69
   },
   {
@@ -559,9 +705,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/zsky-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -576,9 +722,9 @@
     ],
     "url": "https://ai-bot.cn/opera-browser-cli/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -592,9 +738,9 @@
     ],
     "url": "https://ai-bot.cn/minicpm5-1b/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -611,9 +757,9 @@
     ],
     "url": "https://ai-bot.cn/agentscope-2-0/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -630,9 +776,9 @@
     ],
     "url": "https://ai-bot.cn/skyclaw-v1-0/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:18.106Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -646,9 +792,9 @@
     ],
     "url": "https://ai-bot.cn/xiaomi-auto-world-model/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -664,9 +810,9 @@
     ],
     "url": "https://ai-bot.cn/reasonix/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -683,9 +829,9 @@
     ],
     "url": "https://ai-bot.cn/dulus/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -699,9 +845,9 @@
     ],
     "url": "https://ai-bot.cn/databuddy/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -715,9 +861,9 @@
     ],
     "url": "https://ai-bot.cn/bitcpm-cann/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:56.057Z",
     "_page": 69
   },
   {
@@ -730,9 +876,9 @@
     ],
     "url": "https://ai-bot.cn/horizon/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   },
   {
@@ -747,9 +893,9 @@
     ],
     "url": "https://ai-bot.cn/software-copyright-materials-skill/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   },
   {
@@ -763,9 +909,9 @@
     ],
     "url": "https://ai-bot.cn/command-a-plus/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   },
   {
@@ -778,9 +924,9 @@
     ],
     "url": "https://ai-bot.cn/freellmapi/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   },
   {
@@ -791,9 +937,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/octask/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:19.715Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   },
   {
@@ -808,9 +954,9 @@
     ],
     "url": "https://ai-bot.cn/codegraph/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   },
   {
@@ -825,158 +971,9 @@
     ],
     "url": "https://ai-bot.cn/mega-asr/",
     "source": "ai-bot.cn",
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "32a01248d9ed",
-    "title": "LLM Council",
-    "summary": "LLM Council 是 Andrej Karpathy 开源的多模型协作框架，通过 OpenRouter 将用户问题同时分发给多个大模型（如 Claude、GPT、Gemini 等）独立作答，各模型匿...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "框架",
-      "Claude",
-      "Google"
-    ],
-    "url": "https://ai-bot.cn/llm-council/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-25",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "0f43ace97671",
-    "title": "SenseNova-Skills",
-    "summary": "SenseNova-Skills 是 OpenSenseNova（商汤）团队开源的模块化 AI 办公技能库，专为 Agent 运行时设计。工具将信息图生成、PPT 制作、Excel 数据分析与深度研...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "办公"
-    ],
-    "url": "https://ai-bot.cn/sensenova-skills/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-25",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "f74eb696db7f",
-    "title": "陪读蛙",
-    "summary": "陪读蛙（ReadFrog）是开源的 AI 沉浸式翻译浏览器扩展工具。工具能翻译和解读浏览器上的任何内容，支持Chrome、Edge、Firefox。通过上下文感知翻译、划词解析...",
-    "category": "AI工具",
-    "tags": [
-      "开源"
-    ],
-    "url": "https://ai-bot.cn/readfrog/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-25",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "f00e744482ad",
-    "title": "Confucius4",
-    "summary": "Confucius4是网易有道AI团队基于Qwen3.5-27B架构推出的开源多模态大语言模型，专为高级数学推理场景设计。模型通过迭代SFT+RL训练范式、纯文本推理数据增强及...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "通义千问"
-    ],
-    "url": "https://ai-bot.cn/confucius4/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-25",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "34f26a14fdc1",
-    "title": "GLM-5.1-highspeed",
-    "summary": "GLM-5.1-HighSpeed是智谱AI推出的旗舰级高速大模型API，在完整保留GLM-5.1综合能力的基础上，通过TileRT高性能推理引擎实现400 tokens/s的输出速度，刷新全球...",
-    "category": "AI工具",
-    "tags": [
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/glm-5-1-highspeed/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-18",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "1815602bdc15",
-    "title": "LongCat-Video-Avatar 1.5",
-    "summary": "LongCat-Video-Avatar 1.5 是美团 LongCat 开源的音频驱动数字人视频生成框架。模型基于 13.6B 参数的基础视频生成模型 LongCat-Video 构建，将音频编码器从 ...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型",
-      "框架",
-      "视频"
-    ],
-    "url": "https://ai-bot.cn/longcat-video-avatar-1-5/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-18",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "855332e4aa8d",
-    "title": "autoresearch",
-    "summary": "autoresearch 是 Andrej Karpathy 开源的 AI 自主科研实验框架。框架让 AI Agent 在单张 GPU 上自动运行 nanochat 训练实验：自主调参、执行训练、分析验证指...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "Agent",
-      "框架"
-    ],
-    "url": "https://ai-bot.cn/autoresearch/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-18",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "efc81196d9ea",
-    "title": "Stable Audio 3",
-    "summary": "Stable Audio 3是Stability AI推出的新一代开源音频生成模型系列，基于流匹配潜空间扩散架构，支持文本转音乐与音效、音频编辑及续写。Stable Audio 3提供Sma...",
-    "category": "AI工具",
-    "tags": [
-      "开源",
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/stable-audio-3/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-18",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:21.328Z",
-    "_page": 69
-  },
-  {
-    "id": "d8240f0ba172",
-    "title": "Hy 翻译",
-    "summary": "Hy 翻译是腾讯混元团队基于自研 Hy-MT2 大模型推出的 AI 翻译小程序，支持 33 种语言互译与 5 种民汉方言。工具提供 9 种预设翻译风格与个性化指令设定，覆盖...",
-    "category": "AI工具",
-    "tags": [
-      "模型"
-    ],
-    "url": "https://ai-bot.cn/qq-hy-translation/",
-    "source": "ai-bot.cn",
-    "date": "2026-05-18",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-08T16:21:22.954Z",
+    "fetchedAt": "2026-06-09T10:03:57.665Z",
     "_page": 69
   }
 ]
