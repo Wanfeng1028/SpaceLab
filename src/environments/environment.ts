@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
   
-  // 后端 API 地址
-  apiUrl: 'http://localhost:8081/api/v1',
+  // 后端 API 地址（开发环境通过 proxy 转发到 localhost:8081）
+  apiUrl: '/api/v1',
   
   // LiveComment 站点 ID（需要在 https://livecomment.cn 注册获取）
   liveCommentSiteId: 'your-livecomment-site-id',

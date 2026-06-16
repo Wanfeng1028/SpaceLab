@@ -151,6 +151,10 @@ func main() {
 	// API v1 路由组
 	api := r.Group("/api/v1")
 	{
+		// 验证码（通过 /api/v1 也能访问，适配前端 proxy）
+		api.GET("/captcha/new", middleware.AuthLimiter(), captchaHandler.GetCaptchaID)
+		api.GET("/captcha/:id.png", captchaHandler.GetCaptchaImage)
+		api.POST("/captcha/verify", middleware.AuthLimiter(), captchaHandler.VerifyCaptcha)
 		// 认证路由（无需登录，带限流）
 		authRoutes := api.Group("/auth")
 		{

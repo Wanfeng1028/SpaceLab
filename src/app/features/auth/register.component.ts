@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } 
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { CaptchaService } from '../../core/services/captcha.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private captchaService = inject(CaptchaService);
 
   email = signal('');
   username = signal('');
@@ -24,17 +26,19 @@ export class RegisterComponent implements OnInit {
   showPassword = signal(false);
   registrationClosed = signal(false);
 
-  /** 密码强度 */
+  /** 图形验证码 */
+  captchaId = signal('');
+  captchaImageUrl = signal('');
+  captchaAnswer = signal('');
+
   passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
 
-  /** 密码校验错误 */
   passwordError = computed(() => {
     const p = this.password();
     if (!p) return '';
     return this.authService.validatePassword(p) || '';
   });
 
-  /** 确认密码不匹配 */
   confirmPasswordError = computed(() => {
     const p = this.password();
     const cp = this.confirmPassword();
@@ -42,7 +46,6 @@ export class RegisterComponent implements OnInit {
     return p !== cp ? '两次输入的密码不一致' : '';
   });
 
-  /** 邮箱格式 */
   emailError = computed(() => {
     const e = this.email();
     if (!e) return '';
@@ -50,7 +53,6 @@ export class RegisterComponent implements OnInit {
     return emailRegex.test(e) ? '' : '请输入有效的邮箱地址';
   });
 
-  /** 用户名校验 */
   usernameError = computed(() => {
     const u = this.username();
     if (!u) return '';
@@ -61,13 +63,11 @@ export class RegisterComponent implements OnInit {
     return '';
   });
 
-  /** 整体表单是否有效 */
   formValid = computed(() => {
     return this.email() && this.username() && this.password() && this.confirmPassword()
       && !this.emailError() && !this.usernameError() && !this.passwordError() && !this.confirmPasswordError();
   });
 
-  /** 第三方登录弹窗提示 */
   thirdPartyDialogVisible = signal(false);
   thirdPartyName = signal('');
 
@@ -79,7 +79,21 @@ export class RegisterComponent implements OnInit {
           this.error.set('注册功能暂时关闭');
         }
       },
-      error: () => { /* 默认允许注册 */ }
+      error: () => {}
+    });
+    this.loadCaptcha();
+  }
+
+  loadCaptcha(): void {
+    this.captchaService.getNew().subscribe({
+      next: (session) => {
+        this.captchaId.set(session.captcha_id);
+        this.captchaImageUrl.set(session.imageUrl);
+        this.captchaAnswer.set('');
+      },
+      error: (err) => {
+        console.warn('[Captcha] Failed to load captcha:', err);
+      }
     });
   }
 
@@ -101,7 +115,7 @@ export class RegisterComponent implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    this.authService.register(this.email(), this.password(), this.username()).subscribe({
+    this.authService.register(this.email(), this.password(), this.username(), undefined, this.captchaId(), this.captchaAnswer()).subscribe({
       next: (response) => {
         this.loading.set(false);
         const isAdmin = response.user?.role === 'admin';
@@ -110,6 +124,9 @@ export class RegisterComponent implements OnInit {
       error: (err) => {
         this.loading.set(false);
         this.error.set(err.error?.error || '注册失败，请稍后重试');
+        if (err.error?.error?.includes('captcha')) {
+          this.loadCaptcha();
+        }
       }
     });
   }

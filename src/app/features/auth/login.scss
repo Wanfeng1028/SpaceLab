@@ -177,6 +177,35 @@ $google-error-bg: #fce8e6;
   }
 }
 
+// 图形验证码
+.form-captcha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-captcha img {
+  width: 120px;
+  height: 44px;
+  border-radius: 24px;
+  cursor: pointer;
+  object-fit: contain;
+  background: rgba(0,0,0,0.05);
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.form-captcha img:hover { opacity: 0.8; }
+
+.form-captcha__input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  text-align: center;
+  letter-spacing: 4px;
+  font-size: 18px;
+}
+
 // 提交按钮 (Google 胶囊按钮)
 .auth-submit {
   width: 100%;

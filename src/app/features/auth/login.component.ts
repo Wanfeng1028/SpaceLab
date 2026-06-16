@@ -1,7 +1,8 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { CaptchaService } from '../../core/services/captcha.service';
 
 @Component({
   selector: 'app-login',
@@ -11,16 +12,22 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private captchaService = inject(CaptchaService);
 
   email = signal('');
   password = signal('');
   error = signal('');
   loading = signal(false);
   showPassword = signal(false);
+
+  /** 图形验证码 */
+  captchaId = signal('');
+  captchaImageUrl = signal('');
+  captchaAnswer = signal('');
 
   /** 邮箱格式校验 */
   emailError = computed(() => {
@@ -46,6 +53,23 @@ export class LoginComponent {
   resendLoading = signal(false);
   resendSuccess = signal(false);
 
+  ngOnInit(): void {
+    this.loadCaptcha();
+  }
+
+  loadCaptcha(): void {
+    this.captchaService.getNew().subscribe({
+      next: (session) => {
+        this.captchaId.set(session.captcha_id);
+        this.captchaImageUrl.set(session.imageUrl);
+        this.captchaAnswer.set('');
+      },
+      error: (err) => {
+        console.warn('[Captcha] Failed to load captcha:', err);
+      }
+    });
+  }
+
   onSubmit(): void {
     if (!this.email() || !this.password()) {
       this.error.set('请输入邮箱和密码');
@@ -58,7 +82,7 @@ export class LoginComponent {
     this.loading.set(true);
     this.error.set('');
 
-    this.authService.login(this.email(), this.password()).subscribe({
+    this.authService.login(this.email(), this.password(), undefined, this.captchaId(), this.captchaAnswer()).subscribe({
       next: (response) => {
         this.loading.set(false);
         if (!response.user?.email_verified_at) {
@@ -76,6 +100,10 @@ export class LoginComponent {
         this.loading.set(false);
         const msg = err.error?.error || '登录失败，请检查邮箱和密码';
         this.error.set(msg);
+        // 验证码错误时刷新
+        if (err.error?.error?.includes('captcha')) {
+          this.loadCaptcha();
+        }
       }
     });
   }
@@ -103,14 +131,8 @@ export class LoginComponent {
     this.forgotLoading.set(true);
     this.forgotError.set('');
     this.authService.requestPasswordReset(this.forgotEmail()).subscribe({
-      next: () => {
-        this.forgotLoading.set(false);
-        this.forgotSuccess.set(true);
-      },
-      error: () => {
-        this.forgotLoading.set(false);
-        this.forgotSuccess.set(true);
-      }
+      next: () => { this.forgotLoading.set(false); this.forgotSuccess.set(true); },
+      error: () => { this.forgotLoading.set(false); this.forgotSuccess.set(true); }
     });
   }
 
@@ -127,13 +149,8 @@ export class LoginComponent {
     this.resendLoading.set(true);
     this.resendSuccess.set(false);
     this.authService.resendVerificationEmail().subscribe({
-      next: () => {
-        this.resendLoading.set(false);
-        this.resendSuccess.set(true);
-      },
-      error: () => {
-        this.resendLoading.set(false);
-      }
+      next: () => { this.resendLoading.set(false); this.resendSuccess.set(true); },
+      error: () => { this.resendLoading.set(false); }
     });
   }
 
