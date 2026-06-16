@@ -46,8 +46,8 @@ services:
       MAX_UPLOAD_SIZE: 10485760
       UPLOAD_PATH: /app/uploads
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:4200,http://localhost:8081}
-      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY:-}
-      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY:-}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
+      TURNSTILE_SITE_KEY: ${TURNSTILE_SITE_KEY:-}
     ports:
       - "8081:8080"
     volumes:

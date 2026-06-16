@@ -15,6 +15,7 @@ import (
 	adminhandler "github.com/spacelab/backend/internal/handler/admin"
 	analytics "github.com/spacelab/backend/internal/handler/analytics"
 	auth "github.com/spacelab/backend/internal/handler/auth"
+	captchahandler "github.com/spacelab/backend/internal/handler/captcha"
 	contenthandler "github.com/spacelab/backend/internal/handler/content"
 	comment "github.com/spacelab/backend/internal/handler/comment"
 	media "github.com/spacelab/backend/internal/handler/media"
@@ -110,7 +111,7 @@ func main() {
 	postHandler := post.NewPostHandler(postService)
 	projectHandler := projecthandler.NewProjectHandler(projectService)
 	nativeCommentHandler := comment.NewNativeCommentHandler(commentService)
-	nativeCommentHandler.SetRecaptchaSecret(cfg.RecaptchaSecret)
+	nativeCommentHandler.SetTurnstileSecret(cfg.TurnstileSecret)
 	// liveCommentHandler 保留供未来切换使用
 	_ = comment.NewLiveCommentHandler(cfg)
 	mediaHandler := media.NewMediaHandler(cfg, config.GetDB())
@@ -120,6 +121,7 @@ func main() {
 	friendLinkHandler := contenthandler.NewFriendLinkHandler(friendLinkService)
 	newsHandler := aiNewsHandler.NewAiNewsHandler(aiNewsService)
 	toolHandler := aiToolHandler.NewAiToolHandler(aiToolService)
+	captchaHandler := captchahandler.NewCaptchaHandler()
 
 	r := gin.Default()
 
@@ -140,6 +142,11 @@ func main() {
 	r.GET("/ws", func(c *gin.Context) {
 		utils.HandleWebSocket(c.Writer, c.Request)
 	})
+
+	// 图形验证码（公开，无需认证）
+	r.GET("/captcha/new", middleware.AuthLimiter(), captchaHandler.GetCaptchaID)
+	r.GET("/captcha/:id.png", captchaHandler.GetCaptchaImage)
+	r.POST("/captcha/verify", middleware.AuthLimiter(), captchaHandler.VerifyCaptcha)
 
 	// API v1 路由组
 	api := r.Group("/api/v1")

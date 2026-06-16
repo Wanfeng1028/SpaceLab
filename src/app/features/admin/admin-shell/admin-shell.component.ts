@@ -40,6 +40,7 @@ export class AdminShellComponent {
     { label: '标签管理', path: '/admin/tags', icon: 'tags' },
     { label: '友链管理', path: '/admin/friend-links', icon: 'link' },
     { label: '数据分析', path: '/admin/analytics', icon: 'bar-chart' },
+    { label: '站点设置', path: '/admin/settings', icon: 'setting' },
   ];
 
   toggleCollapsed(): void {

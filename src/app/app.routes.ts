@@ -197,6 +197,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'settings',
+        title: 'Settings — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-settings/admin-settings.component').then(
+            (m) => m.AdminSettingsComponent,
+          ),
+      },
+      {
         path: 'analytics',
         title: 'Analytics — SpaceLab Admin',
         loadComponent: () =>

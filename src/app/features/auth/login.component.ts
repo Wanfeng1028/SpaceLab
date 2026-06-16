@@ -1,8 +1,10 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
-import { RecaptchaService } from '../../core/services/recaptcha.service';
+import { TurnstileService } from '../../core/services/turnstile.service';
+import { CaptchaService } from '../../core/services/captcha.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +14,39 @@ import { RecaptchaService } from '../../core/services/recaptcha.service';
   styleUrl: './login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private recaptcha = inject(RecaptchaService);
+  private turnstile = inject(TurnstileService);
+  private captchaService = inject(CaptchaService);
 
   email = signal('');
   password = signal('');
   error = signal('');
   loading = signal(false);
   showPassword = signal(false);
+
+  /** 图形验证码 */
+  captchaId = signal('');
+  captchaImageUrl = signal('');
+  captchaAnswer = signal('');
+
+  /** Turnstile 站点密钥（模板绑定） */
+  readonly turnstileSiteKey = environment.turnstileSiteKey;
+
+  ngOnInit(): void {
+    this.loadCaptcha();
+  }
+
+  /** 加载图形验证码 */
+  loadCaptcha(): void {
+    this.captchaService.getNew().subscribe(session => {
+      this.captchaId.set(session.captcha_id);
+      this.captchaImageUrl.set(session.imageUrl);
+      this.captchaAnswer.set('');
+    });
+  }
 
   /** 密码强度（用于注册页也复用） */
   passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
@@ -51,7 +75,7 @@ export class LoginComponent {
   resendLoading = signal(false);
   resendSuccess = signal(false);
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
     // 前端校验
     if (!this.email() || !this.password()) {
       this.error.set('请输入邮箱和密码');
@@ -66,10 +90,13 @@ export class LoginComponent {
     this.loading.set(true);
     this.error.set('');
 
-    // 获取 reCAPTCHA token
-    const captchaToken = await this.recaptcha.execute('login');
+    // 从 Turnstile widget 获取 token
+    const captchaToken = this.turnstile.getToken();
 
-    this.authService.login(this.email(), this.password(), captchaToken).subscribe({
+    this.authService.login(
+      this.email(), this.password(), captchaToken,
+      this.captchaId(), this.captchaAnswer()
+    ).subscribe({
       next: (response) => {
         this.loading.set(false);
         // 检查邮箱是否已验证

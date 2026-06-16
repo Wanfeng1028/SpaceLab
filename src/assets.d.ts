@@ -18,14 +18,24 @@ declare module '*.glsl' {
   export default content;
 }
 
-// Google reCAPTCHA v3
+// Cloudflare Turnstile
 interface Window {
-  grecaptcha: ReCaptchaV3;
+  turnstile: Turnstile;
 }
 
-interface ReCaptchaV3 {
-  ready: (callback: () => void) => void;
-  execute: (siteKey: string, options: { action: string }) => Promise<string>;
+interface Turnstile {
+  render: (container: string | HTMLElement, options: TurnstileOptions) => string | undefined;
+  reset: (widgetId?: string) => void;
+  getResponse: (widgetId?: string) => string;
 }
 
-declare var grecaptcha: ReCaptchaV3;
+interface TurnstileOptions {
+  sitekey: string;
+  theme?: 'light' | 'dark' | 'auto';
+  size?: 'normal' | 'compact';
+  callback?: (token: string) => void;
+  'expired-callback'?: () => void;
+  'error-callback'?: () => void;
+}
+
+declare var turnstile: Turnstile;

@@ -26,9 +26,9 @@ type Config struct {
 	MailerLiteAPIKey  string
 	MailerLiteGroupID string
 	MailerLiteBaseURL string
-	// reCAPTCHA v3 配置
-	RecaptchaSecret  string
-	RecaptchaSiteKey string
+	// Cloudflare Turnstile 配置
+	TurnstileSecret  string
+	TurnstileSiteKey string
 }
 
 func LoadConfig() *Config {
@@ -93,9 +93,9 @@ func LoadConfig() *Config {
 		MailerLiteAPIKey:  getEnv("MAILERLITE_API_KEY", ""),
 		MailerLiteGroupID: getEnv("MAILERLITE_GROUP_ID", ""),
 		MailerLiteBaseURL: getEnv("MAILERLITE_BASE_URL", "https://api.mailerlite.com/api/v2"),
-		// reCAPTCHA
-		RecaptchaSecret:  getEnv("RECAPTCHA_SECRET_KEY", ""),
-		RecaptchaSiteKey: getEnv("RECAPTCHA_SITE_KEY", ""),
+		// Cloudflare Turnstile
+		TurnstileSecret:  getEnv("TURNSTILE_SECRET_KEY", ""),
+		TurnstileSiteKey: getEnv("TURNSTILE_SITE_KEY", ""),
 	}
 }
 

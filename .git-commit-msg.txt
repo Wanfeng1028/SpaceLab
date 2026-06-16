@@ -1,9 +1,10 @@
-test(cy): add Cypress E2E test infrastructure with page and auth tests
+feat(admin): add site settings page (registration, comments, moderation)
 
-- Install cypress
-- Add cypress.config.ts with baseUrl pointing to localhost:4200
-- Add app.cy.ts: 11 tests covering all main pages
-- Add auth.cy.ts: 3 tests for register/login flow
-- Scripts: test:e2e (headless) and test:e2e:open (interactive)
+- Create admin-settings component with toggle UI
+- Supports: registration_open, comments_enabled, comment_pre_moderate
+- Backend API: GET/PUT /admin/settings
+- Register route + menu item in admin sidebar
+
+Admin sidebar now has 13 sections covering the full site management.
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

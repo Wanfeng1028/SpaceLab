@@ -7,8 +7,8 @@ export const environment = {
   // LiveComment 站点 ID（如需 livecomment 集成，在此填写）
   liveCommentSiteId: '',
 
-  // reCAPTCHA v3 Site Key（需在 https://www.google.com/recaptcha/admin 申请）
-  recaptchaSiteKey: '',
+  // Cloudflare Turnstile v3 Site Key（需在 https://www.google.com/recaptcha/admin 申请）
+  turnstileSiteKey: '',
 
   // 应用版本
   appVersion: '1.0.0',

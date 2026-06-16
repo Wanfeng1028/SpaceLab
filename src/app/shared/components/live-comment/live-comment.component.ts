@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 
 import { LiveCommentService, LiveComment } from '../../../core/services/live-comment.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { RecaptchaService } from '../../../core/services/recaptcha.service';
+import { TurnstileService } from '../../../core/services/turnstile.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
@@ -27,7 +27,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
 
   private commentService = inject(LiveCommentService);
   private authService = inject(AuthService);
-  private recaptcha = inject(RecaptchaService);
+  private turnstile = inject(TurnstileService);
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
@@ -100,7 +100,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
       });
   }
 
-  async submitComment(): Promise<void> {
+  submitComment(): void {
     if (!this.newComment.trim()) return;
 
     if (!this.isLoggedIn()) {
@@ -112,7 +112,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     this.error = null;
 
     const content = this.newComment.trim();
-    const captchaToken = await this.recaptcha.execute('comment');
+    const captchaToken = this.turnstile.getToken();
 
     this.commentService.createComment(
       this.postId,

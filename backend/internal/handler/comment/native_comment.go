@@ -14,7 +14,7 @@ import (
 // NativeCommentHandler 自研评论处理器
 type NativeCommentHandler struct {
 	commentService  *service.CommentService
-	recaptchaSecret string
+	turnstileSecret string
 }
 
 func NewNativeCommentHandler(commentService *service.CommentService) *NativeCommentHandler {
@@ -23,9 +23,9 @@ func NewNativeCommentHandler(commentService *service.CommentService) *NativeComm
 	}
 }
 
-// SetRecaptchaSecret 设置 reCAPTCHA 密钥（在 main.go 中调用）
-func (h *NativeCommentHandler) SetRecaptchaSecret(secret string) {
-	h.recaptchaSecret = secret
+// SetTurnstileSecret 设置 Turnstile 密钥（在 main.go 中调用）
+func (h *NativeCommentHandler) SetTurnstileSecret(secret string) {
+	h.turnstileSecret = secret
 }
 
 // GetComments 获取文章评论
@@ -86,8 +86,8 @@ func (h *NativeCommentHandler) CreateComment(c *gin.Context) {
 		return
 	}
 
-	// reCAPTCHA 校验（评论提交）
-	if ok, _ := utils.VerifyRecaptchaToken(input.CaptchaToken, h.recaptchaSecret); !ok {
+	// Turnstile 校验（评论提交）
+	if ok, _ := utils.VerifyTurnstileToken(input.CaptchaToken, h.turnstileSecret); !ok {
 		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
 		return
 	}

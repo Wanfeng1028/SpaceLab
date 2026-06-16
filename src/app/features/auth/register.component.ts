@@ -2,7 +2,9 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } 
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
-import { RecaptchaService } from '../../core/services/recaptcha.service';
+import { TurnstileService } from '../../core/services/turnstile.service';
+import { CaptchaService } from '../../core/services/captcha.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +17,8 @@ import { RecaptchaService } from '../../core/services/recaptcha.service';
 export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
-  private recaptcha = inject(RecaptchaService);
+  private turnstile = inject(TurnstileService);
+  private captchaService = inject(CaptchaService);
 
   email = signal('');
   username = signal('');
@@ -25,6 +28,14 @@ export class RegisterComponent implements OnInit {
   loading = signal(false);
   showPassword = signal(false);
   registrationClosed = signal(false);
+
+  /** 图形验证码 */
+  captchaId = signal('');
+  captchaImageUrl = signal('');
+  captchaAnswer = signal('');
+
+  /** Turnstile 站点密钥（模板绑定） */
+  readonly turnstileSiteKey = environment.turnstileSiteKey;
 
   /** 密码强度 */
   passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
@@ -87,9 +98,19 @@ export class RegisterComponent implements OnInit {
         // 默认允许注册
       }
     });
+    this.loadCaptcha();
   }
 
-  async onSubmit(): Promise<void> {
+  /** 加载图形验证码 */
+  loadCaptcha(): void {
+    this.captchaService.getNew().subscribe(session => {
+      this.captchaId.set(session.captcha_id);
+      this.captchaImageUrl.set(session.imageUrl);
+      this.captchaAnswer.set('');
+    });
+  }
+
+  onSubmit(): void {
     if (this.registrationClosed()) return;
 
     if (!this.email() || !this.username() || !this.password()) {
@@ -119,10 +140,13 @@ export class RegisterComponent implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    // 获取 reCAPTCHA token
-    const captchaToken = await this.recaptcha.execute('register');
+    // 从 Turnstile widget 获取 token
+    const captchaToken = this.turnstile.getToken();
 
-    this.authService.register(this.email(), this.password(), this.username(), captchaToken).subscribe({
+    this.authService.register(
+      this.email(), this.password(), this.username(), captchaToken,
+      this.captchaId(), this.captchaAnswer()
+    ).subscribe({
       next: (response) => {
         this.loading.set(false);
         const isAdmin = response.user?.role === 'admin';

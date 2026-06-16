@@ -84,6 +84,28 @@
           </button>
         </div>
 
+        <!-- Cloudflare Turnstile 可视化验证 -->
+        <div class="form-turnstile">
+          <div class="cf-turnstile" [attr.data-sitekey]="turnstileSiteKey" data-theme="dark"></div>
+        </div>
+
+        <!-- 图形验证码 -->
+        @if (captchaImageUrl()) {
+          <div class="form-captcha">
+            <img [src]="captchaImageUrl()" alt="验证码" class="form-captcha__image" (click)="loadCaptcha()" title="点击刷新" />
+            <input
+              class="form-input form-captcha__input"
+              type="text"
+              [value]="captchaAnswer()"
+              (input)="captchaAnswer.set($any($event.target).value)"
+              placeholder="输入验证码"
+              maxlength="6"
+              autocomplete="off"
+              required
+            />
+          </div>
+        }
+
         <div class="form-actions">
           <button type="submit" class="auth-btn" [disabled]="loading()">
             @if (loading()) {

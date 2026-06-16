@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dchest/captcha"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/config"
@@ -17,14 +18,14 @@ import (
 type AuthHandler struct {
 	authService *service.AuthService
 	cfg         *config.Config
-	recaptchaSecret string
+	turnstileSecret string
 }
 
 func NewAuthHandler(authService *service.AuthService, cfg *config.Config) *AuthHandler {
 	return &AuthHandler{
 		authService:     authService,
 		cfg:             cfg,
-		recaptchaSecret: cfg.RecaptchaSecret,
+		turnstileSecret: cfg.TurnstileSecret,
 	}
 }
 
@@ -71,6 +72,8 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		Password    string `json:"password" binding:"required,min=8"`
 		Username    string `json:"username" binding:"required,min=2,max=50"`
 		CaptchaToken string `json:"captcha_token"`
+		CaptchaID   string `json:"captcha_id"`
+		CaptchaAnswer string `json:"captcha_answer"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -78,8 +81,14 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	// reCAPTCHA 校验
-	if ok, _ := utils.VerifyRecaptchaToken(input.CaptchaToken, h.recaptchaSecret); !ok {
+	// 图形验证码校验
+	if input.CaptchaID == "" || !captcha.VerifyString(input.CaptchaID, input.CaptchaAnswer) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Graphical captcha verification failed, please refresh and try again"})
+		return
+	}
+
+	// Turnstile 校验
+	if ok, _ := utils.VerifyTurnstileToken(input.CaptchaToken, h.turnstileSecret); !ok {
 		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
 		return
 	}
@@ -122,6 +131,8 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		Email        string `json:"email" binding:"required,email"`
 		Password     string `json:"password" binding:"required"`
 		CaptchaToken string `json:"captcha_token"`
+		CaptchaID    string `json:"captcha_id"`
+		CaptchaAnswer string `json:"captcha_answer"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -129,8 +140,14 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// reCAPTCHA 校验
-	if ok, _ := utils.VerifyRecaptchaToken(input.CaptchaToken, h.recaptchaSecret); !ok {
+	// 图形验证码校验
+	if input.CaptchaID == "" || !captcha.VerifyString(input.CaptchaID, input.CaptchaAnswer) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Graphical captcha verification failed, please refresh and try again"})
+		return
+	}
+
+	// Turnstile 校验
+	if ok, _ := utils.VerifyTurnstileToken(input.CaptchaToken, h.turnstileSecret); !ok {
 		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
 		return
 	}
