@@ -37,6 +37,9 @@ export class WriteComponent implements OnInit, OnDestroy {
   readonly error = signal('');
   readonly success = signal('');
 
+  /** 定时发布 */
+  readonly scheduledAt = signal('');
+
   /** 标记是否有未保存的修改 */
   readonly isDirty = signal(false);
 
@@ -200,7 +203,7 @@ export class WriteComponent implements OnInit, OnDestroy {
   }
 
   private buildPostData(status: string): Partial<Post> {
-    return {
+    const data: Partial<Post> = {
       title: this.title(),
       slug: this.slug(),
       summary: this.summary(),
@@ -209,8 +212,18 @@ export class WriteComponent implements OnInit, OnDestroy {
       category: this.category(),
       tags: this.tagsArray(),
       language: this.language(),
-      status,
     };
+
+    // 定时发布
+    const scheduled = this.scheduledAt();
+    if (scheduled) {
+      data.status = 'scheduled';
+      data.scheduled_at = new Date(scheduled).toISOString();
+    } else {
+      data.status = status;
+    }
+
+    return data;
   }
 
   savePost(status: string): void {

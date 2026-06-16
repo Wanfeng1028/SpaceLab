@@ -23,6 +23,9 @@
           <td class="posts__title-cell">{{ post.title }}</td>
           <td>
             <nz-tag [nzColor]="statusColor(post.status)">{{ statusText(post.status) }}</nz-tag>
+            @if (post.status === 'scheduled' && post.scheduled_at) {
+              <div class="scheduled-hint">{{ post.scheduled_at | date: 'MM-dd HH:mm' }}发布</div>
+            }
           </td>
           <td>{{ post.view_count || 0 }}</td>
           <td>{{ post.created_at | date: 'yyyy-MM-dd' }}</td>

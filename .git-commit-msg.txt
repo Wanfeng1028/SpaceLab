@@ -1,12 +1,16 @@
-feat(admin): add login logs and risk events management pages
+feat: add scheduled publishing (write now, publish later)
 
-- Add admin-login-logs component showing user login history
-- Add admin-risk-events component with resolve functionality
-- Register both routes in app.routes.ts
-- Add menu items in admin-shell sidebar
-- Backend API: GET /admin/login-logs, GET /admin/risk-events,
-  POST /admin/risk-events/:id/resolve
+Backend:
+- Add ScheduledAt field to Post model
+- Add "scheduled" status to Post (draft/scheduled/published/archived)
+- Add PublishScheduled() method to PostService
+- Add goroutine in main.go that checks every minute for due scheduled posts
 
-Admin sidebar now has 12 sections covering full content + security management.
+Frontend:
+- Add datetime-local picker in write editor for scheduled publishing
+- Update buildPostData() to use status='scheduled' + scheduled_at
+- Update Post interface to include scheduled_at
+- Show scheduled time in admin posts list with "processing" tag color
+- Add statusText/statusColor for "scheduled" state
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

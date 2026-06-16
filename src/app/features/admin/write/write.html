@@ -119,6 +119,17 @@
         </div>
 
         <div class="write-field">
+          <label class="write-label">定时发布（可选）</label>
+          <input
+            class="write-input"
+            type="datetime-local"
+            [value]="scheduledAt()"
+            (input)="scheduledAt.set($any($event.target).value); markDirty()"
+          />
+          <span class="write-hint">设置后文章将在指定时间自动发布</span>
+        </div>
+
+        <div class="write-field">
           <label class="write-label">内容（Markdown）</label>
           <textarea
             class="write-textarea write-textarea--content"

@@ -369,6 +369,23 @@ func main() {
 		zap.String("environment", cfg.Environment),
 	)
 
+	// 启动定时发布检查器（每分钟检查一次）
+	go func() {
+		ticker := time.NewTicker(1 * time.Minute)
+		defer ticker.Stop()
+		// 启动时立即执行一次
+		if count, err := postService.PublishScheduled(); err == nil && count > 0 {
+			utils.Logger.Info("Scheduled posts published on startup", zap.Int64("count", count))
+		}
+		for range ticker.C {
+			if count, err := postService.PublishScheduled(); err != nil {
+				utils.Logger.Warn("Scheduled publish check failed", zap.Error(err))
+			} else if count > 0 {
+				utils.Logger.Info("Scheduled posts published", zap.Int64("count", count))
+			}
+		}
+	}()
+
 	log.Printf("Server starting on port %d", cfg.ServerPort)
 	log.Printf("Environment: %s", cfg.Environment)
 	log.Printf("Metrics: http://localhost:%d/metrics", cfg.ServerPort)

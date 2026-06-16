@@ -88,10 +88,10 @@ export class AdminPostsComponent implements OnInit {
   }
 
   statusText(status: string): string {
-    return status === 'published' ? '已发布' : status === 'draft' ? '草稿' : status;
+    return status === 'published' ? '已发布' : status === 'draft' ? '草稿' : status === 'scheduled' ? '定时' : status;
   }
 
   statusColor(status: string): string {
-    return status === 'published' ? 'success' : status === 'draft' ? 'warning' : 'default';
+    return status === 'published' ? 'success' : status === 'draft' ? 'warning' : status === 'scheduled' ? 'processing' : 'default';
   }
 }

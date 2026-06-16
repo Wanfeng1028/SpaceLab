@@ -27,6 +27,7 @@ export interface Post {
   updated_at: string;
   published_at?: string;
   view_count?: number;
+  scheduled_at?: string;
 }
 
 export interface PostListResponse {

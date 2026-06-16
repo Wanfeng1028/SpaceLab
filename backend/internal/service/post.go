@@ -186,6 +186,19 @@ func (s *PostService) PublishPost(id string) (*model.Post, error) {
 	return s.UpdatePost(id, UpdatePostInput{Status: func() *string { s := "published"; return &s }(), PublishedAt: &now})
 }
 
+// PublishScheduled 发布所有到达预定时间的文章（由定时器调用）
+func (s *PostService) PublishScheduled() (int64, error) {
+	now := time.Now()
+	result := s.db.Model(&model.Post{}).
+		Where("status = ? AND scheduled_at <= ?", "scheduled", now).
+		Updates(map[string]interface{}{
+			"status":       "published",
+			"published_at": now,
+			"updated_at":   now,
+		})
+	return result.RowsAffected, result.Error
+}
+
 // SaveDraft 保存草稿
 func (s *PostService) SaveDraft(id string) (*model.Post, error) {
 	return s.UpdatePost(id, UpdatePostInput{Status: func() *string { s := "draft"; return &s }()})

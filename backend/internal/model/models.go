@@ -75,17 +75,18 @@ type Post struct {
 	Category    string     `gorm:"size:100" json:"category"`
 	Tags        []string   `gorm:"type:text[]" json:"tags"`
 	ReadingTime int        `gorm:"default:0" json:"reading_time"`
-	Status      string     `gorm:"size:20;default:'draft'" json:"status"` // draft, published, archived
+	Status      string     `gorm:"size:20;default:'draft'" json:"status"` // draft, scheduled, published, archived
 	Language    string     `gorm:"size:10;default:'zh-CN'" json:"language"`
 	AuthorID    uuid.UUID  `gorm:"type:uuid" json:"author_id"`
 	Author      User       `gorm:"foreignKey:AuthorID" json:"author,omitempty"`
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
-	PublishedAt *time.Time `json:"published_at"`
-	ViewCount       int            `gorm:"default:0" json:"view_count"`
-	CommentsEnabled bool           `gorm:"default:true" json:"comments_enabled"`
-	DeletedAt       gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
-	Comments        []Comment      `gorm:"foreignKey:ContentID;references:ID" json:"comments,omitempty"`
+	PublishedAt        *time.Time    `json:"published_at"`
+	ScheduledAt        *time.Time    `json:"scheduled_at"`
+	ViewCount           int          `gorm:"default:0" json:"view_count"`
+	CommentsEnabled     bool         `gorm:"default:true" json:"comments_enabled"`
+	DeletedAt           gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
+	Comments            []Comment    `gorm:"foreignKey:ContentID;references:ID" json:"comments,omitempty"`
 }
 
 // Comment 评论模型（支持多内容类型）
