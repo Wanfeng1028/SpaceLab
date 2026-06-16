@@ -53,6 +53,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
+    path: '3d',
+    title: '3D Experience — SpaceLab',
+    loadComponent: () =>
+      import('./features/three-d-experience/three-d-experience.component').then(
+        (m) => m.ThreeDExperienceComponent,
+      ),
+  },
+  {
     path: 'archive',
     title: 'Archive — SpaceLab',
     loadComponent: () =>

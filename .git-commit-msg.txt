@@ -1,8 +1,0 @@
-style(nav): add 3D perspective tilt effect to nav buttons
-
-- Add transform-style: preserve-3d and perspective: 800px to sparkle-btn
-- On hover: subtle rotateX(2deg) rotateY(-2deg) for 3D tilt feel
-- Enhanced box-shadow for floating depth effect
-- Active state resets tilt with pressed shadow
-
-Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

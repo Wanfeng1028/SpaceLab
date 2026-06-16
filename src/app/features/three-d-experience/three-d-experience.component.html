@@ -1,0 +1,160 @@
+<div class="three-d-experience" [class.is-lightweight]="renderMode() === 'lightweight'">
+  <!-- Close button -->
+  <button class="experience-close" (click)="goBack()" aria-label="Close 3D experience">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
+  @if (renderMode() !== 'none') {
+    <!-- Scene switcher tabs -->
+    <div class="scene-switcher">
+      <button
+        class="scene-tab"
+        [class.is-active]="activeScene() === 'earth'"
+        (click)="switchScene('earth')"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>{{ t('threeD.earth') }}</span>
+      </button>
+      <button
+        class="scene-tab"
+        [class.is-active]="activeScene() === 'tree'"
+        (click)="switchScene('tree')"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22V8"></path>
+          <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+          <path d="M8 8a4 4 0 0 1 8 0"></path>
+        </svg>
+        <span>{{ t('threeD.moonTree') }}</span>
+      </button>
+    </div>
+
+    <!-- 3D Canvas Area -->
+    <div class="scene-viewport">
+      @if (activeScene() === 'earth') {
+        <app-three-canvas [sceneFactory]="earthFactory" />
+      } @else {
+        <app-three-canvas [sceneFactory]="treeFactory" />
+      }
+    </div>
+
+    <!-- Floating nav overlay -->
+    <div class="scene-nav-overlay" (mouseenter)="toggleNavLabels()" (mouseleave)="toggleNavLabels()">
+      <div class="nav-hint">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="1"></circle>
+          <circle cx="12" cy="5" r="1"></circle>
+          <circle cx="12" cy="19" r="1"></circle>
+        </svg>
+      </div>
+      @if (showNavLabels()) {
+        <div class="nav-links">
+          <button class="nav-link-item" (click)="navigateTo('/blog')">
+            <span class="nav-link-dot"></span>
+            <span>{{ t('nav.blog') }}</span>
+          </button>
+          <button class="nav-link-item" (click)="navigateTo('/projects')">
+            <span class="nav-link-dot"></span>
+            <span>{{ t('nav.projects') }}</span>
+          </button>
+          <button class="nav-link-item" (click)="navigateTo('/lab')">
+            <span class="nav-link-dot"></span>
+            <span>{{ t('nav.lab') }}</span>
+          </button>
+          <button class="nav-link-item" (click)="navigateTo('/ai-frontline')">
+            <span class="nav-link-dot"></span>
+            <span>{{ t('nav.aiFrontline') }}</span>
+          </button>
+          <button class="nav-link-item" (click)="navigateTo('/about')">
+            <span class="nav-link-dot"></span>
+            <span>{{ t('nav.about') }}</span>
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (renderMode() === 'lightweight') {
+      <div class="lightweight-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+        </svg>
+        {{ t('threeD.lightweightMode') }}
+      </div>
+    }
+
+    <!-- Bottom info bar -->
+    <div class="experience-info-bar">
+      <span class="info-label">
+        @if (activeScene() === 'earth') {
+          {{ t('threeD.earthInfo') }}
+        } @else {
+          {{ t('threeD.treeInfo') }}
+        }
+      </span>
+      <span class="info-tier">TIER: {{ deviceTier() }}</span>
+    </div>
+  } @else {
+    <!-- Fallback for unsupported/low devices -->
+    <div class="experience-fallback">
+      <div class="fallback-card">
+        <div class="fallback-icon">🌍</div>
+        <h2 class="fallback-title">{{ t('threeD.fallbackTitle') }}</h2>
+        <p class="fallback-desc">{{ t('threeD.fallbackDesc') }}</p>
+        <div class="fallback-links">
+          <button class="fallback-link" (click)="navigateTo('/blog')">
+            <span class="fallback-link-icon">📝</span>
+            {{ t('nav.blog') }}
+          </button>
+          <button class="fallback-link" (click)="navigateTo('/projects')">
+            <span class="fallback-link-icon">🚀</span>
+            {{ t('nav.projects') }}
+          </button>
+          <button class="fallback-link" (click)="navigateTo('/lab')">
+            <span class="fallback-link-icon">🧪</span>
+            {{ t('nav.lab') }}
+          </button>
+          <button class="fallback-link" (click)="navigateTo('/ai-frontline')">
+            <span class="fallback-link-icon">🤖</span>
+            {{ t('nav.aiFrontline') }}
+          </button>
+          <button class="fallback-link" (click)="navigateTo('/about')">
+            <span class="fallback-link-icon">✦</span>
+            {{ t('nav.about') }}
+          </button>
+        </div>
+        <button class="compat-btn" (click)="onFallbackClick()">
+          {{ t('threeD.compatDetails') }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Compatibility dialog -->
+  @if (showCompatDialog()) {
+    <div class="compat-dialog-overlay" (click)="closeCompatDialog()">
+      <div class="compat-dialog" (click)="$event.stopPropagation()">
+        <div class="compat-dialog__icon">🖥️</div>
+        <h3 class="compat-dialog__title">{{ t('threeD.compatTitle') }}</h3>
+        <div class="compat-dialog__body">
+          <p>{{ t('threeD.compatCurrentTier') }} <strong>{{ deviceTier() }}</strong></p>
+          <ul>
+            <li>{{ t('threeD.compatHigh') }}</li>
+            <li>{{ t('threeD.compatMedium') }}</li>
+            <li>{{ t('threeD.compatLow') }}</li>
+          </ul>
+          <p>{{ t('threeD.compatContinue') }}</p>
+        </div>
+        <button class="compat-dialog__btn" (click)="closeCompatDialog()">
+          {{ t('threeD.compatClose') }}
+        </button>
+      </div>
+    </div>
+  }
+</div>
