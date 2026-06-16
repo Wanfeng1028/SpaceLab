@@ -181,6 +181,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'login-logs',
+        title: 'Login Logs — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-login-logs/admin-login-logs.component').then(
+            (m) => m.AdminLoginLogsComponent,
+          ),
+      },
+      {
+        path: 'risk-events',
+        title: 'Risk Events — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-risk-events/admin-risk-events.component').then(
+            (m) => m.AdminRiskEventsComponent,
+          ),
+      },
+      {
         path: 'analytics',
         title: 'Analytics — SpaceLab Admin',
         loadComponent: () =>

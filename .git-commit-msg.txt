@@ -1,14 +1,12 @@
-feat: add comment reporting UI and sensitive words admin management
+feat(admin): add login logs and risk events management pages
 
-Admin:
-- Add admin-comment-reports component: list reports by status, review/dismiss
-- Add admin-sensitive-words component: CRUD for comment filtering
+- Add admin-login-logs component showing user login history
+- Add admin-risk-events component with resolve functionality
 - Register both routes in app.routes.ts
-- Add menu items in admin-shell (举报管理, 敏感词)
+- Add menu items in admin-shell sidebar
+- Backend API: GET /admin/login-logs, GET /admin/risk-events,
+  POST /admin/risk-events/:id/resolve
 
-Frontend:
-- Add report button to comment items (yellow, non-own comments only)
-- reportComment() method: POST to /comments/:id/report with reason
-- Inject HttpClient into LiveCommentComponent
+Admin sidebar now has 12 sections covering full content + security management.
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>
