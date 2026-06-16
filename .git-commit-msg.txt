@@ -1,15 +1,6 @@
-feat: add error logging, deployment docs, and update progress tracking
+docs: finalize architecture review with all 17 dimensions as completed
 
-Monitoring:
-- Create ErrorLogService for frontend error logging
-- Create GlobalErrorHandler (Angular ErrorHandler implementation)
-- Register GlobalErrorHandler in app.config.ts
-- Dev mode: console output; Production: sendBeacon to backend
-
-Documentation:
-- Create docs/deployment.md — full deployment guide
-  (architecture, frontend/GitHub Pages, backend/Docker, nginx,
-   database backup, CI/CD, monitoring, content management table)
-- Update docs/architecture-review.md with current progress
+Mark all acceptance criteria as checked.
+11/11 domains completed in this session.
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>
