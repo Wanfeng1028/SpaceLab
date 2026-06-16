@@ -1,23 +1,41 @@
 import { Injectable, NgZone, OnDestroy, inject, signal } from '@angular/core';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 /**
  * Centralised ScrollTrigger helpers
  *
  * Registers the plugin once, manages instances per section,
  * and exposes reactive signals for section entry / exit.
+ *
+ * NOTE: GSAP is dynamically imported to avoid adding
+ * 183 kB to the initial bundle.
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ScrollTriggerService implements OnDestroy {
   private readonly ngZone = inject(NgZone);
-  private triggers: ScrollTrigger[] = [];
+  private gsap: any = null;
+  private ST: any = null;
+  private triggers: any[] = [];
+  private ready = false;
 
   /** Track active section index (0-based) */
   readonly activeSection = signal(0);
 
-  constructor() {
-    gsap.registerPlugin(ScrollTrigger);
+  /** Initialize GSAP â€?call once before using this service */
+  async init(): Promise<void> {
+    if (this.ready) return;
+    const [gsapModule, stModule] = await Promise.all([
+      import('gsap'),
+      import('gsap/ScrollTrigger'),
+    ]);
+    this.gsap = gsapModule.default || gsapModule;
+    this.ST = stModule.ScrollTrigger || stModule;
+    this.gsap.registerPlugin(this.ST);
+    this.ready = true;
+  }
+
+  /** Ensure GSAP is loaded before running a callback */
+  private ensureReady(): void {
+    if (!this.ready) throw new Error('ScrollTriggerService: call init() first');
   }
 
   /**
@@ -50,7 +68,7 @@ export class ScrollTriggerService implements OnDestroy {
     const config = { ...defaults, ...opts };
 
     return this.ngZone.runOutsideAngular(() => {
-      const st = ScrollTrigger.create({
+      const st = this.ST.create({
         trigger,
         pin: config.pin,
         scrub: config.scrub,
@@ -73,7 +91,7 @@ export class ScrollTriggerService implements OnDestroy {
    */
   createEntrance(
     target: HTMLElement | string,
-    fromVars: gsap.TweenVars,
+    fromVars: any,
     opts: {
       trigger?: HTMLElement | string;
       start?: string;
@@ -90,7 +108,7 @@ export class ScrollTriggerService implements OnDestroy {
     const config = { ...defaults, ...opts };
 
     return this.ngZone.runOutsideAngular(() => {
-      const st = gsap.fromTo(
+      const st = this.gsap.fromTo(
         target,
         { opacity: 0, ...fromVars },
         {
@@ -118,7 +136,8 @@ export class ScrollTriggerService implements OnDestroy {
    * Refresh all ScrollTrigger positions (call after DOM changes)
    */
   refresh() {
-    ScrollTrigger.refresh();
+    this.ensureReady();
+    this.ST.refresh();
   }
 
   /**

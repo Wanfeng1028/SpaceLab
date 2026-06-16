@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wanfeng1028.github.io/SpaceLab/sitemap.xml
+
+# Disallow admin and auth pages
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+Disallow: /profile
