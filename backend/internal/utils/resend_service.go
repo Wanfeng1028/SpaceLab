@@ -192,6 +192,7 @@ func (s *ResendService) SendCommentNotification(ctx context.Context, to, postTit
 	}
 	return nil
 }
+
 // IsConfigured 检查是否已配置
 func (s *ResendService) IsConfigured() bool {
 	return s != nil && s.client != nil

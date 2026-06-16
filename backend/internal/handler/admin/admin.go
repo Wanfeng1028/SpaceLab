@@ -250,11 +250,11 @@ func (h *AdminHandler) GetStats(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"total_users":          totalUsers,
-		"active_users":        activeUsers,
-		"banned_users":        bannedUsers,
-		"locked_users":        lockedUsers,
+		"active_users":         activeUsers,
+		"banned_users":         bannedUsers,
+		"locked_users":         lockedUsers,
 		"pending_verify_users": pendingVerifyUsers,
-		"recent_users":        recentUsers,
+		"recent_users":         recentUsers,
 	})
 }
 
@@ -442,9 +442,9 @@ func (h *AdminHandler) UpdateSiteSetting(c *gin.Context) {
 	}
 
 	allowedKeys := map[string]bool{
-		"registration_open":     true,
-		"comments_enabled":      true,
-		"comment_pre_moderate":  true,
+		"registration_open":    true,
+		"comments_enabled":     true,
+		"comment_pre_moderate": true,
 	}
 	if !allowedKeys[input.Key] {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid setting key"})

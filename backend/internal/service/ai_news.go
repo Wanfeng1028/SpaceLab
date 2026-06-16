@@ -77,19 +77,19 @@ func (s *AiNewsService) Create(input CreateAiNewsInput) (*model.AiNews, error) {
 	}
 
 	news := model.AiNews{
-		ID:        uuid.New(),
-		Slug:      input.Slug,
-		Title:     input.Title,
-		Summary:   input.Summary,
-		Content:   input.Content,
+		ID:         uuid.New(),
+		Slug:       input.Slug,
+		Title:      input.Title,
+		Summary:    input.Summary,
+		Content:    input.Content,
 		SourceName: input.SourceName,
-		SourceURL: input.SourceURL,
-		Category:  input.Category,
-		Tags:      input.Tags,
-		ImageURL:  input.ImageURL,
-		Status:    "draft",
-		CreatedAt: now,
-		UpdatedAt: now,
+		SourceURL:  input.SourceURL,
+		Category:   input.Category,
+		Tags:       input.Tags,
+		ImageURL:   input.ImageURL,
+		Status:     "draft",
+		CreatedAt:  now,
+		UpdatedAt:  now,
 	}
 
 	if input.Status == "published" {

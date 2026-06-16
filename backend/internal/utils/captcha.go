@@ -12,10 +12,10 @@ import (
 
 // TurnstileResponse Cloudflare Turnstile API 响应
 type TurnstileResponse struct {
-	Success    bool     `json:"success"`
-	ErrorCodes []string `json:"error-codes"`
-	ChallengeTS string  `json:"challenge_ts"`
-	Hostname   string   `json:"hostname"`
+	Success     bool     `json:"success"`
+	ErrorCodes  []string `json:"error-codes"`
+	ChallengeTS string   `json:"challenge_ts"`
+	Hostname    string   `json:"hostname"`
 }
 
 // VerifyTurnstileToken 校验 Cloudflare Turnstile token

@@ -116,8 +116,8 @@ func CacheGetJSON(ctx context.Context, key string, dest interface{}) error {
 
 // 缓存 Key 常量
 const (
-	CacheKeyPostList   = "posts:list:%d:%d"     // page:pageSize
-	CacheKeyPostDetail = "posts:detail:%s"       // slug
+	CacheKeyPostList   = "posts:list:%d:%d" // page:pageSize
+	CacheKeyPostDetail = "posts:detail:%s"  // slug
 	CacheKeyPostCount  = "posts:count"
 	CacheKeyAnalytics  = "analytics:summary"
 	CacheKeyTopPosts   = "analytics:top-posts"

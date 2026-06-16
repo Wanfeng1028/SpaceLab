@@ -70,7 +70,7 @@ func TestMetrics(t *testing.T) {
 	RecordHttpRequest("GET", "/test", "200", 0.1)
 
 	// 测试数据库查询指标
- RecordDBQuery("SELECT", "posts", 0.05)
+	RecordDBQuery("SELECT", "posts", 0.05)
 
 	// 测试活跃用户
 	IncrementActiveUsers()

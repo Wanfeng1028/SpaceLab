@@ -72,18 +72,18 @@ func main() {
 		publishedAt, _ := time.Parse("2006-01-02", item.Date)
 
 		newsItem := model.AiNews{
-			ID:         uuid.New(),
-			Slug:       slug,
-			Title:      item.Title,
-			Summary:    item.Summary,
-			SourceName: item.Source,
-			SourceURL:  item.URL,
-			Category:   item.Category,
-			Tags:       item.Tags,
-			Status:     "published",
+			ID:          uuid.New(),
+			Slug:        slug,
+			Title:       item.Title,
+			Summary:     item.Summary,
+			SourceName:  item.Source,
+			SourceURL:   item.URL,
+			Category:    item.Category,
+			Tags:        item.Tags,
+			Status:      "published",
 			PublishedAt: &publishedAt,
-			CreatedAt:  time.Now(),
-			UpdatedAt:  time.Now(),
+			CreatedAt:   time.Now(),
+			UpdatedAt:   time.Now(),
 		}
 
 		if err := db.Create(&newsItem).Error; err != nil {

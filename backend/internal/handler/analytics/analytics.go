@@ -123,11 +123,11 @@ func (h *AnalyticsHandler) GetSummary(c *gin.Context) {
 		Count(&monthViews)
 
 	response := gin.H{
-		"total_views":    totalViews,
-		"today_views":    todayViews,
-		"week_views":     weekViews,
-		"month_views":    monthViews,
-		"updated_at":     now,
+		"total_views": totalViews,
+		"today_views": todayViews,
+		"week_views":  weekViews,
+		"month_views": monthViews,
+		"updated_at":  now,
 	}
 
 	c.JSON(http.StatusOK, response)
@@ -191,7 +191,7 @@ func (h *AnalyticsHandler) GetTrafficTrend(c *gin.Context) {
 	h.db.Raw(query, startDate).Scan(&traffic)
 
 	c.JSON(http.StatusOK, gin.H{
-		"days":   days,
-		"trend":  traffic,
+		"days":  days,
+		"trend": traffic,
 	})
 }

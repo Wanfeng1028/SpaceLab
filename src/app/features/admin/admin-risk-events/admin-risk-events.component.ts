@@ -35,7 +35,7 @@ interface RiskEventItem {
         </div>
         <div class="event-desc">{{ e.description }}</div>
         <div class="event-meta">
-          <span>用户: {{ e.user_id?.slice(0, 12) || '-' }}</span>
+          <span>用户: {{ e.user_id.slice(0, 12) || '-' }}</span>
           <span>IP: {{ e.ip || '-' }}</span>
         </div>
         <button *ngIf="!e.resolved" class="btn-resolve" (click)="resolve(e.id)">标记已处理</button>

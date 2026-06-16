@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -36,8 +37,8 @@ func (s *AiToolService) List(category, search string, page, pageSize int) ([]mod
 		query = query.Where("category = ?", category)
 	}
 	if search != "" {
-		like := "%" + search + "%"
-		query = query.Where("title ILIKE ? OR summary ILIKE ? OR source ILIKE ?", like, like, like)
+		like := "%" + strings.ToLower(search) + "%"
+		query = query.Where("LOWER(title) LIKE ? OR LOWER(summary) LIKE ? OR LOWER(source) LIKE ?", like, like, like)
 	}
 
 	query.Count(&total)

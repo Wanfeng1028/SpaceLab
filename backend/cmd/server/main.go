@@ -13,14 +13,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/config"
 	adminhandler "github.com/spacelab/backend/internal/handler/admin"
+	aiNewsHandler "github.com/spacelab/backend/internal/handler/ai_news"
+	aiToolHandler "github.com/spacelab/backend/internal/handler/ai_tool"
 	analytics "github.com/spacelab/backend/internal/handler/analytics"
 	auth "github.com/spacelab/backend/internal/handler/auth"
 	captchahandler "github.com/spacelab/backend/internal/handler/captcha"
-	contenthandler "github.com/spacelab/backend/internal/handler/content"
 	comment "github.com/spacelab/backend/internal/handler/comment"
+	contenthandler "github.com/spacelab/backend/internal/handler/content"
 	media "github.com/spacelab/backend/internal/handler/media"
-	aiNewsHandler "github.com/spacelab/backend/internal/handler/ai_news"
-	aiToolHandler "github.com/spacelab/backend/internal/handler/ai_tool"
 	post "github.com/spacelab/backend/internal/handler/post"
 	projecthandler "github.com/spacelab/backend/internal/handler/project"
 	"github.com/spacelab/backend/internal/middleware"
@@ -377,18 +377,25 @@ func main() {
 	)
 
 	// 启动定时发布检查器（每分钟检查一次）
+	schedCtx, schedCancel := context.WithCancel(context.Background())
+	defer schedCancel()
 	go func() {
 		ticker := time.NewTicker(1 * time.Minute)
 		defer ticker.Stop()
-		// 启动时立即执行一次
 		if count, err := postService.PublishScheduled(); err == nil && count > 0 {
 			utils.Logger.Info("Scheduled posts published on startup", zap.Int64("count", count))
 		}
-		for range ticker.C {
-			if count, err := postService.PublishScheduled(); err != nil {
-				utils.Logger.Warn("Scheduled publish check failed", zap.Error(err))
-			} else if count > 0 {
-				utils.Logger.Info("Scheduled posts published", zap.Int64("count", count))
+		for {
+			select {
+			case <-ticker.C:
+				if count, err := postService.PublishScheduled(); err != nil {
+					utils.Logger.Warn("Scheduled publish check failed", zap.Error(err))
+				} else if count > 0 {
+					utils.Logger.Info("Scheduled posts published", zap.Int64("count", count))
+				}
+			case <-schedCtx.Done():
+				utils.Logger.Info("Scheduled publish checker stopped")
+				return
 			}
 		}
 	}()

@@ -61,9 +61,9 @@ type Client struct {
 	userID string
 	roomID string
 	// 消息速率限制
-	msgCount   int
-	lastMsgAt  time.Time
-	msgMu      sync.Mutex
+	msgCount  int
+	lastMsgAt time.Time
+	msgMu     sync.Mutex
 }
 
 // Message WebSocket 消息
@@ -291,10 +291,10 @@ func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	client := &Client{
-		hub:      Hub,
-		conn:     conn,
-		send:     make(chan []byte, 256),
-		userID:   userID, // 来自 JWT，不可伪造
+		hub:       Hub,
+		conn:      conn,
+		send:      make(chan []byte, 256),
+		userID:    userID, // 来自 JWT，不可伪造
 		lastMsgAt: time.Now(),
 	}
 

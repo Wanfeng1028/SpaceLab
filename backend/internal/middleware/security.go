@@ -13,7 +13,7 @@ import (
 func CORS(cfg *config.Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
-		
+
 		// 检查是否允许
 		allowed := false
 		for _, allowedOrigin := range cfg.AllowedOrigins {
@@ -96,7 +96,7 @@ func Security() gin.HandlerFunc {
 		c.Header("X-Content-Type-Options", "nosniff")
 		c.Header("X-XSS-Protection", "1; mode=block")
 		c.Header("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
-		
+
 		c.Next()
 	}
 }

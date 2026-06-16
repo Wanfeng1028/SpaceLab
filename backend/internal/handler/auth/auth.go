@@ -16,8 +16,8 @@ import (
 )
 
 type AuthHandler struct {
-	authService *service.AuthService
-	cfg         *config.Config
+	authService     *service.AuthService
+	cfg             *config.Config
 	turnstileSecret string
 }
 
@@ -68,11 +68,11 @@ func parseDeviceInfo(ua string) string {
 // Register 用户注册
 func (h *AuthHandler) Register(c *gin.Context) {
 	var input struct {
-		Email       string `json:"email" binding:"required,email"`
-		Password    string `json:"password" binding:"required,min=8"`
-		Username    string `json:"username" binding:"required,min=2,max=50"`
-		CaptchaToken string `json:"captcha_token"`
-		CaptchaID   string `json:"captcha_id"`
+		Email         string `json:"email" binding:"required,email"`
+		Password      string `json:"password" binding:"required,min=8"`
+		Username      string `json:"username" binding:"required,min=2,max=50"`
+		CaptchaToken  string `json:"captcha_token"`
+		CaptchaID     string `json:"captcha_id"`
 		CaptchaAnswer string `json:"captcha_answer"`
 	}
 
@@ -128,10 +128,10 @@ func (h *AuthHandler) Register(c *gin.Context) {
 // Login 用户登录
 func (h *AuthHandler) Login(c *gin.Context) {
 	var input struct {
-		Email        string `json:"email" binding:"required,email"`
-		Password     string `json:"password" binding:"required"`
-		CaptchaToken string `json:"captcha_token"`
-		CaptchaID    string `json:"captcha_id"`
+		Email         string `json:"email" binding:"required,email"`
+		Password      string `json:"password" binding:"required"`
+		CaptchaToken  string `json:"captcha_token"`
+		CaptchaID     string `json:"captcha_id"`
 		CaptchaAnswer string `json:"captcha_answer"`
 	}
 

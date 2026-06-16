@@ -13,7 +13,7 @@ type User struct {
 	Email             string     `gorm:"uniqueIndex;size:255;not null" json:"email"`
 	PasswordHash      string     `gorm:"size:255;not null" json:"-"`
 	Username          string     `gorm:"size:100" json:"username"`
-	Role              string     `gorm:"size:20;default:'viewer'" json:"role"` // admin, writer, viewer
+	Role              string     `gorm:"size:20;default:'viewer'" json:"role"`           // admin, writer, viewer
 	Status            string     `gorm:"size:20;default:'pending_verify'" json:"status"` // active, pending_verify, locked, banned
 	AvatarURL         string     `gorm:"size:500" json:"avatar_url"`
 	EmailVerifiedAt   *time.Time `json:"email_verified_at,omitempty"`
@@ -33,27 +33,27 @@ type User struct {
 
 // LoginLog 登录日志
 type LoginLog struct {
-	ID           uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
-	UserID       uuid.UUID `gorm:"type:uuid;index" json:"user_id"`
-	Email        string    `gorm:"size:255;index" json:"email"`
-	IP           string    `gorm:"size:45;index" json:"ip"`
-	UserAgent    string    `gorm:"size:500" json:"user_agent"`
-	DeviceInfo   string    `gorm:"size:200" json:"device_info"`
-	Success      bool      `gorm:"default:false" json:"success"`
-	FailReason   string    `gorm:"size:200" json:"fail_reason,omitempty"`
-	LoginAt      time.Time `gorm:"index" json:"login_at"`
+	ID         uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	UserID     uuid.UUID `gorm:"type:uuid;index" json:"user_id"`
+	Email      string    `gorm:"size:255;index" json:"email"`
+	IP         string    `gorm:"size:45;index" json:"ip"`
+	UserAgent  string    `gorm:"size:500" json:"user_agent"`
+	DeviceInfo string    `gorm:"size:200" json:"device_info"`
+	Success    bool      `gorm:"default:false" json:"success"`
+	FailReason string    `gorm:"size:200" json:"fail_reason,omitempty"`
+	LoginAt    time.Time `gorm:"index" json:"login_at"`
 }
 
 // RiskEvent 风险事件
 type RiskEvent struct {
-	ID          uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
-	UserID      uuid.UUID `gorm:"type:uuid;index" json:"user_id"`
-	EventType   string    `gorm:"size:50;index" json:"event_type"` // new_device, new_ip, brute_force, admin_login_fail, suspicious_activity
-	IP          string    `gorm:"size:45" json:"ip"`
-	UserAgent   string    `gorm:"size:500" json:"user_agent"`
-	Details     string    `gorm:"type:text" json:"details"`
-	Resolved    bool      `gorm:"default:false" json:"resolved"`
-	CreatedAt   time.Time `json:"created_at"`
+	ID        uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	UserID    uuid.UUID `gorm:"type:uuid;index" json:"user_id"`
+	EventType string    `gorm:"size:50;index" json:"event_type"` // new_device, new_ip, brute_force, admin_login_fail, suspicious_activity
+	IP        string    `gorm:"size:45" json:"ip"`
+	UserAgent string    `gorm:"size:500" json:"user_agent"`
+	Details   string    `gorm:"type:text" json:"details"`
+	Resolved  bool      `gorm:"default:false" json:"resolved"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 // SiteSetting 站点设置（包括是否开放注册等开关）
@@ -66,44 +66,44 @@ type SiteSetting struct {
 
 // Post 文章模型
 type Post struct {
-	ID          uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
-	Slug        string     `gorm:"uniqueIndex;size:255;not null" json:"slug"`
-	Title       string     `gorm:"size:500;not null" json:"title"`
-	Summary     string     `gorm:"type:text" json:"summary"`
-	Content     string     `gorm:"type:text" json:"content"`
-	CoverURL    string     `gorm:"size:500" json:"cover_url"`
-	Category    string     `gorm:"size:100" json:"category"`
-	Tags        []string   `gorm:"type:text[]" json:"tags"`
-	ReadingTime int        `gorm:"default:0" json:"reading_time"`
-	Status      string     `gorm:"size:20;default:'draft'" json:"status"` // draft, scheduled, published, archived
-	Language    string     `gorm:"size:10;default:'zh-CN'" json:"language"`
-	AuthorID    uuid.UUID  `gorm:"type:uuid" json:"author_id"`
-	Author      User       `gorm:"foreignKey:AuthorID" json:"author,omitempty"`
-	CreatedAt   time.Time  `json:"created_at"`
-	UpdatedAt   time.Time  `json:"updated_at"`
-	PublishedAt        *time.Time    `json:"published_at"`
-	ScheduledAt        *time.Time    `json:"scheduled_at"`
-	ViewCount           int          `gorm:"default:0" json:"view_count"`
-	CommentsEnabled     bool         `gorm:"default:true" json:"comments_enabled"`
-	DeletedAt           gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
-	Comments            []Comment    `gorm:"foreignKey:ContentID;references:ID" json:"comments,omitempty"`
+	ID              uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+	Slug            string         `gorm:"uniqueIndex;size:255;not null" json:"slug"`
+	Title           string         `gorm:"size:500;not null" json:"title"`
+	Summary         string         `gorm:"type:text" json:"summary"`
+	Content         string         `gorm:"type:text" json:"content"`
+	CoverURL        string         `gorm:"size:500" json:"cover_url"`
+	Category        string         `gorm:"size:100" json:"category"`
+	Tags            []string       `gorm:"type:text[]" json:"tags"`
+	ReadingTime     int            `gorm:"default:0" json:"reading_time"`
+	Status          string         `gorm:"size:20;default:'draft'" json:"status"` // draft, scheduled, published, archived
+	Language        string         `gorm:"size:10;default:'zh-CN'" json:"language"`
+	AuthorID        uuid.UUID      `gorm:"type:uuid" json:"author_id"`
+	Author          User           `gorm:"foreignKey:AuthorID" json:"author,omitempty"`
+	CreatedAt       time.Time      `json:"created_at"`
+	UpdatedAt       time.Time      `json:"updated_at"`
+	PublishedAt     *time.Time     `json:"published_at"`
+	ScheduledAt     *time.Time     `json:"scheduled_at"`
+	ViewCount       int            `gorm:"default:0" json:"view_count"`
+	CommentsEnabled bool           `gorm:"default:true" json:"comments_enabled"`
+	DeletedAt       gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
+	Comments        []Comment      `gorm:"foreignKey:ContentID;references:ID" json:"comments,omitempty"`
 }
 
 // Comment 评论模型（支持多内容类型）
 type Comment struct {
-	ID          uuid.UUID   `gorm:"type:uuid;primary_key" json:"id"`
-	ContentType string      `gorm:"size:50;default:'post';index:idx_content" json:"content_type"` // post, project, page
-	ContentID   uuid.UUID   `gorm:"type:uuid;index:idx_content" json:"content_id"`
-	UserID      uuid.UUID   `gorm:"type:uuid;not null" json:"user_id"`
-	ParentID    *uuid.UUID  `gorm:"type:uuid" json:"parent_id"`
-	Content     string      `gorm:"type:text;not null" json:"content"`
-	Status      string      `gorm:"size:20;default:'pending'" json:"status"` // pending, approved, rejected, spam
-	CreatedAt   time.Time   `json:"created_at"`
-	UpdatedAt   time.Time   `json:"updated_at"`
+	ID          uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+	ContentType string         `gorm:"size:50;default:'post';index:idx_content" json:"content_type"` // post, project, page
+	ContentID   uuid.UUID      `gorm:"type:uuid;index:idx_content" json:"content_id"`
+	UserID      uuid.UUID      `gorm:"type:uuid;not null" json:"user_id"`
+	ParentID    *uuid.UUID     `gorm:"type:uuid" json:"parent_id"`
+	Content     string         `gorm:"type:text;not null" json:"content"`
+	Status      string         `gorm:"size:20;default:'pending'" json:"status"` // pending, approved, rejected, spam
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
-	User        User        `gorm:"foreignKey:UserID" json:"user,omitempty"`
-	Parent      *Comment    `gorm:"foreignKey:ParentID" json:"parent,omitempty"`
-	Replies     []Comment   `gorm:"foreignKey:ParentID" json:"replies,omitempty"`
+	User        User           `gorm:"foreignKey:UserID" json:"user,omitempty"`
+	Parent      *Comment       `gorm:"foreignKey:ParentID" json:"parent,omitempty"`
+	Replies     []Comment      `gorm:"foreignKey:ParentID" json:"replies,omitempty"`
 }
 
 // MediaAsset 媒体资源模型
@@ -149,25 +149,25 @@ type AnalyticsEvent struct {
 
 // Project 项目模型
 type Project struct {
-	ID           uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
-	Slug         string     `gorm:"uniqueIndex;size:255;not null" json:"slug"`
-	Title        string     `gorm:"size:255;not null" json:"title"`
-	Description  string     `gorm:"type:text" json:"description"`
-	Content      string     `gorm:"type:text" json:"content"`
-	CoverURL     string     `gorm:"size:500" json:"cover_url"`
-	WebsiteURL   string     `gorm:"size:500" json:"website_url"`
-	GitHubURL    string     `gorm:"size:500" json:"github_url"`
-	Language     string     `gorm:"size:50" json:"language"`
-	Tags         []string   `gorm:"type:text[]" json:"tags"`
-	Features     []string   `gorm:"type:text[]" json:"features"`
-	Technologies []string   `gorm:"type:text[]" json:"technologies"`
-	Status       string     `gorm:"size:20;default:'published'" json:"status"` // draft, published, archived
-	ViewCount    int        `gorm:"default:0" json:"view_count"`
-	AuthorID     uuid.UUID  `gorm:"type:uuid" json:"author_id"`
-	Author       User       `gorm:"foreignKey:AuthorID" json:"author,omitempty"`
-	PublishedAt  *time.Time `json:"published_at"`
-	CreatedAt    time.Time  `json:"created_at"`
-	UpdatedAt    time.Time  `json:"updated_at"`
+	ID           uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+	Slug         string         `gorm:"uniqueIndex;size:255;not null" json:"slug"`
+	Title        string         `gorm:"size:255;not null" json:"title"`
+	Description  string         `gorm:"type:text" json:"description"`
+	Content      string         `gorm:"type:text" json:"content"`
+	CoverURL     string         `gorm:"size:500" json:"cover_url"`
+	WebsiteURL   string         `gorm:"size:500" json:"website_url"`
+	GitHubURL    string         `gorm:"size:500" json:"github_url"`
+	Language     string         `gorm:"size:50" json:"language"`
+	Tags         []string       `gorm:"type:text[]" json:"tags"`
+	Features     []string       `gorm:"type:text[]" json:"features"`
+	Technologies []string       `gorm:"type:text[]" json:"technologies"`
+	Status       string         `gorm:"size:20;default:'published'" json:"status"` // draft, published, archived
+	ViewCount    int            `gorm:"default:0" json:"view_count"`
+	AuthorID     uuid.UUID      `gorm:"type:uuid" json:"author_id"`
+	Author       User           `gorm:"foreignKey:AuthorID" json:"author,omitempty"`
+	PublishedAt  *time.Time     `json:"published_at"`
+	CreatedAt    time.Time      `json:"created_at"`
+	UpdatedAt    time.Time      `json:"updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
 }
 
@@ -218,15 +218,15 @@ type Tag struct {
 
 // FriendLink 友情链接模型
 type FriendLink struct {
-	ID          uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
-	Name        string     `gorm:"size:100;not null" json:"name"`
-	URL         string     `gorm:"size:500;not null" json:"url"`
-	LogoURL     string     `gorm:"size:500" json:"logo_url"`
-	Description string     `gorm:"type:text" json:"description"`
-	SortOrder   int        `gorm:"default:0" json:"sort_order"`
-	Status      string     `gorm:"size:20;default:'pending'" json:"status"` // pending, active, inactive
-	CreatedAt   time.Time  `json:"created_at"`
-	UpdatedAt   time.Time  `json:"updated_at"`
+	ID          uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	Name        string    `gorm:"size:100;not null" json:"name"`
+	URL         string    `gorm:"size:500;not null" json:"url"`
+	LogoURL     string    `gorm:"size:500" json:"logo_url"`
+	Description string    `gorm:"type:text" json:"description"`
+	SortOrder   int       `gorm:"default:0" json:"sort_order"`
+	Status      string    `gorm:"size:20;default:'pending'" json:"status"` // pending, active, inactive
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // AdminAuditLog 管理员审计日志
@@ -234,7 +234,7 @@ type AdminAuditLog struct {
 	ID         uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
 	AdminID    uuid.UUID `gorm:"type:uuid;index" json:"admin_id"`
 	AdminName  string    `gorm:"size:100" json:"admin_name"`
-	Action     string    `gorm:"size:50;index;not null" json:"action"`     // create, update, delete, approve, reject, ban, unban, lock, unlock, reset_password, update_setting
+	Action     string    `gorm:"size:50;index;not null" json:"action"`      // create, update, delete, approve, reject, ban, unban, lock, unlock, reset_password, update_setting
 	TargetType string    `gorm:"size:50;index;not null" json:"target_type"` // user, post, comment, friend_link, category, tag, setting
 	TargetID   string    `gorm:"size:100;index" json:"target_id"`
 	Details    string    `gorm:"type:text" json:"details"`

@@ -397,7 +397,7 @@ func (s *CommentService) ReviewCommentReport(reportID, reviewerID string, dismis
 
 	// 更新举报状态
 	updates := map[string]interface{}{
-		"status":     status,
+		"status":      status,
 		"reviewed_by": reviewerUUID,
 	}
 	if err := s.db.Model(&report).Updates(updates).Error; err != nil {

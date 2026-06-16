@@ -26,7 +26,7 @@ func SetupTestDB(t *testing.T) {
 	}
 
 	// 自动迁移
-	TestDB.AutoMigrate(&model.User{}, &model.Post{}, &model.Comment{}, &model.MediaAsset{}, &model.AnalyticsEvent{}, &model.Project{}, &model.Category{}, &model.Tag{}, &model.FriendLink{})
+	TestDB.AutoMigrate(&model.User{}, &model.Post{}, &model.Comment{}, &model.MediaAsset{}, &model.AnalyticsEvent{}, &model.Project{}, &model.Category{}, &model.Tag{}, &model.FriendLink{}, &model.AiNews{}, &model.AiTool{})
 }
 
 // TestAuthService_Register 测试用户注册
@@ -316,18 +316,18 @@ func TestCategoryService_Tree(t *testing.T) {
 
 	// 创建父分类
 	parent, _ := service.CreateCategory(CreateCategoryInput{
-		Slug:  "tech",
-		Name:  "技术",
+		Slug:      "tech",
+		Name:      "技术",
 		SortOrder: 0,
 	})
 
 	// 创建子分类
 	parentIDStr := parent.ID.String()
 	_, err := service.CreateCategory(CreateCategoryInput{
-		Slug:        "frontend",
-		Name:        "前端",
-		ParentID:    &parentIDStr,
-		SortOrder:   1,
+		Slug:      "frontend",
+		Name:      "前端",
+		ParentID:  &parentIDStr,
+		SortOrder: 1,
 	})
 	if err != nil {
 		t.Fatalf("CreateCategory child failed: %v", err)
@@ -419,5 +419,92 @@ func TestFriendLinkService_CreateAndList(t *testing.T) {
 
 	if len(links) != 1 {
 		t.Errorf("Expected 1 friend link, got %d", len(links))
+	}
+}
+
+// TestAiNewsService 测试 AI 新闻服务
+func TestAiNewsService_CreateAndList(t *testing.T) {
+	SetupTestDB(t)
+
+	service := NewAiNewsService(TestDB)
+
+	news, err := service.Create(CreateAiNewsInput{
+		Slug:       "test-ai-news",
+		Title:      "Test AI News",
+		Summary:    "A test news item",
+		SourceName: "Test Source",
+		SourceURL:  "https://example.com",
+		Category:   "product",
+		Tags:       []string{"AI", "test"},
+		Status:     "published",
+	})
+	if err != nil {
+		t.Fatalf("Create AiNews failed: %v", err)
+	}
+
+	if news.Slug != "test-ai-news" {
+		t.Errorf("Expected slug 'test-ai-news', got '%s'", news.Slug)
+	}
+	if news.Status != "published" {
+		t.Errorf("Expected status 'published', got '%s'", news.Status)
+	}
+
+	// List published
+	list, total, err := service.List("published", "", 1, 10)
+	if err != nil {
+		t.Fatalf("List AiNews failed: %v", err)
+	}
+	if total != 1 {
+		t.Errorf("Expected 1 news item, got %d", total)
+	}
+	if len(list) != 1 {
+		t.Errorf("Expected 1 item in list, got %d", len(list))
+	}
+}
+
+// TestAiToolService 测试 AI 工具服务
+func TestAiToolService_CreateAndList(t *testing.T) {
+	SetupTestDB(t)
+
+	service := NewAiToolService(TestDB)
+
+	tool, err := service.Create(CreateAiToolInput{
+		Title:    "Test Tool",
+		Summary:  "A test tool",
+		Category: "testing",
+		Source:   "GitHub",
+		URL:      "https://github.com/test",
+		Tags:     []string{"tool"},
+	})
+	if err != nil {
+		t.Fatalf("Create AiTool failed: %v", err)
+	}
+
+	if tool.Title != "Test Tool" {
+		t.Errorf("Expected title 'Test Tool', got '%s'", tool.Title)
+	}
+
+	// List all
+	list, total, err := service.List("", "", 1, 10)
+	if err != nil {
+		t.Fatalf("List AiTools failed: %v", err)
+	}
+	if total != 1 {
+		t.Errorf("Expected 1 tool, got %d", total)
+	}
+	if len(list) != 1 {
+		t.Errorf("Expected 1 tool in list, got %d", len(list))
+	}
+
+	// Filter by category
+	catList, catTotal, err := service.List("testing", "", 1, 10)
+	if err != nil {
+		t.Fatalf("List AiTools by category failed: %v", err)
+	}
+	if catTotal != 1 {
+		t.Errorf("Expected 1 tool in category, got %d", catTotal)
+	}
+	if len(catList) != 1 {
+		t.Errorf("Expected 1 tool in category list, got %d", len(catList))
 	}
 }

@@ -1,10 +1,10 @@
-feat(admin): add site settings page (registration, comments, moderation)
+chore: code review fixes — fix goroutine leak, ILIKE compat, add tests
 
-- Create admin-settings component with toggle UI
-- Supports: registration_open, comments_enabled, comment_pre_moderate
-- Backend API: GET/PUT /admin/settings
-- Register route + menu item in admin sidebar
-
-Admin sidebar now has 13 sections covering the full site management.
+- Fix scheduled publish goroutine: use context cancellation (schedCtx/schedCancel)
+  to properly stop ticker on server shutdown
+- Fix AiToolService.List: replace PostgreSQL-only ILIKE with LOWER()
+  for cross-DB compatibility (PostgreSQL + SQLite)
+- Fix NG8107 warning: replace e.user_id?.slice with e.user_id.slice
+- Add AiNewsService + AiToolService unit tests
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>
