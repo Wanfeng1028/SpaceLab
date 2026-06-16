@@ -1,21 +1,9 @@
-feat: migrate Archive to API, add sitemap/robots, lazy load GSAP
+feat(profile): enhance user center with avatar, email verification, and recent comments
 
-Archive:
-- Rewrite ArchiveComponent to load posts from PostService API
-- Group posts by year, sort chronologically
-- Show real article titles (not i18n keys)
-- Add loading and error states
-
-SEO:
-- Create scripts/generate-sitemap.mjs — generates sitemap.xml
-- Add generate-sitemap.mjs to prebuild pipeline
-- Create public/robots.txt with proper rules
-- Sitemap covers 7 static routes + 5 posts + 32 projects (44 URLs)
-
-Performance:
-- Refactor ScrollTriggerService to dynamically import GSAP
-- Remove providedIn: 'root' — service is now @Injectable() only
-- GSAP (183 kB) no longer in initial bundle; loaded on demand
-- Fix TS type errors with dynamic GSAP imports
+Profile page now includes:
+- Avatar display with fallback initial
+- Email verification status badge (verified/unverified)
+- Recent comments section from admin API
+- Comment status display (approved/pending/rejected/spam)
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

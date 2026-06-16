@@ -15,13 +15,23 @@
       <nz-card class="profile-card">
         <div class="profile-info">
           <div class="profile-info__avatar">
-            <div class="profile-avatar-placeholder">
-              {{ (user.username || user.email).charAt(0).toUpperCase() }}
-            </div>
+            @if (user.avatar_url) {
+              <img [src]="user.avatar_url" [alt]="user.username" class="profile-avatar-img" />
+            } @else {
+              <div class="profile-avatar-placeholder">
+                {{ (user.username || user.email).charAt(0).toUpperCase() }}
+              </div>
+            }
           </div>
           <div class="profile-info__detail">
             <h2 class="profile-info__name">{{ user.username || '未设置用户名' }}</h2>
-            <p class="profile-info__email">{{ user.email }}</p>
+            <p class="profile-info__email">{{ user.email }}
+              @if (user.email_verified_at) {
+                <span class="profile-badge profile-badge--verified">已验证</span>
+              } @else {
+                <span class="profile-badge profile-badge--unverified">未验证</span>
+              }
+            </p>
             <div class="profile-info__meta">
               <nz-tag [nzColor]="roleColor(user.role)">{{ roleText(user.role) }}</nz-tag>
               <span class="profile-info__date">注册于 {{ formatDate(user.created_at) }}</span>
@@ -68,6 +78,23 @@
           </div>
         </div>
       </nz-card>
+
+      <!-- 我的评论 -->
+      @if (recentComments().length > 0) {
+        <nz-card class="profile-card" nzTitle="我的最新评论">
+          <div class="profile-comments">
+            @for (c of recentComments(); track c.id) {
+              <div class="profile-comment">
+                <p class="profile-comment__content">{{ c.content }}</p>
+                <div class="profile-comment__meta">
+                  <span class="profile-comment__status">{{ commentStatusText(c.status) }}</span>
+                  <span class="profile-comment__date">{{ formatDate(c.created_at) }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </nz-card>
+      }
 
       <!-- 修改密码 -->
       <nz-card class="profile-card" nzTitle="修改密码">

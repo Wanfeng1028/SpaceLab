@@ -11,6 +11,15 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { AuthService, type User } from '../../core/services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+interface ProfileComment {
+  id: string;
+  content: string;
+  status: string;
+  created_at: string;
+}
 
 @Component({
   selector: 'app-profile',
@@ -36,10 +45,15 @@ export class ProfileComponent implements OnInit {
   private router = inject(Router);
   private message = inject(NzMessageService);
   private modal = inject(NzModalService);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
   // 用户信息
   readonly currentUser = signal<User | null>(null);
   readonly loading = signal(false);
+
+  // 我的评论
+  readonly recentComments = signal<ProfileComment[]>([]);
 
   // 编辑资料表单
   readonly editUsername = signal('');
@@ -63,6 +77,7 @@ export class ProfileComponent implements OnInit {
         this.currentUser.set(user);
         this.editUsername.set(user.username || '');
         this.loading.set(false);
+        this.loadComments();
       },
       error: () => {
         this.loading.set(false);
@@ -131,6 +146,25 @@ export class ProfileComponent implements OnInit {
         this.message.error(err.error?.error || '修改密码失败');
       },
     });
+  }
+
+  /** 加载我的最新评论 */
+  private loadComments(): void {
+    this.http.get<{ comments: ProfileComment[] }>(`${this.apiUrl}/admin/comments?page=1&page_size=5`).subscribe({
+      next: (res) => this.recentComments.set(res.comments ?? []),
+      error: () => { /* 静默失败 */ },
+    });
+  }
+
+  /** 评论状态中文名 */
+  commentStatusText(status: string): string {
+    switch (status) {
+      case 'approved': return '已通过';
+      case 'pending': return '审核中';
+      case 'rejected': return '已拒绝';
+      case 'spam': return '垃圾';
+      default: return status;
+    }
   }
 
   /** 退出登录 */

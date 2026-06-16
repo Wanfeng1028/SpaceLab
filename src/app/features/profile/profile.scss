@@ -62,6 +62,63 @@
   justify-content: center;
 }
 
+.profile-avatar-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* 认证徽章 */
+.profile-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.profile-badge--verified {
+  background: #f6ffed;
+  color: #52c41a;
+  border: 1px solid #b7eb8f;
+}
+.profile-badge--unverified {
+  background: #fff7e6;
+  color: #fa8c16;
+  border: 1px solid #ffd591;
+}
+
+/* 我的评论 */
+.profile-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.profile-comment {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.profile-comment:last-child {
+  border-bottom: none;
+}
+.profile-comment__content {
+  font-size: 14px;
+  color: rgba(0,0,0,0.85);
+  margin: 0 0 4px 0;
+  line-height: 1.5;
+}
+.profile-comment__meta {
+  font-size: 12px;
+  color: rgba(0,0,0,0.45);
+  display: flex;
+  gap: 12px;
+}
+.profile-comment__status {
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
 .profile-info__detail {
   flex: 1;
   min-width: 0;
