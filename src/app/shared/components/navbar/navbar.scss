@@ -360,6 +360,8 @@
   align-items: center;
   gap: 0.35rem;
   transform-origin: center;
+  transform-style: preserve-3d;
+  perspective: 800px;
   padding: 0.4rem 0.85rem;
   background: transparent;
   border: none;
@@ -371,7 +373,7 @@
   font-weight: 500;
   font-family: var(--font-sans);
   transform: scale(calc(1 + (var(--active, 0) * 0.06)));
-  transition: transform var(--btn_transition);
+  transition: transform var(--btn_transition), box-shadow var(--btn_transition);
 
   // Background glow
   &::before {
@@ -417,10 +419,16 @@
   &:is(:hover, :focus-visible) {
     --active: 1;
     color: #fff;
+    transform: scale(1.06) rotateX(2deg) rotateY(-2deg);
+    box-shadow:
+      0 4px 20px rgba(99, 102, 241, 0.3),
+      0 8px 32px rgba(0, 0, 0, 0.2);
   }
 
   &:active {
-    transform: scale(1);
+    transform: scale(1.02) rotateX(0deg) rotateY(0deg);
+    box-shadow:
+      0 2px 8px rgba(99, 102, 241, 0.2);
   }
 
   // Active route — full hover glow

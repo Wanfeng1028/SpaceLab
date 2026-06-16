@@ -1,8 +1,8 @@
-fix(blog): add static content fallback when backend API fails
+style(nav): add 3D perspective tilt effect to nav buttons
 
-- Blog component now falls back to static POSTS from content.generated.ts
-  when the backend API is unreachable or database is empty
-- Add staticToPost() adapter to convert GeneratedPost → Post format
-- Ensures blog always shows content even before data is seeded to DB
+- Add transform-style: preserve-3d and perspective: 800px to sparkle-btn
+- On hover: subtle rotateX(2deg) rotateY(-2deg) for 3D tilt feel
+- Enhanced box-shadow for floating depth effect
+- Active state resets tilt with pressed shadow
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>
