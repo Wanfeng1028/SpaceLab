@@ -18,30 +18,32 @@ export class LiveCommentItemComponent {
   @Output() replyEvent = new EventEmitter<LiveComment>();
   @Output() deleteEvent = new EventEmitter<string>();
 
-  getRelativeTime(timestamp: number): string {
+  getRelativeTime(createdAt: string): string {
+    if (!createdAt) return '';
+    const timestamp = new Date(createdAt).getTime();
+    if (isNaN(timestamp)) return '';
     const now = Date.now();
     const diff = now - timestamp;
-    
     const minute = 60 * 1000;
     const hour = 60 * minute;
     const day = 24 * hour;
-
-    if (diff < minute) {
-      return '刚刚';
-    } else if (diff < hour) {
-      return Math.floor(diff / minute) + '分钟前';
-    } else if (diff < day) {
-      return Math.floor(diff / hour) + '小时前';
-    } else {
-      return Math.floor(diff / day) + '天前';
-    }
+    if (diff < minute) return '刚刚';
+    if (diff < hour) return Math.floor(diff / minute) + '分钟前';
+    if (diff < day) return Math.floor(diff / hour) + '小时前';
+    return Math.floor(diff / day) + '天前';
   }
 
-  getAvatarUrl(username: string): string {
-    // 使用 Gravatar 或默认头像
-    const email = this.comment.email || '';
-    const hash = btoa(email).slice(0, 32);
-    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}&backgroundColor=b6e3f4`;
+  getDisplayName(): string {
+    return this.comment.user?.username || '匿名用户';
+  }
+
+  getAvatarUrl(): string {
+    if (this.comment.user?.avatar_url) return this.comment.user.avatar_url;
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${this.getDisplayName()}&backgroundColor=b6e3f4`;
+  }
+
+  isAdmin(): boolean {
+    return this.comment.user?.role === 'admin';
   }
 
   startReply(): void {

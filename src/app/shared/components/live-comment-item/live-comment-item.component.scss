@@ -30,6 +30,25 @@
   font-size: 14px;
   color: var(--text-primary, #ffffff);
   margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 徽章 */
+.live-comment-item__badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.live-comment-item__badge--admin {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .live-comment-item__time {

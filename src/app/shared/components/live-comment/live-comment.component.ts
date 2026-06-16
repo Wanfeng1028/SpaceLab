@@ -5,12 +5,11 @@ import { RouterLink } from '@angular/router';
 
 import { LiveCommentService, LiveComment } from '../../../core/services/live-comment.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { LiveCommentItemComponent } from '../live-comment-item/live-comment-item.component';
 
 @Component({
   selector: 'app-live-comment',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, LiveCommentItemComponent],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './live-comment.component.html',
   styleUrl: './live-comment.component.scss'
 })
@@ -35,6 +34,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
   newComment: string = '';
   submitting: boolean = false;
   replyTo: LiveComment | null = null;
+  submittedPending = false; // 刚提交需要审核的提示
 
   /** 当前登录用户 */
   readonly isLoggedIn = this.authService.isLoggedInSig;
@@ -60,7 +60,6 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     this.commentService.getComments(this.postId, this.currentPage, this.pageSize)
       .subscribe({
         next: (response) => {
-          // 兼容原生后端格式 { comments: [], total: N } 和旧 LiveComment 格式 { list: [], total: N }
           const nativeResp = response as any;
           if (nativeResp.comments && Array.isArray(nativeResp.comments)) {
             this.comments = nativeResp.comments;
@@ -96,9 +95,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
   }
 
   submitComment(): void {
-    if (!this.newComment.trim()) {
-      return;
-    }
+    if (!this.newComment.trim()) return;
 
     if (!this.isLoggedIn()) {
       this.error = '请先登录后再发表评论';
@@ -106,21 +103,27 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     }
 
     this.submitting = true;
+    this.error = null;
+
+    const content = this.newComment.trim();
 
     this.commentService.createComment(
       this.postId,
-      this.newComment.trim(),
+      content,
       this.replyTo?.id
     ).subscribe({
       next: () => {
         this.newComment = '';
         this.replyTo = null;
         this.submitting = false;
+        this.submittedPending = true;
+        // 重新加载评论（不延迟显示）
         this.loadComments();
         this.loadCommentCount();
       },
       error: (err) => {
         this.submitting = false;
+        // 失败不清空输入框
         if (err.status === 401) {
           this.error = '请先登录后再发表评论';
         } else {
@@ -136,9 +139,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
   }
 
   startReply(comment: LiveComment): void {
-    if (!this.enableReply) {
-      return;
-    }
+    if (!this.enableReply) return;
     if (!this.isLoggedIn()) {
       this.error = '请先登录后再回复评论';
       return;
@@ -146,9 +147,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     this.replyTo = comment;
     setTimeout(() => {
       const input = document.querySelector('#new-comment-input') as HTMLTextAreaElement;
-      if (input) {
-        input.focus();
-      }
+      if (input) input.focus();
     }, 100);
   }
 
@@ -165,29 +164,49 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     });
   }
 
-  getRelativeTime(timestamp: number): string {
+  /** 从 ISO 字符串计算相对时间 */
+  getRelativeTime(createdAt: string): string {
+    if (!createdAt) return '';
+    const timestamp = new Date(createdAt).getTime();
+    if (isNaN(timestamp)) return '';
     const now = Date.now();
     const diff = now - timestamp;
-    
+
     const minute = 60 * 1000;
     const hour = 60 * minute;
     const day = 24 * hour;
     const month = 30 * day;
     const year = 365 * day;
 
-    if (diff < minute) {
-      return '刚刚';
-    } else if (diff < hour) {
-      return Math.floor(diff / minute) + '分钟前';
-    } else if (diff < day) {
-      return Math.floor(diff / hour) + '小时前';
-    } else if (diff < month) {
-      return Math.floor(diff / day) + '天前';
-    } else if (diff < year) {
-      return Math.floor(diff / month) + '个月前';
-    } else {
-      return Math.floor(diff / year) + '年前';
-    }
+    if (diff < minute) return '刚刚';
+    if (diff < hour) return Math.floor(diff / minute) + '分钟前';
+    if (diff < day) return Math.floor(diff / hour) + '小时前';
+    if (diff < month) return Math.floor(diff / day) + '天前';
+    if (diff < year) return Math.floor(diff / month) + '个月前';
+    return Math.floor(diff / year) + '年前';
+  }
+
+  /** 获取用户显示名 */
+  getDisplayName(comment: LiveComment): string {
+    return comment.user?.username || '匿名用户';
+  }
+
+  /** 获取头像 URL */
+  getAvatarUrl(comment: LiveComment): string {
+    if (comment.user?.avatar_url) return comment.user.avatar_url;
+    const seed = comment.user?.username || 'user';
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4`;
+  }
+
+  /** 是否为管理员 */
+  isAdmin(comment: LiveComment): boolean {
+    return comment.user?.role === 'admin';
+  }
+
+  /** 评论是否由当前用户发布 */
+  isOwnComment(comment: LiveComment): boolean {
+    const cu = this.currentUser();
+    return !!cu && comment.user_id === cu.id;
   }
 
   hasMore(): boolean {

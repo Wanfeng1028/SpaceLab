@@ -1,16 +1,19 @@
 <div class="live-comment-item">
   <div class="live-comment-item__header">
     <img
-      [src]="getAvatarUrl(comment.username || '用户')"
-      [alt]="comment.username || '用户'"
+      [src]="getAvatarUrl()"
+      [alt]="getDisplayName()"
       class="live-comment-item__avatar"
     />
     <div class="live-comment-item__info">
       <div class="live-comment-item__name">
-        {{ comment.username || '匿名用户' }}
+        {{ getDisplayName() }}
+        @if (isAdmin()) {
+          <span class="live-comment-item__badge live-comment-item__badge--admin">管理员</span>
+        }
       </div>
       <div class="live-comment-item__time">
-        {{ getRelativeTime(comment.create_time) }}
+        {{ getRelativeTime(comment.created_at) }}
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@
     >
       回复
     </button>
-    
+
     <button
       *ngIf="enableLike"
       class="live-comment-item__action-btn live-comment-item__action-btn--like"

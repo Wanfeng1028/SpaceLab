@@ -5,16 +5,19 @@ import { environment } from '../../../environments/environment';
 
 export interface LiveComment {
   id: string;
-  post_id: string;
-  username: string;
-  email: string;
-  avatar: string;
+  content_type?: string;
+  content_id?: string;
   content: string;
-  ip: string;
-  user_id: string;
-  status: string;
-  create_time: number;
-  update_time: number;
+  status: string;       // pending, approved, rejected, spam
+  created_at: string;   // ISO 8601 from backend
+  updated_at: string;
+  user_id?: string;
+  user?: {
+    id: string;
+    username: string;
+    avatar_url?: string;
+    role?: string;
+  };
   parent_id?: string;
   replies: LiveComment[];
 }

@@ -29,6 +29,17 @@
   font-size: 14px;
 }
 
+/* 提交后审核提示 */
+.live-comment__pending-hint {
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid #eab308;
+  border-radius: 8px;
+  color: #eab308;
+  font-size: 13px;
+}
+
 .live-comment__input-section {
   margin-bottom: 24px;
 }
@@ -183,6 +194,105 @@
       text-decoration: underline;
     }
   }
+}
+
+/* 评论条目 — 内联在 live-comment 组件中 */
+.live-comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: var(--bg-tertiary, rgba(255,255,255,0.03));
+  border-radius: 8px;
+}
+.live-comment-item--reply {
+  margin-left: 48px;
+  background: var(--bg-secondary, rgba(255,255,255,0.02));
+}
+.live-comment-item__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.live-comment-item__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-tertiary, #242442);
+}
+.live-comment-item__info {
+  flex: 1;
+  min-width: 0;
+}
+.live-comment-item__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #fff);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.live-comment-item__time {
+  font-size: 12px;
+  color: var(--text-muted, #888);
+  margin-top: 2px;
+}
+/* 徽章 */
+.live-comment-item__badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.live-comment-item__badge--admin {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+.live-comment-item__badge--pending {
+  background: rgba(250, 204, 21, 0.1);
+  color: #eab308;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+.live-comment-item__content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary, #e0e0e0);
+  word-break: break-word;
+}
+.live-comment-item__actions {
+  display: flex;
+  gap: 8px;
+}
+.live-comment-item__action-btn {
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #888);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.live-comment-item__action-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-primary, #fff);
+}
+.live-comment-item__action-btn--reply {
+  color: #818cf8;
+}
+.live-comment-item__action-btn--delete {
+  color: #ef4444;
+}
+.live-comment-item__replies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 /* 移动端适配 */
