@@ -31,6 +31,9 @@ export class RegisterComponent implements OnInit {
   captchaImageUrl = signal('');
   captchaAnswer = signal('');
 
+  /** 验证码加载状态 */
+  captchaLoading = signal(false);
+
   passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
 
   passwordError = computed(() => {
@@ -71,6 +74,10 @@ export class RegisterComponent implements OnInit {
   thirdPartyDialogVisible = signal(false);
   thirdPartyName = signal('');
 
+  /** 图形验证码重试计数 */
+  private captchaRetryCount = 0;
+  private readonly captchaMaxRetries = 3;
+
   ngOnInit(): void {
     this.authService.isRegistrationOpen().subscribe({
       next: (res) => {
@@ -85,14 +92,25 @@ export class RegisterComponent implements OnInit {
   }
 
   loadCaptcha(): void {
+    if (this.captchaLoading()) return;
+    this.captchaLoading.set(true);
+
     this.captchaService.getNew().subscribe({
       next: (session) => {
+        this.captchaLoading.set(false);
+        this.captchaRetryCount = 0;
         this.captchaId.set(session.captcha_id);
         this.captchaImageUrl.set(session.imageUrl);
         this.captchaAnswer.set('');
       },
       error: (err) => {
-        console.warn('[Captcha] Failed to load captcha:', err);
+        this.captchaLoading.set(false);
+        console.warn('[Captcha] Failed to load captcha:', err?.status || err);
+        // 429 限流时 10 秒后重试，最多重试 3 次，避免无限循环
+        if (err?.status === 429 && this.captchaRetryCount < this.captchaMaxRetries) {
+          this.captchaRetryCount++;
+          setTimeout(() => this.loadCaptcha(), 10000);
+        }
       }
     });
   }

@@ -67,7 +67,7 @@
         <!-- 图形验证码 -->
         @if (captchaImageUrl()) {
           <div class="form-captcha">
-            <img [src]="captchaImageUrl()" alt="验证码" (click)="loadCaptcha()" title="点击刷新" />
+            <img [src]="captchaImageUrl()" alt="验证码" (click)="!captchaLoading() && loadCaptcha()" title="点击刷新" [style.cursor]="captchaLoading() ? 'wait' : 'pointer'" [style.opacity]="captchaLoading() ? 0.5 : 1" />
             <input
               class="form-input form-captcha__input"
               type="text"

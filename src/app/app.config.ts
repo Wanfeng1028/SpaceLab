@@ -22,6 +22,13 @@ import {
   MenuUnfoldOutline,
   UserOutline,
   LockOutline,
+  SafetyOutline,
+  TagsOutline,
+  WarningOutline,
+  ExceptionOutline,
+  AppstoreOutline,
+  LinkOutline,
+  SettingOutline,
 } from '@ant-design/icons-angular/icons';
 
 // 后台管理用到的图标（按需导入，避免打包全部图标）
@@ -42,6 +49,13 @@ const ADMIN_ICONS: IconDefinition[] = [
   MenuUnfoldOutline,
   UserOutline,
   LockOutline,
+  SafetyOutline,
+  TagsOutline,
+  WarningOutline,
+  ExceptionOutline,
+  AppstoreOutline,
+  LinkOutline,
+  SettingOutline,
 ];
 
 import { routes } from './app.routes';

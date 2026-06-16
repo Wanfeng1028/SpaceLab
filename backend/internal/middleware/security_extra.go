@@ -25,9 +25,11 @@ func ContentSecurityPolicy() gin.HandlerFunc {
 					"form-action 'self'",
 			)
 		} else {
-			// 开发环境宽松 CSP（允许 localhost 和开发工具）
+			// 开发环境宽松 CSP（允许 localhost、开发工具和 HMR worker）
 			c.Header("Content-Security-Policy",
 				"default-src 'self' 'unsafe-inline' 'unsafe-eval'; "+
+					"script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; "+
+					"worker-src 'self' blob:; "+
 					"img-src 'self' data: https: http:; "+
 					"connect-src 'self' http://localhost:* ws://localhost:*; "+
 					"frame-ancestors 'none'",

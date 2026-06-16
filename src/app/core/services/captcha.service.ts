@@ -14,10 +14,10 @@ export class CaptchaService {
 
   /** 获取新的验证码 ID 和图片 URL */
   getNew(): Observable<CaptchaSession> {
-    return this.http.get<{ captcha_id: string }>('/api/v1/captcha/new').pipe(
+    return this.http.get<{ captcha_id: string }>('/captcha/new').pipe(
       map(res => ({
         captcha_id: res.captcha_id,
-        imageUrl: `/api/v1/captcha/${res.captcha_id}.png`,
+        imageUrl: `/captcha/image/${res.captcha_id}`,
       }))
     );
   }

@@ -29,6 +29,9 @@ export class LoginComponent implements OnInit {
   captchaImageUrl = signal('');
   captchaAnswer = signal('');
 
+  /** 验证码加载状态 */
+  captchaLoading = signal(false);
+
   /** 邮箱格式校验 */
   emailError = computed(() => {
     const e = this.email();
@@ -53,19 +56,34 @@ export class LoginComponent implements OnInit {
   resendLoading = signal(false);
   resendSuccess = signal(false);
 
+  /** 图形验证码重试计数 */
+  private captchaRetryCount = 0;
+  private readonly captchaMaxRetries = 3;
+
   ngOnInit(): void {
     this.loadCaptcha();
   }
 
   loadCaptcha(): void {
+    if (this.captchaLoading()) return;
+    this.captchaLoading.set(true);
+
     this.captchaService.getNew().subscribe({
       next: (session) => {
+        this.captchaLoading.set(false);
+        this.captchaRetryCount = 0;
         this.captchaId.set(session.captcha_id);
         this.captchaImageUrl.set(session.imageUrl);
         this.captchaAnswer.set('');
       },
       error: (err) => {
-        console.warn('[Captcha] Failed to load captcha:', err);
+        this.captchaLoading.set(false);
+        console.warn('[Captcha] Failed to load captcha:', err?.status || err);
+        // 429 限流时 10 秒后重试，最多重试 3 次，避免无限循环
+        if (err?.status === 429 && this.captchaRetryCount < this.captchaMaxRetries) {
+          this.captchaRetryCount++;
+          setTimeout(() => this.loadCaptcha(), 10000);
+        }
       }
     });
   }
