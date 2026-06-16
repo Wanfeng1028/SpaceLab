@@ -1,13 +1,12 @@
-fix: replace broken EarthObservatoryScene with working EarthFlylineScene in 3D page
+fix: directly reuse home earth-flyline and blue-moon-tree components in 3D page
 
-The EarthObservatoryScene was failing to render properly. Replace it
-with the same EarthFlylineScene that was previously used on the home
-page section 2 — proven stable with flylines, city lights, satellites,
-and auto-rotation.
+Instead of manually recreating scene factories, just import the exact
+same components that were working on the home page section 2 & 3.
+This guarantees the 3D experience page shows identical rendering.
 
-- Import EarthFlylineScene instead of EarthObservatoryScene/LightScene
-- Update mouse interaction to use setManualRotationDegrees()
-- Update click interaction to use zoomIn/zoomOut
-- Remove unused EarthObservatoryScene and EarthObservatoryLightScene imports
+- Import EarthFlylineSectionComponent and MoonTreeSectionComponent
+- Remove all manual scene factory / ThreeCanvas / HostListener code
+- Template uses <app-home-earth-flyline /> and <app-home-blue-moon-tree />
+- Scene lifecycle managed by the original components themselves
 
 Co-Authored-By: AtomCode (GLM-5.1) <noreply@atomgit.com>

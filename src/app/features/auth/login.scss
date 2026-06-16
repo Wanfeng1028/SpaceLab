@@ -1,391 +1,257 @@
-:host { display: block; }
+// Google 风格登录页 + 蓝色渐变背景
+$google-blue: #1a73e8;
+$google-blue-hover: #1765cc;
+$google-blue-active: #1558b0;
+$google-bg: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+$google-card-bg: #ffffff;
+$google-text: #202124;
+$google-text-secondary: #5f6368;
+$google-border: #dadce0;
+$google-border-focus: #1a73e8;
+$google-error: #d93025;
+$google-error-bg: #fce8e6;
 
-/* ── Background ── */
 .auth-page {
-  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a0e1a;
-  overflow: hidden;
+  background: $google-bg;
   padding: 24px;
+  font-family: 'Google Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.auth-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-}
-.auth-bg__stars {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 15% 85%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.2), transparent),
-    radial-gradient(1.5px 1.5px at 25% 35%, rgba(255,255,255,0.5), transparent);
-}
-.auth-bg__nebula {
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.05) 40%, transparent 70%);
-  border-radius: 50%;
-  filter: blur(80px);
-}
-.auth-bg__grid {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* ── Container ── */
 .auth-container {
-  position: relative;
-  z-index: 1;
   width: 100%;
-  max-width: 420px;
+  max-width: 450px;
 }
 
-/* ── Card ── */
 .auth-card {
-  background: rgba(18, 24, 48, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(99, 102, 241, 0.15);
-  border-radius: 20px;
-  padding: 40px 36px;
-  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.4), 0 0 80px rgba(99, 102, 241, 0.06);
+  background: $google-card-bg;
+  border-radius: 16px;
+  padding: 48px 40px 36px;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15), 0 4px 8px rgba(60, 64, 67, 0.1);
+  border: 1px solid $google-border;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 6px rgba(60, 64, 67, 0.15), 0 8px 16px rgba(60, 64, 67, 0.1);
+  }
 }
-.auth-card__logo {
+
+// Logo
+.auth-logo {
   display: flex;
-  align-items: center;
-  gap: 10px;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
-.auth-logo-icon {
+
+.auth-logo__icon {
+  font-size: 42px;
+  line-height: 1;
+  background: linear-gradient(135deg, #4285f4, #8ab4f8, #a8c7fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-title {
   font-size: 24px;
-  color: #818cf8;
-}
-.auth-logo-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: #e0e0e0;
-  letter-spacing: 0.02em;
-}
-.auth-card__title {
+  font-weight: 400;
+  color: $google-text;
   text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 4px;
-}
-.auth-card__subtitle {
-  text-align: center;
-  font-size: 14px;
-  color: rgba(255,255,255,0.5);
-  margin: 0 0 28px;
-}
-.auth-card__footer {
-  text-align: center;
-  font-size: 13px;
-  color: rgba(255,255,255,0.45);
-  margin: 20px 0 0;
-}
-.auth-card__footer a {
-  color: #818cf8;
-  text-decoration: none;
-  font-weight: 500;
-}
-.auth-card__footer a:hover {
-  text-decoration: underline;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
 }
 
-/* ── Error / Warning ── */
+.auth-subtitle {
+  font-size: 16px;
+  color: $google-text-secondary;
+  text-align: center;
+  margin: 0 0 32px 0;
+  font-weight: 400;
+}
+
+// 错误提示
 .auth-error {
-  padding: 10px 14px;
-  margin-bottom: 16px;
-  background: rgba(239,68,68,0.1);
-  border: 1px solid rgba(239,68,68,0.3);
-  border-radius: 10px;
-  color: #f87171;
-  font-size: 13px;
-  text-align: center;
-}
-.auth-warning {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding: 10px 14px;
-  margin-bottom: 16px;
-  background: rgba(250,204,21,0.08);
-  border: 1px solid rgba(250,204,21,0.2);
-  border-radius: 10px;
-  font-size: 13px;
-  color: #eab308;
-}
-.auth-warning__action {
-  background: none;
-  border: none;
-  color: #818cf8;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 0;
-}
-.auth-warning__success { color: #4ade80; font-size: 12px; }
-.auth-warning__close {
-  margin-left: auto;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.3);
-  cursor: pointer;
+  background: $google-error-bg;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  color: $google-error;
   font-size: 14px;
+  line-height: 1.5;
+  border: 1px solid #f5c6cb;
 }
 
-/* ── Form ── */
+// 表单
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
+
+// 浮动标签输入框 (Google Material 风格)
 .form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  position: relative;
 }
-.form-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.7);
-}
+
 .form-input {
   width: 100%;
-  padding: 12px 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  color: #fff;
-  font-size: 14px;
-  font-family: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box;
-}
-.form-input::placeholder { color: rgba(255,255,255,0.25); }
-.form-input:focus {
-  outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
-}
-.form-password-wrap {
-  position: relative;
-}
-.form-password-wrap .form-input {
-  padding-right: 44px;
-}
-.form-toggle-pwd {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
+  padding: 14px 16px;
+  background: transparent;
+  border: 1px solid $google-border;
+  border-radius: 8px;
+  color: $google-text;
   font-size: 16px;
-  padding: 4px;
-  color: rgba(255,255,255,0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  line-height: 1.5;
+  outline: none;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:hover {
+    border-color: darken($google-border, 10%);
+  }
+
+  &:focus {
+    border-color: $google-border-focus;
+    border-width: 2px;
+    padding: 13px 15px;
+    box-shadow: none;
+  }
+
+  // 输入框有内容或聚焦时，标签浮上去
+  &:focus + .form-label,
+  &:not(:placeholder-shown) + .form-label {
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    padding: 0 4px;
+    background: $google-card-bg;
+    color: $google-border-focus;
+    font-weight: 500;
+  }
+
+  &:not(:focus):not(:placeholder-shown) + .form-label {
+    color: $google-text-secondary;
+  }
 }
 
-/* ── Forgot password ── */
-.form-forgot {
-  text-align: right;
-  margin-top: -4px;
-}
-.form-forgot-btn {
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.4);
-  font-size: 12px;
-  cursor: pointer;
+.form-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: $google-text-secondary;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
   padding: 0;
-  transition: color 0.15s;
+  line-height: 1;
 }
-.form-forgot-btn:hover { color: #818cf8; }
 
-/* ── Submit button ── */
-.auth-btn {
+// 提交按钮 (Google 胶囊按钮)
+.auth-submit {
   width: 100%;
-  padding: 13px 24px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: #fff;
+  padding: 12px 24px;
+  background: $google-blue;
+  color: #ffffff;
   border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  letter-spacing: 0.01em;
-  position: relative;
-  overflow: hidden;
-}
-.auth-btn:hover:not(:disabled) {
-  box-shadow: 0 4px 20px rgba(99,102,241,0.4);
-  transform: translateY(-1px);
-}
-.auth-btn:active:not(:disabled) { transform: translateY(0); }
-.auth-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.auth-btn__spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: auth-spin 0.6s linear infinite;
-}
-@keyframes auth-spin { to { transform: rotate(360deg); } }
+  line-height: 1.5;
+  margin-top: 8px;
+  letter-spacing: 0.25px;
 
-/* ── Divider ── */
+  &:hover:not(:disabled) {
+    background: $google-blue-hover;
+    box-shadow: 0 1px 3px rgba(26, 115, 232, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    background: $google-blue-active;
+    box-shadow: 0 1px 2px rgba(26, 115, 232, 0.3);
+  }
+
+  &:disabled {
+    background: lighten($google-blue, 30%);
+    cursor: not-allowed;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// 底部链接
+.auth-footer {
+  margin-top: 28px;
+  text-align: left;
+}
+
+.auth-link {
+  color: $google-blue;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $google-blue-hover;
+    text-decoration: underline;
+  }
+}
+
+// ── Divider ──
 .auth-divider {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin: 20px 0;
-  color: rgba(255,255,255,0.25);
-  font-size: 12px;
-}
-.auth-divider::before,
-.auth-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(255,255,255,0.08);
+  margin: 24px 0;
 }
 
-/* ── Social buttons ── */
+.auth-divider__line {
+  flex: 1;
+  height: 1px;
+  background: $google-border;
+}
+
+.auth-divider__text {
+  font-size: 13px;
+  color: $google-text-secondary;
+  white-space: nowrap;
+}
+
+// ── Social buttons ──
 .auth-social {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
 .social-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 8px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  color: rgba(255,255,255,0.7);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.social-btn:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.15);
-  color: #fff;
-}
-.social-btn svg {
-  flex-shrink: 0;
-}
-
-/* ── Dialog ── */
-.auth-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  animation: overlay-in 0.2s ease;
-}
-@keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
-
-.auth-dialog {
-  background: #1a1f3a;
-  border: 1px solid rgba(99,102,241,0.2);
-  border-radius: 16px;
-  padding: 32px 28px;
-  max-width: 380px;
-  width: 90%;
-  text-align: center;
-  animation: dialog-in 0.25s ease;
-}
-@keyframes dialog-in {
-  from { transform: scale(0.92) translateY(12px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
-}
-.auth-dialog__icon { font-size: 40px; margin-bottom: 12px; }
-.auth-dialog__badge {
-  display: inline-block;
-  padding: 3px 12px;
-  background: rgba(99,102,241,0.15);
-  color: #818cf8;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-.auth-dialog__title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 8px;
-}
-.auth-dialog__desc {
-  font-size: 14px;
-  color: rgba(255,255,255,0.5);
-  margin: 0 0 20px;
-  line-height: 1.5;
-}
-.auth-dialog__actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-.auth-dialog__btn {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: #fff;
+  padding: 10px 12px;
+  border: 1px solid $google-border;
+  border-radius: 8px;
+  background: $google-card-bg;
+  color: $google-text-secondary;
   font-size: 14px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.auth-dialog__btn:hover { box-shadow: 0 4px 16px rgba(99,102,241,0.3); }
-.auth-dialog__btn--secondary {
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.6);
-}
-.auth-dialog__btn--secondary:hover { background: rgba(255,255,255,0.1); }
+  cursor: not-allowed;
+  opacity: 0.6;
+  transition: all 0.2s;
+  line-height: 1;
 
-/* ── Responsive ── */
-@media (max-width: 480px) {
-  .auth-card { padding: 28px 20px; border-radius: 16px; }
-  .auth-social { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .social-btn { padding: 9px 6px; font-size: 12px; }
+  svg {
+    flex-shrink: 0;
+  }
 }

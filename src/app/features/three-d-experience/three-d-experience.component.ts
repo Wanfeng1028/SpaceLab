@@ -5,13 +5,10 @@ import {
   signal,
   OnInit,
   OnDestroy,
-  HostListener,
-  ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
-import { EarthFlylineScene } from '../../shared/three/earth-flyline/earth-flyline-scene';
-import { MoonTreeScene } from '../../shared/three/moon-tree/moon-tree-scene';
+import { EarthFlylineSectionComponent } from '../home/components/home-earth-flyline/home-earth-flyline.component';
+import { MoonTreeSectionComponent } from '../home/components/home-blue-moon-tree/home-blue-moon-tree.component';
 import { DeviceCapabilityService, DeviceTier } from '../../core/services/device-capability.service';
 import { I18nService } from '../../core/services/i18n.service';
 
@@ -22,44 +19,17 @@ type RenderMode = 'full' | 'lightweight' | 'none';
   templateUrl: './three-d-experience.component.html',
   styleUrl: './three-d-experience.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ThreeCanvasComponent],
+  imports: [EarthFlylineSectionComponent, MoonTreeSectionComponent],
 })
 export class ThreeDExperienceComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private device = inject(DeviceCapabilityService);
   private i18n = inject(I18nService);
-  private el = inject(ElementRef<HTMLElement>);
 
   readonly renderMode = signal<RenderMode>('full');
   readonly deviceTier = signal<DeviceTier>('high');
   readonly showCompatDialog = signal(false);
   readonly activeScene = signal<'earth' | 'tree'>('earth');
-  readonly showNavLabels = signal(false);
-
-  private earthScene: EarthFlylineScene | null = null;
-  private treeScene: MoonTreeScene | null = null;
-
-  /** Earth scene factory — uses EarthFlyline (same as home section 2) */
-  readonly earthFactory = (canvas: HTMLCanvasElement) => {
-    try {
-      this.earthScene = new EarthFlylineScene(canvas, { autoRotate: true });
-      return this.earthScene;
-    } catch (e) {
-      console.warn('[3D Experience] Earth scene init failed:', e);
-      return { init() {}, destroy() {} };
-    }
-  };
-
-  /** Moon tree scene factory */
-  readonly treeFactory = (canvas: HTMLCanvasElement) => {
-    try {
-      this.treeScene = new MoonTreeScene(canvas);
-      return this.treeScene;
-    } catch (e) {
-      console.warn('[3D Experience] Moon tree scene init failed:', e);
-      return { init() {}, destroy() {} };
-    }
-  };
 
   ngOnInit(): void {
     const cap = this.device.capability();
@@ -67,7 +37,6 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
 
     if (cap.tier === 'unsupported' || cap.tier === 'low') {
       this.renderMode.set('none');
-      // 直接弹窗告知用户不支持
       this.showCompatDialog.set(true);
     } else if (cap.tier === 'medium') {
       this.renderMode.set('lightweight');
@@ -77,28 +46,7 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.earthScene?.destroy();
-    this.earthScene = null;
-    this.treeScene?.destroy();
-    this.treeScene = null;
-  }
-
-  @HostListener('mousemove', ['$event'])
-  onMouseMove(event: MouseEvent): void {
-    if (!this.earthScene) return;
-    const rect = this.el.nativeElement.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    // EarthFlylineScene uses setManualRotationDegrees for mouse interaction
-    this.earthScene.setManualRotationDegrees(x * 15);
-  }
-
-  @HostListener('click', ['$event'])
-  onEarthClick(event: MouseEvent): void {
-    if (this.activeScene() !== 'earth' || !this.earthScene) return;
-    // EarthFlylineScene has zoom interaction on click
-    this.earthScene.zoomIn();
-    setTimeout(() => this.earthScene?.zoomOut(), 800);
+    // 子组件自己管理场景生命周期
   }
 
   t(key: string): string {
@@ -109,21 +57,11 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
     this.activeScene.set(scene);
   }
 
-  navigateTo(path: string): void {
-    this.router.navigate([path]);
-  }
-
-
   closeCompatDialog(): void {
     this.showCompatDialog.set(false);
-    // 不支持时关闭弹窗直接返回首页
     if (this.renderMode() === 'none') {
       this.router.navigate(['/']);
     }
-  }
-
-  toggleNavLabels(): void {
-    this.showNavLabels.update((v) => !v);
   }
 
   goBack(): void {

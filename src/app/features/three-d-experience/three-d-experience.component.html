@@ -39,44 +39,9 @@
     <!-- 3D Canvas Area -->
     <div class="scene-viewport">
       @if (activeScene() === 'earth') {
-        <app-three-canvas [sceneFactory]="earthFactory" />
+        <app-home-earth-flyline />
       } @else {
-        <app-three-canvas [sceneFactory]="treeFactory" />
-      }
-    </div>
-
-    <!-- Floating nav overlay -->
-    <div class="scene-nav-overlay" (mouseenter)="toggleNavLabels()" (mouseleave)="toggleNavLabels()">
-      <div class="nav-hint">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="1"></circle>
-          <circle cx="12" cy="5" r="1"></circle>
-          <circle cx="12" cy="19" r="1"></circle>
-        </svg>
-      </div>
-      @if (showNavLabels()) {
-        <div class="nav-links">
-          <button class="nav-link-item" (click)="navigateTo('/blog')">
-            <span class="nav-link-dot"></span>
-            <span>{{ t('nav.blog') }}</span>
-          </button>
-          <button class="nav-link-item" (click)="navigateTo('/projects')">
-            <span class="nav-link-dot"></span>
-            <span>{{ t('nav.projects') }}</span>
-          </button>
-          <button class="nav-link-item" (click)="navigateTo('/lab')">
-            <span class="nav-link-dot"></span>
-            <span>{{ t('nav.lab') }}</span>
-          </button>
-          <button class="nav-link-item" (click)="navigateTo('/ai-frontline')">
-            <span class="nav-link-dot"></span>
-            <span>{{ t('nav.aiFrontline') }}</span>
-          </button>
-          <button class="nav-link-item" (click)="navigateTo('/about')">
-            <span class="nav-link-dot"></span>
-            <span>{{ t('nav.about') }}</span>
-          </button>
-        </div>
+        <app-home-blue-moon-tree />
       }
     </div>
 
