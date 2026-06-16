@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } 
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { RecaptchaService } from '../../core/services/recaptcha.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private recaptcha = inject(RecaptchaService);
 
   email = signal('');
   username = signal('');
@@ -87,7 +89,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.registrationClosed()) return;
 
     if (!this.email() || !this.username() || !this.password()) {
@@ -117,7 +119,10 @@ export class RegisterComponent implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    this.authService.register(this.email(), this.password(), this.username()).subscribe({
+    // 获取 reCAPTCHA token
+    const captchaToken = await this.recaptcha.execute('register');
+
+    this.authService.register(this.email(), this.password(), this.username(), captchaToken).subscribe({
       next: (response) => {
         this.loading.set(false);
         const isAdmin = response.user?.role === 'admin';

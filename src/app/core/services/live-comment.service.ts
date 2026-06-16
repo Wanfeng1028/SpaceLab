@@ -85,9 +85,10 @@ export class LiveCommentService {
    * @param content 评论内容
    * @param parentCommentId 父评论 ID（可选，用于回复）
    */
-  createComment(postId: string, content: string, parentCommentId?: string): Observable<LiveComment> {
+  createComment(postId: string, content: string, parentCommentId?: string, captchaToken?: string): Observable<LiveComment> {
     const body: any = {
-      content: content
+      content: content,
+      captcha_token: captchaToken || '',
     };
 
     if (parentCommentId) {

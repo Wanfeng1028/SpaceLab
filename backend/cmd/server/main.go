@@ -19,6 +19,7 @@ import (
 	comment "github.com/spacelab/backend/internal/handler/comment"
 	media "github.com/spacelab/backend/internal/handler/media"
 	aiNewsHandler "github.com/spacelab/backend/internal/handler/ai_news"
+	aiToolHandler "github.com/spacelab/backend/internal/handler/ai_tool"
 	post "github.com/spacelab/backend/internal/handler/post"
 	projecthandler "github.com/spacelab/backend/internal/handler/project"
 	"github.com/spacelab/backend/internal/middleware"
@@ -61,6 +62,7 @@ func main() {
 		&model.SensitiveWord{},
 		&model.CommentReport{},
 		&model.AiNews{},
+		&model.AiTool{},
 	); err != nil {
 		utils.Logger.Warn("Auto-migration warning", zap.Error(err))
 	}
@@ -100,6 +102,7 @@ func main() {
 	tagService := service.NewTagService(config.GetDB())
 	friendLinkService := service.NewFriendLinkService(config.GetDB())
 	aiNewsService := service.NewAiNewsService(config.GetDB())
+	aiToolService := service.NewAiToolService(config.GetDB())
 
 	// 创建处理器
 	authHandler := auth.NewAuthHandler(authService, cfg)
@@ -116,6 +119,7 @@ func main() {
 	tagHandler := contenthandler.NewTagHandler(tagService)
 	friendLinkHandler := contenthandler.NewFriendLinkHandler(friendLinkService)
 	newsHandler := aiNewsHandler.NewAiNewsHandler(aiNewsService)
+	toolHandler := aiToolHandler.NewAiToolHandler(aiToolService)
 
 	r := gin.Default()
 
@@ -311,6 +315,10 @@ func main() {
 			public.GET("/ai-news", newsHandler.List)
 			public.GET("/ai-news/categories", newsHandler.GetCategories)
 			public.GET("/ai-news/:slug", newsHandler.GetBySlug)
+
+			// 实验室（公开）
+			public.GET("/ai-tools", toolHandler.List)
+			public.GET("/ai-tools/categories", toolHandler.GetCategories)
 		}
 	}
 

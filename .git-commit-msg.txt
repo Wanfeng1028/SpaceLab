@@ -1,3 +1,17 @@
-docs: update architecture review - AI Frontline API completed, Lab still pending
+feat: add AiTool backend API and migrate Lab component to use it
+
+Backend:
+- Add AiTool model (title, summary, category, source, url, tags, dates)
+- Register AiTool in AutoMigrate
+- Create AiToolService with list (paginated, category filter, search) + categories
+- Create AiToolHandler with public endpoints (list, categories)
+
+Frontend:
+- Create AiToolService (list with pagination/category/search, categories)
+- Update LabComponent: load tools from backend API first, fallback to static JSON
+- Add adapter to transform backend snake_case to UI camelCase format
+
+Docs:
+- Update architecture-review.md - all pages now use backend API as primary source
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

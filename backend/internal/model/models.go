@@ -280,3 +280,18 @@ type AiNews struct {
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
 }
+
+// AiTool 实验室 AI 工具
+type AiTool struct {
+	ID          uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	Title       string    `gorm:"size:500;not null" json:"title"`
+	Summary     string    `gorm:"type:text" json:"summary"`
+	Category    string    `gorm:"size:100;index" json:"category"`
+	Source      string    `gorm:"size:200" json:"source"`
+	URL         string    `gorm:"size:500" json:"url"`
+	Tags        []string  `gorm:"type:text[]" json:"tags"`
+	PublishedAt string    `gorm:"size:20" json:"published_at"`
+	FetchedAt   string    `gorm:"size:30" json:"fetched_at"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}

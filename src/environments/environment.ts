@@ -7,6 +7,9 @@ export const environment = {
   // LiveComment 站点 ID（需要在 https://livecomment.cn 注册获取）
   liveCommentSiteId: 'your-livecomment-site-id',
   
+  // reCAPTCHA v3 Site Key（需在 https://www.google.com/recaptcha/admin 申请）
+  recaptchaSiteKey: '',
+  
   // 应用版本
   appVersion: '1.0.0',
 

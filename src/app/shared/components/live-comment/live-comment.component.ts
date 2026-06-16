@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 
 import { LiveCommentService, LiveComment } from '../../../core/services/live-comment.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { RecaptchaService } from '../../../core/services/recaptcha.service';
 
 @Component({
   selector: 'app-live-comment',
@@ -24,6 +25,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
 
   private commentService = inject(LiveCommentService);
   private authService = inject(AuthService);
+  private recaptcha = inject(RecaptchaService);
 
   comments: LiveComment[] = [];
   loading: boolean = false;
@@ -94,7 +96,7 @@ export class LiveCommentComponent implements OnInit, OnChanges {
       });
   }
 
-  submitComment(): void {
+  async submitComment(): Promise<void> {
     if (!this.newComment.trim()) return;
 
     if (!this.isLoggedIn()) {
@@ -106,11 +108,13 @@ export class LiveCommentComponent implements OnInit, OnChanges {
     this.error = null;
 
     const content = this.newComment.trim();
+    const captchaToken = await this.recaptcha.execute('comment');
 
     this.commentService.createComment(
       this.postId,
       content,
-      this.replyTo?.id
+      this.replyTo?.id,
+      captchaToken
     ).subscribe({
       next: () => {
         this.newComment = '';

@@ -2,6 +2,7 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@a
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { RecaptchaService } from '../../core/services/recaptcha.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private recaptcha = inject(RecaptchaService);
 
   email = signal('');
   password = signal('');
@@ -49,7 +51,7 @@ export class LoginComponent {
   resendLoading = signal(false);
   resendSuccess = signal(false);
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     // 前端校验
     if (!this.email() || !this.password()) {
       this.error.set('请输入邮箱和密码');
@@ -64,7 +66,10 @@ export class LoginComponent {
     this.loading.set(true);
     this.error.set('');
 
-    this.authService.login(this.email(), this.password()).subscribe({
+    // 获取 reCAPTCHA token
+    const captchaToken = await this.recaptcha.execute('login');
+
+    this.authService.login(this.email(), this.password(), captchaToken).subscribe({
       next: (response) => {
         this.loading.set(false);
         // 检查邮箱是否已验证

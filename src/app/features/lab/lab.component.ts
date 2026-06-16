@@ -18,6 +18,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { I18nService } from '../../core/services/i18n.service';
 import { LabToolsService, LabResourceItem } from '../../core/services/lab-tools.service';
+import { AiToolService } from '../../core/services/ai-tool.service';
 import {
   ResourceDetailDialogComponent,
   ResourceDetailData,
@@ -110,6 +111,7 @@ export class LabComponent implements OnInit {
   private readonly i18n = inject(I18nService);
   private readonly dialog = inject(MatDialog);
   private readonly labToolsService = inject(LabToolsService);
+  private readonly aiToolService = inject(AiToolService);
 
   readonly tabs: { key: TabKey; labelKey: string }[] = [
     { key: 'tools', labelKey: 'lab.aiTools' },
@@ -228,31 +230,56 @@ export class LabComponent implements OnInit {
   async loadData() {
     this.loading.set(true);
     this.error.set(null);
+
     try {
-      // Load projects from generated content (still small)
+      // 优先从后端 API 加载工具
+      this.aiToolService.list(1, 200).subscribe({
+        next: (res) => {
+          const backendTools: LabResourceItem[] = (res.tools ?? []).map((item) => ({
+            id: item.id,
+            title: item.title,
+            summary: item.summary,
+            category: item.category,
+            source: item.source,
+            url: item.url,
+            tags: item.tags || [],
+            publishedAt: item.published_at,
+            fetchedAt: item.fetched_at,
+            date: item.published_at?.slice(0, 10),
+          }));
+          this.toolsData.set(backendTools);
+          this.totalTools.set(res.total);
+        },
+        error: () => this.loadStaticTools(),
+      });
+
+      // Load projects from generated content
       const { LAB_AI_PROJECTS, LAB_SOURCES } =
         await import('../../../generated/content.generated');
       this.projectsData.set(LAB_AI_PROJECTS);
       this.sources.set(LAB_SOURCES);
 
-      // Load tools metadata and first page from runtime
-      const meta = await this.labToolsService.getMeta().toPromise();
-      if (meta) {
-        this.totalTools.set(meta.total);
-        const firstPage = await this.labToolsService.getPage(1).toPromise();
-        if (firstPage) {
-          this.toolsData.set(firstPage);
-        }
-      }
+      this.loading.set(false);
     } catch (err) {
       console.error('Failed to load lab data:', err);
       this.error.set('Failed to load data');
-      // Fallback to empty arrays
       this.toolsData.set([]);
       this.projectsData.set([]);
-    } finally {
       this.loading.set(false);
     }
+  }
+
+  private loadStaticTools(): void {
+    this.labToolsService.getMeta().subscribe({
+      next: (meta) => {
+        this.totalTools.set(meta.total);
+        this.labToolsService.getPage(1).subscribe({
+          next: (items) => this.toolsData.set(items),
+          error: () => this.toolsData.set([]),
+        });
+      },
+      error: () => this.toolsData.set([]),
+    });
   }
 
   openDialog(item: LabResourceItem) {

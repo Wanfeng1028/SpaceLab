@@ -119,12 +119,19 @@ func (h *AuthHandler) Register(c *gin.Context) {
 // Login 用户登录
 func (h *AuthHandler) Login(c *gin.Context) {
 	var input struct {
-		Email    string `json:"email" binding:"required,email"`
-		Password string `json:"password" binding:"required"`
+		Email        string `json:"email" binding:"required,email"`
+		Password     string `json:"password" binding:"required"`
+		CaptchaToken string `json:"captcha_token"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
+
+	// reCAPTCHA 校验
+	if ok, _ := utils.VerifyRecaptchaToken(input.CaptchaToken, h.recaptchaSecret); !ok {
+		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
 		return
 	}
 

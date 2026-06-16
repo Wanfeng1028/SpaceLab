@@ -152,20 +152,22 @@ export class AuthService {
     this.authState.set('anonymous');
   }
 
-  register(email: string, password: string, username: string): Observable<AuthResponse> {
+  register(email: string, password: string, username: string, captchaToken?: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, {
       email,
       password,
-      username
+      username,
+      captcha_token: captchaToken || '',
     }).pipe(
       tap(response => this.storeAuthData(response))
     );
   }
 
-  login(email: string, password: string): Observable<AuthResponse> {
+  login(email: string, password: string, captchaToken?: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, {
       email,
-      password
+      password,
+      captcha_token: captchaToken || '',
     }).pipe(
       tap(response => this.storeAuthData(response))
     );
