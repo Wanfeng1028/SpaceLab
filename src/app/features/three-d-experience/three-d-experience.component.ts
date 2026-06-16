@@ -10,8 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
-import { EarthObservatoryScene } from '../../three/scenes/earth-observatory.scene';
-import { EarthObservatoryLightScene } from '../../three/scenes/earth-observatory-light.scene';
+import { EarthFlylineScene } from '../../shared/three/earth-flyline/earth-flyline-scene';
 import { MoonTreeScene } from '../../shared/three/moon-tree/moon-tree-scene';
 import { DeviceCapabilityService, DeviceTier } from '../../core/services/device-capability.service';
 import { I18nService } from '../../core/services/i18n.service';
@@ -37,17 +36,13 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
   readonly activeScene = signal<'earth' | 'tree'>('earth');
   readonly showNavLabels = signal(false);
 
-  private earthScene: EarthObservatoryScene | EarthObservatoryLightScene | null = null;
+  private earthScene: EarthFlylineScene | null = null;
   private treeScene: MoonTreeScene | null = null;
 
-  /** Earth scene factory — high tier gets full scene, medium gets light */
+  /** Earth scene factory — uses EarthFlyline (same as home section 2) */
   readonly earthFactory = (canvas: HTMLCanvasElement) => {
     try {
-      if (this.renderMode() === 'full') {
-        this.earthScene = new EarthObservatoryScene(canvas);
-      } else {
-        this.earthScene = new EarthObservatoryLightScene(canvas);
-      }
+      this.earthScene = new EarthFlylineScene(canvas, { autoRotate: true });
       return this.earthScene;
     } catch (e) {
       console.warn('[3D Experience] Earth scene init failed:', e);
@@ -94,13 +89,16 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
     const rect = this.el.nativeElement.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    this.earthScene.updateMouse(x, y);
+    // EarthFlylineScene uses setManualRotationDegrees for mouse interaction
+    this.earthScene.setManualRotationDegrees(x * 15);
   }
 
   @HostListener('click', ['$event'])
   onEarthClick(event: MouseEvent): void {
     if (this.activeScene() !== 'earth' || !this.earthScene) return;
-    this.earthScene.triggerScanWave();
+    // EarthFlylineScene has zoom interaction on click
+    this.earthScene.zoomIn();
+    setTimeout(() => this.earthScene?.zoomOut(), 800);
   }
 
   t(key: string): string {

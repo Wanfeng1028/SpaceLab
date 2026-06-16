@@ -262,61 +262,6 @@
 }
 @keyframes auth-spin { to { transform: rotate(360deg); } }
 
-/* ── Turnstile 验证 ── */
-.form-turnstile {
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: center;
-}
-
-/* ── 图形验证码 ── */
-.form-captcha {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  padding: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px;
-}
-
-.form-captcha__image {
-  width: 120px;
-  height: 44px;
-  border-radius: 8px;
-  cursor: pointer;
-  object-fit: contain;
-  background: rgba(0,0,0,0.3);
-  transition: opacity 0.2s;
-  flex-shrink: 0;
-}
-
-.form-captcha__image:hover { opacity: 0.8; }
-
-.form-captcha__input {
-  flex: 1;
-  min-width: 0;
-  height: 44px;
-  padding: 0 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  color: #fff;
-  font-size: 15px;
-  letter-spacing: 4px;
-  text-align: center;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.form-captcha__input:focus { border-color: #818cf8; }
-
-.form-captcha__input::placeholder {
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 0;
-}
-
 /* ── Divider ── */
 .auth-divider {
   display: flex;
