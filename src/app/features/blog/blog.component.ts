@@ -11,6 +11,29 @@ import {
   matchesSearchQuery,
   normalizeSearchText,
 } from '../../core/utils/search.utils';
+import { POSTS as STATIC_POSTS } from '../../../generated/content.generated';
+
+/** 将静态 GeneratedPost 转为后端 Post 格式 */
+function staticToPost(p: typeof STATIC_POSTS[number]): Post {
+  return {
+    id: p.slug,
+    slug: p.slug,
+    title: p.title,
+    summary: p.summary,
+    content: p.contentHtml,
+    cover_url: p.cover || '',
+    category: p.category,
+    tags: p.tags,
+    reading_time: p.readingTime,
+    status: p.published ? 'published' : 'draft',
+    author_id: '',
+    language: 'zh-CN',
+    created_at: p.date,
+    updated_at: p.date,
+    published_at: p.date,
+    view_count: 0,
+  };
+}
 
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 const WEB3FORMS_ACCESS_KEY = '874ed1fa-0a5f-481a-810f-83d2d2613b36';
@@ -119,8 +142,8 @@ export class BlogComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.loadError.set('文章加载失败，请稍后再试');
-        this._allPosts.set([]);
+        // 降级：使用静态生成的数据
+        this._allPosts.set(STATIC_POSTS.map(staticToPost));
         this.loading.set(false);
       },
     });
