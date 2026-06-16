@@ -18,6 +18,7 @@ import (
 	contenthandler "github.com/spacelab/backend/internal/handler/content"
 	comment "github.com/spacelab/backend/internal/handler/comment"
 	media "github.com/spacelab/backend/internal/handler/media"
+	aiNewsHandler "github.com/spacelab/backend/internal/handler/ai_news"
 	post "github.com/spacelab/backend/internal/handler/post"
 	projecthandler "github.com/spacelab/backend/internal/handler/project"
 	"github.com/spacelab/backend/internal/middleware"
@@ -59,6 +60,7 @@ func main() {
 		&model.AdminAuditLog{},
 		&model.SensitiveWord{},
 		&model.CommentReport{},
+		&model.AiNews{},
 	); err != nil {
 		utils.Logger.Warn("Auto-migration warning", zap.Error(err))
 	}
@@ -97,6 +99,7 @@ func main() {
 	categoryService := service.NewCategoryService(config.GetDB())
 	tagService := service.NewTagService(config.GetDB())
 	friendLinkService := service.NewFriendLinkService(config.GetDB())
+	aiNewsService := service.NewAiNewsService(config.GetDB())
 
 	// 创建处理器
 	authHandler := auth.NewAuthHandler(authService, cfg)
@@ -104,6 +107,7 @@ func main() {
 	postHandler := post.NewPostHandler(postService)
 	projectHandler := projecthandler.NewProjectHandler(projectService)
 	nativeCommentHandler := comment.NewNativeCommentHandler(commentService)
+	nativeCommentHandler.SetRecaptchaSecret(cfg.RecaptchaSecret)
 	// liveCommentHandler 保留供未来切换使用
 	_ = comment.NewLiveCommentHandler(cfg)
 	mediaHandler := media.NewMediaHandler(cfg, config.GetDB())
@@ -111,6 +115,7 @@ func main() {
 	categoryHandler := contenthandler.NewCategoryHandler(categoryService)
 	tagHandler := contenthandler.NewTagHandler(tagService)
 	friendLinkHandler := contenthandler.NewFriendLinkHandler(friendLinkService)
+	newsHandler := aiNewsHandler.NewAiNewsHandler(aiNewsService)
 
 	r := gin.Default()
 
@@ -140,7 +145,7 @@ func main() {
 		{
 			authRoutes.POST("/register", middleware.AuthLimiter(), authHandler.Register)
 			authRoutes.POST("/login", middleware.AuthFailureLimiter(), authHandler.Login)
-			authRoutes.POST("/refresh", authHandler.RefreshToken)
+			authRoutes.POST("/refresh", middleware.AuthLimiter(), authHandler.RefreshToken)
 			authRoutes.POST("/verify-email", authHandler.VerifyEmail)
 			authRoutes.GET("/verify-email", authHandler.VerifyEmail) // 邮件链接直接点击
 			authRoutes.POST("/request-password-reset", middleware.AuthLimiter(), authHandler.RequestPasswordReset)
@@ -160,13 +165,13 @@ func main() {
 			protected.POST("/auth/logout", authHandler.Logout)
 
 			// 评论管理
-			protected.POST("/comments", nativeCommentHandler.CreateComment)
-			protected.PUT("/comments/:id", nativeCommentHandler.UpdateComment)
+			protected.POST("/comments", middleware.AuthLimiter(), nativeCommentHandler.CreateComment)
+			protected.PUT("/comments/:id", middleware.AuthLimiter(), nativeCommentHandler.UpdateComment)
 			protected.DELETE("/comments/:id", nativeCommentHandler.DeleteComment)
 			// 兼容前端 /posts/:id/comments 路径创建评论
-			protected.POST("/posts/:id/comments", nativeCommentHandler.CreateComment)
+			protected.POST("/posts/:id/comments", middleware.AuthLimiter(), nativeCommentHandler.CreateComment)
 			// 评论举报
-			protected.POST("/comments/:id/report", nativeCommentHandler.ReportComment)
+			protected.POST("/comments/:id/report", middleware.AuthLimiter(), nativeCommentHandler.ReportComment)
 
 			// 文章管理（仅 Admin 可访问）
 			adminOnly := protected.Group("")
@@ -196,6 +201,11 @@ func main() {
 				adminOnly.POST("/friend-links", friendLinkHandler.CreateFriendLink)
 				adminOnly.PUT("/friend-links/:id", friendLinkHandler.UpdateFriendLink)
 				adminOnly.DELETE("/friend-links/:id", friendLinkHandler.DeleteFriendLink)
+
+				// AI 新闻管理
+				adminOnly.POST("/ai-news", newsHandler.Create)
+				adminOnly.PUT("/ai-news/:id", newsHandler.Update)
+				adminOnly.DELETE("/ai-news/:id", newsHandler.Delete)
 			}
 
 			// 管理员路由（仅 Admin 可访问）
@@ -296,6 +306,11 @@ func main() {
 			// 友链（公开）
 			public.GET("/friend-links", friendLinkHandler.ListFriendLinks)
 			public.GET("/friend-links/:id", friendLinkHandler.GetFriendLink)
+
+			// AI 新闻（公开）
+			public.GET("/ai-news", newsHandler.List)
+			public.GET("/ai-news/categories", newsHandler.GetCategories)
+			public.GET("/ai-news/:slug", newsHandler.GetBySlug)
 		}
 	}
 

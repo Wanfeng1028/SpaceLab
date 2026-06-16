@@ -262,3 +262,21 @@ type CommentReport struct {
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
 }
+
+// AiNews AI 前线新闻条目
+type AiNews struct {
+	ID          uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
+	Slug        string     `gorm:"uniqueIndex;size:255;not null" json:"slug"`
+	Title       string     `gorm:"size:500;not null" json:"title"`
+	Summary     string     `gorm:"type:text" json:"summary"`
+	Content     string     `gorm:"type:text" json:"content"`
+	SourceName  string     `gorm:"size:200" json:"source_name"`
+	SourceURL   string     `gorm:"size:500" json:"source_url"`
+	Category    string     `gorm:"size:50;index" json:"category"` // model, product, funding, opensource, agent, tool, industry
+	Tags        []string   `gorm:"type:text[]" json:"tags"`
+	ImageURL    string     `gorm:"size:500" json:"image_url"`
+	Status      string     `gorm:"size:20;default:'draft'" json:"status"` // draft, published, archived
+	PublishedAt *time.Time `json:"published_at"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+}

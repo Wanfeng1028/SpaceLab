@@ -26,6 +26,9 @@ type Config struct {
 	MailerLiteAPIKey  string
 	MailerLiteGroupID string
 	MailerLiteBaseURL string
+	// reCAPTCHA v3 配置
+	RecaptchaSecret  string
+	RecaptchaSiteKey string
 }
 
 func LoadConfig() *Config {
@@ -90,6 +93,9 @@ func LoadConfig() *Config {
 		MailerLiteAPIKey:  getEnv("MAILERLITE_API_KEY", ""),
 		MailerLiteGroupID: getEnv("MAILERLITE_GROUP_ID", ""),
 		MailerLiteBaseURL: getEnv("MAILERLITE_BASE_URL", "https://api.mailerlite.com/api/v2"),
+		// reCAPTCHA
+		RecaptchaSecret:  getEnv("RECAPTCHA_SECRET_KEY", ""),
+		RecaptchaSiteKey: getEnv("RECAPTCHA_SITE_KEY", ""),
 	}
 }
 

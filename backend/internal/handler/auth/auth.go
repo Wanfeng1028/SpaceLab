@@ -17,12 +17,14 @@ import (
 type AuthHandler struct {
 	authService *service.AuthService
 	cfg         *config.Config
+	recaptchaSecret string
 }
 
 func NewAuthHandler(authService *service.AuthService, cfg *config.Config) *AuthHandler {
 	return &AuthHandler{
-		authService: authService,
-		cfg:         cfg,
+		authService:     authService,
+		cfg:             cfg,
+		recaptchaSecret: cfg.RecaptchaSecret,
 	}
 }
 
@@ -65,13 +67,20 @@ func parseDeviceInfo(ua string) string {
 // Register 用户注册
 func (h *AuthHandler) Register(c *gin.Context) {
 	var input struct {
-		Email    string `json:"email" binding:"required,email"`
-		Password string `json:"password" binding:"required,min=8"`
-		Username string `json:"username" binding:"required,min=2,max=50"`
+		Email       string `json:"email" binding:"required,email"`
+		Password    string `json:"password" binding:"required,min=8"`
+		Username    string `json:"username" binding:"required,min=2,max=50"`
+		CaptchaToken string `json:"captcha_token"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
+		return
+	}
+
+	// reCAPTCHA 校验
+	if ok, _ := utils.VerifyRecaptchaToken(input.CaptchaToken, h.recaptchaSecret); !ok {
+		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
 		return
 	}
 

@@ -32,13 +32,20 @@ func NewCommentService(db *gorm.DB) *CommentService {
 	return &CommentService{db: db}
 }
 
-// checkCommentRateLimit 评论频率限制：同一用户每分钟最多 3 条评论
-func (s *CommentService) checkCommentRateLimit(userID string) error {
+// CheckCommentRateLimit 检查用户评论频率（每分钟最多 3 条，每小时最多 20 条）
+func (s *CommentService) CheckCommentRateLimit(userID string) error {
 	oneMinuteAgo := time.Now().Add(-1 * time.Minute)
-	var count int64
-	s.db.Model(&model.Comment{}).Where("user_id = ? AND created_at > ?", userID, oneMinuteAgo).Count(&count)
-	if count >= 3 {
+	var countMinute int64
+	s.db.Model(&model.Comment{}).Where("user_id = ? AND created_at > ?", userID, oneMinuteAgo).Count(&countMinute)
+	if countMinute >= 3 {
 		return errors.New("comment rate limit exceeded, please wait before posting again")
+	}
+
+	oneHourAgo := time.Now().Add(-1 * time.Hour)
+	var countHour int64
+	s.db.Model(&model.Comment{}).Where("user_id = ? AND created_at > ?", userID, oneHourAgo).Count(&countHour)
+	if countHour >= 20 {
+		return errors.New("hourly comment limit exceeded")
 	}
 	return nil
 }
@@ -170,7 +177,7 @@ func (s *CommentService) CreateComment(input CreateCommentInput, userID string) 
 	}
 
 	// 评论频率限制
-	if err := s.checkCommentRateLimit(userID); err != nil {
+	if err := s.CheckCommentRateLimit(userID); err != nil {
 		return nil, err
 	}
 

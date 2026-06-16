@@ -1,11 +1,16 @@
-feat(write): add markdown preview, auto-save, and unsaved changes warning
+feat: add AiNews backend API and migrate AI Frontline to use it
 
-Editor improvements:
-- Preview mode now renders Markdown via MarkdownRendererService
-- Auto-save draft every 30s (for new posts with title + content)
-- Unsaved changes warning on page leave (beforeunload event)
-- Dirty state indicator "未保存" badge in header
-- Confirm dialog on back navigation when dirty
-- Summary displayed in preview header
+Backend:
+- Add AiNews model (slug, title, summary, content, source, category, tags, status)
+- Register AiNews in AutoMigrate
+- Create AiNewsService with CRUD + list by status/category + pagination
+- Create AiNewsHandler with public endpoints (list, getBySlug, categories)
+- Create admin endpoints (create, update, delete)
+- Add seed script (cmd/seed/seed_ai_news.go) to import static news JSON into DB
+
+Frontend:
+- Create AiNewsService with list/getBySlug/getCategories methods
+- Update AiFrontlineComponent: load from backend API first, fallback to static
+- Add adapter to transform backend model fields to UI format
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

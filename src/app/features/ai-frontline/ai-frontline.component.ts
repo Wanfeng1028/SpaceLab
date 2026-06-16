@@ -26,6 +26,7 @@ import {
   matchesSearchQuery,
   normalizeSearchText,
 } from '../../core/utils/search.utils';
+import { AiNewsService } from '../../core/services/ai-news.service';
 
 export interface AiNewsItem {
   id: string;
@@ -113,6 +114,7 @@ const PAGE_SIZE = 15;
 export class AiFrontlineComponent implements OnInit {
   private readonly i18n = inject(I18nService);
   private readonly dialog = inject(MatDialog);
+  private readonly aiNewsService = inject(AiNewsService);
 
   readonly news = signal<AiNewsItem[]>([]);
   readonly source = signal<AiFrontlineSource | null>(null);
@@ -307,6 +309,41 @@ export class AiFrontlineComponent implements OnInit {
   async loadNews() {
     this.loading.set(true);
     this.error.set(null);
+
+    // 优先从后端 API 加载
+    this.aiNewsService.list(1, 200, 'published').subscribe({
+      next: (res) => {
+        const backendNews: AiNewsItem[] = (res.news ?? []).map((item) => ({
+          id: item.slug,
+          date: (item.published_at || item.created_at || '').split('T')[0],
+          title: item.title,
+          summary: item.summary || '',
+          source: item.source_name || '',
+          url: item.source_url || '',
+          category: item.category as AiNewsItem['category'],
+          tags: item.tags || [],
+          fetchedAt: item.updated_at || '',
+        }));
+        this.news.set(backendNews);
+        this.source.set({
+          name: 'SpaceLab AI News Database',
+          url: '',
+          description: 'AI news curated and sourced from public channels.',
+          lastFetchedAt: new Date().toISOString(),
+          contentStartDate: new Date().toISOString().split('T')[0],
+          notice: 'Content may be from public AI news aggregator sources.',
+        });
+        this.loading.set(false);
+        this.validateAndLogStats();
+      },
+      error: () => {
+        // 降级：从静态生成数据加载
+        this.loadStaticNews();
+      },
+    });
+  }
+
+  private async loadStaticNews() {
     try {
       const { AI_FRONTLINE_NEWS, AI_FRONTLINE_SOURCE } =
         await import('../../../generated/content.generated');
@@ -324,10 +361,8 @@ export class AiFrontlineComponent implements OnInit {
       }
     } finally {
       this.loading.set(false);
+      this.validateAndLogStats();
     }
-
-    // Data validation and statistics logging
-    this.validateAndLogStats();
   }
 
   private validateAndLogStats(): void {

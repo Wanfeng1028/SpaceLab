@@ -103,12 +103,45 @@ func (s *AuthService) IsRegistrationOpen() bool {
 	return setting.Value == "true" || setting.Value == "1"
 }
 
+// 临时邮箱域名黑名单
+var disposableEmailDomains = map[string]bool{
+	"10minutemail.com": true, "mailinator.com": true, "guerrillamail.com": true,
+	"guerrillamail.net": true, "guerrillamail.org": true, "guerrillamail.biz": true,
+	"sharklasers.com": true, "grr.la": true, "yopmail.com": true,
+	"yopmail.fr": true, "yopmail.net": true, "throwaway.email": true,
+	"trashmail.com": true, "trashmail.net": true,
+	"mailnator.com": true, "getnada.com": true, "temp-mail.org": true,
+	"temp-mail.ru": true, "tempmail.email": true, "tempmail.net": true,
+	"tempmail.org": true, "tempmail.eu": true, "maildrop.cc": true,
+	"mailmetrash.com": true, "mailexpire.com": true, "mintemail.com": true,
+	"spamgourmet.com": true, "spamspot.com": true, "spam.la": true,
+	"emailondeck.com": true, "emailfake.com": true, "emailsilo.com": true,
+	"dispostable.com": true, "throw-away.com": true,
+	"mailcatch.com": true, "mailsac.com": true, "mailinator2.com": true,
+	"mailtaxi.com": true, "mytemp.email": true, "mytrashmail.com": true,
+	"quickinbox.com": true, "receivemails.com": true, "receivemail.org": true,
+	"receive-sms-online.info": true, "reginamail.com": true, "safetymail.info": true,
+	"shortmail.net": true, "slopsbox.com": true, "sofort-mail.de": true,
+	"spambox.info": true, "spambox.us": true, "spamcannon.com": true,
+	"spamdecoy.net": true, "spamex.com": true, "spamfighter.de": true,
+	"spamfree24.org": true, "spamhole.com": true,
+}
+
 // ValidateRegistration 校验注册参数
 func (s *AuthService) ValidateRegistration(email, password, username string) error {
 	// 邮箱格式校验
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
 	if !emailRegex.MatchString(email) {
 		return errors.New("invalid email format")
+	}
+
+	// 临时邮箱拦截
+	parts := strings.Split(email, "@")
+	if len(parts) == 2 {
+		domain := strings.ToLower(strings.TrimSpace(parts[1]))
+		if disposableEmailDomains[domain] {
+			return errors.New("disposable email addresses are not allowed")
+		}
 	}
 
 	// 邮箱唯一性校验

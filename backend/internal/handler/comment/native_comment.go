@@ -13,11 +13,19 @@ import (
 
 // NativeCommentHandler 自研评论处理器
 type NativeCommentHandler struct {
-	commentService *service.CommentService
+	commentService  *service.CommentService
+	recaptchaSecret string
 }
 
 func NewNativeCommentHandler(commentService *service.CommentService) *NativeCommentHandler {
-	return &NativeCommentHandler{commentService: commentService}
+	return &NativeCommentHandler{
+		commentService: commentService,
+	}
+}
+
+// SetRecaptchaSecret 设置 reCAPTCHA 密钥（在 main.go 中调用）
+func (h *NativeCommentHandler) SetRecaptchaSecret(secret string) {
+	h.recaptchaSecret = secret
 }
 
 // GetComments 获取文章评论
@@ -66,15 +74,31 @@ func (h *NativeCommentHandler) CreateComment(c *gin.Context) {
 	}
 
 	var input struct {
-		ContentID   string `json:"content_id"`
-		ContentType string `json:"content_type"`
-		Content     string `json:"content" binding:"required,min=1,max=5000"`
-		ParentID    string `json:"parent_id"`
+		ContentID    string `json:"content_id"`
+		ContentType  string `json:"content_type"`
+		Content      string `json:"content" binding:"required,min=1,max=5000"`
+		ParentID     string `json:"parent_id"`
+		CaptchaToken string `json:"captcha_token"`
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
 		return
+	}
+
+	// reCAPTCHA 校验（评论提交）
+	if ok, _ := utils.VerifyRecaptchaToken(input.CaptchaToken, h.recaptchaSecret); !ok {
+		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
+		return
+	}
+
+	// 评论频率限制（同一用户每小时最多 10 条）
+	uid, _ := userID.(string)
+	if uid != "" {
+		if err := h.commentService.CheckCommentRateLimit(uid); err != nil {
+			c.JSON(http.StatusTooManyRequests, gin.H{"error": "You are commenting too frequently, please try again later"})
+			return
+		}
 	}
 
 	// 支持从 URL param 获取 content_id（兼容 /posts/:id/comments）
