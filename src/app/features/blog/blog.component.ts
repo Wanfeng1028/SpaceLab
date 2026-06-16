@@ -31,6 +31,7 @@ export class BlogComponent implements OnInit {
   readonly searchQuery = signal('');
   readonly selectedCategory = signal('all');
   readonly loading = signal(false);
+  readonly loadError = signal<string | null>(null);
 
   // Newsletter form
   readonly newsletterEmail = signal('');
@@ -110,6 +111,7 @@ export class BlogComponent implements OnInit {
 
   loadPosts(): void {
     this.loading.set(true);
+    this.loadError.set(null);
     // Fetch all published posts from backend
     this.postService.getPosts(1, 100, 'published').subscribe({
       next: (response) => {
@@ -117,6 +119,7 @@ export class BlogComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => {
+        this.loadError.set('文章加载失败，请稍后再试');
         this._allPosts.set([]);
         this.loading.set(false);
       },

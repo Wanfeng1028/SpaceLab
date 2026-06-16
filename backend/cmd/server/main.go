@@ -260,6 +260,9 @@ func main() {
 				// 站点设置
 				adminRoutes.GET("/admin/settings", adminHandler.GetSiteSettings)
 				adminRoutes.PUT("/admin/settings", adminHandler.UpdateSiteSetting)
+
+				// 驾驶舱统计（综合概览）
+				adminRoutes.GET("/admin/stats/site", adminHandler.GetSiteStats)
 			}
 		}
 

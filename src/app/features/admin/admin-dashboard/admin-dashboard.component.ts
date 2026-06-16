@@ -5,24 +5,21 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { PostService } from '../../../core/services/post.service';
-import { UserService, UserStats } from '../../../core/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
-interface PostStats {
-  totalPosts: number;
-  publishedPosts: number;
-  draftPosts: number;
-  totalViews: number;
+interface SiteStats {
+  posts: { total: number; published: number; drafts: number; views: number };
+  projects: number;
+  comments: { total: number; pending: number };
+  users: { total: number; active: number; banned: number; recent: number };
+  ai_news: number;
+  ai_tools: number;
 }
 
 interface HealthStatus {
   status: string;
-  checks?: {
-    database: string;
-    redis: string;
-  };
+  checks?: { database: string; redis: string };
 }
 
 @Component({
@@ -33,54 +30,24 @@ interface HealthStatus {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminDashboardComponent implements OnInit {
-  private postService = inject(PostService);
-  private userService = inject(UserService);
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
   private router = inject(Router);
 
-  readonly postStats = signal<PostStats>({
-    totalPosts: 0,
-    publishedPosts: 0,
-    draftPosts: 0,
-    totalViews: 0,
-  });
-  readonly userStats = signal<UserStats>({
-    total_users: 0,
-    active_users: 0,
-    banned_users: 0,
-    recent_users: 0,
-  });
-  readonly loading = signal(false);
+  readonly stats = signal<SiteStats | null>(null);
   readonly health = signal<HealthStatus | null>(null);
+  readonly loading = signal(false);
 
   ngOnInit(): void {
-    this.loadPostStats();
-    this.loadUserStats();
+    this.loadStats();
     this.loadHealth();
   }
 
-  private loadPostStats(): void {
+  private loadStats(): void {
     this.loading.set(true);
-    this.postService.getPosts(1, 1000).subscribe({
-      next: (response) => {
-        const posts = response.posts || [];
-        this.postStats.set({
-          totalPosts: posts.length,
-          publishedPosts: posts.filter((p) => p.status === 'published').length,
-          draftPosts: posts.filter((p) => p.status === 'draft').length,
-          totalViews: posts.reduce((sum, p) => sum + (p.view_count || 0), 0),
-        });
-        this.loading.set(false);
-      },
+    this.http.get<SiteStats>(`${this.apiUrl}/admin/stats/site`).subscribe({
+      next: (s) => { this.stats.set(s); this.loading.set(false); },
       error: () => this.loading.set(false),
-    });
-  }
-
-  private loadUserStats(): void {
-    this.userService.getStats().subscribe({
-      next: (stats) => this.userStats.set(stats),
-      error: (err) => console.error('Failed to load user stats:', err),
     });
   }
 

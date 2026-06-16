@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/model"
 	"github.com/spacelab/backend/internal/service"
 	"github.com/spacelab/backend/internal/utils"
@@ -501,5 +500,64 @@ func (h *AdminHandler) GetUserRiskProfile(c *gin.Context) {
 	})
 }
 
-// Ensure uuid import is used
-var _ = uuid.Nil
+// GetSiteStats 获取站点概览统计（驾驶舱用）
+// 单次查询返回所有计数，避免前端逐个拉取
+func (h *AdminHandler) GetSiteStats(c *gin.Context) {
+	db := h.authService.DB()
+
+	var (
+		totalPosts, publishedPosts, draftPosts int64
+		totalViews                             int64
+		totalProjects                          int64
+		totalComments, pendingComments         int64
+		totalUsers, activeUsers, bannedUsers   int64
+		totalAiNews                            int64
+		totalAiTools                           int64
+		recentUsers                            int64
+	)
+
+	// 文章统计
+	db.Model(&model.Post{}).Count(&totalPosts)
+	db.Model(&model.Post{}).Where("status = ?", "published").Count(&publishedPosts)
+	db.Model(&model.Post{}).Where("status = ?", "draft").Count(&draftPosts)
+	db.Model(&model.Post{}).Select("COALESCE(SUM(view_count), 0)").Scan(&totalViews)
+
+	// 项目统计
+	db.Model(&model.Project{}).Count(&totalProjects)
+
+	// 评论统计
+	db.Model(&model.Comment{}).Count(&totalComments)
+	db.Model(&model.Comment{}).Where("status = ?", "pending").Count(&pendingComments)
+
+	// 用户统计
+	db.Model(&model.User{}).Count(&totalUsers)
+	db.Model(&model.User{}).Where("status = ?", "active").Count(&activeUsers)
+	db.Model(&model.User{}).Where("status = ?", "banned").Count(&bannedUsers)
+	db.Model(&model.User{}).Where("created_at > ?", time.Now().Add(-7*24*time.Hour)).Count(&recentUsers)
+
+	// AI 新闻/工具统计
+	db.Model(&model.AiNews{}).Count(&totalAiNews)
+	db.Model(&model.AiTool{}).Count(&totalAiTools)
+
+	c.JSON(http.StatusOK, gin.H{
+		"posts": gin.H{
+			"total":     totalPosts,
+			"published": publishedPosts,
+			"drafts":    draftPosts,
+			"views":     totalViews,
+		},
+		"projects": totalProjects,
+		"comments": gin.H{
+			"total":   totalComments,
+			"pending": pendingComments,
+		},
+		"users": gin.H{
+			"total":  totalUsers,
+			"active": activeUsers,
+			"banned": bannedUsers,
+			"recent": recentUsers,
+		},
+		"ai_news": totalAiNews,
+		"ai_tools": totalAiTools,
+	})
+}

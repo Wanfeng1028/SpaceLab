@@ -209,3 +209,41 @@ func TestSanitizeLinkURL(t *testing.T) {
 		})
 	}
 }
+
+// ── Benchmark ────────────────────────────────────────────────────────────
+
+func BenchmarkSanitizePlainString(b *testing.B) {
+	inputs := []string{
+		"<script>alert(1)</script>Hello World",
+		"<p><b>Bold</b></p>Normal text with <a href='#'>link</a>",
+		"Clean text with no HTML at all",
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		SanitizePlainString(inputs[i%len(inputs)])
+	}
+}
+
+func BenchmarkValidateSafeURL(b *testing.B) {
+	urls := []string{
+		"https://example.com/path?q=1&x=2",
+		"javascript:alert(1)",
+		"http://localhost:8080/api/v1/users",
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		ValidateSafeURL(urls[i%len(urls)])
+	}
+}
+
+func BenchmarkIsValidURL(b *testing.B) {
+	urls := []string{
+		"https://example.com/path?q=1&x=2",
+		"javascript:alert(1)",
+		"not-a-url",
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		IsValidURL(urls[i%len(urls)])
+	}
+}

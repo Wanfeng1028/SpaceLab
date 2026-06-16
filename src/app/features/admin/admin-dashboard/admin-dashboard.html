@@ -1,51 +1,78 @@
 <div class="dashboard">
   <h2 class="dashboard__title">仪表盘</h2>
 
-  <nz-row [nzGutter]="[16, 16]">
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="postStats().totalPosts" nzTitle="文章总数"></nz-statistic>
-      </nz-card>
-    </nz-col>
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="postStats().publishedPosts" nzTitle="已发布"></nz-statistic>
-      </nz-card>
-    </nz-col>
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="postStats().draftPosts" nzTitle="草稿"></nz-statistic>
-      </nz-card>
-    </nz-col>
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="postStats().totalViews" nzTitle="总阅读量"></nz-statistic>
-      </nz-card>
-    </nz-col>
-  </nz-row>
+  @if (loading()) {
+    <div class="dashboard__loading">加载中...</div>
+  } @else if (stats(); as s) {
+    <nz-row [nzGutter]="[16, 16]">
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.posts.total" nzTitle="文章总数"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.posts.published" nzTitle="已发布"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.posts.drafts" nzTitle="草稿"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.posts.views" nzTitle="总阅读量"></nz-statistic>
+        </nz-card>
+      </nz-col>
+    </nz-row>
 
-  <nz-row [nzGutter]="[16, 16]" class="dashboard__row">
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="userStats().total_users" nzTitle="用户总数"></nz-statistic>
-      </nz-card>
-    </nz-col>
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="userStats().active_users" nzTitle="活跃用户"></nz-statistic>
-      </nz-card>
-    </nz-col>
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="userStats().banned_users" nzTitle="封禁用户"></nz-statistic>
-      </nz-card>
-    </nz-col>
-    <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
-      <nz-card>
-        <nz-statistic [nzValue]="userStats().recent_users" nzTitle="近7天新增"></nz-statistic>
-      </nz-card>
-    </nz-col>
-  </nz-row>
+    <nz-row [nzGutter]="[16, 16]" class="dashboard__row">
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.users.total" nzTitle="用户总数"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.users.active" nzTitle="活跃用户"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.users.recent" nzTitle="近7天新增"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.comments.pending" nzTitle="待审评论"></nz-statistic>
+        </nz-card>
+      </nz-col>
+    </nz-row>
+
+    <nz-row [nzGutter]="[16, 16]" class="dashboard__row">
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.projects" nzTitle="项目"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.ai_news" nzTitle="AI 前线"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.ai_tools" nzTitle="AI 资源"></nz-statistic>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="12" [nzSm]="12" [nzMd]="6">
+        <nz-card>
+          <nz-statistic [nzValue]="s.comments.total" nzTitle="评论总数"></nz-statistic>
+        </nz-card>
+      </nz-col>
+    </nz-row>
+  }
 
   <div class="dashboard__shortcuts">
     <nz-card nzTitle="快捷操作">

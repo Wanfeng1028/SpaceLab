@@ -64,3 +64,48 @@ describe('AuthService', () => {
     });
   });
 });
+
+describe('login with captcha params', () => {
+  it('should include captcha_token, captcha_id and captcha_answer', () => {
+    const mockResponse = {
+      token: 'abc', refresh_token: 'def',
+      user: { id: '1', email: 'test@example.com', username: 'test', role: 'viewer', status: 'active', created_at: '2025-01-01' },
+      expires_at: '2026-01-01',
+    };
+
+    service.login('test@example.com', 'password123', 'turnstile_token', 'cid', '42').subscribe();
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/auth/login`);
+    expect(req.request.body).toEqual({
+      email: 'test@example.com',
+      password: 'password123',
+      captcha_token: 'turnstile_token',
+      captcha_id: 'cid',
+      captcha_answer: '42',
+    });
+    req.flush(mockResponse);
+  });
+});
+
+describe('register with captcha params', () => {
+  it('should include captcha fields', () => {
+    const mockResponse = {
+      token: 'abc', refresh_token: 'def',
+      user: { id: '1', email: 'test@example.com', username: 'testuser', role: 'viewer', status: 'active', created_at: '2025-01-01' },
+      expires_at: '2026-01-01',
+    };
+
+    service.register('test@example.com', 'Password123', 'testuser', 'ts_token', 'cid', '42').subscribe();
+
+    const req = httpMock.expectOne(`${environment.apiUrl}/auth/register`);
+    expect(req.request.body).toEqual({
+      email: 'test@example.com',
+      password: 'Password123',
+      username: 'testuser',
+      captcha_token: 'ts_token',
+      captcha_id: 'cid',
+      captcha_answer: '42',
+    });
+    req.flush(mockResponse);
+  });
+});

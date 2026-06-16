@@ -108,6 +108,27 @@
 }
 
 // ============================================
+// Error State
+// ============================================
+
+.blog-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  gap: 16px;
+  width: min(100%, 980px);
+  margin: 0 auto;
+  text-align: center;
+
+  p {
+    color: #f87171;
+    font-size: 1rem;
+  }
+}
+
+// ============================================
 // Article List — Vertical Centered
 // ============================================
 

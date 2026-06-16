@@ -1,10 +1,20 @@
-chore: code review fixes — fix goroutine leak, ILIKE compat, add tests
+fix: redesign login/register page UI and fix blog data inconsistency
 
-- Fix scheduled publish goroutine: use context cancellation (schedCtx/schedCancel)
-  to properly stop ticker on server shutdown
-- Fix AiToolService.List: replace PostgreSQL-only ILIKE with LOWER()
-  for cross-DB compatibility (PostgreSQL + SQLite)
-- Fix NG8107 warning: replace e.user_id?.slice with e.user_id.slice
-- Add AiNewsService + AiToolService unit tests
+Login/Register page:
+- Replace plain light-blue background with SpaceLab dark cosmic theme
+  (stars, nebula glow, tech grid overlay)
+- Redesign auth card: dark glassmorphism, proper shadows, rounded corners
+- Fix login button: gradient btn with hover glow effect (was invisible text)
+- Fix social login: 2x2 grid of card-style buttons (Google, GitHub, Microsoft, Apple)
+  with proper spacing, hover states (was broken blue border, cramped text)
+- Remove large unused SVG icon inputs, use clean label+input layout
+- Add visibility toggle for password
+- Consistent dialog styling
+
+Blog page:
+- Add loadError signal: distinguish "API failure" from "no posts"
+- Show red error message + retry button on API failure
+- Show "empty" state only when API succeeds but returns no posts
+- Fix: silent empty state misled users into thinking no content existed
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

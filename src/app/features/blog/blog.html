@@ -60,6 +60,14 @@
     </div>
   }
 
+  <!-- Error -->
+  @else if (loadError()) {
+    <div class="blog-error">
+      <p>{{ loadError() }}</p>
+      <button class="space-button space-button--sm" (click)="loadPosts()">重试</button>
+    </div>
+  }
+
   <!-- Article List -->
   @else if (filteredArticles().length > 0) {
     <section class="blog-list">
