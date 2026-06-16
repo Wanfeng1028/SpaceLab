@@ -78,37 +78,23 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   // Signals for holding telemetry states
   readonly currentTime = signal(new Date());
 
-  // Cached formatted strings — updated only when currentTime changes
-  private _cachedTime = '';
-  private _cachedDate = '';
-  private _cachedDateTime = '';
-  private _cachedTimeAt = 0;
-  private _cachedDateAt = 0;
+  private pad(n: number): string {
+    return String(n).padStart(2, '0');
+  }
 
-  // Formatting utility getters (cached per second to avoid repeated string ops)
-  get formattedTime(): string {
-    const now = Date.now();
-    if (now - this._cachedTimeAt < 1000) return this._cachedTime;
+  readonly formattedTime = computed(() => {
     const d = this.currentTime();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    this._cachedTime = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-    this._cachedTimeAt = now;
-    return this._cachedTime;
-  }
+    return `${this.pad(d.getHours())}:${this.pad(d.getMinutes())}:${this.pad(d.getSeconds())}`;
+  });
 
-  get formattedDate(): string {
-    const now = Date.now();
-    if (now - this._cachedDateAt < 1000) return this._cachedDate;
+  readonly formattedDate = computed(() => {
     const d = this.currentTime();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    this._cachedDate = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-    this._cachedDateAt = now;
-    return this._cachedDate;
-  }
+    return `${d.getFullYear()}-${this.pad(d.getMonth() + 1)}-${this.pad(d.getDate())}`;
+  });
 
-  get formattedDateTime(): string {
-    return `${this.formattedDate} ${this.formattedTime}`;
-  }
+  readonly formattedDateTime = computed(() => {
+    return `${this.formattedDate()} ${this.formattedTime()}`;
+  });
 
   readonly locationInfo = signal({
     status: 'loading',
@@ -143,6 +129,13 @@ export class LaunchTelemetryOverlayComponent implements OnInit, OnDestroy {
   @HostListener('window:offline')
   onOffline(): void {
     this.updateNetworkStatus();
+  }
+
+  @HostListener('document:visibilitychange')
+  onVisibilityChange(): void {
+    if (!document.hidden) {
+      this.currentTime.set(new Date());
+    }
   }
 
   ngOnInit(): void {

@@ -108,11 +108,11 @@
     </div>
 
     <div class="countdown current-clock">
-      {{ formattedTime }}
+      {{ formattedTime() }}
     </div>
 
     <div class="mission-id">
-      {{ formattedDate }}
+      {{ formattedDate() }}
     </div>
   </div>
 
@@ -219,6 +219,6 @@
 <div class="telemetry-caption">
   <span>{{ t('telemetry.localEnv') }}</span>
   <span
-    >{{ t('telemetry.updated') }} &middot; {{ formattedDateTime }} &middot; {{ userTimeZone }}</span
+    >{{ t('telemetry.updated') }} &middot; {{ formattedDateTime() }} &middot; {{ userTimeZone }}</span
   >
 </div>

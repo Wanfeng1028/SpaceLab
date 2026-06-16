@@ -1,62 +1,57 @@
-<div
-  class="earth-flyline-wrapper"
-  aria-label="Blue holographic Earth flyline scene"
-  [style.--scene-brightness]="brightness() + '%'"
->
-  <app-three-canvas [sceneFactory]="sceneFactory" />
+<div class="earth-flyline-wrapper" aria-label="Earth navigation hub">
+  @if (renderMode() !== 'none') {
+    <!-- 3D 场景（全量或轻量） -->
+    <app-three-canvas [sceneFactory]="sceneFactory" />
 
-  <div class="scene-control">
-    <div class="scene-control__actions" aria-label="Earth scene controls">
-      <button mat-icon-button type="button" class="scene-control__icon" aria-label="Zoom earth in" (click)="zoomIn()">
-        <mat-icon>zoom_in</mat-icon>
-      </button>
-      <button mat-icon-button type="button" class="scene-control__icon" aria-label="Zoom earth out" (click)="zoomOut()">
-        <mat-icon>zoom_out</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        type="button"
-        class="scene-control__icon"
-        aria-label="Rotate earth"
-        (click)="toggleRotation()"
-      >
-        <mat-icon>360</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        type="button"
-        class="scene-control__icon"
-        aria-label="Earth brightness"
-        (click)="toggleBrightness()"
-      >
-        <mat-icon>brightness_6</mat-icon>
-      </button>
+    <!-- 可点击导航覆盖层 -->
+    <div class="scene-nav-overlay" (click)="onSceneClick()" role="button" tabindex="0" aria-label="Click to enter Blog">
+      <div class="scene-nav-overlay__hint">
+        <span class="scene-nav-overlay__title">BLOG</span>
+        <span class="scene-nav-overlay__sub">探索文章 →</span>
+      </div>
+
+      <!-- 快捷导航标签 -->
+      <div class="scene-nav-overlay__tags" (click)="$event.stopPropagation()">
+        <button class="scene-nav-tag" (click)="navigateBlog()">📝 文章</button>
+        <button class="scene-nav-tag" (click)="navigateProjects()">💻 项目</button>
+        <button class="scene-nav-tag" (click)="navigateAbout()">ℹ️ 关于</button>
+      </div>
+
+      @if (renderMode() === 'lightweight') {
+        <div class="scene-nav-overlay__badge">轻量模式</div>
+      }
     </div>
-
-    @if (rotationOpen()) {
-      <div class="scene-control__panel" aria-label="Earth scene rotation">
-        <mat-slider min="0" max="360" step="1" discrete>
-          <input
-            matSliderThumb
-            [value]="rotation()"
-            (input)="setRotation($any($event.target).valueAsNumber)"
-            aria-label="Earth 360 degree rotation"
-          />
-        </mat-slider>
+  } @else {
+    <!-- 降级回退：设备不支持 3D 时显示静态导航卡片 -->
+    <div class="scene-fallback" (click)="onFallbackClick()" role="button" tabindex="0">
+      <div class="scene-fallback__icon">🌍</div>
+      <h3 class="scene-fallback__title">地球信号 — 导航中心</h3>
+      <p class="scene-fallback__desc">您的设备不支持 3D 渲染，点击了解详情</p>
+      <div class="scene-fallback__links">
+        <button class="scene-nav-tag" (click)="navigateBlog()">📝 文章</button>
+        <button class="scene-nav-tag" (click)="navigateProjects()">💻 项目</button>
+        <button class="scene-nav-tag" (click)="navigateAbout()">ℹ️ 关于</button>
       </div>
-    }
+    </div>
+  }
 
-    @if (brightnessOpen()) {
-      <div class="scene-control__panel" aria-label="Earth scene brightness">
-        <mat-slider min="25" max="82" step="1" discrete>
-          <input
-            matSliderThumb
-            [value]="brightness()"
-            (input)="setBrightness($any($event.target).valueAsNumber)"
-            aria-label="Earth brightness"
-          />
-        </mat-slider>
+  <!-- 设备能力说明弹窗 -->
+  @if (showDialog()) {
+    <div class="device-dialog-overlay" (click)="closeDialog()">
+      <div class="device-dialog" (click)="$event.stopPropagation()">
+        <div class="device-dialog__icon">🖥️</div>
+        <h3 class="device-dialog__title">设备兼容性说明</h3>
+        <div class="device-dialog__body">
+          <p>当前设备 <strong>{{ deviceTier() }}</strong> 等级</p>
+          <ul>
+            <li>全量 3D：需要 WebGL2 + 高端 GPU</li>
+            <li>轻量 3D：需要 WebGL 支持</li>
+            <li>降级模式：不支持 3D 时显示静态导航</li>
+          </ul>
+          <p>您可以继续使用下方导航按钮访问内容。</p>
+        </div>
+        <button class="device-dialog__btn" (click)="closeDialog()">知道了</button>
       </div>
-    }
-  </div>
+    </div>
+  }
 </div>
