@@ -1,6 +1,9 @@
-docs: finalize architecture review with all 17 dimensions as completed
+feat(analytics): replace mock data with real backend API
 
-Mark all acceptance criteria as checked.
-11/11 domains completed in this session.
+- Rewrite AnalyticsComponent to use AnalyticsService
+- Load summary, top posts, and traffic trend from backend
+- Add loading/error states
+- Replace hardcoded i18n page titles with real post titles
+- Day labels on trend chart (一/二/三... instead of blank)
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

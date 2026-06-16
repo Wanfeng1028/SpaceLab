@@ -1,31 +1,49 @@
-import { Injectable, signal } from '@angular/core';
-import type { AnalyticsEventType, SitePulse } from '../models';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
+export interface AnalyticsSummary {
+  total_views: number;
+  today_views: number;
+  week_views: number;
+  month_views: number;
+}
+
+export interface TopPost {
+  id: string;
+  title: string;
+  view_count: number;
+}
+
+export interface TrafficDay {
+  date: string;
+  views: number;
+}
+
+export interface TrafficTrend {
+  days: number;
+  trend: TrafficDay[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-  private readonly _pulse = signal<SitePulse | null>(null);
-  private readonly _loading = signal(false);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
-  readonly pulse = this._pulse.asReadonly();
-  readonly loading = this._loading.asReadonly();
-
-  async trackEvent(_eventType: AnalyticsEventType, _data?: Record<string, string>): Promise<void> {
-    // TODO: integrate with Supabase analytics_events
+  getSummary(): Observable<AnalyticsSummary> {
+    return this.http.get<AnalyticsSummary>(`${this.apiUrl}/analytics/summary`);
   }
 
-  async fetchSitePulse(): Promise<void> {
-    this._loading.set(true);
-    try {
-      // TODO: integrate with Supabase
-      this._pulse.set({
-        totalVisits: 0,
-        todayVisits: 0,
-        topPages: [],
-        topArticles: [],
-        trend: [],
-      });
-    } finally {
-      this._loading.set(false);
-    }
+  getTopPosts(limit = 10): Observable<TopPost[]> {
+    return this.http.get<TopPost[]>(`${this.apiUrl}/analytics/top-posts`, {
+      params: { limit: limit.toString() },
+    });
+  }
+
+  getTrafficTrend(days = 7): Observable<TrafficTrend> {
+    return this.http.get<TrafficTrend>(`${this.apiUrl}/analytics/traffic`, {
+      params: { days: days.toString() },
+    });
   }
 }

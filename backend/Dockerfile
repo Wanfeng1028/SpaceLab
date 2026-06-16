@@ -16,19 +16,24 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
 
 # Runtime stage
-FROM alpine:latest
+FROM alpine:3.21
 
 WORKDIR /app
 
 # Runtime dependencies (CA certs + timezone data)
-RUN apk --no-cache add ca-certificates tzdata
+RUN apk --no-cache add ca-certificates tzdata && \
+    addgroup -S appgroup && \
+    adduser -S appuser -G appgroup
 
 # Copy binary from builder
 COPY --from=builder /build/main .
-COPY --from=builder /build/.env.example .
 
-# Create uploads directory
-RUN mkdir -p /app/uploads
+# Create uploads directory with correct ownership
+RUN mkdir -p /app/uploads && \
+    chown -R appuser:appgroup /app/uploads
+
+# Switch to non-root user
+USER appuser
 
 EXPOSE 8080
 

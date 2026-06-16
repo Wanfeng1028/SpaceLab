@@ -5,10 +5,10 @@ services:
     container_name: spacelab-postgres
     environment:
       POSTGRES_USER: spacelab
-      POSTGRES_PASSWORD: spacelab_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-spacelab_password}
       POSTGRES_DB: spacelab
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d
@@ -20,8 +20,9 @@ services:
   redis:
     image: redis:7-alpine
     container_name: spacelab-redis
+    command: redis-server --requirepass ${REDIS_PASSWORD:-spacelab_redis}
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
     volumes:
       - redis_data:/data
     networks:
@@ -35,14 +36,16 @@ services:
       dockerfile: Dockerfile
     container_name: spacelab
     environment:
-      DATABASE_URL: postgres://spacelab:spacelab_password@postgres:5432/spacelab?sslmode=disable
+      DATABASE_URL: postgres://spacelab:${POSTGRES_PASSWORD:-spacelab_password}@postgres:5432/spacelab?sslmode=disable
+      REDIS_ADDR: redis:6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-spacelab_redis}
       JWT_SECRET: ${JWT_SECRET:-dev-secret-key-change-in-production}
       JWT_EXPIRATION: 24h
       SERVER_PORT: 8080
       ENVIRONMENT: production
       MAX_UPLOAD_SIZE: 10485760
       UPLOAD_PATH: /app/uploads
-      ALLOWED_ORIGINS: http://localhost:4200,http://localhost:8081
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:4200,http://localhost:8081}
     ports:
       - "8081:8080"
     volumes:

@@ -1,6 +1,7 @@
-import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { I18nService } from '../../core/services/i18n.service';
 import { PulseMetricComponent } from '../../shared/components/pulse-metric/pulse-metric.component';
+import { AnalyticsService, AnalyticsSummary, TopPost, TrafficDay } from '../../core/services/analytics.service';
 
 @Component({
   selector: 'app-analytics',
@@ -9,67 +10,82 @@ import { PulseMetricComponent } from '../../shared/components/pulse-metric/pulse
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PulseMetricComponent],
 })
-export class AnalyticsComponent {
+export class AnalyticsComponent implements OnInit {
   private i18n = inject(I18nService);
+  private analyticsService = inject(AnalyticsService);
 
-  private readonly metricData = [
-    { value: '1,234', key: 'totalVisits' },
-    { value: '89', key: 'todayVisits' },
-    { value: '567', key: 'weekVisits' },
-    { value: '45', key: 'uniqueVisitors' },
-  ];
+  readonly loading = signal(true);
+  readonly error = signal<string | null>(null);
 
-  readonly metrics = computed(() =>
-    this.metricData.map((m) => ({
+  readonly summary = signal<AnalyticsSummary | null>(null);
+  readonly topPosts = signal<TopPost[]>([]);
+  readonly traffic = signal<TrafficDay[]>([]);
+
+  readonly metrics = computed(() => {
+    const s = this.summary();
+    if (!s) return [];
+    return [
+      { value: this.fmt(s.total_views), key: 'totalVisits' },
+      { value: this.fmt(s.today_views), key: 'todayVisits' },
+      { value: this.fmt(s.week_views), key: 'weekVisits' },
+      { value: this.fmt(s.month_views), key: 'monthVisits' },
+    ].map((m) => ({
       value: m.value,
       label: this.i18n.t(`analytics.${m.key}`),
-    })),
-  );
+    }));
+  });
 
-  private readonly pageData = [
-    { path: '/', views: 320, key: 'page0' },
-    { path: '/blog', views: 185, key: 'page1' },
-    { path: '/article/hello-world', views: 142, key: 'page2' },
-    { path: '/projects', views: 98, key: 'page3' },
-    { path: '/article/angular-21-overview', views: 76, key: 'page4' },
-  ];
+  readonly trendData = computed(() => this.traffic().map((d) => d.views));
 
-  readonly topPages = computed(() =>
-    this.pageData.map((p) => ({
-      path: p.path,
-      views: p.views,
-      title: this.i18n.t(`analytics.${p.key}`),
-    })),
-  );
+  ngOnInit(): void {
+    this.loadData();
+  }
 
-  private readonly articleData = [
-    { key: 'page2', slug: 'hello-world', views: 142, date: '2025-05-24' },
-    { key: 'page4', slug: 'angular-21-overview', views: 76, date: '2025-05-20' },
-    { titleKey: 'archive.post2_title', slug: 'threejs-particles', views: 58, date: '2025-05-15' },
-    { titleKey: 'archive.post3_title', slug: 'glassmorphism-guide', views: 45, date: '2025-05-10' },
-    { titleKey: 'archive.post4_title', slug: 'dev-tools-2025', views: 32, date: '2025-05-05' },
-  ];
+  private loadData(): void {
+    this.loading.set(true);
+    this.error.set(null);
 
-  readonly topArticles = computed(() =>
-    this.articleData.map((a) => ({
-      title:
-        'key' in a
-          ? this.i18n.t(`analytics.${a.key}`)
-          : this.i18n.t((a as { titleKey: string }).titleKey),
-      slug: a.slug,
-      views: a.views,
-      date: a.date,
-    })),
-  );
+    this.analyticsService.getSummary().subscribe({
+      next: (s) => {
+        this.summary.set(s);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set('加载分析数据失败');
+        this.loading.set(false);
+      },
+    });
 
-  readonly trendData = [45, 52, 38, 65, 72, 58, 89];
+    this.analyticsService.getTopPosts(5).subscribe({
+      next: (posts) => this.topPosts.set(posts),
+      error: () => { /* 静默失败 */ },
+    });
+
+    this.analyticsService.getTrafficTrend(7).subscribe({
+      next: (t) => this.traffic.set(t.trend ?? []),
+      error: () => { /* 静默失败 */ },
+    });
+  }
+
+  /** 格式化数字 */
+  private fmt(n: number): string {
+    if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+    return n.toLocaleString();
+  }
+
+  /** 获取星期标签 */
+  dayLabel(index: number): string {
+    const labels = ['一', '二', '三', '四', '五', '六', '日'];
+    return labels[index % 7] || '';
+  }
 
   t(key: string): string {
     return this.i18n.t(key);
   }
 
   getMaxViews(): number {
-    return Math.max(...this.trendData);
+    return Math.max(...this.trendData(), 1);
   }
 
   getBarHeight(value: number): number {

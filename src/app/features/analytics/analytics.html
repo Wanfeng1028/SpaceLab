@@ -4,64 +4,56 @@
       <h1 class="analytics-header__title">{{ t('analytics.title') }}</h1>
     </div>
 
-    <!-- Metrics Cards -->
-    <div class="metrics-grid">
-      @for (metric of metrics(); track metric.label) {
-        <div class="metric-card glass-card-base">
-          <app-pulse-metric [value]="metric.value" [label]="metric.label" />
-        </div>
-      }
-    </div>
-
-    <!-- Trend Chart -->
-    <div class="chart-section">
-      <h2 class="section-title">{{ t('analytics.trend') }}</h2>
-      <div class="chart-card glass-card-base">
-        <div class="bar-chart">
-          @for (value of trendData; track $index) {
-            <div class="bar-column">
-              <div class="bar" [style.height.%]="getBarHeight(value)">
-                <span class="bar__value">{{ value }}</span>
-              </div>
-              <span class="bar__label">{{ $index === 6 ? t('common.today') : '' }}</span>
-            </div>
-          }
-        </div>
+    @if (loading()) {
+      <div class="analytics-loading">加载中...</div>
+    } @else if (error()) {
+      <div class="analytics-error">{{ error() }}</div>
+    } @else {
+      <!-- Metrics Cards -->
+      <div class="metrics-grid">
+        @for (metric of metrics(); track metric.label) {
+          <div class="metric-card glass-card-base">
+            <app-pulse-metric [value]="metric.value" [label]="metric.label" />
+          </div>
+        }
       </div>
-    </div>
 
-    <div class="tables-row">
-      <!-- Top Pages -->
-      <div class="table-section">
-        <h2 class="section-title">{{ t('analytics.topPages') }}</h2>
-        <div class="table-card glass-card-base">
-          @for (page of topPages(); track page.path) {
-            <div class="table-row">
-              <div class="table-row__info">
-                <span class="table-row__title">{{ page.title }}</span>
-                <span class="table-row__path">{{ page.path }}</span>
+      <!-- Trend Chart -->
+      <div class="chart-section">
+        <h2 class="section-title">{{ t('analytics.trend') }}</h2>
+        <div class="chart-card glass-card-base">
+          <div class="bar-chart">
+            @for (value of trendData(); track $index) {
+              <div class="bar-column">
+                <div class="bar" [style.height.%]="getBarHeight(value)">
+                  <span class="bar__value">{{ value }}</span>
+                </div>
+                <span class="bar__label">{{ dayLabel($index) }}</span>
               </div>
-              <span class="table-row__views">{{ page.views }}</span>
-            </div>
-          }
+            }
+          </div>
         </div>
       </div>
 
-      <!-- Top Articles -->
-      <div class="table-section">
-        <h2 class="section-title">{{ t('analytics.topArticles') }}</h2>
-        <div class="table-card glass-card-base">
-          @for (article of topArticles(); track article.slug) {
-            <div class="table-row">
-              <div class="table-row__info">
-                <span class="table-row__title">{{ article.title }}</span>
-                <span class="table-row__date">{{ article.date }}</span>
+      <div class="tables-row">
+        <!-- Top Pages / Articles (from backend) -->
+        <div class="table-section">
+          <h2 class="section-title">{{ t('analytics.topArticles') }}</h2>
+          <div class="table-card glass-card-base">
+            @if (topPosts().length === 0) {
+              <div class="table-empty">暂无数据</div>
+            }
+            @for (post of topPosts(); track post.id) {
+              <div class="table-row">
+                <div class="table-row__info">
+                  <span class="table-row__title">{{ post.title }}</span>
+                </div>
+                <span class="table-row__views">{{ post.view_count }}</span>
               </div>
-              <span class="table-row__views">{{ article.views }}</span>
-            </div>
-          }
+            }
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 </div>
