@@ -25,7 +25,6 @@ export class MarkdownRendererService {
     const rawHtml = marked.parse(markdown, { async: false }) as string;
     const sanitized = DOMPurify.sanitize(rawHtml, {
       ADD_ATTR: ['target'],
-      ADD_TAGS: ['iframe'],
       ALLOW_DATA_ATTR: false,
       ALLOWED_TAGS: [
         'p', 'br', 'strong', 'em', 'del', 'code', 'pre', 'blockquote',
@@ -37,6 +36,7 @@ export class MarkdownRendererService {
         'href', 'src', 'alt', 'title', 'class', 'id',
         'target', 'rel', 'colspan', 'rowspan', 'width', 'height',
       ],
+      ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i,
     });
     return sanitized;
   }
@@ -48,7 +48,6 @@ export class MarkdownRendererService {
     const rawHtml = (await marked.parse(markdown, { async: true })) as string;
     const sanitized = DOMPurify.sanitize(rawHtml, {
       ADD_ATTR: ['target'],
-      ADD_TAGS: ['iframe'],
       ALLOW_DATA_ATTR: false,
       ALLOWED_TAGS: [
         'p', 'br', 'strong', 'em', 'del', 'code', 'pre', 'blockquote',
@@ -60,6 +59,7 @@ export class MarkdownRendererService {
         'href', 'src', 'alt', 'title', 'class', 'id',
         'target', 'rel', 'colspan', 'rowspan', 'width', 'height',
       ],
+      ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i,
     });
     return sanitized;
   }

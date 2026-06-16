@@ -155,6 +155,7 @@ func main() {
 			protected.PUT("/auth/password", authHandler.UpdatePassword)
 			protected.PUT("/auth/profile", authHandler.UpdateProfile)
 			protected.POST("/auth/resend-verification", middleware.AuthLimiter(), authHandler.ResendVerificationEmail)
+			protected.POST("/auth/logout", authHandler.Logout)
 
 			// 评论管理
 			protected.POST("/comments", nativeCommentHandler.CreateComment)

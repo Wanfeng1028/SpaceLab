@@ -1,18 +1,9 @@
-refactor(comment): align LiveComment interface with backend model and improve UX
+feat(seo): add RSS feed, autodiscovery links in HTML head
 
-Breaking changes to LiveComment interface:
-- Replace post_id/username/email/create_time with
-  content_id/content_type/user{id,username,avatar_url,role}/created_at
-- Article component now passes post UUID (p.id) instead of slug
-- Relative time display now parses ISO 8601 strings from backend
-
-UX improvements:
-- Comment failure no longer clears input text
-- "评论已提交，审核通过后会展示" hint after pending comment
-- Admin badge displayed on comments from admin users
-- "审核中" badge shown to author for their pending comments
-- Delete button only shown for own comments
-- ReplyTo header uses display name instead of raw username
-- Comment items inlined in live-comment template (removed dead component import)
+- Create scripts/generate-feed.mjs — generates RSS 2.0 feed.xml
+- Add generate-feed.mjs to prebuild pipeline
+- Add RSS + sitemap link tags in index.html for browser autodiscovery
+- feed.xml contains all 5 published posts sorted by date
+- Update architecture-review.md with current progress
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

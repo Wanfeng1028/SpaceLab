@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
 import { ProjectService, Project } from '../../core/services/project.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-project-detail',
@@ -68,7 +69,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
         <!-- Content (Markdown rendered on the backend) -->
         @if (p.content) {
           <section class="project-detail__section project-detail__content">
-            <div [innerHTML]="p.content"></div>
+            <div [innerHTML]="sanitize(p.content)"></div>
           </section>
         }
 
@@ -150,5 +151,21 @@ export class ProjectDetailComponent implements OnInit {
     if (!dateStr) return '';
     const d = new Date(dateStr);
     return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  sanitize(html: string): string {
+    return DOMPurify.sanitize(html, {
+      ALLOWED_TAGS: [
+        'p', 'br', 'strong', 'em', 'del', 'code', 'pre', 'blockquote',
+        'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'hr', 'img', 'a', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
+        'span', 'div',
+      ],
+      ALLOWED_ATTR: [
+        'href', 'src', 'alt', 'title', 'class', 'id',
+        'target', 'rel', 'colspan', 'rowspan', 'width', 'height',
+      ],
+      ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i,
+    });
   }
 }

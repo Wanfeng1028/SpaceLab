@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -409,6 +410,31 @@ func (h *AuthHandler) ResetPassword(c *gin.Context) {
 func (h *AuthHandler) IsRegistrationOpen(c *gin.Context) {
 	open := h.authService.IsRegistrationOpen()
 	c.JSON(http.StatusOK, gin.H{"registration_open": open})
+}
+
+// Logout 登出：撤销当前 Token
+func (h *AuthHandler) Logout(c *gin.Context) {
+	authHeader := c.GetHeader("Authorization")
+	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
+
+	// 撤销 Token
+	if tokenString != "" && tokenString != authHeader {
+		if utils.TokenRevocationMgr != nil {
+			go func() {
+				_ = utils.TokenRevocationMgr.RevokeToken(tokenString, 24*time.Hour)
+			}()
+		}
+	}
+
+	// 记录登出日志
+	userID, _ := c.Get("user_id")
+	if uid, ok := userID.(string); ok && uid != "" {
+		ip := getClientIP(c)
+		ua := c.GetHeader("User-Agent")
+		h.authService.RecordLoginLog(uuid.MustParse(uid), "", ip, ua, parseDeviceInfo(ua), true, "logout")
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Logged out successfully"})
 }
 
 // ResendVerificationEmail 重新发送邮箱验证邮件（需登录）

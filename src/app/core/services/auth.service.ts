@@ -172,8 +172,15 @@ export class AuthService {
   }
 
   logout(): void {
-    this.clearAuth();
-    this.router.navigate(['/']);
+    // 尝试服务端撤销 Token
+    this.http.post(`${this.apiUrl}/auth/logout`, {}).pipe(
+      catchError(() => of(null))
+    ).subscribe({
+      complete: () => {
+        this.clearAuth();
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   isAdmin(): boolean {
