@@ -7,12 +7,22 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { PostService } from '../../../core/services/post.service';
 import { UserService, UserStats } from '../../../core/services/user.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 interface PostStats {
   totalPosts: number;
   publishedPosts: number;
   draftPosts: number;
   totalViews: number;
+}
+
+interface HealthStatus {
+  status: string;
+  checks?: {
+    database: string;
+    redis: string;
+  };
 }
 
 @Component({
@@ -25,6 +35,8 @@ interface PostStats {
 export class AdminDashboardComponent implements OnInit {
   private postService = inject(PostService);
   private userService = inject(UserService);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
   private router = inject(Router);
 
   readonly postStats = signal<PostStats>({
@@ -40,10 +52,12 @@ export class AdminDashboardComponent implements OnInit {
     recent_users: 0,
   });
   readonly loading = signal(false);
+  readonly health = signal<HealthStatus | null>(null);
 
   ngOnInit(): void {
     this.loadPostStats();
     this.loadUserStats();
+    this.loadHealth();
   }
 
   private loadPostStats(): void {
@@ -72,5 +86,12 @@ export class AdminDashboardComponent implements OnInit {
 
   go(path: string): void {
     this.router.navigate([path]);
+  }
+
+  private loadHealth(): void {
+    this.http.get<HealthStatus>(`${this.apiUrl.replace('/api/v1', '')}/health`).subscribe({
+      next: (h) => this.health.set(h),
+      error: () => { /* 静默 */ },
+    });
   }
 }

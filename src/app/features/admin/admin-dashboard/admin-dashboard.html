@@ -71,4 +71,29 @@
       </button>
     </nz-card>
   </div>
+
+  <!-- 系统状态 -->
+  <nz-row [nzGutter]="[16, 16]" class="dashboard__row">
+    <nz-col [nzSpan]="24">
+      <nz-card nzTitle="系统状态">
+        <div class="health-grid">
+          <div class="health-item">
+            <span class="health-label">API</span>
+            <span class="health-dot" [class.health-dot--ok]="health()?.status === 'healthy'" [class.health-dot--err]="health()?.status !== 'healthy'"></span>
+            <span class="health-value">{{ health()?.status || '检查中...' }}</span>
+          </div>
+          <div class="health-item">
+            <span class="health-label">数据库</span>
+            <span class="health-dot" [class.health-dot--ok]="health()?.checks?.database === 'healthy'" [class.health-dot--err]="health()?.checks?.database?.startsWith('error')"></span>
+            <span class="health-value">{{ health()?.checks?.database || '检查中...' }}</span>
+          </div>
+          <div class="health-item">
+            <span class="health-label">Redis</span>
+            <span class="health-dot" [class.health-dot--ok]="health()?.checks?.redis === 'healthy'" [class.health-dot--na]="health()?.checks?.redis === 'not configured'"></span>
+            <span class="health-value">{{ health()?.checks?.redis || '检查中...' }}</span>
+          </div>
+        </div>
+      </nz-card>
+    </nz-col>
+  </nz-row>
 </div>

@@ -137,3 +137,67 @@ func TestRequireRole(t *testing.T) {
 		t.Errorf("Expected status 403, got %d", w.Code)
 	}
 }
+
+// TestCORSVaryHeader 测试 CORS Vary 头
+func TestCORSVaryHeader(t *testing.T) {
+	cfg := &config.Config{
+		AllowedOrigins: []string{"http://example.com"},
+	}
+
+	r := gin.Default()
+	r.Use(middleware.CORS(cfg))
+
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "ok"})
+	})
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/test", nil)
+	req.Header.Set("Origin", "http://example.com")
+	r.ServeHTTP(w, req)
+
+	if w.Header().Get("Vary") != "Origin" {
+		t.Errorf("Expected Vary: Origin header, got '%s'", w.Header().Get("Vary"))
+	}
+}
+
+// TestCORSDisallowedOrigin 测试不允许的 Origin 不返回 ACAO
+func TestCORSDisallowedOrigin(t *testing.T) {
+	cfg := &config.Config{
+		AllowedOrigins: []string{"http://example.com"},
+	}
+
+	r := gin.Default()
+	r.Use(middleware.CORS(cfg))
+
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "ok"})
+	})
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/test", nil)
+	req.Header.Set("Origin", "http://evil.com")
+	r.ServeHTTP(w, req)
+
+	if w.Header().Get("Access-Control-Allow-Origin") != "" {
+		t.Errorf("Expected no ACAO header for disallowed origin, got '%s'", w.Header().Get("Access-Control-Allow-Origin"))
+	}
+}
+
+// TestSecurityExtraHeaders 测试安全中间件的额外头
+func TestSecurityExtraHeaders(t *testing.T) {
+	r := gin.Default()
+	r.Use(middleware.Security())
+
+	r.GET("/test", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "ok"})
+	})
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/test", nil)
+	r.ServeHTTP(w, req)
+
+	if w.Header().Get("Strict-Transport-Security") == "" {
+		t.Error("Expected Strict-Transport-Security header")
+	}
+}

@@ -1,9 +1,12 @@
-feat(analytics): replace mock data with real backend API
+feat: add system health checks to backend and admin dashboard
 
-- Rewrite AnalyticsComponent to use AnalyticsService
-- Load summary, top posts, and traffic trend from backend
-- Add loading/error states
-- Replace hardcoded i18n page titles with real post titles
-- Day labels on trend chart (一/二/三... instead of blank)
+Backend:
+- Enhance /health endpoint with database ping + Redis ping checks
+- Return checks.database and checks.redis status alongside API status
+
+Admin Dashboard:
+- Add system health widget showing API/Database/Redis status
+- Green dot for healthy, red for error, grey for not configured
+- Load health data on dashboard init
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

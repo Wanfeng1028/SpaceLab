@@ -299,10 +299,32 @@ func main() {
 
 	// 健康检查
 	r.GET("/health", func(c *gin.Context) {
+		db := config.GetDB()
+		dbStatus := "healthy"
+		if sqlDB, err := db.DB(); err != nil {
+			dbStatus = "error: " + err.Error()
+		} else if err := sqlDB.Ping(); err != nil {
+			dbStatus = "error: " + err.Error()
+		}
+
+		redisStatus := "not configured"
+		rdb := utils.GetRedisClient()
+		if rdb != nil {
+			if _, err := rdb.Ping(context.Background()).Result(); err != nil {
+				redisStatus = "error: " + err.Error()
+			} else {
+				redisStatus = "healthy"
+			}
+		}
+
 		c.JSON(http.StatusOK, gin.H{
 			"status":    "healthy",
 			"version":   "1.0.0",
 			"timestamp": fmt.Sprintf("%v", time.Now()),
+			"checks": gin.H{
+				"database": dbStatus,
+				"redis":    redisStatus,
+			},
 		})
 	})
 

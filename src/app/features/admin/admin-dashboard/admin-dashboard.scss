@@ -29,3 +29,35 @@
     }
   }
 }
+
+/* 系统状态指示器 */
+.health-grid {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.health-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.health-label {
+  font-weight: 500;
+  color: rgba(0,0,0,0.85);
+  min-width: 48px;
+}
+.health-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  flex: none;
+}
+.health-dot--ok { background: #52c41a; }
+.health-dot--err { background: #ff4d4f; }
+.health-dot--na { background: #d9d9d9; }
+.health-value {
+  color: rgba(0,0,0,0.45);
+  font-size: 13px;
+}

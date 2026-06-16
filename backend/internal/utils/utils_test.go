@@ -107,3 +107,105 @@ func TestWebSocket(t *testing.T) {
 		t.Errorf("Expected 0 users in list, got %d", len(users))
 	}
 }
+
+// TestSanitizeFunctions 测试数据清洗函数
+func TestSanitizeFunctions(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{"strip basic html", "<script>alert(1)</script>Hello", "alert(1)Hello"},
+		{"strip complex html", "<p><b>Bold</b></p>Text", "BoldText"},
+		{"strip with entities", "Hello &amp; World", "Hello &amp; World"},
+		{"no html", "Clean Text", "Clean Text"},
+		{"empty", "", ""},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := SanitizePlainString(tt.input)
+			if got != tt.expected {
+				t.Errorf("SanitizePlainString(%q) = %q, want %q", tt.input, got, tt.expected)
+			}
+		})
+	}
+}
+
+// TestValidateSafeURL 测试安全 URL 校验
+func TestValidateSafeURL(t *testing.T) {
+	tests := []struct {
+		name string
+		url  string
+		want bool
+	}{
+		{"https url", "https://example.com", true},
+		{"http url", "http://example.com", true},
+		{"javascript scheme", "javascript:alert(1)", false},
+		{"data scheme", "data:text/html,<script>alert(1)</script>", false},
+		{"empty", "", true},
+		{"no scheme", "ftp://example.com", false},
+		{"whitespace", "  https://example.com  ", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := ValidateSafeURL(tt.url)
+			if got != tt.want {
+				t.Errorf("ValidateSafeURL(%q) = %v, want %v", tt.url, got, tt.want)
+			}
+		})
+	}
+}
+
+// TestIsValidURL 测试 URL 格式校验
+func TestIsValidURL(t *testing.T) {
+	tests := []struct {
+		name string
+		url  string
+		want bool
+	}{
+		{"valid https", "https://example.com/path?q=1", true},
+		{"valid http", "http://example.com", true},
+		{"empty", "", false},
+		{"no host", "https://", false},
+		{"javascript", "javascript:alert(1)", false},
+		{"data uri", "data:text/plain,hello", false},
+		{"mailto", "mailto:test@example.com", false},
+		{"invalid", "not-a-url", false},
+		{"ipv4", "https://127.0.0.1:8080/api", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := IsValidURL(tt.url)
+			if got != tt.want {
+				t.Errorf("IsValidURL(%q) = %v, want %v", tt.url, got, tt.want)
+			}
+		})
+	}
+}
+
+// TestSanitizeLinkURL 测试链接 URL 清洗
+func TestSanitizeLinkURL(t *testing.T) {
+	tests := []struct {
+		name string
+		url  string
+		want string
+	}{
+		{"safe https", "https://example.com", "https://example.com"},
+		{"safe http", "http://example.com", "http://example.com"},
+		{"javascript", "javascript:alert(1)", ""},
+		{"data", "data:text/html,<script>", ""},
+		{"whitespace", "  https://example.com  ", "https://example.com"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := SanitizeLinkURL(tt.url)
+			if got != tt.want {
+				t.Errorf("SanitizeLinkURL(%q) = %q, want %q", tt.url, got, tt.want)
+			}
+		})
+	}
+}
