@@ -1,12 +1,11 @@
-feat: add system health checks to backend and admin dashboard
+feat(write): add markdown preview, auto-save, and unsaved changes warning
 
-Backend:
-- Enhance /health endpoint with database ping + Redis ping checks
-- Return checks.database and checks.redis status alongside API status
-
-Admin Dashboard:
-- Add system health widget showing API/Database/Redis status
-- Green dot for healthy, red for error, grey for not configured
-- Load health data on dashboard init
+Editor improvements:
+- Preview mode now renders Markdown via MarkdownRendererService
+- Auto-save draft every 30s (for new posts with title + content)
+- Unsaved changes warning on page leave (beforeunload event)
+- Dirty state indicator "未保存" badge in header
+- Confirm dialog on back navigation when dirty
+- Summary displayed in preview header
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

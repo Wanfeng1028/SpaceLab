@@ -1,9 +1,11 @@
-import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { I18nService } from '../../../core/services/i18n.service';
 import { PostService, Post } from '../../../core/services/post.service';
 import { ContentService, Category } from '../../../core/services/content.service';
+import { MarkdownRendererService } from '../../../core/services/markdown-renderer.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-write',
@@ -12,12 +14,14 @@ import { ContentService, Category } from '../../../core/services/content.service
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
 })
-export class WriteComponent implements OnInit {
+export class WriteComponent implements OnInit, OnDestroy {
   private i18n = inject(I18nService);
   private postService = inject(PostService);
   private contentService = inject(ContentService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private markdownRenderer = inject(MarkdownRendererService);
+  private sanitizer = inject(DomSanitizer);
 
   readonly title = signal('');
   readonly slug = signal('');
@@ -32,8 +36,15 @@ export class WriteComponent implements OnInit {
   readonly isPublishing = signal(false);
   readonly error = signal('');
   readonly success = signal('');
+
+  /** 标记是否有未保存的修改 */
+  readonly isDirty = signal(false);
+
   readonly isEditing = signal(false);
   readonly editId = signal<string | null>(null);
+
+  /** 渲染后的 Markdown 预览 HTML */
+  readonly previewHtml = signal<SafeHtml>('');
 
   /** 动态分类列表（从后端获取） */
   readonly categories = signal<Category[]>([]);
@@ -46,22 +57,55 @@ export class WriteComponent implements OnInit {
       .filter((t) => t.length > 0)
   );
 
+  private autoSaveTimer: ReturnType<typeof setInterval> | undefined;
+
   ngOnInit(): void {
     this.loadCategories();
-    // 检查是否是编辑模式
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditing.set(true);
       this.editId.set(id);
       this.loadPost(id);
     }
+
+    // 自动保存草稿（每 30 秒）
+    this.autoSaveTimer = setInterval(() => {
+      if (this.isDirty() && this.title() && !this.isEditing()) {
+        this.autoSave();
+      }
+    }, 30000);
+
+    // 离开页面提醒
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', this.beforeUnload);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.autoSaveTimer) clearInterval(this.autoSaveTimer);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('beforeunload', this.beforeUnload);
+    }
+  }
+
+  private beforeUnload = (e: BeforeUnloadEvent): void => {
+    if (this.isDirty()) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  };
+
+  /** 标记内容已修改（供模板调用） */
+  markDirty(): void {
+    this.isDirty.set(true);
+    this.error.set('');
+    this.success.set('');
   }
 
   private loadCategories(): void {
     this.contentService.listCategories().subscribe({
       next: (list) => this.categories.set(list || []),
       error: () => {
-        // 后端不可用时，保留一个硬编码的降级列表
         this.categories.set([
           { id: '', slug: 'GIS', name: 'GIS', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
           { id: '', slug: 'dev', name: '开发', description: '', icon: '', sort_order: 0, created_at: '', updated_at: '' },
@@ -84,6 +128,8 @@ export class WriteComponent implements OnInit {
         this.category.set(post.category || '');
         this.tagsInput.set((post.tags ?? []).join(', '));
         this.language.set(post.language);
+        this.isDirty.set(false);
+        this.renderPreview();
       },
       error: (err) => {
         this.error.set('加载文章失败');
@@ -96,16 +142,34 @@ export class WriteComponent implements OnInit {
     return this.i18n.t(key);
   }
 
-  togglePreview(): void {
-    this.isPreview.update((v) => !v);
+  async togglePreview(): Promise<void> {
+    if (this.isPreview()) {
+      this.isPreview.set(false);
+    } else {
+      await this.renderPreview();
+      this.isPreview.set(true);
+    }
+  }
+
+  /** 渲染 Markdown 为 HTML */
+  private async renderPreview(): Promise<void> {
+    if (this.content()) {
+      const html = await this.markdownRenderer.render(this.content());
+      this.previewHtml.set(this.sanitizer.bypassSecurityTrustHtml(html));
+    }
   }
 
   onTitleChange(value: string): void {
     this.title.set(value);
-    // 自动生成 slug
+    this.markDirty();
     if (!this.isEditing()) {
       this.slug.set(this.generateSlug(value));
     }
+  }
+
+  onContentChange(value: string): void {
+    this.content.set(value);
+    this.markDirty();
   }
 
   generateSlug(title: string): string {
@@ -125,6 +189,30 @@ export class WriteComponent implements OnInit {
     this.savePost('published');
   }
 
+  /** 自动保存（静默，不显示消息） */
+  private autoSave(): void {
+    if (!this.title() || !this.content()) return;
+    const postData = this.buildPostData('draft');
+    this.postService.createPost(postData).subscribe({
+      next: () => this.isDirty.set(false),
+      error: () => { /* 静默失败 */ },
+    });
+  }
+
+  private buildPostData(status: string): Partial<Post> {
+    return {
+      title: this.title(),
+      slug: this.slug(),
+      summary: this.summary(),
+      content: this.content(),
+      cover_url: this.coverUrl(),
+      category: this.category(),
+      tags: this.tagsArray(),
+      language: this.language(),
+      status,
+    };
+  }
+
   savePost(status: string): void {
     if (!this.title() || !this.content()) {
       this.error.set('标题和内容不能为空');
@@ -135,18 +223,7 @@ export class WriteComponent implements OnInit {
     this.error.set('');
     this.success.set('');
 
-    const postData: Partial<Post> = {
-      title: this.title(),
-      slug: this.slug(),
-      summary: this.summary(),
-      content: this.content(),
-      cover_url: this.coverUrl(),
-      category: this.category(),
-      tags: this.tagsArray(),
-      language: this.language(),
-      status: status
-    };
-
+    const postData = this.buildPostData(status);
     const request = this.isEditing()
       ? this.postService.updatePost(this.editId()!, postData)
       : this.postService.createPost(postData);
@@ -154,12 +231,11 @@ export class WriteComponent implements OnInit {
     request.subscribe({
       next: () => {
         this.isSaving.set(false);
+        this.isDirty.set(false);
         this.success.set(status === 'published' ? '文章已发布' : '草稿已保存');
-        
+
         if (status === 'published') {
-          setTimeout(() => {
-            this.router.navigate(['/admin/posts']);
-          }, 1500);
+          setTimeout(() => this.router.navigate(['/admin/posts']), 1500);
         }
       },
       error: (err) => {
@@ -171,6 +247,9 @@ export class WriteComponent implements OnInit {
   }
 
   onBack(): void {
+    if (this.isDirty()) {
+      if (!confirm('有未保存的修改，确定要离开吗？')) return;
+    }
     this.router.navigate(['/admin/posts']);
   }
 }

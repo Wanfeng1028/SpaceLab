@@ -126,6 +126,8 @@ func main() {
 
 	// 监控路由
 	r.GET("/metrics", middleware.PrometheusHandler())
+
+	// WebSocket — 独立路由，通过 ?token=JWT 认证（浏览器 WebSocket API 无法设置 Authorization 头）
 	r.GET("/ws", func(c *gin.Context) {
 		utils.HandleWebSocket(c.Writer, c.Request)
 	})

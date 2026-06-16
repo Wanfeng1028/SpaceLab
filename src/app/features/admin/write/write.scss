@@ -36,6 +36,18 @@
   }
 }
 
+/* Dirty badge */
+.write-dirty-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(250, 204, 21, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  font-weight: 500;
+}
+
 .write-header__right {
   display: flex;
   gap: 12px;
@@ -216,6 +228,14 @@
   gap: 16px;
   font-size: 14px;
   color: #888;
+}
+
+.write-preview__summary {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #aaa;
+  line-height: 1.6;
+  font-style: italic;
 }
 
 .write-preview__content {

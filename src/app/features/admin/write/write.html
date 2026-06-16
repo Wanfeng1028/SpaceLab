@@ -7,6 +7,9 @@
           ← 返回
         </button>
         <h1>{{ isEditing() ? '编辑文章' : '新建文章' }}</h1>
+        @if (isDirty()) {
+          <span class="write-dirty-badge">未保存</span>
+        }
       </div>
       <div class="write-header__right">
         <button class="write-btn write-btn--secondary" (click)="togglePreview()">
@@ -49,7 +52,7 @@
             class="write-input"
             type="text"
             [value]="slug()"
-            (input)="slug.set($any($event.target).value)"
+            (input)="slug.set($any($event.target).value); markDirty()"
             placeholder="article-slug"
           />
           <span class="write-hint">用于 URL，建议使用英文和连字符</span>
@@ -60,7 +63,7 @@
           <textarea
             class="write-textarea"
             [value]="summary()"
-            (input)="summary.set($any($event.target).value)"
+            (input)="summary.set($any($event.target).value); markDirty()"
             placeholder="文章摘要（可选）"
             rows="3"
           ></textarea>
@@ -72,7 +75,7 @@
             <select
               class="write-select"
               [value]="category()"
-              (change)="category.set($any($event.target).value)"
+              (change)="category.set($any($event.target).value); markDirty()"
             >
               <option value="">选择分类</option>
               @for (cat of categories(); track cat.slug) {
@@ -85,7 +88,7 @@
             <select
               class="write-select"
               [value]="language()"
-              (change)="language.set($any($event.target).value)"
+              (change)="language.set($any($event.target).value); markDirty()"
             >
               <option value="zh-CN">中文</option>
               <option value="en-US">English</option>
@@ -99,7 +102,7 @@
             class="write-input"
             type="text"
             [value]="tagsInput()"
-            (input)="tagsInput.set($any($event.target).value)"
+            (input)="tagsInput.set($any($event.target).value); markDirty()"
             placeholder="例如：Angular, TypeScript, 前端"
           />
         </div>
@@ -110,7 +113,7 @@
             class="write-input"
             type="text"
             [value]="coverUrl()"
-            (input)="coverUrl.set($any($event.target).value)"
+            (input)="coverUrl.set($any($event.target).value); markDirty()"
             placeholder="https://example.com/cover.jpg"
           />
         </div>
@@ -120,14 +123,14 @@
           <textarea
             class="write-textarea write-textarea--content"
             [value]="content()"
-            (input)="content.set($any($event.target).value)"
+            (input)="onContentChange($any($event.target).value)"
             placeholder="使用 Markdown 编写文章内容..."
             rows="20"
           ></textarea>
         </div>
       </div>
     } @else {
-      <!-- Preview Mode -->
+      <!-- Preview Mode — rendered Markdown -->
       <div class="write-preview">
         <div class="write-preview__header">
           <h1>{{ title() || '无标题' }}</h1>
@@ -139,11 +142,12 @@
             @if (tagsArray().length > 0) {
               <span>{{ tagsArray().join(', ') }}</span>
             }
-            <span>{{ summary() }}</span>
           </div>
+          @if (summary()) {
+            <p class="write-preview__summary">{{ summary() }}</p>
+          }
         </div>
-        <div class="write-preview__content markdown-body">
-          {{ content() }}
+        <div class="write-preview__content markdown-body" [innerHTML]="previewHtml()">
         </div>
       </div>
     }
