@@ -98,6 +98,9 @@
             @if (isOwnComment(comment)) {
               <button (click)="deleteComment(comment.id)" class="live-comment-item__action-btn live-comment-item__action-btn--delete">删除</button>
             }
+            @if (!isOwnComment(comment)) {
+              <button (click)="reportComment(comment.id)" class="live-comment-item__action-btn live-comment-item__action-btn--report">举报</button>
+            }
           </div>
 
           <!-- 回复列表 -->

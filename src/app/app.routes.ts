@@ -165,6 +165,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'comment-reports',
+        title: 'Comment Reports — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-comment-reports/admin-comment-reports.component').then(
+            (m) => m.AdminCommentReportsComponent,
+          ),
+      },
+      {
+        path: 'sensitive-words',
+        title: 'Sensitive Words — SpaceLab Admin',
+        loadComponent: () =>
+          import('./features/admin/admin-sensitive-words/admin-sensitive-words.component').then(
+            (m) => m.AdminSensitiveWordsComponent,
+          ),
+      },
+      {
         path: 'analytics',
         title: 'Analytics — SpaceLab Admin',
         loadComponent: () =>

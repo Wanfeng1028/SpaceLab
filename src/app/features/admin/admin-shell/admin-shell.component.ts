@@ -32,6 +32,8 @@ export class AdminShellComponent {
     { label: '文章管理', path: '/admin/posts', icon: 'file-text' },
     { label: '用户管理', path: '/admin/users', icon: 'team' },
     { label: '评论审核', path: '/admin/comments', icon: 'message' },
+    { label: '举报管理', path: '/admin/comment-reports', icon: 'warning' },
+    { label: '敏感词', path: '/admin/sensitive-words', icon: 'lock' },
     { label: '分类管理', path: '/admin/categories', icon: 'appstore' },
     { label: '标签管理', path: '/admin/tags', icon: 'tags' },
     { label: '友链管理', path: '/admin/friend-links', icon: 'link' },

@@ -6,6 +6,8 @@ import { RouterLink } from '@angular/router';
 import { LiveCommentService, LiveComment } from '../../../core/services/live-comment.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { RecaptchaService } from '../../../core/services/recaptcha.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-live-comment',
@@ -26,6 +28,8 @@ export class LiveCommentComponent implements OnInit, OnChanges {
   private commentService = inject(LiveCommentService);
   private authService = inject(AuthService);
   private recaptcha = inject(RecaptchaService);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
   comments: LiveComment[] = [];
   loading: boolean = false;
@@ -165,6 +169,15 @@ export class LiveCommentComponent implements OnInit, OnChanges {
         this.error = '删除评论失败';
         console.error('Error deleting comment:', err);
       }
+    });
+  }
+
+  reportComment(commentId: string): void {
+    const reason = prompt('举报原因：spam(垃圾广告) / harassment(人身攻击) / inappropriate(内容不当) / other(其他)');
+    if (!reason || !['spam', 'harassment', 'inappropriate', 'other'].includes(reason)) return;
+    this.http.post(`${this.apiUrl}/comments/${commentId}/report`, { reason }).subscribe({
+      next: () => { this.error = '举报已提交，我们会尽快处理'; setTimeout(() => this.error = null, 3000); },
+      error: () => { this.error = '举报提交失败'; },
     });
   }
 
