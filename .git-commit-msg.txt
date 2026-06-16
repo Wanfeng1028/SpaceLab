@@ -1,9 +1,15 @@
-feat(seo): add RSS feed, autodiscovery links in HTML head
+feat: add error logging, deployment docs, and update progress tracking
 
-- Create scripts/generate-feed.mjs — generates RSS 2.0 feed.xml
-- Add generate-feed.mjs to prebuild pipeline
-- Add RSS + sitemap link tags in index.html for browser autodiscovery
-- feed.xml contains all 5 published posts sorted by date
-- Update architecture-review.md with current progress
+Monitoring:
+- Create ErrorLogService for frontend error logging
+- Create GlobalErrorHandler (Angular ErrorHandler implementation)
+- Register GlobalErrorHandler in app.config.ts
+- Dev mode: console output; Production: sendBeacon to backend
+
+Documentation:
+- Create docs/deployment.md — full deployment guide
+  (architecture, frontend/GitHub Pages, backend/Docker, nginx,
+   database backup, CI/CD, monitoring, content management table)
+- Update docs/architecture-review.md with current progress
 
 Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>
