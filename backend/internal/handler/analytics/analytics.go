@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/spacelab/backend/internal/model"
+	"github.com/spacelab/backend/internal/utils"
 	"gorm.io/gorm"
 )
 
@@ -34,8 +35,34 @@ func (h *AnalyticsHandler) RecordEvent(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
 		return
+	}
+
+	// 事件类型白名单（防止任意数据注入）
+	validEventTypes := map[string]bool{
+		"page_view": true, "click": true, "scroll": true,
+		"share": true, "download": true, "search": true,
+	}
+	if !validEventTypes[input.EventType] {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid event type"})
+		return
+	}
+
+	// 清洗输入字段（防止 XSS 和超长字符串）
+	input.PagePath = truncateStr(utils.SanitizePlainString(input.PagePath), 500)
+	input.PageTitle = truncateStr(utils.SanitizePlainString(input.PageTitle), 500)
+	input.Referrer = truncateStr(utils.SanitizeLinkURL(input.Referrer), 500)
+	input.DeviceType = truncateStr(utils.SanitizePlainString(input.DeviceType), 50)
+	input.Browser = truncateStr(utils.SanitizePlainString(input.Browser), 100)
+	input.Language = truncateStr(utils.SanitizePlainString(input.Language), 10)
+
+	// 验证 TargetType
+	if input.TargetType != "" {
+		validTargetTypes := map[string]bool{"post": true, "project": true, "comment": true, "category": true, "tag": true}
+		if !validTargetTypes[input.TargetType] {
+			input.TargetType = ""
+		}
 	}
 
 	event := model.AnalyticsEvent{
@@ -60,11 +87,19 @@ func (h *AnalyticsHandler) RecordEvent(c *gin.Context) {
 
 	result := h.db.Create(&event)
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to record event"})
 		return
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Event recorded successfully"})
+}
+
+// truncateStr 截断字符串到指定长度
+func truncateStr(s string, maxLen int) string {
+	if len(s) <= maxLen {
+		return s
+	}
+	return s[:maxLen]
 }
 
 // GetSummary 获取分析概览
@@ -107,6 +142,11 @@ func (h *AnalyticsHandler) GetTopPosts(c *gin.Context) {
 		}
 	}
 
+	// 限制查询范围
+	if limit > 50 {
+		limit = 50
+	}
+
 	var posts []model.Post
 	h.db.Model(&model.Post{}).
 		Select("id, title, view_count").
@@ -124,6 +164,11 @@ func (h *AnalyticsHandler) GetTrafficTrend(c *gin.Context) {
 		if parsed, err := strconv.Atoi(d); err == nil && parsed > 0 {
 			days = parsed
 		}
+	}
+
+	// 限制查询范围
+	if days > 365 {
+		days = 365
 	}
 
 	startDate := time.Now().AddDate(0, 0, -days)

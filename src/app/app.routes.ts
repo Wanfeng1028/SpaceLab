@@ -71,6 +71,18 @@ export const routes: Routes = [
       import('./features/auth/register.component').then((m) => m.RegisterComponent),
   },
   {
+    path: 'verify-email',
+    title: 'Verify Email — SpaceLab',
+    loadComponent: () =>
+      import('./features/auth/verify-email.component').then((m) => m.VerifyEmailComponent),
+  },
+  {
+    path: 'reset-password',
+    title: 'Reset Password — SpaceLab',
+    loadComponent: () =>
+      import('./features/auth/reset-password.component').then((m) => m.ResetPasswordComponent),
+  },
+  {
     path: 'profile',
     title: 'Profile — SpaceLab',
     canActivate: [authGuard],

@@ -15,6 +15,7 @@ import { PostService, Post } from '../../core/services/post.service';
 import { LiveCommentComponent } from '../../shared/components/live-comment/live-comment.component';
 import DOMPurify from 'dompurify';
 import { MarkdownRendererService } from '../../core/services/markdown-renderer.service';
+import { SeoService } from '../../core/services/seo.service';
 
 @Component({
   selector: 'app-article',
@@ -30,6 +31,7 @@ export class ArticleComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private postService = inject(PostService);
   private markdownRenderer = inject(MarkdownRendererService);
+  private seo = inject(SeoService);
 
   readonly post = signal<Post | null>(null);
   readonly loading = signal(false);
@@ -49,6 +51,9 @@ export class ArticleComponent implements OnInit {
             this.sanitizedContent.set(this.sanitizer.bypassSecurityTrustHtml(html));
           }
           this.loading.set(false);
+
+          // SEO
+          this.seo.setArticle(post.title, post.summary ?? '', post.slug, post.cover_url);
 
           // Increment view count on the backend
           if (post.id) {

@@ -10,3 +10,10 @@
 .auth-form {
   gap: 14px;
 }
+
+// 注册页密码规则在移动端变为单列
+@media (max-width: 480px) {
+  .password-rules__list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -21,7 +21,12 @@
         <div class="auth-error">{{ error() }}</div>
       }
 
-      <form (ngSubmit)="onSubmit()" class="auth-form">
+      @if (registrationClosed()) {
+        <div class="auth-warning">注册功能暂时关闭，请联系管理员</div>
+      }
+
+      <form (ngSubmit)="onSubmit()" class="auth-form" [class.auth-form--disabled]="registrationClosed()">
+        <!-- 邮箱 -->
         <div class="form-field">
           <svg class="form-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -35,9 +40,15 @@
             (input)="email.set($any($event.target).value)"
             placeholder="请输入邮箱"
             required
+            autocomplete="email"
+            [class.form-input--error]="email() && emailError()"
           />
         </div>
+        @if (email() && emailError()) {
+          <div class="form-hint form-hint--error">{{ emailError() }}</div>
+        }
 
+        <!-- 用户名 -->
         <div class="form-field">
           <svg class="form-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -49,11 +60,17 @@
             type="text"
             [value]="username()"
             (input)="username.set($any($event.target).value)"
-            placeholder="请输入用户名"
+            placeholder="请输入用户名（2-50字符）"
             required
+            autocomplete="username"
+            [class.form-input--error]="username() && usernameError()"
           />
         </div>
+        @if (username() && usernameError()) {
+          <div class="form-hint form-hint--error">{{ usernameError() }}</div>
+        }
 
+        <!-- 密码 -->
         <div class="form-field">
           <svg class="form-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
@@ -62,14 +79,57 @@
           <input
             id="password"
             class="form-input"
-            type="password"
+            [type]="showPassword() ? 'text' : 'password'"
             [value]="password()"
             (input)="password.set($any($event.target).value)"
-            placeholder="请输入密码"
+            placeholder="请输入密码（至少8位）"
             required
+            autocomplete="new-password"
+            [class.form-input--error]="password() && passwordError()"
           />
+          <button type="button" class="form-toggle-password" (click)="togglePasswordVisibility()" [attr.aria-label]="showPassword() ? '隐藏密码' : '显示密码'">
+            @if (showPassword()) {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            }
+          </button>
         </div>
 
+        <!-- 密码强度指示器 -->
+        @if (password()) {
+          <div class="password-strength">
+            <div class="password-strength__bars">
+              @for (i of [1,2,3,4]; track i) {
+                <div
+                  class="password-strength__bar"
+                  [class.password-strength__bar--active]="i <= passwordStrength().score"
+                  [style.background]="i <= passwordStrength().score ? passwordStrength().color : ''"
+                ></div>
+              }
+            </div>
+            <span class="password-strength__label" [style.color]="passwordStrength().color">
+              {{ passwordStrength().label }}
+            </span>
+          </div>
+        }
+
+        @if (password() && passwordError()) {
+          <div class="form-hint form-hint--error">{{ passwordError() }}</div>
+        }
+
+        @if (password() && !passwordError()) {
+          <div class="form-hint form-hint--success">密码格式正确</div>
+        }
+
+        <!-- 确认密码 -->
         <div class="form-field">
           <svg class="form-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -78,19 +138,42 @@
           <input
             id="confirmPassword"
             class="form-input"
-            type="password"
+            [type]="showPassword() ? 'text' : 'password'"
             [value]="confirmPassword()"
             (input)="confirmPassword.set($any($event.target).value)"
             placeholder="请确认密码"
             required
+            autocomplete="new-password"
+            [class.form-input--error]="confirmPassword() && confirmPasswordError()"
+            [class.form-input--success]="confirmPassword() && !confirmPasswordError()"
           />
+        </div>
+        @if (confirmPassword() && confirmPasswordError()) {
+          <div class="form-hint form-hint--error">{{ confirmPasswordError() }}</div>
+        }
+        @if (confirmPassword() && !confirmPasswordError()) {
+          <div class="form-hint form-hint--success">密码一致</div>
+        }
+
+        <!-- 密码规则提示 -->
+        <div class="password-rules">
+          <div class="password-rules__title">密码要求：</div>
+          <ul class="password-rules__list">
+            <li [class.password-rules__item--met]="password().length >= 8">至少 8 个字符</li>
+            <li [class.password-rules__item--met]="/[A-Z]/.test(password())">包含大写字母</li>
+            <li [class.password-rules__item--met]="/[a-z]/.test(password())">包含小写字母</li>
+            <li [class.password-rules__item--met]="/[0-9]/.test(password())">包含数字</li>
+          </ul>
         </div>
 
         <button
           type="submit"
           class="auth-submit"
-          [disabled]="loading()"
+          [disabled]="loading() || !formValid()"
         >
+          @if (loading()) {
+            <span class="auth-btn__loading"></span>
+          }
           {{ loading() ? '注册中...' : '注册' }}
         </button>
       </form>

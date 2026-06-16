@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -66,14 +67,21 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 		".jpg": true, ".jpeg": true, ".png": true, ".gif": true, ".webp": true,
 		".mp4": true, ".webm": true,
 	}
-	ext := filepath.Ext(file.Filename)
+	ext := strings.ToLower(filepath.Ext(file.Filename))
 	if !validExts[ext] {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid file extension"})
 		return
 	}
 
+	// 路径遍历防护：确保文件名不包含路径分隔符或 ..
+	cleanName := filepath.Base(file.Filename)
+	if cleanName != file.Filename || strings.Contains(file.Filename, "..") {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid filename"})
+		return
+	}
+
 	// L6: 使用临时文件写入，成功后重命名
-	tempFile, err := os.CreateTemp(uploadDir, "upload-*. "+ext)
+	tempFile, err := os.CreateTemp(uploadDir, "upload-*"+ext)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create temp file"})
 		return
@@ -98,6 +106,14 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 	}
 	tempFile.Close()
 
+	// Magic bytes 验证：读取文件头确认真实类型
+	detectedType, err := detectFileType(tempPath)
+	if err != nil || !validTypes[detectedType] {
+		os.Remove(tempPath)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "File content does not match allowed types"})
+		return
+	}
+
 	// 生成最终文件名（UUID + 白名单扩展名）
 	filename := fmt.Sprintf("%s%s", uuid.New().String(), ext)
 	finalPath := filepath.Join(uploadDir, filename)
@@ -116,14 +132,16 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 	}
 
 	// 存储到数据库
+	uploaderID, _ := uuid.Parse(c.GetString("user_id"))
 	mediaAsset := model.MediaAsset{
 		ID:           uuid.New(),
 		Filename:     filename,
 		OriginalName: file.Filename,
 		StoragePath:  finalPath,
-		MimeType:     file.Header.Get("Content-Type"),
+		MimeType:     detectedType, // 使用 magic bytes 检测的真实类型，而非客户端 Content-Type
 		Size:         info.Size(),
-		Type:         getMediaType(file.Header.Get("Content-Type")),
+		Type:         getMediaType(detectedType),
+		UploadedBy:   uploaderID,
 		CreatedAt:    time.Now(),
 	}
 
@@ -204,6 +222,26 @@ func (h *MediaHandler) Delete(c *gin.Context) {
 		return
 	}
 
+	// 权限检查：只有 admin 或资源所有者可删除
+	currentUserID := c.GetString("user_id")
+	currentRole := c.GetString("role")
+	if mediaAsset.UploadedBy != uuid.Nil && mediaAsset.UploadedBy.String() != currentUserID && currentRole != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Permission denied"})
+		return
+	}
+
+	// 路径遍历防护：确保 StoragePath 在上传目录内
+	absPath, err := filepath.Abs(mediaAsset.StoragePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid file path"})
+		return
+	}
+	absUpload, err := filepath.Abs(h.cfg.UploadPath)
+	if err != nil || !strings.HasPrefix(absPath, absUpload) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid storage path"})
+		return
+	}
+
 	// 删除物理文件
 	if err := os.Remove(mediaAsset.StoragePath); err != nil && !os.IsNotExist(err) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete file"})
@@ -247,4 +285,38 @@ func getMediaType(mimeType string) string {
 	}
 
 	return "unknown"
+}
+
+// detectFileType 通过读取文件头部 magic bytes 判断真实 MIME 类型
+// 防止攻击者伪造 Content-Type / 扩展名上传恶意文件
+func detectFileType(path string) (string, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+
+	buf := make([]byte, 32)
+	n, err := f.Read(buf)
+	if err != nil || n < 4 {
+		return "", fmt.Errorf("cannot read file header")
+	}
+
+	switch {
+	case len(buf) >= 3 && buf[0] == 0xFF && buf[1] == 0xD8 && buf[2] == 0xFF:
+		return "image/jpeg", nil
+	case len(buf) >= 8 && string(buf[:8]) == "\x89PNG\r\n\x1a\n":
+		return "image/png", nil
+	case len(buf) >= 6 && (string(buf[:6]) == "GIF87a" || string(buf[:6]) == "GIF89a"):
+		return "image/gif", nil
+	case len(buf) >= 4 && string(buf[:4]) == "RIFF" && len(buf) >= 12 && string(buf[8:12]) == "WEBP":
+		return "image/webp", nil
+	case len(buf) >= 8 && (string(buf[:4]) == "ftyp" || (len(buf) >= 12 && string(buf[4:8]) == "ftyp")):
+		// MP4 / MOV 等容器格式均以 ftyp box 开头
+		return "video/mp4", nil
+	case len(buf) >= 4 && string(buf[:4]) == "\x1a\x45\xdf\xa3":
+		return "video/webm", nil
+	default:
+		return "", fmt.Errorf("unknown file type")
+	}
 }

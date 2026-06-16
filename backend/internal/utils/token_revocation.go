@@ -127,3 +127,13 @@ func ParseAndCheckToken(rdb *redis.Client, tokenString string) (bool, error) {
 
 	return NewTokenRevocationManager(rdb).IsTokenRevoked(tokenString)
 }
+
+// TokenRevocationMgr 全局 Token 撤销管理器实例
+var TokenRevocationMgr *TokenRevocationManager
+
+// InitTokenRevocation 初始化全局 Token 撤销管理器
+func InitTokenRevocation(rdb *redis.Client) {
+	if rdb != nil {
+		TokenRevocationMgr = NewTokenRevocationManager(rdb)
+	}
+}

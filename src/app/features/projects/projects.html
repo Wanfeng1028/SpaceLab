@@ -40,6 +40,12 @@
     </div>
   }
 
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="projects-loading">
+      <div class="glitch-loader">加载中...</div>
+    </div>
+  } @else {
   <!-- Projects count -->
   <div class="projects-count">
     {{ tPage('projects.showing', { count: filteredProjects().length }) }}
@@ -162,4 +168,5 @@
       </div>
     </app-mac-terminal-modal>
   }
+}
 </div>

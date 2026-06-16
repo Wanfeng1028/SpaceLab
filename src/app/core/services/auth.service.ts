@@ -215,6 +215,93 @@ export class AuthService {
     });
   }
 
+  /** 检查注册是否开放 */
+  isRegistrationOpen(): Observable<{ registration_open: boolean }> {
+    return this.http.get<{ registration_open: boolean }>(`${this.apiUrl}/auth/registration-open`);
+  }
+
+  /** 请求密码重置邮件 */
+  requestPasswordReset(email: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/auth/request-password-reset`, { email });
+  }
+
+  /** 使用 token 重置密码 */
+  resetPassword(token: string, newPassword: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/auth/reset-password`, {
+      token,
+      new_password: newPassword
+    });
+  }
+
+  /** 验证邮箱 */
+  verifyEmail(token: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/auth/verify-email`, { token });
+  }
+
+  /** 重新发送验证邮件（需登录） */
+  resendVerificationEmail(): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/auth/resend-verification`, {});
+  }
+
+  /**
+   * 密码强度评估（前端辅助校验）
+   * 返回 0-4 分：0=极弱, 1=弱, 2=一般, 3=强, 4=极强
+   */
+  evaluatePasswordStrength(password: string): { score: number; label: string; color: string } {
+    if (!password) return { score: 0, label: '', color: '' };
+
+    let score = 0;
+    const len = password.length;
+
+    // 长度评分
+    if (len >= 8) score++;
+    if (len >= 12) score++;
+    if (len >= 16) score++;
+
+    // 字符种类
+    const hasLower = /[a-z]/.test(password);
+    const hasUpper = /[A-Z]/.test(password);
+    const hasDigit = /[0-9]/.test(password);
+    const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+
+    const varietyCount = [hasLower, hasUpper, hasDigit, hasSpecial].filter(Boolean).length;
+    if (varietyCount >= 3) score++;
+    if (varietyCount >= 4) score++;
+
+    // 常见弱密码惩罚
+    const weakPasswords = ['123456', 'password', 'qwerty', 'abc123', '111111', '12345678', 'letmein', 'admin'];
+    if (weakPasswords.includes(password.toLowerCase())) {
+      score = Math.min(score, 1);
+    }
+
+    // 连续字符惩罚
+    if (/(.)\1{2,}/.test(password)) {
+      score = Math.max(0, score - 1);
+    }
+
+    score = Math.min(4, Math.max(0, score));
+
+    const labels = ['', '弱', '一般', '强', '极强'];
+    const colors = ['', '#ff4d4f', '#faad14', '#52c41a', '#1890ff'];
+
+    return {
+      score,
+      label: labels[score] || '',
+      color: colors[score] || '',
+    };
+  }
+
+  /** 前端密码格式校验（与后端保持一致） */
+  validatePassword(password: string): string | null {
+    if (!password) return '请输入密码';
+    if (password.length < 8) return '密码至少 8 个字符';
+    if (password.length > 128) return '密码最多 128 个字符';
+    if (!/[A-Z]/.test(password)) return '密码必须包含大写字母';
+    if (!/[a-z]/.test(password)) return '密码必须包含小写字母';
+    if (!/[0-9]/.test(password)) return '密码必须包含数字';
+    return null;
+  }
+
   getMe(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/auth/me`).pipe(
       tap(user => {

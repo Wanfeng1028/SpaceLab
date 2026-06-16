@@ -2,9 +2,11 @@ package handler
 
 import (
 	"net/http"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/service"
+	"github.com/spacelab/backend/internal/utils"
 )
 
 // ─── Category ──────────────────────────────────────────────────────────
@@ -21,7 +23,7 @@ func NewCategoryHandler(categoryService *service.CategoryService) *CategoryHandl
 func (h *CategoryHandler) ListCategories(c *gin.Context) {
 	categories, err := h.categoryService.ListCategories()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"categories": categories})
@@ -31,7 +33,7 @@ func (h *CategoryHandler) ListCategories(c *gin.Context) {
 func (h *CategoryHandler) GetCategoryTree(c *gin.Context) {
 	tree, err := h.categoryService.GetCategoryTree()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"categories": tree})
@@ -64,6 +66,11 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 		return
 	}
 
+	input.Slug = utils.SanitizePlainString(input.Slug)
+	input.Name = utils.SanitizePlainString(input.Name)
+	input.Description = utils.SanitizePlainString(input.Description)
+	input.Icon = utils.SanitizePlainString(input.Icon)
+
 	var parentID *string
 	if input.ParentID != "" {
 		parentID = &input.ParentID
@@ -78,7 +85,7 @@ func (h *CategoryHandler) CreateCategory(c *gin.Context) {
 		ParentID:    parentID,
 	})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -103,6 +110,23 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 		return
 	}
 
+	if input.Slug != nil {
+		sanitized := utils.SanitizePlainString(*input.Slug)
+		input.Slug = &sanitized
+	}
+	if input.Name != nil {
+		sanitized := utils.SanitizePlainString(*input.Name)
+		input.Name = &sanitized
+	}
+	if input.Description != nil {
+		sanitized := utils.SanitizePlainString(*input.Description)
+		input.Description = &sanitized
+	}
+	if input.Icon != nil {
+		sanitized := utils.SanitizePlainString(*input.Icon)
+		input.Icon = &sanitized
+	}
+
 	category, err := h.categoryService.UpdateCategory(id, service.UpdateCategoryInput{
 		Slug:        input.Slug,
 		Name:        input.Name,
@@ -112,7 +136,7 @@ func (h *CategoryHandler) UpdateCategory(c *gin.Context) {
 		ParentID:    input.ParentID,
 	})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -124,7 +148,7 @@ func (h *CategoryHandler) DeleteCategory(c *gin.Context) {
 	id := c.Param("id")
 
 	if err := h.categoryService.DeleteCategory(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -145,7 +169,7 @@ func NewTagHandler(tagService *service.TagService) *TagHandler {
 func (h *TagHandler) ListTags(c *gin.Context) {
 	tags, err := h.tagService.ListTags()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"tags": tags})
@@ -175,13 +199,24 @@ func (h *TagHandler) CreateTag(c *gin.Context) {
 		return
 	}
 
+	input.Slug = utils.SanitizePlainString(input.Slug)
+	input.Name = utils.SanitizePlainString(input.Name)
+	// 验证颜色格式（必须是 #hex）
+	if input.Color != "" {
+		colorRegex := regexp.MustCompile(`^#[0-9a-fA-F]{3,8}$`)
+		if !colorRegex.MatchString(input.Color) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid color format"})
+			return
+		}
+	}
+
 	tag, err := h.tagService.CreateTag(service.CreateTagInput{
 		Slug:  input.Slug,
 		Name:  input.Name,
 		Color: input.Color,
 	})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create tag"})
 		return
 	}
 
@@ -203,13 +238,29 @@ func (h *TagHandler) UpdateTag(c *gin.Context) {
 		return
 	}
 
+	if input.Slug != nil {
+		sanitized := utils.SanitizePlainString(*input.Slug)
+		input.Slug = &sanitized
+	}
+	if input.Name != nil {
+		sanitized := utils.SanitizePlainString(*input.Name)
+		input.Name = &sanitized
+	}
+	if input.Color != nil && *input.Color != "" {
+		colorRegex := regexp.MustCompile(`^#[0-9a-fA-F]{3,8}$`)
+		if !colorRegex.MatchString(*input.Color) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid color format"})
+			return
+		}
+	}
+
 	tag, err := h.tagService.UpdateTag(id, service.UpdateTagInput{
 		Slug:  input.Slug,
 		Name:  input.Name,
 		Color: input.Color,
 	})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -221,7 +272,7 @@ func (h *TagHandler) DeleteTag(c *gin.Context) {
 	id := c.Param("id")
 
 	if err := h.tagService.DeleteTag(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -241,9 +292,14 @@ func NewFriendLinkHandler(friendLinkService *service.FriendLinkService) *FriendL
 // ListFriendLinks 获取友链列表（公开，默认只显示 active）
 func (h *FriendLinkHandler) ListFriendLinks(c *gin.Context) {
 	status := c.DefaultQuery("status", "active")
+	// 只允许合法的 status 值
+	if status != "active" && status != "inactive" && status != "pending" && status != "all" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status filter"})
+		return
+	}
 	links, err := h.friendLinkService.ListFriendLinks(status)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"friend_links": links})
@@ -276,6 +332,27 @@ func (h *FriendLinkHandler) CreateFriendLink(c *gin.Context) {
 		return
 	}
 
+	input.Name = utils.SanitizePlainString(input.Name)
+	input.URL = utils.SanitizePlainString(input.URL)
+	input.LogoURL = utils.SanitizePlainString(input.LogoURL)
+	input.Description = utils.SanitizePlainString(input.Description)
+
+	// 验证 URL 格式
+	if !utils.IsValidURL(input.URL) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid URL format"})
+		return
+	}
+	if input.LogoURL != "" && !utils.IsValidURL(input.LogoURL) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid logo URL format"})
+		return
+	}
+
+	// status 白名单
+	if input.Status != "" && input.Status != "active" && input.Status != "inactive" && input.Status != "pending" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status value"})
+		return
+	}
+
 	link, err := h.friendLinkService.CreateFriendLink(service.CreateFriendLinkInput{
 		Name:        input.Name,
 		URL:         input.URL,
@@ -285,7 +362,7 @@ func (h *FriendLinkHandler) CreateFriendLink(c *gin.Context) {
 		Status:      input.Status,
 	})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -310,6 +387,37 @@ func (h *FriendLinkHandler) UpdateFriendLink(c *gin.Context) {
 		return
 	}
 
+	if input.Name != nil {
+		sanitized := utils.SanitizePlainString(*input.Name)
+		input.Name = &sanitized
+	}
+	if input.URL != nil {
+		sanitized := utils.SanitizePlainString(*input.URL)
+		input.URL = &sanitized
+		if !utils.IsValidURL(*input.URL) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid URL format"})
+			return
+		}
+	}
+	if input.LogoURL != nil {
+		sanitized := utils.SanitizePlainString(*input.LogoURL)
+		input.LogoURL = &sanitized
+		if *input.LogoURL != "" && !utils.IsValidURL(*input.LogoURL) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid logo URL format"})
+			return
+		}
+	}
+	if input.Description != nil {
+		sanitized := utils.SanitizePlainString(*input.Description)
+		input.Description = &sanitized
+	}
+	if input.Status != nil && *input.Status != "" {
+		if *input.Status != "active" && *input.Status != "inactive" && *input.Status != "pending" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status value"})
+			return
+		}
+	}
+
 	link, err := h.friendLinkService.UpdateFriendLink(id, service.UpdateFriendLinkInput{
 		Name:        input.Name,
 		URL:         input.URL,
@@ -319,7 +427,7 @@ func (h *FriendLinkHandler) UpdateFriendLink(c *gin.Context) {
 		Status:      input.Status,
 	})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -331,7 +439,7 @@ func (h *FriendLinkHandler) DeleteFriendLink(c *gin.Context) {
 	id := c.Param("id")
 
 	if err := h.friendLinkService.DeleteFriendLink(id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 

@@ -1,0 +1,36 @@
+refactor: unify data source and improve project infrastructure
+
+Architecture:
+- Create ProjectService to fetch projects from backend API with static fallback
+- Rewrite ProjectDetailComponent from placeholder to full detail view
+- Add SeoService for page meta/OG/Twitter tags
+- Inject SEO into ArticleComponent for dynamic article pages
+
+Data Model:
+- Comment: migrate from PostID to ContentID+ContentType (multi-content support)
+- Project: add missing fields (Description, WebsiteURL, GitHubURL, Tags, etc.)
+- Post, Project, Comment: add DeletedAt soft delete
+- MediaAsset, AnalyticsEvent: align fields with handler expectations
+
+Testing:
+- Install Karma + Jasmine test framework
+- Configure karma.conf.js and tsconfig.spec.json
+- Add angular.json test builder configuration
+- Write AuthService unit tests (login, register)
+- Add backend tests: CategoryService, TagService, FriendLinkService
+
+Environment:
+- Add environment.staging.ts
+- Add staging build configuration in angular.json with fileReplacements
+- Unify all env files with siteUrl + siteName fields
+
+Bug fixes:
+- Fix login.component.ts: this.emailError -> this.emailError() (signal call)
+- Remove duplicate TokenRevocationMgr declaration in websocket.go
+- Remove duplicate SendPasswordResetEmail in resend_service.go
+- Fix all backend model vs handler field mismatches
+
+Docs:
+- Add docs/architecture-review.md with full 17-dimension audit
+
+Co-Authored-By: AtomCode (deepseek-v4-flash) <noreply@atomgit.com>

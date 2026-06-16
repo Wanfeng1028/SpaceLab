@@ -9,6 +9,10 @@ export const environment = {
   
   // 应用版本
   appVersion: '1.0.0',
+
+  // 站点 URL
+  siteUrl: 'http://localhost:4200',
+  siteName: 'SpaceLab (Dev)',
   
   // 调试模式
   debug: true

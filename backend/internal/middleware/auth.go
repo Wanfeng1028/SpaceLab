@@ -11,6 +11,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/utils"
+	"gorm.io/gorm"
 )
 
 // JWTClaims JWT 声明
@@ -60,11 +61,11 @@ func ParseJWT(cfg *config.Config, tokenString string) (*JWTClaims, error) {
 
 // Auth 认证中间件
 func Auth(cfg *config.Config) gin.HandlerFunc {
-	return AuthWithRedis(cfg, nil)
+	return AuthWithRedis(cfg, nil, nil)
 }
 
-// AuthWithRedis 认证中间件（带 Redis Token 撤销支持）
-func AuthWithRedis(cfg *config.Config, rdb *redis.Client) gin.HandlerFunc {
+// AuthWithRedis 认证中间件（带 Redis Token 撤销和用户状态检查）
+func AuthWithRedis(cfg *config.Config, rdb *redis.Client, db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
@@ -100,6 +101,20 @@ func AuthWithRedis(cfg *config.Config, rdb *redis.Client) gin.HandlerFunc {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
 			c.Abort()
 			return
+		}
+
+		// 检查用户状态（封禁/锁定）
+		if db != nil {
+			var status string
+			var lockedUntil *time.Time
+			row := db.Table("users").Select("status, locked_until").Where("id = ?", claims.UserID).Row()
+			if err := row.Scan(&status, &lockedUntil); err == nil {
+				if status == "banned" || (status == "locked" && lockedUntil != nil && lockedUntil.After(time.Now())) {
+					c.JSON(http.StatusUnauthorized, gin.H{"error": "Account is disabled"})
+					c.Abort()
+					return
+				}
+			}
 		}
 
 		// 将用户信息存入上下文

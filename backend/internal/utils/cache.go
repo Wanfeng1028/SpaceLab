@@ -11,6 +11,11 @@ import (
 
 var RedisClient *redis.Client
 
+// GetRedisClient 获取 Redis 客户端实例（可能为 nil）
+func GetRedisClient() *redis.Client {
+	return RedisClient
+}
+
 // InitRedis 初始化 Redis 连接
 func InitRedis(addr, password string, db int) error {
 	RedisClient = redis.NewClient(&redis.Options{

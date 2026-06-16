@@ -43,15 +43,22 @@ func main() {
 	// 自动迁移数据库表结构
 	if err := config.GetDB().AutoMigrate(
 		&model.User{},
+		&model.LoginLog{},
+		&model.RiskEvent{},
+		&model.SiteSetting{},
 		&model.Post{},
 		&model.Comment{},
 		&model.MediaAsset{},
 		&model.AnalyticsEvent{},
 		&model.Project{},
 		&model.PasswordResetToken{},
+		&model.EmailVerificationToken{},
 		&model.Category{},
 		&model.Tag{},
 		&model.FriendLink{},
+		&model.AdminAuditLog{},
+		&model.SensitiveWord{},
+		&model.CommentReport{},
 	); err != nil {
 		utils.Logger.Warn("Auto-migration warning", zap.Error(err))
 	}
@@ -62,11 +69,19 @@ func main() {
 			utils.Logger.Warn("Redis connection failed, caching disabled", zap.Error(err))
 		} else {
 			utils.Logger.Info("Redis connected successfully")
+			// 初始化 Token 撤销管理器（依赖 Redis）
+			utils.InitTokenRevocation(utils.GetRedisClient())
 		}
 	}
 
 	// 初始化邮件服务
 	utils.InitEmail()
+
+	// 初始化审计日志
+	utils.InitAuditLogger(config.GetDB())
+
+	// 初始化敏感词检查器
+	utils.InitSensitiveChecker(config.GetDB())
 
 	// 初始化 Resend 邮件服务（可选）
 	resendSvc := utils.InitResend(cfg.ResendAPIKey, cfg.ResendFrom, cfg.ResendFrom)
@@ -102,6 +117,9 @@ func main() {
 	// 全局中间件
 	r.Use(middleware.CORS(cfg))
 	r.Use(middleware.Security())
+	r.Use(middleware.ContentSecurityPolicy())
+	r.Use(middleware.NoSnitch())
+	r.Use(middleware.RequestSizeLimit(10 << 20)) // 10MB 全局请求体限制
 	r.Use(middleware.MetricsMiddleware())
 	r.Use(middleware.LoggingMiddleware())
 	r.Use(middleware.RecoveryMiddleware())
@@ -119,18 +137,24 @@ func main() {
 		authRoutes := api.Group("/auth")
 		{
 			authRoutes.POST("/register", middleware.AuthLimiter(), authHandler.Register)
-			 authRoutes.POST("/login", middleware.AuthFailureLimiter(), authHandler.Login)
-			 authRoutes.POST("/refresh", authHandler.RefreshToken)
+			authRoutes.POST("/login", middleware.AuthFailureLimiter(), authHandler.Login)
+			authRoutes.POST("/refresh", authHandler.RefreshToken)
+			authRoutes.POST("/verify-email", authHandler.VerifyEmail)
+			authRoutes.GET("/verify-email", authHandler.VerifyEmail) // 邮件链接直接点击
+			authRoutes.POST("/request-password-reset", middleware.AuthLimiter(), authHandler.RequestPasswordReset)
+			authRoutes.POST("/reset-password", middleware.AuthLimiter(), authHandler.ResetPassword)
+			authRoutes.GET("/registration-open", authHandler.IsRegistrationOpen)
 		}
 
-		// 需要认证的路由
+		// 需要认证的路由（带 Redis Token 撤销检查）
 		protected := api.Group("")
-		protected.Use(middleware.Auth(cfg))
+		protected.Use(middleware.AuthWithRedis(cfg, utils.GetRedisClient(), config.GetDB()))
 		{
 			// 用户信息
 			protected.GET("/auth/me", authHandler.GetMe)
 			protected.PUT("/auth/password", authHandler.UpdatePassword)
 			protected.PUT("/auth/profile", authHandler.UpdateProfile)
+			protected.POST("/auth/resend-verification", middleware.AuthLimiter(), authHandler.ResendVerificationEmail)
 
 			// 评论管理
 			protected.POST("/comments", nativeCommentHandler.CreateComment)
@@ -138,6 +162,8 @@ func main() {
 			protected.DELETE("/comments/:id", nativeCommentHandler.DeleteComment)
 			// 兼容前端 /posts/:id/comments 路径创建评论
 			protected.POST("/posts/:id/comments", nativeCommentHandler.CreateComment)
+			// 评论举报
+			protected.POST("/comments/:id/report", nativeCommentHandler.ReportComment)
 
 			// 文章管理（仅 Admin 可访问）
 			adminOnly := protected.Group("")
@@ -175,18 +201,41 @@ func main() {
 			{
 				// 用户管理
 				adminRoutes.GET("/admin/users", adminHandler.ListUsers)
+				adminRoutes.GET("/admin/users/stats", adminHandler.GetStats)
 				adminRoutes.GET("/admin/users/:id", adminHandler.GetUser)
+				adminRoutes.GET("/admin/users/:id/risk-profile", adminHandler.GetUserRiskProfile)
 				adminRoutes.PUT("/admin/users/:id/role", adminHandler.UpdateUserRole)
 				adminRoutes.PUT("/admin/users/:id/status", adminHandler.UpdateUserStatus)
 				adminRoutes.DELETE("/admin/users/:id", adminHandler.DeleteUser)
 				adminRoutes.POST("/admin/users/:id/reset-password", adminHandler.ResetUserPassword)
-				adminRoutes.GET("/admin/users/stats", adminHandler.GetStats)
+				adminRoutes.POST("/admin/users/:id/lock", adminHandler.LockUser)
+				adminRoutes.POST("/admin/users/:id/unlock", adminHandler.UnlockUser)
+				adminRoutes.POST("/admin/users/:id/ban", adminHandler.BanUser)
+				adminRoutes.POST("/admin/users/:id/unban", adminHandler.UnbanUser)
 
 				// 评论审核
 				adminRoutes.GET("/admin/comments", nativeCommentHandler.AdminListComments)
 				adminRoutes.POST("/admin/comments/:id/approve", nativeCommentHandler.ApproveComment)
 				adminRoutes.POST("/admin/comments/:id/reject", nativeCommentHandler.RejectComment)
 				adminRoutes.DELETE("/admin/comments/:id", nativeCommentHandler.AdminDeleteComment)
+
+				// 评论举报审核
+				adminRoutes.GET("/admin/comment-reports", nativeCommentHandler.ListReports)
+				adminRoutes.POST("/admin/comment-reports/:id/review", nativeCommentHandler.ReviewReport)
+
+				// 敏感词管理
+				adminRoutes.GET("/admin/sensitive-words", nativeCommentHandler.ListSensitiveWords)
+				adminRoutes.POST("/admin/sensitive-words", nativeCommentHandler.AddSensitiveWord)
+				adminRoutes.DELETE("/admin/sensitive-words/:id", nativeCommentHandler.DeleteSensitiveWord)
+
+				// 风控管理
+				adminRoutes.GET("/admin/login-logs", adminHandler.ListLoginLogs)
+				adminRoutes.GET("/admin/risk-events", adminHandler.ListRiskEvents)
+				adminRoutes.POST("/admin/risk-events/:id/resolve", adminHandler.ResolveRiskEvent)
+
+				// 站点设置
+				adminRoutes.GET("/admin/settings", adminHandler.GetSiteSettings)
+				adminRoutes.PUT("/admin/settings", adminHandler.UpdateSiteSetting)
 			}
 		}
 
@@ -196,7 +245,7 @@ func main() {
 			// 文章
 			public.GET("/posts", postHandler.ListPosts)
 			public.GET("/posts/:id", postHandler.GetPostBySlug)
-			public.POST("/posts/:id/view", postHandler.IncrementViewCount)
+			public.POST("/posts/:id/view", middleware.AuthLimiter(), postHandler.IncrementViewCount)
 
 			// 评论（公开读取：优先使用自研原生评论，LiveComment 作为备用）
 			public.GET("/posts/:id/comments", nativeCommentHandler.GetComments)
@@ -207,17 +256,17 @@ func main() {
 
 			// 上传（需登录）
 			upload := api.Group("/media")
-			upload.Use(middleware.Auth(cfg))
+			upload.Use(middleware.AuthWithRedis(cfg, utils.GetRedisClient(), config.GetDB()))
 			{
 				upload.POST("/upload", mediaHandler.Upload)
-				upload.DELETE("/media/:id", mediaHandler.Delete)
+				upload.DELETE("/:id", mediaHandler.Delete)
 			}
 
 			// 分析接口
 			public.GET("/analytics/summary", analyticsHandler.GetSummary)
 			public.GET("/analytics/top-posts", analyticsHandler.GetTopPosts)
 			public.GET("/analytics/traffic", analyticsHandler.GetTrafficTrend)
-			public.POST("/analytics/event", analyticsHandler.RecordEvent)
+			public.POST("/analytics/event", middleware.AuthLimiter(), analyticsHandler.RecordEvent)
 
 			// 在线用户统计
 			public.GET("/online", func(c *gin.Context) {

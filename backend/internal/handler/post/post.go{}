@@ -56,10 +56,10 @@ func (h *PostHandler) ListPosts(c *gin.Context) {
 		PageSize   int          `json:"page_size"`
 		TotalPages int          `json:"total_pages"`
 	}{
-		Posts:      posts,
-		Total:      total,
-		Page:       page,
-		PageSize:   pageSize,
+		Posts:     posts,
+		Total:     total,
+		Page:      page,
+		PageSize:  pageSize,
 		TotalPages: int((total + int64(pageSize-1)) / int64(pageSize)),
 	}
 

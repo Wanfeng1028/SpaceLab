@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/service"
+	"github.com/spacelab/backend/internal/utils"
 )
 
 type ProjectHandler struct {
@@ -20,8 +21,8 @@ func NewProjectHandler(projectService *service.ProjectService) *ProjectHandler {
 func (h *ProjectHandler) ListProjects(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
-	status := c.Query("status")
-	language := c.Query("language")
+	status := utils.SanitizePlainString(c.Query("status"))
+	language := utils.SanitizePlainString(c.Query("language"))
 
 	if page < 1 {
 		page = 1
@@ -32,7 +33,7 @@ func (h *ProjectHandler) ListProjects(c *gin.Context) {
 
 	projects, total, err := h.projectService.ListProjects(status, language, page, pageSize)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch projects"})
 		return
 	}
 
@@ -62,7 +63,7 @@ func (h *ProjectHandler) GetProjectBySlug(c *gin.Context) {
 func (h *ProjectHandler) CreateProject(c *gin.Context) {
 	var input service.CreateProjectInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
 		return
 	}
 
@@ -73,11 +74,27 @@ func (h *ProjectHandler) CreateProject(c *gin.Context) {
 	}
 	input.AuthorID = authorID.(string)
 
+	// 清洗输入字段
+	input.Title = utils.SanitizePlainString(input.Title)
+	input.Description = utils.SanitizePlainString(input.Description)
+	input.Content = utils.SanitizeRichText(input.Content)
+	input.CoverURL = utils.SanitizeLinkURL(input.CoverURL)
+	input.WebsiteURL = utils.SanitizeLinkURL(input.WebsiteURL)
+	input.GitHubURL = utils.SanitizeLinkURL(input.GitHubURL)
+
 	project, err := h.projectService.CreateProject(input)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create project"})
 		return
 	}
+
+	// 审计日志
+	utils.LogAudit(
+		c.GetString("user_id"), c.GetString("email"),
+		"create", "project", project.ID.String(),
+		map[string]interface{}{"title": project.Title},
+		c.ClientIP(), c.GetHeader("User-Agent"),
+	)
 
 	c.JSON(http.StatusCreated, project)
 }
@@ -88,15 +105,49 @@ func (h *ProjectHandler) UpdateProject(c *gin.Context) {
 
 	var input service.UpdateProjectInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request parameters"})
 		return
+	}
+
+	// 清洗输入字段
+	if input.Title != nil {
+		sanitized := utils.SanitizePlainString(*input.Title)
+		input.Title = &sanitized
+	}
+	if input.Description != nil {
+		sanitized := utils.SanitizePlainString(*input.Description)
+		input.Description = &sanitized
+	}
+	if input.Content != nil {
+		sanitized := utils.SanitizeRichText(*input.Content)
+		input.Content = &sanitized
+	}
+	if input.CoverURL != nil {
+		sanitized := utils.SanitizeLinkURL(*input.CoverURL)
+		input.CoverURL = &sanitized
+	}
+	if input.WebsiteURL != nil {
+		sanitized := utils.SanitizeLinkURL(*input.WebsiteURL)
+		input.WebsiteURL = &sanitized
+	}
+	if input.GitHubURL != nil {
+		sanitized := utils.SanitizeLinkURL(*input.GitHubURL)
+		input.GitHubURL = &sanitized
 	}
 
 	project, err := h.projectService.UpdateProject(id, input)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update project"})
 		return
 	}
+
+	// 审计日志
+	utils.LogAudit(
+		c.GetString("user_id"), c.GetString("email"),
+		"update", "project", id,
+		map[string]interface{}{"title": project.Title},
+		c.ClientIP(), c.GetHeader("User-Agent"),
+	)
 
 	c.JSON(http.StatusOK, project)
 }
@@ -107,9 +158,16 @@ func (h *ProjectHandler) DeleteProject(c *gin.Context) {
 
 	err := h.projectService.DeleteProject(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete project"})
 		return
 	}
+
+	// 审计日志
+	utils.LogAudit(
+		c.GetString("user_id"), c.GetString("email"),
+		"delete", "project", id,
+		nil, c.ClientIP(), c.GetHeader("User-Agent"),
+	)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Project deleted successfully"})
 }
@@ -120,7 +178,7 @@ func (h *ProjectHandler) IncrementViewCount(c *gin.Context) {
 
 	err := h.projectService.IncrementViewCount(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to increment view count"})
 		return
 	}
 

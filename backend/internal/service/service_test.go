@@ -26,7 +26,7 @@ func SetupTestDB(t *testing.T) {
 	}
 
 	// 自动迁移
-	TestDB.AutoMigrate(&model.User{}, &model.Post{}, &model.Comment{}, &model.MediaAsset{}, &model.AnalyticsEvent{}, &model.Project{})
+	TestDB.AutoMigrate(&model.User{}, &model.Post{}, &model.Comment{}, &model.MediaAsset{}, &model.AnalyticsEvent{}, &model.Project{}, &model.Category{}, &model.Tag{}, &model.FriendLink{})
 }
 
 // TestAuthService_Register 测试用户注册
@@ -271,5 +271,153 @@ func TestPostService_IncrementViewCount(t *testing.T) {
 	updated, _ := service.GetPostBySlug("test-post")
 	if updated.ViewCount != 1 {
 		t.Errorf("Expected view_count 1, got %d", updated.ViewCount)
+	}
+}
+
+// TestCategoryService 测试分类服务
+func TestCategoryService_CreateAndList(t *testing.T) {
+	SetupTestDB(t)
+
+	service := NewCategoryService(TestDB)
+
+	// 创建分类
+	input := CreateCategoryInput{
+		Slug:        "frontend",
+		Name:        "前端",
+		Description: "前端开发相关文章",
+		SortOrder:   1,
+	}
+
+	cat, err := service.CreateCategory(input)
+	if err != nil {
+		t.Fatalf("CreateCategory failed: %v", err)
+	}
+
+	if cat.Slug != "frontend" {
+		t.Errorf("Expected slug 'frontend', got '%s'", cat.Slug)
+	}
+
+	// 列出分类
+	cats, err := service.ListCategories()
+	if err != nil {
+		t.Fatalf("ListCategories failed: %v", err)
+	}
+
+	if len(cats) != 1 {
+		t.Errorf("Expected 1 category, got %d", len(cats))
+	}
+}
+
+// TestCategoryService_Tree 测试分类树
+func TestCategoryService_Tree(t *testing.T) {
+	SetupTestDB(t)
+
+	service := NewCategoryService(TestDB)
+
+	// 创建父分类
+	parent, _ := service.CreateCategory(CreateCategoryInput{
+		Slug:  "tech",
+		Name:  "技术",
+		SortOrder: 0,
+	})
+
+	// 创建子分类
+	parentIDStr := parent.ID.String()
+	_, err := service.CreateCategory(CreateCategoryInput{
+		Slug:        "frontend",
+		Name:        "前端",
+		ParentID:    &parentIDStr,
+		SortOrder:   1,
+	})
+	if err != nil {
+		t.Fatalf("CreateCategory child failed: %v", err)
+	}
+
+	// 获取分类树
+	tree, err := service.GetCategoryTree()
+	if err != nil {
+		t.Fatalf("GetCategoryTree failed: %v", err)
+	}
+
+	if len(tree) != 1 {
+		t.Errorf("Expected 1 root category, got %d", len(tree))
+	}
+
+	if len(tree[0].Children) != 1 {
+		t.Errorf("Expected 1 child category, got %d", len(tree[0].Children))
+	}
+}
+
+// TestTagService 测试标签服务
+func TestTagService_CreateAndList(t *testing.T) {
+	SetupTestDB(t)
+
+	service := NewTagService(TestDB)
+
+	// 创建标签
+	input := CreateTagInput{
+		Slug:  "angular",
+		Name:  "Angular",
+		Color: "#dd0031",
+	}
+
+	tag, err := service.CreateTag(input)
+	if err != nil {
+		t.Fatalf("CreateTag failed: %v", err)
+	}
+
+	if tag.Slug != "angular" {
+		t.Errorf("Expected slug 'angular', got '%s'", tag.Slug)
+	}
+
+	if tag.Color != "#dd0031" {
+		t.Errorf("Expected color '#dd0031', got '%s'", tag.Color)
+	}
+
+	// 列出标签
+	tags, err := service.ListTags()
+	if err != nil {
+		t.Fatalf("ListTags failed: %v", err)
+	}
+
+	if len(tags) != 1 {
+		t.Errorf("Expected 1 tag, got %d", len(tags))
+	}
+}
+
+// TestFriendLinkService 测试友情链接服务
+func TestFriendLinkService_CreateAndList(t *testing.T) {
+	SetupTestDB(t)
+
+	service := NewFriendLinkService(TestDB)
+
+	input := CreateFriendLinkInput{
+		Name:        "Example Blog",
+		URL:         "https://example.com",
+		Description: "A great blog",
+		SortOrder:   1,
+	}
+
+	link, err := service.CreateFriendLink(input)
+	if err != nil {
+		t.Fatalf("CreateFriendLink failed: %v", err)
+	}
+
+	if link.Name != "Example Blog" {
+		t.Errorf("Expected name 'Example Blog', got '%s'", link.Name)
+	}
+
+	if link.Status != "active" {
+		t.Errorf("Expected status 'active', got '%s'", link.Status)
+	}
+
+	// 列出友链
+	links, err := service.ListFriendLinks("active")
+	if err != nil {
+		t.Fatalf("ListFriendLinks failed: %v", err)
+	}
+
+	if len(links) != 1 {
+		t.Errorf("Expected 1 friend link, got %d", len(links))
 	}
 }
