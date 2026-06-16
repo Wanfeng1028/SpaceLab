@@ -2,7 +2,7 @@
 $google-blue: #1a73e8;
 $google-blue-hover: #1765cc;
 $google-blue-active: #1558b0;
-$google-bg: #f8f9fa;
+$google-bg: linear-gradient(135deg, #eefbff 0%, #f7f8ff 50%, #eef7ff 100%);
 $google-card-bg: #ffffff;
 $google-text: #202124;
 $google-text-secondary: #5f6368;
@@ -97,7 +97,7 @@ $google-error-bg: #fce8e6;
   padding: 14px 16px;
   background: transparent;
   border: 1px solid $google-border;
-  border-radius: 8px;
+  border-radius: 24px;
   color: $google-text;
   font-size: 16px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -198,4 +198,135 @@ $google-error-bg: #fce8e6;
     color: $google-blue-hover;
     text-decoration: underline;
   }
+}
+
+// ── Divider ──
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.auth-divider__line {
+  flex: 1;
+  height: 1px;
+  background: $google-border;
+}
+
+.auth-divider__text {
+  font-size: 13px;
+  color: $google-text-secondary;
+  white-space: nowrap;
+}
+
+// ── Social buttons ──
+.auth-social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid $google-border;
+  border-radius: 24px;
+  background: $google-card-bg;
+  color: $google-text-secondary;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1;
+  min-height: 48px;
+
+  &:hover {
+    border-color: darken($google-border, 10%);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+// ── Dialog overlay ──
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: overlay-in 0.2s ease;
+}
+
+@keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
+
+.auth-dialog {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: dialog-in 0.25s ease;
+}
+
+@keyframes dialog-in {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.auth-dialog__icon { font-size: 40px; margin-bottom: 12px; }
+.auth-dialog__badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background: #e8f0fe;
+  color: #1a73e8;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.auth-dialog__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #202124;
+  margin: 0 0 8px;
+}
+.auth-dialog__desc {
+  font-size: 14px;
+  color: #5f6368;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+.auth-dialog__actions { display: flex; justify-content: center; gap: 8px; }
+.auth-dialog__btn {
+  padding: 10px 32px;
+  border: none;
+  border-radius: 24px;
+  background: #1a73e8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.auth-dialog__btn:hover { background: #1765cc; }
+.auth-dialog__btn--secondary {
+  background: transparent;
+  color: #1a73e8;
+  border: 1px solid #dadce0;
+}
+.auth-dialog__btn--secondary:hover {
+  background: #f8f9fa;
 }

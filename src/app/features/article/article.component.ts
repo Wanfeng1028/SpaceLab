@@ -5,7 +5,6 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   DestroyRef,
-  computed,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -16,6 +15,29 @@ import { LiveCommentComponent } from '../../shared/components/live-comment/live-
 import DOMPurify from 'dompurify';
 import { MarkdownRendererService } from '../../core/services/markdown-renderer.service';
 import { SeoService } from '../../core/services/seo.service';
+import { POSTS as STATIC_POSTS } from '../../../generated/content.generated';
+
+/** 将静态 GeneratedPost 转为后端 Post 格式 */
+function staticToPost(p: typeof STATIC_POSTS[number]): Post {
+  return {
+    id: p.slug,
+    slug: p.slug,
+    title: p.title,
+    summary: p.summary,
+    content: p.contentHtml,
+    cover_url: p.cover || '',
+    category: p.category,
+    tags: p.tags,
+    reading_time: p.readingTime,
+    status: p.published ? 'published' : 'draft',
+    author_id: '',
+    language: 'zh-CN',
+    created_at: p.date,
+    updated_at: p.date,
+    published_at: p.date,
+    view_count: 0,
+  };
+}
 
 @Component({
   selector: 'app-article',
@@ -45,27 +67,40 @@ export class ArticleComponent implements OnInit {
       this.postService.getPostBySlug(slug).subscribe({
         next: async (post) => {
           this.post.set(post);
-          // Render markdown content to HTML if content is plain markdown
-          if (post.content) {
-            const html = await this.markdownRenderer.render(post.content);
-            this.sanitizedContent.set(this.sanitizer.bypassSecurityTrustHtml(html));
-          }
+          await this.renderContent(post);
           this.loading.set(false);
-
-          // SEO
           this.seo.setArticle(post.title, post.summary ?? '', post.slug, post.cover_url);
-
-          // Increment view count on the backend
           if (post.id) {
             this.postService.incrementViewCount(post.id).subscribe();
           }
         },
         error: () => {
-          this.post.set(null);
+          // 降级：从静态数据中查找
+          const staticPost = STATIC_POSTS.find((p) => p.slug === slug);
+          if (staticPost) {
+            const post = staticToPost(staticPost);
+            this.post.set(post);
+            this.renderContent(post);
+            this.seo.setArticle(post.title, post.summary ?? '', post.slug, post.cover_url);
+          } else {
+            this.post.set(null);
+          }
           this.loading.set(false);
         },
       });
     });
+  }
+
+  private async renderContent(post: Post): Promise<void> {
+    if (post.content) {
+      // 如果 content 已经是 HTML（静态数据），直接用；否则渲染 markdown
+      if (post.content.startsWith('<')) {
+        this.sanitizedContent.set(this.sanitizer.bypassSecurityTrustHtml(post.content));
+      } else {
+        const html = await this.markdownRenderer.render(post.content);
+        this.sanitizedContent.set(this.sanitizer.bypassSecurityTrustHtml(html));
+      }
+    }
   }
 
   t(key: string): string {

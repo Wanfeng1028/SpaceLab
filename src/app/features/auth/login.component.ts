@@ -1,10 +1,7 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
-import { TurnstileService } from '../../core/services/turnstile.service';
-import { CaptchaService } from '../../core/services/captcha.service';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -14,42 +11,16 @@ import { environment } from '../../../environments/environment';
   styleUrl: './login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private turnstile = inject(TurnstileService);
-  private captchaService = inject(CaptchaService);
 
   email = signal('');
   password = signal('');
   error = signal('');
   loading = signal(false);
   showPassword = signal(false);
-
-  /** 图形验证码 */
-  captchaId = signal('');
-  captchaImageUrl = signal('');
-  captchaAnswer = signal('');
-
-  /** Turnstile 站点密钥（模板绑定） */
-  readonly turnstileSiteKey = environment.turnstileSiteKey;
-
-  ngOnInit(): void {
-    this.loadCaptcha();
-  }
-
-  /** 加载图形验证码 */
-  loadCaptcha(): void {
-    this.captchaService.getNew().subscribe(session => {
-      this.captchaId.set(session.captcha_id);
-      this.captchaImageUrl.set(session.imageUrl);
-      this.captchaAnswer.set('');
-    });
-  }
-
-  /** 密码强度（用于注册页也复用） */
-  passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
 
   /** 邮箱格式校验 */
   emailError = computed(() => {
@@ -76,30 +47,20 @@ export class LoginComponent implements OnInit {
   resendSuccess = signal(false);
 
   onSubmit(): void {
-    // 前端校验
     if (!this.email() || !this.password()) {
       this.error.set('请输入邮箱和密码');
       return;
     }
-
     if (this.emailError()) {
       this.error.set(this.emailError());
       return;
     }
-
     this.loading.set(true);
     this.error.set('');
 
-    // 从 Turnstile widget 获取 token
-    const captchaToken = this.turnstile.getToken();
-
-    this.authService.login(
-      this.email(), this.password(), captchaToken,
-      this.captchaId(), this.captchaAnswer()
-    ).subscribe({
+    this.authService.login(this.email(), this.password()).subscribe({
       next: (response) => {
         this.loading.set(false);
-        // 检查邮箱是否已验证
         if (!response.user?.email_verified_at) {
           this.emailUnverified.set(true);
         }
@@ -113,7 +74,6 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         this.loading.set(false);
-        // 统一提示，不暴露具体原因
         const msg = err.error?.error || '登录失败，请检查邮箱和密码';
         this.error.set(msg);
       }
@@ -124,7 +84,6 @@ export class LoginComponent implements OnInit {
     this.showPassword.update(v => !v);
   }
 
-  /** 忘记密码 */
   openForgotPassword(): void {
     this.forgotEmail.set(this.email());
     this.forgotError.set('');
@@ -143,7 +102,6 @@ export class LoginComponent implements OnInit {
     }
     this.forgotLoading.set(true);
     this.forgotError.set('');
-
     this.authService.requestPasswordReset(this.forgotEmail()).subscribe({
       next: () => {
         this.forgotLoading.set(false);
@@ -151,13 +109,11 @@ export class LoginComponent implements OnInit {
       },
       error: () => {
         this.forgotLoading.set(false);
-        // 不暴露邮箱是否存在
         this.forgotSuccess.set(true);
       }
     });
   }
 
-  /** 显示第三方登录暂未接入提示 */
   showThirdPartyHint(name: string): void {
     this.thirdPartyName.set(name);
     this.thirdPartyDialogVisible.set(true);
@@ -167,7 +123,6 @@ export class LoginComponent implements OnInit {
     this.thirdPartyDialogVisible.set(false);
   }
 
-  /** 重新发送验证邮件 */
   resendVerification(): void {
     this.resendLoading.set(true);
     this.resendSuccess.set(false);

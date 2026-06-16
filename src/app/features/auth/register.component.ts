@@ -2,9 +2,6 @@ import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } 
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
-import { TurnstileService } from '../../core/services/turnstile.service';
-import { CaptchaService } from '../../core/services/captcha.service';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -17,8 +14,6 @@ import { environment } from '../../../environments/environment';
 export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
-  private turnstile = inject(TurnstileService);
-  private captchaService = inject(CaptchaService);
 
   email = signal('');
   username = signal('');
@@ -28,14 +23,6 @@ export class RegisterComponent implements OnInit {
   loading = signal(false);
   showPassword = signal(false);
   registrationClosed = signal(false);
-
-  /** 图形验证码 */
-  captchaId = signal('');
-  captchaImageUrl = signal('');
-  captchaAnswer = signal('');
-
-  /** Turnstile 站点密钥（模板绑定） */
-  readonly turnstileSiteKey = environment.turnstileSiteKey;
 
   /** 密码强度 */
   passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
@@ -69,7 +56,6 @@ export class RegisterComponent implements OnInit {
     if (!u) return '';
     if (u.length < 2) return '用户名至少 2 个字符';
     if (u.length > 50) return '用户名最多 50 个字符';
-    // 黑名单检测
     const blacklist = /admin|root|system|http|https|www|\.com|<|>/i;
     if (blacklist.test(u)) return '用户名包含不允许的内容';
     return '';
@@ -86,7 +72,6 @@ export class RegisterComponent implements OnInit {
   thirdPartyName = signal('');
 
   ngOnInit(): void {
-    // 检查注册是否开放
     this.authService.isRegistrationOpen().subscribe({
       next: (res) => {
         if (!res.registration_open) {
@@ -94,44 +79,20 @@ export class RegisterComponent implements OnInit {
           this.error.set('注册功能暂时关闭');
         }
       },
-      error: () => {
-        // 默认允许注册
-      }
-    });
-    this.loadCaptcha();
-  }
-
-  /** 加载图形验证码 */
-  loadCaptcha(): void {
-    this.captchaService.getNew().subscribe(session => {
-      this.captchaId.set(session.captcha_id);
-      this.captchaImageUrl.set(session.imageUrl);
-      this.captchaAnswer.set('');
+      error: () => { /* 默认允许注册 */ }
     });
   }
 
   onSubmit(): void {
     if (this.registrationClosed()) return;
-
     if (!this.email() || !this.username() || !this.password()) {
       this.error.set('请填写所有必填字段');
       return;
     }
-
-    // 前端完整校验
-    if (this.emailError()) {
-      this.error.set(this.emailError());
-      return;
-    }
-    if (this.usernameError()) {
-      this.error.set(this.usernameError());
-      return;
-    }
+    if (this.emailError()) { this.error.set(this.emailError()); return; }
+    if (this.usernameError()) { this.error.set(this.usernameError()); return; }
     const pwdErr = this.authService.validatePassword(this.password());
-    if (pwdErr) {
-      this.error.set(pwdErr);
-      return;
-    }
+    if (pwdErr) { this.error.set(pwdErr); return; }
     if (this.password() !== this.confirmPassword()) {
       this.error.set('两次输入的密码不一致');
       return;
@@ -140,13 +101,7 @@ export class RegisterComponent implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    // 从 Turnstile widget 获取 token
-    const captchaToken = this.turnstile.getToken();
-
-    this.authService.register(
-      this.email(), this.password(), this.username(), captchaToken,
-      this.captchaId(), this.captchaAnswer()
-    ).subscribe({
+    this.authService.register(this.email(), this.password(), this.username()).subscribe({
       next: (response) => {
         this.loading.set(false);
         const isAdmin = response.user?.role === 'admin';
