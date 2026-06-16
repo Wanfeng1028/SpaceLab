@@ -204,96 +204,6 @@
     }
   }
 
-  // ── Fallback (Low/Unsupported) ────────────────────────
-  .experience-fallback {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-      radial-gradient(circle at 50% 50%, rgba(105, 215, 255, 0.05), transparent 60%),
-      #030712;
-  }
-
-  .fallback-card {
-    text-align: center;
-    padding: 48px;
-    max-width: 480px;
-  }
-
-  .fallback-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .fallback-title {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0 0 12px;
-    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
-  }
-
-  .fallback-desc {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0 0 32px;
-    line-height: 1.6;
-  }
-
-  .fallback-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  .fallback-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.04);
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
-
-    &:hover {
-      border-color: rgba(105, 215, 255, 0.4);
-      background: rgba(105, 215, 255, 0.08);
-      color: #69d7ff;
-      transform: translateY(-2px);
-    }
-
-    .fallback-link-icon {
-      font-size: 1.4rem;
-    }
-  }
-
-  .compat-btn {
-    padding: 8px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 9999px;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
-
-    &:hover {
-      border-color: rgba(255, 255, 255, 0.3);
-      color: rgba(255, 255, 255, 0.8);
-    }
-  }
-
   // ── Compat Dialog ─────────────────────────────────────
   .compat-dialog-overlay {
     position: fixed;
@@ -391,11 +301,6 @@
     to { opacity: 1; transform: translateX(0); }
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
   // ── Mobile ────────────────────────────────────────────
   @media (max-width: 767px) {
     .scene-switcher {
@@ -426,18 +331,6 @@
       right: 16px;
     }
 
-    .fallback-card {
-      padding: 24px;
-    }
-
-    .fallback-title {
-      font-size: 1.3rem;
-    }
-
-    .fallback-links {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
     .experience-info-bar {
       padding: 8px 16px;
       font-size: 0.6rem;
@@ -446,7 +339,6 @@
 
   // ── Reduced Motion ────────────────────────────────────
   @media (prefers-reduced-motion: reduce) {
-    .fallback-icon,
     .scene-tab,
     .nav-link-item,
     .compat-dialog,

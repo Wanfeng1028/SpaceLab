@@ -15,8 +15,6 @@ import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-
 import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
-import { MoonTreeSectionComponent } from './components/home-blue-moon-tree/home-blue-moon-tree.component';
-import { EarthFlylineSectionComponent } from './components/home-earth-flyline/home-earth-flyline.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 import { HomeNextOrbitCardComponent } from './components/home-next-orbit-card/home-next-orbit-card.component';
 import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
@@ -30,8 +28,6 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
     ThreeCanvasComponent,
     LaunchTelemetryOverlayComponent,
     MacTerminalModalComponent,
-    MoonTreeSectionComponent,
-    EarthFlylineSectionComponent,
     CockpitDashboardSection,
     HomeNextOrbitCardComponent,
     LaunchTerminalTransitionComponent,
@@ -234,13 +230,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       this.isLaunchTransitionActive.set(false);
-      this.scrollToEarthObservatory();
+      this.scrollToCockpit();
     }, 600);
   }
 
-  // 滚动到 Earth Observatory
-  private scrollToEarthObservatory(): void {
-    const target = document.getElementById('section-earth');
+  // 滚动到 Cockpit Dashboard
+  private scrollToCockpit(): void {
+    const target = document.getElementById('section-cockpit');
     if (target) {
       // 使用 Lenis 平滑滚动
       this.lenis.scrollTo(target.offsetTop, { immediate: false });

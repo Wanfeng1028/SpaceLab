@@ -72,6 +72,8 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
 
     if (cap.tier === 'unsupported' || cap.tier === 'low') {
       this.renderMode.set('none');
+      // 直接弹窗告知用户不支持
+      this.showCompatDialog.set(true);
     } else if (cap.tier === 'medium') {
       this.renderMode.set('lightweight');
     } else {
@@ -113,12 +115,13 @@ export class ThreeDExperienceComponent implements OnInit, OnDestroy {
     this.router.navigate([path]);
   }
 
-  onFallbackClick(): void {
-    this.showCompatDialog.set(true);
-  }
 
   closeCompatDialog(): void {
     this.showCompatDialog.set(false);
+    // 不支持时关闭弹窗直接返回首页
+    if (this.renderMode() === 'none') {
+      this.router.navigate(['/']);
+    }
   }
 
   toggleNavLabels(): void {

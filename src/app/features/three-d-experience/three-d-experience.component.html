@@ -100,56 +100,16 @@
       </span>
       <span class="info-tier">TIER: {{ deviceTier() }}</span>
     </div>
-  } @else {
-    <!-- Fallback for unsupported/low devices -->
-    <div class="experience-fallback">
-      <div class="fallback-card">
-        <div class="fallback-icon">🌍</div>
-        <h2 class="fallback-title">{{ t('threeD.fallbackTitle') }}</h2>
-        <p class="fallback-desc">{{ t('threeD.fallbackDesc') }}</p>
-        <div class="fallback-links">
-          <button class="fallback-link" (click)="navigateTo('/blog')">
-            <span class="fallback-link-icon">📝</span>
-            {{ t('nav.blog') }}
-          </button>
-          <button class="fallback-link" (click)="navigateTo('/projects')">
-            <span class="fallback-link-icon">🚀</span>
-            {{ t('nav.projects') }}
-          </button>
-          <button class="fallback-link" (click)="navigateTo('/lab')">
-            <span class="fallback-link-icon">🧪</span>
-            {{ t('nav.lab') }}
-          </button>
-          <button class="fallback-link" (click)="navigateTo('/ai-frontline')">
-            <span class="fallback-link-icon">🤖</span>
-            {{ t('nav.aiFrontline') }}
-          </button>
-          <button class="fallback-link" (click)="navigateTo('/about')">
-            <span class="fallback-link-icon">✦</span>
-            {{ t('nav.about') }}
-          </button>
-        </div>
-        <button class="compat-btn" (click)="onFallbackClick()">
-          {{ t('threeD.compatDetails') }}
-        </button>
-      </div>
-    </div>
   }
 
-  <!-- Compatibility dialog -->
+  <!-- Compatibility dialog (自动弹出：不支持 WebGL 时) -->
   @if (showCompatDialog()) {
     <div class="compat-dialog-overlay" (click)="closeCompatDialog()">
       <div class="compat-dialog" (click)="$event.stopPropagation()">
-        <div class="compat-dialog__icon">🖥️</div>
-        <h3 class="compat-dialog__title">{{ t('threeD.compatTitle') }}</h3>
+        <div class="compat-dialog__icon">🌍</div>
+        <h3 class="compat-dialog__title">{{ t('threeD.fallbackTitle') }}</h3>
         <div class="compat-dialog__body">
-          <p>{{ t('threeD.compatCurrentTier') }} <strong>{{ deviceTier() }}</strong></p>
-          <ul>
-            <li>{{ t('threeD.compatHigh') }}</li>
-            <li>{{ t('threeD.compatMedium') }}</li>
-            <li>{{ t('threeD.compatLow') }}</li>
-          </ul>
-          <p>{{ t('threeD.compatContinue') }}</p>
+          <p>{{ t('threeD.fallbackDesc') }}</p>
         </div>
         <button class="compat-dialog__btn" (click)="closeCompatDialog()">
           {{ t('threeD.compatClose') }}

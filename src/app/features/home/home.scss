@@ -809,24 +809,6 @@
 }
 
 // ── 各屏 section 基础样式 ────────────────────────
-.earth-signal-section,
-.blue-moon-tree-section {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 600px;
-  overflow: hidden;
-}
-
-.earth-signal-section {
-  background: #020509;
-}
-
-.blue-moon-tree-section {
-  background: #000;
-}
-
 .cockpit-dashboard-section {
   position: relative;
   width: 100%;

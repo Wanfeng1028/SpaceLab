@@ -1,0 +1,12 @@
+refactor: migrate Earth & Moon Tree from home sections to 3D experience page
+
+- Remove section-2 (Earth Flyline) and section-3 (Blue Moon Tree) from home page
+- Home now flows: Landing → Cockpit Dashboard → Next Orbit Card
+- 3D Experience page already has both scenes via scene switcher
+- Remove MoonTreeSectionComponent & EarthFlylineSectionComponent imports from home
+- Rename scrollToEarthObservatory → scrollToCockpit, target section-cockpit
+- Remove unused .earth-signal-section & .blue-moon-tree-section SCSS from home.scss
+- Home lazy chunk: 1.17MB → 135KB (88% reduction)
+- Clean up unused fallback SCSS in three-d-experience component
+
+Co-Authored-By: AtomCode (GLM-5.1) <noreply@atomgit.com>
