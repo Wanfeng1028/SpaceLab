@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/dchest/captcha"
 	"github.com/gin-gonic/gin"
@@ -24,9 +25,11 @@ func (h *CaptchaHandler) GetCaptchaID(c *gin.Context) {
 }
 
 // GetCaptchaImage 输出验证码图片
-// GET /captcha/:id.png
+// GET /captcha/image/:id  或  GET /captcha/image/:id.png
 func (h *CaptchaHandler) GetCaptchaImage(c *gin.Context) {
 	id := c.Param("id")
+	// 去掉可能的 .png 后缀
+	id = strings.TrimSuffix(id, ".png")
 	if id == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "captcha id is required"})
 		return
@@ -35,6 +38,7 @@ func (h *CaptchaHandler) GetCaptchaImage(c *gin.Context) {
 	c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
 	c.Header("Pragma", "no-cache")
 	c.Header("Expires", "0")
+	c.Header("Content-Type", "image/png")
 	captcha.WriteImage(c.Writer, id, 240, 80)
 }
 

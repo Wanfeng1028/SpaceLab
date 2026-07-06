@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context7/mcp-server"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/postgres-mcp-server"],
+      "env": {
+        "DATABASE_URL": "postgresql://spacelab:${POSTGRES_PASSWORD:-spacelab_password}@localhost:5432/spacelab"
+      }
+    }
+  }
+}

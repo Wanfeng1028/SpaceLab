@@ -55,11 +55,11 @@ Thumbs.db
 /delete/
 
 # 临时文件（已移至 delete/ 目录）
-temp-ai-research.html 
-temp-ai-tools.html 
-temp-parse-news.mjs 
-temp-parsed-news.json 
-temp-daily-news.html 
+temp-ai-research.html
+temp-ai-tools.html
+temp-parse-news.mjs
+temp-parsed-news.json
+temp-daily-news.html
 
 # 参考资源（已移至 delete/ 目录）
 /reference
@@ -73,3 +73,10 @@ temp-daily-news.html
 .github/
 docs/
 
+
+# AtomCode local-scope configs (machine-specific)
+.atomcode/local/
+.atomcode/
+
+# 静态资源文件
+.public/

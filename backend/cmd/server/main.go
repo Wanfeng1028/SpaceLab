@@ -143,19 +143,14 @@ func main() {
 		utils.HandleWebSocket(c.Writer, c.Request)
 	})
 
-	// 图形验证码（公开，无需认证）
-	r.GET("/captcha/new", middleware.AuthLimiter(), captchaHandler.GetCaptchaID)
-	r.GET("/captcha/:id.png", captchaHandler.GetCaptchaImage)
-	r.POST("/captcha/verify", middleware.AuthLimiter(), captchaHandler.VerifyCaptcha)
+	// 图形验证码（公开，无需认证，不限流 — 验证码本身就是防刷机制）
+	r.GET("/captcha/new", captchaHandler.GetCaptchaID)
+	r.GET("/captcha/image/:id", captchaHandler.GetCaptchaImage)
+	r.POST("/captcha/verify", captchaHandler.VerifyCaptcha)
 
 	// API v1 路由组
 	api := r.Group("/api/v1")
 	{
-		// 验证码（通过 /api/v1 也能访问，适配前端 proxy）
-		api.GET("/captcha/new", middleware.AuthLimiter(), captchaHandler.GetCaptchaID)
-		api.GET("/captcha/:id.png", captchaHandler.GetCaptchaImage)
-		api.POST("/captcha/verify", middleware.AuthLimiter(), captchaHandler.VerifyCaptcha)
-		// 认证路由（无需登录，带限流）
 		authRoutes := api.Group("/auth")
 		{
 			authRoutes.POST("/register", middleware.AuthLimiter(), authHandler.Register)

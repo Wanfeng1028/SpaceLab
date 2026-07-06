@@ -100,7 +100,8 @@
               "buildTarget": "spacelab:build:production"
             },
             "development": {
-              "buildTarget": "spacelab:build:development"
+              "buildTarget": "spacelab:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
