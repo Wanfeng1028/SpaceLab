@@ -80,3 +80,15 @@ docs/
 
 # 静态资源文件
 .public/
+src/assets/
+
+# Large local media files
+src/assets/video/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.mp3
+*.wav
+*.flac
