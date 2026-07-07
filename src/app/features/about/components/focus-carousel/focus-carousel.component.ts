@@ -1,4 +1,14 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  viewChild,
+  signal,
+  NgZone,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface FocusCard {
@@ -18,7 +28,15 @@ interface FocusCard {
   styleUrl: './focus-carousel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FocusCarouselComponent {
+export class FocusCarouselComponent implements OnInit, OnDestroy {
+  readonly trackEl = viewChild<ElementRef<HTMLElement>>('track');
+
+  readonly activeIndex = signal(0);
+  readonly total = signal(0);
+
+  private timer: ReturnType<typeof setInterval> | null = null;
+  private readonly interval = 4000;
+
   readonly cards: FocusCard[] = [
     {
       id: 'ai-llm',
@@ -61,4 +79,91 @@ export class FocusCarouselComponent {
       tags: ['Three.js', 'WebGL', 'Motion'],
     },
   ];
+
+  constructor(private readonly ngZone: NgZone) {}
+
+  ngOnInit(): void {
+    this.total.set(this.cards.length);
+    this.startAutoPlay();
+  }
+
+  ngOnDestroy(): void {
+    this.stopAutoPlay();
+  }
+
+  @HostListener('document:visibilitychange')
+  onVisibilityChange(): void {
+    document.hidden ? this.stopAutoPlay() : this.startAutoPlay();
+  }
+
+  // ── Auto-play ──────────────────────────────────────────────────────
+
+  startAutoPlay(): void {
+    this.stopAutoPlay();
+    this.ngZone.runOutsideAngular(() => {
+      this.timer = setInterval(() => this.scrollNext(), this.interval);
+    });
+  }
+
+  stopAutoPlay(): void {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+  }
+
+  // ── Navigation ─────────────────────────────────────────────────────
+
+  goTo(index: number): void {
+    const track = this.trackEl()?.nativeElement;
+    if (!track) return;
+
+    const card = track.querySelector<HTMLElement>(`.focus__card:nth-child(${index + 1})`);
+    if (!card) return;
+
+    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    this.setActive(index);
+  }
+
+  prev(): void {
+    const idx = this.activeIndex();
+    this.goTo(idx > 0 ? idx - 1 : this.cards.length - 1);
+  }
+
+  next(): void {
+    this.scrollNext();
+  }
+
+  onScroll(): void {
+    const track = this.trackEl()?.nativeElement;
+    if (!track) return;
+
+    const cardEls = track.querySelectorAll<HTMLElement>('.focus__card');
+    const scrollLeft = track.scrollLeft;
+    let closest = 0;
+    let minDist = Infinity;
+
+    cardEls.forEach((card, i) => {
+      const dist = Math.abs(card.offsetLeft - track.offsetLeft - scrollLeft);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = i;
+      }
+    });
+
+    this.setActive(closest);
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────
+
+  private scrollNext(): void {
+    const nextIdx = (this.activeIndex() + 1) % this.cards.length;
+    this.goTo(nextIdx);
+  }
+
+  private setActive(index: number): void {
+    if (this.activeIndex() !== index) {
+      this.ngZone.run(() => this.activeIndex.set(index));
+    }
+  }
 }

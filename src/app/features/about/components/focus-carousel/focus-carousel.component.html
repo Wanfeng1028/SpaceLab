@@ -2,19 +2,44 @@
   <p class="focus__label">FOCUS AREAS</p>
   <h2 class="focus__title">关注领域</h2>
 
-  <div class="focus__track">
-    @for (card of cards; track card.id) {
-      <article class="focus__card">
-        <span class="focus__num">{{ card.num }}</span>
-        <span class="focus__icon">{{ card.icon }}</span>
-        <h3 class="focus__card-title">{{ card.title }}</h3>
-        <p class="focus__card-desc">{{ card.desc }}</p>
-        <div class="focus__tags">
-          @for (tag of card.tags; track tag) {
-            <span class="focus__tag">{{ tag }}</span>
-          }
-        </div>
-      </article>
+  <div
+    class="focus__viewport"
+    (mouseenter)="stopAutoPlay()"
+    (mouseleave)="startAutoPlay()"
+  >
+    <button class="focus__arrow focus__arrow--prev" (click)="prev()" aria-label="上一个">‹</button>
+
+    <div
+      #track
+      class="focus__track"
+      (scroll)="onScroll()"
+    >
+      @for (card of cards; track card.id) {
+        <article class="focus__card">
+          <span class="focus__num">{{ card.num }}</span>
+          <span class="focus__icon">{{ card.icon }}</span>
+          <h3 class="focus__card-title">{{ card.title }}</h3>
+          <p class="focus__card-desc">{{ card.desc }}</p>
+          <div class="focus__tags">
+            @for (tag of card.tags; track tag) {
+              <span class="focus__tag">{{ tag }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+
+    <button class="focus__arrow focus__arrow--next" (click)="next()" aria-label="下一个">›</button>
+  </div>
+
+  <div class="focus__dots">
+    @for (card of cards; track card.id; let i = $index) {
+      <button
+        class="focus__dot"
+        [class.focus__dot--active]="i === activeIndex()"
+        (click)="goTo(i)"
+        [attr.aria-label]="'跳转到第 ' + (i + 1) + ' 张'"
+      ></button>
     }
   </div>
 </section>
