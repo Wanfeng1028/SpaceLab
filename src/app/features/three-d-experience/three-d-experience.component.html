@@ -1,84 +1,93 @@
-<div class="three-d-experience" [class.is-lightweight]="renderMode() === 'lightweight'">
-  <!-- Close button -->
-  <button class="experience-close" (click)="goBack()" aria-label="Close 3D experience">
+<div class="three-d-experience">
+  <!-- Close / Back button -->
+  <button class="experience-close" (click)="goBack()" aria-label="Close">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18"></line>
-      <line x1="6" y1="6" x2="18" y2="18"></line>
+      @if (activeScene()) {
+        <polyline points="15 18 9 12 15 6"></polyline>
+      } @else {
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      }
     </svg>
   </button>
 
-  @if (renderMode() !== 'none') {
+  <!-- ═══ Entry: 三张场景卡片 ═══ -->
+  @if (activeScene() === null) {
+    <div class="scene-entry">
+      <h1 class="scene-entry__title">3D Experience</h1>
+      <p class="scene-entry__subtitle">选择一个 WebGL 场景开始体验</p>
+      <div class="scene-cards">
+        @for (card of sceneCards; track card.key) {
+          <button class="scene-card" type="button" (click)="enterScene(card.key)">
+            <span class="scene-card__icon">{{ card.icon }}</span>
+            <h3 class="scene-card__title">{{ t(card.titleKey) || card.titleFallback }}</h3>
+            <p class="scene-card__desc">{{ t(card.descKey) || card.descFallback }}</p>
+            <span class="scene-card__action">进入场景 →</span>
+          </button>
+        }
+      </div>
+      <div class="scene-entry__tier">Device TIER: {{ deviceTier() }}</div>
+    </div>
+  }
+
+  <!-- ═══ Scene: 场景渲染区域 ═══ -->
+  @if (activeScene() !== null) {
     <!-- Scene switcher tabs -->
     <div class="scene-switcher">
-      <button
-        class="scene-tab"
-        [class.is-active]="activeScene() === 'earth'"
-        (click)="switchScene('earth')"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-        <span>{{ t('threeD.earth') }}</span>
-      </button>
-      <button
-        class="scene-tab"
-        [class.is-active]="activeScene() === 'tree'"
-        (click)="switchScene('tree')"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 22V8"></path>
-          <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
-          <path d="M8 8a4 4 0 0 1 8 0"></path>
-        </svg>
-        <span>{{ t('threeD.moonTree') }}</span>
-      </button>
+      @for (card of sceneCards; track card.key) {
+        <button
+          class="scene-tab"
+          [class.is-active]="activeScene() === card.key"
+          (click)="enterScene(card.key)"
+        >
+          <span>{{ card.icon }}</span>
+          <span>{{ t(card.titleKey) || card.titleFallback }}</span>
+        </button>
+      }
     </div>
 
     <!-- 3D Canvas Area -->
     <div class="scene-viewport">
+      @if (activeScene() === 'lightfield') {
+        @defer (on viewport) {
+          <app-home-light-field />
+        } @placeholder {
+          <div class="scene-loading">加载中...</div>
+        }
+      }
       @if (activeScene() === 'earth') {
-        <app-home-earth-flyline />
-      } @else {
-        <app-home-blue-moon-tree />
+        @defer (on viewport) {
+          <app-home-earth-flyline />
+        } @placeholder {
+          <div class="scene-loading">加载中...</div>
+        }
+      }
+      @if (activeScene() === 'tree') {
+        @defer (on viewport) {
+          <app-home-blue-moon-tree />
+        } @placeholder {
+          <div class="scene-loading">加载中...</div>
+        }
       }
     </div>
 
-    @if (renderMode() === 'lightweight') {
-      <div class="lightweight-badge">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-        </svg>
-        {{ t('threeD.lightweightMode') }}
-      </div>
-    }
-
     <!-- Bottom info bar -->
     <div class="experience-info-bar">
-      <span class="info-label">
-        @if (activeScene() === 'earth') {
-          {{ t('threeD.earthInfo') }}
-        } @else {
-          {{ t('threeD.treeInfo') }}
-        }
-      </span>
+      <span class="info-label">ACTIVE: {{ activeScene() }}</span>
       <span class="info-tier">TIER: {{ deviceTier() }}</span>
     </div>
   }
 
-  <!-- Compatibility dialog (自动弹出：不支持 WebGL 时) -->
+  <!-- ═══ Compatibility dialog ═══ -->
   @if (showCompatDialog()) {
     <div class="compat-dialog-overlay" (click)="closeCompatDialog()">
       <div class="compat-dialog" (click)="$event.stopPropagation()">
-        <div class="compat-dialog__icon">🌍</div>
-        <h3 class="compat-dialog__title">{{ t('threeD.fallbackTitle') }}</h3>
+        <div class="compat-dialog__icon">⚠️</div>
+        <h3 class="compat-dialog__title">设备性能不足</h3>
         <div class="compat-dialog__body">
-          <p>{{ t('threeD.fallbackDesc') }}</p>
+          <p>当前设备可能无法流畅运行 SpaceLab 3D 体验。为了避免卡顿、发热或页面崩溃，建议使用性能更好的电脑访问。</p>
         </div>
-        <button class="compat-dialog__btn" (click)="closeCompatDialog()">
-          {{ t('threeD.compatClose') }}
-        </button>
+        <button class="compat-dialog__btn" (click)="closeCompatDialog()">返回首页</button>
       </div>
     </div>
   }

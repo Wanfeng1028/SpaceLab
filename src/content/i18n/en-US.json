@@ -41,6 +41,8 @@
     "projects": "Projects",
     "lab": "Lab",
     "aiFrontline": "AI Frontline",
+    "experience3d": "3D",
+    "music": "Music",
     "about": "About"
   },
   "home": {
@@ -770,5 +772,18 @@
     "lab": "Lab",
     "aiFrontline": "AI Frontline",
     "about": "About"
+  },
+  "threeD": {
+    "lightField": "Light Field",
+    "lightFieldDesc": "WebGL atmospheric scattering eclipse — volumetric light and particle-driven immersive experience.",
+    "earth": "Globe Stream",
+    "earthDesc": "3D globe visualization with global flight lines and city light particles.",
+    "moonTree": "Blue Moon Tree",
+    "moonTreeDesc": "A particle life form grows under moonlight — 26,000+ particles forming a breathing digital tree."
+  },
+  "music": {
+    "title": "Music Station",
+    "subtitle": "Legend Series · Instrumental Collection",
+    "playHint": "Click a track to start playing"
   }
 }

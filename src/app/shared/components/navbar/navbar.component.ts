@@ -12,8 +12,10 @@ import {
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { I18nService } from '../../../core/services/i18n.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { DeviceCapabilityService } from '../../../core/services/device-capability.service';
 import { SpaceCapsuleModalComponent } from '../space-capsule-modal/space-capsule-modal.component';
 import { MacTerminalModalComponent } from '../mac-terminal-modal/mac-terminal-modal.component';
+import { DeviceWarningModalComponent } from '../device-warning-modal/device-warning-modal.component';
 import { SITE } from '../../../../generated/content.generated';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -36,6 +38,8 @@ const LIGHT_THEME_ROUTES = [
   '/gallery',
   '/about',
   '/ai-frontline',
+  '/music',
+  '/3d',
 ];
 
 interface NavLink {
@@ -53,12 +57,13 @@ interface MobileMenuItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive, SpaceCapsuleModalComponent, MacTerminalModalComponent],
+  imports: [RouterLink, RouterLinkActive, SpaceCapsuleModalComponent, MacTerminalModalComponent, DeviceWarningModalComponent],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   readonly i18n = inject(I18nService);
   readonly authService = inject(AuthService);
+  private deviceCapability = inject(DeviceCapabilityService);
   private destroyRef = inject(DestroyRef);
   private starsAbort: AbortController | null = null;
 
@@ -71,6 +76,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly soundEnabled = signal<boolean>(true);
   readonly isLightTheme = signal(false);
   readonly avatarTriggerEl = signal<HTMLElement | null>(null);
+  readonly showDeviceWarning = signal(false);
   private lastOpenTime = 0;
 
   readonly navLinks: NavLink[] = SITE.nav.map((n) => ({
@@ -222,10 +228,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeDeviceWarning(): void {
+    this.showDeviceWarning.set(false);
+  }
+
   onLinkClick(link: NavLink, event: Event): void {
     if (link.route === '/') {
       event.preventDefault();
       this.onHomeClick(event);
+    } else if (link.route === '/3d') {
+      event.preventDefault();
+      this.closeMobileMenu();
+      if (this.deviceCapability.canEnter3D()) {
+        this.router.navigate(['/3d']);
+      } else {
+        this.showDeviceWarning.set(true);
+      }
     } else {
       this.closeMobileMenu();
     }

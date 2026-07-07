@@ -1,6 +1,9 @@
 <div class="home-container">
   <!-- 第 1 屏：LANDING (完全保留现有设计，不动) -->
   <section class="eclipse-hero" id="section-landing" data-section="0">
+    <!-- 动态视频壁纸背景 -->
+    <app-video-wallpaper />
+
     <!-- CSS 动画背景层 (stars / eclipse / glow) -->
     <div class="hero-background" aria-hidden="true">
       <div class="hero-grid"></div>
@@ -25,9 +28,6 @@
         <div class="moon"></div>
       </div>
     </div>
-
-    <!-- WebGL 大气物理散射日食画布组件 -->
-    <app-three-canvas [sceneFactory]="sceneFactory" class="backdrop-stars" />
 
     <!-- 装饰性发光能量核心 -->
     <div class="energy-orb-wrapper">

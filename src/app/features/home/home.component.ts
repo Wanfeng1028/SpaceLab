@@ -11,13 +11,12 @@ import {
 import { Router } from '@angular/router';
 import { I18nService } from '../../core/services/i18n.service';
 import { LenisScrollService } from '../../core/services/lenis-scroll.service';
-import { ThreeCanvasComponent } from '../../three/components/three-canvas/three-canvas.component';
-import { HeroLightFieldScene } from '../../three/scenes/hero-particles.scene';
 import { LaunchTelemetryOverlayComponent } from './components/launch-telemetry-overlay/launch-telemetry-overlay.component';
 import { MacTerminalModalComponent } from '../../shared/components/mac-terminal-modal/mac-terminal-modal.component';
 import { CockpitDashboardSection } from './components/cockpit-dashboard/cockpit-dashboard.component';
 import { HomeNextOrbitCardComponent } from './components/home-next-orbit-card/home-next-orbit-card.component';
 import { LaunchTerminalTransitionComponent } from './components/launch-terminal-transition/launch-terminal-transition.component';
+import { VideoWallpaperComponent } from './components/video-wallpaper/video-wallpaper.component';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +24,7 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    ThreeCanvasComponent,
+    VideoWallpaperComponent,
     LaunchTelemetryOverlayComponent,
     MacTerminalModalComponent,
     CockpitDashboardSection,
@@ -34,26 +33,6 @@ import { LaunchTerminalTransitionComponent } from './components/launch-terminal-
   ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private activeScene: HeroLightFieldScene | null = null;
-
-  sceneFactory = (canvas: HTMLCanvasElement) => {
-    try {
-      this.activeScene = new HeroLightFieldScene(canvas);
-      this.applySceneConfig();
-      return this.activeScene;
-    } catch (e) {
-      console.warn('[Home] HeroLightFieldScene init failed:', e);
-      return { init() {}, destroy() {} };
-    }
-  };
-
-  // Three.js scene factories for 3D cards
-  // (Old holoIcoFactory and globeOrbitFactory removed — replaced by lightweight dock sections)
-
-  // WebGL Customization properties (inspired by uiverse.io high-tech controls)
-  coronaIntensity = signal<number>(2.8);
-  orbitalSpeed = signal<number>(1.05);
-  activePreset = signal<'ECLIPSE' | 'PULSAR' | 'AURORA'>('ECLIPSE');
   filmNoise = signal<boolean>(true);
 
   // 亮度自适应按钮状态
@@ -105,9 +84,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private audioCtx: AudioContext | null = null;
 
   constructor() {
-    effect(() => {
-      this.applySceneConfig();
-    });
     // Restart typewriter when language changes
     effect(() => {
       const _locale = this.i18n.locale();
@@ -119,23 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.typingIndex = this.fullText.length;
       }
     });
-  }
-
-  private applySceneConfig(): void {
-    const scene = this.activeScene;
-    if (!scene) return;
-
-    scene.updateIntensity(this.coronaIntensity());
-    scene.updateRotationSpeed(this.orbitalSpeed());
-
-    const preset = this.activePreset();
-    if (preset === 'ECLIPSE') {
-      scene.updateTints('#b2a8ff', '#fcff42');
-    } else if (preset === 'PULSAR') {
-      scene.updateTints('#00f0ff', '#ff007b');
-    } else if (preset === 'AURORA') {
-      scene.updateTints('#00ff87', '#60efe0');
-    }
   }
 
   @HostListener('document:click')

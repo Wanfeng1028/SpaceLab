@@ -1,0 +1,56 @@
+<div class="music-page">
+  <header class="music-header">
+    <h1 class="music-title">{{ t('music.title') || '音乐台' }}</h1>
+    <p class="music-subtitle">{{ t('music.subtitle') || '传说系列 · 纯音乐精选' }}</p>
+  </header>
+
+  <!-- 全局音频播放器（隐藏） -->
+  <audio
+    #audioPlayer
+    preload="metadata"
+    (canplay)="onAudioCanPlay()"
+    [src]="currentTrack() ? getTrackSrc(currentTrack()) : ''"
+  ></audio>
+
+  @if (playHint()) {
+    <div class="play-hint">{{ t('music.playHint') || '请点击歌曲开始播放' }}</div>
+  }
+
+  <!-- 歌曲列表 -->
+  <div class="track-list">
+    @for (track of tracks; track track.key) {
+      <div class="track-card" [class.is-active]="isPlaying(track.key)">
+        <div class="track-info">
+          <button class="track-play-btn" (click)="selectTrack(track.key)">
+            @if (isPlaying(track.key)) {
+              <span class="playing-indicator">♫</span>
+            } @else {
+              <span class="play-icon">▶</span>
+            }
+          </button>
+          <div class="track-meta">
+            <h3 class="track-name">{{ track.title }}</h3>
+            <span class="track-name-en">{{ track.titleEn }}</span>
+          </div>
+          <span class="track-duration">{{ track.duration }}</span>
+        </div>
+
+        <button class="video-toggle" (click)="toggleVideo(track.key)">
+          {{ activeVideo() === track.key ? '关闭视频' : '观看视频版' }}
+        </button>
+
+        <!-- 视频懒加载 -->
+        @if (activeVideo() === track.key) {
+          <div class="track-video">
+            <video
+              [src]="track.mp4Src"
+              controls
+              preload="none"
+              playsinline
+            ></video>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

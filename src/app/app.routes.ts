@@ -61,6 +61,12 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'music',
+    title: '音乐台 — SpaceLab',
+    loadComponent: () =>
+      import('./features/music/music.component').then((m) => m.MusicComponent),
+  },
+  {
     path: 'archive',
     title: 'Archive — SpaceLab',
     loadComponent: () =>

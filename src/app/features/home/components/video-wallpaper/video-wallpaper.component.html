@@ -1,0 +1,32 @@
+<!-- 视频壁纸：两个 video 交叉淡入淡出 -->
+@if (!useFallback()) {
+  <div class="wallpaper-layer" [class.active]="activeSlot() === 0">
+    <video
+      #videoA
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      (ended)="onVideoLoop(0)"
+    ></video>
+  </div>
+  <div class="wallpaper-layer" [class.active]="activeSlot() === 1">
+    <video
+      #videoB
+      muted
+      loop
+      playsinline
+      preload="none"
+      (ended)="onVideoLoop(1)"
+    ></video>
+  </div>
+}
+
+<!-- 静态 fallback（慢网 / reduced-motion） -->
+@if (useFallback()) {
+  <div class="wallpaper-fallback"></div>
+}
+
+<!-- 深色遮罩保证文字可读 -->
+<div class="wallpaper-overlay"></div>

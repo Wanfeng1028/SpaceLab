@@ -485,3 +485,9 @@
     (closed)="onCapsuleClosed()"
   />
 }
+
+<!-- Device Warning Modal -->
+<app-device-warning-modal
+  [visible]="showDeviceWarning()"
+  (closed)="closeDeviceWarning()"
+/>

@@ -149,14 +149,6 @@
   }
 }
 
-// ── Three.js 深空粒子层 ────────────────────
-.backdrop-stars {
-  position: absolute;
-  inset: 0;
-  z-index: 2; // Move WebGL canvas to z-index 2 (on top of telemetry HUD)
-  pointer-events: none;
-}
-
 // ── 电影画质高精胶片颗粒噪点 ────────────────
 // 用轻量 CSS 渐变替代 SVG feTurbulence（避免持续重绘开销）
 .grain-overlay {

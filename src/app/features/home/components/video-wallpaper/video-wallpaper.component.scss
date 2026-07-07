@@ -1,0 +1,64 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+// ── 视频层 ──────────────────────────────────────
+.wallpaper-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  will-change: opacity;
+
+  &.active {
+    opacity: 1;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// ── 静态 fallback（CSS 渐变代替视频） ──────────
+.wallpaper-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(30, 60, 120, 0.6), transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(80, 40, 140, 0.4), transparent 50%),
+    linear-gradient(160deg, #0a0e1a 0%, #111827 50%, #0f172a 100%);
+}
+
+// ── 深色遮罩 ────────────────────────────────────
+.wallpaper-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.25) 40%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+// ── 移动端 ──────────────────────────────────────
+@media (max-width: 767px) {
+  .wallpaper-layer video {
+    object-fit: cover;
+    /* 移动端浏览器自动缩放，cover 保证填满 */
+  }
+}
+
+// ── prefers-reduced-motion ──────────────────────
+@media (prefers-reduced-motion: reduce) {
+  .wallpaper-layer {
+    transition: none;
+  }
+}

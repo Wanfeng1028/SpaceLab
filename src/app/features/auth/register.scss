@@ -16,20 +16,38 @@ $google-error-bg: #fce8e6;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $google-bg;
-  padding: 24px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(95, 205, 255, 0.28), transparent 34%),
+    radial-gradient(circle at 80% 16%, rgba(160, 130, 255, 0.22), transparent 36%),
+    linear-gradient(135deg, #eefbff 0%, #f7f8ff 50%, #eef7ff 100%);
+  padding: 16px;
   font-family: 'Google Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(86, 180, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(86, 180, 255, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: 0;
+  }
 }
 
 .auth-container {
   width: 100%;
   max-width: 450px;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-card {
   background: $google-card-bg;
   border-radius: 16px;
-  padding: 48px 40px 36px;
+  padding: 28px 32px 24px;
   box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15), 0 4px 8px rgba(60, 64, 67, 0.1);
   border: 1px solid $google-border;
   transition: box-shadow 0.2s;
@@ -42,7 +60,7 @@ $google-error-bg: #fce8e6;
 .auth-logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .auth-logo__icon {
@@ -67,7 +85,7 @@ $google-error-bg: #fce8e6;
   font-size: 16px;
   color: $google-text-secondary;
   text-align: center;
-  margin: 0 0 32px 0;
+  margin: 0 0 16px 0;
   font-weight: 400;
 }
 
@@ -85,7 +103,7 @@ $google-error-bg: #fce8e6;
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
 .form-field {
@@ -94,7 +112,7 @@ $google-error-bg: #fce8e6;
 
 .form-input {
   width: 100%;
-  padding: 14px 16px;
+  padding: 10px 14px;
   background: transparent;
   border: 1px solid $google-border;
   border-radius: 24px;
@@ -116,7 +134,7 @@ $google-error-bg: #fce8e6;
   &:focus {
     border-color: $google-border-focus;
     border-width: 2px;
-    padding: 13px 15px;
+    padding: 9px 13px;
     box-shadow: none;
   }
 
@@ -150,9 +168,38 @@ $google-error-bg: #fce8e6;
   line-height: 1;
 }
 
+// ── Captcha ──
+.form-captcha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  img {
+    width: 120px;
+    height: 44px;
+    border-radius: 24px;
+    cursor: pointer;
+    object-fit: contain;
+    background: rgba(0,0,0,0.05);
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+
+    &:hover { opacity: 0.8; }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    text-align: center;
+    letter-spacing: 4px;
+    font-size: 18px;
+  }
+}
+
 .auth-submit {
   width: 100%;
-  padding: 12px 24px;
+  padding: 10px 24px;
   background: $google-blue;
   color: #ffffff;
   border: none;
@@ -162,7 +209,7 @@ $google-error-bg: #fce8e6;
   cursor: pointer;
   transition: all 0.2s;
   line-height: 1.5;
-  margin-top: 8px;
+  margin-top: 4px;
   letter-spacing: 0.25px;
 
   &:hover:not(:disabled) {
@@ -183,7 +230,7 @@ $google-error-bg: #fce8e6;
 }
 
 .auth-footer {
-  margin-top: 28px;
+  margin-top: 16px;
   text-align: left;
 }
 
@@ -205,7 +252,7 @@ $google-error-bg: #fce8e6;
   display: flex;
   align-items: center;
   gap: 16px;
-  margin: 24px 0;
+  margin: 14px 0;
 }
 
 .auth-divider__line {
@@ -224,7 +271,7 @@ $google-error-bg: #fce8e6;
 .auth-social {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .social-btn {
@@ -233,7 +280,7 @@ $google-error-bg: #fce8e6;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border: 1px solid $google-border;
   border-radius: 24px;
   background: $google-card-bg;
@@ -243,7 +290,7 @@ $google-error-bg: #fce8e6;
   cursor: pointer;
   transition: all 0.2s;
   line-height: 1;
-  min-height: 48px;
+  min-height: 40px;
 
   &:hover {
     border-color: darken($google-border, 10%);

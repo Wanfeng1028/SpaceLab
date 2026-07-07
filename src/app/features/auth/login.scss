@@ -16,14 +16,32 @@ $google-error-bg: #fce8e6;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $google-bg;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(95, 205, 255, 0.28), transparent 34%),
+    radial-gradient(circle at 80% 16%, rgba(160, 130, 255, 0.22), transparent 36%),
+    linear-gradient(135deg, #eefbff 0%, #f7f8ff 50%, #eef7ff 100%);
   padding: 24px;
   font-family: 'Google Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(86, 180, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(86, 180, 255, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: 0;
+  }
 }
 
 .auth-container {
   width: 100%;
   max-width: 450px;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-card {

@@ -13,7 +13,7 @@ $ComposeFile = Join-Path $BackendDir 'docker-compose.yml'
 
 # 端口定义
 $ANGULAR_PORT = 4200
-$BACKEND_PORT = 8080
+$BACKEND_PORT = 8081
 $DB_PORT = 5432
 $REDIS_PORT = 6379
 
