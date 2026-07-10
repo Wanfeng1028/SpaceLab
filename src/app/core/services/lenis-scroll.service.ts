@@ -88,6 +88,14 @@ export class LenisScrollService implements OnDestroy {
     this.lenis?.resize();
   }
 
+  /** Fully stop the RAF loop and idle timer (e.g. for nested scroll views) */
+  stop(): void {
+    if (this.idleTimer) clearTimeout(this.idleTimer);
+    this.idleTimer = null;
+    cancelAnimationFrame(this.rafId);
+    this.isIdle = false;
+  }
+
   /** Restart the RAF loop if it was paused by the idle timer */
   start(): void {
     if (this.isIdle) {
