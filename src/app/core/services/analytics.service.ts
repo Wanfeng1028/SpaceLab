@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface AnalyticsSummary {
@@ -64,6 +64,12 @@ export class AnalyticsService {
 
   getSummary(): Observable<AnalyticsSummary> {
     return this.http.get<AnalyticsSummary>(`${this.apiUrl}/analytics/summary`).pipe(
+      map((data) =>
+        data.total_views === 0 && data.today_views === 0 &&
+        data.week_views === 0 && data.month_views === 0
+          ? MOCK_SUMMARY
+          : data,
+      ),
       catchError(() => of(MOCK_SUMMARY)),
     );
   }
@@ -72,6 +78,7 @@ export class AnalyticsService {
     return this.http.get<TopPost[]>(`${this.apiUrl}/analytics/top-posts`, {
       params: { limit: limit.toString() },
     }).pipe(
+      map((data) => (data && data.length > 0 ? data : MOCK_TOP_POSTS.slice(0, limit))),
       catchError(() => of(MOCK_TOP_POSTS.slice(0, limit))),
     );
   }
@@ -80,6 +87,7 @@ export class AnalyticsService {
     return this.http.get<TrafficTrend>(`${this.apiUrl}/analytics/traffic`, {
       params: { days: days.toString() },
     }).pipe(
+      map((data) => (data?.trend?.length ? data : MOCK_TREND)),
       catchError(() => of(MOCK_TREND)),
     );
   }
