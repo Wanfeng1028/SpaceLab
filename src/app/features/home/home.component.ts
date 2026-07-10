@@ -86,16 +86,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private audioCtx: AudioContext | null = null;
 
   constructor() {
-    // Restart typewriter when language changes
+    // Update fullText when language changes and restart typewriter
     effect(() => {
       const _locale = this.i18n.locale();
       if (!this.destroyed) {
         this.fullText = this.i18n.t('home.typewriter');
         clearTimeout(this.typingTimer);
         clearTimeout(this.restartTimer);
-        this.typedText.set(this.fullText);
-        this.typingIndex = this.fullText.length;
-        this.showTypewriterCursor.set(false);
+        // Restart typewriter cycle with new text
+        if (this.typingIndex > 0) {
+          this.startTypewriter();
+        }
       }
     });
   }
@@ -118,14 +119,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isHeroDimmed.set(false);
     // 清理可能残留的 body/html class
     this.cleanupBodyClasses();
-    // 直接显示完整文本
-    this.typedText.set(this.fullText);
-    // 延迟2秒后启动打字机循环（确保音频上下文可能需要用户交互）
+    // 光标默认隐藏，等待打字循环启动
+    this.showTypewriterCursor.set(false);
+    // 延迟1.5秒后启动打字机循环
     this.initDelayTimer = setTimeout(() => {
-      if (!this.destroyed && this.audioCtxSuspended()) {
+      if (!this.destroyed) {
         this.startTypewriter();
       }
-    }, 2000);
+    }, 1500);
     this.startCombinedTimer();
   }
 
