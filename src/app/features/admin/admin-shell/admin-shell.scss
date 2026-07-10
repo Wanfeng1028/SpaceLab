@@ -94,6 +94,38 @@
   }
 }
 
+.admin-shell__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-shell__home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1677ff;
+  background: rgba(22, 119, 255, 0.08);
+  border: 1px solid rgba(22, 119, 255, 0.18);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(22, 119, 255, 0.15);
+    border-color: rgba(22, 119, 255, 0.35);
+    color: #1677ff;
+  }
+}
+
 .admin-shell__username {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.85);

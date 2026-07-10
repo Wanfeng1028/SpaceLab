@@ -35,11 +35,18 @@
         <span nz-icon [nzType]="isCollapsed() ? 'menu-unfold' : 'menu-fold'"></span>
       </span>
 
-      <div class="admin-shell__header-right" nz-dropdown [nzDropdownMenu]="userMenu">
-        <nz-avatar [nzSize]="32" nzText="{{ initials() }}"></nz-avatar>
-        <span class="admin-shell__username">
-          {{ currentUser()?.username || currentUser()?.email || '管理员' }}
-        </span>
+      <div class="admin-shell__header-actions">
+        <a class="admin-shell__home-btn" routerLink="/">
+          <span nz-icon nzType="home"></span>
+          <span>首页</span>
+        </a>
+
+        <div class="admin-shell__header-right" nz-dropdown [nzDropdownMenu]="userMenu">
+          <nz-avatar [nzSize]="32" nzText="{{ initials() }}"></nz-avatar>
+          <span class="admin-shell__username">
+            {{ currentUser()?.username || currentUser()?.email || '管理员' }}
+          </span>
+        </div>
       </div>
 
       <nz-dropdown-menu #userMenu="nzDropdownMenu">
