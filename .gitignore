@@ -30,7 +30,7 @@ yarn-error.log
 .history/*
 
 # Generated at build time
-public/github-meta.json
+public/
 
 # Miscellaneous
 /.angular/cache
