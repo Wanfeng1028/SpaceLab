@@ -3,10 +3,10 @@ import {
   ChangeDetectionStrategy,
   signal,
   OnInit,
+  AfterViewInit,
   OnDestroy,
   ElementRef,
   viewChild,
-  inject,
 } from '@angular/core';
 
 // ── 壁纸配置 ──────────────────────────────────────
@@ -17,9 +17,9 @@ interface Wallpaper {
 }
 
 const WALLPAPERS: Wallpaper[] = [
-  { src: '/wallpapers/pixel-lofi-city.mp4' },
-  { src: '/wallpapers/azure-blade.mp4' },
-  { src: '/wallpapers/cat-sakura-street.mp4' },
+  { src: 'wallpapers/pixel-lofi-city.mp4' },
+  { src: 'wallpapers/azure-blade.mp4' },
+  { src: 'wallpapers/cat-sakura-street.mp4' },
 ];
 
 // ── 浏览器扩展类型 ────────────────────────────────
@@ -34,7 +34,7 @@ interface NavConnection {
   styleUrl: './video-wallpaper.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VideoWallpaperComponent implements OnInit, OnDestroy {
+export class VideoWallpaperComponent implements OnInit, AfterViewInit, OnDestroy {
   /** 当前播放的视频索引 (0 = A, 1 = B) */
   readonly activeSlot = signal<0 | 1>(0);
   /** 是否应该跳过视频（慢网 / saveData / reduced-motion） */
@@ -64,10 +64,12 @@ export class VideoWallpaperComponent implements OnInit, OnDestroy {
 
     if (isSlow || this.prefersReducedMotion) {
       this.useFallback.set(true);
-      return;
     }
+  }
 
-    // 初始化第一个视频
+  ngAfterViewInit(): void {
+    if (this.useFallback()) return;
+
     this.loadVideo(0, this.currentIndex);
     this.scheduleNext();
   }
@@ -108,8 +110,10 @@ export class VideoWallpaperComponent implements OnInit, OnDestroy {
     if (!ref) return;
     const video = ref.nativeElement;
     const wp = WALLPAPERS[wallpaperIndex];
-    if (video.src !== window.location.origin + wp.src) {
-      video.src = wp.mobileSrc ?? wp.src;
+    const source = wp.mobileSrc ?? wp.src;
+    const resolvedSource = new URL(source, document.baseURI).href;
+    if (video.src !== resolvedSource) {
+      video.src = resolvedSource;
       video.load();
       video.play().catch(() => {});
     }
