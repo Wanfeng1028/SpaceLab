@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Typewriter properties
   typedText = signal<string>('');
   audioCtxSuspended = signal<boolean>(true);
-  soundEnabled = signal<boolean>(true); // 打字机音效开关
+  soundEnabled = signal<boolean>(false); // 打字机音效开关（默认关闭）
 
   private fullText = this.i18n.t('home.typewriter');
   private typingIndex = 0;
