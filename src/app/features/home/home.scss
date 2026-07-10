@@ -322,7 +322,7 @@
 }
 
 .typewriter-cursor {
-  display: inline-block;
+  display: none;
   width: 3px;
   height: 0.9em;
   background-color: #ffffff;
@@ -330,6 +330,10 @@
   vertical-align: middle;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
   animation: blink 0.8s step-end infinite;
+}
+
+.is-typing .typewriter-cursor {
+  display: inline-block;
 }
 
 @keyframes blink {
