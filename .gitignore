@@ -50,6 +50,7 @@ Thumbs.db
 .env
 .env.local
 .env.production
+accounts.txt
 
 # Local dev automation scripts (not tracked)
 scripts/auto-*
