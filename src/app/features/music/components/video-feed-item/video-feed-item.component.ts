@@ -221,6 +221,9 @@ export class VideoFeedItemComponent implements AfterViewInit, OnDestroy {
   /** Whether the video is currently playing */
   readonly isVideoPlaying = signal(false);
 
+  /** Per-item video error (not shared across feed) */
+  readonly videoError = signal<string | null>(null);
+
   /** Video source info (HEVC detection) */
   readonly videoInfo = computed(() => pickVideoSource(this.track()));
 
@@ -228,14 +231,14 @@ export class VideoFeedItemComponent implements AfterViewInit, OnDestroy {
   readonly errorMessage = computed(() => {
     const info = this.videoInfo();
     if (!info.src && info.reason) return info.reason;
-    return this.svc.mediaError() || '视频加载失败';
+    return this.videoError() || '视频加载失败';
   });
 
   /** Item state */
   readonly state = computed<'idle' | 'playing' | 'error' | 'unsupported'>(() => {
     const info = this.videoInfo();
     if (!info.src && info.reason) return 'unsupported';
-    if (this.svc.mediaError()) return 'error';
+    if (this.videoError()) return 'error';
     if (this.isVideoPlaying()) return 'playing';
     return 'idle';
   });
@@ -302,11 +305,11 @@ export class VideoFeedItemComponent implements AfterViewInit, OnDestroy {
 
   onVideoError(): void {
     this.isVideoPlaying.set(false);
-    this.svc.mediaError.set('视频加载失败，请检查文件或网络连接。');
+    this.videoError.set('视频加载失败，请检查文件或网络连接。');
   }
 
   retryVideo(): void {
-    this.svc.mediaError.set(null);
+    this.videoError.set(null);
     this.onActionClick();
   }
 
@@ -319,5 +322,6 @@ export class VideoFeedItemComponent implements AfterViewInit, OnDestroy {
       el.load();
     }
     this.isVideoPlaying.set(false);
+    this.videoError.set(null);
   }
 }

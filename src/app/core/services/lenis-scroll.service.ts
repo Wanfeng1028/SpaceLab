@@ -7,13 +7,14 @@ import Lenis from 'lenis';
  * Provides a single Lenis instance across the app and exposes
  * reactive signals for scroll progress (0-1) of the whole page.
  *
- * RAF loop pauses when user stops scrolling for 2s to save CPU/GPU.
+ * 全局唯一 Lenis 实例 + 唯一 RAF 循环。
+ * stop() 暂停，start() 恢复，不再有 idle 自动取消 RAF。
  */
 @Injectable({ providedIn: 'root' })
 export class LenisScrollService implements OnDestroy {
   private readonly ngZone = inject(NgZone);
 
-  /** Raw Lenis instance – null before first scroll listener */
+  /** Raw Lenis instance */
   readonly instance = signal<Lenis | null>(null);
 
   /** Normalised page progress 0 → 1 */
@@ -23,9 +24,8 @@ export class LenisScrollService implements OnDestroy {
   readonly scrollY = signal(0);
 
   private lenis!: Lenis;
-  private rafId = 0;
-  private idleTimer: ReturnType<typeof setTimeout> | null = null;
-  private isIdle = false;
+  private rafId: number | null = null;
+  private destroyed = false;
 
   constructor() {
     this.ngZone.runOutsideAngular(() => {
@@ -47,35 +47,27 @@ export class LenisScrollService implements OnDestroy {
           this.scrollY.set(scroll);
           this.scrollProgress.set(progress);
         });
-        this.resetIdleTimer();
       };
 
       this.lenis.on('scroll', onScroll);
-
-      const raf = (time: number) => {
-        this.lenis.raf(time);
-        this.rafId = requestAnimationFrame(raf);
-      };
-      this.rafId = requestAnimationFrame(raf);
-      this.resetIdleTimer();
+      this.ensureRaf();
     });
   }
 
-  private resetIdleTimer(): void {
-    if (this.isIdle) {
-      // Resume RAF
-      this.isIdle = false;
-      const raf = (time: number) => {
-        this.lenis.raf(time);
-        this.rafId = requestAnimationFrame(raf);
-      };
+  private ensureRaf(): void {
+    if (this.rafId !== null || this.destroyed) return;
+
+    const raf = (time: number) => {
+      if (this.destroyed) {
+        this.rafId = null;
+        return;
+      }
+
+      this.lenis.raf(time);
       this.rafId = requestAnimationFrame(raf);
-    }
-    if (this.idleTimer) clearTimeout(this.idleTimer);
-    this.idleTimer = setTimeout(() => {
-      this.isIdle = true;
-      cancelAnimationFrame(this.rafId);
-    }, 2000);
+    };
+
+    this.rafId = requestAnimationFrame(raf);
   }
 
   /** Programmatically scroll to [top] (CSS px) */
@@ -88,30 +80,30 @@ export class LenisScrollService implements OnDestroy {
     this.lenis?.resize();
   }
 
-  /** Fully stop the RAF loop and idle timer (e.g. for nested scroll views) */
+  /** Stop Lenis + cancel RAF (e.g. for nested scroll views like video feed) */
   stop(): void {
-    if (this.idleTimer) clearTimeout(this.idleTimer);
-    this.idleTimer = null;
-    cancelAnimationFrame(this.rafId);
-    this.isIdle = false;
-  }
+    this.lenis.stop();
 
-  /** Restart the RAF loop if it was paused by the idle timer */
-  start(): void {
-    if (this.isIdle) {
-      this.isIdle = false;
-      const raf = (time: number) => {
-        this.lenis.raf(time);
-        this.rafId = requestAnimationFrame(raf);
-      };
-      this.rafId = requestAnimationFrame(raf);
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
     }
-    this.resetIdleTimer();
   }
 
-  ngOnDestroy() {
-    if (this.idleTimer) clearTimeout(this.idleTimer);
-    cancelAnimationFrame(this.rafId);
+  /** Resume Lenis + ensure RAF is running (idempotent) */
+  start(): void {
+    this.lenis.start();
+    this.ensureRaf();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
+
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+
     this.lenis?.destroy();
   }
 }

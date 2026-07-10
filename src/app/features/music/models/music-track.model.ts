@@ -32,11 +32,15 @@ export function resolveMediaUrl(relativePath: string): string {
 
 /**
  * 检测当前浏览器是否支持 HEVC (H.265) 播放。
+ * 同时检测 hvc1 和 hev1 两种 codec 标识，任一支持即返回 true。
  */
 export function isHevcSupported(): boolean {
   if (typeof document === 'undefined') return false;
   const video = document.createElement('video');
-  return video.canPlayType('video/mp4; codecs="hvc1"') !== '';
+  return (
+    video.canPlayType('video/mp4; codecs="hvc1"') !== '' ||
+    video.canPlayType('video/mp4; codecs="hev1"') !== ''
+  );
 }
 
 /**
