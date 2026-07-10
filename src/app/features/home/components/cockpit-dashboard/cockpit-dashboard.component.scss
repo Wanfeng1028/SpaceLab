@@ -1,126 +1,95 @@
-// Cockpit Dashboard — Material Glass-morphism HUD
-// Deep-space dark theme with real Angular Material components
+// Cockpit Dashboard — Angular Material 3 Design
+// Clean, professional control center — no glass-morphism, no neon
 
-// ── Variables ────────────────────────────────────────────────────────
-$cyan: #69d7ff;
-$green: #00ff88;
-$purple: #a855f7;
-$amber: #ffaa00;
-$blue: #3b82f6;
-$muted: rgba(255, 255, 255, 0.48);
-$mono: var(--font-mono);
-$sans: var(--font-sans);
+// ── Surface Colors ────────────────────────────────────────────────────
+$cockpit-bg: #101418;
+$cockpit-surface: #181d24;
+$cockpit-border: rgba(255, 255, 255, 0.08);
+$cockpit-text: rgba(255, 255, 255, 0.87);
+$cockpit-text-secondary: rgba(255, 255, 255, 0.54);
+$cockpit-accent: var(--mat-sys-primary, #fdd835);
 
-// ── Container ────────────────────────────────────────────────────────
+// ── Log Tag Colors (semantic only) ────────────────────────────────────
+$log-sys: #64b5f6;
+$log-visitor: #81c784;
+$log-content: #ce93d8;
+$log-ai: #ffb74d;
+$log-webgl: #4dd0e1;
+$log-net: #81c784;
+$log-nav: rgba(255, 255, 255, 0.6);
+
+// ── Container ─────────────────────────────────────────────────────────
 .cockpit-dashboard {
   position: relative;
-  min-height: 100vh;
   min-height: 100dvh;
-  height: 100dvh;
-  overflow: hidden;
+  height: auto;
+  overflow: visible;
   padding: clamp(78px, 9vh, 96px) 24px clamp(28px, 4vh, 42px);
-  color: rgba(220, 246, 255, 0.92);
-  background:
-    linear-gradient(180deg, rgba(2, 6, 17, 0.30), rgba(2, 8, 22, 0.50)),
-    url('/cockpit-dashboard-bg.jpg') center / cover no-repeat,
-    #020611;
+  background: $cockpit-bg;
+  color: $cockpit-text;
 }
 
-// ── Background image layer ───────────────────────────────────────────
-.cockpit-bg-frame {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  // background-image: url('/cockpit-dashboard-bg.jpg');
-  background-image: url('/cockpit-dashboard-bg.jpg');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: min(135vw, 1700px) auto;
-  opacity: 0.85;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        circle at 50% 35%,
-        rgba(5, 11, 20, 0.55),
-        rgba(5, 11, 20, 0.18) 40%,
-        transparent 68%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(5, 11, 20, 0.65) 0%,
-        rgba(5, 11, 20, 0.25) 40%,
-        rgba(5, 11, 20, 0.35) 70%,
-        rgba(5, 11, 20, 0.72) 100%
-      );
-  }
+// ── Hidden layers (bg-frame, three.js canvas) ─────────────────────────
+.cockpit-bg-frame,
+.cockpit-canvas-bg {
+  display: none;
 }
 
-// ── Shell container ──────────────────────────────────────────────────
+// ── Shell ──────────────────────────────────────────────────────────────
 .cockpit-shell {
-  width: min(100% - 32px, 1120px);
-  height: 100%;
-  max-height: calc(100dvh - 120px);
+  width: min(100% - 32px, 1200px);
   margin: 0 auto;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-  gap: 14px;
+  grid-template-rows: auto auto auto auto auto;
+  gap: 16px;
   position: relative;
   z-index: 1;
 }
 
-// ── Three.js background ──────────────────────────────────────────────
-.cockpit-canvas-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.12;
-  pointer-events: none;
-
-  app-three-canvas {
-    width: 100%;
-    height: 100%;
-  }
+// ── Toolbar ────────────────────────────────────────────────────────────
+.cockpit-toolbar {
+  background: transparent !important;
+  padding: 0 !important;
+  height: auto !important;
 }
 
-// ── Header ───────────────────────────────────────────────────────────
-.cockpit-header {
-  text-align: center;
+.cockpit-toolbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.cockpit-toolbar-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cockpit-title {
   margin: 0;
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: $cockpit-text;
+  letter-spacing: 0.01em;
 }
 
-.cockpit-header h1 {
-  margin: 6px 0 4px;
-  font-size: clamp(24px, 3vw, 36px);
-  line-height: 1;
-  letter-spacing: 0.12em;
-  color: #60d8ff;
-  text-shadow: 0 0 24px rgba(96, 216, 255, 0.35);
+.cockpit-subtitle {
+  font-size: 13px;
+  color: $cockpit-text-secondary;
+  letter-spacing: 0.02em;
 }
 
-.cockpit-header p {
-  margin: 0;
-  font-size: 12px;
-  color: rgba(200, 230, 244, 0.64);
-  letter-spacing: 0.14em;
+.cockpit-toolbar-spacer {
+  flex: 1;
 }
 
-.cockpit-index-chip {
-  background: rgba($cyan, 0.12) !important;
-  border: 1px solid rgba($cyan, 0.25) !important;
-  color: $cyan !important;
-  font-family: $mono;
-  font-size: 0.68rem;
-  min-height: 24px;
-  border-radius: 999px !important;
+.cockpit-toolbar-chips {
+  flex-shrink: 0;
 }
 
-// ── KPI Grid ─────────────────────────────────────────────────────────
+// ── KPI Grid ──────────────────────────────────────────────────────────
 .cockpit-kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -128,31 +97,9 @@ $sans: var(--font-sans);
 }
 
 .cockpit-kpi-card {
-  min-height: 76px;
-  padding: 12px 14px !important;
-  display: grid !important;
-  place-items: center;
-  text-align: center;
-  border-radius: 18px !important;
-}
-
-.cockpit-kpi-card mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  color: rgba(99, 220, 255, 0.78);
-}
-
-.cockpit-kpi-card strong {
-  font-size: 24px;
-  line-height: 1.1;
-  color: #63dcff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-.cockpit-kpi-card span {
-  font-size: 11px;
-  color: rgba(210, 238, 250, 0.58);
+  .mat-mdc-card-content {
+    padding: 16px !important;
+  }
 }
 
 .kpi-link {
@@ -162,171 +109,108 @@ $sans: var(--font-sans);
   justify-content: center;
   text-decoration: none;
   color: inherit;
-  gap: 4px;
+  gap: 6px;
+  text-align: center;
 }
 
-// ── Main Dashboard Board ─────────────────────────────────────────────
+.kpi-link mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: $cockpit-text-secondary;
+}
+
+.kpi-link strong {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+  color: $cockpit-accent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.kpi-link span {
+  font-size: 12px;
+  color: $cockpit-text-secondary;
+}
+
+// ── Board ─────────────────────────────────────────────────────────────
 .cockpit-board {
-  min-height: 0;
   display: grid;
-  grid-template-rows: minmax(0, 1.25fr) minmax(0, 0.95fr) 128px;
-  gap: 12px;
+  grid-template-rows: auto auto auto;
+  gap: 16px;
 }
 
 .cockpit-main-grid,
 .cockpit-secondary-grid {
-  min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 1.25fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
-.cockpit-panel,
-.cockpit-log-card {
-  min-height: 0;
-  overflow: hidden;
-  border-radius: 20px !important;
-  padding: 14px !important;
-}
-
-// ── Material Glass Card ──────────────────────────────────────────────
-.cockpit-glass-card {
-  background:
-    linear-gradient(135deg, rgba(8, 20, 38, 0.76), rgba(9, 28, 48, 0.48)) !important;
-  border: 1px solid rgba(105, 215, 255, 0.22) !important;
-  box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(180, 240, 255, 0.12) !important;
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-  color: rgba(220, 246, 255, 0.9) !important;
-}
-
-// ── Panel Title ──────────────────────────────────────────────────────
-.cockpit-panel-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.panel-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  background: rgba(99, 220, 255, 0.12);
-  color: #63dcff;
-}
-
-.panel-icon mat-icon {
-  font-size: 17px;
-  width: 17px;
-  height: 17px;
-}
-
-.cockpit-panel-title h2 {
-  margin: 0;
-  font-size: 16px;
-  color: rgba(225, 248, 255, 0.92);
-}
-
-// ── Site Pulse with radar ────────────────────────────────────────────
-.pulse-compact-layout {
-  min-height: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 96px;
-  gap: 12px;
-  align-items: center;
-}
-
-.orbit-radar {
-  width: 92px;
-  height: 92px;
-  border-radius: 50%;
-  position: relative;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle, rgba(99, 220, 255, 0.16), transparent 62%);
-}
-
-.orbit-radar span {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(99, 220, 255, 0.12);
-}
-
-.orbit-radar span:nth-child(1) {
-  inset: 0;
-}
-
-.orbit-radar span:nth-child(2) {
-  inset: 15px;
-}
-
-.orbit-radar span:nth-child(3) {
-  inset: 30px;
-}
-
-.orbit-radar i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50%;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(99, 220, 255, 0.6), transparent);
-  transform-origin: left center;
-  animation: radar-sweep 4s linear infinite;
-}
-
-.orbit-radar i::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  background: #63dcff;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 12px rgba(99, 220, 255, 0.6);
-}
-
-@keyframes radar-sweep {
-  from {
-    transform: rotate(0deg);
+// ── Material Card Overrides (scoped to cockpit) ───────────────────────
+.cockpit-dashboard {
+  .mat-mdc-card {
+    background: $cockpit-surface !important;
+    border: 1px solid $cockpit-border !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
   }
-  to {
-    transform: rotate(360deg);
+
+  .mat-mdc-card-header {
+    padding: 12px 16px 0 !important;
+  }
+
+  .mat-mdc-card-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    color: $cockpit-text;
+  }
+
+  .mat-mdc-card-avatar {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 18px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $cockpit-text-secondary;
+    border-radius: 4px !important;
+    overflow: visible !important;
+  }
+
+  .mat-mdc-card-content {
+    padding: 8px 0 12px !important;
+  }
+
+  .mat-divider {
+    border-top-color: $cockpit-border !important;
+    margin: 8px 16px !important;
+  }
+
+  .mat-mdc-list {
+    padding: 0 8px !important;
+  }
+
+  .mat-mdc-list-item {
+    height: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .mat-mdc-list-item [matListItemTitle] {
+    font-size: 12px !important;
+    color: $cockpit-text-secondary;
+  }
+
+  .mat-mdc-list-item [matListItemMeta] {
+    font-size: 12px !important;
+    color: $cockpit-text;
+    font-weight: 500;
+    white-space: nowrap;
   }
 }
 
-// ── Data List ────────────────────────────────────────────────────────
-.cockpit-data-list {
-  padding: 6px 0 0 !important;
-}
-
-.cockpit-data-list mat-list-item {
-  height: 30px !important;
-  min-height: 30px !important;
-  border-bottom: 1px solid rgba(130, 220, 255, 0.08);
-}
-
-.cockpit-data-list [matListItemTitle] {
-  font-size: 11px !important;
-  color: rgba(204, 232, 246, 0.58);
-}
-
-.cockpit-data-list [matListItemMeta] {
-  font-size: 11px !important;
-  color: #63dcff;
-  font-weight: 800;
-  white-space: nowrap;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-// ── FPS progress bar ─────────────────────────────────────────────────
+// ── FPS Progress Bar ──────────────────────────────────────────────────
 .fps-bar {
   display: inline-block;
   width: 48px;
@@ -334,48 +218,31 @@ $sans: var(--font-sans);
   margin-left: 8px;
   vertical-align: middle;
   border-radius: 2px;
+}
 
-  ::ng-deep {
-    .mdc-linear-progress__buffer-bar {
-      background: rgba(255, 255, 255, 0.06);
-    }
-    .mdc-linear-progress__bar-inner {
-      border-color: $cyan;
-    }
-    .mat-mdc-progress-bar {
-      border-radius: 2px;
-    }
+// ── Log Card ──────────────────────────────────────────────────────────
+.cockpit-log-card {
+  .mat-mdc-card-content {
+    padding: 8px 16px 12px !important;
   }
 }
 
-// ── System Log ───────────────────────────────────────────────────────
-.cockpit-log-card {
-  height: 128px;
-  overflow: hidden;
-}
-
 .cockpit-log-list {
-  margin-top: 8px;
   display: grid;
   gap: 4px;
-  max-height: 82px;
-  overflow: hidden;
+  max-height: 200px;
+  overflow-y: auto;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 .log-line {
   display: grid;
-  grid-template-columns: 72px 70px minmax(0, 1fr);
+  grid-template-columns: 72px auto minmax(0, 1fr);
   gap: 8px;
   align-items: center;
   font-size: 11px;
-  color: rgba(215, 242, 255, 0.72);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 2px 0;
-}
-
-.log-line:last-child {
-  border-bottom: none;
+  color: $cockpit-text-secondary;
+  padding: 3px 0;
 }
 
 .log-line__time {
@@ -384,38 +251,35 @@ $sans: var(--font-sans);
 }
 
 .log-line__tag {
-  color: $cyan;
-  min-width: 64px;
-  flex-shrink: 0;
-  font-weight: 600;
+  font-size: 10px !important;
+  min-height: 20px !important;
+  border-radius: 4px !important;
+  padding: 0 6px !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 500;
 }
 
+// Log tag semantic colors
 .log-line__tag[data-tag='SYS'] {
-  color: $blue;
+  --mdc-chip-label-text-color: #{$log-sys};
 }
-
 .log-line__tag[data-tag='VISITOR'] {
-  color: $green;
+  --mdc-chip-label-text-color: #{$log-visitor};
 }
-
 .log-line__tag[data-tag='CONTENT'] {
-  color: $purple;
+  --mdc-chip-label-text-color: #{$log-content};
 }
-
 .log-line__tag[data-tag='AI'] {
-  color: $amber;
+  --mdc-chip-label-text-color: #{$log-ai};
 }
-
 .log-line__tag[data-tag='WEBGL'] {
-  color: $cyan;
+  --mdc-chip-label-text-color: #{$log-webgl};
 }
-
 .log-line__tag[data-tag='NET'] {
-  color: $green;
+  --mdc-chip-label-text-color: #{$log-net};
 }
-
 .log-line__tag[data-tag='NAV'] {
-  color: rgba(255, 255, 255, 0.6);
+  --mdc-chip-label-text-color: #{$log-nav};
 }
 
 .log-line__msg {
@@ -424,18 +288,6 @@ $sans: var(--font-sans);
 
 .log-chips {
   margin-left: auto;
-
-  ::ng-deep {
-    .mat-mdc-chip {
-      background: rgba($cyan, 0.12) !important;
-      border: 1px solid rgba($cyan, 0.25) !important;
-      color: $cyan !important;
-      font-family: $mono;
-      font-size: 0.68rem;
-      min-height: 24px;
-      border-radius: 999px !important;
-    }
-  }
 }
 
 // ── Action Buttons ───────────────────────────────────────────────────
@@ -444,11 +296,12 @@ $sans: var(--font-sans);
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
+  padding-top: 8px;
 }
 
 .cockpit-actions button {
-  min-height: 38px;
-  border-radius: 999px !important;
+  min-height: 40px;
+  border-radius: 6px !important;
 }
 
 // ── Telemetry bar ────────────────────────────────────────────────────
@@ -458,17 +311,10 @@ app-telemetry-bar {
   margin-top: 4px;
 }
 
-// ── Mobile (< 1024px) ────────────────────────────────────────────────
+// ── Tablet (<= 1024px) ────────────────────────────────────────────────
 @media (max-width: 1024px) {
   .cockpit-dashboard {
-    height: auto;
-    min-height: 100dvh;
-    overflow: visible;
-  }
-
-  .cockpit-shell {
-    height: auto;
-    max-height: none;
+    padding: 72px 16px 48px;
   }
 
   .cockpit-board {
@@ -483,20 +329,12 @@ app-telemetry-bar {
   .cockpit-secondary-grid {
     grid-template-columns: 1fr;
   }
-
-  .cockpit-log-card {
-    height: auto;
-  }
 }
 
-// ── Small mobile (< 640px) ──────────────────────────────────────────
+// ── Small mobile (<= 640px) ──────────────────────────────────────────
 @media (max-width: 640px) {
-  .cockpit-dashboard {
-    padding: 88px 16px 64px;
-  }
-
   .cockpit-kpi-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .cockpit-actions {
@@ -507,18 +345,17 @@ app-telemetry-bar {
     width: 100%;
   }
 
-  .pulse-compact-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .orbit-radar {
-    justify-self: center;
+  .cockpit-toolbar-inner {
+    flex-wrap: wrap;
   }
 }
 
 // ── Reduced motion ───────────────────────────────────────────────────
 @media (prefers-reduced-motion: reduce) {
-  .orbit-radar i {
-    animation: none;
+  .cockpit-dashboard {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 }

@@ -16,10 +16,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { I18nService } from '../../../../core/services/i18n.service';
 import { LenisScrollService } from '../../../../core/services/lenis-scroll.service';
-import { ThreeCanvasComponent } from '../../../../three/components/three-canvas/three-canvas.component';
-import { CockpitDashboardScene } from '../../../../three/scenes/cockpit-dashboard.scene';
 import { TelemetryBarComponent } from '../../../../shared/components/hud/telemetry-bar.component';
 import {
   POSTS,
@@ -65,7 +64,7 @@ interface NetworkInformation {
     MatListModule,
     MatTooltipModule,
     MatProgressBarModule,
-    ThreeCanvasComponent,
+    MatToolbarModule,
     TelemetryBarComponent,
   ],
 })
@@ -73,15 +72,6 @@ export class CockpitDashboardSection implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly i18n = inject(I18nService);
   private readonly lenis = inject(LenisScrollService);
-
-  readonly cockpitFactory = (canvas: HTMLCanvasElement) => {
-    try {
-      return new CockpitDashboardScene(canvas);
-    } catch (e) {
-      console.warn('[CockpitDashboard] Scene init failed:', e);
-      return { init() {}, destroy() {} };
-    }
-  };
 
   /* ── Timers & listeners ─────────────────────────────────────────── */
 

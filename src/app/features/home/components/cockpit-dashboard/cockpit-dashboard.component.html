@@ -1,38 +1,41 @@
 <div class="cockpit-dashboard">
-  <!-- Background image layer -->
-  <div class="cockpit-bg-frame" aria-hidden="true"></div>
-
-  <!-- Three.js background -->
-  <div class="cockpit-canvas-bg">
-    <app-three-canvas [sceneFactory]="cockpitFactory" />
-  </div>
-
   <div class="cockpit-shell">
     <!-- ═══════════════════════════════════════════════════════════════
-         1. Header
+         1. Header — mat-toolbar
          ═══════════════════════════════════════════════════════════════ -->
-    <header class="cockpit-header">
-      <mat-chip class="cockpit-index-chip">07</mat-chip>
-      <h1>{{ t('title') }}</h1>
-      <p>{{ t('subtitle') }}</p>
-    </header>
+    <mat-toolbar class="cockpit-toolbar">
+      <div class="cockpit-toolbar-inner">
+        <div class="cockpit-toolbar-text">
+          <h1 class="cockpit-title">{{ t('title') }}</h1>
+          <span class="cockpit-subtitle">{{ t('subtitle') }}</span>
+        </div>
+        <span class="cockpit-toolbar-spacer"></span>
+        <mat-chip-set class="cockpit-toolbar-chips">
+          <mat-chip [matTooltip]="t('buildMode')">{{ buildMode() }}</mat-chip>
+        </mat-chip-set>
+      </div>
+    </mat-toolbar>
 
     <!-- ═══════════════════════════════════════════════════════════════
          2. KPI Cards
          ═══════════════════════════════════════════════════════════════ -->
     <section class="cockpit-kpi-grid">
-      <mat-card class="cockpit-kpi-card cockpit-glass-card" *ngFor="let item of [
+      @for (item of [
         { icon: 'article', value: postsCount(), label: t('posts'), link: '/blog' },
         { icon: 'folder_special', value: projectsCount(), label: t('projects'), link: '/projects' },
         { icon: 'bolt', value: aiNewsCount(), label: t('aiNews'), link: '/ai-frontline' },
         { icon: 'science', value: aiResourcesCount(), label: t('aiResources'), link: '/lab' }
-      ]">
-        <a [routerLink]="item.link" class="kpi-link">
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <strong>{{ item.value }}</strong>
-          <span>{{ item.label }}</span>
-        </a>
-      </mat-card>
+      ]; track item.link) {
+        <mat-card class="cockpit-kpi-card" appearance="outlined">
+          <mat-card-content>
+            <a [routerLink]="item.link" class="kpi-link">
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <strong>{{ item.value }}</strong>
+              <span>{{ item.label }}</span>
+            </a>
+          </mat-card-content>
+        </mat-card>
+      }
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════════
@@ -41,59 +44,70 @@
     <section class="cockpit-board">
       <div class="cockpit-main-grid">
         <!-- Visitor Signal -->
-        <mat-card class="cockpit-panel cockpit-glass-card">
-          <div class="cockpit-panel-title">
-            <span class="panel-icon"><mat-icon>sensors</mat-icon></span>
-            <h2>{{ t('visitorSignal') }}</h2>
-          </div>
-          <mat-divider></mat-divider>
-          <mat-list class="cockpit-data-list">
-            <mat-list-item *ngFor="let row of visitorSignals()">
-              <span matListItemTitle>{{ row.label }}</span>
-              <span matListItemMeta>{{ row.value }}</span>
-            </mat-list-item>
-          </mat-list>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>sensors</mat-icon>
+            <mat-card-title>{{ t('visitorSignal') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-list>
+              @for (row of visitorSignals(); track row.label) {
+                <mat-list-item>
+                  <span matListItemTitle>{{ row.label }}</span>
+                  <span matListItemMeta>{{ row.value }}</span>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
         </mat-card>
 
         <!-- Site Pulse -->
-        <mat-card class="cockpit-panel cockpit-panel--pulse cockpit-glass-card">
-          <div class="cockpit-panel-title">
-            <span class="panel-icon"><mat-icon>track_changes</mat-icon></span>
-            <h2>{{ t('sitePulse') }}</h2>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="pulse-compact-layout">
-            <mat-list class="cockpit-data-list">
-              <mat-list-item *ngFor="let row of sitePulse()">
-                <span matListItemTitle>{{ row.label }}</span>
-                <span matListItemMeta>{{ row.value }}</span>
-              </mat-list-item>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>track_changes</mat-icon>
+            <mat-card-title>{{ t('sitePulse') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-list>
+              @for (row of sitePulse(); track row.label) {
+                <mat-list-item>
+                  <span matListItemTitle>{{ row.label }}</span>
+                  <span matListItemMeta>{{ row.value }}</span>
+                </mat-list-item>
+              }
             </mat-list>
-            <div class="orbit-radar" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <i></i>
-            </div>
-          </div>
+          </mat-card-content>
         </mat-card>
 
         <!-- System Status -->
-        <mat-card class="cockpit-panel cockpit-glass-card">
-          <div class="cockpit-panel-title">
-            <span class="panel-icon"><mat-icon>monitor_heart</mat-icon></span>
-            <h2>{{ t('systemStatus') }}</h2>
-          </div>
-          <mat-divider></mat-divider>
-          <mat-list class="cockpit-data-list">
-            <mat-list-item *ngFor="let row of systemStatus()">
-              <span matListItemTitle>{{ row.label }}</span>
-              <span matListItemMeta>
-                {{ row.value }}
-                <mat-progress-bar *ngIf="row.label === t('fps')" mode="determinate" [value]="+row.value" class="fps-bar" matTooltip="FPS"></mat-progress-bar>
-              </span>
-            </mat-list-item>
-          </mat-list>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>monitor_heart</mat-icon>
+            <mat-card-title>{{ t('systemStatus') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-list>
+              @for (row of systemStatus(); track row.label) {
+                <mat-list-item>
+                  <span matListItemTitle>{{ row.label }}</span>
+                  <span matListItemMeta>
+                    {{ row.value }}
+                    @if (row.label === t('fps')) {
+                      <mat-progress-bar
+                        class="fps-bar"
+                        mode="determinate"
+                        [value]="+row.value"
+                        matTooltip="FPS">
+                      </mat-progress-bar>
+                    }
+                  </span>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
         </mat-card>
       </div>
 
@@ -102,70 +116,86 @@
            ═══════════════════════════════════════════════════════════════ -->
       <div class="cockpit-secondary-grid">
         <!-- Session Metrics -->
-        <mat-card class="cockpit-panel cockpit-glass-card">
-          <div class="cockpit-panel-title">
-            <span class="panel-icon"><mat-icon>schedule</mat-icon></span>
-            <h2>{{ t('sessionMetrics') }}</h2>
-          </div>
-          <mat-divider></mat-divider>
-          <mat-list class="cockpit-data-list">
-            <mat-list-item *ngFor="let row of sessionMetrics()">
-              <span matListItemTitle>{{ row.label }}</span>
-              <span matListItemMeta>{{ row.value }}</span>
-            </mat-list-item>
-          </mat-list>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>schedule</mat-icon>
+            <mat-card-title>{{ t('sessionMetrics') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-list>
+              @for (row of sessionMetrics(); track row.label) {
+                <mat-list-item>
+                  <span matListItemTitle>{{ row.label }}</span>
+                  <span matListItemMeta>{{ row.value }}</span>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
         </mat-card>
 
         <!-- Content Sync -->
-        <mat-card class="cockpit-panel cockpit-glass-card">
-          <div class="cockpit-panel-title">
-            <span class="panel-icon"><mat-icon>sync</mat-icon></span>
-            <h2>{{ t('contentSync') }}</h2>
-          </div>
-          <mat-divider></mat-divider>
-          <mat-list class="cockpit-data-list">
-            <mat-list-item *ngFor="let row of contentSync()">
-              <span matListItemTitle>{{ row.label }}</span>
-              <span matListItemMeta>{{ row.value }}</span>
-            </mat-list-item>
-          </mat-list>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>sync</mat-icon>
+            <mat-card-title>{{ t('contentSync') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-list>
+              @for (row of contentSync(); track row.label) {
+                <mat-list-item>
+                  <span matListItemTitle>{{ row.label }}</span>
+                  <span matListItemMeta>{{ row.value }}</span>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
         </mat-card>
 
         <!-- Analytics Status -->
-        <mat-card class="cockpit-panel cockpit-glass-card">
-          <div class="cockpit-panel-title">
-            <span class="panel-icon"><mat-icon>analytics</mat-icon></span>
-            <h2>{{ t('analyticsStatus') }}</h2>
-          </div>
-          <mat-divider></mat-divider>
-          <mat-list class="cockpit-data-list">
-            <mat-list-item *ngFor="let row of analyticsData()">
-              <span matListItemTitle>{{ row.label }}</span>
-              <span matListItemMeta>{{ row.value }}</span>
-            </mat-list-item>
-          </mat-list>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>analytics</mat-icon>
+            <mat-card-title>{{ t('analyticsStatus') }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-list>
+              @for (row of analyticsData(); track row.label) {
+                <mat-list-item>
+                  <span matListItemTitle>{{ row.label }}</span>
+                  <span matListItemMeta>{{ row.value }}</span>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
         </mat-card>
       </div>
 
       <!-- ═══════════════════════════════════════════════════════════════
            5. System Log
            ═══════════════════════════════════════════════════════════════ -->
-      <mat-card class="cockpit-log-card cockpit-glass-card">
-        <div class="cockpit-panel-title">
-          <span class="panel-icon"><mat-icon>terminal</mat-icon></span>
-          <h2>{{ t('commandLog') }}</h2>
+      <mat-card class="cockpit-log-card" appearance="outlined">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>terminal</mat-icon>
+          <mat-card-title>{{ t('commandLog') }}</mat-card-title>
           <mat-chip-set class="log-chips">
-            <mat-chip highlighted>{{ commandLog().length }}</mat-chip>
+            <mat-chip>{{ commandLog().length }}</mat-chip>
           </mat-chip-set>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="cockpit-log-list">
-          <div class="log-line" *ngFor="let entry of commandLog().slice(0, 5)">
-            <span class="log-line__time">[{{ entry.time }}]</span>
-            <span class="log-line__tag" [attr.data-tag]="entry.tag">[{{ entry.tag }}]</span>
-            <span class="log-line__msg">{{ entry.message }}</span>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-divider></mat-divider>
+          <div class="cockpit-log-list">
+            @for (entry of commandLog().slice(0, 5); track entry.time + entry.message) {
+              <div class="log-line">
+                <span class="log-line__time">[{{ entry.time }}]</span>
+                <mat-chip class="log-line__tag" [attr.data-tag]="entry.tag">{{ entry.tag }}</mat-chip>
+                <span class="log-line__msg">{{ entry.message }}</span>
+              </div>
+            }
           </div>
-        </div>
+        </mat-card-content>
       </mat-card>
     </section>
 
@@ -181,7 +211,7 @@
         <mat-icon>refresh</mat-icon>
         {{ t('restartOrbit') }}
       </button>
-      <button mat-raised-button type="button" (click)="enterSite()">
+      <button mat-flat-button color="primary" type="button" (click)="enterSite()">
         <mat-icon>open_in_new</mat-icon>
         {{ t('enterSite') }}
       </button>

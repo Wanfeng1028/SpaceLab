@@ -2,6 +2,7 @@ import {
   Component,
   ChangeDetectionStrategy,
   OnInit,
+  AfterViewInit,
   OnDestroy,
   inject,
   signal,
@@ -32,7 +33,7 @@ import { VideoWallpaperComponent } from './components/video-wallpaper/video-wall
     LaunchTerminalTransitionComponent,
   ],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   filmNoise = signal<boolean>(true);
 
   // 亮度自适应按钮状态
@@ -126,6 +127,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     }, 2000);
     this.startCombinedTimer();
+  }
+
+  ngAfterViewInit(): void {
+    // 视图渲染完成后重新计算 Lenis 滚动尺寸
+    this.lenis.resize();
+    this.lenis.start();
   }
 
   ngOnDestroy(): void {

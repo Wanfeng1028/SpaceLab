@@ -83,6 +83,24 @@ export class LenisScrollService implements OnDestroy {
     this.lenis?.scrollTo(top, { immediate: !!opts?.immediate });
   }
 
+  /** Recalculate wrapper/content dimensions after DOM changes */
+  resize(): void {
+    this.lenis?.resize();
+  }
+
+  /** Restart the RAF loop if it was paused by the idle timer */
+  start(): void {
+    if (this.isIdle) {
+      this.isIdle = false;
+      const raf = (time: number) => {
+        this.lenis.raf(time);
+        this.rafId = requestAnimationFrame(raf);
+      };
+      this.rafId = requestAnimationFrame(raf);
+    }
+    this.resetIdleTimer();
+  }
+
   ngOnDestroy() {
     if (this.idleTimer) clearTimeout(this.idleTimer);
     cancelAnimationFrame(this.rafId);
