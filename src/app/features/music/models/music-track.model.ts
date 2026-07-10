@@ -8,6 +8,8 @@ export interface MusicTrack {
   subtitle: string;
   duration: string;
   mp3Src: string;
+  /** 纯 CSS 渐变封面（蓝色系不同色调） */
+  artworkGradient: string;
   /** 原始 H.265 视频文件路径（可选） */
   originalVideoSrc?: string;
   /** H.264 网页兼容版视频路径（可选，转码后填入） */
@@ -78,6 +80,7 @@ export const TRACKS: MusicTrack[] = [
     mp3Src: MEDIA_BASE_URL + 'chuanshao-.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-.mp4',
     duration: '43:11',
+    artworkGradient: 'linear-gradient(145deg, #0a2e5c 0%, #1a5a9e 55%, #3d8ecf 100%)',
   },
   {
     key: 'chuanshao-1',
@@ -86,6 +89,7 @@ export const TRACKS: MusicTrack[] = [
     mp3Src: MEDIA_BASE_URL + 'chuanshao-1.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-1.mp4',
     duration: '38:27',
+    artworkGradient: 'linear-gradient(145deg, #122a6b 0%, #2d5cb8 50%, #5b9de6 100%)',
   },
   {
     key: 'chuanshao-2',
@@ -94,6 +98,7 @@ export const TRACKS: MusicTrack[] = [
     mp3Src: MEDIA_BASE_URL + 'chuanshao-2.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-2.mp4',
     duration: '35:06',
+    artworkGradient: 'linear-gradient(145deg, #0c3d5e 0%, #1a7a8a 50%, #4ec6d6 100%)',
   },
   {
     key: 'chuanshao-3',
@@ -102,5 +107,6 @@ export const TRACKS: MusicTrack[] = [
     mp3Src: MEDIA_BASE_URL + 'chuanshao-3.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-3.mp4',
     duration: '36:00',
+    artworkGradient: 'linear-gradient(145deg, #0d1b3e 0%, #1e3a6e 45%, #4a7ab5 100%)',
   },
 ];

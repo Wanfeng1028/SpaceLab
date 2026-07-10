@@ -779,6 +779,8 @@
   "music": {
     "title": "音乐台",
     "subtitle": "传说系列 · 纯音乐精选",
-    "playHint": "请点击歌曲开始播放"
+    "playHint": "请点击歌曲开始播放",
+    "audioMode": "音频模式",
+    "videoMode": "视频流"
   }
 }

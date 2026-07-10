@@ -785,6 +785,8 @@
   "music": {
     "title": "Music Station",
     "subtitle": "Legend Series · Instrumental Collection",
-    "playHint": "Click a track to start playing"
+    "playHint": "Click a track to start playing",
+    "audioMode": "Audio",
+    "videoMode": "Video Feed"
   }
 }

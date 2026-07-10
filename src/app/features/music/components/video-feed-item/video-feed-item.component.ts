@@ -85,7 +85,7 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
     `
       :host {
         display: block;
-        height: 100vh;
+        height: calc(100dvh - var(--navbar-height, 64px));
         scroll-snap-align: start;
         scroll-snap-stop: always;
       }
@@ -96,13 +96,14 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #0d1117;
+        background: var(--music-bg-start, #061425);
         overflow: hidden;
       }
 
       /* ── Video ──────────────────────────────────── */
       .feed-item__video {
         width: 100%;
+        max-width: 1200px;
         height: 100%;
         object-fit: contain;
         background: #000;

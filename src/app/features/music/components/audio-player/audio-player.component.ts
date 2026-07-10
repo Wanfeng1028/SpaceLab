@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MediaPlaybackService } from '../../services/media-playback.service';
 import { MediaErrorComponent } from '../media-error/media-error.component';
@@ -24,115 +23,129 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
     MatButtonModule,
     MatSliderModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule,
     MatTooltipModule,
     MediaErrorComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- 唯一 audio 元素 -->
-    <audio
-      #audioElement
-      preload="metadata"
-    ></audio>
+    <audio #audioElement preload="metadata"></audio>
 
-    <div class="audio-player">
-      <!-- 当前曲目信息 -->
+    <div class="now-playing">
       @if (svc.currentTrack(); as track) {
-        <div class="player-info">
-          <h2 class="player-info__title">{{ track.title }}</h2>
-          <span class="player-info__subtitle">{{ track.subtitle }}</span>
+        <div class="now-playing__inner">
+          <!-- Artwork -->
+          <div
+            class="now-playing__artwork"
+            [style.background]="track.artworkGradient"
+          >
+            <mat-icon class="now-playing__artwork-icon">music_note</mat-icon>
+            <span class="now-playing__artwork-label">{{ track.subtitle }}</span>
+          </div>
+
+          <!-- Info + Controls -->
+          <div class="now-playing__controls">
+            <h2 class="now-playing__title">{{ track.title }}</h2>
+            <span class="now-playing__subtitle">{{ track.subtitle }}</span>
+
+            @if (svc.isBuffering()) {
+              <mat-progress-bar
+                mode="indeterminate"
+                class="now-playing__buffer"
+              />
+            }
+
+            <!-- Progress -->
+            <div class="now-playing__progress">
+              <span class="now-playing__time">{{ svc.formatTime(svc.currentTime()) }}</span>
+              <mat-slider
+                class="now-playing__slider"
+                [min]="0"
+                [max]="svc.duration() || 1"
+                [step]="1"
+                [discrete]="true"
+              >
+                <input
+                  matSliderThumb
+                  [value]="svc.currentTime()"
+                  (valueChange)="svc.seek($event)"
+                />
+              </mat-slider>
+              <span class="now-playing__time">{{ svc.formatTime(svc.duration()) }}</span>
+            </div>
+
+            <!-- Main controls -->
+            <div class="now-playing__buttons">
+              <button
+                mat-icon-button
+                class="now-playing__skip"
+                matTooltip="上一首"
+                (click)="svc.previous()"
+              >
+                <mat-icon>skip_previous</mat-icon>
+              </button>
+
+              <button
+                mat-fab
+                class="now-playing__play"
+                [attr.aria-label]="svc.isPlaying() ? '暂停' : '播放'"
+                (click)="svc.togglePlay()"
+              >
+                <mat-icon>{{ svc.isPlaying() ? 'pause' : 'play_arrow' }}</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="now-playing__skip"
+                matTooltip="下一首"
+                (click)="svc.next()"
+              >
+                <mat-icon>skip_next</mat-icon>
+              </button>
+            </div>
+
+            <!-- Volume -->
+            <div class="now-playing__volume">
+              <button mat-icon-button (click)="toggleMute()">
+                <mat-icon>{{ volumeIcon() }}</mat-icon>
+              </button>
+              <mat-slider
+                class="now-playing__volume-slider"
+                [min]="0"
+                [max]="1"
+                [step]="0.05"
+              >
+                <input
+                  matSliderThumb
+                  [value]="svc.volume()"
+                  (valueChange)="svc.setVolume($event)"
+                />
+              </mat-slider>
+            </div>
+
+            @if (svc.playHint()) {
+              <p class="now-playing__hint">请点击歌曲或播放按钮开始</p>
+            }
+
+            @if (svc.mediaError(); as err) {
+              <app-media-error
+                [message]="err"
+                (retry)="retryPlayback()"
+              />
+            }
+          </div>
         </div>
       } @else {
-        <div class="player-info">
-          <h2 class="player-info__title player-info__title--empty">选择一首歌曲开始播放</h2>
+        <!-- Empty state -->
+        <div class="now-playing__empty">
+          <div class="now-playing__artwork now-playing__artwork--empty">
+            <mat-icon class="now-playing__artwork-icon">music_note</mat-icon>
+          </div>
+          <div class="now-playing__controls">
+            <h2 class="now-playing__title now-playing__title--empty">
+              选择一首歌曲开始播放
+            </h2>
+          </div>
         </div>
-      }
-
-      <!-- 缓冲指示器 -->
-      @if (svc.isBuffering()) {
-        <mat-progress-bar mode="indeterminate" class="player-buffer" />
-      } @else {
-        <div class="player-buffer-spacer"></div>
-      }
-
-      <!-- 进度条 -->
-      <div class="player-progress">
-        <span class="player-progress__time">{{ svc.formatTime(svc.currentTime()) }}</span>
-        <mat-slider
-          class="player-progress__slider"
-          [min]="0"
-          [max]="svc.duration() || 1"
-          [step]="1"
-          [discrete]="true"
-        >
-          <input
-            matSliderThumb
-            [value]="svc.currentTime()"
-            (valueChange)="svc.seek($event)"
-          />
-        </mat-slider>
-        <span class="player-progress__time">{{ svc.formatTime(svc.duration()) }}</span>
-      </div>
-
-      <!-- 控制按钮 -->
-      <div class="player-controls">
-        <button
-          mat-icon-button
-          matTooltip="上一首"
-          (click)="svc.previous()"
-        >
-          <mat-icon>skip_previous</mat-icon>
-        </button>
-
-        <button
-          mat-fab
-          class="player-controls__play"
-          matTooltip="{{ svc.isPlaying() ? '暂停' : '播放' }}"
-          (click)="svc.togglePlay()"
-        >
-          <mat-icon>{{ svc.isPlaying() ? 'pause' : 'play_arrow' }}</mat-icon>
-        </button>
-
-        <button
-          mat-icon-button
-          matTooltip="下一首"
-          (click)="svc.next()"
-        >
-          <mat-icon>skip_next</mat-icon>
-        </button>
-      </div>
-
-      <!-- 音量 -->
-      <div class="player-volume">
-        <button mat-icon-button (click)="toggleMute()">
-          <mat-icon>{{ volumeIcon() }}</mat-icon>
-        </button>
-        <mat-slider
-          class="player-volume__slider"
-          [min]="0"
-          [max]="1"
-          [step]="0.05"
-        >
-          <input
-            matSliderThumb
-            [value]="svc.volume()"
-            (valueChange)="svc.setVolume($event)"
-          />
-        </mat-slider>
-      </div>
-
-      <!-- 播放提示 -->
-      @if (svc.playHint()) {
-        <p class="player-hint">请点击歌曲或播放按钮开始</p>
-      }
-
-      <!-- 错误状态 -->
-      @if (svc.mediaError(); as err) {
-        <app-media-error
-          [message]="err"
-          (retry)="retryPlayback()"
-        />
       }
     </div>
   `,
@@ -142,108 +155,219 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
         display: block;
       }
 
-      .audio-player {
+      .now-playing {
+        background: var(--music-surface, #0d1c2d);
+        border-radius: 16px;
+        padding: clamp(24px, 3vw, 40px);
+        min-height: 480px;
+        display: flex;
+        align-items: center;
+      }
+
+      .now-playing__inner,
+      .now-playing__empty {
+        display: grid;
+        grid-template-columns: minmax(200px, 320px) minmax(280px, 1fr);
+        align-items: center;
+        gap: clamp(24px, 4vw, 56px);
+        width: 100%;
+      }
+
+      .now-playing__empty {
+        grid-template-columns: minmax(160px, 240px) 1fr;
+      }
+
+      /* ── Artwork ────────────────────────────────── */
+      .now-playing__artwork {
+        aspect-ratio: 1;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: clamp(200px, 26vw, 320px);
+      }
+
+      .now-playing__artwork--empty {
+        background: var(--music-surface-raised, #122840);
+        opacity: 0.5;
+      }
+
+      .now-playing__artwork-icon {
+        font-size: 56px;
+        width: 56px;
+        height: 56px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .now-playing__artwork-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.55);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      /* ── Controls area ─────────────────────────── */
+      .now-playing__controls {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        padding: 20px 24px;
-        background: var(--mat-sys-surface, #fff);
-        border-radius: 12px;
-        border: 1px solid var(--mat-sys-outline-variant, #e0e0e0);
+        width: 100%;
       }
 
-      /* ── 曲目信息 ── */
-      .player-info {
-        text-align: center;
+      .now-playing__title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--music-text, #f4f8ff);
+        letter-spacing: -0.01em;
       }
 
-      .player-info__title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin: 0 0 2px;
-        color: var(--mat-sys-on-surface, #171717);
-      }
-
-      .player-info__title--empty {
+      .now-playing__title--empty {
         font-weight: 400;
-        font-size: 1rem;
-        color: var(--mat-sys-on-surface-variant, #999);
+        font-size: 1.1rem;
+        color: var(--music-text-secondary, #a9bdd3);
       }
 
-      .player-info__subtitle {
-        font-size: 0.8rem;
-        color: var(--mat-sys-on-surface-variant, #666);
+      .now-playing__subtitle {
+        font-size: 0.9rem;
+        color: var(--music-text-secondary, #a9bdd3);
+        margin-top: -8px;
       }
 
-      /* ── 缓冲 ── */
-      .player-buffer {
+      /* ── Buffer ─────────────────────────────────── */
+      .now-playing__buffer {
         height: 3px;
+        border-radius: 2px;
       }
 
-      .player-buffer-spacer {
-        height: 3px;
-      }
-
-      /* ── 进度 ── */
-      .player-progress {
+      /* ── Progress ───────────────────────────────── */
+      .now-playing__progress {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
+        margin-top: 8px;
       }
 
-      .player-progress__slider {
+      .now-playing__slider {
         flex: 1;
       }
 
-      .player-progress__time {
-        font-size: 0.7rem;
+      .now-playing__time {
+        font-size: 0.75rem;
         font-family: 'Roboto Mono', monospace;
-        color: var(--mat-sys-on-surface-variant, #999);
-        min-width: 36px;
+        color: var(--music-text-secondary, #a9bdd3);
+        min-width: 40px;
         text-align: center;
+        user-select: none;
       }
 
-      /* ── 控制 ── */
-      .player-controls {
+      /* ── Buttons ────────────────────────────────── */
+      .now-playing__buttons {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 20px;
+        margin: 8px 0;
       }
 
-      .player-controls__play {
-        --mat-fab-container-color: var(--mat-sys-primary, #1a73e8);
-        --mat-fab-icon-color: var(--mat-sys-on-primary, #fff);
+      .now-playing__play {
+        width: 64px;
+        height: 64px;
+        --mat-fab-container-color: var(--music-primary, #4da3ff);
+        --mat-fab-icon-color: #fff;
       }
 
-      /* ── 音量 ── */
-      .player-volume {
+      .now-playing__play mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .now-playing__skip {
+        width: 48px;
+        height: 48px;
+        color: var(--music-text-secondary, #a9bdd3);
+      }
+
+      .now-playing__skip mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+      }
+
+      /* ── Volume ─────────────────────────────────── */
+      .now-playing__volume {
         display: flex;
         align-items: center;
         gap: 4px;
-        justify-content: center;
+        margin-top: 4px;
       }
 
-      .player-volume__slider {
-        width: 100px;
+      .now-playing__volume mat-icon {
+        color: var(--music-text-secondary, #a9bdd3);
+        font-size: 20px;
       }
 
-      /* ── 提示 ── */
-      .player-hint {
+      .now-playing__volume-slider {
+        width: 120px;
+      }
+
+      /* ── Hint ───────────────────────────────────── */
+      .now-playing__hint {
         text-align: center;
         font-size: 0.75rem;
-        color: var(--mat-sys-on-surface-variant, #999);
-        margin: 0;
+        color: var(--music-text-secondary, #a9bdd3);
+        margin: 4px 0 0;
       }
 
-      /* ── 移动端 ── */
-      @media (max-width: 767px) {
-        .audio-player {
-          padding: 16px;
+      /* ── Medium: artwork above, controls below ── */
+      @media (max-width: 1099px) {
+        .now-playing__inner {
+          grid-template-columns: 1fr;
+          justify-items: center;
         }
 
-        .player-volume__slider {
-          width: 80px;
+        .now-playing__artwork {
+          width: clamp(180px, 40vw, 280px);
+        }
+
+        .now-playing__controls {
+          align-items: center;
+          text-align: center;
+        }
+      }
+
+      /* ── Mobile ─────────────────────────────────── */
+      @media (max-width: 767px) {
+        .now-playing {
+          min-height: auto;
+          padding: 24px 16px;
+        }
+
+        .now-playing__inner,
+        .now-playing__empty {
+          grid-template-columns: 1fr;
+          justify-items: center;
+        }
+
+        .now-playing__empty .now-playing__artwork {
+          width: 160px;
+        }
+
+        .now-playing__artwork {
+          width: clamp(160px, 50vw, 240px);
+        }
+
+        .now-playing__title {
+          font-size: 1.3rem;
+          text-align: center;
+        }
+
+        .now-playing__volume-slider {
+          width: 100px;
         }
       }
     `,

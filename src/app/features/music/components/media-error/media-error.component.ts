@@ -46,7 +46,7 @@ import { MatIconModule } from '@angular/material/icon';
       .media-error__message {
         margin: 0;
         font-size: 0.875rem;
-        color: var(--mat-sys-on-surface-variant, #666);
+        color: var(--music-text-secondary, var(--mat-sys-on-surface-variant, #a9bdd3));
         max-width: 360px;
         line-height: 1.5;
       }

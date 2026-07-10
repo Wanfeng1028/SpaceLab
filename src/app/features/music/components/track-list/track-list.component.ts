@@ -10,28 +10,35 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
   imports: [MatListModule, MatIconModule, MatButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <mat-nav-list class="track-list">
-      @for (track of svc.tracks; track track.key) {
-        <mat-list-item
-          class="track-item"
-          [class.is-active]="svc.currentTrack()?.key === track.key"
-          (click)="svc.selectTrack(track.key)"
-        >
-          <mat-icon matListItemIcon class="track-item__icon">
-            @if (svc.currentTrack()?.key === track.key && svc.isPlaying()) {
-              equalizer
-            } @else {
-              play_arrow
-            }
-          </mat-icon>
-          <div matListItemTitle class="track-item__title">{{ track.title }}</div>
-          <div matListItemLine class="track-item__meta">
-            <span class="track-item__subtitle">{{ track.subtitle }}</span>
-            <span class="track-item__duration">{{ track.duration }}</span>
-          </div>
-        </mat-list-item>
-      }
-    </mat-nav-list>
+    <div class="queue">
+      <div class="queue__header">
+        <h3 class="queue__title">播放队列</h3>
+        <span class="queue__count">{{ svc.tracks.length }} 首曲目</span>
+      </div>
+
+      <mat-nav-list class="queue__list">
+        @for (track of svc.tracks; track track.key; let i = $index) {
+          <mat-list-item
+            class="queue-item"
+            [class.queue-item--active]="svc.currentTrack()?.key === track.key"
+            (click)="svc.selectTrack(track.key)"
+          >
+            <div matListItemMeta class="queue-item__index">
+              @if (svc.currentTrack()?.key === track.key && svc.isPlaying()) {
+                <mat-icon class="queue-item__eq">equalizer</mat-icon>
+              } @else {
+                <span>{{ i + 1 }}</span>
+              }
+            </div>
+            <div matListItemTitle class="queue-item__title">{{ track.title }}</div>
+            <div matListItemLine class="queue-item__line">
+              <span class="queue-item__subtitle">{{ track.subtitle }}</span>
+              <span class="queue-item__duration">{{ track.duration }}</span>
+            </div>
+          </mat-list-item>
+        }
+      </mat-nav-list>
+    </div>
   `,
   styles: [
     `
@@ -39,55 +46,91 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
         display: block;
       }
 
-      .track-list {
+      .queue__header {
+        padding: 16px 16px 12px;
+        border-bottom: 1px solid var(--music-divider, rgba(190, 215, 240, 0.14));
+      }
+
+      .queue__title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--music-text, #f4f8ff);
+        margin: 0 0 2px;
+      }
+
+      .queue__count {
+        font-size: 0.75rem;
+        color: var(--music-text-secondary, #a9bdd3);
+      }
+
+      .queue__list {
         padding-top: 0;
       }
 
-      .track-item {
+      /* ── Queue item ─────────────────────────────── */
+      .queue-item {
         cursor: pointer;
         border-left: 3px solid transparent;
-        transition: background 150ms, border-color 150ms;
-        border-radius: 0;
+        transition: background 120ms, border-color 120ms;
+        height: 68px;
 
         &:hover {
-          background: var(--mat-sys-surface-variant, rgba(0, 0, 0, 0.04));
+          background: var(--music-surface-hover, #173550);
         }
 
-        &.is-active {
-          border-left-color: var(--mat-sys-primary, #1a73e8);
-          background: var(--mat-sys-secondary-container, rgba(26, 115, 232, 0.08));
-        }
-      }
-
-      .track-item__icon {
-        color: var(--mat-sys-on-surface-variant, #666);
-
-        .is-active & {
-          color: var(--mat-sys-primary, #1a73e8);
+        &.queue-item--active {
+          border-left-color: var(--music-primary, #4da3ff);
+          background: var(--music-surface-raised, #122840);
         }
       }
 
-      .track-item__title {
+      .queue-item__index {
+        font-size: 0.75rem;
+        font-family: 'Roboto Mono', monospace;
+        color: var(--music-text-secondary, #a9bdd3);
+        min-width: 20px;
+        text-align: center;
+
+        .queue-item--active & {
+          color: var(--music-primary, #4da3ff);
+        }
+      }
+
+      .queue-item__eq {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        color: var(--music-primary, #4da3ff);
+      }
+
+      .queue-item__title {
         font-weight: 500;
         font-size: 0.875rem;
+        color: var(--music-text, #f4f8ff);
+
+        .queue-item:not(.queue-item--active) & {
+          color: var(--music-text-secondary, #a9bdd3);
+        }
       }
 
-      .track-item__meta {
+      .queue-item__line {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
       }
 
-      .track-item__subtitle {
+      .queue-item__subtitle {
         font-size: 0.75rem;
-        color: var(--mat-sys-on-surface-variant, #999);
+        color: var(--music-text-secondary, #a9bdd3);
+        opacity: 0.7;
       }
 
-      .track-item__duration {
+      .queue-item__duration {
         font-size: 0.7rem;
         font-family: 'Roboto Mono', monospace;
-        color: var(--mat-sys-on-surface-variant, #999);
+        color: var(--music-text-secondary, #a9bdd3);
+        opacity: 0.6;
       }
     `,
   ],

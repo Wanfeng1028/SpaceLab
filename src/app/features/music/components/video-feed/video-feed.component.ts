@@ -34,7 +34,7 @@ import {
     `
       :host {
         display: block;
-        height: 100vh;
+        height: calc(100dvh - var(--navbar-height, 64px));
         overflow: hidden;
       }
 
