@@ -12,7 +12,7 @@
       <!-- Metrics Cards -->
       <div class="metrics-grid">
         @for (metric of metrics(); track metric.label) {
-          <div class="metric-card glass-card-base">
+          <div class="metric-card glass-card">
             <app-pulse-metric [value]="metric.value" [label]="metric.label" />
           </div>
         }
@@ -21,7 +21,7 @@
       <!-- Trend Chart -->
       <div class="chart-section">
         <h2 class="section-title">{{ t('analytics.trend') }}</h2>
-        <div class="chart-card glass-card-base">
+        <div class="chart-card glass-card">
           <div class="bar-chart">
             @for (value of trendData(); track $index) {
               <div class="bar-column">
@@ -39,7 +39,7 @@
         <!-- Top Pages / Articles (from backend) -->
         <div class="table-section">
           <h2 class="section-title">{{ t('analytics.topArticles') }}</h2>
-          <div class="table-card glass-card-base">
+          <div class="table-card glass-card">
             @if (topPosts().length === 0) {
               <div class="table-empty">暂无数据</div>
             }

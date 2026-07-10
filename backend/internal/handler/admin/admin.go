@@ -419,11 +419,22 @@ func (h *AdminHandler) ResolveRiskEvent(c *gin.Context) {
 func (h *AdminHandler) GetSiteSettings(c *gin.Context) {
 	settings := map[string]string{}
 
-	regOpen, err := h.authService.GetSiteSetting("registration_open")
-	if err != nil {
-		regOpen = "true"
+	keys := []struct {
+		key          string
+		defaultValue string
+	}{
+		{"registration_open", "true"},
+		{"comment_pre_moderate", "false"},
+		{"comments_enabled", "true"},
 	}
-	settings["registration_open"] = regOpen
+
+	for _, k := range keys {
+		val, err := h.authService.GetSiteSetting(k.key)
+		if err != nil {
+			val = k.defaultValue
+		}
+		settings[k.key] = val
+	}
 
 	c.JSON(http.StatusOK, gin.H{"settings": settings})
 }
