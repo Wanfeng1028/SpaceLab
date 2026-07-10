@@ -36,6 +36,10 @@
       </span>
 
       <div class="admin-shell__header-actions">
+        <button class="admin-shell__lang-btn" (click)="toggleLocale()">
+          {{ isZh() ? 'EN' : '中' }}
+        </button>
+
         <a class="admin-shell__home-btn" routerLink="/">
           <span nz-icon nzType="home"></span>
           <span>首页</span>

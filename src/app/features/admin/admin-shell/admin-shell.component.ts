@@ -6,6 +6,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { AuthService } from '../../../core/services/auth.service';
+import { I18nService } from '../../../core/services/i18n.service';
 
 interface MenuLink {
   label: string;
@@ -23,9 +24,11 @@ interface MenuLink {
 export class AdminShellComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private i18n = inject(I18nService);
 
   readonly isCollapsed = signal(false);
   readonly currentUser = signal(this.authService.getCurrentUser());
+  readonly isZh = this.i18n.isZh;
 
   readonly menuLinks: MenuLink[] = [
     { label: '仪表盘', path: '/admin', icon: 'dashboard' },
@@ -45,6 +48,10 @@ export class AdminShellComponent {
 
   toggleCollapsed(): void {
     this.isCollapsed.update((v) => !v);
+  }
+
+  toggleLocale(): void {
+    this.i18n.toggleLocale();
   }
 
   onLogout(): void {
