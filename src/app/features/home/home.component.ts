@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Typewriter properties
   typedText = signal<string>('');
+  showTypewriterCursor = signal<boolean>(false);
   audioCtxSuspended = signal<boolean>(true);
   soundEnabled = signal<boolean>(false); // 打字机音效开关（默认关闭）
 
@@ -93,6 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         clearTimeout(this.restartTimer);
         this.typedText.set(this.fullText);
         this.typingIndex = this.fullText.length;
+        this.showTypewriterCursor.set(false);
       }
     });
   }
@@ -209,6 +211,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private startTypewriter(): void {
     this.typedText.set('');
     this.typingIndex = 0;
+    this.showTypewriterCursor.set(true);
     this.typeNextChar();
   }
 
@@ -227,6 +230,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       const variation = Math.random() * 80;
       this.typingTimer = setTimeout(() => this.typeNextChar(), baseDelay + variation);
     } else {
+      // Typing complete — hide cursor immediately
+      this.showTypewriterCursor.set(false);
       // Reached the end of line, ring the typewriter bell!
       this.bellTimer = setTimeout(() => this.playBellSound(), 100);
       // 等待2秒后重新开始打字（循环）
@@ -234,6 +239,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (this.destroyed) return;
         this.typedText.set('');
         this.typingIndex = 0;
+        this.showTypewriterCursor.set(true);
         this.typeNextChar();
       }, 2000);
     }
