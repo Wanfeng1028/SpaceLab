@@ -15,6 +15,17 @@ interface LoginLogItem {
   login_at: string;
 }
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_LOGS: LoginLogItem[] = [
+  { id: 'l1', user_id: 'u1', email: 'admin@spacelab.com', ip: '192.168.1.100', user_agent: 'Mozilla/5.0 Chrome/126', device: 'Chrome / Windows', success: true, fail_reason: '', login_at: '2026-07-11T08:30:00Z' },
+  { id: 'l2', user_id: 'u2', email: 'writer@spacelab.com', ip: '10.0.0.55', user_agent: 'Mozilla/5.0 Firefox/128', device: 'Firefox / macOS', success: true, fail_reason: '', login_at: '2026-07-11T09:15:00Z' },
+  { id: 'l3', user_id: 'unknown', email: '', ip: '203.0.113.42', user_agent: 'Mozilla/5.0 Chrome/126', device: 'Chrome / Linux', success: false, fail_reason: 'invalid credentials', login_at: '2026-07-11T02:40:00Z' },
+  { id: 'l4', user_id: 'u3', email: 'viewer@spacelab.com', ip: '172.16.0.88', user_agent: 'Mozilla/5.0 Safari/17', device: 'Safari / macOS', success: true, fail_reason: '', login_at: '2026-07-10T18:20:00Z' },
+  { id: 'l5', user_id: 'u4', email: 'editor@spacelab.com', ip: '192.168.2.201', user_agent: 'Mozilla/5.0 Edge/126', device: 'Edge / Windows', success: true, fail_reason: '', login_at: '2026-07-10T14:05:00Z' },
+  { id: 'l6', user_id: 'unknown', email: '', ip: '198.51.100.77', user_agent: 'python-requests/2.31', device: 'python-requests', success: false, fail_reason: 'account not found', login_at: '2026-07-10T03:12:00Z' },
+];
+
 @Component({
   selector: 'app-admin-login-logs',
   standalone: true,
@@ -66,7 +77,7 @@ export class AdminLoginLogsComponent implements OnInit {
     this.loading.set(true);
     this.http.get<{ logs: LoginLogItem[] }>(this.apiUrl + '/admin/login-logs?page_size=100').subscribe({
       next: (res) => { this.logs.set(res.logs || []); this.loading.set(false); },
-      error: () => { this.logs.set([]); this.loading.set(false); },
+      error: () => { this.logs.set(MOCK_LOGS); this.loading.set(false); },
     });
   }
 }

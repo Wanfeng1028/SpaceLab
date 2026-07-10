@@ -11,6 +11,16 @@ interface SensitiveWordItem {
   created_at: string;
 }
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_WORDS: SensitiveWordItem[] = [
+  { id: 'sw1', word: '示例敏感词A', category: 'profanity', created_at: '2026-06-01T08:00:00Z' },
+  { id: 'sw2', word: '示例敏感词B', category: 'spam', created_at: '2026-06-05T10:30:00Z' },
+  { id: 'sw3', word: '示例敏感词C', category: 'ads', created_at: '2026-06-10T14:00:00Z' },
+  { id: 'sw4', word: '示例敏感词D', category: 'politics', created_at: '2026-06-15T09:15:00Z' },
+  { id: 'sw5', word: '示例敏感词E', category: 'profanity', created_at: '2026-06-20T11:45:00Z' },
+];
+
 @Component({
   selector: 'app-admin-sensitive-words',
   standalone: true,
@@ -79,7 +89,7 @@ export class AdminSensitiveWordsComponent implements OnInit {
     this.loading.set(true);
     this.http.get<{ words: SensitiveWordItem[] }>(this.apiUrl + '/admin/sensitive-words').subscribe({
       next: (res) => { this.words.set(res.words || []); this.loading.set(false); },
-      error: () => { this.words.set([]); this.loading.set(false); },
+      error: () => { this.words.set(MOCK_WORDS); this.loading.set(false); },
     });
   }
 

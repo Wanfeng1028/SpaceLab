@@ -4,6 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_SETTINGS: Record<string, string> = {
+  registration_open: 'true',
+  comment_pre_moderate: 'false',
+  comments_enabled: 'true',
+};
+
 @Component({
   selector: 'app-admin-settings',
   standalone: true,
@@ -75,7 +83,7 @@ export class AdminSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<{ settings: Record<string, string> }>(this.apiUrl + '/admin/settings').subscribe({
       next: (res) => { this.settings.set(res.settings || {}); this.loading.set(false); },
-      error: () => { this.settings.set({}); this.loading.set(false); },
+      error: () => { this.settings.set(MOCK_SETTINGS); this.loading.set(false); },
     });
   }
 

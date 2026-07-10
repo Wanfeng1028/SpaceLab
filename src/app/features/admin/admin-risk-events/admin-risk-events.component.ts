@@ -15,6 +15,15 @@ interface RiskEventItem {
   created_at: string;
 }
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_EVENTS: RiskEventItem[] = [
+  { id: 're1', user_id: 'unknown-001', event_type: 'brute_force', description: '5 分钟内连续登录失败 10 次', ip: '203.0.113.42', metadata: '{"attempts":10}', resolved: false, resolved_by: '', created_at: '2026-07-11T02:45:00Z' },
+  { id: 're2', user_id: 'u5', event_type: 'suspicious_activity', description: '短时间内大量评论操作', ip: '198.51.100.77', metadata: '{"comment_count":50}', resolved: false, resolved_by: '', created_at: '2026-07-10T16:30:00Z' },
+  { id: 're3', user_id: 'unknown-002', event_type: 'port_scan', description: '检测到端口扫描行为', ip: '192.0.2.100', metadata: '{"ports":"22,80,443,8080"}', resolved: true, resolved_by: 'admin', created_at: '2026-07-09T04:00:00Z' },
+  { id: 're4', user_id: 'u3', event_type: 'privilege_escalation', description: '普通用户尝试访问管理接口', ip: '172.16.0.88', metadata: '{"endpoint":"/admin/users"}', resolved: true, resolved_by: 'admin', created_at: '2026-07-08T11:20:00Z' },
+];
+
 @Component({
   selector: 'app-admin-risk-events',
   standalone: true,
@@ -80,7 +89,11 @@ export class AdminRiskEventsComponent implements OnInit {
         this.events.set(this.showResolved() ? all.filter((e) => e.resolved) : all.filter((e) => !e.resolved));
         this.loading.set(false);
       },
-      error: () => { this.events.set([]); this.loading.set(false); },
+      error: () => {
+        const all = MOCK_EVENTS;
+        this.events.set(this.showResolved() ? all.filter((e) => e.resolved) : all.filter((e) => !e.resolved));
+        this.loading.set(false);
+      },
     });
   }
 

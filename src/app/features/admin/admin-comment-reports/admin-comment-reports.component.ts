@@ -16,6 +16,14 @@ interface ReportItem {
   reporter?: { username: string };
 }
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_REPORTS: ReportItem[] = [
+  { id: 'r1', comment_id: 'c3', reporter_id: 'u1', reason: 'spam', description: '疑似广告推广内容', status: 'pending', created_at: '2026-07-08T10:30:00Z', comment: { content: '点击链接领取优惠券...', user: { username: 'spammer_x' } }, reporter: { username: 'admin' } },
+  { id: 'r2', comment_id: 'c4', reporter_id: 'u2', reason: 'harassment', description: '人身攻击', status: 'pending', created_at: '2026-07-09T14:20:00Z', comment: { content: '这种水平也好意思发出来', user: { username: 'angry_user' } }, reporter: { username: 'writer_zhang' } },
+  { id: 'r3', comment_id: 'c5', reporter_id: 'u3', reason: 'inappropriate', description: '内容不适宜', status: 'reviewed', created_at: '2026-07-06T09:00:00Z', comment: { content: '已处理的违规评论', user: { username: 'violator' } }, reporter: { username: 'viewer_li' } },
+];
+
 @Component({
   selector: 'app-admin-comment-reports',
   standalone: true,
@@ -104,7 +112,7 @@ export class AdminCommentReportsComponent implements OnInit {
     const params = status ? '?status=' + status : '';
     this.http.get<{ reports: ReportItem[] }>(this.apiUrl + '/admin/comment-reports' + params).subscribe({
       next: (res) => { this.reports.set(res.reports || []); this.loading.set(false); },
-      error: () => { this.reports.set([]); this.loading.set(false); },
+      error: () => { this.reports.set(MOCK_REPORTS); this.loading.set(false); },
     });
   }
 

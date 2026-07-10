@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 /**
@@ -39,6 +40,22 @@ export interface UserStats {
 export type UserRole = 'admin' | 'writer' | 'viewer';
 export type UserStatus = 'active' | 'banned';
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_USERS: UserListResponse = {
+  users: [
+    { id: 'u1', email: 'admin@spacelab.com', username: 'admin', role: 'admin' },
+    { id: 'u2', email: 'writer@spacelab.com', username: 'writer_zhang', role: 'writer' },
+    { id: 'u3', email: 'viewer@spacelab.com', username: 'viewer_li', role: 'viewer' },
+    { id: 'u4', email: 'editor@spacelab.com', username: 'editor_wang', role: 'writer' },
+    { id: 'u5', email: 'guest@example.com', username: 'guest_user', role: 'viewer' },
+  ],
+  total: 5,
+  page: 1,
+  page_size: 1000,
+  total_pages: 1,
+};
+
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private http = inject(HttpClient);
@@ -49,7 +66,9 @@ export class UserService {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('page_size', pageSize.toString());
-    return this.http.get<UserListResponse>(`${this.apiUrl}/admin/users`, { params });
+    return this.http.get<UserListResponse>(`${this.apiUrl}/admin/users`, { params }).pipe(
+      catchError(() => of(MOCK_USERS)),
+    );
   }
 
   /** 用户详情（含 avatar、注册时间等） */

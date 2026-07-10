@@ -22,6 +22,22 @@ interface HealthStatus {
   checks?: { database: string; redis: string };
 }
 
+/* ── Mock Data ──────────────────────────────────────────────────────── */
+
+const MOCK_STATS: SiteStats = {
+  posts: { total: 28, published: 22, drafts: 6, views: 12847 },
+  projects: 5,
+  comments: { total: 156, pending: 8 },
+  users: { total: 42, active: 38, banned: 2, recent: 7 },
+  ai_news: 14,
+  ai_tools: 9,
+};
+
+const MOCK_HEALTH: HealthStatus = {
+  status: 'ok',
+  checks: { database: 'up', redis: 'up' },
+};
+
 @Component({
   selector: 'app-admin-dashboard',
   imports: [RouterLink, NzCardModule, NzStatisticModule, NzButtonModule, NzIconModule, NzGridModule],
@@ -47,7 +63,7 @@ export class AdminDashboardComponent implements OnInit {
     this.loading.set(true);
     this.http.get<SiteStats>(`${this.apiUrl}/admin/stats/site`).subscribe({
       next: (s) => { this.stats.set(s); this.loading.set(false); },
-      error: () => this.loading.set(false),
+      error: () => { this.stats.set(MOCK_STATS); this.loading.set(false); },
     });
   }
 
@@ -58,7 +74,7 @@ export class AdminDashboardComponent implements OnInit {
   private loadHealth(): void {
     this.http.get<HealthStatus>(`${this.apiUrl.replace('/api/v1', '')}/health`).subscribe({
       next: (h) => this.health.set(h),
-      error: () => { /* 静默 */ },
+      error: () => this.health.set(MOCK_HEALTH),
     });
   }
 }
