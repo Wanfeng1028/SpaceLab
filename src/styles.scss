@@ -290,6 +290,14 @@ body {
   color: var(--color-text);
 }
 
+.app-shell.theme-admin {
+  background: none;
+  background-color: transparent;
+  background-image: none;
+  color-scheme: light;
+  overflow: hidden;
+}
+
 // ============================================
 // SpaceLab Dialog — Mac/玻璃风格覆盖
 // ============================================

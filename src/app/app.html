@@ -1,6 +1,10 @@
-<app-navbar />
-<div class="app-shell" [class.theme-light]="!isHome()">
+@if (!isAdmin()) {
+  <app-navbar />
+}
+<div class="app-shell" [class.theme-light]="!isHome()" [class.theme-admin]="isAdmin()">
   <router-outlet />
-  <app-footer />
+  @if (!isAdmin()) {
+    <app-footer />
+  }
 </div>
 <app-toast />

@@ -19,6 +19,7 @@ export class App implements OnInit {
   private readonly authService = inject(AuthService);
 
   readonly isHome = signal(true);
+  readonly isAdmin = signal(false);
 
   ngOnInit() {
     // 启动时验证 token 有效性，过期则清理
@@ -38,6 +39,7 @@ export class App implements OnInit {
       .subscribe((e) => {
         const url = e.urlAfterRedirects;
         this.isHome.set(url === '/' || url.startsWith('/home'));
+        this.isAdmin.set(url.startsWith('/admin'));
       });
   }
 }
