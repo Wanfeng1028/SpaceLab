@@ -18,10 +18,7 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       <!-- Left: Track info -->
       <div class="bar-info">
         @if (svc.currentTrack(); as track) {
-          <div
-            class="bar-info__thumb"
-            [style.background]="track.artworkGradient"
-          >
+          <div class="bar-info__thumb" [style.background]="track.artworkGradient">
             <mat-icon>music_note</mat-icon>
           </div>
           <div class="bar-info__text">
@@ -41,7 +38,7 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       <!-- Center: Controls + Progress -->
       <div class="bar-controls">
         <div class="bar-controls__buttons">
-          <button mat-icon-button class="bar-controls__btn" (click)="svc.previous()">
+          <button mat-icon-button class="bar-controls__skip" (click)="svc.previous()">
             <mat-icon>skip_previous</mat-icon>
           </button>
           <button
@@ -52,7 +49,7 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
           >
             <mat-icon>{{ svc.isPlaying() ? 'pause' : 'play_arrow' }}</mat-icon>
           </button>
-          <button mat-icon-button class="bar-controls__btn" (click)="svc.next()">
+          <button mat-icon-button class="bar-controls__skip" (click)="svc.next()">
             <mat-icon>skip_next</mat-icon>
           </button>
         </div>
@@ -99,36 +96,32 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
     `
       :host {
         display: block;
-        position: sticky;
-        bottom: 0;
-        z-index: 10;
+        min-width: 0;
       }
 
       .player-bar {
+        min-height: 104px;
         display: grid;
-        grid-template-columns: minmax(180px, 260px) 1fr auto;
+        grid-template-columns: minmax(220px, 1fr) minmax(420px, 2fr) minmax(180px, 1fr);
         align-items: center;
-        gap: 16px;
-        height: 80px;
-        padding: 0 24px;
-        background: rgba(8, 20, 40, 0.92);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border-top: 1px solid var(--music-divider, rgba(190, 215, 240, 0.14));
+        gap: 24px;
+        padding: 16px 24px;
+        background: #081725;
+        border-top: 1px solid rgba(160, 195, 225, 0.12);
       }
 
       /* ── Left: Info ────────────────────────────── */
       .bar-info {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
         min-width: 0;
       }
 
       .bar-info__thumb {
-        width: 48px;
-        height: 48px;
-        border-radius: 8px;
+        width: 56px;
+        height: 56px;
+        border-radius: 10px;
         flex-shrink: 0;
         display: flex;
         align-items: center;
@@ -136,14 +129,14 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       }
 
       .bar-info__thumb mat-icon {
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-        color: rgba(255, 255, 255, 0.6);
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+        color: rgba(255, 255, 255, 0.65);
       }
 
       .bar-info__thumb--empty {
-        background: var(--music-surface-raised, #122840);
+        background: #122840;
         opacity: 0.5;
       }
 
@@ -151,26 +144,26 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
         min-width: 0;
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 3px;
       }
 
       .bar-info__title {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--music-text, #f4f8ff);
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #f4f8ff;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
 
       .bar-info__title--empty {
-        color: var(--music-text-secondary, #a9bdd3);
+        color: #a9bdd3;
         font-weight: 400;
       }
 
       .bar-info__subtitle {
-        font-size: 0.75rem;
-        color: var(--music-text-secondary, #a9bdd3);
+        font-size: 0.78rem;
+        color: #a9bdd3;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -181,44 +174,44 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2px;
+        gap: 6px;
         min-width: 0;
       }
 
       .bar-controls__buttons {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 8px;
       }
 
-      .bar-controls__btn {
-        width: 36px;
-        height: 36px;
-        color: var(--music-text-secondary, #a9bdd3);
+      .bar-controls__skip {
+        width: 44px;
+        height: 44px;
+        color: #a9bdd3;
       }
 
-      .bar-controls__btn mat-icon {
-        font-size: 22px;
-        width: 22px;
-        height: 22px;
+      .bar-controls__skip mat-icon {
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
       }
 
       .bar-controls__play {
-        width: 40px;
-        height: 40px;
-        color: var(--music-primary, #4da3ff);
+        width: 56px;
+        height: 56px;
+        color: #4da3ff;
       }
 
       .bar-controls__play mat-icon {
-        font-size: 28px;
-        width: 28px;
-        height: 28px;
+        font-size: 34px;
+        width: 34px;
+        height: 34px;
       }
 
       .bar-controls__progress {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         width: 100%;
       }
 
@@ -227,10 +220,10 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       }
 
       .bar-controls__time {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         font-family: 'Roboto Mono', monospace;
-        color: var(--music-text-secondary, #a9bdd3);
-        min-width: 36px;
+        color: #a9bdd3;
+        min-width: 40px;
         text-align: center;
         user-select: none;
       }
@@ -239,68 +232,74 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       .bar-volume {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 6px;
+        justify-self: end;
       }
 
       .bar-volume__btn {
-        width: 36px;
-        height: 36px;
-        color: var(--music-text-secondary, #a9bdd3);
+        width: 40px;
+        height: 40px;
+        color: #a9bdd3;
       }
 
       .bar-volume__btn mat-icon {
-        font-size: 20px;
+        font-size: 22px;
       }
 
       .bar-volume__slider {
-        width: 100px;
+        width: 130px;
       }
 
       /* ── Tablet ────────────────────────────────── */
       @media (max-width: 1099px) {
         .player-bar {
-          grid-template-columns: minmax(140px, 200px) 1fr auto;
-          gap: 12px;
-          padding: 0 16px;
+          grid-template-columns: minmax(160px, 1fr) minmax(300px, 2fr) auto;
+          gap: 16px;
+          padding: 12px 16px;
+          min-height: 96px;
         }
 
         .bar-volume__slider {
-          width: 80px;
+          width: 90px;
         }
       }
 
-      /* ── Mobile: two-row layout ────────────────── */
+      /* ── Mobile: two-row ───────────────────────── */
       @media (max-width: 767px) {
         .player-bar {
-          grid-template-columns: 1fr auto;
+          grid-template-columns: 1fr;
           grid-template-rows: auto auto;
-          height: auto;
-          padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-          gap: 4px 8px;
+          min-height: auto;
+          padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+          gap: 8px;
         }
 
         .bar-info {
-          grid-column: 1;
-          grid-row: 1;
+          display: none;
         }
 
         .bar-volume {
-          grid-column: 2;
-          grid-row: 1;
+          display: none;
         }
 
         .bar-controls {
-          grid-column: 1 / -1;
-          grid-row: 2;
+          grid-column: 1;
         }
 
-        .bar-info__thumb {
+        .bar-controls__skip {
           width: 40px;
           height: 40px;
         }
 
-        .bar-volume__slider {
-          width: 60px;
+        .bar-controls__play {
+          width: 48px;
+          height: 48px;
+        }
+
+        .bar-controls__play mat-icon {
+          font-size: 28px;
+          width: 28px;
+          height: 28px;
         }
       }
     `,

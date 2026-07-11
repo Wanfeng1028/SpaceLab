@@ -60,12 +60,8 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 
         @if (svc.mode() === 'audio') {
           <div class="audio-layout">
-            <aside class="audio-layout__sidebar">
-              <app-track-list />
-            </aside>
-            <main class="audio-layout__main">
-              <app-audio-player />
-            </main>
+            <app-track-list />
+            <app-audio-player />
           </div>
         } @else {
           <app-video-feed (backToAudio)="onBackToAudio()" />
@@ -97,28 +93,28 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         --mat-sys-inverse-surface: #f4f8ff;
 
         /* Local design tokens */
-        --music-bg-start: #061425;
-        --music-bg-middle: #0a2342;
-        --music-bg-end: #0d3260;
+        --music-bg-start: #071625;
+        --music-bg-middle: #0a2948;
+        --music-bg-end: #0c3b6b;
         --music-surface: #0d1c2d;
         --music-surface-raised: #122840;
         --music-surface-hover: #173550;
         --music-primary: #4da3ff;
         --music-text: #f4f8ff;
         --music-text-secondary: #a9bdd3;
-        --music-divider: rgba(190, 215, 240, 0.14);
+        --music-divider: rgba(160, 195, 225, 0.12);
       }
 
       /* ── Page ──────────────────────────────────── */
       .music-page {
         min-height: calc(100dvh - var(--navbar-height, 64px));
-        padding: 32px clamp(20px, 4vw, 64px) calc(96px + env(safe-area-inset-bottom));
+        padding: 24px clamp(20px, 4vw, 56px) 32px;
         color: var(--music-text);
         background: linear-gradient(
           145deg,
-          var(--music-bg-start) 0%,
-          var(--music-bg-middle) 48%,
-          var(--music-bg-end) 100%
+          #071625 0%,
+          #0a2948 48%,
+          #0c3b6b 100%
         );
         display: flex;
         flex-direction: column;
@@ -126,19 +122,27 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 
       .music-page--video {
         padding: 0;
-        background: var(--music-bg-start);
+        background: #071625;
       }
 
+      /* ── Shell (player housing) ────────────────── */
       .music-shell {
         width: min(1440px, 100%);
+        min-height: calc(100dvh - var(--navbar-height, 64px) - 56px);
         margin: 0 auto;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        background: #091a2a;
+        border: 1px solid rgba(160, 195, 225, 0.12);
+        border-radius: 16px;
+        overflow: hidden;
       }
 
       .music-page--video .music-shell {
         width: 100%;
+        background: transparent;
+        border: none;
+        border-radius: 0;
       }
 
       /* ── Header ────────────────────────────────── */
@@ -146,8 +150,8 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 24px;
-        margin-bottom: 32px;
+        min-height: 80px;
+        padding: 8px 24px 20px;
       }
 
       .music-page--video .music-header {
@@ -156,13 +160,12 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         left: 0;
         right: 0;
         z-index: 10;
-        padding: 16px clamp(20px, 4vw, 64px);
-        margin: 0;
-        background: linear-gradient(to bottom, rgba(6, 20, 37, 0.85), transparent);
+        padding: 16px clamp(20px, 4vw, 56px);
+        background: linear-gradient(to bottom, rgba(7, 22, 37, 0.85), transparent);
       }
 
       .music-header__title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 700;
         margin: 0 0 4px;
         color: var(--music-text);
@@ -192,63 +195,57 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         margin-right: 4px;
       }
 
-      /* ── Audio Layout ──────────────────────────── */
+      /* ── Audio Layout (grid row 2) ─────────────── */
       .audio-layout {
+        min-height: 0;
         display: grid;
         grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
-        gap: 24px;
-        align-items: start;
-        flex: 1;
-        min-height: 480px;
+        align-items: stretch;
       }
 
-      .audio-layout__sidebar {
-        background: var(--music-surface);
-        border-radius: 16px;
-        overflow: hidden;
-        max-height: 70vh;
-        overflow-y: auto;
-        scrollbar-width: none;
+      /* Force child components to fill the grid cell */
+      .audio-layout > app-track-list {
+        display: flex;
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
       }
 
-      .audio-layout__sidebar::-webkit-scrollbar {
-        display: none;
+      .audio-layout > app-audio-player {
+        display: block;
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
       }
 
       /* ── Responsive: Medium ────────────────────── */
       @media (max-width: 1099px) {
         .audio-layout {
           grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-          min-height: auto;
         }
       }
 
       /* ── Responsive: Mobile ────────────────────── */
       @media (max-width: 767px) {
         .music-page {
-          padding: 20px 16px calc(120px + env(safe-area-inset-bottom));
+          padding: 16px 12px 24px;
         }
 
         .music-header {
           flex-direction: column;
           align-items: stretch;
-          gap: 16px;
-          margin-bottom: 20px;
+          gap: 12px;
+          min-height: auto;
+          padding: 8px 16px 16px;
         }
 
         .audio-layout {
           grid-template-columns: 1fr;
-          min-height: auto;
+          grid-template-rows: auto 1fr;
         }
 
-        /* 移动端：当前播放区域在队列之前 */
-        .audio-layout__sidebar {
-          order: 2;
-          max-height: none;
-        }
-
-        .audio-layout__main {
-          order: 1;
+        .audio-layout > app-audio-player {
+          order: -1;
         }
       }
     `,
