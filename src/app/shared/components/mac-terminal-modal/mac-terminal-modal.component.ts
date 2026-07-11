@@ -27,7 +27,7 @@ export class MacTerminalModalComponent implements AfterViewInit, OnDestroy {
   private elRef = inject(ElementRef);
 
   @Input() size: MacTerminalSize = 'md';
-  @Input() title: string = 'spacelab @orbit: ~/session';
+  @Input() title: string = 'tesorohome @orbit: ~/session';
   @Input() showProgress: boolean = false;
   @Input() progressValue: number = 0;
   @Input() closable: boolean = true;

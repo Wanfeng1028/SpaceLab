@@ -69,12 +69,12 @@ func (e *EmailService) SendCommentNotification(to, postTitle, commentContent, co
 
 // SendWelcomeEmail 发送欢迎邮件
 func (e *EmailService) SendWelcomeEmail(to, username string) error {
-	subject := "Welcome to SpaceLab!"
+	subject := "Welcome to TesoroHome!"
 	body := fmt.Sprintf(`
 		<html>
 		<body>
 			<h2>Welcome, %s!</h2>
-			<p>Thank you for joining SpaceLab.</p>
+			<p>Thank you for joining TesoroHome.</p>
 			<p>You can now:</p>
 			<ul>
 				<li>Browse articles</li>
@@ -91,7 +91,7 @@ func (e *EmailService) SendWelcomeEmail(to, username string) error {
 
 // SendPasswordReset 发送密码重置邮件
 func (e *EmailService) SendPasswordReset(to, resetToken string) error {
-	subject := "Password Reset - SpaceLab"
+	subject := "Password Reset - TesoroHome"
 	resetLink := fmt.Sprintf("%s/reset-password?token=%s", GetEnv("SITE_URL", "http://localhost:4200"), resetToken)
 	body := fmt.Sprintf(`
 		<html>
@@ -116,7 +116,7 @@ func (e *EmailService) SendNewsletter(to, subject, content string) error {
 			<h1>%s</h1>
 			%s
 			<hr>
-			<p><small>You received this email because you subscribed to SpaceLab newsletter.</small></p>
+			<p><small>You received this email because you subscribed to TesoroHome newsletter.</small></p>
 		</body>
 		</html>
 	`, subject, content)

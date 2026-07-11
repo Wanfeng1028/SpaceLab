@@ -15,7 +15,7 @@ export const environment = {
 
   // 站点 URL
   siteUrl: 'http://localhost:4200',
-  siteName: 'SpaceLab (Dev)',
+  siteName: 'TesoroHome (Dev)',
   
   // 调试模式
   debug: true

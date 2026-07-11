@@ -27,7 +27,7 @@ const GITHUB_STARS_CACHE_KEY = 'spacelab_github_stars';
 const GITHUB_STARS_CACHE_TIME_KEY = 'spacelab_github_stars_time';
 const CACHE_EXPIRY_MS = 60 * 60 * 1000; // 1 hour — static file changes only on deploy
 const SHARE_TEXT =
-  '🚀 SpaceLab — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
+  '🚀 TesoroHome — An interactive space-themed portfolio built with Angular 21 & Three.js. Check it out!';
 
 // 浅色页面路由
 const LIGHT_THEME_ROUTES = [

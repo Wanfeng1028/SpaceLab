@@ -15,7 +15,7 @@ export const environment = {
 
   // 站点 URL（用于 SEO canonical / sitemap / OpenGraph）
   siteUrl: 'https://wanfeng1028.github.io/SpaceLab',
-  siteName: 'SpaceLab',
+  siteName: 'TesoroHome',
 
   // 调试模式
   debug: false,

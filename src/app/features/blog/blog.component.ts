@@ -174,11 +174,11 @@ export class BlogComponent implements OnInit {
         WEB3FORMS_ENDPOINT,
         {
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: 'SpaceLab 新订阅',
-          from_name: 'SpaceLab Newsletter',
+          subject: 'TesoroHome 新订阅',
+          from_name: 'TesoroHome Newsletter',
           email,
-          message: `新的 SpaceLab 订阅邮箱: ${email}`,
-          source: 'SpaceLab 官网 - 保持同步',
+          message: `新的 TesoroHome 订阅邮箱: ${email}`,
+          source: 'TesoroHome 官网 - 保持同步',
           submittedAt: new Date().toISOString(),
         },
         {

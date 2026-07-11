@@ -5,12 +5,12 @@ import { authGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    title: 'SpaceLab',
+    title: 'TesoroHome',
     loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'blog',
-    title: 'Blog — SpaceLab',
+    title: 'Blog — TesoroHome',
     loadComponent: () => import('./features/blog/blog.component').then((m) => m.BlogComponent),
   },
   {
@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'projects',
-    title: 'Projects — SpaceLab',
+    title: 'Projects — TesoroHome',
     loadComponent: () =>
       import('./features/projects/projects.component').then((m) => m.ProjectsComponent),
   },
@@ -33,12 +33,12 @@ export const routes: Routes = [
   },
   {
     path: 'lab',
-    title: 'Lab — SpaceLab',
+    title: 'Lab — TesoroHome',
     loadComponent: () => import('./features/lab/lab.component').then((m) => m.LabComponent),
   },
   {
     path: 'ai-frontline',
-    title: 'AI Frontline — SpaceLab',
+    title: 'AI Frontline — TesoroHome',
     loadComponent: () =>
       import('./features/ai-frontline/ai-frontline.component').then((m) => m.AiFrontlineComponent),
   },
@@ -49,12 +49,12 @@ export const routes: Routes = [
   },
   {
     path: 'about',
-    title: 'About — SpaceLab',
+    title: 'About — TesoroHome',
     loadComponent: () => import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
     path: '3d',
-    title: '3D Experience — SpaceLab',
+    title: '3D Experience — TesoroHome',
     loadComponent: () =>
       import('./features/three-d-experience/three-d-experience.component').then(
         (m) => m.ThreeDExperienceComponent,
@@ -62,57 +62,57 @@ export const routes: Routes = [
   },
   {
     path: 'music',
-    title: '音乐台 — SpaceLab',
+    title: '音乐台 — TesoroHome',
     loadComponent: () =>
       import('./features/music/music.component').then((m) => m.MusicComponent),
   },
   {
     path: 'archive',
-    title: 'Archive — SpaceLab',
+    title: 'Archive — TesoroHome',
     loadComponent: () =>
       import('./features/archive/archive.component').then((m) => m.ArchiveComponent),
   },
   {
     path: 'login',
-    title: 'Login — SpaceLab',
+    title: 'Login — TesoroHome',
     loadComponent: () =>
       import('./features/auth/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'register',
-    title: 'Register — SpaceLab',
+    title: 'Register — TesoroHome',
     loadComponent: () =>
       import('./features/auth/register.component').then((m) => m.RegisterComponent),
   },
   {
     path: 'verify-email',
-    title: 'Verify Email — SpaceLab',
+    title: 'Verify Email — TesoroHome',
     loadComponent: () =>
       import('./features/auth/verify-email.component').then((m) => m.VerifyEmailComponent),
   },
   {
     path: 'reset-password',
-    title: 'Reset Password — SpaceLab',
+    title: 'Reset Password — TesoroHome',
     loadComponent: () =>
       import('./features/auth/reset-password.component').then((m) => m.ResetPasswordComponent),
   },
   {
     path: 'profile',
-    title: 'Profile — SpaceLab',
+    title: 'Profile — TesoroHome',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
     path: 'admin',
-    title: 'Admin — SpaceLab',
+    title: 'Admin — TesoroHome',
     canActivate: [adminGuard],
     loadComponent: () =>
       import('./features/admin/admin-shell/admin-shell.component').then((m) => m.AdminShellComponent),
     children: [
       {
         path: '',
-        title: 'Dashboard — SpaceLab Admin',
+        title: 'Dashboard — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-dashboard/admin-dashboard.component').then(
             (m) => m.AdminDashboardComponent,
@@ -120,7 +120,7 @@ export const routes: Routes = [
       },
       {
         path: 'posts',
-        title: 'Posts — SpaceLab Admin',
+        title: 'Posts — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-posts/admin-posts.component').then(
             (m) => m.AdminPostsComponent,
@@ -128,19 +128,19 @@ export const routes: Routes = [
       },
       {
         path: 'write',
-        title: 'Write — SpaceLab Admin',
+        title: 'Write — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/write/write.component').then((m) => m.WriteComponent),
       },
       {
         path: 'write/:id',
-        title: 'Edit — SpaceLab Admin',
+        title: 'Edit — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/write/write.component').then((m) => m.WriteComponent),
       },
       {
         path: 'users',
-        title: 'Users — SpaceLab Admin',
+        title: 'Users — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-users/admin-users.component').then(
             (m) => m.AdminUsersComponent,
@@ -148,7 +148,7 @@ export const routes: Routes = [
       },
       {
         path: 'comments',
-        title: 'Comments — SpaceLab Admin',
+        title: 'Comments — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-comments/admin-comments.component').then(
             (m) => m.AdminCommentsComponent,
@@ -156,7 +156,7 @@ export const routes: Routes = [
       },
       {
         path: 'categories',
-        title: 'Categories — SpaceLab Admin',
+        title: 'Categories — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-categories/admin-categories.component').then(
             (m) => m.AdminCategoriesComponent,
@@ -164,7 +164,7 @@ export const routes: Routes = [
       },
       {
         path: 'tags',
-        title: 'Tags — SpaceLab Admin',
+        title: 'Tags — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-tags/admin-tags.component').then(
             (m) => m.AdminTagsComponent,
@@ -172,7 +172,7 @@ export const routes: Routes = [
       },
       {
         path: 'friend-links',
-        title: 'Friend Links — SpaceLab Admin',
+        title: 'Friend Links — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-friend-links/admin-friend-links.component').then(
             (m) => m.AdminFriendLinksComponent,
@@ -180,7 +180,7 @@ export const routes: Routes = [
       },
       {
         path: 'comment-reports',
-        title: 'Comment Reports — SpaceLab Admin',
+        title: 'Comment Reports — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-comment-reports/admin-comment-reports.component').then(
             (m) => m.AdminCommentReportsComponent,
@@ -188,7 +188,7 @@ export const routes: Routes = [
       },
       {
         path: 'sensitive-words',
-        title: 'Sensitive Words — SpaceLab Admin',
+        title: 'Sensitive Words — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-sensitive-words/admin-sensitive-words.component').then(
             (m) => m.AdminSensitiveWordsComponent,
@@ -196,7 +196,7 @@ export const routes: Routes = [
       },
       {
         path: 'login-logs',
-        title: 'Login Logs — SpaceLab Admin',
+        title: 'Login Logs — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-login-logs/admin-login-logs.component').then(
             (m) => m.AdminLoginLogsComponent,
@@ -204,7 +204,7 @@ export const routes: Routes = [
       },
       {
         path: 'risk-events',
-        title: 'Risk Events — SpaceLab Admin',
+        title: 'Risk Events — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-risk-events/admin-risk-events.component').then(
             (m) => m.AdminRiskEventsComponent,
@@ -212,7 +212,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        title: 'Settings — SpaceLab Admin',
+        title: 'Settings — TesoroHome Admin',
         loadComponent: () =>
           import('./features/admin/admin-settings/admin-settings.component').then(
             (m) => m.AdminSettingsComponent,
@@ -220,7 +220,7 @@ export const routes: Routes = [
       },
       {
         path: 'analytics',
-        title: 'Analytics — SpaceLab Admin',
+        title: 'Analytics — TesoroHome Admin',
         loadComponent: () =>
           import('./features/analytics/analytics.component').then((m) => m.AnalyticsComponent),
       },
@@ -228,7 +228,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    title: '404 — SpaceLab',
+    title: '404 — TesoroHome',
     loadComponent: () =>
       import('./features/not-found/not-found.component').then((m) => m.NotFoundComponent),
   },

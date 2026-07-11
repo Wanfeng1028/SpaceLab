@@ -63,7 +63,7 @@ export class SeoService {
   /** 默认站点 SEO */
   setDefault(): void {
     this.set({
-      title: 'SpaceLab — Personal Digital Space',
+      title: 'TesoroHome — Personal Digital Space',
       description: 'A personal digital space for code, science visualization and WebGL experiments.',
       canonical: BASE_URL,
       ogUrl: BASE_URL,
@@ -74,8 +74,8 @@ export class SeoService {
   /** 文章页 SEO */
   setArticle(title: string, description: string, slug: string, image?: string): void {
     this.set({
-      title: `${title} — SpaceLab`,
-      description: description || 'Read article on SpaceLab',
+      title: `${title} — TesoroHome`,
+      description: description || 'Read article on TesoroHome',
       canonical: `${BASE_URL}/blog/${slug}`,
       ogUrl: `${BASE_URL}/blog/${slug}`,
       ogTitle: title,

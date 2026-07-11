@@ -13,7 +13,7 @@ export const environment = {
 
   // 站点配置
   siteUrl: 'https://staging.wanfeng1028.github.io/SpaceLab',
-  siteName: 'SpaceLab (Staging)',
+  siteName: 'TesoroHome (Staging)',
 
   // 调试模式
   debug: true,

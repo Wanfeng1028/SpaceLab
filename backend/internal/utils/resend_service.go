@@ -34,12 +34,12 @@ func InitResend(apiKey, from, siteURL string) *ResendService {
 // SendVerificationEmail 发送邮箱验证邮件
 func (s *ResendService) SendVerificationEmail(ctx context.Context, to, token string) error {
 	verifyLink := fmt.Sprintf("%s/verify-email?token=%s", s.siteURL, token)
-	subject := "Verify your email - SpaceLab"
+	subject := "Verify your email - TesoroHome"
 	html := fmt.Sprintf(`
 		<html>
 		<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
 			<h1 style="color: #333;">Verify Your Email</h1>
-			<p>Thanks for joining SpaceLab! Please verify your email address by clicking the button below:</p>
+			<p>Thanks for joining TesoroHome! Please verify your email address by clicking the button below:</p>
 			<div style="text-align: center; margin: 30px 0;">
 				<a href="%s" style="background-color: #6366f1; color: white; padding: 12px 32px; text-decoration: none; border-radius: 8px; display: inline-block;">Verify Email</a>
 			</div>
@@ -47,7 +47,7 @@ func (s *ResendService) SendVerificationEmail(ctx context.Context, to, token str
 			<p>This link will expire in 24 hours.</p>
 			<p>If you didn't create an account, you can safely ignore this email.</p>
 			<hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-			<p style="color: #999; font-size: 12px;">SpaceLab - Explore the Universe of Knowledge</p>
+			<p style="color: #999; font-size: 12px;">TesoroHome - Explore the Universe of Knowledge</p>
 		</body>
 		</html>
 	`, verifyLink, verifyLink, verifyLink)
@@ -68,7 +68,7 @@ func (s *ResendService) SendVerificationEmail(ctx context.Context, to, token str
 // SendPasswordResetEmail 发送密码重置邮件
 func (s *ResendService) SendPasswordResetEmail(ctx context.Context, to, token string) error {
 	resetLink := fmt.Sprintf("%s/reset-password?token=%s", s.siteURL, token)
-	subject := "Reset Your Password - SpaceLab"
+	subject := "Reset Your Password - TesoroHome"
 	html := fmt.Sprintf(`
 		<html>
 		<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -81,7 +81,7 @@ func (s *ResendService) SendPasswordResetEmail(ctx context.Context, to, token st
 			<p>This link will expire in 1 hour.</p>
 			<p>If you didn't request a password reset, you can safely ignore this email. Your password will not change.</p>
 			<hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-			<p style="color: #999; font-size: 12px;">SpaceLab - Explore the Universe of Knowledge</p>
+			<p style="color: #999; font-size: 12px;">TesoroHome - Explore the Universe of Knowledge</p>
 		</body>
 		</html>
 	`, resetLink, resetLink, resetLink)
@@ -101,12 +101,12 @@ func (s *ResendService) SendPasswordResetEmail(ctx context.Context, to, token st
 
 // SendWelcomeEmail 发送欢迎邮件
 func (s *ResendService) SendWelcomeEmail(ctx context.Context, to, username string) error {
-	subject := "Welcome to SpaceLab, " + username + "!"
+	subject := "Welcome to TesoroHome, " + username + "!"
 	html := fmt.Sprintf(`
 		<html>
 		<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
 			<h1 style="color: #333;">Welcome, %s!</h1>
-			<p>Thank you for joining SpaceLab. We're glad to have you here.</p>
+			<p>Thank you for joining TesoroHome. We're glad to have you here.</p>
 			<h3>You can now:</h3>
 			<ul>
 				<li>Browse and read articles across AI, technology, and space</li>
@@ -118,7 +118,7 @@ func (s *ResendService) SendWelcomeEmail(ctx context.Context, to, username strin
 			</div>
 			<p>Happy exploring!</p>
 			<hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-			<p style="color: #999; font-size: 12px;">SpaceLab - Explore the Universe of Knowledge</p>
+			<p style="color: #999; font-size: 12px;">TesoroHome - Explore the Universe of Knowledge</p>
 		</body>
 		</html>
 	`, username, s.siteURL)
@@ -144,7 +144,7 @@ func (s *ResendService) SendSystemNotification(ctx context.Context, to, subject,
 			<h1 style="color: #333;">%s</h1>
 			<div style="line-height: 1.6;">%s</div>
 			<hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-			<p style="color: #999; font-size: 12px;">SpaceLab - Explore the Universe of Knowledge</p>
+			<p style="color: #999; font-size: 12px;">TesoroHome - Explore the Universe of Knowledge</p>
 		</body>
 		</html>
 	`, subject, content)
@@ -175,7 +175,7 @@ func (s *ResendService) SendCommentNotification(ctx context.Context, to, postTit
 				<a href="%s/blog" style="background-color: #6366f1; color: white; padding: 12px 32px; text-decoration: none; border-radius: 8px; display: inline-block;">View Comments</a>
 			</div>
 			<hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-			<p style="color: #999; font-size: 12px;">SpaceLab - Explore the Universe of Knowledge</p>
+			<p style="color: #999; font-size: 12px;">TesoroHome - Explore the Universe of Knowledge</p>
 		</body>
 		</html>
 	`, commenterName, postTitle, commentContent, s.siteURL)

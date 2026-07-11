@@ -326,7 +326,7 @@ export class AiFrontlineComponent implements OnInit {
         }));
         this.news.set(backendNews);
         this.source.set({
-          name: 'SpaceLab AI News Database',
+          name: 'TesoroHome AI News Database',
           url: '',
           description: 'AI news curated and sourced from public channels.',
           lastFetchedAt: new Date().toISOString(),

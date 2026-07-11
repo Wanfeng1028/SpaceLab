@@ -49,7 +49,7 @@ function main() {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">\n';
   xml += '  <channel>\n';
-  xml += `    <title>SpaceLab</title>\n`;
+  xml += `    <title>TesoroHome</title>\n`;
   xml += `    <link>${BASE_URL}</link>\n`;
   xml += `    <description>A personal digital space for code, science visualization and WebGL experiments.</description>\n`;
   xml += `    <language>zh-CN</language>\n`;

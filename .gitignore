@@ -69,10 +69,12 @@ temp-*
 .git-commit-msg.txt*
 
 .workbuddy/
+.codebuddy/
 .claude/
 .angular/
 .vscode/
 .qwen/
+.atomcode
 # .github/
 docs/
 
