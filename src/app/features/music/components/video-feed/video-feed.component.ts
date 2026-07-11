@@ -2,6 +2,7 @@ import {
   Component,
   ChangeDetectionStrategy,
   inject,
+  output,
   ViewChildren,
   QueryList,
   AfterViewInit,
@@ -53,6 +54,7 @@ import {
 })
 export class VideoFeedComponent implements AfterViewInit, OnDestroy {
   readonly svc = inject(MediaPlaybackService);
+  readonly backToAudio = output<void>();
 
   @ViewChildren(VideoFeedItemComponent)
   feedItems!: QueryList<VideoFeedItemComponent>;
@@ -83,8 +85,7 @@ export class VideoFeedComponent implements AfterViewInit, OnDestroy {
 
   onBackToAudio(): void {
     this.cleanupAllVideos();
-    this.svc.setMode('audio');
-    // Parent MusicComponent handles Lenis restore via onModeChange
+    this.backToAudio.emit();
   }
 
   private findItem(key: string): VideoFeedItemComponent | undefined {

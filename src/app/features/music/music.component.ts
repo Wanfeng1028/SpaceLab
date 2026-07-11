@@ -15,6 +15,7 @@ import {
 import { TrackListComponent } from './components/track-list/track-list.component';
 import { AudioPlayerComponent } from './components/audio-player/audio-player.component';
 import { VideoFeedComponent } from './components/video-feed/video-feed.component';
+import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 
 @Component({
   selector: 'app-music',
@@ -25,6 +26,7 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
     TrackListComponent,
     AudioPlayerComponent,
     VideoFeedComponent,
+    PlayerBarComponent,
   ],
   providers: [MediaPlaybackService],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,7 +68,11 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
             </main>
           </div>
         } @else {
-          <app-video-feed />
+          <app-video-feed (backToAudio)="onBackToAudio()" />
+        }
+
+        @if (svc.mode() === 'audio') {
+          <app-player-bar />
         }
       </div>
     </div>
@@ -106,7 +112,7 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
       /* ── Page ──────────────────────────────────── */
       .music-page {
         min-height: calc(100dvh - var(--navbar-height, 64px));
-        padding: 32px clamp(20px, 4vw, 64px) 48px;
+        padding: 32px clamp(20px, 4vw, 64px) calc(96px + env(safe-area-inset-bottom));
         color: var(--music-text);
         background: linear-gradient(
           145deg,
@@ -114,6 +120,8 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
           var(--music-bg-middle) 48%,
           var(--music-bg-end) 100%
         );
+        display: flex;
+        flex-direction: column;
       }
 
       .music-page--video {
@@ -124,6 +132,9 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
       .music-shell {
         width: min(1440px, 100%);
         margin: 0 auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       .music-page--video .music-shell {
@@ -187,7 +198,8 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
         grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
         gap: 24px;
         align-items: start;
-        min-height: 640px;
+        flex: 1;
+        min-height: 480px;
       }
 
       .audio-layout__sidebar {
@@ -214,7 +226,7 @@ import { VideoFeedComponent } from './components/video-feed/video-feed.component
       /* ── Responsive: Mobile ────────────────────── */
       @media (max-width: 767px) {
         .music-page {
-          padding: 20px 16px 32px;
+          padding: 20px 16px calc(120px + env(safe-area-inset-bottom));
         }
 
         .music-header {
@@ -259,6 +271,10 @@ export class MusicComponent implements OnDestroy {
       this.lenis.start();
       requestAnimationFrame(() => this.lenis.resize());
     }
+  }
+
+  onBackToAudio(): void {
+    this.onModeChange('audio');
   }
 
   ngOnDestroy(): void {
