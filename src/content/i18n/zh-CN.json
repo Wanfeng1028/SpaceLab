@@ -1,6 +1,6 @@
 {
   "common": {
-    "siteName": "SpaceLab",
+    "siteName": "TesoroHome",
     "loading": "加载中...",
     "error": "出错了",
     "retry": "重试",
@@ -155,7 +155,7 @@
   },
   "cockpit": {
     "title": "驾驶舱总控台",
-    "subtitle": "SpaceLab 系统控制中心",
+    "subtitle": "TesoroHome 系统控制中心",
     "posts": "文章",
     "projects": "项目",
     "aiNews": "AI 前线",
@@ -250,8 +250,8 @@
     "viewLab": "查看实验室"
   },
   "launchTerminal": {
-    "title": "spacelab @orbit: ~/launch",
-    "bootCmd": "启动 spacelab --模式=轨道",
+    "title": "tesorohome @orbit: ~/launch",
+    "bootCmd": "启动 tesorohome --模式=轨道",
     "bootOutput": "[OK] WebGL 渲染器已初始化",
     "loadCmd": "加载内容 --静态",
     "loadOutput1": "[OK] Markdown 文章已索引",
@@ -261,7 +261,7 @@
     "connectOutput2": "[OK] 网络通道稳定",
     "enterCmd": "进入地球观测站",
     "enterOutput": "[READY] 发射路线已计算",
-    "bootCmdShort": "启动 spacelab",
+    "bootCmdShort": "启动 tesorohome",
     "bootOutputShort": "[OK] 渲染器就绪",
     "loadCmdShort": "加载内容",
     "loadOutputShort": "[OK] 静态层在线",
@@ -297,9 +297,9 @@
     "subscribeFail": "提交失败，请稍后再试。",
     "subscribeErrEmpty": "请输入邮箱",
     "subscribeErrInvalid": "请输入有效的邮箱地址",
-    "subscribePrivacy": "仅用于接收 SpaceLab 更新，不会公开你的邮箱。",
+    "subscribePrivacy": "仅用于接收 TesoroHome 更新，不会公开你的邮箱。",
     "post0_title": "你好，世界",
-    "post0_excerpt": "这是 SpaceLab 的第一篇文章，记录建站的初衷和未来的规划。从零开始搭建一个个人数字空间，记录技术与生活。",
+    "post0_excerpt": "这是 TesoroHome 的第一篇文章，记录建站的初衷和未来的规划。从零开始搭建一个个人数字空间，记录技术与生活。",
     "post1_title": "Angular 21 新特性速览",
     "post1_excerpt": "Angular 21 带来了全新的信号系统、改进的变更检测和更好的开发体验。本文带你了解最重要的变化。",
     "post2_title": "Three.js 粒子系统入门",
@@ -439,7 +439,7 @@
     "kicker": "数字身份舱",
     "title": "关于我",
     "subtitle": "Frontend Developer → Full-stack & AI Builder",
-    "description": "成为一名全栈开发者！关注 AI / LLM、GIS、遥感与数字地球、算法、开发技术和资源整理，把 SpaceLab 做成长期维护的数字空间。",
+    "description": "成为一名全栈开发者！关注 AI / LLM、GIS、遥感与数字地球、算法、开发技术和资源整理，把 TesoroHome 做成长期维护的数字空间。",
     "whoAmI": "我是跨越前端、AI 与空间数据的 Web 构建者",
     "ctaTitle": "准备好开始下一个项目了吗？",
     "ctaDesc": "无论是项目合作、技术交流，还是资源分享，都欢迎通过 GitHub 或 Email 与我联系。",
@@ -467,11 +467,11 @@
       },
       "resource": {
         "title": "资源整理与前沿追踪",
-        "desc": "持续整理 AI 新闻、AI 工具、开源项目和技术资源，把 SpaceLab 建设成可长期更新的资源合集站。"
+        "desc": "持续整理 AI 新闻、AI 工具、开源项目和技术资源，把 TesoroHome 建设成可长期更新的资源合集站。"
       }
     },
-    "spacelabTitle": "SpaceLab 是什么？",
-    "spacelabDesc": "SpaceLab 对我来说不是单纯的作品集，也不是普通博客。它更像一个个人资源合集站：一边展示我正在做的项目和实验，一边持续整理 AI 前线、AI 工具、项目框架、技术文章和可视化灵感。",
+    "spacelabTitle": "TesoroHome 是什么？",
+    "spacelabDesc": "TesoroHome 对我来说不是单纯的作品集，也不是普通博客。它更像一个个人资源合集站：一边展示我正在做的项目和实验，一边持续整理 AI 前线、AI 工具、项目框架、技术文章和可视化灵感。",
     "module": {
       "aiFrontline": {
         "title": "AI 前线",
@@ -692,7 +692,7 @@
     "headerTitle": "SPACE CAPSULE",
     "welcome": "欢迎登舱",
     "subtitle": "个人信号已连接",
-    "description": "这里是 SpaceLab，一个关于代码、科学可视化和 WebGL 实验的个人数字空间。",
+    "description": "这里是 TesoroHome，一个关于代码、科学可视化和 WebGL 实验的个人数字空间。",
     "contactBtn": "联系我",
     "githubBtn": "GitHub",
     "tagRemote": "遥感",
@@ -724,7 +724,9 @@
     "status": "系统状态",
     "builtBy": "Built by Wanfeng.",
     "craftedWith": "Crafted with Angular, Three.js and curiosity.",
-    "backToTop": "返回顶部"
+    "backToTop": "返回顶部",
+    "expand": "展开页脚",
+    "collapse": "收起页脚"
   },
   "homeEarthSignal": {
     "telemetry": "SIGNAL PROTOCOL // v3.2.1",

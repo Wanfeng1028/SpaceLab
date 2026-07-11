@@ -5,6 +5,7 @@
   <router-outlet />
   @if (!isAdmin()) {
     <app-footer />
+    <div class="footer-sentinel" aria-hidden="true"></div>
   }
 </div>
 <app-toast />

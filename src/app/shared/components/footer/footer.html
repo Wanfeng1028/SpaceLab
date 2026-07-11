@@ -1,76 +1,113 @@
-<!-- Gradient bridge: transparent → dark, blends light/dark pages into footer -->
-<div class="site-footer-bridge"></div>
+<footer
+  class="site-footer"
+  [class.is-collapsed]="isFooterCollapsed() && isAtBottom()"
+  [class.is-hidden]="!isAtBottom()"
+  [class.site-footer--offset]="isMusicRoute()"
+  (pointerenter)="onFooterEnter()"
+  (pointerleave)="onFooterLeave()"
+  (focusin)="onFooterFocusIn()"
+  (focusout)="onFooterFocusOut()"
+  role="contentinfo"
+>
+  <!-- ═══ 常驻底部触发条（收起时仍可见、可操作） ═══ -->
+  <button
+    class="site-footer__handle"
+    type="button"
+    (click)="toggleFooter()"
+    [attr.aria-expanded]="!isFooterCollapsed()"
+    [attr.aria-label]="isFooterCollapsed() ? t('footer.expand') : t('footer.collapse')"
+  >
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M8 13V3M8 3L3 8M8 3l5 5"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    <span class="site-footer__handle-label">{{
+      isFooterCollapsed() ? t('footer.expand') : t('footer.collapse')
+    }}</span>
+  </button>
 
-<footer class="site-footer" role="contentinfo">
-  <div class="site-footer__shell">
-    <!-- ═══ Main: brand + 4 link columns ═══ -->
-    <div class="site-footer__main">
-      <!-- Brand -->
-      <div class="site-footer__brand">
-        <div class="site-footer__logo">SpaceLab</div>
-        <p class="site-footer__description">{{ t('footer.description') }}</p>
-        <span class="site-footer__status">
-          <span class="site-footer__dot"></span>
-          {{ t('footer.statusTag') }}
-        </span>
+  <!-- ═══ 页脚主面板（收起时下移、不可聚焦） ═══ -->
+  <div
+    class="site-footer__panel"
+    [class.is-collapsed]="isFooterCollapsed()"
+    [inert]="isFooterCollapsed()"
+    [attr.aria-hidden]="isFooterCollapsed()"
+  >
+    <div class="site-footer__shell">
+      <!-- ═══ Main: brand + 4 link columns ═══ -->
+      <div class="site-footer__main">
+        <!-- Brand -->
+        <div class="site-footer__brand">
+          <div class="site-footer__logo">TesoroHome</div>
+          <p class="site-footer__description">{{ t('footer.description') }}</p>
+          <span class="site-footer__status">
+            <span class="site-footer__dot"></span>
+            {{ t('footer.statusTag') }}
+          </span>
+        </div>
+
+        <!-- Links -->
+        <div class="site-footer__links">
+          @for (group of groups; track group.title) {
+            <div class="site-footer__group">
+              <h3 class="site-footer__group-title">{{ group.title }}</h3>
+              <ul class="site-footer__list">
+                @for (link of group.links; track link.label) {
+                  <li>
+                    @if (link.routerLink && !link.disabled) {
+                      <a class="site-footer__link" [routerLink]="link.routerLink">{{ link.label }}</a>
+                    } @else if (link.external && link.href && !link.disabled) {
+                      <a
+                        class="site-footer__link"
+                        [href]="link.href"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >{{ link.label }}</a
+                      >
+                    } @else if (link.href && !link.disabled) {
+                      <a class="site-footer__link" [href]="link.href">{{ link.label }}</a>
+                    } @else {
+                      <span class="site-footer__link site-footer__link--disabled">{{
+                        link.label
+                      }}</span>
+                    }
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
       </div>
 
-      <!-- Links -->
-      <div class="site-footer__links">
-        @for (group of groups; track group.title) {
-          <div class="site-footer__group">
-            <h3 class="site-footer__group-title">{{ group.title }}</h3>
-            <ul class="site-footer__list">
-              @for (link of group.links; track link.label) {
-                <li>
-                  @if (link.routerLink && !link.disabled) {
-                    <a class="site-footer__link" [routerLink]="link.routerLink">{{ link.label }}</a>
-                  } @else if (link.external && link.href && !link.disabled) {
-                    <a
-                      class="site-footer__link"
-                      [href]="link.href"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      >{{ link.label }}</a
-                    >
-                  } @else if (link.href && !link.disabled) {
-                    <a class="site-footer__link" [href]="link.href">{{ link.label }}</a>
-                  } @else {
-                    <span class="site-footer__link site-footer__link--disabled">{{
-                      link.label
-                    }}</span>
-                  }
-                </li>
-              }
-            </ul>
-          </div>
-        }
+      <!-- ═══ Divider ═══ -->
+      <div class="site-footer__divider"></div>
+
+      <!-- ═══ Bottom bar ═══ -->
+      <div class="site-footer__bottom">
+        <span class="site-footer__copy">&copy; 2026 TesoroHome. {{ t('footer.builtBy') }}</span>
+        <span class="site-footer__crafted">{{ t('footer.craftedWith') }}</span>
+        <button
+          class="site-footer__top"
+          (click)="scrollToTop()"
+          [attr.aria-label]="t('footer.backToTop')"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path
+              d="M8 13V3M8 3L3 8M8 3l5 5"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          {{ t('footer.backToTop') }}
+        </button>
       </div>
-    </div>
-
-    <!-- ═══ Divider ═══ -->
-    <div class="site-footer__divider"></div>
-
-    <!-- ═══ Bottom bar ═══ -->
-    <div class="site-footer__bottom">
-      <span class="site-footer__copy">&copy; 2026 SpaceLab. {{ t('footer.builtBy') }}</span>
-      <span class="site-footer__crafted">{{ t('footer.craftedWith') }}</span>
-      <button
-        class="site-footer__top"
-        (click)="scrollToTop()"
-        [attr.aria-label]="t('footer.backToTop')"
-      >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path
-            d="M8 13V3M8 3L3 8M8 3l5 5"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        {{ t('footer.backToTop') }}
-      </button>
     </div>
   </div>
 </footer>

@@ -2,27 +2,83 @@
 
 // ============================================
 // Site Footer — Deep Space Information Bay
-// Self-contained dark theme, works on ANY page
+// 固定底部面板：进入底部区域展开，停止交互后主体收起只留触发条
+// 复用 Navbar 的 --ease-out 缓动与 0.4s 位移；不改变文档高度，故无页面跳动
 // ============================================
 
-// ── Gradient bridge: smooth transition from light pages ──
-.site-footer-bridge {
-  height: 40px;
-  background: linear-gradient(180deg, transparent 0%, #060810 100%);
-  pointer-events: none;
+// ── 固定底部面板容器 ──
+.site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90; // 低于导航栏(100)，低于/避开音乐台播放栏
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform 0.4s var(--ease-out),
+    opacity 0.2s ease;
+  will-change: transform;
+
+  // 收起：主体向下移出，仅留顶部触发条（handle 为首个子元素，下移后停在视口底部 20px）
+  &.is-collapsed {
+    transform: translateY(calc(100% - 20px));
+  }
+
+  // 离开底部区域：整体移出视口
+  &.is-hidden {
+    transform: translateY(100%);
+  }
+
+  // 音乐台：抬高以避开 sticky 播放栏（height 80px + 安全区）
+  &--offset {
+    bottom: calc(80px + env(safe-area-inset-bottom));
+  }
 }
 
-// ── Main footer shell ──
-.site-footer {
+// ── 常驻触发条（始终可见、可操作） ──
+.site-footer__handle {
+  flex: 0 0 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  // 顶部渐变：从页面背景淡入深色，形成低对比过渡
+  background: linear-gradient(180deg, rgba(11, 16, 32, 0) 0%, #0b1020 72%);
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.18s ease;
+  padding: 0;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+// ── 主面板（深色主体） ──
+.site-footer__panel {
+  position: relative;
   background:
     radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 70%),
-    linear-gradient(180deg, #060810 0%, #04060c 100%);
+    linear-gradient(180deg, #0b1020 0%, #070b14 100%);
   color: rgba(255, 255, 255, 0.7);
   padding: 0 24px;
-  position: relative;
   overflow: hidden;
 
-  // faint star dots
+  // 微弱星点纹理
   &::before {
     content: '';
     position: absolute;
@@ -51,7 +107,7 @@
   display: flex;
   justify-content: space-between;
   gap: 48px;
-  padding: 64px 0 48px;
+  padding: 56px 0 44px;
 }
 
 // ── Brand column ──
@@ -236,16 +292,12 @@
 // Tablet (≤ 1024px)
 // ============================================
 @include m.tablet {
-  .site-footer-bridge {
-    height: 32px;
-  }
-
   .site-footer__main {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 36px;
-    padding: 48px 0 40px;
+    padding: 44px 0 36px;
   }
 
   .site-footer__brand {
@@ -278,11 +330,11 @@
 // Mobile (≤ 767px)
 // ============================================
 @include m.mobile {
-  .site-footer-bridge {
-    height: 24px;
+  .site-footer {
+    padding: 0;
   }
 
-  .site-footer {
+  .site-footer__panel {
     padding: 0 16px;
   }
 
@@ -330,9 +382,12 @@
 }
 
 // ============================================
-// Reduced motion
+// Reduced motion — 取消位移动画，仅轻微淡入
 // ============================================
 @media (prefers-reduced-motion: reduce) {
+  .site-footer {
+    transition: opacity 0.2s ease;
+  }
   .site-footer__dot {
     animation: none;
     opacity: 0.7;
@@ -355,11 +410,17 @@
 // Light Theme — inherited from .app-shell.theme-light
 // ============================================
 .theme-light {
-  .site-footer-bridge {
-    background: linear-gradient(180deg, transparent 0%, var(--color-bg-soft) 100%);
+  .site-footer__handle {
+    border-top-color: rgba(0, 0, 0, 0.08);
+    background: linear-gradient(180deg, rgba(11, 16, 32, 0) 0%, var(--color-bg-soft) 72%);
+    color: var(--color-text-tertiary);
+
+    &:hover {
+      color: var(--color-text);
+    }
   }
 
-  .site-footer {
+  .site-footer__panel {
     background:
       radial-gradient(ellipse 60% 50% at 50% 0%, rgba(105, 215, 255, 0.06) 0%, transparent 70%),
       linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);

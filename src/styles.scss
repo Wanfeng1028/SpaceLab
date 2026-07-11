@@ -277,6 +277,13 @@ body {
   overflow-x: hidden;
 }
 
+// 底部 sentinel：仅作 IntersectionObserver 检测锚点，不占视觉空间
+.footer-sentinel {
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+}
+
 // ============================================
 // Light Theme — Non-home pages
 // ============================================

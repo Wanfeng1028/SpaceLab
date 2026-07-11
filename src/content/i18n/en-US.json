@@ -1,6 +1,6 @@
 {
   "common": {
-    "siteName": "SpaceLab",
+    "siteName": "TesoroHome",
     "loading": "Loading...",
     "error": "Something went wrong",
     "retry": "Retry",
@@ -155,7 +155,7 @@
   },
   "cockpit": {
     "title": "COCKPIT DASHBOARD",
-    "subtitle": "SpaceLab system control center",
+    "subtitle": "TesoroHome system control center",
     "posts": "Posts",
     "projects": "Projects",
     "aiNews": "AI News",
@@ -250,8 +250,8 @@
     "viewLab": "View Resource Lab"
   },
   "launchTerminal": {
-    "title": "spacelab @orbit: ~/launch",
-    "bootCmd": "boot spacelab --mode=orbit",
+    "title": "tesorohome @orbit: ~/launch",
+    "bootCmd": "boot tesorohome --mode=orbit",
     "bootOutput": "[OK] WebGL renderer initialized",
     "loadCmd": "load content --static",
     "loadOutput1": "[OK] Markdown posts indexed",
@@ -261,7 +261,7 @@
     "connectOutput2": "[OK] Network channel stable",
     "enterCmd": "enter earth-observatory",
     "enterOutput": "[READY] Launch route calculated",
-    "bootCmdShort": "boot spacelab",
+    "bootCmdShort": "boot tesorohome",
     "bootOutputShort": "[OK] Renderer ready",
     "loadCmdShort": "load content",
     "loadOutputShort": "[OK] Static layer online",
@@ -297,9 +297,9 @@
     "subscribeFail": "Submission failed. Please try again later.",
     "subscribeErrEmpty": "Please enter your email",
     "subscribeErrInvalid": "Please enter a valid email address",
-    "subscribePrivacy": "Used only for SpaceLab updates. Your email will never be shared.",
+    "subscribePrivacy": "Used only for TesoroHome updates. Your email will never be shared.",
     "post0_title": "Hello, World",
-    "post0_excerpt": "This is the first article on SpaceLab, documenting the motivation behind building the site and plans for the future.",
+    "post0_excerpt": "This is the first article on TesoroHome, documenting the motivation behind building the site and plans for the future.",
     "post1_title": "Angular 21 New Features Overview",
     "post1_excerpt": "Angular 21 brings a brand-new signal system, improved change detection, and a better developer experience. This article covers the most important changes.",
     "post2_title": "Getting Started with Three.js Particles",
@@ -439,7 +439,7 @@
     "kicker": "Digital Identity Capsule",
     "title": "About Me",
     "subtitle": "Frontend Developer → Full-stack & AI Builder",
-    "description": "Becoming a full-stack developer! Focused on AI / LLM, GIS, Remote Sensing & Digital Earth, Algorithms, Development Techniques, and Resource Curation — building SpaceLab as a long-term digital space.",
+    "description": "Becoming a full-stack developer! Focused on AI / LLM, GIS, Remote Sensing & Digital Earth, Algorithms, Development Techniques, and Resource Curation — building TesoroHome as a long-term digital space.",
     "whoAmI": "I build across frontend, AI and spatial data",
     "ctaTitle": "Ready to start the next project?",
     "ctaDesc": "Whether it's project collaboration, tech discussion, or resource sharing — feel free to reach out via GitHub or Email.",
@@ -470,8 +470,8 @@
         "desc": "Curating AI news, tools, open-source projects and technical resources into a long-term resource hub."
       }
     },
-    "spacelabTitle": "What is SpaceLab?",
-    "spacelabDesc": "SpaceLab is not just a portfolio or a traditional blog. It is a personal resource hub where I collect AI signals, tools, frameworks, technical notes, GitHub projects and visual experiments.",
+    "spacelabTitle": "What is TesoroHome?",
+    "spacelabDesc": "TesoroHome is not just a portfolio or a traditional blog. It is a personal resource hub where I collect AI signals, tools, frameworks, technical notes, GitHub projects and visual experiments.",
     "module": {
       "aiFrontline": {
         "title": "AI Frontline",
@@ -698,7 +698,7 @@
     "headerTitle": "SPACE CAPSULE",
     "welcome": "WELCOME ABOARD",
     "subtitle": "PERSONAL SIGNAL CONNECTED",
-    "description": "This is SpaceLab, a personal digital space for code, science and visual experiments.",
+    "description": "This is TesoroHome, a personal digital space for code, science and visual experiments.",
     "contactBtn": "Contact Me",
     "githubBtn": "GitHub",
     "tagRemote": "Remote Sensing",
@@ -730,7 +730,9 @@
     "status": "Status",
     "builtBy": "Built by Wanfeng.",
     "craftedWith": "Crafted with Angular, Three.js and curiosity.",
-    "backToTop": "Back to Top"
+    "backToTop": "Back to Top",
+    "expand": "Expand footer",
+    "collapse": "Collapse footer"
   },
   "homeEarthSignal": {
     "telemetry": "SIGNAL PROTOCOL // v3.2.1",
