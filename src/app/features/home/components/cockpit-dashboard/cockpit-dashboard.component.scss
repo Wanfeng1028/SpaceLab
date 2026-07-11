@@ -1,6 +1,12 @@
 // Cockpit Dashboard — Angular Material 3 Design
 // Clean, professional control center — no glass-morphism, no neon
 
+// ── Host (transparent for wallpaper) ──────────────────────────────────
+:host {
+  display: block;
+  background: transparent;
+}
+
 // ── Surface Colors ────────────────────────────────────────────────────
 $cockpit-bg: #101418;
 $cockpit-surface: #181d24;
@@ -25,7 +31,7 @@ $log-nav: rgba(255, 255, 255, 0.6);
   height: auto;
   overflow: visible;
   padding: clamp(78px, 9vh, 96px) 24px clamp(28px, 4vh, 42px);
-  background: $cockpit-bg;
+  background: transparent;
   color: $cockpit-text;
 }
 

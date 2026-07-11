@@ -1,3 +1,9 @@
+// ── Host (transparent for wallpaper) ──────────────────────────────────
+:host {
+  display: block;
+  background: transparent;
+}
+
 // ── Variables (redefined from cockpit-dashboard for consistency) ──────
 $cyan: #69d7ff;
 $mono: var(--font-mono);
