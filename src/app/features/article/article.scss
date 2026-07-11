@@ -382,17 +382,19 @@
 // ============================================
 
 .article-not-found {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
+  padding-top: 100px;
+  padding-bottom: 80px;
+  min-height: 80vh;
 
-  h2 {
-    font-size: 1.5rem;
-    color: #6c757d;
-    margin-bottom: 24px;
+  &__body {
     text-align: center;
+    padding: 60px 0;
+
+    h2 {
+      font-size: 1.5rem;
+      color: #6c757d;
+      margin: 0;
+    }
   }
 }
 

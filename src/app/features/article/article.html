@@ -60,10 +60,10 @@
 } @else {
   <div class="article-not-found">
     <div class="container">
-      <h2>{{ t('article.notFound') }}</h2>
-      <a class="space-button space-button--md space-button--white" routerLink="/blog">{{
-        t('article.backToBlog')
-      }}</a>
+      <a class="article-back" routerLink="/blog"> ← {{ t('article.backToBlog') }} </a>
+      <div class="article-not-found__body">
+        <h2>{{ t('article.notFound') }}</h2>
+      </div>
     </div>
   </div>
 }
