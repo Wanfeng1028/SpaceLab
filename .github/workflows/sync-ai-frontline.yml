@@ -1,0 +1,83 @@
+name: Sync AI Frontline News
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force sync even if no changes detected'
+        required: false
+        default: 'false'
+        type: boolean
+
+  # Scheduled - every 2 hours (UTC times)
+  # 00:17 UTC = 08:17 CST, 02:17 UTC = 10:17 CST, etc.
+  schedule:
+    - cron: '17 */2 * * *'
+
+# Allow only one run at a time
+concurrency:
+  group: sync-ai-frontline
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Sync AI News
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Pull latest changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.com"
+          git pull --rebase origin main
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync AI Frontline news
+        id: sync
+        run: node scripts/sync-ai-frontline.mjs
+        env:
+          GITHUB_OUTPUT: ${{ github.output }}
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ "${{ steps.sync.outputs.changed }}" = "true" ] || [ "${{ github.event.inputs.force }}" = "true" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.com"
+          git add src/content/ai-frontline/
+          git commit -m "chore: sync ai frontline news"
+          # Rebase again in case remote advanced while syncing
+          git pull --rebase origin main
+          git push
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.changes.outputs.has_changes }}" = "true" ]; then
+            echo "✅ AI Frontline news updated and committed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No changes detected" >> $GITHUB_STEP_SUMMARY
+          fi
