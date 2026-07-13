@@ -2,23 +2,30 @@
 
 // ============================================
 // Site Footer — Deep Space Information Bay
-// 固定底部面板：进入底部区域展开，停止交互后主体收起只留触发条
-// 复用 Navbar 的 --ease-out 缓动与 0.4s 位移；不改变文档高度，故无页面跳动
+// 基础（非首页）：普通文档流，跟随内容末尾
+// 首页（.site-footer--auto-hide）：fixed 底部面板，进入底部展开，停止交互后收起只留触发条
+// 复用 Navbar 的 --ease-out 缓动与 0.35s 位移；不改变文档高度，故无页面跳动
 // ============================================
 
-// ── 固定底部面板容器 ──
+// ── �基础：普通文档流 ──
 .site-footer {
+  position: relative;
+  width: 100%;
+  inset: auto;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+}
+
+// ── 首页模式：固定底部面板 ──
+.site-footer--auto-hide {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 90; // 低于导航栏(100)，低于/避开音乐台播放栏
-  display: flex;
-  flex-direction: column;
+  z-index: 40; // 低于导航栏，不覆盖音乐台 sticky 播放栏
   overflow: hidden;
-  transition:
-    transform 0.4s var(--ease-out),
-    opacity 0.2s ease;
+  transition: transform 0.35s var(--ease-out), opacity 0.2s ease;
   will-change: transform;
 
   // 收起：主体向下移出，仅留顶部触发条（handle 为首个子元素，下移后停在视口底部 20px）
@@ -30,15 +37,15 @@
   &.is-hidden {
     transform: translateY(100%);
   }
-
-  // 音乐台：抬高以避开 sticky 播放栏（height 80px + 安全区）
-  &--offset {
-    bottom: calc(80px + env(safe-area-inset-bottom));
-  }
 }
 
-// ── 常驻触发条（始终可见、可操作） ──
-.site-footer__handle {
+// 非首页：永远不要位移（防御性）
+.site-footer:not(.site-footer--auto-hide) {
+  transform: none !important;
+}
+
+// ── 常驻触发条（仅首页模式渲染，故仅此时样式生效） ──
+.site-footer--auto-hide .site-footer__handle {
   flex: 0 0 20px;
   height: 20px;
   display: flex;
@@ -68,7 +75,7 @@
   }
 }
 
-// ── 主面板（深色主体） ──
+// ── 主面板（深色主体；首页与非首页共享） ──
 .site-footer__panel {
   position: relative;
   background:
@@ -385,7 +392,7 @@
 // Reduced motion — 取消位移动画，仅轻微淡入
 // ============================================
 @media (prefers-reduced-motion: reduce) {
-  .site-footer {
+  .site-footer--auto-hide {
     transition: opacity 0.2s ease;
   }
   .site-footer__dot {
@@ -410,7 +417,7 @@
 // Light Theme — inherited from .app-shell.theme-light
 // ============================================
 .theme-light {
-  .site-footer__handle {
+  .site-footer--auto-hide .site-footer__handle {
     border-top-color: rgba(0, 0, 0, 0.08);
     background: linear-gradient(180deg, rgba(11, 16, 32, 0) 0%, var(--color-bg-soft) 72%);
     color: var(--color-text-tertiary);
