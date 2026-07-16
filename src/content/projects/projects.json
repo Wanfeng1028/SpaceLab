@@ -10,7 +10,7 @@
       "Space UI"
     ],
     "language": "TypeScript",
-    "stars": 5,
+    "stars": 4,
     "forks": 0,
     "status": "Building",
     "cover": "",
@@ -19,7 +19,7 @@
     "featured": true,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-06-08T16:47:10Z"
+    "updatedAt": "2026-07-16T10:55:32Z"
   },
   {
     "id": "ParrotSoundReVue",
@@ -214,7 +214,7 @@
     "featured": false,
     "archived": false,
     "fork": true,
-    "updatedAt": "2026-05-07T08:06:46Z"
+    "updatedAt": "2026-06-30T19:28:26Z"
   },
   {
     "id": "WeFlow",
@@ -231,7 +231,7 @@
     "featured": false,
     "archived": false,
     "fork": true,
-    "updatedAt": "2026-05-07T07:08:07Z"
+    "updatedAt": "2026-07-07T19:55:35Z"
   },
   {
     "id": "echotrace",
@@ -544,8 +544,8 @@
     "name": "GeoWork",
     "description": "",
     "tags": [],
-    "language": "",
-    "stars": 0,
+    "language": "TypeScript",
+    "stars": 1,
     "forks": 0,
     "status": "Building",
     "cover": "",
@@ -554,7 +554,92 @@
     "featured": false,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-06-07T19:58:59Z"
+    "updatedAt": "2026-06-30T10:57:11Z"
+  },
+  {
+    "id": "GeoOfficial",
+    "name": "GeoOfficial",
+    "description": "",
+    "tags": [],
+    "language": "TypeScript",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/GeoOfficial",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-07-16T14:17:17Z"
+  },
+  {
+    "id": "KaoYanYingYu",
+    "name": "KaoYanYingYu",
+    "description": "",
+    "tags": [],
+    "language": "",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/KaoYanYingYu",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-07-11T12:08:45Z"
+  },
+  {
+    "id": "GeoFrontend2.0",
+    "name": "GeoFrontend2.0",
+    "description": "GeoWork重构的前端仓库(AntDesign)",
+    "tags": [],
+    "language": "TypeScript",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/GeoFrontend2.0",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-07-05T15:12:52Z"
+  },
+  {
+    "id": "Copy",
+    "name": "Copy",
+    "description": "",
+    "tags": [],
+    "language": "CSS",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/Copy",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-06-14T20:41:37Z"
+  },
+  {
+    "id": "ai-agent-toolbox",
+    "name": "ai-agent-toolbox",
+    "description": "A personal AI agent toolbox for MCP servers, ChatGPT Skills, agent rules, prompts, and reusable AI workflows.",
+    "tags": [],
+    "language": "JavaScript",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/ai-agent-toolbox",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-06-10T13:53:21Z"
   },
   {
     "id": "menu-coco",
