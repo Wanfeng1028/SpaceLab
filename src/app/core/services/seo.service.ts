@@ -15,7 +15,7 @@ export interface SeoData {
 }
 
 const BASE_URL = 'https://wanfeng1028.github.io/SpaceLab';
-const DEFAULT_IMAGE = '/assets/og-default.png';
+const DEFAULT_IMAGE = `${BASE_URL}/assets/og-default.png`;
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
