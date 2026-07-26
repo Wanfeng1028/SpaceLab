@@ -264,8 +264,18 @@ async function main() {
 
   // Check for changes
   const oldIds = new Set(existing.map((n) => n.id));
-  const newIds = new Set(merged.map((n) => n.id));
   const hasNew = merged.some((n) => !oldIds.has(n.id));
+
+  // Read previously committed timestamp BEFORE overwriting source.json
+  let lastCommittedAt = '';
+  try {
+    lastCommittedAt = JSON.parse(fs.readFileSync(SOURCE_FILE, 'utf-8')).lastFetchedAt || '';
+  } catch { /* ignore */ }
+  const now = new Date().toISOString();
+  // Heartbeat: when there are no new items, still commit the fetch timestamp
+  // once per day so the sync is visibly "alive" in git history.
+  const hoursSinceCommit = lastCommittedAt ? (now - new Date(lastCommittedAt)) / 3_600_000 : Infinity;
+  const heartbeat = !hasNew && hoursSinceCommit >= 24;
 
   // Save
   saveJson(NEWS_FILE, merged);
@@ -273,7 +283,7 @@ async function main() {
     name: '每日AI快讯',
     url: 'https://ai-bot.cn/daily-ai-news/',
     description: '每日 AI 资讯聚合来源，仅做标题、摘要和原文链接展示。',
-    lastFetchedAt: new Date().toISOString(),
+    lastFetchedAt: now,
     contentStartDate: CONTENT_START_DATE,
     notice: '内容来源于 ai-bot.cn 公开信息聚合，保留原文链接与来源标注。',
   });
@@ -281,12 +291,14 @@ async function main() {
   if (hasNew) {
     const added = merged.filter((n) => !oldIds.has(n.id));
     console.log(`\n💾 Saved ${merged.length} items (+${added.length} new)`);
+  } else if (heartbeat) {
+    console.log(`\n💓 Heartbeat: committing fetch timestamp (no new items)`);
   } else {
     console.log(`\n✅ No new items. File updated with ${merged.length} items.`);
   }
 
   if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${hasNew}\n`);
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${hasNew || heartbeat}\n`);
   }
 }
 

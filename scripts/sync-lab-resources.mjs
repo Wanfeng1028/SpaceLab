@@ -273,6 +273,20 @@ async function main() {
   const mergedProjects = mergeResources(existingProjects, freshProjects);
   console.log(`🧹 Merged: ${mergedTools.length} tools, ${mergedProjects.length} projects`);
 
+  // Read previously committed timestamp BEFORE overwriting source.json
+  let lastCommittedAt = '';
+  try {
+    lastCommittedAt = JSON.parse(fs.readFileSync(SOURCE_FILE, 'utf-8')).lastFetchedAt || '';
+  } catch { /* ignore */ }
+  const now = new Date().toISOString();
+  const hasNew =
+    mergedTools.length !== existingTools.length ||
+    mergedProjects.length !== existingProjects.length;
+  // Heartbeat: when there are no updates, still commit the fetch timestamp
+  // once per day so the sync is visibly "alive" in git history.
+  const hoursSinceCommit = lastCommittedAt ? (now - new Date(lastCommittedAt)) / 3_600_000 : Infinity;
+  const heartbeat = !hasNew && hoursSinceCommit >= 24;
+
   // Save
   saveJson(TOOLS_FILE, mergedTools);
   saveJson(PROJECTS_FILE, mergedProjects);
@@ -281,18 +295,16 @@ async function main() {
       { key: 'ai-tools', name: 'AI 工具', url: 'https://ai-bot.cn/ai-tools/' },
       { key: 'ai-projects', name: 'AI 项目和框架', url: 'https://ai-bot.cn/ai-research/' },
     ],
-    lastFetchedAt: new Date().toISOString(),
+    lastFetchedAt: now,
     contentStartDate: CONTENT_START_DATE,
     notice: '内容来源于 ai-bot.cn 公开信息聚合，仅作学习与资源导航使用，保留原文链接。',
   });
 
-  const hasNew =
-    mergedTools.length !== existingTools.length ||
-    mergedProjects.length !== existingProjects.length;
   console.log(`\n💾 Saved: ${mergedTools.length} tools, ${mergedProjects.length} projects`);
+  if (heartbeat) console.log('💓 Heartbeat: committing fetch timestamp (no content changes)');
 
   if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${hasNew}\n`);
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${hasNew || heartbeat}\n`);
   }
 }
 
