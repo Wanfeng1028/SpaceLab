@@ -97,3 +97,9 @@ src/assets/video/
 *.mp3
 *.wav
 *.flac
+
+# public/ 下的媒体文件改为通过 Git LFS 跟踪（规则见 .gitattributes）
+!public/**/*.mp4
+!public/**/*.mp3
+!public/**/*.mov
+!public/**/*.webm
