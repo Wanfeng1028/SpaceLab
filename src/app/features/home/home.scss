@@ -807,6 +807,7 @@
 // ── 各屏 section 基础样式 ────────────────────────
 .cockpit-dashboard-section {
   position: relative;
+  z-index: 3; // 位于固定视频背景(z-index:2)之上，使动态背景透出于内容缝隙
   width: 100%;
   min-height: auto;
   overflow: visible;
@@ -815,6 +816,7 @@
 
 .next-orbit-card-section {
   position: relative;
+  z-index: 3; // 位于固定视频背景(z-index:2)之上，使动态背景透出于内容缝隙
   width: 100%;
   overflow: hidden;
   padding: 48px 24px 64px;
