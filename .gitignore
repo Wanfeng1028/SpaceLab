@@ -29,8 +29,6 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
-# Generated at build time
-public/
 
 # Miscellaneous
 /.angular/cache
@@ -87,6 +85,7 @@ log/
 # 静态资源文件
 .public/
 src/assets/
+asserts/
 
 # Large local media files
 src/assets/video/
