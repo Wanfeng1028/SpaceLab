@@ -18,7 +18,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Cache Git LFS objects
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ runner.os }}
+          restore-keys: |
+            lfs-
+
       - uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - uses: actions/setup-node@v4
         with:
