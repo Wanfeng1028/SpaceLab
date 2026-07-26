@@ -1,5 +1,6 @@
 import ChartScene from './lib/chartScene';
 import { Options } from './lib/interface';
+import { assetUrl } from '../asset-url';
 
 export interface GlobeStreamOptions {
   autoRotate?: boolean;
@@ -43,7 +44,7 @@ export class GlobeStreamScene {
       config: {
         R: 100,
         texture: {
-          path: 'assets/three/globe-stream/image/map.svg', // 纹理路径
+          path: assetUrl('three/globe-stream/image/map.svg'), // 纹理路径
           mixed: false,
         },
         earth: {

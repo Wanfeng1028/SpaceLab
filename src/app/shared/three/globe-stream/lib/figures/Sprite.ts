@@ -1,10 +1,11 @@
 import { Sprite, SpriteMaterial, TextureLoader } from 'three';
 import { StoreConfig } from '../interface';
+import { assetUrl } from '../../../asset-url';
 
 export default (config: StoreConfig) => {
   // TextureLoader创建一个纹理加载器对象，可以加载图片作为纹理贴图
   const textureLoader = new TextureLoader();
-  const texture = textureLoader.load('/three/globe-stream/image/sprite.png'); //加载纹理贴图
+  const texture = textureLoader.load(assetUrl('three/globe-stream/image/sprite.png')); //加载纹理贴图
   // 创建精灵材质对象SpriteMaterial
   const spriteMaterial = new SpriteMaterial({
     color: config.spriteStyle.color,

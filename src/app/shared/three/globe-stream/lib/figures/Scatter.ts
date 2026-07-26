@@ -6,10 +6,11 @@ import { setTween } from '../utils/tween';
 import { Group, Mesh, MeshBasicMaterial, PlaneGeometry, TextureLoader, Vector3 } from 'three';
 import Store from '../store/store';
 import { cloneDeep } from 'lodash-es';
+import { assetUrl } from '../../../asset-url';
 
 const textureLoader = new TextureLoader();
-const POINT_TEXTURE = textureLoader.load('/three/globe-stream/image/point.png');
-const SCATTER_TEXTURE = textureLoader.load('/three/globe-stream/image/scatter.png');
+const POINT_TEXTURE = textureLoader.load(assetUrl('three/globe-stream/image/point.png'));
+const SCATTER_TEXTURE = textureLoader.load(assetUrl('three/globe-stream/image/scatter.png'));
 
 export default class Scatter {
   private readonly _config: StoreConfig;

@@ -36,6 +36,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
 import worldJSON from '../globe-stream/map/world.json';
+import { assetUrl } from '../asset-url';
 
 const DEG = Math.PI / 180;
 
@@ -177,7 +178,7 @@ export class EarthFlylineScene {
   }
 
   private loadTexture(path: string): Texture {
-    const texture = new TextureLoader().load(path);
+    const texture = new TextureLoader().load(assetUrl(path));
     this.textures.push(texture);
     return texture;
   }
