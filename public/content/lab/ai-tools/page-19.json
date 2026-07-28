@@ -1,21 +1,5 @@
 [
   {
-    "id": "07b1c76c133e",
-    "title": "TinyR1-Preview",
-    "summary": "TinyR1-Preview是北京大学计算机学院与360公司联合推出的32B参数量的推理模型。模型仅用5%的参数量，逼近Deepseek-R1-671B的性能，TinyR1-Preview在数学领域...",
-    "category": "AI工具",
-    "tags": [
-      "模型",
-      "DeepSeek"
-    ],
-    "url": "https://ai-bot.cn/tinyr1-preview/",
-    "source": "ai-bot.cn",
-    "date": "2026-06-09",
-    "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
-    "_page": 19
-  },
-  {
     "id": "fcfc6eaa1a2f",
     "title": "DeepGEMM",
     "summary": "DeepGEMM是DeepSeek开源的为高效简洁的FP8矩阵乘法（GEMM）设计的库，目前仅支持NVIDIA Hopper张量核心。DeepGEMM支持普通和混合专家（MoE）分组的GEMM操作，...",
@@ -26,9 +10,9 @@
     ],
     "url": "https://ai-bot.cn/deepgemm/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -43,9 +27,9 @@
     ],
     "url": "https://ai-bot.cn/agentrefine/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -60,9 +44,9 @@
     ],
     "url": "https://ai-bot.cn/gemini-code-assist/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -77,9 +61,9 @@
     ],
     "url": "https://ai-bot.cn/wan2-1/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -92,9 +76,9 @@
     ],
     "url": "https://ai-bot.cn/ai-jd-aigc/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -109,9 +93,9 @@
     ],
     "url": "https://ai-bot.cn/pyspur/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:07.973Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -124,9 +108,9 @@
     ],
     "url": "https://ai-bot.cn/yuanjing/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:21.727Z",
     "_page": 19
   },
   {
@@ -139,9 +123,9 @@
     ],
     "url": "https://ai-bot.cn/bfs-prover/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.978Z",
     "_page": 19
   },
   {
@@ -155,9 +139,9 @@
     ],
     "url": "https://ai-bot.cn/omneky/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.978Z",
     "_page": 19
   },
   {
@@ -170,9 +154,9 @@
     ],
     "url": "https://ai-bot.cn/facepoke/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.978Z",
     "_page": 19
   },
   {
@@ -186,9 +170,9 @@
     ],
     "url": "https://ai-bot.cn/vlm-r1/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.978Z",
     "_page": 19
   },
   {
@@ -201,9 +185,9 @@
     ],
     "url": "https://ai-bot.cn/builder-io/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.978Z",
     "_page": 19
   },
   {
@@ -217,9 +201,9 @@
     ],
     "url": "https://ai-bot.cn/sigstyle/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.978Z",
     "_page": 19
   },
   {
@@ -230,9 +214,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/careerflow/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.979Z",
     "_page": 19
   },
   {
@@ -246,9 +230,9 @@
     ],
     "url": "https://ai-bot.cn/fantasyid/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.979Z",
     "_page": 19
   },
   {
@@ -263,9 +247,9 @@
     ],
     "url": "https://ai-bot.cn/qwq-max/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:09.813Z",
+    "fetchedAt": "2026-07-28T14:53:23.979Z",
     "_page": 19
   },
   {
@@ -280,9 +264,9 @@
     ],
     "url": "https://ai-bot.cn/deepep/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:23.979Z",
     "_page": 19
   },
   {
@@ -296,9 +280,9 @@
     ],
     "url": "https://ai-bot.cn/claude-3-7-sonnet/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -312,9 +296,9 @@
     ],
     "url": "https://ai-bot.cn/claude-code/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -328,9 +312,9 @@
     ],
     "url": "https://ai-bot.cn/i2v-01-director/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -341,9 +325,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/endex/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -354,9 +338,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/mme-cot/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -370,9 +354,9 @@
     ],
     "url": "https://ai-bot.cn/meteora/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -385,9 +369,9 @@
     ],
     "url": "https://ai-bot.cn/memobase/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.625Z",
     "_page": 19
   },
   {
@@ -402,9 +386,9 @@
     ],
     "url": "https://ai-bot.cn/mgx/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.626Z",
     "_page": 19
   },
   {
@@ -415,9 +399,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/tusiart-ai-logo/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:11.222Z",
+    "fetchedAt": "2026-07-28T14:53:25.626Z",
     "_page": 19
   },
   {
@@ -430,9 +414,9 @@
     ],
     "url": "https://ai-bot.cn/tusiart-ai-face-swapping/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.628Z",
+    "fetchedAt": "2026-07-28T14:53:25.626Z",
     "_page": 19
   },
   {
@@ -448,9 +432,9 @@
     ],
     "url": "https://ai-bot.cn/lazyllm/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -464,9 +448,9 @@
     ],
     "url": "https://ai-bot.cn/aingdesk/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -479,9 +463,9 @@
     ],
     "url": "https://ai-bot.cn/wenxiaobai-aippt/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -495,9 +479,9 @@
     ],
     "url": "https://ai-bot.cn/llasa-tts/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -508,9 +492,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/miss-dora/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -521,9 +505,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/argon/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -536,9 +520,9 @@
     ],
     "url": "https://ai-bot.cn/tangled/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -549,9 +533,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/wysa/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -564,9 +548,9 @@
     ],
     "url": "https://ai-bot.cn/lindy/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:12.629Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -580,9 +564,9 @@
     ],
     "url": "https://ai-bot.cn/magicarticulate/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:27.266Z",
     "_page": 19
   },
   {
@@ -597,9 +581,9 @@
     ],
     "url": "https://ai-bot.cn/zhichuanx-agent/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -612,9 +596,9 @@
     ],
     "url": "https://ai-bot.cn/pixverse-v4/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -628,9 +612,9 @@
     ],
     "url": "https://ai-bot.cn/flashmla/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -643,9 +627,9 @@
     ],
     "url": "https://ai-bot.cn/moonlight-16b-a3b/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -659,9 +643,9 @@
     ],
     "url": "https://ai-bot.cn/yoya/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -672,9 +656,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/reweb/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -687,9 +671,9 @@
     ],
     "url": "https://ai-bot.cn/avatargo/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -704,9 +688,9 @@
     ],
     "url": "https://ai-bot.cn/siglip-2/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -721,9 +705,9 @@
     ],
     "url": "https://ai-bot.cn/biomedgpt-r1/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:14.237Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -736,9 +720,9 @@
     ],
     "url": "https://ai-bot.cn/grutopia-2-0/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:28.970Z",
     "_page": 19
   },
   {
@@ -751,9 +735,9 @@
     ],
     "url": "https://ai-bot.cn/indic-parler-tts/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -766,9 +750,9 @@
     ],
     "url": "https://ai-bot.cn/evo-2/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -781,9 +765,9 @@
     ],
     "url": "https://ai-bot.cn/oomol/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -798,9 +782,9 @@
     ],
     "url": "https://ai-bot.cn/auto-deep-research/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -813,9 +797,9 @@
     ],
     "url": "https://ai-bot.cn/comfyui-copilot/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -829,9 +813,9 @@
     ],
     "url": "https://ai-bot.cn/signllm/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -842,9 +826,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/mercor/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -857,9 +841,9 @@
     ],
     "url": "https://ai-bot.cn/together-ai/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -873,9 +857,9 @@
     ],
     "url": "https://ai-bot.cn/migician/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:15.646Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -886,9 +870,9 @@
     "tags": [],
     "url": "https://ai-bot.cn/sitcom-crafter/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:17.649Z",
+    "fetchedAt": "2026-07-28T14:53:31.838Z",
     "_page": 19
   },
   {
@@ -902,9 +886,9 @@
     ],
     "url": "https://ai-bot.cn/agentsociety/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:17.649Z",
+    "fetchedAt": "2026-07-28T14:53:33.476Z",
     "_page": 19
   },
   {
@@ -917,9 +901,24 @@
     ],
     "url": "https://ai-bot.cn/pull-sense/",
     "source": "ai-bot.cn",
-    "date": "2026-06-09",
+    "date": "2026-07-28",
     "publishedAt": "",
-    "fetchedAt": "2026-06-09T10:12:17.649Z",
+    "fetchedAt": "2026-07-28T14:53:33.476Z",
+    "_page": 19
+  },
+  {
+    "id": "448787958b6e",
+    "title": "Ovis2",
+    "summary": "Ovis2 是阿里巴巴国际团队推出的新型多模态大语言模型，基于结构化嵌入对齐解决视觉与文本模态间的差异。Ovis2继承、优化了 Ovis 系列架构，强化小规模模型的...",
+    "category": "AI工具",
+    "tags": [
+      "模型"
+    ],
+    "url": "https://ai-bot.cn/ovis2/",
+    "source": "ai-bot.cn",
+    "date": "2026-07-28",
+    "publishedAt": "",
+    "fetchedAt": "2026-07-28T14:53:33.476Z",
     "_page": 19
   }
 ]
