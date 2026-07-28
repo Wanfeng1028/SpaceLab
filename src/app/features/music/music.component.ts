@@ -133,6 +133,9 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 
       .music-page--video {
         padding: 0;
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
       }
 
       /* ── Shell (player housing)：浅蓝玻璃壳 ────── */
@@ -159,10 +162,12 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 
       .music-page--video .music-shell {
         width: 100%;
+        height: 100%;
+        min-height: 0;
         background: transparent;
         border: none;
         border-radius: 0;
-        overflow: visible;
+        overflow: hidden;
       }
 
       /* ── Header ────────────────────────────────── */

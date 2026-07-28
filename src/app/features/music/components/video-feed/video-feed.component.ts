@@ -43,6 +43,7 @@ import {
         height: 100%;
         overflow-y: auto;
         scroll-snap-type: y mandatory;
+        overscroll-behavior: contain;
         scrollbar-width: none;
       }
 
