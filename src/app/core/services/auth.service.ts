@@ -2,7 +2,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap, catchError, of, map, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, Observable, tap, catchError, of, distinctUntilChanged } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface User {
@@ -34,6 +34,9 @@ export class AuthService {
   private router = inject(Router);
   private apiUrl = environment.apiUrl;
 
+  /** 访问令牌过期时间戳（毫秒），用于标签页可见时主动续期 */
+  private tokenExpiryAt: number | null = null;
+
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -51,9 +54,10 @@ export class AuthService {
 
   constructor() {
     this.restoreSession();
+    this.initProactiveRefresh();
   }
 
-  /** 启动时恢复会话：先检查 localStorage token，再调用 /auth/me 验证 */
+  /** 启动时恢复会话：本地有 token 即乐观视为已登录，避免刷新页面瞬间被误登出 */
   private restoreSession(): void {
     const token = this.getRawToken();
     if (!token) {
@@ -61,10 +65,7 @@ export class AuthService {
       return;
     }
 
-    // 有旧 token，先设为 checking，然后调 /auth/me 验证
-    this.authState.set('checking');
-
-    // 先从 localStorage 恢复用户信息（快速显示）
+    // 先从 localStorage 恢复用户信息（快速显示，避免刷新后闪烁/跳登录页）
     const userStr = typeof localStorage !== 'undefined' ? localStorage.getItem('user') : null;
     if (userStr) {
       try {
@@ -76,49 +77,69 @@ export class AuthService {
       }
     }
 
-    // 异步验证 token 有效性
-    this.http.get<User>(`${this.apiUrl}/auth/me`).pipe(
-      catchError(() => {
-        // /auth/me 失败，尝试 refresh token
-        return this.tryRefresh().pipe(
-          catchError(() => {
-            // refresh 也失败，清理状态
-            this.clearAuth();
-            return of(null);
-          })
-        );
-      })
-    ).subscribe({
+    // 恢复过期时间，供标签页可见时主动续期
+    const expStr = typeof localStorage !== 'undefined' ? localStorage.getItem('token_expires_at') : null;
+    if (expStr) {
+      const t = Number(expStr);
+      this.tokenExpiryAt = Number.isFinite(t) ? t : null;
+    }
+
+    // 乐观地先置为已登录：只要本地存在 token，就认为已登录，
+    // 避免刷新页面瞬间 /auth/me 偶发失败（后端重启/网络抖动/代理未就绪）导致被误登出。
+    // 真正的有效性由后续请求 + 拦截器自动刷新来保证；若 token 确已失效，
+    // 拦截器刷新失败会再置为 anonymous。
+    this.authState.set('authenticated');
+
+    // 后台静默校验并刷新最新用户信息（失败也不清登出，交给拦截器统一处理）
+    this.http.get<User>(`${this.apiUrl}/auth/me`).subscribe({
       next: (user) => {
-        if (user) {
-          this.currentUserSubject.next(user);
-          this.currentUserSig.set(user);
-          this.authState.set('authenticated');
-          if (typeof localStorage !== 'undefined') {
-            localStorage.setItem('user', JSON.stringify(user));
-          }
+        this.currentUserSubject.next(user);
+        this.currentUserSig.set(user);
+        this.authState.set('authenticated');
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('user', JSON.stringify(user));
         }
       },
       error: () => {
-        this.clearAuth();
-      }
+        // 不再主动 clearAuth：401 由拦截器自动刷新；其它瞬时错误保持乐观登录态，
+        // 待下一次真实请求再决定是否需要重新登录。
+      },
     });
   }
 
-  /** 尝试用 refresh_token 换新 token（内部用） */
-  private tryRefresh(): Observable<User | null> {
-    const refreshToken = typeof localStorage !== 'undefined' ? localStorage.getItem('refresh_token') : null;
-    if (!refreshToken) {
-      return of(null);
+  /**
+   * 当标签页重新可见 / 窗口聚焦，且访问令牌即将过期时主动续期，
+   * 避免用户空闲后被静默登出（#5 可见性续期）。
+   */
+  private initProactiveRefresh(): void {
+    if (typeof document === 'undefined') return;
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return;
+      this.proactiveRefreshIfNeeded();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('focus', onVisible);
     }
+  }
 
-    return this.refreshToken(refreshToken).pipe(
-      tap((response) => {
-        this.storeAuthData(response);
-      }),
-      map((response) => response.user),
-      catchError(() => of(null))
-    );
+  private proactiveRefreshIfNeeded(): void {
+    if (this.authState() !== 'authenticated') return;
+    if (!this.tokenExpiryAt) return;
+    const bufferMs = 5 * 60 * 1000; // 过期前 5 分钟触发续期
+    if (Date.now() > this.tokenExpiryAt - bufferMs) {
+      this.refreshNow();
+    }
+  }
+
+  private refreshNow(): void {
+    const refreshToken =
+      typeof localStorage !== 'undefined' ? localStorage.getItem('refresh_token') : null;
+    if (!refreshToken) return;
+    this.refreshToken(refreshToken).subscribe({
+      next: (response) => this.storeAuthData(response),
+      error: () => this.clearAuth(),
+    });
   }
 
   /** 用 refresh_token 换新 token（公开，供 interceptor 调用） */
@@ -138,6 +159,13 @@ export class AuthService {
     this.currentUserSubject.next(response.user);
     this.currentUserSig.set(response.user);
     this.authState.set('authenticated');
+    if (response.expires_at) {
+      const t = new Date(response.expires_at).getTime();
+      this.tokenExpiryAt = Number.isFinite(t) ? t : null;
+      if (typeof localStorage !== 'undefined' && this.tokenExpiryAt) {
+        localStorage.setItem('token_expires_at', String(this.tokenExpiryAt));
+      }
+    }
   }
 
   /** 清理登录状态（公开，供 interceptor/guard 调用） */
@@ -146,6 +174,7 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user');
+      localStorage.removeItem('token_expires_at');
     }
     this.currentUserSubject.next(null);
     this.currentUserSig.set(null);
@@ -326,5 +355,57 @@ export class AuthService {
         }
       })
     );
+  }
+
+  // ── OAuth ───────────────────────────────────────────────────────────
+
+  /** 跳转到后端 OAuth 发起端点，由后端 302 重定向到 Google/GitHub */
+  loginWithOAuth(provider: 'google' | 'github'): void {
+    // 直接 window.location 跳转，经过 proxy 转发到后端
+    window.location.href = `${this.apiUrl}/auth/${provider}`;
+  }
+
+  /** 从 URL hash 解析 OAuth 回调 token，完成登录 */
+  handleOAuthCallback(): { success: boolean; error?: string } {
+    const hash = window.location.hash;
+    if (!hash || !hash.includes('token=')) {
+      return { success: false, error: '缺少授权参数' };
+    }
+
+    const params = new URLSearchParams(hash.startsWith('#') ? hash.slice(1) : hash);
+    const token = params.get('token');
+    const refreshToken = params.get('refresh_token');
+    const error = params.get('error');
+
+    if (error) {
+      // 清理 hash
+      window.history.replaceState(null, '', window.location.pathname);
+      return { success: false, error: decodeURIComponent(error) };
+    }
+
+    if (!token || !refreshToken) {
+      window.history.replaceState(null, '', window.location.pathname);
+      return { success: false, error: '授权失败，缺少 token' };
+    }
+
+    // 存储 token
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('token', token);
+      localStorage.setItem('refresh_token', refreshToken);
+    }
+
+    // 立即置为已登录，避免 getMe() 返回前 guard 误跳 login
+    this.authState.set('authenticated');
+
+    // 清理 hash
+    window.history.replaceState(null, '', window.location.pathname);
+
+    // 异步拉取用户信息并更新状态
+    this.getMe().subscribe({
+      next: () => {},
+      error: () => this.clearAuth(),
+    });
+
+    return { success: true };
   }
 }

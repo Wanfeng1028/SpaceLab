@@ -11,12 +11,15 @@ import (
 type User struct {
 	ID                uuid.UUID  `gorm:"type:uuid;primary_key" json:"id"`
 	Email             string     `gorm:"uniqueIndex;size:255;not null" json:"email"`
-	PasswordHash      string     `gorm:"size:255;not null" json:"-"`
+	PasswordHash      string     `gorm:"size:255" json:"-"` // 可为空（OAuth 用户无需密码）
 	Username          string     `gorm:"size:100" json:"username"`
 	Role              string     `gorm:"size:20;default:'viewer'" json:"role"`           // admin, writer, viewer
-	Status            string     `gorm:"size:20;default:'pending_verify'" json:"status"` // active, pending_verify, locked, banned
+	Status            string     `gorm:"size:20;default:'active'" json:"status"`          // active, pending_verify, locked, banned
 	AvatarURL         string     `gorm:"size:500" json:"avatar_url"`
 	EmailVerifiedAt   *time.Time `json:"email_verified_at,omitempty"`
+	// OAuth 字段
+	OAuthProvider   string `gorm:"size:20;index" json:"oauth_provider"` // google / github（空表示普通注册）
+	OAuthID         string `gorm:"size:255;index" json:"oauth_id"`     // OAuth 提供商的唯一用户 ID
 	LoginFailCount    int        `gorm:"default:0" json:"login_fail_count"`
 	LockedUntil       *time.Time `json:"locked_until,omitempty"`
 	LastLoginAt       *time.Time `json:"last_login_at,omitempty"`

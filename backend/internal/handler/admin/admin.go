@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/model"
 	"github.com/spacelab/backend/internal/service"
+	"github.com/spacelab/backend/internal/tasks"
 	"github.com/spacelab/backend/internal/utils"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
@@ -570,5 +571,37 @@ func (h *AdminHandler) GetSiteStats(c *gin.Context) {
 		},
 		"ai_news": totalAiNews,
 		"ai_tools": totalAiTools,
+	})
+}
+
+// CleanupUnverifiedUsers 手动清理超过指定天数仍未验证邮箱的账号（管理员操作）
+func (h *AdminHandler) CleanupUnverifiedUsers(c *gin.Context) {
+	var input struct {
+		Days *int `json:"days"`
+	}
+	_ = c.ShouldBindJSON(&input)
+	days := 7
+	if input.Days != nil && *input.Days > 0 {
+		days = *input.Days
+	}
+
+	count, err := tasks.CleanupUnverifiedUsers(h.authService.DB(), days)
+	if err != nil {
+		utils.Logger.Warn("Manual unverified user cleanup failed", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "清理失败，请稍后重试"})
+		return
+	}
+
+	// 审计日志
+	utils.LogAudit(
+		c.GetString("user_id"), c.GetString("email"),
+		"cleanup_unverified_users", "system", "",
+		map[string]interface{}{"days": days, "deleted_count": count},
+		c.ClientIP(), c.GetHeader("User-Agent"),
+	)
+
+	c.JSON(http.StatusOK, gin.H{
+		"message":       "清理完成",
+		"deleted_count": count,
 	})
 }

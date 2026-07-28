@@ -81,15 +81,24 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	// 图形验证码校验
-	if input.CaptchaID == "" || !captcha.VerifyString(input.CaptchaID, input.CaptchaAnswer) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Graphical captcha verification failed, please refresh and try again"})
-		return
+	// 图形验证码校验（若已启用 Turnstile 则跳过，避免双重人机验证）
+	if h.turnstileSecret == "" {
+		if input.CaptchaID == "" || !captcha.VerifyString(input.CaptchaID, input.CaptchaAnswer) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Graphical captcha verification failed, please refresh and try again"})
+			return
+		}
 	}
 
 	// Turnstile 校验
 	if ok, _ := utils.VerifyTurnstileToken(input.CaptchaToken, h.turnstileSecret); !ok {
 		c.JSON(http.StatusTooManyRequests, gin.H{"error": "Unable to verify you are human, please try again"})
+		return
+	}
+
+	// 注册频率防护：限制同一 IP / 全局的成功注册数量，防止批量注册
+	ip := getClientIP(c)
+	if allowed, reason := middleware.CheckRegisterIPGuard(ip); !allowed {
+		c.JSON(http.StatusTooManyRequests, gin.H{"error": reason})
 		return
 	}
 
@@ -118,9 +127,12 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	}
 
 	// 记录注册成功日志（用空 UUID 表示注册场景）
-	ip := getClientIP(c)
+	ip = getClientIP(c)
 	ua := c.GetHeader("User-Agent")
 	h.authService.RecordLoginLog(uuid.Nil, input.Email, ip, ua, parseDeviceInfo(ua), true, "")
+
+	// 记录成功注册（用于 IP / 全局频率防护）
+	middleware.RecordRegisterSuccess(ip)
 
 	c.JSON(http.StatusCreated, response)
 }
@@ -140,10 +152,12 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	// 图形验证码校验
-	if input.CaptchaID == "" || !captcha.VerifyString(input.CaptchaID, input.CaptchaAnswer) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Graphical captcha verification failed, please refresh and try again"})
-		return
+	// 图形验证码校验（若已启用 Turnstile 则跳过，避免双重人机验证）
+	if h.turnstileSecret == "" {
+		if input.CaptchaID == "" || !captcha.VerifyString(input.CaptchaID, input.CaptchaAnswer) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Graphical captcha verification failed, please refresh and try again"})
+			return
+		}
 	}
 
 	// Turnstile 校验
@@ -333,6 +347,14 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 
 	realUserID := strings.TrimSuffix(claims.UserID, "refresh")
 
+	// 检查安全 stamp（改密码/重置后旧 refresh token 失效）
+	if utils.TokenRevocationMgr != nil {
+		if revoked, _ := utils.TokenRevocationMgr.IsStampRevoked(realUserID, claims.Stamp); revoked {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "refresh token has been revoked"})
+			return
+		}
+	}
+
 	user, err := h.authService.GetUserByID(realUserID)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found"})
@@ -345,14 +367,19 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 		return
 	}
 
-	// 生成新的 token 对
-	token, err := middleware.GenerateJWT(h.cfg, user.ID.String(), user.Email, user.Role)
+	// 沿用当前 stamp 生成新 token 对（刷新后仍有效，直到下次轮换）
+	stamp := ""
+	if utils.TokenRevocationMgr != nil {
+		stamp = utils.TokenRevocationMgr.GetOrCreateStamp(realUserID)
+	}
+
+	token, err := middleware.GenerateAccessToken(h.cfg, user.ID.String(), user.Email, user.Role, stamp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate token"})
 		return
 	}
 
-	newRefreshToken, err := middleware.GenerateJWT(h.cfg, user.ID.String()+"refresh", user.Email, user.Role)
+	newRefreshToken, err := middleware.GenerateRefreshToken(h.cfg, user.ID.String()+"refresh", user.Email, user.Role, stamp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to generate refresh token"})
 		return
@@ -362,7 +389,7 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 		Token:        token,
 		RefreshToken: newRefreshToken,
 		User:         service.ToUserInfo(*user),
-		ExpiresAt:    claims.ExpiresAt.Time,
+		ExpiresAt:    time.Now().Add(h.cfg.JWTExpiration),
 	})
 }
 
@@ -450,11 +477,13 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	authHeader := c.GetHeader("Authorization")
 	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 
-	// 撤销 Token
+	// 撤销 Token 并记录到用户集合（供 RevokeUserTokens 兜底批量撤销）
 	if tokenString != "" && tokenString != authHeader {
 		if utils.TokenRevocationMgr != nil {
+			uid, _ := c.Get("user_id")
+			uidStr, _ := uid.(string)
 			go func() {
-				_ = utils.TokenRevocationMgr.RevokeToken(tokenString, 24*time.Hour)
+				_ = utils.TokenRevocationMgr.AddUserTokenToBlacklist(tokenString, uidStr, 24*time.Hour)
 			}()
 		}
 	}

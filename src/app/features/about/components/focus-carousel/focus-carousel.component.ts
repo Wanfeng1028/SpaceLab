@@ -3,11 +3,10 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
-  ElementRef,
-  viewChild,
   signal,
   NgZone,
   HostListener,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -29,10 +28,8 @@ interface FocusCard {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FocusCarouselComponent implements OnInit, OnDestroy {
-  readonly trackEl = viewChild<ElementRef<HTMLElement>>('track');
-
+  private readonly ngZone = inject(NgZone);
   readonly activeIndex = signal(0);
-  readonly total = signal(0);
 
   private timer: ReturnType<typeof setInterval> | null = null;
   private readonly interval = 4000;
@@ -47,43 +44,40 @@ export class FocusCarouselComponent implements OnInit, OnDestroy {
       tags: ['LLM', 'Agent', 'AI Tools'],
     },
     {
-      id: 'web',
-      num: '02',
-      icon: '◈',
-      title: 'Web 前端工程',
-      desc: '关注 Angular、TypeScript、SCSS、交互体验和前端工程化。',
-      tags: ['Angular', 'TypeScript', 'SCSS'],
-    },
-    {
       id: 'gis',
-      num: '03',
+      num: '02',
       icon: '◉',
-      title: 'GIS 与空间可视化',
-      desc: '关注地图、遥感、空间数据和地理信息可视化表达。',
-      tags: ['GIS', 'Map', 'Visualization'],
+      title: 'GIS',
+      desc: '关注地图服务、空间数据处理和地理信息系统的构建与应用。',
+      tags: ['GIS', 'Map', 'Spatial Data'],
     },
     {
-      id: 'resources',
+      id: 'remote-sensing',
+      num: '03',
+      icon: '◎',
+      title: '遥感与数字地球',
+      desc: '关注遥感影像解译、对地观测技术和数字地球平台开发。',
+      tags: ['Remote Sensing', 'Digital Earth', 'Observation'],
+    },
+    {
+      id: 'algorithm',
       num: '04',
-      icon: '▣',
-      title: '资源合集与内容整理',
-      desc: '整理 AI 工具、开源项目、模型框架和开发资源。',
-      tags: ['Resource', 'Open Source', 'Lab'],
+      icon: '▤',
+      title: '算法',
+      desc: '关注数据结构、算法逻辑、性能优化和计算问题的工程化求解。',
+      tags: ['Algorithm', 'Data Structure', 'Optimization'],
     },
     {
-      id: 'webgl',
+      id: 'dev-tech',
       num: '05',
-      icon: '◆',
-      title: 'WebGL 与视觉实验',
-      desc: '用 Three.js、动画和可视化技术做更有空间感的网页体验。',
-      tags: ['Three.js', 'WebGL', 'Motion'],
+      icon: '◈',
+      title: '开发技术',
+      desc: '关注前后端框架、工程实践、部署运维和新技术的工程落地。',
+      tags: ['Frontend', 'Backend', 'DevOps'],
     },
   ];
 
-  constructor(private readonly ngZone: NgZone) {}
-
   ngOnInit(): void {
-    this.total.set(this.cards.length);
     this.startAutoPlay();
   }
 
@@ -95,8 +89,6 @@ export class FocusCarouselComponent implements OnInit, OnDestroy {
   onVisibilityChange(): void {
     document.hidden ? this.stopAutoPlay() : this.startAutoPlay();
   }
-
-  // ── Auto-play ──────────────────────────────────────────────────────
 
   startAutoPlay(): void {
     this.stopAutoPlay();
@@ -112,17 +104,10 @@ export class FocusCarouselComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ── Navigation ─────────────────────────────────────────────────────
-
   goTo(index: number): void {
-    const track = this.trackEl()?.nativeElement;
-    if (!track) return;
-
-    const card = track.querySelector<HTMLElement>(`.focus__card:nth-child(${index + 1})`);
-    if (!card) return;
-
-    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
-    this.setActive(index);
+    if (index === this.activeIndex()) return;
+    this.activeIndex.set(index);
+    this.startAutoPlay();
   }
 
   prev(): void {
@@ -134,36 +119,8 @@ export class FocusCarouselComponent implements OnInit, OnDestroy {
     this.scrollNext();
   }
 
-  onScroll(): void {
-    const track = this.trackEl()?.nativeElement;
-    if (!track) return;
-
-    const cardEls = track.querySelectorAll<HTMLElement>('.focus__card');
-    const scrollLeft = track.scrollLeft;
-    let closest = 0;
-    let minDist = Infinity;
-
-    cardEls.forEach((card, i) => {
-      const dist = Math.abs(card.offsetLeft - track.offsetLeft - scrollLeft);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = i;
-      }
-    });
-
-    this.setActive(closest);
-  }
-
-  // ── Helpers ────────────────────────────────────────────────────────
-
   private scrollNext(): void {
     const nextIdx = (this.activeIndex() + 1) % this.cards.length;
     this.goTo(nextIdx);
-  }
-
-  private setActive(index: number): void {
-    if (this.activeIndex() !== index) {
-      this.ngZone.run(() => this.activeIndex.set(index));
-    }
   }
 }
