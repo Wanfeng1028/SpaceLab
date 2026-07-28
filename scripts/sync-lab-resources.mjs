@@ -6,7 +6,14 @@
  * Both pages share the same "latest items" feed on page 1.
  * We fetch page 2+ from each to get category-specific items.
  *
- * Date: 从 time 元素的相对时间（如 "3小时前"）估算
+ * Date strategy:
+ *   1. 列表页 <time> 相对时间（如 "3小时前"）作为初始估算
+ *   2. 对缺少 publishedAt 的条目，抓取详情页 meta 标签获取真实日期：
+ *      - article:published_time → publishedAt
+ *      - article:modified_time → date（排序用）
+ *   3. 每次运行最多抓 DETAIL_BATCH_LIMIT 个详情页（CI 安全）
+ *   4. 合并时保留已有真实日期，不被估算值覆盖
+ *
  * Category: 由来源页面决定（ai-tools → AI工具, ai-research → AI研究）
  *
  * Usage: node scripts/sync-lab-resources.mjs
@@ -24,6 +31,7 @@ const SOURCE_FILE = path.join(LAB_DIR, 'source.json');
 const USER_AGENT = 'SpaceLabBot/1.0 (+https://github.com/Wanfeng1028/SpaceLab)';
 const MAX_ITEMS = 200;
 const CONTENT_START_DATE = '2026-05-25';
+const DETAIL_BATCH_LIMIT = 100; // max detail pages per sync run (CI safety)
 const TODAY = new Date().toISOString().slice(0, 10);
 
 // ── Relative time → ISO date ──────────────────────────────────────────
@@ -165,7 +173,7 @@ function parseListPage(html, defaultCategory) {
   return items;
 }
 
-// ── Merge: fresh corrects dates for matched items ─────────────────────
+// ── Merge: preserve real dates, only update from detail-page data ─────
 function mergeResources(existing, fresh) {
   const keyOf = (n) => `${n.title}|${n.url}`;
   const freshByKey = new Map();
@@ -180,9 +188,13 @@ function mergeResources(existing, fresh) {
     const key = keyOf(item);
     const freshItem = freshByKey.get(key);
     if (freshItem) {
+      // Preserve existing real publishedAt; only adopt fresh date if it came
+      // from a detail page (i.e. freshItem.publishedAt is non-empty).
+      const realDate = freshItem.publishedAt ? freshItem.date : item.date;
       seen.set(key, {
         ...item,
-        date: freshItem.date,
+        date: realDate || freshItem.date,
+        publishedAt: freshItem.publishedAt || item.publishedAt,
         source: freshItem.source || item.source,
         fetchedAt: freshItem.fetchedAt,
       });
@@ -210,6 +222,51 @@ async function fetchPage(url) {
   });
   if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
   return resp.text();
+}
+
+// ── Fetch detail page for real dates ──────────────────────────────────
+async function fetchDetailDates(url) {
+  try {
+    const html = await fetchPage(url);
+    const pubMatch = html.match(/article:published_time["']\s+content=["']([^"']+)["']/);
+    const modMatch = html.match(/article:modified_time["']\s+content=["']([^"']+)["']/);
+    const publishedAt = pubMatch ? pubMatch[1] : '';
+    const modifiedAt = modMatch ? modMatch[1] : '';
+    if (!publishedAt && !modifiedAt) return null;
+    return { publishedAt, modifiedAt: modifiedAt || publishedAt };
+  } catch {
+    return null;
+  }
+}
+
+// ── Enrich items with real dates from detail pages ────────────────────
+async function enrichWithDetailDates(freshItems, existingByKey) {
+  const needDetail = freshItems.filter((item) => {
+    const existing = existingByKey.get(`${item.title}|${item.url}`);
+    return !existing?.publishedAt; // only fetch if no real date yet
+  });
+
+  if (needDetail.length === 0) return;
+
+  const batch = needDetail.slice(0, DETAIL_BATCH_LIMIT);
+  console.log(
+    `\n🔍 Fetching detail pages for ${batch.length}/${needDetail.length} items (real dates)...`,
+  );
+
+  let done = 0;
+  for (const item of batch) {
+    const dates = await fetchDetailDates(item.url);
+    done++;
+    if (dates) {
+      item.publishedAt = dates.publishedAt;
+      // Use modified date as primary date (reflects latest update)
+      item.date = (dates.modifiedAt || dates.publishedAt).slice(0, 10);
+      if (done % 10 === 0 || done === batch.length) {
+        console.log(`   ${done}/${batch.length} detail pages fetched`);
+      }
+    }
+    await new Promise((r) => setTimeout(r, 500)); // rate limit
+  }
 }
 
 // ── Main ──────────────────────────────────────────────────────────────
@@ -271,6 +328,12 @@ async function main() {
   const freshTools = fresh.filter((i) => i.category === 'AI工具');
   const freshProjects = fresh.filter((i) => i.category === 'AI研究');
   console.log(`   ${freshTools.length} tools, ${freshProjects.length} projects`);
+
+  // Enrich with real dates from detail pages (only for items lacking publishedAt)
+  const existingToolsByKey = new Map(existingTools.map((i) => [`${i.title}|${i.url}`, i]));
+  const existingProjectsByKey = new Map(existingProjects.map((i) => [`${i.title}|${i.url}`, i]));
+  await enrichWithDetailDates(freshTools, existingToolsByKey);
+  await enrichWithDetailDates(freshProjects, existingProjectsByKey);
 
   // Merge each
   const mergedTools = mergeResources(existingTools, freshTools);
