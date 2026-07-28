@@ -40,7 +40,7 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
           <div class="music-header__text">
             <p class="music-header__eyebrow">SpaceLab · Side A</p>
             <h1 class="music-header__title">
-              {{ t('music.title') }} <em>Lightyear Medley</em>
+              {{ t('music.title') }} <em>Medley</em>
             </h1>
             <p class="music-header__subtitle">{{ t('music.subtitle') }}</p>
           </div>
@@ -167,6 +167,9 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         background: transparent;
         border: none;
         border-radius: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
         overflow: hidden;
       }
 
