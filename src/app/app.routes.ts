@@ -79,6 +79,12 @@ export const routes: Routes = [
       import('./features/auth/login.component').then((m) => m.LoginComponent),
   },
   {
+    path: 'auth/callback',
+    title: 'OAuth 登录 — TesoroHome',
+    loadComponent: () =>
+      import('./features/auth/oauth-callback.component').then((m) => m.OAuthCallbackComponent),
+  },
+  {
     path: 'register',
     title: 'Register — TesoroHome',
     loadComponent: () =>

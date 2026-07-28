@@ -163,6 +163,11 @@ export class LoginComponent implements OnInit {
     this.thirdPartyDialogVisible.set(false);
   }
 
+  /** 发起 OAuth 登录 */
+  loginWithOAuth(provider: 'google' | 'github'): void {
+    this.authService.loginWithOAuth(provider);
+  }
+
   resendVerification(): void {
     this.resendLoading.set(true);
     this.resendSuccess.set(false);

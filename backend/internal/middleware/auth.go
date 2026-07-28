@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"github.com/redis/go-redis/v9"
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/utils"
@@ -19,24 +20,39 @@ type JWTClaims struct {
 	UserID string `json:"user_id"`
 	Email  string `json:"email"`
 	Role   string `json:"role"`
+	Typ    string `json:"typ"`   // 令牌类型：access / refresh
+	Stamp  string `json:"stamp"` // 安全 stamp，用于改密码/重置后批量失效
 	jwt.RegisteredClaims
 }
 
-// GenerateJWT 生成 JWT Token
-func GenerateJWT(cfg *config.Config, userID, email, role string) (string, error) {
+// GenerateToken 生成 JWT（可指定类型、stamp 与有效期）
+func GenerateToken(cfg *config.Config, userID, email, role, typ, stamp string, expiry time.Duration) (string, error) {
 	claims := JWTClaims{
 		UserID: userID,
 		Email:  email,
 		Role:   role,
+		Typ:    typ,
+		Stamp:  stamp,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(cfg.JWTExpiration)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiry)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			Issuer:    "spacelab-backend",
+			ID:        uuid.NewString(),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(cfg.JWTSecret))
+}
+
+// GenerateAccessToken 生成访问令牌（短时效）
+func GenerateAccessToken(cfg *config.Config, userID, email, role, stamp string) (string, error) {
+	return GenerateToken(cfg, userID, email, role, "access", stamp, cfg.JWTExpiration)
+}
+
+// GenerateRefreshToken 生成刷新令牌（长时效，独立于访问令牌）
+func GenerateRefreshToken(cfg *config.Config, userID, email, role, stamp string) (string, error) {
+	return GenerateToken(cfg, userID, email, role, "refresh", stamp, cfg.JWTRefreshExpiration)
 }
 
 // ParseJWT 解析 JWT Token
@@ -101,6 +117,15 @@ func AuthWithRedis(cfg *config.Config, rdb *redis.Client, db *gorm.DB) gin.Handl
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
 			c.Abort()
 			return
+		}
+
+		// 检查安全 stamp（改密码/重置后旧 token 失效）
+		if utils.TokenRevocationMgr != nil {
+			if revoked, _ := utils.TokenRevocationMgr.IsStampRevoked(claims.UserID, claims.Stamp); revoked {
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "Token has been revoked"})
+				c.Abort()
+				return
+			}
 		}
 
 		// 检查用户状态（封禁/锁定）

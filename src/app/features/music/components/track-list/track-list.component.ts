@@ -56,25 +56,26 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
         min-height: 0;
         display: flex;
         flex-direction: column;
-        background: #0b1d2f;
+        background: rgba(255, 255, 255, 0.38);
+        border-right: 1px solid rgba(70, 120, 170, 0.14);
       }
 
       .track-list-header {
         padding: 16px 20px 14px;
-        border-bottom: 1px solid rgba(160, 195, 225, 0.12);
+        border-bottom: 1px solid rgba(70, 120, 170, 0.14);
         flex-shrink: 0;
       }
 
       .track-list-header__title {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #f4f8ff;
+        color: rgba(18, 32, 48, 0.88);
         margin: 0 0 2px;
       }
 
       .track-list-header__count {
         font-size: 0.75rem;
-        color: #a9bdd3;
+        color: rgba(18, 32, 48, 0.55);
       }
 
       .track-list-scroll {
@@ -82,7 +83,7 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
         min-height: 0;
         overflow-y: auto;
         scrollbar-width: thin;
-        scrollbar-color: rgba(160, 195, 225, 0.12) transparent;
+        scrollbar-color: rgba(70, 120, 170, 0.2) transparent;
       }
 
       .track-list-scroll::-webkit-scrollbar {
@@ -90,7 +91,7 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       }
 
       .track-list-scroll::-webkit-scrollbar-thumb {
-        background: rgba(160, 195, 225, 0.15);
+        background: rgba(70, 120, 170, 0.22);
         border-radius: 2px;
       }
 
@@ -107,41 +108,41 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
       }
 
       .queue-item:hover {
-        background: #173550;
+        background: rgba(105, 180, 255, 0.1);
       }
 
       .queue-item--active {
-        border-left-color: #4da3ff;
-        background: #122840;
+        border-left-color: #2f7fe0;
+        background: rgba(216, 233, 255, 0.55);
       }
 
       .queue-item__index {
         font-size: 0.75rem;
         font-family: 'Roboto Mono', monospace;
-        color: #a9bdd3;
+        color: rgba(18, 32, 48, 0.5);
         min-width: 20px;
         text-align: center;
       }
 
       .queue-item--active .queue-item__index {
-        color: #4da3ff;
+        color: #2f7fe0;
       }
 
       .queue-item__eq {
         font-size: 20px;
         width: 20px;
         height: 20px;
-        color: #4da3ff;
+        color: #2f7fe0;
       }
 
       .queue-item__title {
         font-weight: 500;
         font-size: 0.875rem;
-        color: #f4f8ff;
+        color: rgba(18, 32, 48, 0.88);
       }
 
       .queue-item:not(.queue-item--active) .queue-item__title {
-        color: #a9bdd3;
+        color: rgba(18, 32, 48, 0.68);
       }
 
       .queue-item__line {
@@ -153,15 +154,13 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
 
       .queue-item__subtitle {
         font-size: 0.75rem;
-        color: #a9bdd3;
-        opacity: 0.7;
+        color: rgba(18, 32, 48, 0.55);
       }
 
       .queue-item__duration {
         font-size: 0.7rem;
         font-family: 'Roboto Mono', monospace;
-        color: #a9bdd3;
-        opacity: 0.6;
+        color: rgba(18, 32, 48, 0.45);
       }
     `,
   ],

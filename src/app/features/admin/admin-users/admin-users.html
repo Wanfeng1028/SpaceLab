@@ -5,6 +5,10 @@
       <span nz-icon nzType="reload"></span>
       刷新
     </button>
+    <button nz-button nzType="primary" nzDanger (click)="onCleanupUnverified()" [nzLoading]="loading()">
+      <span nz-icon nzType="delete"></span>
+      清理未验证账号
+    </button>
   </div>
 
   <nz-table #basicTable [nzData]="users()" [nzLoading]="loading()" [nzPageSize]="20" nzSize="middle">

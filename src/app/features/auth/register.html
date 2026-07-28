@@ -64,8 +64,8 @@
           <label class="form-label" for="confirmPassword">确认密码</label>
         </div>
 
-        <!-- 图形验证码 -->
-        @if (captchaImageUrl()) {
+        <!-- 图形验证码（启用 Turnstile 后隐藏，避免双重验证） -->
+        @if (!turnstileEnabled() && captchaImageUrl()) {
           <div class="form-captcha">
             <img [src]="captchaImageUrl()" alt="验证码" (click)="!captchaLoading() && loadCaptcha()" title="点击刷新" [style.cursor]="captchaLoading() ? 'wait' : 'pointer'" [style.opacity]="captchaLoading() ? 0.5 : 1" />
             <input
@@ -81,10 +81,18 @@
           </div>
         }
 
+        <!-- Cloudflare Turnstile 人机验证（已配置 site key 时启用） -->
+        @if (turnstileEnabled()) {
+          <div id="turnstile-widget" class="form-turnstile"></div>
+          @if (!turnstileToken()) {
+            <div class="auth-hint">请完成人机验证</div>
+          }
+        }
+
         <button
           type="submit"
           class="auth-submit"
-          [disabled]="loading()"
+          [disabled]="loading() || (turnstileEnabled() && !turnstileToken())"
         >
           {{ loading() ? '注册中...' : '注册' }}
         </button>

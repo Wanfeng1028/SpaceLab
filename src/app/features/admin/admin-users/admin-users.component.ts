@@ -188,6 +188,33 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
+  /** 手动清理未验证账号 */
+  onCleanupUnverified(): void {
+    const days = 7;
+    this.modal.confirm({
+      nzTitle: '清理未验证账号',
+      nzContent: `将删除注册后超过 ${days} 天仍未验证邮箱的账号及其关联数据（不可恢复）。确定继续吗？`,
+      nzOkText: '清理',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzCancelText: '取消',
+      nzOnOk: () =>
+        new Promise<boolean>((resolve) => {
+          this.userService.cleanupUnverifiedUsers(days).subscribe({
+            next: (res) => {
+              this.message.success(`已清理 ${res.deleted_count} 个未验证账号`);
+              this.loadUsers();
+              resolve(true);
+            },
+            error: () => {
+              this.message.error('清理失败');
+              resolve(true);
+            },
+          });
+        }),
+    });
+  }
+
   /** 是否为当前登录用户自己（避免误操作自己） */
   isSelf(user: AdminUser): boolean {
     return false; // 占位：admin-shell 已注入 currentUser，可在需要时扩展

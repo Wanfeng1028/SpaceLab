@@ -264,14 +264,18 @@ func (s *AuthService) Register(email, password, username string) (*AuthResponse,
 		}
 	}
 
-	// 生成 Token
-	token, err := middleware.GenerateJWT(s.cfg, user.ID.String(), user.Email, user.Role)
+	// 生成 Token（带安全 stamp）
+	stamp := ""
+	if utils.TokenRevocationMgr != nil {
+		stamp = utils.TokenRevocationMgr.GetOrCreateStamp(user.ID.String())
+	}
+	token, err := middleware.GenerateAccessToken(s.cfg, user.ID.String(), user.Email, user.Role, stamp)
 	if err != nil {
 		return nil, errors.New("failed to generate token")
 	}
 
-	// 刷新 Token
-	refreshToken, err := middleware.GenerateJWT(s.cfg, user.ID.String()+"refresh", user.Email, user.Role)
+	// 刷新 Token（长时效）
+	refreshToken, err := middleware.GenerateRefreshToken(s.cfg, user.ID.String()+"refresh", user.Email, user.Role, stamp)
 	if err != nil {
 		return nil, errors.New("failed to generate refresh token")
 	}
@@ -342,14 +346,18 @@ func (s *AuthService) Login(email, password string) (*AuthResponse, error) {
 		"last_login_at":    now,
 	})
 
-	// 生成 Token
-	token, err := middleware.GenerateJWT(s.cfg, user.ID.String(), user.Email, user.Role)
+	// 生成 Token（带安全 stamp）
+	stamp := ""
+	if utils.TokenRevocationMgr != nil {
+		stamp = utils.TokenRevocationMgr.GetOrCreateStamp(user.ID.String())
+	}
+	token, err := middleware.GenerateAccessToken(s.cfg, user.ID.String(), user.Email, user.Role, stamp)
 	if err != nil {
 		return nil, errors.New("failed to generate token")
 	}
 
-	// 刷新 Token
-	refreshToken, err := middleware.GenerateJWT(s.cfg, user.ID.String()+"refresh", user.Email, user.Role)
+	// 刷新 Token（长时效）
+	refreshToken, err := middleware.GenerateRefreshToken(s.cfg, user.ID.String()+"refresh", user.Email, user.Role, stamp)
 	if err != nil {
 		return nil, errors.New("failed to generate refresh token")
 	}
@@ -450,11 +458,9 @@ func (s *AuthService) UpdatePassword(userID, oldPassword, newPassword string) er
 		return err
 	}
 
-	// 撤销该用户所有已有 token（安全：修改密码后使旧 session 失效）
+	// 轮换安全 stamp，使旧 token 立即失效（安全：修改密码后旧 session 失效）
 	if utils.TokenRevocationMgr != nil {
-		if err := utils.TokenRevocationMgr.RevokeUserTokens(user.ID.String()); err != nil {
-			utils.Logger.Warn("Failed to revoke user tokens on password change", zap.Error(err))
-		}
+		utils.TokenRevocationMgr.RotateStamp(user.ID.String())
 	}
 
 	return nil
@@ -659,11 +665,9 @@ func (s *AuthService) ResetPassword(token, newPassword string) error {
 	resetToken.Used = true
 	s.db.Save(&resetToken)
 
-	// 撤销该用户所有已有 token（安全：重置密码后使旧 session 失效）
+	// 轮换安全 stamp，使旧 token 立即失效（安全：重置密码后旧 session 失效）
 	if utils.TokenRevocationMgr != nil {
-		if err := utils.TokenRevocationMgr.RevokeUserTokens(user.ID.String()); err != nil {
-			utils.Logger.Warn("Failed to revoke user tokens on password reset", zap.Error(err))
-		}
+		utils.TokenRevocationMgr.RotateStamp(user.ID.String())
 	}
 
 	return nil

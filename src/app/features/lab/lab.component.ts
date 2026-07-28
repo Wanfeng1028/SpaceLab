@@ -263,8 +263,7 @@ export class LabComponent implements OnInit {
       });
 
       // Load projects from generated content
-      const { LAB_AI_PROJECTS, LAB_SOURCES } =
-        await import('../../../generated/content.generated');
+      const { LAB_AI_PROJECTS, LAB_SOURCES } = await import('../../../generated/content.generated');
       this.projectsData.set(LAB_AI_PROJECTS);
       this.sources.set(LAB_SOURCES);
 

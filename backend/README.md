@@ -206,6 +206,15 @@ ALLOWED_ORIGINS=https://yourdomain.com
 DATABASE_URL=postgres://...?sslmode=require
 ```
 
+### JWT 令牌时效配置
+系统采用双令牌机制：
+- `JWT_EXPIRATION`：访问令牌（access token）有效期，默认 `24h`，到期需刷新。
+- `JWT_REFRESH_EXPIRATION`：刷新令牌（refresh token）有效期，默认 `168h`（7 天），独立于访问令牌。
+
+刷新令牌用于无感续期——访问令牌过期后，前端会自动用刷新令牌换取新的令牌对，因此用户的登录态由刷新令牌维持。建议将 `JWT_REFRESH_EXPIRATION` 设置为较长时效（如 `168h`~`720h`）；`JWT_EXPIRATION` 则应保持较短（如 `24h`~`1h`）以降低被盗用风险。
+
+当用户修改密码或重置密码时，旧的刷新令牌会基于 security stamp 机制立即失效（需 Redis 可用），强制重新登录。
+
 ### 建议的安全措施
 - 使用 HTTPS
 - 配置防火墙

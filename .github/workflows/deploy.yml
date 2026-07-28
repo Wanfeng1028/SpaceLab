@@ -18,17 +18,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
       - name: Cache Git LFS objects
         uses: actions/cache@v4
         with:
           path: .git/lfs
-          key: lfs-${{ runner.os }}
+          key: lfs-${{ runner.os }}-${{ hashFiles('.gitattributes', 'public/**/*.mp4', 'public/**/*.mp3', 'public/**/*.mov', 'public/**/*.webm') }}
           restore-keys: |
-            lfs-
+            lfs-${{ runner.os }}-
 
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
+      - name: Pull Git LFS objects
+        run: git lfs pull
 
       - uses: actions/setup-node@v4
         with:

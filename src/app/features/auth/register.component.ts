@@ -1,8 +1,9 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy, OnInit, NgZone } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { CaptchaService } from '../../core/services/captcha.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private captchaService = inject(CaptchaService);
+  private ngZone = inject(NgZone);
 
   email = signal('');
   username = signal('');
@@ -33,6 +35,11 @@ export class RegisterComponent implements OnInit {
 
   /** 验证码加载状态 */
   captchaLoading = signal(false);
+
+  /** Cloudflare Turnstile 人机验证（仅在配置了 site key 时启用） */
+  turnstileEnabled = signal(false);
+  turnstileToken = signal('');
+  private turnstileScriptLoaded = false;
 
   passwordStrength = computed(() => this.authService.evaluatePasswordStrength(this.password()));
 
@@ -88,7 +95,14 @@ export class RegisterComponent implements OnInit {
       },
       error: () => {}
     });
-    this.loadCaptcha();
+
+    // 若配置了 Turnstile site key，则启用 Turnstile 并跳过图形验证码；否则使用图形验证码
+    this.turnstileEnabled.set(!!environment.turnstileSiteKey);
+    if (this.turnstileEnabled()) {
+      this.loadTurnstileScript();
+    } else {
+      this.loadCaptcha();
+    }
   }
 
   loadCaptcha(): void {
@@ -115,6 +129,46 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  private loadTurnstileScript(): void {
+    if (this.turnstileScriptLoaded) return;
+    const existing = document.getElementById('cf-turnstile-script');
+    const onReady = () => {
+      this.turnstileScriptLoaded = true;
+      this.renderTurnstile();
+    };
+    if (existing) {
+      onReady();
+      return;
+    }
+    const script = document.createElement('script');
+    script.id = 'cf-turnstile-script';
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    script.async = true;
+    script.defer = true;
+    script.onload = onReady;
+    document.head.appendChild(script);
+  }
+
+  private renderTurnstile(): void {
+    const turnstile = (window as any).turnstile;
+    const el = document.getElementById('turnstile-widget');
+    if (!turnstile || !el) return;
+    turnstile.render(el, {
+      sitekey: environment.turnstileSiteKey,
+      callback: (token: string) => this.ngZone.run(() => this.turnstileToken.set(token)),
+      'expired-callback': () => this.ngZone.run(() => this.turnstileToken.set('')),
+      'error-callback': () => this.ngZone.run(() => this.turnstileToken.set('')),
+    });
+  }
+
+  private resetTurnstile(): void {
+    this.turnstileToken.set('');
+    const turnstile = (window as any).turnstile;
+    if (turnstile && typeof turnstile.reset === 'function') {
+      try { turnstile.reset(); } catch { /* noop */ }
+    }
+  }
+
   onSubmit(): void {
     if (this.registrationClosed()) return;
     if (!this.email() || !this.username() || !this.password()) {
@@ -129,11 +183,18 @@ export class RegisterComponent implements OnInit {
       this.error.set('两次输入的密码不一致');
       return;
     }
+    if (this.turnstileEnabled() && !this.turnstileToken()) {
+      this.error.set('请先完成人机验证');
+      return;
+    }
 
     this.loading.set(true);
     this.error.set('');
 
-    this.authService.register(this.email(), this.password(), this.username(), undefined, this.captchaId(), this.captchaAnswer()).subscribe({
+    const captchaToken = this.turnstileEnabled() ? this.turnstileToken() : undefined;
+    const captchaId = this.turnstileEnabled() ? undefined : this.captchaId();
+    const captchaAnswer = this.turnstileEnabled() ? undefined : this.captchaAnswer();
+    this.authService.register(this.email(), this.password(), this.username(), captchaToken, captchaId, captchaAnswer).subscribe({
       next: (response) => {
         this.loading.set(false);
         const isAdmin = response.user?.role === 'admin';
@@ -142,8 +203,11 @@ export class RegisterComponent implements OnInit {
       error: (err) => {
         this.loading.set(false);
         this.error.set(err.error?.error || '注册失败，请稍后重试');
-        if (err.error?.error?.includes('captcha')) {
+        if (err.error?.error?.includes('captcha') && !this.turnstileEnabled()) {
           this.loadCaptcha();
+        }
+        if (this.turnstileEnabled()) {
+          this.resetTurnstile();
         }
       }
     });

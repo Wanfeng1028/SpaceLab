@@ -13,6 +13,7 @@ type Config struct {
 	DatabaseURL       string
 	JWTSecret         string
 	JWTExpiration     time.Duration
+	JWTRefreshExpiration time.Duration // 刷新令牌有效期（长时效，独立于访问令牌）
 	ServerPort        int
 	Environment       string
 	MaxUploadSize     int64
@@ -29,6 +30,13 @@ type Config struct {
 	// Cloudflare Turnstile 配置
 	TurnstileSecret  string
 	TurnstileSiteKey string
+	// OAuth 配置
+	GoogleClientID     string
+	GoogleClientSecret string
+	GitHubClientID     string
+	GitHubClientSecret string
+	// OAuth 回调基础地址 (如 https://yourdomain.com)
+	OAuthCallbackBaseURL string
 }
 
 func LoadConfig() *Config {
@@ -46,6 +54,16 @@ func LoadConfig() *Config {
 	if err != nil {
 		duration = 24 * time.Hour
 		log.Printf("Invalid JWT_EXPIRATION, using default: %s", duration)
+	}
+
+	refreshExpirationStr := os.Getenv("JWT_REFRESH_EXPIRATION")
+	if refreshExpirationStr == "" {
+		refreshExpirationStr = "168h" // 默认 7 天
+	}
+	refreshDuration, err := time.ParseDuration(refreshExpirationStr)
+	if err != nil {
+		refreshDuration = 168 * time.Hour
+		log.Printf("Invalid JWT_REFRESH_EXPIRATION, using default: %s", refreshDuration)
 	}
 
 	portStr := os.Getenv("SERVER_PORT")
@@ -79,7 +97,8 @@ func LoadConfig() *Config {
 	return &Config{
 		DatabaseURL:       getEnv("DATABASE_URL", ""),
 		JWTSecret:         jwtSecret,
-		JWTExpiration:     duration,
+		JWTExpiration:        duration,
+		JWTRefreshExpiration: refreshDuration,
 		ServerPort:        port,
 		Environment:       getEnv("ENVIRONMENT", "development"),
 		MaxUploadSize:     maxSize,
@@ -96,6 +115,12 @@ func LoadConfig() *Config {
 		// Cloudflare Turnstile
 		TurnstileSecret:  getEnv("TURNSTILE_SECRET_KEY", ""),
 		TurnstileSiteKey: getEnv("TURNSTILE_SITE_KEY", ""),
+		// OAuth
+		GoogleClientID:       getEnv("GOOGLE_CLIENT_ID", ""),
+		GoogleClientSecret:   getEnv("GOOGLE_CLIENT_SECRET", ""),
+		GitHubClientID:       getEnv("GITHUB_CLIENT_ID", ""),
+		GitHubClientSecret:   getEnv("GITHUB_CLIENT_SECRET", ""),
+		OAuthCallbackBaseURL: getEnv("OAUTH_CALLBACK_BASE_URL", "http://localhost:4200"),
 	}
 }
 

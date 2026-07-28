@@ -91,6 +91,14 @@ export class UserService {
     return this.http.delete<{ message: string }>(`${this.apiUrl}/admin/users/${id}`);
   }
 
+  /** 手动清理未验证账号（管理员） */
+  cleanupUnverifiedUsers(days: number = 7): Observable<{ message: string; deleted_count: number }> {
+    return this.http.post<{ message: string; deleted_count: number }>(
+      `${this.apiUrl}/admin/cleanup-unverified-users`,
+      { days },
+    );
+  }
+
   /** 重置用户密码 */
   resetPassword(id: string, password: string): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`${this.apiUrl}/admin/users/${id}/reset-password`, {

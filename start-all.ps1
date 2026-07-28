@@ -166,7 +166,9 @@ if (-not $skipDocker) {
     else {
         Write-Action "启动 PostgreSQL, Redis, Backend..."
         # --progress plain：禁用彩色进度条（进度条在非交互终端下会互相覆盖产生乱码）
-        docker-compose -f $ComposeFile --progress plain up -d 2>&1 | ForEach-Object {
+        # --build：后端 Go 代码改动后必须重建镜像，否则会沿用旧镜像
+        # （旧镜像中刷新令牌仅 24h，改完刷新页面就会掉登录）
+        docker-compose -f $ComposeFile --progress plain up -d --build 2>&1 | ForEach-Object {
             # 清除残留的 ANSI 转义码（颜色/光标控制），避免 ?[0m 之类乱码
             $_ -replace '\x1b\[[0-9;]*[a-zA-Z]', ''
         } | Write-Host

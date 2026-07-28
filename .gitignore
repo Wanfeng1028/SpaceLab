@@ -103,3 +103,6 @@ src/assets/video/
 !public/**/*.mp3
 !public/**/*.mov
 !public/**/*.webm
+
+# public/music/ 下的视频过大（>100MB），不纳入版本控制
+public/music/*.mp4

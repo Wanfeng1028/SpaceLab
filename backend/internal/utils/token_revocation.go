@@ -2,6 +2,8 @@ package utils
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"strings"
 	"time"
@@ -55,22 +57,83 @@ func (m *TokenRevocationManager) IsTokenRevoked(tokenString string) (bool, error
 	return exists > 0, nil
 }
 
-// RevokeUserTokens 撤销用户所有 Token（密码修改/账号安全时）
+const stampKeyPrefix = "token:stamp:"
+
+// generateRandomHex 生成随机十六进制字符串（用于安全 stamp）
+func generateRandomHex(n int) string {
+	b := make([]byte, n)
+	if _, err := rand.Read(b); err != nil {
+		return fmt.Sprintf("%d", time.Now().UnixNano())
+	}
+	return hex.EncodeToString(b)
+}
+
+// GetOrCreateStamp 获取（或创建）用户的安全 stamp。
+// stamp 内嵌在 JWT 中；修改密码/重置时通过 RotateStamp 轮换，使所有旧 token 立即失效。
+func (m *TokenRevocationManager) GetOrCreateStamp(userID string) string {
+	if m.rdb == nil {
+		return ""
+	}
+	key := stampKeyPrefix + userID
+	if val, err := m.rdb.Get(m.ctx, key).Result(); err == nil && val != "" {
+		return val
+	}
+	newStamp := generateRandomHex(16)
+	_ = m.rdb.Set(m.ctx, key, newStamp, 0).Err()
+	return newStamp
+}
+
+// RotateStamp 轮换用户的安全 stamp（改密码/重置后调用），使旧 token 失效
+func (m *TokenRevocationManager) RotateStamp(userID string) string {
+	if m.rdb == nil {
+		return ""
+	}
+	key := stampKeyPrefix + userID
+	newStamp := generateRandomHex(16)
+	_ = m.rdb.Set(m.ctx, key, newStamp, 0).Err()
+	return newStamp
+}
+
+// IsStampRevoked 检查给定 stamp 是否已被轮换（即 token 是否失效）
+func (m *TokenRevocationManager) IsStampRevoked(userID, stamp string) (bool, error) {
+	if m.rdb == nil {
+		return false, nil
+	}
+	if stamp == "" {
+		// 未启用 stamp 跟踪（Redis 缺失或老 token），视为有效，保持向后兼容
+		return false, nil
+	}
+	key := stampKeyPrefix + userID
+	val, err := m.rdb.Get(m.ctx, key).Result()
+	if err != nil {
+		// stamp 尚未初始化（老用户），不撤销
+		return false, nil
+	}
+	return val != stamp, nil
+}
+
+// RevokeUserTokens 撤销用户所有已记录的 Token（密码修改/账号安全时兜底使用）
 func (m *TokenRevocationManager) RevokeUserTokens(userID string) error {
 	if m.rdb == nil {
 		return nil
 	}
 
-	// 查找并删除该用户的所有 token
-	pattern := fmt.Sprintf("token:blacklist:user:%s:*", userID)
-	var keys []string
+	// 撤销 logout 时记录到 token:user:{id} 集合中的 token
+	key := fmt.Sprintf("token:user:%s", userID)
+	if members, err := m.rdb.SMembers(m.ctx, key).Result(); err == nil {
+		for _, t := range members {
+			_ = m.RevokeToken(t, 24*time.Hour)
+		}
+		_ = m.rdb.Del(m.ctx, key).Err()
+	}
 
-	// 分批删除，避免一次性删除太多
+	// 兜底：清理按旧 pattern 存储的黑名单 key
+	var keys []string
 	cursor := uint64(0)
 	for {
-		k, newCursor, err := m.rdb.Scan(m.ctx, cursor, pattern, 100).Result()
-		if err != nil {
-			return err
+		k, newCursor, e := m.rdb.Scan(m.ctx, cursor, fmt.Sprintf("token:blacklist:user:%s:*", userID), 100).Result()
+		if e != nil {
+			break
 		}
 		keys = append(keys, k...)
 		cursor = newCursor
@@ -78,9 +141,8 @@ func (m *TokenRevocationManager) RevokeUserTokens(userID string) error {
 			break
 		}
 	}
-
 	if len(keys) > 0 {
-		return m.rdb.Del(m.ctx, keys...).Err()
+		_ = m.rdb.Del(m.ctx, keys...).Err()
 	}
 
 	return nil
