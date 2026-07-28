@@ -96,6 +96,50 @@ CREATE TABLE IF NOT EXISTS projects (
 CREATE INDEX idx_projects_slug ON projects(slug);
 CREATE INDEX idx_projects_author ON projects(author_id);
 
+-- 评论表（支持多内容类型：post/project/page）
+CREATE TABLE IF NOT EXISTS comments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    content_type VARCHAR(50) DEFAULT 'post',
+    content_id UUID NOT NULL,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    parent_id UUID REFERENCES comments(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    deleted_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE INDEX idx_comments_content ON comments(content_type, content_id);
+CREATE INDEX idx_comments_user ON comments(user_id);
+CREATE INDEX idx_comments_status ON comments(status);
+CREATE INDEX idx_comments_deleted ON comments(deleted_at);
+
+-- 评论举报表
+CREATE TABLE IF NOT EXISTS comment_reports (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    comment_id UUID NOT NULL REFERENCES comments(id) ON DELETE CASCADE,
+    reporter_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    reason VARCHAR(200) NOT NULL,
+    description TEXT,
+    status VARCHAR(20) DEFAULT 'pending',
+    reviewed_by UUID REFERENCES users(id) ON DELETE SET NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_comment_reports_comment ON comment_reports(comment_id);
+CREATE INDEX idx_comment_reports_reporter ON comment_reports(reporter_id);
+CREATE INDEX idx_comment_reports_status ON comment_reports(status);
+
+-- 敏感词表
+CREATE TABLE IF NOT EXISTS sensitive_words (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    word VARCHAR(100) NOT NULL UNIQUE,
+    category VARCHAR(50),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- 初始化默认管理员用户（密码：Admin@123456，首次登录后请修改）
 INSERT INTO users (id, email, password_hash, username, role)
 VALUES (
