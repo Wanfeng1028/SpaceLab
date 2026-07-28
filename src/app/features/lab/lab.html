@@ -138,7 +138,7 @@
                       }
                     </mat-chip-set>
                     <span class="resource-highlight-card__date">{{
-                      formatDate(item.date || item.publishedAt?.slice(0, 10) || item.fetchedAt || '')
+                      formatDate(item.date || item.publishedAt.slice(0, 10) || item.fetchedAt || '')
                     }}</span>
                   </div>
                 </mat-card-content>
@@ -185,7 +185,7 @@
                     <span class="resource-card__badge">{{ item.category }}</span>
                     @if (item.date || item.publishedAt || item.fetchedAt) {
                       <span class="resource-card__date">{{
-                        formatDate(item.date || item.publishedAt?.slice(0, 10) || item.fetchedAt || '')
+                        formatDate(item.date || item.publishedAt.slice(0, 10) || item.fetchedAt || '')
                       }}</span>
                     }
                   </div>
