@@ -75,8 +75,8 @@ export function pickVideoSource(track: MusicTrack): { src: string; reason: strin
 export const TRACKS: MusicTrack[] = [
   {
     key: 'chuanshao',
-    title: '串烧',
-    subtitle: 'Medley',
+    title: '串烧 One',
+    subtitle: 'Medley One',
     mp3Src: MEDIA_BASE_URL + 'chuanshao-.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-.mp4',
     webVideoSrc: MEDIA_BASE_URL + 'chuanshao-web.mp4',
@@ -85,8 +85,8 @@ export const TRACKS: MusicTrack[] = [
   },
   {
     key: 'chuanshao-1',
-    title: '串烧 One',
-    subtitle: 'Medley One',
+    title: '串烧 Two',
+    subtitle: 'Medley Two',
     mp3Src: MEDIA_BASE_URL + 'chuanshao-1.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-1.mp4',
     webVideoSrc: MEDIA_BASE_URL + 'chuanshao-1-web.mp4',
@@ -95,8 +95,8 @@ export const TRACKS: MusicTrack[] = [
   },
   {
     key: 'chuanshao-2',
-    title: '串烧 Two',
-    subtitle: 'Medley Two',
+    title: '串烧 Three',
+    subtitle: 'Medley Three',
     mp3Src: MEDIA_BASE_URL + 'chuanshao-2.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-2.mp4',
     webVideoSrc: MEDIA_BASE_URL + 'chuanshao-2-web.mp4',
@@ -105,8 +105,8 @@ export const TRACKS: MusicTrack[] = [
   },
   {
     key: 'chuanshao-3',
-    title: '串烧 Three',
-    subtitle: 'Medley Three',
+    title: '串烧 Four',
+    subtitle: 'Medley Four',
     mp3Src: MEDIA_BASE_URL + 'chuanshao-3.mp3',
     originalVideoSrc: MEDIA_BASE_URL + 'chuanshao-3.mp4',
     webVideoSrc: MEDIA_BASE_URL + 'chuanshao-3-web.mp4',

@@ -316,8 +316,8 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
   readonly svc = inject(MediaPlaybackService);
   private audioRef = viewChild<ElementRef<HTMLAudioElement>>('audioElement');
 
-  private readonly _defaultTitle = signal('串烧');
-  private readonly _defaultSubtitle = signal('Medley · 纯音乐串烧');
+  private readonly _defaultTitle = signal('串烧 One');
+  private readonly _defaultSubtitle = signal('Medley One · 纯音乐串烧');
 
   readonly trackNumber = computed(() => {
     const track = this.svc.currentTrack();

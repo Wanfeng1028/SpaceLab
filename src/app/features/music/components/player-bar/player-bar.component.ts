@@ -28,10 +28,10 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
           </div>
           <div class="dock__text">
             <span class="dock__name">{{
-              svc.currentTrack()?.title || '串烧'
+              svc.currentTrack()?.title || '串烧 One'
             }}</span>
             <span class="dock__sub">{{
-              svc.currentTrack()?.subtitle || 'Medley'
+              svc.currentTrack()?.subtitle || 'Medley One'
             }}</span>
           </div>
         </div>
