@@ -101,7 +101,7 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
     `
       :host {
         display: block;
-        height: calc(100dvh - var(--navbar-height, 64px));
+        height: 100%;
         scroll-snap-align: start;
         scroll-snap-stop: always;
       }
