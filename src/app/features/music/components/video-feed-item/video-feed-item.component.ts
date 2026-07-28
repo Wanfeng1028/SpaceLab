@@ -40,6 +40,8 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
               preload="none"
               (ended)="onVideoEnded()"
               (error)="onVideoError()"
+              (timeupdate)="onTimeUpdate()"
+              (loadedmetadata)="onLoadedMetadata()"
             ></video>
           }
 
@@ -70,6 +72,22 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
             >
               <mat-icon>pause</mat-icon>
             </button>
+          }
+
+          <!-- Progress bar overlay -->
+          @if (isActive() && videoDuration() > 0) {
+            <div class="stage__progress-bar">
+              <div class="stage__progress-track" (click)="seek($event)">
+                <div
+                  class="stage__progress-fill"
+                  [style.width.%]="progressPercent()"
+                ></div>
+              </div>
+              <div class="stage__progress-time">
+                <span>{{ formatTime(videoCurrentTime()) }}</span>
+                <span>{{ formatTime(videoDuration()) }}</span>
+              </div>
+            </div>
           }
 
           <!-- Error / Unsupported overlay -->
@@ -168,6 +186,55 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
 
       .stage__screen:hover .stage__action--pause {
         opacity: 1;
+      }
+
+      /* ── Progress Bar ──────────────────────────── */
+      .stage__progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 4;
+        padding: 10px 14px 10px;
+        background: linear-gradient(to top, rgba(4, 12, 24, 0.82), transparent);
+        opacity: 0;
+        transition: opacity 250ms ease;
+      }
+
+      .stage__screen:hover .stage__progress-bar,
+      .stage__screen:focus-within .stage__progress-bar {
+        opacity: 1;
+      }
+
+      .stage__progress-track {
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+        position: relative;
+        transition: height 150ms ease;
+      }
+
+      .stage__progress-track:hover {
+        height: 6px;
+      }
+
+      .stage__progress-fill {
+        height: 100%;
+        border-radius: 2px;
+        background: #4fb8f5;
+        pointer-events: none;
+        transition: width 200ms linear;
+      }
+
+      .stage__progress-time {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        font-size: 11px;
+        font-family: 'Roboto Mono', monospace;
+        color: rgba(255, 255, 255, 0.75);
       }
 
       /* ── Info Bar ─────────────────────────────── */
@@ -287,6 +354,40 @@ export class VideoFeedItemComponent implements OnDestroy {
     return 'idle';
   });
 
+  /** Progress bar state */
+  readonly videoCurrentTime = signal(0);
+  readonly videoDuration = signal(0);
+  readonly progressPercent = computed(() => {
+    const dur = this.videoDuration();
+    return dur > 0 ? (this.videoCurrentTime() / dur) * 100 : 0;
+  });
+
+  onTimeUpdate(): void {
+    const el = this.videoElement()?.nativeElement;
+    if (el) this.videoCurrentTime.set(el.currentTime);
+  }
+
+  onLoadedMetadata(): void {
+    const el = this.videoElement()?.nativeElement;
+    if (el) this.videoDuration.set(el.duration);
+  }
+
+  seek(e: MouseEvent): void {
+    const el = this.videoElement()?.nativeElement;
+    if (!el || !this.videoDuration()) return;
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    el.currentTime = ratio * el.duration;
+    this.videoCurrentTime.set(el.currentTime);
+  }
+
+  formatTime(seconds: number): string {
+    if (!seconds || !isFinite(seconds)) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
   ngOnDestroy(): void {
     this.cleanupVideo();
   }
@@ -349,5 +450,7 @@ export class VideoFeedItemComponent implements OnDestroy {
     }
     this.isVideoPlaying.set(false);
     this.videoError.set(null);
+    this.videoCurrentTime.set(0);
+    this.videoDuration.set(0);
   }
 }
