@@ -29,56 +29,72 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
   host: { class: 'video-feed-item' },
   template: `
     <div class="feed-item">
-      <!-- Video element: rendered only when active + source available, no auto src -->
-      @if (isActive() && videoInfo().src) {
-        <video
-          #videoElement
-          class="feed-item__video"
-          playsinline
-          preload="none"
-          (ended)="onVideoEnded()"
-          (error)="onVideoError()"
-        ></video>
-      }
-
-      <!-- Center action button (shown when not playing) -->
-      @if (!isVideoPlaying()) {
-        <button class="feed-item__action" (click)="onActionClick()">
-          @if (state() === 'error' || state() === 'unsupported') {
-            <mat-icon class="feed-item__action-icon">error_outline</mat-icon>
-          } @else {
-            <mat-icon class="feed-item__action-icon feed-item__action-icon--play">
-              play_arrow
-            </mat-icon>
+      <div class="stage">
+        <!-- Screen: deep-navy theater inside the sky panel -->
+        <div class="stage__screen">
+          <!-- Video element: rendered only when active + source available, no auto src -->
+          @if (isActive() && videoInfo().src) {
+            <video
+              #videoElement
+              class="stage__video"
+              playsinline
+              preload="none"
+              (ended)="onVideoEnded()"
+              (error)="onVideoError()"
+            ></video>
           }
-        </button>
-      }
 
-      <!-- Pause button (shown when playing, click to pause) -->
-      @if (isVideoPlaying()) {
-        <button class="feed-item__action feed-item__action--pause" (click)="pauseVideo()">
-          <mat-icon class="feed-item__action-icon">pause</mat-icon>
-        </button>
-      }
+          <!-- Center action button (shown when not playing) -->
+          @if (!isVideoPlaying()) {
+            <button
+              mat-fab
+              color="primary"
+              class="stage__action"
+              [attr.aria-label]="state() === 'error' || state() === 'unsupported' ? '视频不可用' : '播放视频'"
+              (click)="onActionClick()"
+            >
+              @if (state() === 'error' || state() === 'unsupported') {
+                <mat-icon>error_outline</mat-icon>
+              } @else {
+                <mat-icon class="stage__action-icon--play">play_arrow</mat-icon>
+              }
+            </button>
+          }
 
-      <!-- Info overlay at bottom -->
-      <div class="feed-item__info">
-        <h3 class="feed-item__title">{{ track().title }}</h3>
-        <span class="feed-item__subtitle">{{ track().subtitle }}</span>
-        <span class="feed-item__duration">{{ track().duration }}</span>
-      </div>
+          <!-- Pause button (shown when playing, click to pause) -->
+          @if (isVideoPlaying()) {
+            <button
+              mat-fab
+              class="stage__action stage__action--pause"
+              aria-label="暂停视频"
+              (click)="pauseVideo()"
+            >
+              <mat-icon>pause</mat-icon>
+            </button>
+          }
 
-      <!-- Error / Unsupported overlay -->
-      @if (state() === 'error' || state() === 'unsupported') {
-        <div class="feed-item__error-overlay">
-          <app-media-error
-            [message]="errorMessage()"
-            [showBackToAudio]="true"
-            (retry)="retryVideo()"
-            (backToAudio)="backToAudio.emit()"
-          />
+          <!-- Error / Unsupported overlay -->
+          @if (state() === 'error' || state() === 'unsupported') {
+            <div class="stage__error-overlay">
+              <app-media-error
+                [message]="errorMessage()"
+                [showBackToAudio]="true"
+                (retry)="retryVideo()"
+                (backToAudio)="backToAudio.emit()"
+              />
+            </div>
+          }
         </div>
-      }
+
+        <!-- Info bar: same sky panel, dark navy text -->
+        <div class="stage__info">
+          <div class="stage__text">
+            <h3 class="stage__title">{{ track().title }}</h3>
+            <span class="stage__subtitle">{{ track().subtitle }}</span>
+          </div>
+          <span class="stage__duration">{{ track().duration }}</span>
+        </div>
+      </div>
     </div>
   `,
   styles: [
@@ -91,117 +107,150 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
       }
 
       .feed-item {
-        position: relative;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--music-bg-start, #061425);
-        overflow: hidden;
+        /* 顶部为固定导航栏 + 视频模式浮动页头留位 */
+        padding: calc(var(--navbar-height, 64px) + 72px) 20px 32px;
+        box-sizing: border-box;
       }
 
-      /* ── Video ──────────────────────────────────── */
-      .feed-item__video {
+      /* ── Stage: sky glass panel (same language as audio side) ── */
+      .stage {
+        width: min(1280px, 100%);
+        padding: 14px 14px 10px;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.82),
+          rgba(255, 255, 255, 0.52)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow:
+          0 18px 56px rgba(70, 120, 170, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+      }
+
+      /* ── Screen ───────────────────────────────── */
+      .stage__screen {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #0c1a2c;
+        aspect-ratio: 16 / 9;
+        max-height: calc(100dvh - var(--navbar-height, 64px) - 180px);
+        margin: 0 auto;
+      }
+
+      .stage__video {
+        display: block;
         width: 100%;
-        max-width: 1200px;
         height: 100%;
         object-fit: contain;
-        background: #000;
       }
 
-      /* ── Center Action ──────────────────────────── */
-      .feed-item__action {
+      /* ── Center Action (Material FAB) ─────────── */
+      .stage__action {
         position: absolute;
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        background: rgba(0, 0, 0, 0.4);
-        color: #fff;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition:
-          background 200ms,
-          border-color 200ms,
-          transform 200ms;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.15);
         z-index: 2;
       }
 
-      .feed-item__action:hover {
-        background: rgba(0, 0, 0, 0.6);
-        border-color: rgba(255, 255, 255, 0.5);
-        transform: scale(1.05);
+      .stage__action-icon--play {
+        margin-left: 4px;
       }
 
-      .feed-item__action--pause {
+      .stage__action--pause {
         opacity: 0;
         transition: opacity 300ms;
       }
 
-      .feed-item:hover .feed-item__action--pause {
+      .stage__screen:hover .stage__action--pause {
         opacity: 1;
       }
 
-      .feed-item__action-icon {
-        font-size: 36px;
-        width: 36px;
-        height: 36px;
+      /* ── Info Bar ─────────────────────────────── */
+      .stage__info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 8px 4px;
       }
 
-      .feed-item__action-icon--play {
-        margin-left: 4px;
-      }
-
-      /* ── Info Overlay ───────────────────────────── */
-      .feed-item__info {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 40px 24px 24px;
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      .stage__text {
+        min-width: 0;
         display: flex;
         align-items: baseline;
-        gap: 8px;
-        z-index: 1;
+        gap: 10px;
       }
 
-      .feed-item__title {
+      .stage__title {
         font-size: 1rem;
         font-weight: 600;
-        color: #fff;
+        color: rgba(18, 32, 48, 0.88);
         margin: 0;
+        white-space: nowrap;
       }
 
-      .feed-item__subtitle {
+      .stage__subtitle {
         font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(18, 32, 48, 0.6);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      .feed-item__duration {
-        margin-left: auto;
+      .stage__duration {
+        flex-shrink: 0;
         font-size: 0.75rem;
         font-family: 'Roboto Mono', monospace;
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(18, 32, 48, 0.5);
       }
 
-      /* ── Error Overlay ──────────────────────────── */
-      .feed-item__error-overlay {
+      /* ── Error Overlay ────────────────────────── */
+      .stage__error-overlay {
         position: absolute;
         inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(248, 252, 255, 0.78);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         z-index: 3;
+      }
+
+      /* ── Mobile ───────────────────────────────── */
+      @media (max-width: 767px) {
+        .feed-item {
+          padding: calc(var(--navbar-height, 64px) + 52px) 12px 24px;
+        }
+
+        .stage {
+          padding: 10px 10px 8px;
+          border-radius: 16px;
+        }
+
+        .stage__screen {
+          aspect-ratio: 16 / 9;
+          max-height: none;
+        }
+
+        .stage__action {
+          transform: translate(-50%, -50%);
+        }
       }
 
       /* ── Reduced Motion ─────────────────────────── */
       @media (prefers-reduced-motion: reduce) {
-        .feed-item__action,
-        .feed-item__action--pause {
+        .stage__action,
+        .stage__action--pause {
           transition: none;
         }
       }

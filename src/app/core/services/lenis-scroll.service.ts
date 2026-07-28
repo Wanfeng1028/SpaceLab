@@ -96,6 +96,43 @@ export class LenisScrollService implements OnDestroy {
     this.ensureRaf();
   }
 
+  /** Fully destroy Lenis, removing all wheel/touch listeners from DOM */
+  destroyInstance(): void {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+    this.lenis?.destroy();
+    this.instance.set(null);
+  }
+
+  /** Re-create Lenis after destroyInstance() */
+  recreate(): void {
+    if (this.instance()) return; // already alive
+    this.ngZone.runOutsideAngular(() => {
+      this.lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+      this.instance.set(this.lenis);
+
+      const onScroll = ({ scroll, progress }: { scroll: number; progress: number }) => {
+        this.ngZone.run(() => {
+          this.scrollY.set(scroll);
+          this.scrollProgress.set(progress);
+        });
+      };
+      this.lenis.on('scroll', onScroll);
+      this.ensureRaf();
+    });
+  }
+
   ngOnDestroy(): void {
     this.destroyed = true;
 

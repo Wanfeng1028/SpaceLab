@@ -38,7 +38,10 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
       <div class="music-shell">
         <header class="music-header">
           <div class="music-header__text">
-            <h1 class="music-header__title">{{ t('music.title') }}</h1>
+            <p class="music-header__eyebrow">SpaceLab · Side A</p>
+            <h1 class="music-header__title">
+              {{ t('music.title') }} <em>Lightyear Medley</em>
+            </h1>
             <p class="music-header__subtitle">{{ t('music.subtitle') }}</p>
           </div>
           <mat-button-toggle-group
@@ -75,66 +78,82 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
   `,
   styles: [
     `
-      /* ── Local Material blue theme ────────────── */
+      /* ── Local Material sky theme（对齐 ai-frontline 浅蓝）── */
       :host {
-        --mat-sys-primary: #4da3ff;
-        --mat-sys-on-primary: #001d35;
-        --mat-sys-primary-container: #174f7f;
-        --mat-sys-on-primary-container: #d5eaff;
-        --mat-sys-secondary-container: #173550;
-        --mat-sys-surface: #0d1c2d;
-        --mat-sys-surface-variant: #122840;
-        --mat-sys-surface-container: #122840;
-        --mat-sys-on-surface: #f4f8ff;
-        --mat-sys-on-surface-variant: #a9bdd3;
-        --mat-sys-outline: rgba(190, 215, 240, 0.28);
-        --mat-sys-outline-variant: rgba(190, 215, 240, 0.14);
-        --mat-sys-error: #ff6b6b;
-        --mat-sys-inverse-surface: #f4f8ff;
+        --mat-sys-primary: #2f7fe0;
+        --mat-sys-on-primary: #ffffff;
+        --mat-sys-primary-container: #d8e9ff;
+        --mat-sys-on-primary-container: #0b3a75;
+        --mat-sys-secondary-container: #e3f0fc;
+        --mat-sys-surface: #f8fcff;
+        --mat-sys-surface-variant: #eef6fd;
+        --mat-sys-surface-container: #eef6fd;
+        --mat-sys-on-surface: rgba(18, 32, 48, 0.88);
+        --mat-sys-on-surface-variant: rgba(18, 32, 48, 0.62);
+        --mat-sys-outline: rgba(70, 120, 170, 0.28);
+        --mat-sys-outline-variant: rgba(70, 120, 170, 0.14);
+        --mat-sys-error: #d33f49;
+        --mat-sys-inverse-surface: #12202f;
 
         /* Local design tokens */
-        --music-bg-start: #071625;
-        --music-bg-middle: #0a2948;
-        --music-bg-end: #0c3b6b;
-        --music-surface: #0d1c2d;
-        --music-surface-raised: #122840;
-        --music-surface-hover: #173550;
-        --music-primary: #4da3ff;
-        --music-text: #f4f8ff;
-        --music-text-secondary: #a9bdd3;
-        --music-divider: rgba(160, 195, 225, 0.12);
+        --music-bg-start: #f8fcff;
+        --music-bg-middle: #f1f7fb;
+        --music-bg-end: #f8fbff;
+        --music-surface: rgba(255, 255, 255, 0.66);
+        --music-surface-raised: #ffffff;
+        --music-surface-hover: #e8f3fd;
+        --music-primary: #2f7fe0;
+        --music-text: rgba(18, 32, 48, 0.88);
+        --music-text-secondary: rgba(18, 32, 48, 0.6);
+        --music-divider: rgba(70, 120, 170, 0.14);
       }
 
-      /* ── Page ──────────────────────────────────── */
+      /* ── Page（ai-frontline 同款天蓝背景）───────── */
       .music-page {
         min-height: calc(100dvh - var(--navbar-height, 64px));
-        padding: 24px clamp(20px, 4vw, 56px) 32px;
+        /* 顶部留白 = 固定导航栏高度 + 呼吸间距，避免页头被 navbar 遮挡 */
+        padding: calc(var(--navbar-height, 64px) + 24px) clamp(20px, 4vw, 56px)
+          32px;
         color: var(--music-text);
-        background: linear-gradient(
-          145deg,
-          #071625 0%,
-          #0a2948 48%,
-          #0c3b6b 100%
-        );
+        background:
+          radial-gradient(
+            circle at 16% 8%,
+            rgba(125, 210, 255, 0.22),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 84% 14%,
+            rgba(178, 160, 255, 0.16),
+            transparent 32%
+          ),
+          linear-gradient(180deg, #f8fcff 0%, #f1f7fb 42%, #f8fbff 100%);
         display: flex;
         flex-direction: column;
       }
 
       .music-page--video {
         padding: 0;
-        background: #071625;
       }
 
-      /* ── Shell (player housing) ────────────────── */
+      /* ── Shell (player housing)：浅蓝玻璃壳 ────── */
       .music-shell {
         width: min(1440px, 100%);
         min-height: calc(100dvh - var(--navbar-height, 64px) - 56px);
         margin: 0 auto;
         display: grid;
         grid-template-rows: auto minmax(0, 1fr) auto;
-        background: #091a2a;
-        border: 1px solid rgba(160, 195, 225, 0.12);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.82),
+          rgba(255, 255, 255, 0.52)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.72);
         border-radius: 16px;
+        box-shadow:
+          0 18px 56px rgba(70, 120, 170, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
         overflow: hidden;
       }
 
@@ -143,6 +162,7 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         background: transparent;
         border: none;
         border-radius: 0;
+        overflow: visible;
       }
 
       /* ── Header ────────────────────────────────── */
@@ -156,24 +176,62 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 
       .music-page--video .music-header {
         position: fixed;
-        top: 0;
+        /* 固定导航栏下方，避免被 navbar 遮挡 */
+        top: var(--navbar-height, 64px);
         left: 0;
         right: 0;
         z-index: 10;
-        padding: 16px clamp(20px, 4vw, 56px);
-        background: linear-gradient(to bottom, rgba(7, 22, 37, 0.85), transparent);
+        padding: 12px clamp(20px, 4vw, 56px) 16px;
+        background: linear-gradient(
+          to bottom,
+          rgba(248, 252, 255, 0.92),
+          transparent
+        );
+      }
+
+      /* 预览同款 eyebrow：等宽字体 + 大写字距 + 渐变短线 */
+      .music-header__eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 10px;
+        font-family: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--music-primary);
+        opacity: 0.85;
+      }
+
+      .music-header__eyebrow::before {
+        content: '';
+        width: 26px;
+        height: 1px;
+        background: linear-gradient(90deg, var(--music-primary), transparent);
       }
 
       .music-header__title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 0 0 4px;
+        margin: 0 0 6px;
+        font-family: 'Noto Serif SC', Georgia, 'Songti SC', 'SimSun', serif;
+        font-size: clamp(26px, 2.6vw, 34px);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: 0.01em;
         color: var(--music-text);
-        letter-spacing: -0.01em;
+      }
+
+      /* 英文名：衬线斜体 + 天空蓝→紫渐变字（浅色主题适配） */
+      .music-header__title em {
+        font-style: italic;
+        background: linear-gradient(100deg, #4fb8f5, #2f7fe0 55%, #7a8ce8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
 
       .music-header__subtitle {
-        font-size: 0.85rem;
+        font-size: 12.5px;
+        letter-spacing: 0.06em;
         color: var(--music-text-secondary);
         margin: 0;
       }
@@ -184,8 +242,13 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
         --mat-standard-button-toggle-text-color: var(--music-text-secondary);
         --mat-standard-button-toggle-selected-state-background-color: var(--music-surface-hover);
         --mat-standard-button-toggle-selected-state-text-color: var(--music-primary);
-        border-radius: 12px;
+        /* 预览同款胶囊外形 */
+        border-radius: 999px;
         overflow: hidden;
+      }
+
+      .music-header__toggle mat-button-toggle {
+        border-radius: 999px;
       }
 
       .music-header__toggle mat-icon {
@@ -228,7 +291,7 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
       /* ── Responsive: Mobile ────────────────────── */
       @media (max-width: 767px) {
         .music-page {
-          padding: 16px 12px 24px;
+          padding: calc(var(--navbar-height, 64px) + 16px) 12px 24px;
         }
 
         .music-header {
@@ -263,9 +326,9 @@ export class MusicComponent implements OnDestroy {
   onModeChange(mode: MusicMode): void {
     this.svc.setMode(mode);
     if (mode === 'video') {
-      this.lenis.stop();
+      this.lenis.destroyInstance();
     } else {
-      this.lenis.start();
+      this.lenis.recreate();
       requestAnimationFrame(() => this.lenis.resize());
     }
   }
@@ -276,7 +339,7 @@ export class MusicComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.svc.stopAll();
-    this.lenis.start();
+    this.lenis.recreate();
     requestAnimationFrame(() => this.lenis.resize());
   }
 }
