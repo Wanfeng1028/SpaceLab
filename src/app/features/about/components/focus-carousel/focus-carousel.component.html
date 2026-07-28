@@ -7,15 +7,15 @@
     (mouseenter)="stopAutoPlay()"
     (mouseleave)="startAutoPlay()"
   >
-    <button class="focus__arrow focus__arrow--prev" (click)="prev()" aria-label="上一个">‹</button>
+    <button class="focus__arrow" (click)="prev()" aria-label="上一个">‹</button>
 
-    <div
-      #track
-      class="focus__track"
-      (scroll)="onScroll()"
-    >
-      @for (card of cards; track card.id) {
-        <article class="focus__card">
+    <div class="focus__track">
+      @for (card of cards; track card.id; let i = $index) {
+        <article
+          class="focus__card"
+          [class.focus__card--active]="i === activeIndex()"
+          (click)="goTo(i)"
+        >
           <span class="focus__num">{{ card.num }}</span>
           <span class="focus__icon">{{ card.icon }}</span>
           <h3 class="focus__card-title">{{ card.title }}</h3>
@@ -29,7 +29,7 @@
       }
     </div>
 
-    <button class="focus__arrow focus__arrow--next" (click)="next()" aria-label="下一个">›</button>
+    <button class="focus__arrow" (click)="next()" aria-label="下一个">›</button>
   </div>
 
   <div class="focus__dots">

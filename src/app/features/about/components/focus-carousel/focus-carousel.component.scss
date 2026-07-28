@@ -1,7 +1,7 @@
-// Focus Carousel — horizontal scroll-snap cards
+// Focus Carousel — centered, arrows outside card area
 
 .focus {
-  padding: 0 20px 48px;
+  padding: 0 0 48px;
   text-align: center;
 }
 
@@ -27,73 +27,52 @@
   margin: 0 0 24px;
 }
 
-// ── Scroll Track ─────────────────────────────────────────────────────
+// ── Viewport: arrows are flex children, outside the track ─────────
 .focus__viewport {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
-  max-width: 1120px;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
-.focus__track {
-  flex: 1;
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: 8px 0 16px;
-
-  // Fade edges for scroll hint
-  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 4%,
-    black 96%,
-    transparent 100%
-  );
-
-  // Hide scrollbar
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-// ── Arrow Buttons ────────────────────────────────────────────────────
+// ── Arrow Buttons: flex-shrink 0, never overlap cards ─────────────
 .focus__arrow {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(86, 180, 255, 0.25);
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.75);
   color: rgba(86, 180, 255, 0.85);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 300;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(12px);
-  transition:
-    background 200ms ease,
-    border-color 200ms ease,
-    transform 200ms ease;
+  backdrop-filter: blur(10px);
+  transition: all 200ms ease;
 
   &:hover {
-    background: rgba(86, 180, 255, 0.12);
-    border-color: rgba(86, 180, 255, 0.45);
+    background: rgba(86, 180, 255, 0.14);
+    border-color: rgba(86, 180, 255, 0.5);
     transform: scale(1.08);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
   }
+}
+
+// ── Track: flex, centered, no overflow ──────────────────────────────
+.focus__track {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 12px;
 }
 
 // ── Dot Indicators ───────────────────────────────────────────────────
@@ -101,7 +80,7 @@
   display: flex;
   justify-content: center;
   gap: 8px;
-  padding: 4px 0 0;
+  padding: 20px 0 0;
 }
 
 .focus__dot {
@@ -112,17 +91,14 @@
   background: rgba(86, 180, 255, 0.2);
   cursor: pointer;
   padding: 0;
-  transition:
-    background 260ms ease,
-    width 260ms ease,
-    border-radius 260ms ease;
+  transition: all 260ms ease;
 
   &:hover {
     background: rgba(86, 180, 255, 0.4);
   }
 
   &--active {
-    width: 22px;
+    width: 24px;
     border-radius: 999px;
     background: rgba(86, 180, 255, 0.7);
   }
@@ -130,104 +106,149 @@
 
 // ── Card ─────────────────────────────────────────────────────────────
 .focus__card {
-  flex: 0 0 300px;
-  scroll-snap-align: start;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.48));
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 22px;
-  padding: 28px 24px;
+  flex: 0 0 190px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   text-align: left;
-  box-shadow:
-    0 20px 60px rgba(70, 120, 170, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(22px) saturate(145%);
-  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border-radius: 16px;
+  padding: 20px 16px;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  opacity: 0.5;
+  transform: scale(0.88);
+  filter: blur(0.6px);
+
   transition:
-    transform 260ms ease,
-    box-shadow 260ms ease;
+    opacity 480ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 480ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 480ms ease,
+    box-shadow 480ms ease,
+    background 480ms ease;
 
   &:hover {
-    transform: translateY(-3px);
+    opacity: 0.72;
+    transform: scale(0.93);
+  }
+
+  &--active {
+    opacity: 1;
+    transform: scale(1.06);
+    filter: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.85);
     box-shadow:
-      0 24px 64px rgba(70, 120, 170, 0.16),
-      inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      0 20px 56px rgba(70, 120, 170, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    z-index: 1;
   }
 }
 
 .focus__num {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
   font-weight: 700;
-  color: rgba(86, 180, 255, 0.6);
+  color: rgba(86, 180, 255, 0.5);
   letter-spacing: 0.08em;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .focus__icon {
   display: block;
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-  color: rgba(86, 180, 255, 0.8);
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: rgba(86, 180, 255, 0.6);
 }
 
 .focus__card-title {
-  font-size: 0.96rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: rgba(20, 34, 54, 0.92);
-  margin: 0 0 8px;
+  color: rgba(20, 34, 54, 0.88);
+  margin: 0 0 6px;
 }
 
 .focus__card-desc {
-  font-size: 0.82rem;
-  color: rgba(20, 34, 54, 0.62);
-  line-height: 1.65;
-  margin: 0 0 14px;
+  font-size: 0.72rem;
+  color: rgba(20, 34, 54, 0.48);
+  line-height: 1.5;
+  margin: 0 0 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .focus__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
+  margin-top: auto;
 }
 
 .focus__tag {
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-weight: 600;
-  color: rgba(20, 34, 54, 0.68);
-  background: rgba(235, 249, 255, 0.72);
-  border: 1px solid rgba(120, 216, 255, 0.32);
+  color: rgba(20, 34, 54, 0.52);
+  background: rgba(235, 249, 255, 0.6);
+  border: 1px solid rgba(120, 216, 255, 0.22);
   border-radius: 999px;
-  padding: 3px 10px;
+  padding: 2px 8px;
+}
+
+// ── Active card: bolder text ─────────────────────────────────────────
+.focus__card--active {
+  .focus__num {
+    font-size: 0.7rem;
+    color: rgba(86, 180, 255, 0.72);
+    margin-bottom: 8px;
+  }
+  .focus__icon {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  .focus__card-title {
+    font-size: 1.08rem;
+    margin-bottom: 8px;
+  }
+  .focus__card-desc {
+    font-size: 0.8rem;
+    color: rgba(20, 34, 54, 0.6);
+    margin-bottom: 14px;
+    -webkit-line-clamp: 4;
+  }
+  .focus__tag {
+    font-size: 0.68rem;
+    padding: 3px 10px;
+    color: rgba(20, 34, 54, 0.68);
+    border-color: rgba(120, 216, 255, 0.38);
+  }
 }
 
 // ── Mobile ───────────────────────────────────────────────────────────
 @media (max-width: 767px) {
-  .focus {
-    padding: 0 12px 40px;
-  }
-
   .focus__arrow {
     display: none;
   }
 
-  .focus__viewport {
-    gap: 0;
-  }
-
   .focus__track {
-    gap: 14px;
-    padding: 4px 0 12px;
+    display: block;
   }
 
   .focus__card {
-    flex: 0 0 82vw;
-    padding: 22px 18px;
-  }
-}
+    display: none;
 
-@media (max-width: 480px) {
-  .focus__card {
-    flex: 0 0 86vw;
+    &--active {
+      display: flex;
+      flex: none;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
   }
 }

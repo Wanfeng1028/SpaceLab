@@ -57,6 +57,14 @@ function getItemDate(item: AiNewsItem): string {
   return raw.slice(0, 10);
 }
 
+/** 将 Date 格式化为本地日期字符串 YYYY-MM-DD */
+function formatLocalDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 /** 计算 dateStr 距离当前时间的「本地日历天数差」，与 formatDate 保持口径一致 */
 function localDayDiff(dateStr: string): number {
   if (!dateStr) return Infinity;
