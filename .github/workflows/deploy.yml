@@ -36,6 +36,7 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: node scripts/build-content.mjs
       - run: npm run build -- --base-href=/SpaceLab/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

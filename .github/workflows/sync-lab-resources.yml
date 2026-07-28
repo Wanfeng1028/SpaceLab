@@ -49,8 +49,6 @@ jobs:
       - name: Sync lab resources
         id: sync
         run: node scripts/sync-lab-resources.mjs
-        env:
-          GITHUB_OUTPUT: ${{ github.output }}
 
       - name: Check for changes
         id: changes

@@ -51,8 +51,6 @@ jobs:
       - name: Sync AI Frontline news
         id: sync
         run: node scripts/sync-ai-frontline.mjs
-        env:
-          GITHUB_OUTPUT: ${{ github.output }}
 
       - name: Check for changes
         id: changes

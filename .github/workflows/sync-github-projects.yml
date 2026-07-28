@@ -46,7 +46,6 @@ jobs:
         run: node scripts/sync-github-projects.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_OUTPUT: ${{ github.output }}
 
       - name: Check for changes
         id: changes
