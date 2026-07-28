@@ -5,7 +5,6 @@ import {
   input,
   output,
   ElementRef,
-  AfterViewInit,
   OnDestroy,
   viewChild,
   computed,
@@ -102,8 +101,6 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
       :host {
         display: block;
         height: 100%;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
       }
 
       .feed-item {
@@ -112,26 +109,24 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
         align-items: center;
         justify-content: center;
         /* 顶部为固定导航栏 + 视频模式浮动页头留位 */
-        padding: calc(var(--navbar-height, 64px) + 72px) 20px 32px;
+        padding: calc(var(--navbar-height, 64px) + 56px) 24px 24px;
         box-sizing: border-box;
       }
 
       /* ── Stage: sky glass panel (same language as audio side) ── */
       .stage {
-        width: min(1280px, 100%);
-        padding: 14px 14px 10px;
+        width: min(1400px, 100%);
+        padding: 12px 12px 8px;
         border-radius: 20px;
         background: linear-gradient(
           135deg,
-          rgba(255, 255, 255, 0.82),
-          rgba(255, 255, 255, 0.52)
+          rgba(255, 255, 255, 0.92),
+          rgba(255, 255, 255, 0.78)
         );
         border: 1px solid rgba(255, 255, 255, 0.72);
         box-shadow:
           0 18px 56px rgba(70, 120, 170, 0.12),
           inset 0 1px 0 rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(18px) saturate(140%);
-        -webkit-backdrop-filter: blur(18px) saturate(140%);
       }
 
       /* ── Screen ───────────────────────────────── */
@@ -141,7 +136,7 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
         overflow: hidden;
         background: #0c1a2c;
         aspect-ratio: 16 / 9;
-        max-height: calc(100dvh - var(--navbar-height, 64px) - 180px);
+        max-height: calc(100dvh - var(--navbar-height, 64px) - 160px);
         margin: 0 auto;
       }
 
@@ -257,13 +252,11 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
     `,
   ],
 })
-export class VideoFeedItemComponent implements AfterViewInit, OnDestroy {
+export class VideoFeedItemComponent implements OnDestroy {
   readonly svc = inject(MediaPlaybackService);
-  private readonly hostEl = inject(ElementRef<HTMLElement>);
 
   readonly track = input.required<MusicTrack>();
   readonly isActive = input(false);
-  readonly visible = output<string>();
   readonly backToAudio = output();
 
   readonly videoElement = viewChild<ElementRef<HTMLVideoElement>>('videoElement');
@@ -293,26 +286,8 @@ export class VideoFeedItemComponent implements AfterViewInit, OnDestroy {
     return 'idle';
   });
 
-  private observer: IntersectionObserver | null = null;
-
-  ngAfterViewInit(): void {
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            this.visible.emit(this.track().key);
-          }
-        }
-      },
-      { threshold: 0.7 },
-    );
-    this.observer.observe(this.hostEl.nativeElement);
-  }
-
   ngOnDestroy(): void {
     this.cleanupVideo();
-    this.observer?.disconnect();
-    this.observer = null;
   }
 
   /** User clicks play button */

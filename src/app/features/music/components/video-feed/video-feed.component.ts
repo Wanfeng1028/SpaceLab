@@ -5,8 +5,10 @@ import {
   output,
   ViewChildren,
   QueryList,
-  AfterViewInit,
   OnDestroy,
+  ElementRef,
+  NgZone,
+  signal,
 } from '@angular/core';
 import { MediaPlaybackService } from '../../services/media-playback.service';
 import {
@@ -18,16 +20,33 @@ import {
   standalone: true,
   imports: [VideoFeedItemComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'video-feed' },
+  host: {
+    class: 'video-feed',
+    '(wheel)': 'onWheel($event)',
+  },
   template: `
-    <div class="feed-scroll">
-      @for (track of svc.tracks; track track.key) {
+    <div
+      class="feed-track"
+      [style.transform]="'translateY(-' + currentIndex() * 100 + '%)'"
+    >
+      @for (track of svc.tracks; track track.key; let i = $index) {
         <app-video-feed-item
           [track]="track"
-          [isActive]="svc.activeVideoKey() === track.key"
-          (visible)="onItemVisible($event)"
+          [isActive]="i === currentIndex()"
           (backToAudio)="onBackToAudio()"
         />
+      }
+    </div>
+
+    <!-- Dot indicators -->
+    <div class="feed-dots">
+      @for (track of svc.tracks; track track.key; let i = $index) {
+        <button
+          class="feed-dot"
+          [class.feed-dot--active]="i === currentIndex()"
+          (click)="goTo(i)"
+          [attr.aria-label]="'切换到第' + (i + 1) + '个视频'"
+        ></button>
       }
     </div>
   `,
@@ -37,51 +56,111 @@ import {
         display: block;
         height: 100%;
         overflow: hidden;
+        position: relative;
       }
 
-      .feed-scroll {
+      .feed-track {
         height: 100%;
-        overflow-y: auto;
-        scroll-snap-type: y mandatory;
-        overscroll-behavior: contain;
-        scrollbar-width: none;
+        transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
       }
 
-      .feed-scroll::-webkit-scrollbar {
-        display: none;
+      /* ── Dot navigation ── */
+      .feed-dots {
+        position: absolute;
+        right: 24px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 5;
+      }
+
+      .feed-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid rgba(47, 127, 224, 0.5);
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+        transition: all 250ms ease;
+      }
+
+      .feed-dot--active {
+        background: #2f7fe0;
+        border-color: #2f7fe0;
+        transform: scale(1.3);
+      }
+
+      .feed-dot:hover:not(.feed-dot--active) {
+        border-color: #2f7fe0;
+        background: rgba(47, 127, 224, 0.25);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .feed-track {
+          transition: none;
+        }
       }
     `,
   ],
 })
-export class VideoFeedComponent implements AfterViewInit, OnDestroy {
+export class VideoFeedComponent implements OnDestroy {
   readonly svc = inject(MediaPlaybackService);
   readonly backToAudio = output<void>();
+
+  private readonly zone = inject(NgZone);
+  private readonly hostEl = inject(ElementRef<HTMLElement>);
 
   @ViewChildren(VideoFeedItemComponent)
   feedItems!: QueryList<VideoFeedItemComponent>;
 
-  private currentActiveKey: string | null = null;
+  readonly currentIndex = signal(0);
 
-  ngAfterViewInit(): void {
-    // No additional setup needed; IntersectionObserver is in each item
-  }
+  /** Lock to prevent rapid wheel spam during transition */
+  private locked = false;
+  private lockTimer: ReturnType<typeof setTimeout> | null = null;
 
-  ngOnDestroy(): void {
-    this.cleanupAllVideos();
-  }
+  onWheel(e: WheelEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
 
-  /** Called when an item becomes >= 70% visible */
-  onItemVisible(key: string): void {
-    if (this.currentActiveKey === key) return;
+    if (this.locked) return;
 
-    // Clean up old active item's video
-    if (this.currentActiveKey) {
-      const oldItem = this.findItem(this.currentActiveKey);
-      oldItem?.cleanupVideo();
+    const delta = e.deltaY;
+    if (Math.abs(delta) < 30) return; // ignore tiny trackpad noise
+
+    const total = this.svc.tracks.length;
+    const cur = this.currentIndex();
+
+    if (delta > 0 && cur < total - 1) {
+      this.goTo(cur + 1);
+    } else if (delta < 0 && cur > 0) {
+      this.goTo(cur - 1);
     }
+  }
 
-    this.currentActiveKey = key;
-    this.svc.activeVideoKey.set(key);
+  goTo(index: number): void {
+    if (index === this.currentIndex()) return;
+
+    // Cleanup old active video
+    const oldItem = this.findItemByIndex(this.currentIndex());
+    oldItem?.cleanupVideo();
+
+    this.currentIndex.set(index);
+
+    // Set new active key in service
+    const track = this.svc.tracks[index];
+    this.svc.activeVideoKey.set(track?.key ?? null);
+
+    // Lock for transition duration
+    this.locked = true;
+    if (this.lockTimer) clearTimeout(this.lockTimer);
+    this.lockTimer = setTimeout(() => {
+      this.locked = false;
+    }, 700);
   }
 
   onBackToAudio(): void {
@@ -89,13 +168,17 @@ export class VideoFeedComponent implements AfterViewInit, OnDestroy {
     this.backToAudio.emit();
   }
 
-  private findItem(key: string): VideoFeedItemComponent | undefined {
-    return this.feedItems?.find((item) => item.track().key === key);
+  ngOnDestroy(): void {
+    this.cleanupAllVideos();
+    if (this.lockTimer) clearTimeout(this.lockTimer);
+  }
+
+  private findItemByIndex(index: number): VideoFeedItemComponent | undefined {
+    return this.feedItems?.toArray()[index];
   }
 
   private cleanupAllVideos(): void {
     this.feedItems?.forEach((item) => item.cleanupVideo());
-    this.currentActiveKey = null;
     this.svc.activeVideoKey.set(null);
   }
 }
