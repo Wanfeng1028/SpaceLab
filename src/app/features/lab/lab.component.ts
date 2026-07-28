@@ -145,16 +145,36 @@ export class LabComponent implements OnInit {
     const query = this.searchQuery();
     const isSearchMode = query.trim().length > 0;
 
-    // If searching, use search results
+    // Pick the base dataset
+    let data: LabResourceItem[];
     if (isSearchMode && this.isSearching()) {
-      return this.searchResults();
+      data = this.searchResults();
+    } else if (tab === 'tools') {
+      data = this.toolsData();
+    } else {
+      data = this.projectsData();
     }
 
-    // Otherwise use paginated data for tools, or projects data
-    if (tab === 'tools') {
-      return this.toolsData();
-    }
-    return this.projectsData();
+    // Apply date range + category filters
+    const range = this.selectedDateRange();
+    const cat = this.selectedCategory();
+    const normalizedCat = normalizeSearchText(cat);
+
+    return data.filter((item) => {
+      if (!isAfterContentStartDate(item.publishedAt || item.fetchedAt || item.date)) {
+        return false;
+      }
+      if (!matchesDateRange(item, range)) {
+        return false;
+      }
+      if (cat !== 'all') {
+        const matchesCategory =
+          normalizeSearchText(item.category) === normalizedCat ||
+          item.tags.some((tag) => normalizeSearchText(tag) === normalizedCat);
+        if (!matchesCategory) return false;
+      }
+      return true;
+    });
   });
 
   readonly totalPages = computed(() => {
