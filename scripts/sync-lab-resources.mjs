@@ -50,6 +50,10 @@ function relativeTimeToDate(label) {
   if (monthM)
     return new Date(now.getTime() - parseInt(monthM[1]) * 2_592_000_000).toISOString().slice(0, 10);
 
+  const yearM = label.match(/(\d+)\s*年前/);
+  if (yearM)
+    return new Date(now.getTime() - parseInt(yearM[1]) * 31_536_000_000).toISOString().slice(0, 10);
+
   return null;
 }
 

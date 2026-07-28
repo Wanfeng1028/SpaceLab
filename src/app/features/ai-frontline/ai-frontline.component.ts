@@ -51,15 +51,19 @@ export interface AiFrontlineSource {
 
 type DateRangeFilter = 'all' | 'today' | 'yesterday' | '7d' | '30d';
 
-function formatLocalDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+function getItemDate(item: AiNewsItem): string {
+  const raw = item.date || item.fetchedAt?.slice(0, 10) || '';
+  // 兼容完整 ISO 时间戳或纯日期字符串，统一归一化为 YYYY-MM-DD
+  return raw.slice(0, 10);
 }
 
-function getItemDate(item: AiNewsItem): string {
-  return item.date || item.fetchedAt?.slice(0, 10) || '';
+/** 计算 dateStr 距离当前时间的「本地日历天数差」，与 formatDate 保持口径一致 */
+function localDayDiff(dateStr: string): number {
+  if (!dateStr) return Infinity;
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return Infinity;
+  const now = new Date();
+  return Math.floor((now.getTime() - d.getTime()) / 86_400_000);
 }
 
 function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
@@ -67,26 +71,11 @@ function matchesDateRange(item: AiNewsItem, range: DateRangeFilter): boolean {
   if (!date) return range === 'all';
   if (range === 'all') return true;
 
-  const today = new Date();
-  const todayStr = formatLocalDate(today);
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const yesterdayStr = formatLocalDate(yesterday);
-
-  if (range === 'today') return date === todayStr;
-  if (range === 'yesterday') return date === yesterdayStr;
-
-  const itemTime = new Date(`${date}T00:00:00`).getTime();
-  if (range === '7d') {
-    const start = new Date(today);
-    start.setDate(today.getDate() - 6);
-    return itemTime >= new Date(formatLocalDate(start)).getTime();
-  }
-  if (range === '30d') {
-    const start = new Date(today);
-    start.setDate(today.getDate() - 29);
-    return itemTime >= new Date(formatLocalDate(start)).getTime();
-  }
+  const diff = localDayDiff(date);
+  if (range === 'today') return diff === 0;
+  if (range === 'yesterday') return diff === 1;
+  if (range === '7d') return diff >= 0 && diff <= 6;
+  if (range === '30d') return diff >= 0 && diff <= 29;
   return true;
 }
 

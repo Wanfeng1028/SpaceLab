@@ -62,26 +62,15 @@ function matchesDateRange(item: LabResourceItem, range: DateRangeFilter): boolea
   if (!isAfterContentStartDate(date)) return false;
   if (range === 'all') return true;
 
-  const today = new Date();
-  const todayStr = today.toISOString().slice(0, 10);
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().slice(0, 10);
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return false;
+  const now = new Date();
+  const diff = Math.floor((now.getTime() - d.getTime()) / 86_400_000);
 
-  if (range === 'today') return date === todayStr;
-  if (range === 'yesterday') return date === yesterdayStr;
-
-  const itemTime = new Date(`${date}T00:00:00`).getTime();
-  if (range === '7d') {
-    const start = new Date(today);
-    start.setDate(today.getDate() - 6);
-    return itemTime >= new Date(start.toISOString().slice(0, 10)).getTime();
-  }
-  if (range === '30d') {
-    const start = new Date(today);
-    start.setDate(today.getDate() - 29);
-    return itemTime >= new Date(start.toISOString().slice(0, 10)).getTime();
-  }
+  if (range === 'today') return diff === 0;
+  if (range === 'yesterday') return diff === 1;
+  if (range === '7d') return diff >= 0 && diff <= 6;
+  if (range === '30d') return diff >= 0 && diff <= 29;
   return true;
 }
 
