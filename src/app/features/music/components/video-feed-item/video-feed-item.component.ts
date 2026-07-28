@@ -108,16 +108,17 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
         display: flex;
         align-items: center;
         justify-content: center;
-        /* 顶部为固定导航栏 + 视频模式浮动页头留位 */
-        padding: calc(var(--navbar-height, 64px) + 56px) 24px 24px;
+        /* 顶部仅留 navbar + 浮动页头最小间距 */
+        padding: calc(var(--navbar-height, 64px) + 40px) 16px 16px;
         box-sizing: border-box;
       }
 
       /* ── Stage: sky glass panel (same language as audio side) ── */
       .stage {
-        width: min(1400px, 100%);
-        padding: 12px 12px 8px;
-        border-radius: 20px;
+        width: 100%;
+        max-width: 1600px;
+        padding: 10px 10px 6px;
+        border-radius: 18px;
         background: linear-gradient(
           135deg,
           rgba(255, 255, 255, 0.92),
@@ -132,11 +133,11 @@ import { MediaErrorComponent } from '../media-error/media-error.component';
       /* ── Screen ───────────────────────────────── */
       .stage__screen {
         position: relative;
-        border-radius: 14px;
+        border-radius: 12px;
         overflow: hidden;
         background: #0c1a2c;
         aspect-ratio: 16 / 9;
-        max-height: calc(100dvh - var(--navbar-height, 64px) - 160px);
+        max-height: calc(100dvh - var(--navbar-height, 64px) - 130px);
         margin: 0 auto;
       }
 
