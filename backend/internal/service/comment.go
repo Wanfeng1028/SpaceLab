@@ -21,6 +21,7 @@ type CreateCommentInput struct {
 	ContentType string
 	Content     string
 	ParentID    *string
+	IP          string // 评论者客户端IP（合规：记录+解析归属地）
 }
 
 type UpdateCommentInput struct {
@@ -186,37 +187,32 @@ func (s *CommentService) CreateComment(input CreateCommentInput, userID string) 
 		return nil, err
 	}
 
-	// 确定评论初始状态：检查是否需要先审后发
-	initialStatus := "approved"
-
-	// 全站先审后发开关
-	var preModerateSetting model.SiteSetting
-	if err := s.db.Where("`key` = ?", "comment_pre_moderate").First(&preModerateSetting); err == nil {
-		if preModerateSetting.Value == "true" || preModerateSetting.Value == "1" {
-			initialStatus = "pending"
-		}
-	}
-
-	// 新用户先审后发
+	// 合规：后台实名——邮箱未验证的用户不允许评论
 	var user model.User
-	if err := s.db.Where("id = ?", userID).First(&user).Error; err == nil {
-		if user.Status == "pending_verify" {
-			initialStatus = "pending"
-		}
+	if err := s.db.Where("id = ?", userID).First(&user).Error; err != nil {
+		return nil, errors.New("user not found")
+	}
+	if user.EmailVerifiedAt == nil {
+		return nil, errors.New("email not verified, please verify your email before commenting")
 	}
 
-	// 敏感词检查：命中则进入待审核
+	// 解析 IP 归属地（合规：前台展示）
+	ipLocation := utils.GetIPLocation(input.IP)
+
+	// 确定评论初始状态：先审后发为默认策略
+	initialStatus := "pending"
+
+	// 信任分级：累计通过审核 >= 3 条且账号正常的用户，新评论自动通过
+	if user.CommentApprovedCount >= 3 && user.Status == "active" {
+		initialStatus = "approved"
+	}
+
+	// 敏感词检查：命中则强制进入待审核（覆盖信任分级）
 	if utils.GlobalSensitiveChecker != nil {
 		if hit, category := utils.GlobalSensitiveChecker.CheckWithCategory(input.Content); hit {
 			initialStatus = "pending"
 			utils.Logger.Info("Comment hit sensitive word, set to pending", zap.String("category", category))
 		}
-	}
-
-	// 如果初始状态已经是 pending，不需要再改
-	if initialStatus == "approved" {
-		// 默认新评论也进入 pending，等管理员确认后再自动批准
-		initialStatus = "pending"
 	}
 
 	comment := model.Comment{
@@ -227,6 +223,8 @@ func (s *CommentService) CreateComment(input CreateCommentInput, userID string) 
 		ParentID:    parentID,
 		Content:     input.Content,
 		Status:      initialStatus,
+		IP:          input.IP,
+		IPLocation:  ipLocation,
 	}
 
 	if err := s.db.Create(&comment).Error; err != nil {
@@ -295,9 +293,20 @@ func (s *CommentService) DeleteComment(id string, userID string) error {
 
 // ApproveComment 审核通过评论
 func (s *CommentService) ApproveComment(id string) error {
+	// 获取评论以找到作者
+	var comment model.Comment
+	if err := s.db.Where("id = ?", id).First(&comment).Error; err != nil {
+		return errors.New("comment not found")
+	}
+
 	if err := s.db.Model(&model.Comment{}).Where("id = ?", id).Update("status", "approved").Error; err != nil {
 		return errors.New("failed to approve comment")
 	}
+
+	// 信任分级：递增作者累计通过数
+	s.db.Model(&model.User{}).Where("id = ?", comment.UserID).
+		Update("comment_approved_count", gorm.Expr("comment_approved_count + 1"))
+
 	return nil
 }
 

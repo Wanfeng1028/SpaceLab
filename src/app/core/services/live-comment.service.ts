@@ -12,6 +12,7 @@ export interface LiveComment {
   created_at: string;   // ISO 8601 from backend
   updated_at: string;
   user_id?: string;
+  ip_location?: string; // IP归属地（合规展示）
   user?: {
     id: string;
     username: string;

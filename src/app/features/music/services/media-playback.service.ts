@@ -9,17 +9,17 @@ import {
 export type MusicMode = 'audio' | 'video';
 
 /**
- * 音乐台播放状态中枢。
- * 由 MusicComponent 局部提供（非 root），离开页面时自动销毁。
+ * 音乐台播放状态中枢（root 级单例）。
+ * 自持 <audio> 元素，离开音乐页面后音频继续播放。
  *
  * 职责：
- * - 管理唯一 <audio> 元素引用（由 AudioPlayerComponent 注册）
+ * - 创建并管理唯一 <audio> 元素
  * - 播放/暂停/切歌/进度/音量
  * - audio/video 互斥
  * - 媒体事件解析（loadstart/canplay/waiting/error/timeupdate/ended）
  * - 资源清理
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MediaPlaybackService implements OnDestroy {
   // ── 信号 ────────────────────────────────────────
   readonly tracks = TRACKS;
@@ -41,28 +41,16 @@ export class MediaPlaybackService implements OnDestroy {
   readonly activeVideoKey = signal<string | null>(null);
 
   // ── 内部 ────────────────────────────────────────
-  private audio: HTMLAudioElement | null = null;
+  private audio: HTMLAudioElement;
   private timeUpdateHandler = () => {
-    if (this.audio) {
-      this.currentTime.set(this.audio.currentTime);
-    }
+    this.currentTime.set(this.audio.currentTime);
   };
 
-  // ── Audio 元素注册 ──────────────────────────────
-  attachAudioElement(el: HTMLAudioElement): void {
-    this.audio = el;
-    el.volume = this.volume();
-    this.bindAudioEvents(el);
-  }
-
-  detachAudioElement(): void {
-    if (this.audio) {
-      this.unbindAudioEvents(this.audio);
-      this.audio.pause();
-      this.audio.removeAttribute('src');
-      this.audio.load();
-      this.audio = null;
-    }
+  constructor() {
+    this.audio = new Audio();
+    this.audio.preload = 'auto';
+    this.audio.volume = this.volume();
+    this.bindAudioEvents(this.audio);
   }
 
   // ── 播放控制 ────────────────────────────────────
@@ -80,8 +68,6 @@ export class MediaPlaybackService implements OnDestroy {
     this.currentTime.set(0);
 
     const audio = this.audio;
-    if (!audio) return;
-
     const src = resolveMediaUrl(track.mp3Src);
 
     audio.pause();
@@ -107,7 +93,7 @@ export class MediaPlaybackService implements OnDestroy {
 
   togglePlay(): void {
     const audio = this.audio;
-    if (!audio || !this.currentTrack()) return;
+    if (!this.currentTrack()) return;
 
     if (audio.paused) {
       audio
@@ -138,17 +124,13 @@ export class MediaPlaybackService implements OnDestroy {
   }
 
   seek(time: number): void {
-    if (this.audio) {
-      this.audio.currentTime = time;
-      this.currentTime.set(time);
-    }
+    this.audio.currentTime = time;
+    this.currentTime.set(time);
   }
 
   setVolume(vol: number): void {
     this.volume.set(vol);
-    if (this.audio) {
-      this.audio.volume = vol;
-    }
+    this.audio.volume = vol;
   }
 
   /** 格式化秒数为 mm:ss */
@@ -165,7 +147,7 @@ export class MediaPlaybackService implements OnDestroy {
 
     if (m === 'video') {
       // 进入视频模式：暂停音频
-      if (this.audio && !this.audio.paused) {
+      if (!this.audio.paused) {
         this.audio.pause();
         this.isPlaying.set(false);
       }
@@ -183,7 +165,7 @@ export class MediaPlaybackService implements OnDestroy {
 
   setActiveVideo(key: string | null): void {
     // 音频视频互斥：播放视频时暂停音频
-    if (key && this.audio && !this.audio.paused) {
+    if (key && !this.audio.paused) {
       this.audio.pause();
       this.isPlaying.set(false);
     }
@@ -211,7 +193,9 @@ export class MediaPlaybackService implements OnDestroy {
   }
 
   stopAll(): void {
-    this.detachAudioElement();
+    this.audio.pause();
+    this.audio.removeAttribute('src');
+    this.audio.load();
     this.isPlaying.set(false);
     this.isLoading.set(false);
     this.isBuffering.set(false);
@@ -236,19 +220,6 @@ export class MediaPlaybackService implements OnDestroy {
     el.addEventListener('timeupdate', this.timeUpdateHandler);
   }
 
-  private unbindAudioEvents(el: HTMLAudioElement): void {
-    el.removeEventListener('loadstart', this.onLoadStart);
-    el.removeEventListener('loadedmetadata', this.onLoadedMetadata);
-    el.removeEventListener('canplay', this.onCanPlay);
-    el.removeEventListener('playing', this.onPlaying);
-    el.removeEventListener('pause', this.onPause);
-    el.removeEventListener('waiting', this.onWaiting);
-    el.removeEventListener('stalled', this.onStalled);
-    el.removeEventListener('ended', this.onEnded);
-    el.removeEventListener('error', this.onError);
-    el.removeEventListener('timeupdate', this.timeUpdateHandler);
-  }
-
   // ── 私有：事件处理 ──────────────────────────────
   private onLoadStart = () => {
     this.isLoading.set(true);
@@ -256,9 +227,7 @@ export class MediaPlaybackService implements OnDestroy {
   };
 
   private onLoadedMetadata = () => {
-    if (this.audio) {
-      this.duration.set(this.audio.duration);
-    }
+    this.duration.set(this.audio.duration);
   };
 
   private onCanPlay = () => {

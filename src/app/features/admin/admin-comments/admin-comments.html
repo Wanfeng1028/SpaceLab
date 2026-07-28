@@ -2,6 +2,16 @@
   <div class="comments__header">
     <h2 class="comments__title">评论审核</h2>
     <div class="comments__toolbar">
+      <div class="comments__global-toggle">
+        <span class="comments__toggle-label">全站评论</span>
+        <nz-switch
+          [ngModel]="commentsEnabled()"
+          (ngModelChange)="onToggleComments($event)"
+          nzCheckedChildren="开"
+          nzUnCheckedChildren="关"
+          nzSize="small"
+        ></nz-switch>
+      </div>
       <nz-radio-group
         [ngModel]="statusFilter()"
         (ngModelChange)="onStatusFilterChange($event)"
@@ -30,6 +40,7 @@
       <tr>
         <th>评论内容</th>
         <th nzWidth="140px">作者</th>
+        <th nzWidth="100px">IP属地</th>
         <th nzWidth="100px">状态</th>
         <th nzWidth="150px">时间</th>
         <th nzWidth="200px">操作</th>
@@ -43,6 +54,7 @@
             <div class="comments__meta">文章 #{{ comment.post_id }}</div>
           </td>
           <td>{{ authorName(comment) }}</td>
+          <td>{{ comment.ip_location || '-' }}</td>
           <td>
             <nz-tag [nzColor]="statusColor(comment.status)">{{ statusText(comment.status) }}</nz-tag>
           </td>
@@ -88,7 +100,7 @@
         </tr>
       } @empty {
         <tr>
-          <td colspan="5" class="comments__empty">暂无评论</td>
+          <td colspan="6" class="comments__empty">暂无评论</td>
         </tr>
       }
     </tbody>

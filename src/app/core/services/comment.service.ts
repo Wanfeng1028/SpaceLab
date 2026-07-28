@@ -19,6 +19,7 @@ export interface AdminComment {
   parent_id: string | null;
   content: string;
   status: CommentStatus;
+  ip_location?: string;
   created_at: string;
   updated_at: string;
   user?: CommentAuthor;

@@ -9,7 +9,11 @@ import {
   ElementRef,
   NgZone,
   signal,
+  computed,
 } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MediaPlaybackService } from '../../services/media-playback.service';
 import {
   VideoFeedItemComponent,
@@ -18,7 +22,7 @@ import {
 @Component({
   selector: 'app-video-feed',
   standalone: true,
-  imports: [VideoFeedItemComponent],
+  imports: [VideoFeedItemComponent, MatIconModule, MatButtonModule, MatTooltipModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'video-feed',
@@ -34,9 +38,22 @@ import {
           [track]="track"
           [isActive]="i === currentIndex()"
           (backToAudio)="onBackToAudio()"
+          (playingStateChange)="onPlayingStateChange($event)"
         />
       }
     </div>
+
+    <!-- Scroll lock button -->
+    <button
+      mat-mini-fab
+      class="feed-lock"
+      [class.feed-lock--active]="scrollLocked()"
+      (click)="toggleLock()"
+      [attr.aria-label]="scrollLocked() ? '解锁滚轮切换' : '锁定滚轮切换'"
+      [matTooltip]="scrollLocked() ? '已锁定，点击解锁滚轮切换' : '点击锁定，防止误触滚轮'"
+    >
+      <mat-icon>{{ scrollLocked() ? 'lock' : 'lock_open' }}</mat-icon>
+    </button>
 
     <!-- Dot indicators -->
     <div class="feed-dots">
@@ -63,6 +80,27 @@ import {
         height: 100%;
         transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform;
+      }
+
+      /* ── Lock button ── */
+      .feed-lock {
+        position: absolute;
+        top: calc(var(--navbar-height, 64px) + 16px);
+        right: 24px;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.85);
+        color: rgba(18, 32, 48, 0.6);
+        box-shadow: 0 2px 12px rgba(70, 120, 170, 0.15);
+        transition: all 250ms ease;
+      }
+
+      .feed-lock--active {
+        background: #2f7fe0;
+        color: #fff;
+      }
+
+      .feed-lock:hover {
+        transform: scale(1.1);
       }
 
       /* ── Dot navigation ── */
@@ -119,6 +157,9 @@ export class VideoFeedComponent implements OnDestroy {
 
   readonly currentIndex = signal(0);
 
+  /** Scroll lock: when true, wheel events are ignored */
+  readonly scrollLocked = signal(false);
+
   /** Lock to prevent rapid wheel spam during transition */
   private locked = false;
   private lockTimer: ReturnType<typeof setTimeout> | null = null;
@@ -127,7 +168,7 @@ export class VideoFeedComponent implements OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    if (this.locked) return;
+    if (this.scrollLocked() || this.locked) return;
 
     const delta = e.deltaY;
     if (Math.abs(delta) < 30) return; // ignore tiny trackpad noise
@@ -139,6 +180,17 @@ export class VideoFeedComponent implements OnDestroy {
       this.goTo(cur + 1);
     } else if (delta < 0 && cur > 0) {
       this.goTo(cur - 1);
+    }
+  }
+
+  toggleLock(): void {
+    this.scrollLocked.update((v) => !v);
+  }
+
+  /** Auto-lock when video starts playing, auto-unlock when stopped */
+  onPlayingStateChange(playing: boolean): void {
+    if (playing) {
+      this.scrollLocked.set(true);
     }
   }
 

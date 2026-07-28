@@ -28,7 +28,6 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
     VideoFeedComponent,
     PlayerBarComponent,
   ],
-  providers: [MediaPlaybackService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -346,7 +345,7 @@ export class MusicComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.svc.stopAll();
+    // 不再 stopAll —— 音频跨页面持续播放
     this.lenis.recreate();
     requestAnimationFrame(() => this.lenis.resize());
   }

@@ -134,6 +134,8 @@ export class LiveCommentComponent implements OnInit, OnChanges {
         // 失败不清空输入框
         if (err.status === 401) {
           this.error = '请先登录后再发表评论';
+        } else if (err.status === 403 && err.error?.error?.includes('验证邮箱')) {
+          this.error = '请先验证邮箱后再发表评论';
         } else {
           this.error = '评论发布失败，请稍后再试';
         }

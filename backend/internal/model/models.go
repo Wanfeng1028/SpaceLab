@@ -24,6 +24,7 @@ type User struct {
 	LockedUntil       *time.Time `json:"locked_until,omitempty"`
 	LastLoginAt       *time.Time `json:"last_login_at,omitempty"`
 	LastLoginIP       string     `gorm:"size:45" json:"last_login_ip,omitempty"`
+	CommentApprovedCount int     `gorm:"default:0" json:"comment_approved_count"` // 累计通过审核的评论数（信任分级）
 	NewsletterOptIn   bool       `gorm:"default:false" json:"newsletter_opt_in"`
 	NewsletterOptInAt *time.Time `json:"newsletter_opt_in_at,omitempty"`
 	MailerLiteID      string     `gorm:"size:255" json:"mailerlite_id,omitempty"`
@@ -101,6 +102,8 @@ type Comment struct {
 	ParentID    *uuid.UUID     `gorm:"type:uuid" json:"parent_id"`
 	Content     string         `gorm:"type:text;not null" json:"content"`
 	Status      string         `gorm:"size:20;default:'pending'" json:"status"` // pending, approved, rejected, spam
+	IP          string         `gorm:"size:45" json:"ip,omitempty"`             // 评论者IP（合规：后台记录）
+	IPLocation  string         `gorm:"size:100" json:"ip_location"`             // IP归属地（合规：前台展示，省/国家级）
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`

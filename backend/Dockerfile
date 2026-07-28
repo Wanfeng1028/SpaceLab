@@ -28,6 +28,9 @@ RUN apk --no-cache add ca-certificates tzdata && \
 # Copy binary from builder
 COPY --from=builder /build/main .
 
+# Copy IP location data (ip2region.xdb)
+COPY --from=builder /build/data ./data
+
 # Create uploads directory with correct ownership
 RUN mkdir -p /app/uploads && \
     chown -R appuser:appgroup /app/uploads

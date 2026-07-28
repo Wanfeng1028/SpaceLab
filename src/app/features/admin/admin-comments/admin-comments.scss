@@ -20,6 +20,20 @@
   gap: 12px;
 }
 
+.comments__global-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 12px;
+  border-right: 1px solid #f0f0f0;
+}
+
+.comments__toggle-label {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+}
+
 .comments__content-cell {
   max-width: 420px;
 }

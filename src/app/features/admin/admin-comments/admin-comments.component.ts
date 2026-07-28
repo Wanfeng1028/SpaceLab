@@ -1,12 +1,14 @@
 import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import {
@@ -14,6 +16,7 @@ import {
   AdminComment,
   CommentStatus,
 } from '../../../core/services/comment.service';
+import { environment } from '../../../../environments/environment';
 
 type StatusFilter = CommentStatus | '';
 
@@ -28,6 +31,7 @@ type StatusFilter = CommentStatus | '';
     NzTagModule,
     NzTooltipModule,
     NzRadioModule,
+    NzSwitchModule,
     NzModalModule,
   ],
   templateUrl: './admin-comments.html',
@@ -38,10 +42,13 @@ export class AdminCommentsComponent implements OnInit {
   private commentService = inject(CommentService);
   private message = inject(NzMessageService);
   private modal = inject(NzModalService);
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
   readonly comments = signal<AdminComment[]>([]);
   readonly loading = signal(false);
   readonly statusFilter = signal<StatusFilter>('pending');
+  readonly commentsEnabled = signal(true);
 
   // 状态筛选选项
   readonly statusOptions: { label: string; value: StatusFilter }[] = [
@@ -53,6 +60,32 @@ export class AdminCommentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadComments();
+    this.loadCommentsEnabled();
+  }
+
+  /** 加载全站评论开关状态 */
+  private loadCommentsEnabled(): void {
+    this.http.get<{ settings: Record<string, string> }>(`${this.apiUrl}/admin/settings`).subscribe({
+      next: (res) => {
+        const val = res.settings?.['comments_enabled'];
+        this.commentsEnabled.set(val !== 'false' && val !== '0');
+      },
+      error: () => this.commentsEnabled.set(true),
+    });
+  }
+
+  /** 一键关闭/开放全站评论 */
+  onToggleComments(enabled: boolean): void {
+    this.http.put(`${this.apiUrl}/admin/settings`, {
+      key: 'comments_enabled',
+      value: enabled ? 'true' : 'false',
+    }).subscribe({
+      next: () => {
+        this.commentsEnabled.set(enabled);
+        this.message.success(enabled ? '全站评论已开放' : '全站评论已关闭');
+      },
+      error: () => this.message.error('操作失败'),
+    });
   }
 
   loadComments(): void {

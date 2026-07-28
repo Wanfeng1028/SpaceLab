@@ -130,6 +130,7 @@ func (h *NativeCommentHandler) CreateComment(c *gin.Context) {
 		ContentType: input.ContentType,
 		Content:     input.Content,
 		ParentID:    parentID,
+		IP:          c.ClientIP(),
 	}, userID.(string))
 	if err != nil {
 		// 安全错误消息：不暴露内部细节
@@ -140,6 +141,10 @@ func (h *NativeCommentHandler) CreateComment(c *gin.Context) {
 			err.Error() == "comments are disabled for this post" {
 			status = http.StatusForbidden
 			errMsg = err.Error()
+		}
+		if err.Error() == "email not verified, please verify your email before commenting" {
+			status = http.StatusForbidden
+			errMsg = "请先验证邮箱后再发表评论"
 		}
 		if err.Error() == "comment content is empty after sanitization" {
 			status = http.StatusBadRequest

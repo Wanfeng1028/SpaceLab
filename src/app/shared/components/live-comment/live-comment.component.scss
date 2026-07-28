@@ -239,6 +239,11 @@
   color: var(--text-muted, #888);
   margin-top: 2px;
 }
+.live-comment-item__ip-location {
+  margin-left: 8px;
+  color: var(--text-muted, #666);
+  font-size: 11px;
+}
 /* 徽章 */
 .live-comment-item__badge {
   display: inline-block;

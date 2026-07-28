@@ -82,7 +82,12 @@
                   <span class="live-comment-item__badge live-comment-item__badge--pending">审核中</span>
                 }
               </div>
-              <div class="live-comment-item__time">{{ getRelativeTime(comment.created_at) }}</div>
+              <div class="live-comment-item__time">
+                {{ getRelativeTime(comment.created_at) }}
+                @if (comment.ip_location) {
+                  <span class="live-comment-item__ip-location">IP属地：{{ comment.ip_location }}</span>
+                }
+              </div>
             </div>
           </div>
 
@@ -117,7 +122,12 @@
                           <span class="live-comment-item__badge live-comment-item__badge--admin">管理员</span>
                         }
                       </div>
-                      <div class="live-comment-item__time">{{ getRelativeTime(reply.created_at) }}</div>
+                      <div class="live-comment-item__time">
+                        {{ getRelativeTime(reply.created_at) }}
+                        @if (reply.ip_location) {
+                          <span class="live-comment-item__ip-location">IP属地：{{ reply.ip_location }}</span>
+                        }
+                      </div>
                     </div>
                   </div>
                   <div class="live-comment-item__content">{{ reply.content }}</div>

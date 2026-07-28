@@ -26,6 +26,7 @@ import (
 	"github.com/spacelab/backend/internal/middleware"
 	"github.com/spacelab/backend/internal/model"
 	"github.com/spacelab/backend/internal/service"
+	"github.com/spacelab/backend/internal/tasks"
 	"github.com/spacelab/backend/internal/utils"
 	"go.uber.org/zap"
 )
@@ -88,6 +89,13 @@ func main() {
 	// 初始化敏感词检查器
 	utils.InitSensitiveChecker(config.GetDB())
 
+	// 初始化 IP 归属地查询器（合规：评论显示IP属地）
+	if err := utils.InitIPLocation("data/ip2region.xdb"); err != nil {
+		utils.Logger.Warn("IP location init failed, ip_location will be empty", zap.Error(err))
+	} else {
+		utils.Logger.Info("IP location searcher initialized")
+	}
+
 	// 初始化 Resend 邮件服务（可选）
 	resendSvc := utils.InitResend(cfg.ResendAPIKey, cfg.ResendFrom, cfg.ResendFrom)
 
@@ -105,7 +113,11 @@ func main() {
 	aiNewsService := service.NewAiNewsService(config.GetDB())
 	aiToolService := service.NewAiToolService(config.GetDB())
 
-	// 创建处理器
+	// 创建 OAuth 服务与处理器
+	oauthSvc := service.NewOAuthService(config.GetDB(), cfg)
+	oauthHandler := auth.NewOAuthHandler(oauthSvc, cfg)
+
+	// 其他处理器
 	authHandler := auth.NewAuthHandler(authService, cfg)
 	adminHandler := adminhandler.NewAdminHandler(authService)
 	postHandler := post.NewPostHandler(postService)
@@ -153,6 +165,10 @@ func main() {
 	{
 		authRoutes := api.Group("/auth")
 		{
+			// OAuth 公开路由：发起登录 & 回调
+			authRoutes.GET("/:provider", oauthHandler.Initiate)
+			authRoutes.GET("/:provider/callback", oauthHandler.Callback)
+
 			authRoutes.POST("/register", middleware.AuthLimiter(), authHandler.Register)
 			authRoutes.POST("/login", middleware.AuthFailureLimiter(), authHandler.Login)
 			authRoutes.POST("/refresh", middleware.AuthLimiter(), authHandler.RefreshToken)
@@ -235,6 +251,7 @@ func main() {
 				adminRoutes.POST("/admin/users/:id/unlock", adminHandler.UnlockUser)
 				adminRoutes.POST("/admin/users/:id/ban", adminHandler.BanUser)
 				adminRoutes.POST("/admin/users/:id/unban", adminHandler.UnbanUser)
+				adminRoutes.POST("/admin/cleanup-unverified-users", adminHandler.CleanupUnverifiedUsers)
 
 				// 评论审核
 				adminRoutes.GET("/admin/comments", nativeCommentHandler.AdminListComments)
@@ -377,6 +394,9 @@ func main() {
 		zap.Int("port", cfg.ServerPort),
 		zap.String("environment", cfg.Environment),
 	)
+
+	// 启动未验证用户定时清理（每天执行，防止批量注册产生大量废号污染数据库）
+	tasks.StartUnverifiedUserCleanup(config.DB)
 
 	// 启动定时发布检查器（每分钟检查一次）
 	schedCtx, schedCancel := context.WithCancel(context.Background())

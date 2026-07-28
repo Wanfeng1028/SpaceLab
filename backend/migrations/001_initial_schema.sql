@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(100),
     role VARCHAR(20) DEFAULT 'viewer',
     avatar_url VARCHAR(500),
+    comment_approved_count INTEGER DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -105,6 +106,8 @@ CREATE TABLE IF NOT EXISTS comments (
     parent_id UUID REFERENCES comments(id) ON DELETE CASCADE,
     content TEXT NOT NULL,
     status VARCHAR(20) DEFAULT 'pending',
+    ip VARCHAR(45),
+    ip_location VARCHAR(100),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     deleted_at TIMESTAMP WITH TIME ZONE

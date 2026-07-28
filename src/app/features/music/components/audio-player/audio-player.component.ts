@@ -2,10 +2,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   inject,
-  viewChild,
-  ElementRef,
-  AfterViewInit,
-  OnDestroy,
   computed,
   signal,
 } from '@angular/core';
@@ -17,8 +13,6 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <audio #audioElement preload="metadata"></audio>
-
     <div class="deck">
       <!-- 唱片舞台 -->
       <div class="turntable">
@@ -312,9 +306,8 @@ import { MediaPlaybackService } from '../../services/media-playback.service';
     `,
   ],
 })
-export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
+export class AudioPlayerComponent {
   readonly svc = inject(MediaPlaybackService);
-  private audioRef = viewChild<ElementRef<HTMLAudioElement>>('audioElement');
 
   private readonly _defaultTitle = signal('串烧 One');
   private readonly _defaultSubtitle = signal('Medley One · 纯音乐串烧');
@@ -333,15 +326,4 @@ export class AudioPlayerComponent implements AfterViewInit, OnDestroy {
 
   defaultTitle(): string { return this._defaultTitle(); }
   defaultSubtitle(): string { return this._defaultSubtitle(); }
-
-  ngAfterViewInit(): void {
-    const el = this.audioRef()?.nativeElement;
-    if (el) {
-      this.svc.attachAudioElement(el);
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.svc.detachAudioElement();
-  }
 }

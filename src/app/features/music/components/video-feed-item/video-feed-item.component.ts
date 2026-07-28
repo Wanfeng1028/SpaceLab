@@ -326,6 +326,7 @@ export class VideoFeedItemComponent implements OnDestroy {
   readonly track = input.required<MusicTrack>();
   readonly isActive = input(false);
   readonly backToAudio = output();
+  readonly playingStateChange = output<boolean>();
 
   readonly videoElement = viewChild<ElementRef<HTMLVideoElement>>('videoElement');
 
@@ -411,7 +412,10 @@ export class VideoFeedItemComponent implements OnDestroy {
         el.load();
       }
       el.play()
-        .then(() => this.isVideoPlaying.set(true))
+        .then(() => {
+          this.isVideoPlaying.set(true);
+          this.playingStateChange.emit(true);
+        })
         .catch(() => {
           /* autoplay blocked, user clicks again */
         });
@@ -423,11 +427,13 @@ export class VideoFeedItemComponent implements OnDestroy {
     if (el) {
       el.pause();
       this.isVideoPlaying.set(false);
+      this.playingStateChange.emit(false);
     }
   }
 
   onVideoEnded(): void {
     this.isVideoPlaying.set(false);
+    this.playingStateChange.emit(false);
   }
 
   onVideoError(): void {
