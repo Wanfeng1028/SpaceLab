@@ -1,0 +1,9 @@
+name = "spacelab-frontend"
+compatibility_date = "2025-01-01"
+
+[build]
+command = "npm run build"
+output_directory = "dist/spacelab/browser"
+
+# 环境变量（部署时在 CF Dashboard 设置）
+# CF_API_URL = "https://your-cf-worker.workers.dev/api/v1"  (指向 CF Worker)

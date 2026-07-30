@@ -1,0 +1,28 @@
+{
+  "name": "spacelab-cf-worker",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 migrations apply spacelab-db --local",
+    "db:migrate:prod": "wrangler d1 migrations apply spacelab-db --remote",
+    "db:seed": "tsx src/db/seed.ts"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "drizzle-orm": "^0.39.0",
+    "@hono/zod-validator": "^0.5.0",
+    "zod": "^3.23.0",
+    "jose": "^6.0.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "drizzle-kit": "^0.30.0",
+    "wrangler": "^4.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/config"
@@ -46,7 +47,7 @@ func (h *OAuthHandler) Callback(c *gin.Context) {
 
 	if errorParam != "" {
 		// 用户拒绝授权或其他错误
-		redirectURL := h.cfg.OAuthCallbackBaseURL + "/auth/callback?error=" + errorParam
+		redirectURL := h.cfg.OAuthCallbackBaseURL + "/auth/callback?error=" + url.QueryEscape(errorParam)
 		c.Redirect(http.StatusFound, redirectURL)
 		return
 	}
@@ -57,10 +58,13 @@ func (h *OAuthHandler) Callback(c *gin.Context) {
 		return
 	}
 
+	// 提取 state 参数并传递给 service 层验证
+	state := c.Query("state")
+
 	// 处理回调：交换 token、获取用户信息、生成 JWT
-	result, err := h.oauthSvc.HandleCallback(provider, code)
+	result, err := h.oauthSvc.HandleCallback(provider, code, state)
 	if err != nil {
-		redirectURL := h.cfg.OAuthCallbackBaseURL + "/auth/callback?error=" + err.Error()
+		redirectURL := h.cfg.OAuthCallbackBaseURL + "/auth/callback?error=" + url.QueryEscape(err.Error())
 		c.Redirect(http.StatusFound, redirectURL)
 		return
 	}

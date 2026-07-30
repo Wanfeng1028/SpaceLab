@@ -14,6 +14,7 @@ import (
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/model"
 	"github.com/spacelab/backend/internal/utils"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -147,7 +148,8 @@ func (h *MediaHandler) Upload(c *gin.Context) {
 
 	if err := h.db.Create(&mediaAsset).Error; err != nil {
 		os.Remove(finalPath) // 回滚：删除文件
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.Logger.Error("保存媒体资源到数据库失败", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -189,7 +191,8 @@ func (h *MediaHandler) List(c *gin.Context) {
 	result := query.Offset(offset).Limit(pageSize).Order("created_at DESC").Find(&mediaAssets)
 
 	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		utils.Logger.Error("查询媒体列表失败", zap.Error(result.Error))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 

@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"github.com/redis/go-redis/v9"
 	"github.com/spacelab/backend/internal/config"
 	"github.com/spacelab/backend/internal/utils"
 	"gorm.io/gorm"
@@ -80,8 +79,9 @@ func Auth(cfg *config.Config) gin.HandlerFunc {
 	return AuthWithRedis(cfg, nil, nil)
 }
 
-// AuthWithRedis 认证中间件（带 Redis Token 撤销和用户状态检查）
-func AuthWithRedis(cfg *config.Config, rdb *redis.Client, db *gorm.DB) gin.HandlerFunc {
+// AuthWithRedis 认证中间件（带 Token 撤销和用户状态检查）
+// rdb 参数保留向后兼容，实际使用全局 TokenRevocationMgr
+func AuthWithRedis(cfg *config.Config, _ interface{}, db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
@@ -97,9 +97,9 @@ func AuthWithRedis(cfg *config.Config, rdb *redis.Client, db *gorm.DB) gin.Handl
 			return
 		}
 
-		// 检查 Token 是否被撤销
-		if rdb != nil {
-			revoked, err := utils.ParseAndCheckToken(rdb, tokenString)
+		// 检查 Token 是否被撤销（通过全局 TokenRevocationMgr，支持 Redis/内存双模式）
+		if utils.TokenRevocationMgr != nil {
+			revoked, err := utils.ParseAndCheckToken(tokenString)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Authentication service error"})
 				c.Abort()

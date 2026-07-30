@@ -83,14 +83,31 @@ func (s *OAuthService) IsEnabled(provider string) bool {
 	return false
 }
 
-// GetAuthURL 生成 OAuth 授权 URL
+// GetAuthURL 生成 OAuth 授权 URL，并将 state 存入数据库以防 CSRF
 func (s *OAuthService) GetAuthURL(provider string) (string, error) {
+	state, err := genState()
+	if err != nil {
+		return "", errors.New("生成状态令牌失败")
+	}
+
+	// 将 state 存入数据库，有效期 10 分钟
+	oauthState := model.OAuthState{
+		ID:        uuid.New(),
+		State:     state,
+		Provider:  provider,
+		ExpiresAt: time.Now().Add(10 * time.Minute),
+		CreatedAt: time.Now(),
+	}
+	if err := s.db.Create(&oauthState).Error; err != nil {
+		utils.Logger.Error("存储 OAuth state 失败", zap.Error(err))
+		return "", errors.New("生成授权链接失败")
+	}
+
 	switch provider {
 	case "google":
 		if s.googleConf == nil {
 			return "", errors.New("Google OAuth 未配置")
 		}
-		state, _ := genState()
 		return s.googleConf.AuthCodeURL(state,
 			oauth2.AccessTypeOnline,
 			oauth2.SetAuthURLParam("prompt", "select_account"),
@@ -99,14 +116,29 @@ func (s *OAuthService) GetAuthURL(provider string) (string, error) {
 		if s.githubConf == nil {
 			return "", errors.New("GitHub OAuth 未配置")
 		}
-		state, _ := genState()
 		return s.githubConf.AuthCodeURL(state), nil
 	}
 	return "", errors.New("未知提供商: " + provider)
 }
 
-// HandleCallback 处理回调，返回本地 JWT
-func (s *OAuthService) HandleCallback(provider, code string) (*AuthResponse, error) {
+// HandleCallback 处理回调，验证 state 防 CSRF，返回本地 JWT
+func (s *OAuthService) HandleCallback(provider, code, state string) (*AuthResponse, error) {
+	// 验证 state 参数
+	if state == "" {
+		return nil, errors.New("缺少状态验证参数")
+	}
+	var oauthState model.OAuthState
+	if err := s.db.Where("state = ? AND provider = ?", state, provider).First(&oauthState).Error; err != nil {
+		return nil, errors.New("状态验证失败，请重新发起登录")
+	}
+	// 检查是否过期
+	if time.Now().After(oauthState.ExpiresAt) {
+		s.db.Delete(&oauthState)
+		return nil, errors.New("授权已过期，请重新发起登录")
+	}
+	// 验证后立即删除
+	s.db.Delete(&oauthState)
+
 	var conf *oauth2.Config
 	switch provider {
 	case "google":

@@ -6,6 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/spacelab/backend/internal/service"
+	"github.com/spacelab/backend/internal/utils"
+	"go.uber.org/zap"
 )
 
 type AiToolHandler struct {
@@ -31,7 +33,8 @@ func (h *AiToolHandler) List(c *gin.Context) {
 
 	tools, total, err := h.toolService.List(category, search, page, pageSize)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.Logger.Error("获取 AI 工具列表失败", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 
@@ -47,7 +50,8 @@ func (h *AiToolHandler) List(c *gin.Context) {
 func (h *AiToolHandler) GetCategories(c *gin.Context) {
 	categories, err := h.toolService.GetCategories()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.Logger.Error("获取 AI 工具分类失败", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"categories": categories})

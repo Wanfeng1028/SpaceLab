@@ -49,7 +49,10 @@ export class ParticleOceanScene {
     const isMobile =
       /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
       window.innerWidth < 768;
-    this.particleCount = isMobile ? 3000 : 12800;
+    const mem = (navigator as any).deviceMemory ?? 8;
+    const cores = navigator.hardwareConcurrency ?? 8;
+    const isLowEnd = isMobile || mem <= 4 || cores <= 4;
+    this.particleCount = isLowEnd ? 2000 : 12800;
   }
 
   init(): void {

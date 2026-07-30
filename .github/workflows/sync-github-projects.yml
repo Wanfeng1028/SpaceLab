@@ -31,7 +31,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -47,6 +46,7 @@ jobs:
         run: node scripts/sync-github-projects.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OUTPUT: ${{ github.output }}
 
       - name: Check for changes
         id: changes

@@ -97,9 +97,9 @@ func (s *ProjectService) CreateProject(input CreateProjectInput) (*model.Project
 		WebsiteURL:   input.WebsiteURL,
 		GitHubURL:    input.GitHubURL,
 		Language:     input.Language,
-		Tags:         input.Tags,
-		Features:     input.Features,
-		Technologies: input.Technologies,
+		Tags:         model.JSONArray(input.Tags),
+		Features:     model.JSONArray(input.Features),
+		Technologies: model.JSONArray(input.Technologies),
 		AuthorID:     authorID,
 		Status:       "published",
 		CreatedAt:    time.Now(),
@@ -147,13 +147,13 @@ func (s *ProjectService) UpdateProject(id string, input UpdateProjectInput) (*mo
 		project.Status = *input.Status
 	}
 	if input.Tags != nil {
-		project.Tags = input.Tags
+		project.Tags = model.JSONArray(input.Tags)
 	}
 	if input.Features != nil {
-		project.Features = input.Features
+		project.Features = model.JSONArray(input.Features)
 	}
 	if input.Technologies != nil {
-		project.Technologies = input.Technologies
+		project.Technologies = model.JSONArray(input.Technologies)
 	}
 
 	project.UpdatedAt = time.Now()

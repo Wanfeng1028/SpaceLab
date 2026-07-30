@@ -1,0 +1,80 @@
+# =============================================================================
+# SpaceLab CF Worker 配置
+# 文档: https://developers.cloudflare.com/workers/wrangler/configuration/
+# =============================================================================
+
+name = "spacelab-api"
+main = "src/index.ts"
+
+# 兼容性配置
+# nodejs_compat: 启用 Node.js 兼容层（bcryptjs 等依赖需要）
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ─── D1 数据库 ────────────────────────────────────────────────────────────────
+# 主数据库，存储所有持久化数据（文章、项目、用户、评论等）
+# 创建: wrangler d1 create spacelab-db
+# 将返回的 database_id 替换下方占位符
+[[d1_databases]]
+binding = "DB"
+database_name = "spacelab-db"
+database_id = "YOUR_D1_DATABASE_ID"
+
+# ─── KV 命名空间 ──────────────────────────────────────────────────────────────
+# Token 黑名单：存储已登出/已撤销的 JWT Token
+# 创建: wrangler kv:namespace create TOKEN_BLACKLIST
+[[kv_namespaces]]
+binding = "TOKEN_BLACKLIST"
+id = "YOUR_TOKEN_BLACKLIST_KV_ID"
+
+# 速率限制：滑动窗口计数器，防止 API 滥用
+# 创建: wrangler kv:namespace create RATE_LIMIT
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "YOUR_RATE_LIMIT_KV_ID"
+
+# 缓存：API 响应缓存、RSS Feed 缓存等
+# 创建: wrangler kv:namespace create CACHE
+[[kv_namespaces]]
+binding = "CACHE"
+id = "YOUR_CACHE_KV_ID"
+
+# ─── R2 存储桶 ────────────────────────────────────────────────────────────────
+# 媒体文件存储（图片、附件等）
+# 创建: wrangler r2 bucket create spacelab-media
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "spacelab-media"
+
+# ─── Cron Triggers（定时任务）──────────────────────────────────────────────────
+# 所有 cron 表达式使用 UTC 时区
+[triggers]
+crons = [
+  "* * * * *",        # 定时发布 — 每分钟检查待发布文章
+  "0 3 * * *",        # 清理未验证用户 — 每日凌晨 3:00 UTC
+  "17 */2 * * *",     # AI 新闻同步 — 每 2 小时（:17）
+  "21 */2 * * *",     # AI 工具同步 — 每 2 小时（:21）
+  "23 18 * * *",      # GitHub 项目同步 — 每日 18:23 UTC
+  "0 0 * * *"         # 每日统计 — 每日 00:00 UTC
+]
+
+# ─── 非敏感环境变量（明文存储）─────────────────────────────────────────────────
+[vars]
+ENVIRONMENT = "production"
+JWT_EXPIRATION = "24h"
+JWT_REFRESH_EXPIRATION = "168h"
+# AUTH_MODE 说明:
+#   "full"       — 完整模式（OAuth + 密码登录）
+#   "oauth-only" — 仅 OAuth（关闭密码登录，降级部署时使用）
+AUTH_MODE = "full"
+
+# ─── Secrets（通过 wrangler secret put 设置，不会明文存储）────────────────────
+# JWT_SECRET           — JWT 签名密钥
+# GOOGLE_CLIENT_ID     — Google OAuth 客户端 ID
+# GOOGLE_CLIENT_SECRET — Google OAuth 客户端密钥
+# GITHUB_CLIENT_ID     — GitHub OAuth 客户端 ID
+# GITHUB_CLIENT_SECRET — GitHub OAuth 客户端密钥
+# GITHUB_TOKEN         — GitHub Personal Access Token（用于项目同步）
+# RESEND_API_KEY       — Resend 邮件服务 API Key
+# RESEND_FROM          — Resend 发件人地址（如 noreply@yourdomain.com）
+# TURNSTILE_SECRET_KEY — Cloudflare Turnstile 验证密钥

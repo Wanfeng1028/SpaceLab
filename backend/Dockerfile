@@ -1,21 +1,26 @@
+# ============================================================
+# Stage 1: Builder
+# ============================================================
 FROM golang:1.25-alpine AS builder
 
 WORKDIR /build
 
 # Build dependencies
-RUN apk add --no-cache git
+RUN apk add --no-cache git gcc musl-dev
 
-# Copy go.mod and go.sum
+# Copy go.mod and go.sum first (leverage Docker cache)
 COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy source code
 COPY . .
 
-# Build binary
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
+# Build binary with stripped debug info for smaller size
+RUN CGO_ENABLED=1 GOOS=linux go build -ldflags="-s -w" -o main ./cmd/server
 
-# Runtime stage
+# ============================================================
+# Stage 2: Runtime (Alpine minimal image)
+# ============================================================
 FROM alpine:3.21
 
 WORKDIR /app

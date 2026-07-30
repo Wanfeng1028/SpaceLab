@@ -85,7 +85,7 @@ func (s *AiNewsService) Create(input CreateAiNewsInput) (*model.AiNews, error) {
 		SourceName: input.SourceName,
 		SourceURL:  input.SourceURL,
 		Category:   input.Category,
-		Tags:       input.Tags,
+		Tags:       model.JSONArray(input.Tags),
 		ImageURL:   input.ImageURL,
 		Status:     "draft",
 		CreatedAt:  now,
@@ -131,7 +131,7 @@ func (s *AiNewsService) Update(id string, input UpdateAiNewsInput) (*model.AiNew
 		news.Category = *input.Category
 	}
 	if input.Tags != nil {
-		news.Tags = input.Tags
+		news.Tags = model.JSONArray(input.Tags)
 	}
 	if input.ImageURL != nil {
 		news.ImageURL = *input.ImageURL

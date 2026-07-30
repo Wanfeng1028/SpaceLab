@@ -1,0 +1,53 @@
+name: Deploy CF Worker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cf-worker/**'
+  workflow_dispatch:
+    inputs:
+      trigger_cron:
+        description: '手动触发 Cron 任务（部署后执行）'
+        required: false
+        default: 'none'
+        type: choice
+        options:
+          - none
+          - sync-ai-news
+          - sync-lab-tools
+          - sync-github-projects
+          - daily-stats
+          - cleanup-users
+          - scheduled-publish
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cf-worker/package-lock.json
+
+      - name: Install dependencies
+        working-directory: cf-worker
+        run: npm ci
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: cf-worker
+          command: deploy
+
+      - name: Trigger cron (manual)
+        if: github.event.inputs.trigger_cron != 'none' && github.event.inputs.trigger_cron != ''
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: cf-worker
+          command: trigger cron "${{ github.event.inputs.trigger_cron }}"

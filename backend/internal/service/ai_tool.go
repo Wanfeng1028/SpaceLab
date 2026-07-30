@@ -56,7 +56,7 @@ func (s *AiToolService) Create(input CreateAiToolInput) (*model.AiTool, error) {
 		Category:    input.Category,
 		Source:      input.Source,
 		URL:         input.URL,
-		Tags:        input.Tags,
+		Tags:        model.JSONArray(input.Tags),
 		PublishedAt: input.PublishedAt,
 		FetchedAt:   input.FetchedAt,
 		CreatedAt:   now,

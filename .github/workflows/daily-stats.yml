@@ -1,4 +1,3 @@
-# trigger: reactivate github actions scheduled workflows 2026-07-30
 name: Daily Stats Log
 
 on:
@@ -40,13 +39,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/daily-log.md
+          git add docs/daily-log.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             git commit -m "📊 daily stats: $(date +%Y-%m-%d)"
-            # build-content.mjs modified the generated file but we don't need it — discard so rebase works
-            git checkout -- src/generated/content.generated.ts 2>/dev/null || true
             # Rebase again in case remote advanced while running
             git pull --rebase origin main
             git push

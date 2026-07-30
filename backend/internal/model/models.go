@@ -1,11 +1,158 @@
 package model
 
 import (
+	"database/sql/driver"
+	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
+
+// ActiveDBDriver 当前活跃的数据库驱动名称（"postgres" 或 "sqlite"），由 config.InitDB 设置。
+var ActiveDBDriver = "postgres"
+
+// JSONArray 自定义类型：PostgreSQL 模式使用 pq 原生 text[]，SQLite 模式使用 JSON 字符串。
+// 底层类型为 []string，JSON 序列化/反序列化透明。
+type JSONArray []string
+
+// Value 实现 driver.Valuer，写入数据库时调用。
+func (a JSONArray) Value() (driver.Value, error) {
+	if a == nil {
+		return nil, nil
+	}
+	if ActiveDBDriver == "sqlite" {
+		b, err := json.Marshal([]string(a))
+		if err != nil {
+			return nil, err
+		}
+		return string(b), nil
+	}
+	// PostgreSQL: 使用 ARRAY 字面量格式 {"a","b"}
+	return formatPgArray([]string(a)), nil
+}
+
+// Scan 实现 sql.Scanner，从数据库读取时调用。
+func (a *JSONArray) Scan(src interface{}) error {
+	if src == nil {
+		*a = nil
+		return nil
+	}
+	switch v := src.(type) {
+	case []byte:
+		return a.scanFromBytes(v)
+	case string:
+		return a.scanFromBytes([]byte(v))
+	case []string:
+		*a = JSONArray(v)
+		return nil
+	default:
+		return fmt.Errorf("JSONArray: unsupported scan type %T", src)
+	}
+}
+
+func (a *JSONArray) scanFromBytes(data []byte) error {
+	if len(data) == 0 {
+		*a = nil
+		return nil
+	}
+	if ActiveDBDriver == "sqlite" {
+		var arr []string
+		if err := json.Unmarshal(data, &arr); err != nil {
+			return err
+		}
+		*a = JSONArray(arr)
+		return nil
+	}
+	// PostgreSQL: 解析 {"a","b"} 格式
+	arr := parsePgArray(string(data))
+	*a = JSONArray(arr)
+	return nil
+}
+
+// MarshalJSON 实现 json.Marshaler
+func (a JSONArray) MarshalJSON() ([]byte, error) {
+	if a == nil {
+		return []byte("null"), nil
+	}
+	return json.Marshal([]string(a))
+}
+
+// UnmarshalJSON 实现 json.Unmarshaler
+func (a *JSONArray) UnmarshalJSON(data []byte) error {
+	var arr []string
+	if err := json.Unmarshal(data, &arr); err != nil {
+		return err
+	}
+	*a = JSONArray(arr)
+	return nil
+}
+
+// formatPgArray 将 []string 格式化为 PostgreSQL ARRAY 字面量 {"a","b"}
+func formatPgArray(arr []string) string {
+	if len(arr) == 0 {
+		return "{}"
+	}
+	result := "{"
+	for i, s := range arr {
+		if i > 0 {
+			result += ","
+		}
+		// 转义双引号和反斜杠
+		escaped := ""
+		for _, c := range s {
+			if c == '"' || c == '\\' {
+				escaped += "\\"
+			}
+			escaped += string(c)
+		}
+		result += "\"" + escaped + "\""
+	}
+	result += "}"
+	return result
+}
+
+// parsePgArray 解析 PostgreSQL ARRAY 字面量 {"a","b"} 为 []string
+func parsePgArray(s string) []string {
+	if len(s) < 2 || s[0] != '{' {
+		return nil
+	}
+	s = s[1 : len(s)-1] // 去掉 {}
+	if len(s) == 0 {
+		return []string{}
+	}
+	var result []string
+	current := ""
+	inQuote := false
+	escaped := false
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if escaped {
+			current += string(c)
+			escaped = false
+			continue
+		}
+		if c == '\\' {
+			escaped = true
+			continue
+		}
+		if c == '"' {
+			inQuote = !inQuote
+			continue
+		}
+		if c == ',' && !inQuote {
+			result = append(result, current)
+			current = ""
+			continue
+		}
+		current += string(c)
+	}
+	if current != "" || len(s) > 0 {
+		result = append(result, current)
+	}
+	return result
+}
 
 // User 用户模型
 type User struct {
@@ -77,7 +224,7 @@ type Post struct {
 	Content         string         `gorm:"type:text" json:"content"`
 	CoverURL        string         `gorm:"size:500" json:"cover_url"`
 	Category        string         `gorm:"size:100" json:"category"`
-	Tags            []string       `gorm:"type:text[]" json:"tags"`
+	Tags            JSONArray      `gorm:"type:text[]" json:"tags"`
 	ReadingTime     int            `gorm:"default:0" json:"reading_time"`
 	Status          string         `gorm:"size:20;default:'draft'" json:"status"` // draft, scheduled, published, archived
 	Language        string         `gorm:"size:10;default:'zh-CN'" json:"language"`
@@ -164,9 +311,9 @@ type Project struct {
 	WebsiteURL   string         `gorm:"size:500" json:"website_url"`
 	GitHubURL    string         `gorm:"size:500" json:"github_url"`
 	Language     string         `gorm:"size:50" json:"language"`
-	Tags         []string       `gorm:"type:text[]" json:"tags"`
-	Features     []string       `gorm:"type:text[]" json:"features"`
-	Technologies []string       `gorm:"type:text[]" json:"technologies"`
+	Tags         JSONArray      `gorm:"type:text[]" json:"tags"`
+	Features     JSONArray      `gorm:"type:text[]" json:"features"`
+	Technologies JSONArray      `gorm:"type:text[]" json:"technologies"`
 	Status       string         `gorm:"size:20;default:'published'" json:"status"` // draft, published, archived
 	ViewCount    int            `gorm:"default:0" json:"view_count"`
 	AuthorID     uuid.UUID      `gorm:"type:uuid" json:"author_id"`
@@ -280,12 +427,21 @@ type AiNews struct {
 	SourceName  string     `gorm:"size:200" json:"source_name"`
 	SourceURL   string     `gorm:"size:500" json:"source_url"`
 	Category    string     `gorm:"size:50;index" json:"category"` // model, product, funding, opensource, agent, tool, industry
-	Tags        []string   `gorm:"type:text[]" json:"tags"`
-	ImageURL    string     `gorm:"size:500" json:"image_url"`
+	Tags        JSONArray    `gorm:"type:text[]" json:"tags"`
+	ImageURL    string       `gorm:"size:500" json:"image_url"`
 	Status      string     `gorm:"size:20;default:'draft'" json:"status"` // draft, published, archived
 	PublishedAt *time.Time `json:"published_at"`
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
+}
+
+// OAuthState OAuth 授权状态令牌（防 CSRF）
+type OAuthState struct {
+	ID        uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	State     string    `gorm:"size:64;uniqueIndex;not null" json:"-"`
+	Provider  string    `gorm:"size:20;not null" json:"provider"`
+	ExpiresAt time.Time `json:"expires_at"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 // AiTool 实验室 AI 工具
@@ -296,8 +452,8 @@ type AiTool struct {
 	Category    string    `gorm:"size:100;index" json:"category"`
 	Source      string    `gorm:"size:200" json:"source"`
 	URL         string    `gorm:"size:500" json:"url"`
-	Tags        []string  `gorm:"type:text[]" json:"tags"`
-	PublishedAt string    `gorm:"size:20" json:"published_at"`
+	Tags        JSONArray   `gorm:"type:text[]" json:"tags"`
+	PublishedAt string      `gorm:"size:20" json:"published_at"`
 	FetchedAt   string    `gorm:"size:30" json:"fetched_at"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`

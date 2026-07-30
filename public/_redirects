@@ -1,0 +1,6 @@
+# CF Pages API 代理规则
+# 部署前请将 https://your-cf-worker.workers.dev 替换为实际的 CF Worker 域名
+/api/*  https://your-cf-worker.workers.dev/api/:splat  200
+
+# SPA 路由回退
+/*      /index.html                                    200

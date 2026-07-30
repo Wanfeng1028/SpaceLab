@@ -10,7 +10,9 @@ import (
 )
 
 type Config struct {
+	DBDriver          string // "postgres" 或 "sqlite"，默认 "postgres"
 	DatabaseURL       string
+	CacheDriver       string // "redis" 或 "memory"，默认 "redis"
 	JWTSecret         string
 	JWTExpiration     time.Duration
 	JWTRefreshExpiration time.Duration // 刷新令牌有效期（长时效，独立于访问令牌）
@@ -95,7 +97,9 @@ func LoadConfig() *Config {
 	}
 
 	return &Config{
+		DBDriver:          getEnv("DB_DRIVER", "postgres"),
 		DatabaseURL:       getEnv("DATABASE_URL", ""),
+		CacheDriver:       getEnv("CACHE_DRIVER", "redis"),
 		JWTSecret:         jwtSecret,
 		JWTExpiration:        duration,
 		JWTRefreshExpiration: refreshDuration,
@@ -154,7 +158,7 @@ func parseCommaSeparated(s string) []string {
 func trimSpace(s string) string {
 	start := 0
 	end := len(s)
-	for start < end && s[start] == ' ' || s[start] == '\t' {
+	for start < end && (s[start] == ' ' || s[start] == '\t') {
 		start++
 	}
 	for end > start && (s[end-1] == ' ' || s[end-1] == '\t') {

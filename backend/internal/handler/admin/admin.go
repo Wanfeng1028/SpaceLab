@@ -12,6 +12,7 @@ import (
 	"github.com/spacelab/backend/internal/utils"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type AdminHandler struct {
@@ -174,7 +175,28 @@ func (h *AdminHandler) DeleteUser(c *gin.Context) {
 		return
 	}
 
-	if err := h.authService.DB().Delete(&model.User{}, "id = ?", userID).Error; err != nil {
+	if err := h.authService.DB().Transaction(func(tx *gorm.DB) error {
+		// 级联删除关联数据
+		if err := tx.Where("user_id = ?", userID).Delete(&model.EmailVerificationToken{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("user_id = ?", userID).Delete(&model.PasswordResetToken{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("user_id = ?", userID).Delete(&model.LoginLog{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("user_id = ?", userID).Delete(&model.RiskEvent{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("user_id = ?", userID).Delete(&model.Comment{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("reporter_id = ?", userID).Delete(&model.CommentReport{}).Error; err != nil {
+			return err
+		}
+		return tx.Delete(&model.User{}, "id = ?", userID).Error
+	}); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete user"})
 		return
 	}

@@ -101,7 +101,7 @@ func (s *PostService) CreatePost(input CreatePostInput) (*model.Post, error) {
 		Content:     input.Content,
 		CoverURL:    input.CoverURL,
 		Category:    input.Category,
-		Tags:        input.Tags,
+		Tags:        model.JSONArray(input.Tags),
 		ReadingTime: readingTime,
 		Language:    input.Language,
 		AuthorID:    uuid.MustParse(input.AuthorID),
@@ -143,7 +143,7 @@ func (s *PostService) UpdatePost(id string, input UpdatePostInput) (*model.Post,
 		post.Category = *input.Category
 	}
 	if input.Tags != nil {
-		post.Tags = *input.Tags
+		post.Tags = model.JSONArray(*input.Tags)
 	}
 	if input.ReadingTime != nil {
 		post.ReadingTime = *input.ReadingTime

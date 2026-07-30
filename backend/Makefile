@@ -101,5 +101,16 @@ docs:
 build-prod:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o bin/server ./cmd/server
 
+# 精简构建（去除调试符号，减小体积）
+build-slim:
+	go build -ldflags="-s -w" -o bin/server-slim ./cmd/server
+
+# SQLite 构建（CGO 启用，内嵌 SQLite）
+build-sqlite:
+	CGO_ENABLED=1 go build -tags sqlite -ldflags="-s -w" -o bin/server-sqlite ./cmd/server
+
+# 构建所有变体
+build-all: build-slim build-sqlite
+
 # 运行所有（开发）
 all: db-up deps build run

@@ -35,7 +35,6 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
-import worldJSON from '../globe-stream/map/world.json';
 import { assetUrl } from '../asset-url';
 
 const DEG = Math.PI / 180;
@@ -124,6 +123,13 @@ export class EarthFlylineScene {
   private readonly globeRadius: number;
   private readonly isMobile = window.innerWidth < 768;
   private readonly reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  private readonly isLowEnd = (() => {
+    const mem = (navigator as any).deviceMemory ?? 8;
+    const cores = navigator.hardwareConcurrency ?? 8;
+    return this.isMobile || mem <= 4 || cores <= 4;
+  })();
+  private readonly sphereSeg: [number, number] = this.isLowEnd ? [32, 24] : [96, 64];
+  private worldData: any = null;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -132,7 +138,9 @@ export class EarthFlylineScene {
     this.globeRadius = this.isMobile ? 1.82 : 2.34;
   }
 
-  init(): void {
+  async init(): Promise<void> {
+    this.worldData = await fetch(assetUrl('three/globe-stream/map/world.json')).then((r) => r.json());
+
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(42, 1, 0.1, 200);
     this.camera.position.set(0, 0.18, this.isMobile ? 7.2 : 8.6);
@@ -150,13 +158,15 @@ export class EarthFlylineScene {
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
-    this.bloomPass = new UnrealBloomPass(
-      new Vector2(this.canvas.clientWidth, this.canvas.clientHeight),
-      this.isMobile ? 0.035 : 0.055,
-      0.18,
-      0.76,
-    );
-    this.composer.addPass(this.bloomPass);
+    if (!this.isLowEnd) {
+      this.bloomPass = new UnrealBloomPass(
+        new Vector2(this.canvas.clientWidth, this.canvas.clientHeight),
+        this.isMobile ? 0.035 : 0.055,
+        0.18,
+        0.76,
+      );
+      this.composer.addPass(this.bloomPass);
+    }
     this.composer.addPass(new OutputPass());
     this.applyBrightness();
 
@@ -175,6 +185,19 @@ export class EarthFlylineScene {
     this.bindEvents();
     this.resizeRenderer();
     this.animate();
+  }
+
+  private getEarthTexturePath(): string {
+    const dpr = window.devicePixelRatio || 1;
+    const width = window.innerWidth;
+    const mem = (navigator as any).deviceMemory ?? 8;
+    if (width < 768 || mem <= 2) {
+      return 'three/globe-stream/image/earth-512.webp';
+    }
+    if (mem <= 4 || dpr <= 1.5) {
+      return 'three/globe-stream/image/earth-1k.webp';
+    }
+    return 'three/globe-stream/image/earth-2k.webp';
   }
 
   private loadTexture(path: string): Texture {
@@ -305,7 +328,7 @@ export class EarthFlylineScene {
 
   private buildGlobe(): void {
     const radius = this.globeRadius;
-    const earthTexture = this.loadTexture('three/globe-stream/image/Earth_DiffuseMap_2.jpg');
+    const earthTexture = this.loadTexture(this.getEarthTexturePath());
     const earthMaterial = new ShaderMaterial({
       uniforms: {
         uMap: { value: earthTexture },
@@ -347,11 +370,11 @@ export class EarthFlylineScene {
       `,
       transparent: false,
     });
-    const earth = new Mesh(new SphereGeometry(radius, 96, 64), earthMaterial);
+    const earth = new Mesh(new SphereGeometry(radius, this.sphereSeg[0], this.sphereSeg[1]), earthMaterial);
     this.globeGroup.add(earth);
 
     const ocean = new Mesh(
-      new SphereGeometry(radius * 1.006, 96, 64),
+      new SphereGeometry(radius * 1.006, this.sphereSeg[0], this.sphereSeg[1]),
       new MeshBasicMaterial({
         color: 0x063a52,
         transparent: true,
@@ -363,7 +386,7 @@ export class EarthFlylineScene {
 
     const scanTexture = this.loadTexture('three/globe-stream/image/scanGird.png');
     const scan = new Mesh(
-      new SphereGeometry(radius * 1.018, 96, 64),
+      new SphereGeometry(radius * 1.018, this.sphereSeg[0], this.sphereSeg[1]),
       new MeshBasicMaterial({
         map: scanTexture,
         color: 0x69e7ff,
@@ -377,7 +400,7 @@ export class EarthFlylineScene {
     this.globeGroup.add(scan);
 
     this.cloudShell = new Mesh(
-      new SphereGeometry(radius * 1.033, 96, 64),
+      new SphereGeometry(radius * 1.033, this.sphereSeg[0], this.sphereSeg[1]),
       new MeshBasicMaterial({
         map: this.makeCloudTexture(),
         color: 0xbfe8ff,
@@ -418,7 +441,7 @@ export class EarthFlylineScene {
       depthWrite: false,
       blending: AdditiveBlending,
     });
-    this.globeGroup.add(new Mesh(new SphereGeometry(radius * 1.15, 96, 64), atmosphereMaterial));
+    this.globeGroup.add(new Mesh(new SphereGeometry(radius * 1.15, this.sphereSeg[0], this.sphereSeg[1]), atmosphereMaterial));
 
     const innerGlow = new Sprite(
       new SpriteMaterial({
@@ -440,7 +463,7 @@ export class EarthFlylineScene {
     const borderGroup = new Group();
     this.globeGroup.add(borderGroup);
 
-    worldJSON.features.forEach((feature: any) => {
+    this.worldData.features.forEach((feature: any) => {
       const drawRing = (ring: number[][]) => {
         const points = ring.map(([lng, lat]) => latLngToVec3(lat, lng, radius * 1.024));
         if (points.length < 2) return;

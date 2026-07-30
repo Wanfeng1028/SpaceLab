@@ -257,6 +257,15 @@ func (s *CommentService) UpdateComment(id string, input UpdateCommentInput, user
 			return nil, errors.New("comment content is empty after sanitization")
 		}
 		comment.Content = sanitized
+
+		// 编辑后重新检查敏感词，命中且当前为 approved 则重置为 pending
+		if utils.GlobalSensitiveChecker != nil {
+			if hit, _ := utils.GlobalSensitiveChecker.CheckWithCategory(sanitized); hit {
+				if comment.Status == "approved" {
+					comment.Status = "pending"
+				}
+			}
+		}
 	}
 
 	comment.UpdatedAt = time.Now()

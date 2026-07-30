@@ -1,12 +1,15 @@
 package middleware
 
 import (
+	"context"
 	"net/http"
 	"os"
+	"strconv"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spacelab/backend/internal/utils"
 )
 
 // 包级单例限流器
@@ -14,6 +17,60 @@ var (
 	globalLimiter     *authRateLimiter
 	globalLimiterOnce sync.Once
 )
+
+// counterBackend 限流计数后端（Redis 或内存）
+type counterBackend interface {
+	Incr(ctx context.Context, key string, ttl time.Duration) (int, error)
+}
+
+// redisCounter Redis 计数后端
+type redisCounter struct{}
+
+func (redisCounter) Incr(ctx context.Context, key string, ttl time.Duration) (int, error) {
+	driver := utils.GetCacheDriver()
+	val, err := driver.Get(ctx, key)
+	count := 0
+	if err == nil && len(val) > 0 {
+		count, _ = strconv.Atoi(string(val))
+	}
+	count++
+	_ = driver.Set(ctx, key, []byte(strconv.Itoa(count)), ttl)
+	return count, nil
+}
+
+// memoryCounter 内存计数后端
+type memoryCounter struct {
+	data map[string]*memCounterEntry
+	mu   sync.Mutex
+}
+type memCounterEntry struct {
+	count   int
+	resetAt time.Time
+}
+
+func (m *memoryCounter) Incr(_ context.Context, key string, ttl time.Duration) (int, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	now := time.Now()
+	entry, ok := m.data[key]
+	if !ok || now.After(entry.resetAt) {
+		m.data[key] = &memCounterEntry{count: 1, resetAt: now.Add(ttl)}
+		return 1, nil
+	}
+	entry.count++
+	return entry.count, nil
+}
+
+// defaultCounter 默认内存计数后端（与 security.go RateLimit 模式一致）
+var defaultCounter = &memoryCounter{data: make(map[string]*memCounterEntry)}
+
+// getCounterBackend 获取计数后端：Redis 可用时用 Redis，否则用内存
+func getCounterBackend() counterBackend {
+	if utils.GetRedisClient() != nil {
+		return redisCounter{}
+	}
+	return defaultCounter
+}
 
 // getLimiter 获取全局限流器单例
 func getLimiter() *authRateLimiter {

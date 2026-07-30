@@ -327,7 +327,10 @@ export default class ChartScene {
       antialias: true,
       alpha: true,
     });
-    const pixelRatio = this.options.config.pixelRatio ?? window.devicePixelRatio;
+    const pixelRatio = Math.min(
+      this.options.config.pixelRatio ?? window.devicePixelRatio,
+      1.75,
+    );
     renderer.setPixelRatio(pixelRatio);
     renderer.setSize(this.style.width, this.style.height);
     renderer.setClearColor(

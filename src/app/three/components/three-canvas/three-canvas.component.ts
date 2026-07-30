@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 
 type SceneFactory = (canvas: HTMLCanvasElement) => {
-  init(): void;
-  destroy(): void;
+  init?(): void;
+  destroy?(): void;
   pause?(): void;
   resume?(): void;
 };
@@ -40,10 +40,11 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @Input({ required: true }) sceneFactory!: SceneFactory;
 
-  private sceneInstance: { init(): void; destroy(): void; pause?(): void; resume?(): void } | null =
-    null;
+  private sceneInstance: ReturnType<SceneFactory> | null = null;
   private observer: IntersectionObserver | null = null;
   private initialized = false;
+  private destroyTimer: any = null;
+  private readonly DESTROY_DELAY = 5000;
 
   ngAfterViewInit(): void {
     // 延迟初始化：仅当进入视口时才创建 Three.js 场景
@@ -51,13 +52,28 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // 回到视口：取消延迟销毁定时器
+            if (this.destroyTimer !== null) {
+              clearTimeout(this.destroyTimer);
+              this.destroyTimer = null;
+            }
             if (!this.initialized) {
+              // 尚未初始化（首次或已被 destroy）→ 重新创建场景
               this.initializeScene();
             } else {
               this.sceneInstance?.resume?.();
             }
           } else {
+            // 离开视口：先暂停，5秒后销毁释放显存
             this.sceneInstance?.pause?.();
+            if (this.destroyTimer === null && this.initialized) {
+              this.destroyTimer = setTimeout(() => {
+                this.sceneInstance?.destroy?.();
+                this.sceneInstance = null;
+                this.initialized = false;
+                this.destroyTimer = null;
+              }, this.DESTROY_DELAY);
+            }
           }
         });
       },
@@ -69,13 +85,17 @@ export class ThreeCanvasComponent implements AfterViewInit, OnDestroy {
   private initializeScene(): void {
     const canvas = this.canvasRef.nativeElement;
     this.sceneInstance = this.sceneFactory(canvas);
-    this.sceneInstance.init();
+    this.sceneInstance?.init?.();
     this.initialized = true;
   }
 
   ngOnDestroy(): void {
+    if (this.destroyTimer !== null) {
+      clearTimeout(this.destroyTimer);
+      this.destroyTimer = null;
+    }
     this.observer?.disconnect();
-    this.sceneInstance?.destroy();
+    this.sceneInstance?.destroy?.();
     this.sceneInstance = null;
     this.initialized = false;
   }

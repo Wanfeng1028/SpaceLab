@@ -65,20 +65,27 @@ func main() {
 		&model.CommentReport{},
 		&model.AiNews{},
 		&model.AiTool{},
+		&model.OAuthState{},
 	); err != nil {
 		utils.Logger.Warn("Auto-migration warning", zap.Error(err))
 	}
 
 	// 初始化 Redis（可选）
+	redisAvailable := false
 	if redisAddr := utils.GetEnv("REDIS_ADDR", ""); redisAddr != "" {
 		if err := utils.InitRedis(redisAddr, utils.GetEnv("REDIS_PASSWORD", ""), 0); err != nil {
 			utils.Logger.Warn("Redis connection failed, caching disabled", zap.Error(err))
 		} else {
 			utils.Logger.Info("Redis connected successfully")
-			// 初始化 Token 撤销管理器（依赖 Redis）
-			utils.InitTokenRevocation(utils.GetRedisClient())
+			redisAvailable = true
 		}
 	}
+
+	// 初始化缓存驱动（Redis 可用用 Redis，否则降级为内存）
+	utils.InitCacheDriver(cfg.CacheDriver, utils.GetRedisClient())
+
+	// 初始化 Token 撤销管理器（Redis 可用走 Redis，否则走内存）
+	utils.InitTokenRevocation(utils.GetCacheDriver(), redisAvailable)
 
 	// 初始化邮件服务
 	utils.InitEmail()
@@ -99,8 +106,13 @@ func main() {
 	// 初始化 Resend 邮件服务（可选）
 	resendSvc := utils.InitResend(cfg.ResendAPIKey, cfg.ResendFrom, cfg.ResendFrom)
 
-	// 初始化 WebSocket
-	utils.InitWebSocket()
+	// 初始化 WebSocket（通过环境变量控制，默认关闭）
+	enableWebSocket := utils.GetEnv("ENABLE_WEBSOCKET", "false") == "true"
+	if enableWebSocket {
+		utils.InitWebSocket()
+	} else {
+		utils.Logger.Info("WebSocket disabled (ENABLE_WEBSOCKET=false)")
+	}
 
 	// 创建服务
 	authService := service.NewAuthService(config.GetDB(), cfg, resendSvc)
@@ -143,17 +155,25 @@ func main() {
 	r.Use(middleware.ContentSecurityPolicy())
 	r.Use(middleware.NoSnitch())
 	r.Use(middleware.RequestSizeLimit(10 << 20)) // 10MB 全局请求体限制
-	r.Use(middleware.MetricsMiddleware())
+
+	// Prometheus 监控（通过环境变量控制，默认关闭）
+	enablePrometheus := utils.GetEnv("ENABLE_PROMETHEUS", "false") == "true"
+	if enablePrometheus {
+		r.Use(middleware.MetricsMiddleware())
+		r.GET("/metrics", middleware.PrometheusHandler())
+	} else {
+		utils.Logger.Info("Prometheus metrics disabled (ENABLE_PROMETHEUS=false)")
+	}
+
 	r.Use(middleware.LoggingMiddleware())
 	r.Use(middleware.RecoveryMiddleware())
 
-	// 监控路由
-	r.GET("/metrics", middleware.PrometheusHandler())
-
 	// WebSocket — 独立路由，通过 ?token=JWT 认证（浏览器 WebSocket API 无法设置 Authorization 头）
-	r.GET("/ws", func(c *gin.Context) {
-		utils.HandleWebSocket(c.Writer, c.Request)
-	})
+	if enableWebSocket {
+		r.GET("/ws", func(c *gin.Context) {
+			utils.HandleWebSocket(c.Writer, c.Request)
+		})
+	}
 
 	// 图形验证码（公开，无需认证，不限流 — 验证码本身就是防刷机制）
 	r.GET("/captcha/new", captchaHandler.GetCaptchaID)
@@ -179,9 +199,9 @@ func main() {
 			authRoutes.GET("/registration-open", authHandler.IsRegistrationOpen)
 		}
 
-		// 需要认证的路由（带 Redis Token 撤销检查）
+		// 需要认证的路由（带 Token 撤销检查，支持 Redis/内存双模式）
 		protected := api.Group("")
-		protected.Use(middleware.AuthWithRedis(cfg, utils.GetRedisClient(), config.GetDB()))
+		protected.Use(middleware.AuthWithRedis(cfg, nil, config.GetDB()))
 		{
 			// 用户信息
 			protected.GET("/auth/me", authHandler.GetMe)
@@ -299,7 +319,7 @@ func main() {
 
 			// 上传（需登录）
 			upload := api.Group("/media")
-			upload.Use(middleware.AuthWithRedis(cfg, utils.GetRedisClient(), config.GetDB()))
+			upload.Use(middleware.AuthWithRedis(cfg, nil, config.GetDB()))
 			{
 				upload.POST("/upload", mediaHandler.Upload)
 				upload.DELETE("/:id", mediaHandler.Delete)
@@ -311,18 +331,20 @@ func main() {
 			public.GET("/analytics/traffic", analyticsHandler.GetTrafficTrend)
 			public.POST("/analytics/event", middleware.AuthLimiter(), analyticsHandler.RecordEvent)
 
-			// 在线用户统计
-			public.GET("/online", func(c *gin.Context) {
-				c.JSON(http.StatusOK, gin.H{
-					"online_count": utils.Hub.GetOnlineCount(),
-					"online_users": utils.Hub.GetOnlineUsers(),
+			// 在线用户统计（仅 WebSocket 启用时有效）
+			if enableWebSocket {
+				public.GET("/online", func(c *gin.Context) {
+					c.JSON(http.StatusOK, gin.H{
+						"online_count": utils.Hub.GetOnlineCount(),
+						"online_users": utils.Hub.GetOnlineUsers(),
+					})
 				})
-			})
+			}
 
 			// 项目（公开）
 			public.GET("/projects", projectHandler.ListProjects)
 			public.GET("/projects/:slug", projectHandler.GetProjectBySlug)
-			public.POST("/projects/:id/view", projectHandler.IncrementViewCount)
+			public.POST("/projects/:id/view", middleware.AuthLimiter(), projectHandler.IncrementViewCount)
 
 			// 分类（公开）
 			public.GET("/categories", categoryHandler.ListCategories)
@@ -350,6 +372,12 @@ func main() {
 
 	// 健康检查
 	r.GET("/health", func(c *gin.Context) {
+		// 生产环境只返回基本状态，避免信息泄露
+		if cfg.Environment == "production" {
+			c.JSON(http.StatusOK, gin.H{"status": "ok"})
+			return
+		}
+
 		db := config.GetDB()
 		dbStatus := "healthy"
 		if sqlDB, err := db.DB(); err != nil {
@@ -395,37 +423,49 @@ func main() {
 		zap.String("environment", cfg.Environment),
 	)
 
-	// 启动未验证用户定时清理（每天执行，防止批量注册产生大量废号污染数据库）
-	tasks.StartUnverifiedUserCleanup(config.DB)
+	// 定时任务（通过环境变量控制，默认开启）
+	enableCron := utils.GetEnv("ENABLE_CRON", "true") != "false"
+	if enableCron {
+		// 启动未验证用户定时清理
+		tasks.StartUnverifiedUserCleanup(config.DB)
 
-	// 启动定时发布检查器（每分钟检查一次）
-	schedCtx, schedCancel := context.WithCancel(context.Background())
-	defer schedCancel()
-	go func() {
-		ticker := time.NewTicker(1 * time.Minute)
-		defer ticker.Stop()
-		if count, err := postService.PublishScheduled(); err == nil && count > 0 {
-			utils.Logger.Info("Scheduled posts published on startup", zap.Int64("count", count))
-		}
-		for {
-			select {
-			case <-ticker.C:
-				if count, err := postService.PublishScheduled(); err != nil {
-					utils.Logger.Warn("Scheduled publish check failed", zap.Error(err))
-				} else if count > 0 {
-					utils.Logger.Info("Scheduled posts published", zap.Int64("count", count))
-				}
-			case <-schedCtx.Done():
-				utils.Logger.Info("Scheduled publish checker stopped")
-				return
+		// 启动定时发布检查器（每分钟检查一次）
+		schedCtx, schedCancel := context.WithCancel(context.Background())
+		defer schedCancel()
+		go func() {
+			ticker := time.NewTicker(1 * time.Minute)
+			defer ticker.Stop()
+			if count, err := postService.PublishScheduled(); err == nil && count > 0 {
+				utils.Logger.Info("Scheduled posts published on startup", zap.Int64("count", count))
 			}
-		}
-	}()
+			for {
+				select {
+				case <-ticker.C:
+					if count, err := postService.PublishScheduled(); err != nil {
+						utils.Logger.Warn("Scheduled publish check failed", zap.Error(err))
+					} else if count > 0 {
+						utils.Logger.Info("Scheduled posts published", zap.Int64("count", count))
+					}
+				case <-schedCtx.Done():
+					utils.Logger.Info("Scheduled publish checker stopped")
+					return
+				}
+			}
+		}()
+	} else {
+		utils.Logger.Info("Cron tasks disabled (ENABLE_CRON=false)")
+	}
 
 	log.Printf("Server starting on port %d", cfg.ServerPort)
 	log.Printf("Environment: %s", cfg.Environment)
-	log.Printf("Metrics: http://localhost:%d/metrics", cfg.ServerPort)
-	log.Printf("WebSocket: ws://localhost:%d/ws", cfg.ServerPort)
+	log.Printf("DB Driver: %s", cfg.DBDriver)
+	log.Printf("Cache Driver: %s", cfg.CacheDriver)
+	if enablePrometheus {
+		log.Printf("Metrics: http://localhost:%d/metrics", cfg.ServerPort)
+	}
+	if enableWebSocket {
+		log.Printf("WebSocket: ws://localhost:%d/ws", cfg.ServerPort)
+	}
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", cfg.ServerPort),

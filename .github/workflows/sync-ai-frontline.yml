@@ -32,7 +32,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -52,6 +51,8 @@ jobs:
       - name: Sync AI Frontline news
         id: sync
         run: node scripts/sync-ai-frontline.mjs
+        env:
+          GITHUB_OUTPUT: ${{ github.output }}
 
       - name: Check for changes
         id: changes
