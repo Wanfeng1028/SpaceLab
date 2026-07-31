@@ -19,7 +19,7 @@
     "featured": true,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-07-30T18:32:37Z"
+    "updatedAt": "2026-07-31T15:16:35Z"
   },
   {
     "id": "ParrotSoundReVue",
@@ -83,87 +83,6 @@
     "archived": false,
     "fork": false,
     "updatedAt": "2026-06-07T20:05:40Z"
-  },
-  {
-    "id": "blog",
-    "name": "blog",
-    "description": "基于 Next.js App Router、Prisma 和 Tailwind CSS 构建的个人全栈博客。",
-    "tags": [
-      "Next.js",
-      "Prisma",
-      "Tailwind"
-    ],
-    "language": "TypeScript",
-    "stars": 1,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/blog",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-03-28T17:22:03Z"
-  },
-  {
-    "id": "resume_autofill_universal",
-    "name": "resume_autofill_universal",
-    "description": "简历自动填写工具。",
-    "tags": [
-      "JavaScript",
-      "Tool"
-    ],
-    "language": "JavaScript",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/resume_autofill_universal",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-03-27T15:19:32Z"
-  },
-  {
-    "id": "School-Insight-System",
-    "name": "School-Insight-System",
-    "description": "校园信息系统。",
-    "tags": [
-      "JavaScript",
-      "Web"
-    ],
-    "language": "JavaScript",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/School-Insight-System",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-04-07T03:32:01Z"
-  },
-  {
-    "id": "MappingProgramDesign",
-    "name": "MappingProgramDesign",
-    "description": "测绘程序设计。",
-    "tags": [
-      "C#",
-      "GIS"
-    ],
-    "language": "C#",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/MappingProgramDesign",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2025-07-12T10:50:27Z"
   },
   {
     "id": "CodexPlusPlus",
@@ -554,28 +473,11 @@
     "featured": false,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-07-30T18:38:27Z"
+    "updatedAt": "2026-07-31T17:56:34Z"
   },
   {
-    "id": "GeoOfficial",
-    "name": "GeoOfficial",
-    "description": "",
-    "tags": [],
-    "language": "TypeScript",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/GeoOfficial",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-07-26T18:25:36Z"
-  },
-  {
-    "id": "KaoYanYingYu",
-    "name": "KaoYanYingYu",
+    "id": "Wanfeng1028",
+    "name": "Wanfeng1028",
     "description": "",
     "tags": [],
     "language": "",
@@ -583,79 +485,11 @@
     "forks": 0,
     "status": "Building",
     "cover": "",
-    "github": "https://github.com/Wanfeng1028/KaoYanYingYu",
+    "github": "https://github.com/Wanfeng1028/Wanfeng1028",
     "demo": "",
     "featured": false,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-07-11T12:08:45Z"
-  },
-  {
-    "id": "GeoFrontend2.0",
-    "name": "GeoFrontend2.0",
-    "description": "GeoWork重构的前端仓库(AntDesign)",
-    "tags": [],
-    "language": "TypeScript",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/GeoFrontend2.0",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-07-05T15:12:52Z"
-  },
-  {
-    "id": "Copy",
-    "name": "Copy",
-    "description": "",
-    "tags": [],
-    "language": "CSS",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/Copy",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-06-14T20:41:37Z"
-  },
-  {
-    "id": "ai-agent-toolbox",
-    "name": "ai-agent-toolbox",
-    "description": "A personal AI agent toolbox for MCP servers, ChatGPT Skills, agent rules, prompts, and reusable AI workflows.",
-    "tags": [],
-    "language": "JavaScript",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/ai-agent-toolbox",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-06-10T13:53:21Z"
-  },
-  {
-    "id": "menu-coco",
-    "name": "menu-coco",
-    "description": "",
-    "tags": [],
-    "language": "Vue",
-    "stars": 0,
-    "forks": 0,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/menu-coco",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-06-02T08:10:04Z"
+    "updatedAt": "2026-07-31T18:18:23Z"
   }
 ]
