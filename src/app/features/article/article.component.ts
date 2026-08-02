@@ -7,10 +7,11 @@ import {
   DestroyRef,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { I18nService } from '../../core/services/i18n.service';
 import { PostService, Post } from '../../core/services/post.service';
+import { AuthService } from '../../core/services/auth.service';
 import { LiveCommentComponent } from '../../shared/components/live-comment/live-comment.component';
 import DOMPurify from 'dompurify';
 import { MarkdownRendererService } from '../../core/services/markdown-renderer.service';
@@ -48,16 +49,24 @@ function staticToPost(p: typeof STATIC_POSTS[number]): Post {
 })
 export class ArticleComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private i18n = inject(I18nService);
   private sanitizer = inject(DomSanitizer);
   private destroyRef = inject(DestroyRef);
   private postService = inject(PostService);
+  private authService = inject(AuthService);
   private markdownRenderer = inject(MarkdownRendererService);
   private seo = inject(SeoService);
 
   readonly post = signal<Post | null>(null);
   readonly loading = signal(false);
   readonly sanitizedContent = signal<SafeHtml>('');
+
+  /** 点赞状态 */
+  readonly liked = signal(false);
+  readonly likeCount = signal(0);
+  readonly likePending = signal(false);
+  readonly isLoggedIn = this.authService.isLoggedInSig;
 
   ngOnInit(): void {
     this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(async (params) => {
@@ -72,6 +81,7 @@ export class ArticleComponent implements OnInit {
           this.seo.setArticle(post.title, post.summary ?? '', post.slug, post.cover_url);
           if (post.id) {
             this.postService.incrementViewCount(post.id).subscribe();
+            this.loadLikeStatus(post);
           }
         },
         error: () => {
@@ -107,8 +117,55 @@ export class ArticleComponent implements OnInit {
     return this.i18n.t(key);
   }
 
+  /** 加载点赞初始状态：先用文章自带的 like_count，登录用户再拉取个人点赞状态 */
+  private loadLikeStatus(post: Post): void {
+    this.likeCount.set(post.like_count ?? 0);
+    this.liked.set(false);
+    if (post.id && this.isLoggedIn()) {
+      this.postService.getLikeStatus(post.id).subscribe({
+        next: (r) => {
+          this.liked.set(r.liked);
+          this.likeCount.set(r.like_count);
+        },
+        error: () => {
+          // 失败不阻断，保留文章自带计数
+        },
+      });
+    }
+  }
+
   onLike(): void {
-    // TODO: Implement like via backend API when available
+    const p = this.post();
+    if (!p?.id) return;
+
+    // 未登录 → 引导登录，登录后返回当前文章
+    if (!this.isLoggedIn()) {
+      this.router.navigate(['/login'], { queryParams: { redirect: `/blog/${p.slug}` } });
+      return;
+    }
+
+    if (this.likePending()) return;
+    this.likePending.set(true);
+
+    // 乐观更新：先切换 UI
+    const prevLiked = this.liked();
+    const prevCount = this.likeCount();
+    this.liked.set(!prevLiked);
+    this.likeCount.set(prevCount + (prevLiked ? -1 : 1));
+
+    this.postService.toggleLike(p.id).subscribe({
+      next: (r) => {
+        this.liked.set(r.liked);
+        this.likeCount.set(r.like_count);
+        this.likePending.set(false);
+      },
+      error: () => {
+        // 回滚乐观更新
+        this.liked.set(prevLiked);
+        this.likeCount.set(prevCount);
+        this.likePending.set(false);
+      },
+    });
   }
 
   /** Format date for display */

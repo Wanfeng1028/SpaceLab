@@ -45,6 +45,7 @@ export const posts = sqliteTable("posts", {
   publishedAt: text("published_at"),
   scheduledAt: text("scheduled_at"),
   viewCount: integer("view_count").notNull().default(0),
+  likeCount: integer("like_count").notNull().default(0),
   commentsEnabled: integer("comments_enabled", { mode: "boolean" }).notNull().default(true),
   deletedAt: text("deleted_at"),
   createdAt: text("created_at").notNull(),
@@ -296,4 +297,17 @@ export const aiTools = sqliteTable("ai_tools", {
   fetchedAt: text("fetched_at").default(""),
   createdAt: text("created_at").notNull(),
   updatedAt: text("updated_at").notNull(),
+});
+
+// ─── 20. likes ──────────────────────────────────────────────
+// 点赞记录（支持多内容类型：post/project/comment）
+// 唯一索引 idx_likes_unique(target_type, target_id, user_id) 见迁移文件
+export const likes = sqliteTable("likes", {
+  id: text("id").primaryKey(),
+  targetType: text("target_type").notNull().default("post"), // post, project, comment
+  targetId: text("target_id").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  createdAt: text("created_at").notNull(),
 });

@@ -45,6 +45,21 @@
         [innerHTML]="sanitizedContent()"
       ></article>
 
+      <!-- Like 点赞 -->
+      <div class="article-actions">
+        <button
+          type="button"
+          class="article-like"
+          [class.article-like--active]="liked()"
+          [disabled]="likePending()"
+          [attr.aria-pressed]="liked()"
+          (click)="onLike()"
+        >
+          <span class="article-like__icon">{{ liked() ? '❤️' : '🤍' }}</span>
+          <span class="article-like__count">{{ likeCount() }}</span>
+        </button>
+      </div>
+
       <!-- LiveComment 评论组件 -->
       <div class="article-comments-section">
         <app-live-comment

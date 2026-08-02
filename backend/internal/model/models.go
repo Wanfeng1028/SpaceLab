@@ -235,6 +235,7 @@ type Post struct {
 	PublishedAt     *time.Time     `json:"published_at"`
 	ScheduledAt     *time.Time     `json:"scheduled_at"`
 	ViewCount       int            `gorm:"default:0" json:"view_count"`
+	LikeCount       int            `gorm:"default:0" json:"like_count"`
 	CommentsEnabled bool           `gorm:"default:true" json:"comments_enabled"`
 	DeletedAt       gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
 	Comments        []Comment      `gorm:"foreignKey:ContentID;references:ID" json:"comments,omitempty"`
@@ -402,6 +403,16 @@ type SensitiveWord struct {
 	Word      string    `gorm:"uniqueIndex;size:100;not null" json:"word"`
 	Category  string    `gorm:"size:50" json:"category"` // profanity, spam, politics, ads
 	CreatedAt time.Time `json:"created_at"`
+}
+
+// Like 点赞记录（支持多内容类型：post/project/comment）
+// 通过 (target_type, target_id, user_id) 复合唯一索引保证同一用户对同一目标仅点赞一次
+type Like struct {
+	ID         uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+	TargetType string    `gorm:"size:50;default:'post';uniqueIndex:idx_like_unique" json:"target_type"` // post, project, comment
+	TargetID   uuid.UUID `gorm:"type:uuid;uniqueIndex:idx_like_unique;index" json:"target_id"`
+	UserID     uuid.UUID `gorm:"type:uuid;uniqueIndex:idx_like_unique;not null" json:"user_id"`
+	CreatedAt  time.Time `json:"created_at"`
 }
 
 // CommentReport 评论举报

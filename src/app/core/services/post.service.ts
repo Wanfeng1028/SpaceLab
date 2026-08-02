@@ -28,7 +28,13 @@ export interface Post {
   updated_at: string;
   published_at?: string;
   view_count?: number;
+  like_count?: number;
   scheduled_at?: string;
+}
+
+export interface LikeStatus {
+  liked: boolean;
+  like_count: number;
 }
 
 export interface PostListResponse {
@@ -102,5 +108,15 @@ export class PostService {
 
   incrementViewCount(id: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/posts/${id}/view`, {});
+  }
+
+  /** 查询当前登录用户对文章的点赞状态及总点赞数 */
+  getLikeStatus(id: string): Observable<LikeStatus> {
+    return this.http.get<LikeStatus>(`${this.apiUrl}/posts/${id}/like-status`);
+  }
+
+  /** 切换点赞/取消点赞（需登录），返回最新状态与点赞数 */
+  toggleLike(id: string): Observable<LikeStatus> {
+    return this.http.post<LikeStatus>(`${this.apiUrl}/posts/${id}/like`, {});
   }
 }

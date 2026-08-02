@@ -20,6 +20,7 @@ import (
 	captchahandler "github.com/spacelab/backend/internal/handler/captcha"
 	comment "github.com/spacelab/backend/internal/handler/comment"
 	contenthandler "github.com/spacelab/backend/internal/handler/content"
+	likehandler "github.com/spacelab/backend/internal/handler/like"
 	media "github.com/spacelab/backend/internal/handler/media"
 	post "github.com/spacelab/backend/internal/handler/post"
 	projecthandler "github.com/spacelab/backend/internal/handler/project"
@@ -63,6 +64,7 @@ func main() {
 		&model.AdminAuditLog{},
 		&model.SensitiveWord{},
 		&model.CommentReport{},
+		&model.Like{},
 		&model.AiNews{},
 		&model.AiTool{},
 		&model.OAuthState{},
@@ -119,6 +121,7 @@ func main() {
 	postService := service.NewPostService(config.GetDB())
 	projectService := service.NewProjectService(config.GetDB())
 	commentService := service.NewCommentService(config.GetDB())
+	likeService := service.NewLikeService(config.GetDB())
 	categoryService := service.NewCategoryService(config.GetDB())
 	tagService := service.NewTagService(config.GetDB())
 	friendLinkService := service.NewFriendLinkService(config.GetDB())
@@ -136,6 +139,7 @@ func main() {
 	projectHandler := projecthandler.NewProjectHandler(projectService)
 	nativeCommentHandler := comment.NewNativeCommentHandler(commentService)
 	nativeCommentHandler.SetTurnstileSecret(cfg.TurnstileSecret)
+	likeHandler := likehandler.NewLikeHandler(likeService)
 	// liveCommentHandler 保留供未来切换使用
 	_ = comment.NewLiveCommentHandler(cfg)
 	mediaHandler := media.NewMediaHandler(cfg, config.GetDB())
@@ -218,6 +222,10 @@ func main() {
 			protected.POST("/posts/:id/comments", middleware.AuthLimiter(), nativeCommentHandler.CreateComment)
 			// 评论举报
 			protected.POST("/comments/:id/report", middleware.AuthLimiter(), nativeCommentHandler.ReportComment)
+
+			// 文章点赞（登录后可切换点赞/取消，并查询当前用户点赞状态）
+			protected.POST("/posts/:id/like", middleware.AuthLimiter(), likeHandler.ToggleLike)
+			protected.GET("/posts/:id/like-status", likeHandler.GetLikeStatus)
 
 			// 文章管理（仅 Admin 可访问）
 			adminOnly := protected.Group("")
