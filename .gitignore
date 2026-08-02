@@ -74,7 +74,8 @@ temp-*
 .qwen/
 .atomcode
 # .github/
-docs/
+docs/*
+!docs/daily-log.md
 log/
 
 
