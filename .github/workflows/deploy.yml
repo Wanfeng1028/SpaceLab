@@ -1,37 +1,33 @@
 name: Deploy to GitHub Pages
 
-on:
-  push:
-    branches: ['main']
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
+# ⚠️ 自动触发已禁用（2026-08-09）
+# 如需重新启用，恢复下方的 on: 配置即可
+#
+# on:
+#   push:
+#     branches: ['main']
+#   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: false
-
-      - name: Cache Git LFS objects
-        uses: actions/cache@v4
-        with:
-          path: .git/lfs
-          key: lfs-${{ runner.os }}-${{ hashFiles('.gitattributes', 'public/**/*.mp4', 'public/**/*.mp3', 'public/**/*.mov', 'public/**/*.webm') }}
-          restore-keys: |
-            lfs-${{ runner.os }}-
-
-      - name: Pull Git LFS objects
-        run: git lfs pull
+      # ⚠️ Git LFS 已停用（2026-08-09）—— 保留原始步骤供后续恢复
+      #
+      # - uses: actions/checkout@v4
+      #   with:
+      #     lfs: false
+      #
+      # - name: Cache Git LFS objects
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: .git/lfs
+      #     key: lfs-${{ runner.os }}-${{ hashFiles('.gitattributes', 'public/**/*.mp4', 'public/**/*.mp3', 'public/**/*.mov', 'public/**/*.webm') }}
+      #     restore-keys: |
+      #       lfs-${{ runner.os }}-
+      #
+      # - name: Pull Git LFS objects
+      #   run: git lfs pull
 
       - uses: actions/setup-node@v4
         with:

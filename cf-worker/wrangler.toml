@@ -18,26 +18,26 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "spacelab-db"
-database_id = "YOUR_D1_DATABASE_ID"
+database_id = "3f2059c4-df13-42fd-bf7c-d77c817cade4"
 
 # ─── KV 命名空间 ──────────────────────────────────────────────────────────────
 # Token 黑名单：存储已登出/已撤销的 JWT Token
 # 创建: wrangler kv:namespace create TOKEN_BLACKLIST
 [[kv_namespaces]]
 binding = "TOKEN_BLACKLIST"
-id = "YOUR_TOKEN_BLACKLIST_KV_ID"
+id = "ff0ba3d080d44118ab418979d1452949"
 
 # 速率限制：滑动窗口计数器，防止 API 滥用
 # 创建: wrangler kv:namespace create RATE_LIMIT
 [[kv_namespaces]]
 binding = "RATE_LIMIT"
-id = "YOUR_RATE_LIMIT_KV_ID"
+id = "24ea06b8f7634ccf9407e1f897ced26e"
 
 # 缓存：API 响应缓存、RSS Feed 缓存等
 # 创建: wrangler kv:namespace create CACHE
 [[kv_namespaces]]
 binding = "CACHE"
-id = "YOUR_CACHE_KV_ID"
+id = "cd47098092284d288acd687c3098bece"
 
 # ─── R2 存储桶 ────────────────────────────────────────────────────────────────
 # 媒体文件存储（图片、附件等）

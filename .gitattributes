@@ -1,4 +1,4 @@
-public/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
-public/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
-public/**/*.mov filter=lfs diff=lfs merge=lfs -text
-public/**/*.webm filter=lfs diff=lfs merge=lfs -text
+# public/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+# public/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+# public/**/*.mov filter=lfs diff=lfs merge=lfs -text
+# public/**/*.webm filter=lfs diff=lfs merge=lfs -text
