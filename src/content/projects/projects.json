@@ -19,28 +19,7 @@
     "featured": true,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-08-10T14:29:45Z"
-  },
-  {
-    "id": "ParrotSoundReVue",
-    "name": "ParrotSoundReVue",
-    "description": "鹦音坊 — 基于 AI 语音大模型的智能声音处理软件。",
-    "tags": [
-      "Vue",
-      "AI",
-      "Audio"
-    ],
-    "language": "Vue",
-    "stars": 5,
-    "forks": 1,
-    "status": "Building",
-    "cover": "",
-    "github": "https://github.com/Wanfeng1028/ParrotSoundReVue",
-    "demo": "",
-    "featured": false,
-    "archived": false,
-    "fork": false,
-    "updatedAt": "2026-08-09T09:59:32Z"
+    "updatedAt": "2026-08-11T09:49:43Z"
   },
   {
     "id": "aichat_export_tools",
@@ -459,6 +438,23 @@
     "updatedAt": "2026-02-16T19:11:55Z"
   },
   {
+    "id": "ParrotSound",
+    "name": "ParrotSound",
+    "description": "鹦音坊-基于 AI 语音大模型的智能声音处理软件",
+    "tags": [],
+    "language": "Vue",
+    "stars": 5,
+    "forks": 1,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/ParrotSound",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-08-11T10:14:17Z"
+  },
+  {
     "id": "GeoWork",
     "name": "GeoWork",
     "description": "",
@@ -473,7 +469,24 @@
     "featured": false,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-08-10T04:23:15Z"
+    "updatedAt": "2026-08-11T15:00:54Z"
+  },
+  {
+    "id": "BlogAstroPure",
+    "name": "BlogAstroPure",
+    "description": "",
+    "tags": [],
+    "language": "Astro",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/BlogAstroPure",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-08-11T10:13:34Z"
   },
   {
     "id": "Wanfeng1028",
