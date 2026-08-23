@@ -19,7 +19,7 @@
     "featured": true,
     "archived": false,
     "fork": false,
-    "updatedAt": "2026-08-22T05:26:39Z"
+    "updatedAt": "2026-08-23T15:17:38Z"
   },
   {
     "id": "aichat_export_tools",
@@ -470,6 +470,23 @@
     "archived": false,
     "fork": false,
     "updatedAt": "2026-08-20T14:16:37Z"
+  },
+  {
+    "id": "Spark",
+    "name": "Spark",
+    "description": "",
+    "tags": [],
+    "language": "TypeScript",
+    "stars": 0,
+    "forks": 0,
+    "status": "Building",
+    "cover": "",
+    "github": "https://github.com/Wanfeng1028/Spark",
+    "demo": "",
+    "featured": false,
+    "archived": false,
+    "fork": false,
+    "updatedAt": "2026-08-23T14:37:09Z"
   },
   {
     "id": "BlogAstroPure",
